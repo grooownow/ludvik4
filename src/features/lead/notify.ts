@@ -92,7 +92,13 @@ export async function deliverLead(lead: Lead): Promise<boolean> {
   ).filter((r): r is boolean => r !== null);
 
   if (outcomes.length === 0) {
-    logger.warn("lead: no delivery channel configured");
+    // No channel wired up. Log the full lead so it is at least visible in the
+    // server console (dev testing / a prod misconfiguration) instead of
+    // vanishing. Still fail in production so the user is told to use Telegram.
+    logger.warn(
+      { name: lead.name, contact: lead.contact, message: lead.message },
+      "lead: no delivery channel configured — logged only, not delivered",
+    );
     return env.NODE_ENV !== "production";
   }
   return outcomes.some(Boolean);

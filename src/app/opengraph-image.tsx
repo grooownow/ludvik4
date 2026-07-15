@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export const alt = "Ludvik4 — веб-продукты от идеи до релиза";
+export const alt = "Ludvik4 — цифровые продукты от идеи до запуска";
 export const size = {
   width: 1200,
   height: 630,
@@ -43,7 +43,7 @@ export default function Image() {
           textAlign: "center",
         }}
       >
-        Веб-продукты — от идеи до релиза
+        Цифровые продукты — от идеи до запуска
       </div>
     </div>,
     {

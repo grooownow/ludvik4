@@ -1,0 +1,3441 @@
+{
+  "version": "2.14",
+  "children": [
+    {
+      "type": "frame",
+      "id": "fF5q7",
+      "x": 0,
+      "y": 0,
+      "name": "Desktop Landing Page",
+      "clip": true,
+      "width": 1440,
+      "height": 4100,
+      "fill": "$surface-primary",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "KRNnQ",
+          "name": "Top Bar",
+          "clip": true,
+          "width": 1440,
+          "height": 52,
+          "fill": "$surface-primary",
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "fao5i",
+              "x": 300,
+              "y": 17,
+              "name": "Wordmark",
+              "fill": "$foreground-primary",
+              "content": "Ludvik4",
+              "fontFamily": "$font-data",
+              "fontSize": 14,
+              "fontWeight": "800"
+            },
+            {
+              "type": "frame",
+              "id": "jXRF6",
+              "x": 946,
+              "y": 10,
+              "name": "Discuss Button",
+              "width": 178,
+              "height": 32,
+              "fill": "$rose",
+              "cornerRadius": 8,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Q3wshC",
+                  "name": "Discuss Button Label",
+                  "fill": "#FFFFFF",
+                  "content": "Обсудить задачу",
+                  "fontFamily": "$font-caption",
+                  "fontSize": 12,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "rectangle",
+              "id": "Hvub7",
+              "x": 0,
+              "y": 51,
+              "name": "Pink Divider / Top",
+              "fill": "$line-soft",
+              "width": 1440,
+              "height": 1
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "L3ly3L",
+          "name": "Hero",
+          "clip": true,
+          "width": 1440,
+          "height": 430,
+          "fill": "$surface-primary",
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "TEByT",
+              "x": 300,
+              "y": 68,
+              "name": "Hero Eyebrow",
+              "fill": "$accent-primary",
+              "content": "LUDVIK4",
+              "fontFamily": "$font-caption",
+              "fontSize": 12,
+              "fontWeight": "800"
+            },
+            {
+              "type": "text",
+              "id": "WhU3f",
+              "x": 300,
+              "y": 96,
+              "name": "Hero Heading",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 640,
+              "content": "Цифровые продукты\n— от идеи до запуска.",
+              "lineHeight": 1.06,
+              "fontFamily": "$font-body",
+              "fontSize": 44,
+              "fontWeight": "800"
+            },
+            {
+              "type": "text",
+              "id": "Sg9mj",
+              "x": 300,
+              "y": 220,
+              "name": "Hero Subtitle",
+              "fill": "$foreground-secondary",
+              "textGrowth": "fixed-width",
+              "width": 610,
+              "content": "Сайты, веб-приложения и SaaS, плагины, автоматизация рутины — довожу до готового продукта.",
+              "lineHeight": 1.42,
+              "fontFamily": "$font-body",
+              "fontSize": 17,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "Q3jZl7",
+              "x": 300,
+              "y": 300,
+              "name": "Hero Actions",
+              "width": 190,
+              "height": 38,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "t7RRwg",
+                  "x": 0,
+                  "y": 0,
+                  "name": "Hero CTA",
+                  "width": 190,
+                  "height": 38,
+                  "fill": "$rose",
+                  "cornerRadius": 8,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "NsXRr",
+                      "name": "Hero CTA Label",
+                      "fill": "#FFFFFF",
+                      "content": "Обсудить задачу",
+                      "fontFamily": "$font-caption",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "rectangle",
+              "id": "XAjvv",
+              "x": 300,
+              "y": 390,
+              "name": "Pink Divider / Hero",
+              "fill": "$line-soft",
+              "width": 840,
+              "height": 1
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Q8D4g",
+          "name": "Services",
+          "width": "fill_container",
+          "height": 640,
+          "fill": "$surface-primary",
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "Hrs2Y",
+              "x": 300,
+              "y": 56,
+              "name": "Services Eyebrow",
+              "fill": "$accent-primary",
+              "content": "ЧТО ДЕЛАЮ",
+              "fontFamily": "$font-caption",
+              "fontSize": 12,
+              "fontWeight": "800"
+            },
+            {
+              "type": "frame",
+              "id": "uzv8d",
+              "x": 300,
+              "y": 112,
+              "name": "Service / Сайты",
+              "width": 410,
+              "height": 178,
+              "fill": "$surface-panel",
+              "cornerRadius": 24,
+              "stroke": "$border-subtle",
+              "strokeWidth": 1,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "q6eWlq",
+                  "x": 24,
+                  "y": 24,
+                  "name": "Service / Сайты Title",
+                  "fill": "$foreground-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 350,
+                  "content": "Сайты",
+                  "fontFamily": "$font-heading",
+                  "fontSize": 20,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "vCBBI",
+                  "x": 24,
+                  "y": 66,
+                  "name": "Service / Сайты Text",
+                  "fill": "$foreground-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 350,
+                  "content": "Лендинги, промо- и персональные сайты, корпоративные страницы. Быстрые, адаптивные, готовые к SEO.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Nzbn0",
+              "x": 730,
+              "y": 112,
+              "name": "Service / Веб-приложения и SaaS",
+              "width": 410,
+              "height": 178,
+              "fill": "$surface-panel",
+              "cornerRadius": 24,
+              "stroke": "$border-subtle",
+              "strokeWidth": 1,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "J5OSZn",
+                  "x": 24,
+                  "y": 24,
+                  "name": "Service / Веб-приложения и SaaS Title",
+                  "fill": "$foreground-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 350,
+                  "content": "Веб-приложения и SaaS",
+                  "fontFamily": "$font-heading",
+                  "fontSize": 20,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "HCCW4",
+                  "x": 24,
+                  "y": 66,
+                  "name": "Service / Веб-приложения и SaaS Text",
+                  "fill": "$foreground-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 350,
+                  "content": "Продукты с логикой, аккаунтами и оплатой. SaaS — сервис по подписке прямо в браузере: трекер, дашборд, CRM-лайт, внутренний инструмент.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "FxrzY",
+              "x": 300,
+              "y": 306,
+              "name": "Service / AI-инструменты",
+              "width": 410,
+              "height": 190,
+              "fill": "$surface-panel",
+              "cornerRadius": 24,
+              "stroke": "$border-subtle",
+              "strokeWidth": 1,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "p2TBP",
+                  "x": 24,
+                  "y": 24,
+                  "name": "Service / AI-инструменты Title",
+                  "fill": "$foreground-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 350,
+                  "content": "AI-инструменты и плагины",
+                  "fontFamily": "$font-heading",
+                  "fontSize": 20,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "WShg3",
+                  "x": 24,
+                  "y": 66,
+                  "name": "Service / AI-инструменты Text",
+                  "fill": "$foreground-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 350,
+                  "content": "Инструменты для команд и тех, кто пишет код с AI: плагины для AI-ассистентов, стартер-паки, утилиты и интеграции.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "cjfZA",
+              "x": 730,
+              "y": 306,
+              "name": "Service / Автоматизация",
+              "width": 410,
+              "height": 190,
+              "fill": "$surface-panel",
+              "cornerRadius": 24,
+              "stroke": "$border-subtle",
+              "strokeWidth": 1,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "emgNV",
+                  "x": 24,
+                  "y": 24,
+                  "name": "Service / Автоматизация Title",
+                  "fill": "$foreground-primary",
+                  "textGrowth": "fixed-width",
+                  "width": 350,
+                  "content": "Автоматизация",
+                  "fontFamily": "$font-heading",
+                  "fontSize": 20,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "ROlen",
+                  "x": 24,
+                  "y": 66,
+                  "name": "Service / Автоматизация Text",
+                  "fill": "$foreground-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": 350,
+                  "content": "Рутина уходит в скрипты, боты и связки между сервисами: сбор и обработка данных, отчёты, интеграции. Где уместно — с AI поверх готовых моделей.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Q7L50",
+              "x": 300,
+              "y": 526,
+              "name": "Work Formats",
+              "width": 840,
+              "height": 34,
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "rmEhq",
+                  "name": "Format / Под ключ",
+                  "fill": "$technical-rose-wash",
+                  "cornerRadius": 999,
+                  "stroke": "$technical-rose-line",
+                  "strokeWidth": 1,
+                  "padding": [
+                    7,
+                    14
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "U2CLrT",
+                      "name": "Format Label",
+                      "fill": "$technical-charcoal-soft",
+                      "content": "Под ключ",
+                      "fontFamily": "$font-caption",
+                      "fontSize": 12,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "vWXHm",
+                  "name": "Format / От идеи до MVP",
+                  "fill": "$technical-rose-wash",
+                  "cornerRadius": 999,
+                  "stroke": "$technical-rose-line",
+                  "strokeWidth": 1,
+                  "padding": [
+                    7,
+                    14
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ROTiO",
+                      "name": "Format Label",
+                      "fill": "$technical-charcoal-soft",
+                      "content": "От идеи до MVP",
+                      "fontFamily": "$font-caption",
+                      "fontSize": 12,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "DEK47",
+                  "name": "Format / Усиление команды (frontend / fullstack)",
+                  "fill": "$technical-rose-wash",
+                  "cornerRadius": 999,
+                  "stroke": "$technical-rose-line",
+                  "strokeWidth": 1,
+                  "padding": [
+                    7,
+                    14
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "F2GWCv",
+                      "name": "Format Label",
+                      "fill": "$technical-charcoal-soft",
+                      "content": "Усиление команды (frontend / fullstack)",
+                      "fontFamily": "$font-caption",
+                      "fontSize": 12,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "v9WalZ",
+                  "name": "Format / Миграция легаси",
+                  "fill": "$technical-rose-wash",
+                  "cornerRadius": 999,
+                  "stroke": "$technical-rose-line",
+                  "strokeWidth": 1,
+                  "padding": [
+                    7,
+                    14
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "OeSHy",
+                      "name": "Format Label",
+                      "fill": "$technical-charcoal-soft",
+                      "content": "Миграция легаси",
+                      "fontFamily": "$font-caption",
+                      "fontSize": 12,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "rectangle",
+              "id": "d8sm03",
+              "x": 300,
+              "y": 600,
+              "name": "Pink Divider / Services Bottom",
+              "fill": "$line-soft",
+              "width": 840,
+              "height": 1
+            },
+            {
+              "type": "text",
+              "id": "GiLJH",
+              "x": 948,
+              "y": 60,
+              "name": "Services Technical Caption",
+              "fill": "$foreground-muted",
+              "content": "SERVICE MAP / ROSE CHARCOAL",
+              "fontFamily": "$font-caption",
+              "fontSize": 10,
+              "fontWeight": "500"
+            },
+            {
+              "type": "rectangle",
+              "id": "R5Lc4",
+              "x": 320,
+              "y": 244,
+              "name": "Pink Service Card Rule 1",
+              "fill": "$line-soft",
+              "width": 70,
+              "height": 1
+            },
+            {
+              "type": "text",
+              "id": "I8GIqG",
+              "x": 320,
+              "y": 254,
+              "name": "Service Sites Technical Label",
+              "fill": "$foreground-muted",
+              "content": "MODULE / Sites",
+              "fontFamily": "$font-caption",
+              "fontSize": 9,
+              "fontWeight": "500"
+            },
+            {
+              "type": "rectangle",
+              "id": "m4nWYD",
+              "x": 750,
+              "y": 244,
+              "name": "Pink Service Card Rule 2",
+              "fill": "$line-soft",
+              "width": 70,
+              "height": 1
+            },
+            {
+              "type": "text",
+              "id": "anaxO",
+              "x": 750,
+              "y": 254,
+              "name": "Service SaaS Technical Label",
+              "fill": "$foreground-muted",
+              "content": "MODULE / SaaS",
+              "fontFamily": "$font-caption",
+              "fontSize": 9,
+              "fontWeight": "500"
+            },
+            {
+              "type": "rectangle",
+              "id": "X57ZKl",
+              "x": 320,
+              "y": 452,
+              "name": "Pink Service Card Rule 3",
+              "fill": "$line-soft",
+              "width": 70,
+              "height": 1
+            },
+            {
+              "type": "text",
+              "id": "xvb9h",
+              "x": 320,
+              "y": 462,
+              "name": "Service AI KIT Technical Label",
+              "fill": "$foreground-muted",
+              "content": "MODULE / AI KIT",
+              "fontFamily": "$font-caption",
+              "fontSize": 9,
+              "fontWeight": "500"
+            },
+            {
+              "type": "rectangle",
+              "id": "UM2Ce",
+              "x": 750,
+              "y": 452,
+              "name": "Pink Service Card Rule 4",
+              "fill": "$line-soft",
+              "width": 70,
+              "height": 1
+            },
+            {
+              "type": "text",
+              "id": "HYQVS",
+              "x": 750,
+              "y": 462,
+              "name": "Service AUTO Technical Label",
+              "fill": "$foreground-muted",
+              "content": "MODULE / AUTO",
+              "fontFamily": "$font-caption",
+              "fontSize": 9,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "fRzgk",
+          "name": "How It Works",
+          "clip": true,
+          "width": 1440,
+          "height": 500,
+          "fill": "$surface-primary",
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "C5zahy",
+              "x": 300,
+              "y": 48,
+              "name": "How Eyebrow",
+              "fill": "$rose",
+              "content": "Как это работает",
+              "fontFamily": "$font-caption",
+              "fontSize": 12,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "d3cAAF",
+              "x": 300,
+              "y": 84,
+              "name": "How Lead",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 840,
+              "content": "Вы приходите с идеей или болью — я предлагаю, как её решить.",
+              "lineHeight": 1.15,
+              "fontFamily": "$font-heading",
+              "fontSize": 24,
+              "fontWeight": "650"
+            },
+            {
+              "type": "rectangle",
+              "id": "U8676H",
+              "x": 0,
+              "y": 0,
+              "name": "Pink Divider",
+              "fill": "$line-soft",
+              "width": 0,
+              "height": 0
+            },
+            {
+              "type": "text",
+              "id": "VEJJI",
+              "x": 300,
+              "y": 176,
+              "name": "Step 01 Number",
+              "fill": "$rose",
+              "content": "01",
+              "fontFamily": "$font-caption",
+              "fontSize": 15,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "dtwS3",
+              "x": 300,
+              "y": 216,
+              "name": "Step 01 Title",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 245,
+              "content": "Не нужно готового ТЗ.",
+              "fontFamily": "$font-heading",
+              "fontSize": 19,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "l6ptI",
+              "x": 300,
+              "y": 258,
+              "name": "Step 01 Text",
+              "fill": "$foreground-secondary",
+              "textGrowth": "fixed-width",
+              "width": 245,
+              "content": "Расскажете, что хочется или что не так, — я предложу варианты и придумаю решение под вас. Задачу и результат опишем вместе.",
+              "lineHeight": 1.35,
+              "fontFamily": "$font-body",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "EstgL",
+              "x": 586,
+              "y": 176,
+              "name": "Step 02 Number",
+              "fill": "$rose",
+              "content": "02",
+              "fontFamily": "$font-caption",
+              "fontSize": 15,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "ScMFx",
+              "x": 586,
+              "y": 216,
+              "name": "Step 02 Title",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 245,
+              "content": "Оптимальный MVP.",
+              "fontFamily": "$font-heading",
+              "fontSize": 19,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "uU50W",
+              "x": 586,
+              "y": 258,
+              "name": "Step 02 Text",
+              "fill": "$foreground-secondary",
+              "textGrowth": "fixed-width",
+              "width": 245,
+              "content": "Рабочая версия в короткий срок, которая снимает острую боль.",
+              "lineHeight": 1.35,
+              "fontFamily": "$font-body",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "d5KZb",
+              "x": 872,
+              "y": 176,
+              "name": "Step 03 Number",
+              "fill": "$rose",
+              "content": "03",
+              "fontFamily": "$font-caption",
+              "fontSize": 15,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "ePWNq",
+              "x": 872,
+              "y": 216,
+              "name": "Step 03 Title",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 245,
+              "content": "Формат под вас.",
+              "fontFamily": "$font-heading",
+              "fontSize": 19,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "rRm7F",
+              "x": 872,
+              "y": 258,
+              "name": "Step 03 Text",
+              "fill": "$foreground-secondary",
+              "textGrowth": "fixed-width",
+              "width": 245,
+              "content": "Разовый продукт, развитие или поддержка с доработками. Под смежные задачи — дизайн, бренд, видео, анимацию — подключаю нужных специалистов.",
+              "lineHeight": 1.35,
+              "fontFamily": "$font-body",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "rectangle",
+              "id": "LcOA0",
+              "x": 0,
+              "y": 0,
+              "name": "Pink Divider",
+              "fill": "$line-soft",
+              "width": 0,
+              "height": 0
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "udUev",
+          "name": "About",
+          "clip": true,
+          "width": 1440,
+          "height": 420,
+          "fill": "$surface-primary",
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "mXvWT",
+              "x": 300,
+              "y": 48,
+              "name": "About Eyebrow",
+              "fill": "$rose",
+              "content": "Кто за этим стоит",
+              "fontFamily": "$font-caption",
+              "fontSize": 12,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "Ev9MY",
+              "x": 300,
+              "y": 88,
+              "name": "About Text",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 620,
+              "content": "За Ludvik4 — инженер с более чем 10-летним опытом в вебе: от продуктовой команды в крупном финтехе до собственных приложений. Techlead за плечами, глубоко в современном фронтенде, fullstack и AI-инструментах. Строю быстро, но не на выброс.",
+              "lineHeight": 1.25,
+              "fontFamily": "$font-body",
+              "fontSize": 24,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "bF9Is",
+              "x": 300,
+              "y": 300,
+              "name": "LinkedIn Link",
+              "fill": "$foreground-primary",
+              "content": "LinkedIn →",
+              "fontFamily": "$font-caption",
+              "fontSize": 14,
+              "fontWeight": "700"
+            },
+            {
+              "type": "rectangle",
+              "id": "BceW5",
+              "x": 0,
+              "y": 0,
+              "name": "Pink Divider",
+              "fill": "$line-soft",
+              "width": 0,
+              "height": 0
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "B1kie8",
+          "name": "Contact",
+          "clip": true,
+          "width": 1440,
+          "height": 740,
+          "fill": "$surface-warm",
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "gV8zf",
+              "x": 300,
+              "y": 48,
+              "name": "Contact Eyebrow",
+              "fill": "$rose",
+              "content": "Контакт",
+              "fontFamily": "$font-caption",
+              "fontSize": 12,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "z8ih0Q",
+              "x": 300,
+              "y": 86,
+              "name": "Contact Title",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 360,
+              "content": "Расскажите, что нужно",
+              "lineHeight": 1.08,
+              "fontFamily": "$font-heading",
+              "fontSize": 28,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "ooC8b",
+              "x": 300,
+              "y": 146,
+              "name": "Contact Intro",
+              "fill": "$foreground-secondary",
+              "textGrowth": "fixed-width",
+              "width": 360,
+              "content": "Опишите задачу — предложу решение и подскажу, с чего начать.",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "BxdKb",
+              "x": 300,
+              "y": 230,
+              "name": "Telegram Link",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 360,
+              "content": "Или напишите в Telegram → t.me/ludvik4",
+              "fontFamily": "$font-caption",
+              "fontSize": 14,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "TmzfB",
+              "x": 730,
+              "y": 48,
+              "name": "Contact Form Card",
+              "width": 410,
+              "height": 560,
+              "fill": "$surface-panel",
+              "cornerRadius": 28,
+              "stroke": "$border-subtle",
+              "strokeWidth": 1,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#1A1A1A1F",
+                "offset": {
+                  "x": 0,
+                  "y": 14
+                },
+                "blur": 32,
+                "spread": -24
+              },
+              "layout": "none",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 999,
+                  "id": "F4l9bd",
+                  "x": 20,
+                  "y": 20,
+                  "name": "Form Rose Accent",
+                  "fill": "$rose",
+                  "width": 46,
+                  "height": 3
+                },
+                {
+                  "type": "text",
+                  "id": "R1sqzG",
+                  "x": 20,
+                  "y": 48,
+                  "name": "Name Label",
+                  "fill": "$foreground-secondary",
+                  "content": "Имя",
+                  "fontFamily": "$font-caption",
+                  "fontSize": 12,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "adopD",
+                  "x": 20,
+                  "y": 72,
+                  "name": "Name Input",
+                  "width": 370,
+                  "height": 42,
+                  "fill": "$surface-secondary",
+                  "cornerRadius": 18,
+                  "stroke": "$line-soft",
+                  "strokeWidth": 1,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "u4T5v",
+                      "x": 12,
+                      "y": 12,
+                      "name": "Name Placeholder",
+                      "fill": "$foreground-muted",
+                      "textGrowth": "fixed-width",
+                      "width": 346,
+                      "content": "Ваше имя",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "z931O",
+                  "x": 20,
+                  "y": 132,
+                  "name": "Task Label",
+                  "fill": "$foreground-secondary",
+                  "content": "Задача",
+                  "fontFamily": "$font-caption",
+                  "fontSize": 12,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "O5vvS",
+                  "x": 20,
+                  "y": 156,
+                  "name": "Task Input",
+                  "width": 370,
+                  "height": 112,
+                  "fill": "$surface-secondary",
+                  "cornerRadius": 18,
+                  "stroke": "$line-soft",
+                  "strokeWidth": 1,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "BaWtZ",
+                      "x": 12,
+                      "y": 12,
+                      "name": "Task Placeholder",
+                      "fill": "$foreground-muted",
+                      "textGrowth": "fixed-width",
+                      "width": 346,
+                      "content": "Коротко опишите задачу",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "CvV82",
+                  "x": 20,
+                  "y": 292,
+                  "name": "Contact Method Label",
+                  "fill": "$foreground-secondary",
+                  "content": "Как с вами связаться",
+                  "fontFamily": "$font-caption",
+                  "fontSize": 12,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "KWO4z",
+                  "x": 20,
+                  "y": 316,
+                  "name": "Contact Method Input",
+                  "width": 370,
+                  "height": 42,
+                  "fill": "$surface-secondary",
+                  "cornerRadius": 18,
+                  "stroke": "$line-soft",
+                  "strokeWidth": 1,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "n3qYg",
+                      "x": 12,
+                      "y": 12,
+                      "name": "Contact Placeholder",
+                      "fill": "$foreground-muted",
+                      "textGrowth": "fixed-width",
+                      "width": 346,
+                      "content": "email или ссылка на мессенджер / телефон",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "NUCyh",
+                  "x": 20,
+                  "y": 382,
+                  "name": "Turnstile Slot",
+                  "width": 370,
+                  "height": 56,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 18,
+                  "stroke": "$line-soft",
+                  "strokeWidth": 1,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "ZVNPV",
+                      "x": 14,
+                      "y": 18,
+                      "name": "Shield Icon",
+                      "width": 20,
+                      "height": 20,
+                      "icon": "shield-check",
+                      "library": "lucide",
+                      "fill": "$rose"
+                    },
+                    {
+                      "type": "text",
+                      "id": "RZ8ie",
+                      "x": 46,
+                      "y": 20,
+                      "name": "Captcha Label",
+                      "fill": "$foreground-secondary",
+                      "content": "Turnstile captcha",
+                      "fontFamily": "$font-caption",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "pf2xO",
+                  "x": 20,
+                  "y": 462,
+                  "name": "Submit Button",
+                  "width": 370,
+                  "height": 46,
+                  "fill": "$charcoal",
+                  "cornerRadius": 8,
+                  "stroke": "$charcoal",
+                  "strokeWidth": 1,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "HA5Oe",
+                      "name": "Submit Button Label",
+                      "fill": "#FFFFFF",
+                      "content": "Отправить заявку",
+                      "fontFamily": "$font-caption",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "jZKMT",
+                  "x": 20,
+                  "y": 528,
+                  "name": "Form Status",
+                  "fill": "$foreground-muted",
+                  "textGrowth": "fixed-width",
+                  "width": 370,
+                  "content": "Статус отправки появится здесь.",
+                  "lineHeight": 1.25,
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "rectangle",
+              "id": "bGpnU",
+              "x": 0,
+              "y": 0,
+              "name": "Pink Divider",
+              "fill": "$line-soft",
+              "width": 0,
+              "height": 0
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "eecRy",
+          "name": "Footer",
+          "clip": true,
+          "width": 1440,
+          "height": 180,
+          "fill": "$surface-primary",
+          "layout": "none",
+          "children": [
+            {
+              "type": "rectangle",
+              "id": "cGbky",
+              "x": 0,
+              "y": 0,
+              "name": "Pink Divider",
+              "fill": "$line-soft",
+              "width": 0,
+              "height": 0
+            },
+            {
+              "type": "text",
+              "id": "kzJ71",
+              "x": 300,
+              "y": 56,
+              "name": "Footer Copyright",
+              "fill": "$foreground-secondary",
+              "content": "© 2026 Ludvik4",
+              "fontFamily": "$font-caption",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "C0uZU",
+              "x": 1014,
+              "y": 56,
+              "name": "Footer Links",
+              "fill": "$foreground-primary",
+              "content": "Telegram · LinkedIn",
+              "fontFamily": "$font-caption",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "yrDFY",
+      "x": 1540,
+      "y": 0,
+      "name": "Mobile Landing Page",
+      "clip": true,
+      "width": 390,
+      "height": 5160,
+      "fill": "$surface-primary",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "wcdcx",
+          "name": "Mobile Top Bar",
+          "clip": true,
+          "width": 390,
+          "height": 56,
+          "fill": "$surface-primary",
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "j1jB3",
+              "x": 22,
+              "y": 19,
+              "name": "Wordmark",
+              "fill": "$foreground-primary",
+              "content": "Ludvik4",
+              "fontFamily": "$font-data",
+              "fontSize": 14,
+              "fontWeight": "800"
+            },
+            {
+              "type": "frame",
+              "id": "k3RMeK",
+              "x": 176,
+              "y": 12,
+              "name": "Discuss Button",
+              "width": 154,
+              "height": 32,
+              "fill": "$accent-primary",
+              "cornerRadius": 8,
+              "stroke": "#FFFFFF00",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "WyOsv",
+                  "name": "Button Label",
+                  "fill": "#FFFFFF",
+                  "content": "Обсудить задачу",
+                  "fontFamily": "$font-body",
+                  "fontSize": 12,
+                  "fontWeight": "800"
+                }
+              ]
+            },
+            {
+              "type": "rectangle",
+              "id": "xQnEZ",
+              "x": 0,
+              "y": 55,
+              "name": "Top Border",
+              "opacity": 0.16,
+              "fill": "$line-soft",
+              "width": 390,
+              "height": 1
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "E6S4Q",
+          "name": "Mobile Hero",
+          "clip": true,
+          "width": 390,
+          "height": 540,
+          "fill": "$surface-primary",
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "Vzsgh",
+              "x": 22,
+              "y": 58,
+              "name": "Hero Eyebrow",
+              "fill": "$accent-primary",
+              "content": "LUDVIK4",
+              "fontFamily": "$font-caption",
+              "fontSize": 11,
+              "fontWeight": "800"
+            },
+            {
+              "type": "text",
+              "id": "Ox7Vh",
+              "x": 22,
+              "y": 84,
+              "name": "Hero Heading",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 346,
+              "content": "Цифровые продукты\n— от идеи до запуска.",
+              "lineHeight": 1.04,
+              "fontFamily": "$font-body",
+              "fontSize": 33,
+              "fontWeight": "800"
+            },
+            {
+              "type": "text",
+              "id": "N5xm10",
+              "x": 22,
+              "y": 218,
+              "name": "Hero Subtitle",
+              "fill": "$foreground-secondary",
+              "textGrowth": "fixed-width",
+              "width": 346,
+              "content": "Сайты, веб-приложения и SaaS, плагины, автоматизация рутины — довожу до готового продукта.",
+              "lineHeight": 1.42,
+              "fontFamily": "$font-body",
+              "fontSize": 16,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "iEV9G",
+              "x": 22,
+              "y": 326,
+              "name": "Hero Actions",
+              "width": 346,
+              "height": 38,
+              "gap": 14,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "fbaFV",
+                  "name": "Primary CTA",
+                  "width": 154,
+                  "height": 36,
+                  "fill": "$accent-primary",
+                  "cornerRadius": 8,
+                  "stroke": "#FFFFFF00",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "o1Ctl",
+                      "name": "Primary Label",
+                      "fill": "#FFFFFF",
+                      "content": "Обсудить задачу",
+                      "fontFamily": "$font-body",
+                      "fontSize": 12,
+                      "fontWeight": "800"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "ynThI",
+                  "name": "LinkedIn",
+                  "fill": "$technical-charcoal-soft",
+                  "content": "LinkedIn",
+                  "fontFamily": "$font-caption",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "rectangle",
+              "id": "WElFw",
+              "x": 22,
+              "y": 488,
+              "name": "Divider",
+              "opacity": 0.16,
+              "fill": "$line-soft",
+              "width": 346,
+              "height": 1
+            },
+            {
+              "type": "text",
+              "id": "rWkC9",
+              "x": 22,
+              "y": 462,
+              "name": "Mobile Hero Technical Caption",
+              "opacity": 0.78,
+              "fill": "$foreground-muted",
+              "content": "SCOPE: IDEA -> LAUNCH",
+              "fontFamily": "$font-caption",
+              "fontSize": 9,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "y1EtV",
+          "name": "Mobile Services",
+          "width": "fill_container",
+          "height": 1130,
+          "fill": "$surface-primary",
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "T7U6W",
+              "x": 22,
+              "y": 58,
+              "name": "Services Eyebrow",
+              "fill": "$accent-primary",
+              "content": "ЧТО ДЕЛАЮ",
+              "fontFamily": "$font-caption",
+              "fontSize": 11,
+              "fontWeight": "800"
+            },
+            {
+              "type": "frame",
+              "id": "e3ETjt",
+              "x": 22,
+              "y": 104,
+              "name": "Service / Сайты",
+              "width": 346,
+              "height": 168,
+              "fill": "$surface-panel",
+              "stroke": "$border-primary",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 10,
+              "padding": 20,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cNQbW",
+                  "name": "Service Title",
+                  "fill": "$foreground-primary",
+                  "content": "Сайты",
+                  "fontFamily": "$font-body",
+                  "fontSize": 18,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "HUpjZ",
+                  "name": "Service Description",
+                  "fill": "$foreground-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Лендинги, промо- и персональные сайты, корпоративные страницы. Быстрые, адаптивные, готовые к SEO.",
+                  "lineHeight": 1.42,
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "p6XpJX",
+              "x": 22,
+              "y": 290,
+              "name": "Service / Веб-приложения и SaaS",
+              "width": 346,
+              "height": 198,
+              "fill": "$surface-panel",
+              "stroke": "$border-primary",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 10,
+              "padding": 20,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Db7VY",
+                  "name": "Service Title",
+                  "fill": "$foreground-primary",
+                  "content": "Веб-приложения и SaaS",
+                  "fontFamily": "$font-body",
+                  "fontSize": 18,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "aBKPd",
+                  "name": "Service Description",
+                  "fill": "$foreground-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Продукты с логикой, аккаунтами и оплатой. SaaS — сервис по подписке прямо в браузере: трекер, дашборд, CRM-лайт, внутренний инструмент.",
+                  "lineHeight": 1.42,
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "D4AalB",
+              "x": 22,
+              "y": 506,
+              "name": "Service / AI-инструменты и плагины",
+              "width": 346,
+              "height": 184,
+              "fill": "$surface-panel",
+              "stroke": "$border-primary",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 10,
+              "padding": 20,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "CkrLk",
+                  "name": "Service Title",
+                  "fill": "$foreground-primary",
+                  "content": "AI-инструменты и плагины",
+                  "fontFamily": "$font-body",
+                  "fontSize": 18,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "eQFdR",
+                  "name": "Service Description",
+                  "fill": "$foreground-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Инструменты для команд и тех, кто пишет код с AI: плагины для AI-ассистентов, стартер-паки, утилиты и интеграции.",
+                  "lineHeight": 1.42,
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ceUwd",
+              "x": 22,
+              "y": 708,
+              "name": "Service / Автоматизация",
+              "width": 346,
+              "height": 218,
+              "fill": "$surface-panel",
+              "stroke": "$border-primary",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 22,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "xRmbx",
+                  "name": "Service Title",
+                  "fill": "$foreground-primary",
+                  "content": "Автоматизация",
+                  "fontFamily": "$font-body",
+                  "fontSize": 18,
+                  "fontWeight": "800"
+                },
+                {
+                  "type": "text",
+                  "id": "jdTlh",
+                  "name": "Service Description",
+                  "fill": "$foreground-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Рутина уходит в скрипты, боты и связки между сервисами: сбор и обработка данных, отчёты, интеграции. Где уместно — с AI поверх готовых моделей.",
+                  "lineHeight": 1.42,
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "gHRkV",
+              "x": 22,
+              "y": 954,
+              "name": "Format Chips",
+              "width": 346,
+              "height": 92,
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "AM3fC",
+                  "name": "Chip Row",
+                  "width": "fill_container",
+                  "height": 38,
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "wJbx8",
+                      "name": "Format / Под ключ",
+                      "width": "fill_container",
+                      "height": 34,
+                      "fill": "$technical-rose-wash",
+                      "cornerRadius": 999,
+                      "stroke": "$technical-rose-line",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "j3wBU4",
+                          "name": "Chip Label",
+                          "fill": "$foreground-secondary",
+                          "content": "Под ключ",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ss7yV",
+                      "name": "Format / От идеи до MVP",
+                      "width": "fill_container",
+                      "height": 34,
+                      "fill": "$technical-rose-wash",
+                      "cornerRadius": 999,
+                      "stroke": "$technical-rose-line",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "HbiAO",
+                          "name": "Chip Label",
+                          "fill": "$foreground-secondary",
+                          "content": "От идеи до MVP",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "X4LK9L",
+                  "name": "Chip Row",
+                  "width": "fill_container",
+                  "height": 38,
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "pzNLE",
+                      "name": "Format / Усиление команды",
+                      "width": "fill_container",
+                      "height": 34,
+                      "fill": "$technical-rose-wash",
+                      "cornerRadius": 999,
+                      "stroke": "$technical-rose-line",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "v5fEZi",
+                          "name": "Chip Label",
+                          "fill": "$foreground-secondary",
+                          "content": "Усиление команды",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "EE8pe",
+                      "name": "Format / Миграция легаси",
+                      "width": "fill_container",
+                      "height": 34,
+                      "fill": "$technical-rose-wash",
+                      "cornerRadius": 999,
+                      "stroke": "$technical-rose-line",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "os90d",
+                          "name": "Chip Label",
+                          "fill": "$foreground-secondary",
+                          "content": "Миграция легаси",
+                          "fontFamily": "$font-body",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "rectangle",
+              "id": "GldTF",
+              "x": 22,
+              "y": 1084,
+              "name": "Divider",
+              "opacity": 0.16,
+              "fill": "$line-soft",
+              "width": 346,
+              "height": 1
+            },
+            {
+              "type": "rectangle",
+              "id": "Imu0E",
+              "x": 22,
+              "y": 88,
+              "name": "Mobile Services Blueprint Rule",
+              "opacity": 0.65,
+              "fill": "$line-soft",
+              "width": 346,
+              "height": 1
+            },
+            {
+              "type": "rectangle",
+              "id": "V4jefp",
+              "x": 367,
+              "y": 88,
+              "name": "Mobile Services Right Guide",
+              "opacity": 0.38,
+              "fill": "$line-soft",
+              "width": 1,
+              "height": 958
+            },
+            {
+              "type": "rectangle",
+              "id": "q6SPz",
+              "x": 42,
+              "y": 236,
+              "name": "Mobile Service SITES Blueprint Rule",
+              "opacity": 0.85,
+              "fill": "$line-soft",
+              "width": 58,
+              "height": 1
+            },
+            {
+              "type": "text",
+              "id": "M37qxJ",
+              "x": 42,
+              "y": 245,
+              "name": "Mobile Service SITES Technical Label",
+              "fill": "$foreground-muted",
+              "content": "MODULE / SITES",
+              "fontFamily": "$font-caption",
+              "fontSize": 8,
+              "fontWeight": "500"
+            },
+            {
+              "type": "rectangle",
+              "id": "VGgYZ",
+              "x": 42,
+              "y": 450,
+              "name": "Mobile Service SAAS Blueprint Rule",
+              "opacity": 0.85,
+              "fill": "$line-soft",
+              "width": 58,
+              "height": 1
+            },
+            {
+              "type": "text",
+              "id": "DGRsr",
+              "x": 42,
+              "y": 459,
+              "name": "Mobile Service SAAS Technical Label",
+              "fill": "$foreground-muted",
+              "content": "MODULE / SAAS",
+              "fontFamily": "$font-caption",
+              "fontSize": 8,
+              "fontWeight": "500"
+            },
+            {
+              "type": "rectangle",
+              "id": "YwiYo",
+              "x": 42,
+              "y": 652,
+              "name": "Mobile Service AI KIT Blueprint Rule",
+              "opacity": 0.85,
+              "fill": "$line-soft",
+              "width": 58,
+              "height": 1
+            },
+            {
+              "type": "text",
+              "id": "I7mhm",
+              "x": 42,
+              "y": 661,
+              "name": "Mobile Service AI KIT Technical Label",
+              "fill": "$foreground-muted",
+              "content": "MODULE / AI KIT",
+              "fontFamily": "$font-caption",
+              "fontSize": 8,
+              "fontWeight": "500"
+            },
+            {
+              "type": "rectangle",
+              "id": "iMWrF",
+              "x": 42,
+              "y": 886,
+              "name": "Mobile Service AUTO Blueprint Rule",
+              "opacity": 0.85,
+              "fill": "$line-soft",
+              "width": 58,
+              "height": 1
+            },
+            {
+              "type": "text",
+              "id": "GAfkj",
+              "x": 42,
+              "y": 895,
+              "name": "Mobile Service AUTO Technical Label",
+              "fill": "$foreground-muted",
+              "content": "MODULE / AUTO",
+              "fontFamily": "$font-caption",
+              "fontSize": 8,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "Q0nrir",
+              "x": 194,
+              "y": 58,
+              "name": "Mobile Services Technical Caption",
+              "fill": "$foreground-muted",
+              "content": "SERVICE MAP",
+              "fontFamily": "$font-caption",
+              "fontSize": 9,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "oFzbO",
+          "name": "How It Works Mobile",
+          "clip": true,
+          "width": 390,
+          "height": 820,
+          "fill": "$surface-primary",
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "MwWEu",
+              "x": 22,
+              "y": 48,
+              "name": "How Eyebrow Mobile",
+              "fill": "$rose",
+              "content": "Как это работает",
+              "fontFamily": "$font-caption",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "NdEIa",
+              "x": 22,
+              "y": 84,
+              "name": "How Lead Mobile",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 346,
+              "content": "Вы приходите с идеей или болью — я предлагаю, как её решить.",
+              "lineHeight": 1.15,
+              "fontFamily": "$font-heading",
+              "fontSize": 24,
+              "fontWeight": "650"
+            },
+            {
+              "type": "text",
+              "id": "cBduM",
+              "x": 22,
+              "y": 190,
+              "name": "Step 01 Number Mobile",
+              "fill": "$rose",
+              "content": "01",
+              "fontFamily": "$font-caption",
+              "fontSize": 14,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "V0VpKx",
+              "x": 22,
+              "y": 228,
+              "name": "Step 01 Title Mobile",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 346,
+              "content": "Не нужно готового ТЗ.",
+              "fontFamily": "$font-heading",
+              "fontSize": 19,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "a6kkA5",
+              "x": 22,
+              "y": 264,
+              "name": "Step 01 Text Mobile",
+              "fill": "$foreground-secondary",
+              "textGrowth": "fixed-width",
+              "width": 346,
+              "content": "Расскажете, что хочется или что не так, — я предложу варианты и придумаю решение под вас. Задачу и результат опишем вместе.",
+              "lineHeight": 1.35,
+              "fontFamily": "$font-body",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "ZKs1E",
+              "x": 22,
+              "y": 410,
+              "name": "Step 02 Number Mobile",
+              "fill": "$rose",
+              "content": "02",
+              "fontFamily": "$font-caption",
+              "fontSize": 14,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "pTWJ7",
+              "x": 22,
+              "y": 448,
+              "name": "Step 02 Title Mobile",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 346,
+              "content": "Оптимальный MVP.",
+              "fontFamily": "$font-heading",
+              "fontSize": 19,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "C6rGi",
+              "x": 22,
+              "y": 484,
+              "name": "Step 02 Text Mobile",
+              "fill": "$foreground-secondary",
+              "textGrowth": "fixed-width",
+              "width": 346,
+              "content": "Рабочая версия в короткий срок, которая снимает острую боль.",
+              "lineHeight": 1.35,
+              "fontFamily": "$font-body",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "Upgtq",
+              "x": 22,
+              "y": 600,
+              "name": "Step 03 Number Mobile",
+              "fill": "$rose",
+              "content": "03",
+              "fontFamily": "$font-caption",
+              "fontSize": 14,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "MdMmj",
+              "x": 22,
+              "y": 638,
+              "name": "Step 03 Title Mobile",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 346,
+              "content": "Формат под вас.",
+              "fontFamily": "$font-heading",
+              "fontSize": 19,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "WCjPv",
+              "x": 22,
+              "y": 674,
+              "name": "Step 03 Text Mobile",
+              "fill": "$foreground-secondary",
+              "textGrowth": "fixed-width",
+              "width": 346,
+              "content": "Разовый продукт, развитие или поддержка с доработками. Под смежные задачи — дизайн, бренд, видео, анимацию — подключаю нужных специалистов.",
+              "lineHeight": 1.35,
+              "fontFamily": "$font-body",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "rectangle",
+              "id": "eFvlk",
+              "x": 22,
+              "y": 790,
+              "name": "How Mobile Bottom Rule",
+              "fill": "$line-soft",
+              "width": 346,
+              "height": 1
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "afhRW",
+          "name": "About Mobile",
+          "clip": true,
+          "width": 390,
+          "height": 500,
+          "fill": "$surface-primary",
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "HIiXk",
+              "x": 22,
+              "y": 48,
+              "name": "About Eyebrow Mobile",
+              "fill": "$rose",
+              "content": "Кто за этим стоит",
+              "fontFamily": "$font-caption",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "M2rcm9",
+              "x": 22,
+              "y": 88,
+              "name": "About Text Mobile",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 346,
+              "content": "За Ludvik4 — инженер с более чем 10-летним опытом в вебе: от продуктовой команды в крупном финтехе до собственных приложений. Techlead за плечами, глубоко в современном фронтенде, fullstack и AI-инструментах. Строю быстро, но не на выброс.",
+              "lineHeight": 1.28,
+              "fontFamily": "$font-body",
+              "fontSize": 20,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "R3XU2p",
+              "x": 22,
+              "y": 400,
+              "name": "LinkedIn Link Mobile",
+              "fill": "$foreground-primary",
+              "content": "LinkedIn →",
+              "fontFamily": "$font-caption",
+              "fontSize": 14,
+              "fontWeight": "700"
+            },
+            {
+              "type": "rectangle",
+              "id": "U2OA5B",
+              "x": 22,
+              "y": 460,
+              "name": "About Mobile Bottom Rule",
+              "fill": "$line-soft",
+              "width": 346,
+              "height": 1
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Jmayq",
+          "name": "Contact Mobile",
+          "clip": true,
+          "width": 390,
+          "height": 1120,
+          "fill": "$surface-warm",
+          "layout": "none",
+          "children": [
+            {
+              "type": "text",
+              "id": "jpm7M",
+              "x": 22,
+              "y": 48,
+              "name": "Contact Eyebrow Mobile",
+              "fill": "$rose",
+              "content": "Контакт",
+              "fontFamily": "$font-caption",
+              "fontSize": 11,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "lyTLQ",
+              "x": 22,
+              "y": 86,
+              "name": "Contact Title Mobile",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 346,
+              "content": "Расскажите, что нужно",
+              "lineHeight": 1.08,
+              "fontFamily": "$font-heading",
+              "fontSize": 24,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "hA2Cv",
+              "x": 22,
+              "y": 146,
+              "name": "Contact Intro Mobile",
+              "fill": "$foreground-secondary",
+              "textGrowth": "fixed-width",
+              "width": 346,
+              "content": "Опишите задачу — предложу решение и подскажу, с чего начать.",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-body",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "D4oJc",
+              "x": 22,
+              "y": 230,
+              "name": "Telegram Link Mobile",
+              "fill": "$foreground-primary",
+              "textGrowth": "fixed-width",
+              "width": 346,
+              "content": "Или напишите в Telegram → t.me/ludvik4",
+              "fontFamily": "$font-caption",
+              "fontSize": 13,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "b7jyB",
+              "x": 22,
+              "y": 310,
+              "name": "Contact Form Card Mobile",
+              "width": 346,
+              "height": 700,
+              "fill": "$surface-panel",
+              "cornerRadius": 24,
+              "stroke": "$border-subtle",
+              "strokeWidth": 1,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 999,
+                  "id": "a2ZIw",
+                  "x": 18,
+                  "y": 18,
+                  "name": "Mobile Form Rose Accent",
+                  "fill": "$rose",
+                  "width": 42,
+                  "height": 3
+                },
+                {
+                  "type": "text",
+                  "id": "t0mn5",
+                  "x": 18,
+                  "y": 48,
+                  "name": "Mobile Name Label",
+                  "fill": "$foreground-secondary",
+                  "content": "Имя",
+                  "fontFamily": "$font-caption",
+                  "fontSize": 11,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "E4UdDH",
+                  "x": 18,
+                  "y": 72,
+                  "name": "Mobile Name Input",
+                  "width": 310,
+                  "height": 42,
+                  "fill": "$surface-secondary",
+                  "cornerRadius": 16,
+                  "stroke": "$line-soft",
+                  "strokeWidth": 1,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "VEJwY",
+                      "x": 12,
+                      "y": 12,
+                      "name": "Mobile Name Placeholder",
+                      "fill": "$foreground-muted",
+                      "textGrowth": "fixed-width",
+                      "width": 286,
+                      "content": "Ваше имя",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "V6ymV6",
+                  "x": 18,
+                  "y": 134,
+                  "name": "Mobile Task Label",
+                  "fill": "$foreground-secondary",
+                  "content": "Задача",
+                  "fontFamily": "$font-caption",
+                  "fontSize": 11,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "adVAk",
+                  "x": 18,
+                  "y": 158,
+                  "name": "Mobile Task Input",
+                  "width": 310,
+                  "height": 126,
+                  "fill": "$surface-secondary",
+                  "cornerRadius": 16,
+                  "stroke": "$line-soft",
+                  "strokeWidth": 1,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ChqwV",
+                      "x": 12,
+                      "y": 12,
+                      "name": "Mobile Task Placeholder",
+                      "fill": "$foreground-muted",
+                      "textGrowth": "fixed-width",
+                      "width": 286,
+                      "content": "Коротко опишите задачу",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "q0tRl",
+                  "x": 18,
+                  "y": 310,
+                  "name": "Mobile Contact Method Label",
+                  "fill": "$foreground-secondary",
+                  "content": "Как с вами связаться",
+                  "fontFamily": "$font-caption",
+                  "fontSize": 11,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "gE7w5",
+                  "x": 18,
+                  "y": 334,
+                  "name": "Mobile Contact Method Input",
+                  "width": 310,
+                  "height": 50,
+                  "fill": "$surface-secondary",
+                  "cornerRadius": 16,
+                  "stroke": "$line-soft",
+                  "strokeWidth": 1,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "GjTve",
+                      "x": 12,
+                      "y": 11,
+                      "name": "Mobile Contact Placeholder",
+                      "fill": "$foreground-muted",
+                      "textGrowth": "fixed-width",
+                      "width": 286,
+                      "content": "email или ссылка на мессенджер / телефон",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "v0UlH2",
+                  "x": 18,
+                  "y": 412,
+                  "name": "Mobile Turnstile Slot",
+                  "width": 310,
+                  "height": 58,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 16,
+                  "stroke": "$line-soft",
+                  "strokeWidth": 1,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "pOMph",
+                      "x": 14,
+                      "y": 19,
+                      "name": "Mobile Shield Icon",
+                      "width": 20,
+                      "height": 20,
+                      "icon": "shield-check",
+                      "library": "lucide",
+                      "fill": "$rose"
+                    },
+                    {
+                      "type": "text",
+                      "id": "m7gRnT",
+                      "x": 46,
+                      "y": 21,
+                      "name": "Mobile Captcha Label",
+                      "fill": "$foreground-secondary",
+                      "content": "Turnstile captcha",
+                      "fontFamily": "$font-caption",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ThBLC",
+                  "x": 18,
+                  "y": 498,
+                  "name": "Mobile Submit Button",
+                  "width": 310,
+                  "height": 46,
+                  "fill": "$charcoal",
+                  "cornerRadius": 999,
+                  "stroke": "$charcoal",
+                  "strokeWidth": 1,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ngfbA",
+                      "x": 90,
+                      "y": 14,
+                      "name": "Mobile Submit Label",
+                      "fill": "#FFFFFF",
+                      "content": "Отправить заявку",
+                      "fontFamily": "$font-caption",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "KjZvz",
+                  "x": 18,
+                  "y": 580,
+                  "name": "Mobile Form Status",
+                  "fill": "$foreground-muted",
+                  "textGrowth": "fixed-width",
+                  "width": 310,
+                  "content": "Статус отправки появится здесь.",
+                  "lineHeight": 1.25,
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "rectangle",
+              "id": "K4c1YX",
+              "x": 22,
+              "y": 1060,
+              "name": "Contact Mobile Bottom Rule",
+              "fill": "$line-soft",
+              "width": 346,
+              "height": 1
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "S6tYm",
+          "name": "Footer Mobile",
+          "clip": true,
+          "width": 390,
+          "height": 170,
+          "fill": "$surface-primary",
+          "layout": "none",
+          "children": [
+            {
+              "type": "rectangle",
+              "id": "G4I07",
+              "x": 22,
+              "y": 34,
+              "name": "Mobile Footer Top Rule",
+              "fill": "$line-soft",
+              "width": 346,
+              "height": 1
+            },
+            {
+              "type": "text",
+              "id": "Tb5Y1",
+              "x": 22,
+              "y": 56,
+              "name": "Footer Copyright Mobile",
+              "fill": "$foreground-secondary",
+              "content": "© 2026 Ludvik4",
+              "fontFamily": "$font-caption",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "cR9yU",
+              "x": 22,
+              "y": 96,
+              "name": "Footer Links Mobile",
+              "fill": "$foreground-primary",
+              "content": "Telegram · LinkedIn",
+              "fontFamily": "$font-caption",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "v6u5Ru",
+      "x": 0,
+      "y": 0,
+      "width": "fit_content(0)",
+      "height": "fit_content(0)"
+    },
+    {
+      "type": "frame",
+      "id": "jMyAR",
+      "x": 2010,
+      "y": 0,
+      "name": "Color Palette",
+      "clip": true,
+      "width": 640,
+      "height": 590,
+      "fill": "$surface-primary",
+      "cornerRadius": 28,
+      "stroke": "$border-subtle",
+      "strokeWidth": 1,
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "jHVUY",
+          "x": 32,
+          "y": 30,
+          "name": "Palette Title",
+          "fill": "$foreground-primary",
+          "content": "Ludvik4 color palette",
+          "fontFamily": "$font-heading",
+          "fontSize": 28,
+          "fontWeight": "750"
+        },
+        {
+          "type": "text",
+          "id": "nrG9I",
+          "x": 32,
+          "y": 68,
+          "name": "Palette Subtitle",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 540,
+          "content": "Rose Charcoal palette used in the landing: warm whites, charcoal typography, rose accent and unified pink dividers.",
+          "lineHeight": 1.35,
+          "fontFamily": "$font-body",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "WWbGw",
+          "x": 32,
+          "y": 128,
+          "name": "Swatch / surface-primary",
+          "fill": "#FFFFFF",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "i0mmVe",
+          "x": 82,
+          "y": 128,
+          "name": "Token / surface-primary",
+          "fill": "$foreground-primary",
+          "content": "surface-primary",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "bY8pf",
+          "x": 82,
+          "y": 145,
+          "name": "Hex / surface-primary",
+          "fill": "$foreground-muted",
+          "content": "#FFFFFF",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "ewhd6",
+          "x": 168,
+          "y": 145,
+          "name": "Role / surface-primary",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "Page background",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "O7QAm",
+          "x": 324,
+          "y": 128,
+          "name": "Swatch / surface-warm",
+          "fill": "#FFF8F5",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "nZPsj",
+          "x": 374,
+          "y": 128,
+          "name": "Token / surface-warm",
+          "fill": "$foreground-primary",
+          "content": "surface-warm",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "ibBS0",
+          "x": 374,
+          "y": 145,
+          "name": "Hex / surface-warm",
+          "fill": "$foreground-muted",
+          "content": "#FFF8F5",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "GrcFt",
+          "x": 460,
+          "y": 145,
+          "name": "Role / surface-warm",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "Warm section",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "w7PT9d",
+          "x": 32,
+          "y": 178,
+          "name": "Swatch / surface-secondary",
+          "fill": "#F6F2F4",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "Cs8U2",
+          "x": 82,
+          "y": 178,
+          "name": "Token / surface-secondary",
+          "fill": "$foreground-primary",
+          "content": "surface-secondary",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "i1qRO",
+          "x": 82,
+          "y": 195,
+          "name": "Hex / surface-secondary",
+          "fill": "$foreground-muted",
+          "content": "#F6F2F4",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "U26BS9",
+          "x": 168,
+          "y": 195,
+          "name": "Role / surface-secondary",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "Inputs / chips",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "DJp7X",
+          "x": 324,
+          "y": 178,
+          "name": "Swatch / surface-panel",
+          "fill": "#FFFFFF",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "jTDod",
+          "x": 374,
+          "y": 178,
+          "name": "Token / surface-panel",
+          "fill": "$foreground-primary",
+          "content": "surface-panel",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "QDrJF",
+          "x": 374,
+          "y": 195,
+          "name": "Hex / surface-panel",
+          "fill": "$foreground-muted",
+          "content": "#FFFFFF",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "uyhKb",
+          "x": 460,
+          "y": 195,
+          "name": "Role / surface-panel",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "Cards / form",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "BX0xP",
+          "x": 32,
+          "y": 228,
+          "name": "Swatch / surface-rose",
+          "fill": "#FFF0F6",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "vhKDX",
+          "x": 82,
+          "y": 228,
+          "name": "Token / surface-rose",
+          "fill": "$foreground-primary",
+          "content": "surface-rose",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "SwIU9",
+          "x": 82,
+          "y": 245,
+          "name": "Hex / surface-rose",
+          "fill": "$foreground-muted",
+          "content": "#FFF0F6",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "U85HuK",
+          "x": 168,
+          "y": 245,
+          "name": "Role / surface-rose",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "Rose wash",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "BnZUd",
+          "x": 324,
+          "y": 228,
+          "name": "Swatch / foreground-primary",
+          "fill": "#1A1A1A",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "kwKuZ",
+          "x": 374,
+          "y": 228,
+          "name": "Token / foreground-primary",
+          "fill": "$foreground-primary",
+          "content": "foreground-primary",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "Sc0rm",
+          "x": 374,
+          "y": 245,
+          "name": "Hex / foreground-primary",
+          "fill": "$foreground-muted",
+          "content": "#1A1A1A",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "vqSag",
+          "x": 460,
+          "y": 245,
+          "name": "Role / foreground-primary",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "Main text",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "H1jdc",
+          "x": 32,
+          "y": 278,
+          "name": "Swatch / foreground-secondary",
+          "fill": "#4B5563",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "WYNEC",
+          "x": 82,
+          "y": 278,
+          "name": "Token / foreground-secondary",
+          "fill": "$foreground-primary",
+          "content": "foreground-secondary",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "cf4BQ",
+          "x": 82,
+          "y": 295,
+          "name": "Hex / foreground-secondary",
+          "fill": "$foreground-muted",
+          "content": "#4B5563",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "G1kXoW",
+          "x": 168,
+          "y": 295,
+          "name": "Role / foreground-secondary",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "Body text",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "w3RMC",
+          "x": 324,
+          "y": 278,
+          "name": "Swatch / foreground-muted",
+          "fill": "#9CA3AF",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "a0sfmI",
+          "x": 374,
+          "y": 278,
+          "name": "Token / foreground-muted",
+          "fill": "$foreground-primary",
+          "content": "foreground-muted",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "vakLD",
+          "x": 374,
+          "y": 295,
+          "name": "Hex / foreground-muted",
+          "fill": "$foreground-muted",
+          "content": "#9CA3AF",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "KEUdx",
+          "x": 460,
+          "y": 295,
+          "name": "Role / foreground-muted",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "Hints",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "Nd7oy",
+          "x": 32,
+          "y": 328,
+          "name": "Swatch / rose / accent-primary",
+          "fill": "#FF4FB6",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "s8blU2",
+          "x": 82,
+          "y": 328,
+          "name": "Token / rose / accent-primary",
+          "fill": "$foreground-primary",
+          "content": "rose / accent-primary",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "eSsLD",
+          "x": 82,
+          "y": 345,
+          "name": "Hex / rose / accent-primary",
+          "fill": "$foreground-muted",
+          "content": "#FF4FB6",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "PUDAy",
+          "x": 168,
+          "y": 345,
+          "name": "Role / rose / accent-primary",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "CTA accent",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "D8DUDF",
+          "x": 324,
+          "y": 328,
+          "name": "Swatch / rose-soft",
+          "fill": "#FFD7EB",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "XANH2",
+          "x": 374,
+          "y": 328,
+          "name": "Token / rose-soft",
+          "fill": "$foreground-primary",
+          "content": "rose-soft",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "cIKY8",
+          "x": 374,
+          "y": 345,
+          "name": "Hex / rose-soft",
+          "fill": "$foreground-muted",
+          "content": "#FFD7EB",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "uRZZe",
+          "x": 460,
+          "y": 345,
+          "name": "Role / rose-soft",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "Soft accent",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "LfRKd",
+          "x": 32,
+          "y": 378,
+          "name": "Swatch / line-soft",
+          "fill": "#FFD7EB",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "lc09a",
+          "x": 82,
+          "y": 378,
+          "name": "Token / line-soft",
+          "fill": "$foreground-primary",
+          "content": "line-soft",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "mTNUQ",
+          "x": 82,
+          "y": 395,
+          "name": "Hex / line-soft",
+          "fill": "$foreground-muted",
+          "content": "#FFD7EB",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "KWRnm",
+          "x": 168,
+          "y": 395,
+          "name": "Role / line-soft",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "Dividers",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "W2eW9b",
+          "x": 324,
+          "y": 378,
+          "name": "Swatch / border-subtle",
+          "fill": "#E5DCE1",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "KlAjQ",
+          "x": 374,
+          "y": 378,
+          "name": "Token / border-subtle",
+          "fill": "$foreground-primary",
+          "content": "border-subtle",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "b8Mgw",
+          "x": 374,
+          "y": 395,
+          "name": "Hex / border-subtle",
+          "fill": "$foreground-muted",
+          "content": "#E5DCE1",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "Sklhd",
+          "x": 460,
+          "y": 395,
+          "name": "Role / border-subtle",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "Card border",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "RQXIV",
+          "x": 32,
+          "y": 428,
+          "name": "Swatch / charcoal",
+          "fill": "#1A1A1A",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "EWCP3",
+          "x": 82,
+          "y": 428,
+          "name": "Token / charcoal",
+          "fill": "$foreground-primary",
+          "content": "charcoal",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "oSQNj",
+          "x": 82,
+          "y": 445,
+          "name": "Hex / charcoal",
+          "fill": "$foreground-muted",
+          "content": "#1A1A1A",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "EViGD",
+          "x": 168,
+          "y": 445,
+          "name": "Role / charcoal",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "Dark button",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "NSyYW",
+          "x": 324,
+          "y": 428,
+          "name": "Swatch / technical-rose-line",
+          "fill": "#FFD7EB",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "XAw4h",
+          "x": 374,
+          "y": 428,
+          "name": "Token / technical-rose-line",
+          "fill": "$foreground-primary",
+          "content": "technical-rose-line",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "vgNI9",
+          "x": 374,
+          "y": 445,
+          "name": "Hex / technical-rose-line",
+          "fill": "$foreground-muted",
+          "content": "#FFD7EB",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "kDFxn",
+          "x": 460,
+          "y": 445,
+          "name": "Role / technical-rose-line",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "Hairlines",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "HSXwk",
+          "x": 32,
+          "y": 478,
+          "name": "Swatch / technical-rose-wash",
+          "fill": "#FFF3F8",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "Ivk7s",
+          "x": 82,
+          "y": 478,
+          "name": "Token / technical-rose-wash",
+          "fill": "$foreground-primary",
+          "content": "technical-rose-wash",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "p8Ci6m",
+          "x": 82,
+          "y": 495,
+          "name": "Hex / technical-rose-wash",
+          "fill": "$foreground-muted",
+          "content": "#FFF3F8",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "ht7v3",
+          "x": 168,
+          "y": 495,
+          "name": "Role / technical-rose-wash",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "Tech wash",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 12,
+          "id": "rJRRM",
+          "x": 324,
+          "y": 478,
+          "name": "Swatch / technical-charcoal-soft",
+          "fill": "#3A3036",
+          "width": 38,
+          "height": 38,
+          "stroke": "$border-subtle",
+          "strokeWidth": 1
+        },
+        {
+          "type": "text",
+          "id": "HoTdw",
+          "x": 374,
+          "y": 478,
+          "name": "Token / technical-charcoal-soft",
+          "fill": "$foreground-primary",
+          "content": "technical-charcoal-soft",
+          "fontFamily": "$font-caption",
+          "fontSize": 11,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "by7yD",
+          "x": 374,
+          "y": 495,
+          "name": "Hex / technical-charcoal-soft",
+          "fill": "$foreground-muted",
+          "content": "#3A3036",
+          "fontFamily": "$font-caption",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "DFghW",
+          "x": 460,
+          "y": 495,
+          "name": "Role / technical-charcoal-soft",
+          "fill": "$foreground-secondary",
+          "textGrowth": "fixed-width",
+          "width": 116,
+          "content": "Soft detail",
+          "fontFamily": "$font-body",
+          "fontSize": 10,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "rectangle",
+          "cornerRadius": 999,
+          "id": "BEvrJ",
+          "x": 32,
+          "y": 548,
+          "name": "Palette Accent Rule",
+          "fill": "$line-soft",
+          "width": 576,
+          "height": 2
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "surface-primary": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "surface-secondary": {
+      "type": "color",
+      "value": "#F6F2F4"
+    },
+    "foreground-primary": {
+      "type": "color",
+      "value": "#1A1A1A"
+    },
+    "foreground-secondary": {
+      "type": "color",
+      "value": "#4B5563"
+    },
+    "foreground-muted": {
+      "type": "color",
+      "value": "#9CA3AF"
+    },
+    "border-primary": {
+      "type": "color",
+      "value": "#1A1A1A"
+    },
+    "border-subtle": {
+      "type": "color",
+      "value": "#E5DCE1"
+    },
+    "accent-primary": {
+      "type": "color",
+      "value": "#FF4FB6"
+    },
+    "font-heading": {
+      "type": "string",
+      "value": "Geist"
+    },
+    "font-body": {
+      "type": "string",
+      "value": "Geist"
+    },
+    "font-caption": {
+      "type": "string",
+      "value": "Geist Mono"
+    },
+    "font-data": {
+      "type": "string",
+      "value": "Geist Mono"
+    },
+    "surface-warm": {
+      "type": "color",
+      "value": "#FFF8F5"
+    },
+    "surface-rose": {
+      "type": "color",
+      "value": "#FFF0F6"
+    },
+    "surface-panel": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "charcoal": {
+      "type": "color",
+      "value": "#1A1A1A"
+    },
+    "rose": {
+      "type": "color",
+      "value": "#FF4FB6"
+    },
+    "rose-soft": {
+      "type": "color",
+      "value": "#FFD7EB"
+    },
+    "line-soft": {
+      "type": "color",
+      "value": "#FFD7EB"
+    },
+    "technical-rose-line": {
+      "type": "color",
+      "value": "#F1B2D0"
+    },
+    "technical-rose-wash": {
+      "type": "color",
+      "value": "#FFF3F8"
+    },
+    "technical-charcoal-soft": {
+      "type": "color",
+      "value": "#3A3036"
+    }
+  },
+  "fileToken": "a94a0264-24b7-44f8-8c1e-a8684e7cf444"
+}

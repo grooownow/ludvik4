@@ -55,14 +55,14 @@ Textarea). Новых паттернов не вводим.
 ### 1. Top bar (лёгкая)
 
 > Slim top bar: left — wordmark «Ludvik4» (mono). Right — a single «Обсудить задачу» button
-> (accent) and a theme toggle. Transparent over hero, subtle border on scroll. No nav menu.
+> (accent). No theme toggle in V0, no nav menu. Transparent over hero, subtle border on scroll.
 
 ### 2. Hero
 
 > Big, calm hero. Wordmark/eyebrow «Ludvik4» small on top (mono).
-> H1 (large, tight): «Веб-продукты — от идеи до релиза.»
-> Sub (muted, ~600px): «Сайты, веб-приложения и SaaS, плагины, автоматизация рутины — довожу до рабочего релиза.»
-> Primary button «Обсудить задачу» + quiet secondary link «LinkedIn».
+> H1 (large, tight): «Цифровые продукты — от идеи до запуска.»
+> Sub (muted, ~600px): «Сайты, веб-приложения и SaaS, плагины, автоматизация рутины — довожу до готового продукта.»
+> Primary button «Обсудить задачу» only (no secondary link in V0).
 > Lots of whitespace. No hero image; maybe a very subtle abstract mark or grid texture.
 
 ### 3. Услуги — «Что делаю» (сетка карточек)
@@ -77,8 +77,8 @@ Textarea). Новых паттернов не вводим.
 
 ### 4. Форматы работы (компактная лента)
 
-> A compact row/strip of 4 items (chips or minimal cards), one line each, under the services:
-> «Под ключ» · «От идеи до MVP» · «Усиление команды (frontend/fullstack)» · «Миграция легаси».
+> A compact row/strip of 3 items (chips or minimal cards), one line each, under the services:
+> «Под ключ» · «От идеи до MVP» · «Миграция легаси».
 > Small, secondary weight — a supporting band, not a headline block.
 
 ### 5. Как это работает
