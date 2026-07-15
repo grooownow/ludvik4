@@ -1,0 +1,17 @@
+# OPTIONAL: real local Postgres for those who prefer it over the default PGlite.
+# Usage: docker compose up -d, then set in .env:
+#   LIFTKIT_DB=remote
+#   DATABASE_URL=postgres://liftkit:liftkit@localhost:5432/liftkit
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: liftkit
+      POSTGRES_PASSWORD: liftkit
+      POSTGRES_DB: liftkit
+    ports:
+      - "5432:5432"
+    volumes:
+      - liftkit-pgdata:/var/lib/postgresql/data
+volumes:
+  liftkit-pgdata:

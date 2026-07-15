@@ -1,0 +1,93 @@
+import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
+import path from "node:path";
+
+// `server-only` throws when imported outside a React Server Component
+// context, which includes both vitest projects below. Alias it to a no-op
+// stub so modules guarded by `import "server-only"` (e.g. src/lib/logger.ts)
+// stay testable. See test/server-only-mock.ts.
+const alias = {
+  "@": path.resolve(__dirname, "src"),
+  "server-only": path.resolve(__dirname, "test/server-only-mock.ts"),
+};
+
+export default defineConfig({
+  test: {
+    projects: [
+      {
+        // Plain node tests: server actions, db helpers, config, etc.
+        test: {
+          name: "unit",
+          environment: "node",
+          include: ["src/**/*.test.ts"],
+          // src/lib/auth.ts pulls in `next-auth`, which imports
+          // `next/server` without a file extension. `next`'s package.json
+          // has no `exports` map, so Node's strict ESM resolution (used by
+          // Vitest's node environment) can't resolve the bare specifier
+          // unless the module is routed through Vite's transform (inlined)
+          // so the alias below applies — same workaround the "integration"
+          // project below already uses; mirrored here for unit tests that
+          // import auth.ts.
+          server: { deps: { inline: [/next-auth/, /^next\//] } },
+        },
+        resolve: {
+          alias: {
+            ...alias,
+            "next/server": path.resolve(
+              __dirname,
+              "node_modules/next/server.js",
+            ),
+          },
+        },
+      },
+      {
+        // Client-component tests via Testing Library, need a DOM.
+        plugins: [react()],
+        test: {
+          name: "component",
+          environment: "jsdom",
+          include: ["src/**/*.test.tsx"],
+          setupFiles: ["./vitest.setup.ts"],
+        },
+        resolve: { alias },
+      },
+      {
+        // Integration tests: real (in-memory PGlite) db + direct route/action
+        // calls, as opposed to the mocked-db unit tests above. Each test file
+        // spins up its own PGlite instance (see tests/integration/helpers/test-db.ts),
+        // so keep this project single-threaded — PGlite instances don't love
+        // concurrency, and there's no cross-file shared state to parallelize.
+        // Vitest 4 removed `poolOptions.threads.singleThread` (see the "pool
+        // rework" migration guide); `fileParallelism: false` is the
+        // replacement — it pins the project to a single worker.
+        test: {
+          name: "integration",
+          environment: "node",
+          include: ["tests/integration/**/*.test.ts"],
+          pool: "threads",
+          fileParallelism: false,
+          server: { deps: { inline: [/next-auth/, /^next\//] } },
+        },
+        resolve: {
+          alias: {
+            ...alias,
+            "next/server": path.resolve(
+              __dirname,
+              "node_modules/next/server.js",
+            ),
+          },
+        },
+      },
+      {
+        // Repo tooling that isn't application code: the skill validator and
+        // the skill eval harness under scripts/. Plain node, no aliases —
+        // these modules import nothing from src/.
+        test: {
+          name: "tooling",
+          environment: "node",
+          include: ["scripts/**/*.test.ts"],
+        },
+      },
+    ],
+  },
+});

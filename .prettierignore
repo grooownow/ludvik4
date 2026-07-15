@@ -1,0 +1,12 @@
+.next/
+node_modules/
+pnpm-lock.yaml
+src/db/migrations/
+.superpowers/
+docs/marketing/
+docs/superpowers/
+
+# tests/fixtures/planted-defects/ground-truth.json pins the LINE NUMBER of every
+# planted defect. A reflow here would silently invalidate the ground truth of the
+# review skill's detection eval, and nothing would go red.
+tests/fixtures/planted-defects/

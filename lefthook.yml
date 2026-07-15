@@ -1,0 +1,11 @@
+pre-commit:
+  parallel: true
+  commands:
+    oxlint:
+      glob: "*.{ts,tsx}"
+      exclude:
+        - next-env.d.ts
+      run: pnpm oxlint {staged_files}
+    prettier:
+      glob: "*.{ts,tsx,css,md,json,yml}"
+      run: pnpm prettier --check {staged_files}

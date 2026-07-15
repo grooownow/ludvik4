@@ -1,0 +1,138 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request:
+  # The nightly cron catches drift in the outside world, which no commit of ours
+  # would trigger: `pnpm audit` goes red on a newly published advisory, and the
+  # golden-path bootstrap goes red when a dependency moves under us. Both are
+  # things a buyer would hit on a clean clone tomorrow morning, so they are
+  # worth their minutes overnight.
+  schedule: [{ cron: "0 3 * * *" }]
+  workflow_dispatch:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      # pnpm/action-setup MUST run before actions/setup-node: the next step's
+      # cache: pnpm option shells out to `pnpm store path`, which fails if pnpm
+      # isn't already on PATH.
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      # SKILL.md is compiled from SKILL.md.tmpl. This is the drift gate: it
+      # fails if anyone hand-edited a generated file, which would otherwise
+      # survive until the next regeneration silently reverted it.
+      - run: pnpm skills:check
+      # Tier 1 of the skill eval harness: the skills ARE the product, and
+      # nothing else in CI reads them. See docs/rules/docs.md.
+      - run: pnpm skills:validate
+      # Tier 2: do the skill descriptions still route? Deterministic, no tokens.
+      - run: pnpm skills:evals
+      - run: pnpm test
+      # Red on high/critical vulnerabilities. Escape hatch for false
+      # positives or advisories without a fix: an `overrides:` entry in
+      # pnpm-workspace.yaml, with a comment explaining why — see
+      # docs/rules/security.md.
+      - run: pnpm audit --audit-level high
+
+  # Tier 3 — the detection eval (`pnpm skills:evals:detection`, which runs the
+  # `review` skill against tests/fixtures/planted-defects and asserts a
+  # detection-rate floor) is deliberately NOT a job here.
+  #
+  # It drives the `claude` CLI, which this project authenticates with a Claude
+  # subscription, not an API key. GitHub Actions has no subscription to borrow,
+  # so the job could only be wired up with an `ANTHROPIC_API_KEY` secret that
+  # does not exist and is not planned — and the runner is built to fail loudly
+  # rather than skip in CI. That combination buys a nightly red X and nothing
+  # else, and a gate that is always red teaches people to ignore gates.
+  #
+  # So it is a local command, run deliberately before a release or after a
+  # change to the `review` skill. The honesty rule survives the move: run it
+  # and read the number, or say out loud that you did not.
+
+  golden-path:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      # Same ordering requirement as `quality`: pnpm/action-setup must precede
+      # setup-node so that the next step's cache: pnpm option can shell out to
+      # `pnpm store path` successfully. As a result, pnpm is preinstalled here
+      # and bootstrap's corepack fallback for buyers without pnpm is NOT covered
+      # by this job — the fallback is only tested locally or by buyers running
+      # scripts/bootstrap on a fresh machine with only Node installed.
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with: { node-version: 22, cache: pnpm }
+      - name: Bootstrap from clean checkout (buyer's first-run path)
+        run: ./scripts/bootstrap --ci
+      - run: pnpm build
+
+  remote-db:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: liftkit
+          POSTGRES_PASSWORD: liftkit
+          POSTGRES_DB: liftkit
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U liftkit" --health-interval 5s
+          --health-timeout 5s --health-retries 10
+    env:
+      LIFTKIT_DB: remote
+      DATABASE_URL: postgres://liftkit:liftkit@localhost:5432/liftkit
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm db:migrate
+      - run: pnpm test
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+  lighthouse:
+    runs-on: ubuntu-latest
+    # LIFTKIT_DB defaults to pglite (unset), so db:reset gives `pnpm start`
+    # a database to serve against without needing the remote-db Postgres
+    # service. numberOfRuns is pinned to 1 in lighthouserc.js to keep this
+    # job's CI-minutes budget small — bump it only if scores prove flaky.
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm db:reset
+      - run: pnpm exec lhci autorun
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci/
+          retention-days: 7

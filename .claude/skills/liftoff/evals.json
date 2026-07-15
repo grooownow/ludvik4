@@ -1,0 +1,43 @@
+{
+  "skill_name": "liftoff",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "I have no product yet, help me pick an idea and set the project up",
+        "top_k": 1
+      },
+      {
+        "prompt": "This is a fresh template — onboard me and rename everything",
+        "top_k": 2
+      },
+      {
+        "prompt": "Interview me about my startup idea and write the PRD",
+        "top_k": 2
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Build the next thing on the roadmap, end to end",
+        "owner": "feature"
+      },
+      {
+        "prompt": "Ship this to production on Vercel with a managed database",
+        "owner": "deploy"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Set this project up — I want to build a tool for freelance translators.",
+      "expected_output": "An idea document, a PRD, first specs, an adapted skeleton with the liftoff:fill markers gone, and a running app.",
+      "expectations": [
+        "Exactly one question is asked per message during the interview",
+        "The fit check runs before any document is written",
+        "docs/manifest.md no longer contains liftoff:fill markers when the flow completes",
+        "The chat language is recorded in the manifest"
+      ],
+      "trust_level": "provisional"
+    }
+  ]
+}
