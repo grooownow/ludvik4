@@ -2345,17 +2345,17 @@
         },
         {
           "type": "frame",
-          "id": "fkxBr",
+          "id": "fhOyv",
           "name": "Pricing Mobile",
           "clip": true,
           "width": 390,
-          "height": 930,
+          "height": 740,
           "fill": "$surface-primary",
           "layout": "none",
           "children": [
             {
               "type": "text",
-              "id": "ouc0U",
+              "id": "rmzj2",
               "x": 22,
               "y": 56,
               "name": "Pricing Mobile Eyebrow",
@@ -2367,7 +2367,7 @@
             },
             {
               "type": "text",
-              "id": "RZikh",
+              "id": "RRtlx",
               "x": 22,
               "y": 92,
               "name": "Pricing Mobile Title",
@@ -2382,7 +2382,7 @@
             },
             {
               "type": "text",
-              "id": "DJcob",
+              "id": "G9lzAG",
               "x": 22,
               "y": 148,
               "name": "Pricing Mobile Intro",
@@ -2397,9 +2397,9 @@
             },
             {
               "type": "frame",
-              "id": "JNpOH",
+              "id": "cr5Oi",
               "x": 22,
-              "y": 406,
+              "y": 236,
               "name": "Mobile Price Card Landing",
               "width": 346,
               "height": 72,
@@ -2411,7 +2411,7 @@
               "children": [
                 {
                   "type": "text",
-                  "id": "cbDfA",
+                  "id": "xSDam",
                   "x": 16,
                   "y": 15,
                   "name": "Mobile Price Landing Title",
@@ -2425,25 +2425,24 @@
                 },
                 {
                   "type": "text",
-                  "id": "oB2rd",
+                  "id": "hbbxo",
                   "x": 214,
                   "y": 16,
                   "name": "Mobile Price Landing Value",
                   "fill": "$rose",
                   "textGrowth": "fixed-width",
                   "width": 112,
-                  "content": "— от 10 000 ₽",
+                  "content": "от 10 000 ₽",
                   "fontFamily": "$font-caption",
                   "fontSize": 13,
                   "fontWeight": "700"
                 },
                 {
                   "type": "rectangle",
-                  "cornerRadius": 999,
-                  "id": "q7WqW",
+                  "id": "SY0Jl",
                   "x": 16,
                   "y": 56,
-                  "name": "Mobile Price Pink Divider",
+                  "name": "Mobile Price Landing Rule",
                   "fill": "$line-soft",
                   "width": 52,
                   "height": 2
@@ -2452,9 +2451,9 @@
             },
             {
               "type": "frame",
-              "id": "zc5Lr",
+              "id": "PxaSM",
               "x": 22,
-              "y": 490,
+              "y": 320,
               "name": "Mobile Price Card Multipage",
               "width": 346,
               "height": 72,
@@ -2466,7 +2465,7 @@
               "children": [
                 {
                   "type": "text",
-                  "id": "VuCs9",
+                  "id": "z493NT",
                   "x": 16,
                   "y": 15,
                   "name": "Mobile Price Multipage Title",
@@ -2480,25 +2479,24 @@
                 },
                 {
                   "type": "text",
-                  "id": "YfMaT",
+                  "id": "lKIMc",
                   "x": 214,
                   "y": 16,
                   "name": "Mobile Price Multipage Value",
                   "fill": "$rose",
                   "textGrowth": "fixed-width",
                   "width": 112,
-                  "content": "— от 30 000 ₽",
+                  "content": "от 30 000 ₽",
                   "fontFamily": "$font-caption",
                   "fontSize": 13,
                   "fontWeight": "700"
                 },
                 {
                   "type": "rectangle",
-                  "cornerRadius": 999,
-                  "id": "fF1iF",
+                  "id": "ZhdSp",
                   "x": 16,
                   "y": 56,
-                  "name": "Mobile Price Pink Divider",
+                  "name": "Mobile Price Multipage Rule",
                   "fill": "$line-soft",
                   "width": 52,
                   "height": 2
@@ -2507,9 +2505,9 @@
             },
             {
               "type": "frame",
-              "id": "AFcgk",
+              "id": "ZvWqA",
               "x": 22,
-              "y": 574,
+              "y": 404,
               "name": "Mobile Price Card App",
               "width": 346,
               "height": 72,
@@ -2521,7 +2519,7 @@
               "children": [
                 {
                   "type": "text",
-                  "id": "m8P2jD",
+                  "id": "NrmAR",
                   "x": 16,
                   "y": 15,
                   "name": "Mobile Price App Title",
@@ -2535,25 +2533,24 @@
                 },
                 {
                   "type": "text",
-                  "id": "miFN5",
+                  "id": "wWNY6",
                   "x": 214,
                   "y": 16,
                   "name": "Mobile Price App Value",
                   "fill": "$rose",
                   "textGrowth": "fixed-width",
                   "width": 112,
-                  "content": "— от 50 000 ₽",
+                  "content": "от 50 000 ₽",
                   "fontFamily": "$font-caption",
                   "fontSize": 13,
                   "fontWeight": "700"
                 },
                 {
                   "type": "rectangle",
-                  "cornerRadius": 999,
-                  "id": "D7cTZP",
+                  "id": "TDjPH",
                   "x": 16,
                   "y": 56,
-                  "name": "Mobile Price Pink Divider",
+                  "name": "Mobile Price App Rule",
                   "fill": "$line-soft",
                   "width": 52,
                   "height": 2
@@ -2562,9 +2559,9 @@
             },
             {
               "type": "frame",
-              "id": "a8vNB2",
+              "id": "IOvsp",
               "x": 22,
-              "y": 658,
+              "y": 488,
               "name": "Mobile Price Card Automation",
               "width": 346,
               "height": 72,
@@ -2576,7 +2573,7 @@
               "children": [
                 {
                   "type": "text",
-                  "id": "KZx6D",
+                  "id": "nQ5p7",
                   "x": 16,
                   "y": 15,
                   "name": "Mobile Price Automation Title",
@@ -2590,25 +2587,24 @@
                 },
                 {
                   "type": "text",
-                  "id": "g79TM5",
+                  "id": "aOiVm",
                   "x": 214,
                   "y": 16,
                   "name": "Mobile Price Automation Value",
                   "fill": "$rose",
                   "textGrowth": "fixed-width",
                   "width": 112,
-                  "content": "— от 10 000 ₽",
+                  "content": "от 10 000 ₽",
                   "fontFamily": "$font-caption",
                   "fontSize": 13,
                   "fontWeight": "700"
                 },
                 {
                   "type": "rectangle",
-                  "cornerRadius": 999,
-                  "id": "PMusY",
+                  "id": "hOXX3",
                   "x": 16,
                   "y": 56,
-                  "name": "Mobile Price Pink Divider",
+                  "name": "Mobile Price Automation Rule",
                   "fill": "$line-soft",
                   "width": 52,
                   "height": 2
@@ -2617,9 +2613,9 @@
             },
             {
               "type": "frame",
-              "id": "Z3T812",
+              "id": "N1oXa",
               "x": 22,
-              "y": 742,
+              "y": 572,
               "name": "Mobile Price Card Starter Pack",
               "width": 346,
               "height": 118,
@@ -2631,7 +2627,7 @@
               "children": [
                 {
                   "type": "text",
-                  "id": "zRXVU",
+                  "id": "tBHod",
                   "x": 16,
                   "y": 16,
                   "name": "Mobile Price Starter Title",
@@ -2645,14 +2641,14 @@
                 },
                 {
                   "type": "text",
-                  "id": "nCYdr",
+                  "id": "okq6y",
                   "x": 16,
                   "y": 42,
                   "name": "Mobile Price Starter Description",
                   "fill": "$foreground-secondary",
                   "textGrowth": "fixed-width",
                   "width": 198,
-                  "content": "— готовый продукт — платите один раз, пользуетесь сколько угодно",
+                  "content": "готовый продукт — платите один раз, пользуетесь сколько угодно",
                   "lineHeight": 1.25,
                   "fontFamily": "$font-body",
                   "fontSize": 12,
@@ -2660,25 +2656,24 @@
                 },
                 {
                   "type": "text",
-                  "id": "YlzZw",
+                  "id": "Tca0E",
                   "x": 214,
                   "y": 25,
                   "name": "Mobile Price Starter Value",
                   "fill": "$rose",
                   "textGrowth": "fixed-width",
                   "width": 112,
-                  "content": "— от 1 990 ₽",
+                  "content": "от 1 990 ₽",
                   "fontFamily": "$font-caption",
                   "fontSize": 13,
                   "fontWeight": "700"
                 },
                 {
                   "type": "rectangle",
-                  "cornerRadius": 999,
-                  "id": "HEw39",
+                  "id": "UDoUR",
                   "x": 16,
                   "y": 98,
-                  "name": "Mobile Price Pink Divider",
+                  "name": "Mobile Price Starter Rule",
                   "fill": "$line-soft",
                   "width": 68,
                   "height": 2
@@ -2687,41 +2682,13 @@
             },
             {
               "type": "rectangle",
-              "id": "pVNdw",
+              "id": "Lm54W",
               "x": 22,
-              "y": 894,
+              "y": 718,
               "name": "Pricing Mobile Bottom Divider",
               "fill": "$line-soft",
               "width": 346,
               "height": 1
-            },
-            {
-              "type": "rectangle",
-              "cornerRadius": 22,
-              "id": "rTvMc",
-              "x": 22,
-              "y": 226,
-              "name": "Mobile Pricing Visual Accent",
-              "fill": {
-                "type": "image",
-                "enabled": true,
-                "url": "prices_image.png",
-                "mode": "fill"
-              },
-              "width": 346,
-              "height": 150,
-              "stroke": "$line-soft",
-              "strokeWidth": 1,
-              "effect": {
-                "type": "shadow",
-                "shadowType": "outer",
-                "color": "#1A1A1A0A",
-                "offset": {
-                  "x": 0,
-                  "y": 10
-                },
-                "blur": 24
-              }
             }
           ]
         },

@@ -227,7 +227,7 @@ export default function HomePage() {
           <div>
             <Eyebrow>Ориентиры по цене</Eyebrow>
             <h2 className="text-3xl font-semibold tracking-tight text-balance">
-              Ориентиры по цене
+              Сколько это стоит
             </h2>
             <p className="text-muted-foreground mt-5 max-w-md">
               Точная стоимость зависит от задачи — вот ориентиры, чтобы понять
