@@ -41,7 +41,7 @@ One of: `idea` / `building v1` / `live` / `paused`.
 The language the agent speaks with you in chat (artifacts stay English).
 To change it later, edit the value below (or just ask the agent to switch).
 
-<!-- liftoff:fill -->
+Russian
 
 ## Key URLs
 
