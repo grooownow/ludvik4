@@ -30,7 +30,13 @@ const services = [
   },
 ];
 
-const formats = ["Под ключ", "От идеи до MVP", "Миграция легаси"];
+const formats = [
+  "Под ключ",
+  "От идеи до MVP",
+  "Миграция легаси",
+  "Настройка под AI-агентов",
+  "Spec-driven development",
+];
 
 const steps = [
   {
@@ -150,7 +156,7 @@ export default function HomePage() {
           {formats.map((f) => (
             <span
               key={f}
-              className="border-border text-muted-foreground rounded-full border px-3 py-1 font-mono text-xs"
+              className="rounded-full border border-[#f1b2d0] bg-[#fff3f8] px-3.5 py-[7px] font-mono text-xs text-[#3a3036]"
             >
               {f}
             </span>
