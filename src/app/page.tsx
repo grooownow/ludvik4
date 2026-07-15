@@ -184,7 +184,7 @@ export default function HomePage() {
 
       {/* Contact */}
       <section id="contact" className="bg-surface-warm">
-        <div className="border-pink-soft mx-auto grid max-w-5xl gap-10 border-t px-6 py-14 sm:grid-cols-2">
+        <div className="mx-auto grid max-w-5xl gap-10 px-6 py-14 sm:grid-cols-2">
           <div>
             <Eyebrow>Контакт</Eyebrow>
             <h2 className="text-2xl font-bold tracking-tight">
@@ -211,8 +211,8 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer>
-        <div className="border-pink-soft text-muted-foreground mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 border-t px-6 py-6 font-mono text-sm">
+      <footer className="bg-surface-warm">
+        <div className="text-muted-foreground mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-6 font-mono text-sm">
           <span>© 2026 Ludvik4</span>
           <div className="flex gap-4">
             <a
