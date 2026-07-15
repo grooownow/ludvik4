@@ -94,9 +94,31 @@ function Section({
   );
 }
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Ludvik4",
+  description:
+    "Цифровые продукты от идеи до запуска: сайты, веб-приложения и SaaS, плагины, автоматизация рутины.",
+  url: env.NEXT_PUBLIC_APP_URL,
+  priceRange: "от 1 990 ₽",
+  areaServed: "Worldwide",
+  sameAs: [LINKEDIN_URL, TELEGRAM_URL],
+  makesOffer: pricing.map((p) => ({
+    "@type": "Offer",
+    itemOffered: { "@type": "Service", name: p.title },
+    priceCurrency: "RUB",
+    price: p.price.replace(/[^\d]/g, ""),
+  })),
+};
+
 export default function HomePage() {
   return (
     <div className="bg-background text-foreground min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Top bar */}
       <header className="border-pink-soft bg-background/90 sticky top-0 z-10 border-b backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
