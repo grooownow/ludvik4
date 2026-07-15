@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { LeadForm } from "@/features/lead";
@@ -92,18 +93,33 @@ export default function HomePage() {
 
       {/* Hero */}
       <div className="mx-auto max-w-5xl px-6 py-16">
-        <Eyebrow>Ludvik4</Eyebrow>
-        <h1 className="max-w-3xl text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
-          Цифровые продукты — от идеи до запуска
-        </h1>
-        <p className="text-muted-foreground mt-5 max-w-xl text-lg">
-          Сайты, веб-приложения и SaaS, плагины, автоматизация рутины — довожу
-          до готового продукта
-        </p>
-        <div className="mt-7">
-          <Button asChild size="lg">
-            <Link href="#contact">Обсудить задачу</Link>
-          </Button>
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          <div>
+            <Eyebrow>Ludvik4</Eyebrow>
+            <h1 className="text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
+              Цифровые продукты — от идеи до запуска
+            </h1>
+            <p className="text-muted-foreground mt-5 max-w-xl text-lg">
+              Сайты, веб-приложения и SaaS, плагины, автоматизация рутины —
+              довожу до готового продукта
+            </p>
+            <div className="mt-7">
+              <Button asChild size="lg">
+                <Link href="#contact">Обсудить задачу</Link>
+              </Button>
+            </div>
+          </div>
+          <div className="lg:justify-self-end">
+            <Image
+              src="/hero-product-illustration.png"
+              alt="Схема создания цифрового продукта: от идеи и макета через код к запуску и аналитике"
+              width={1536}
+              height={1024}
+              priority
+              sizes="(min-width: 1024px) 480px, 100vw"
+              className="h-auto w-full max-w-xl"
+            />
+          </div>
         </div>
       </div>
 
