@@ -1,40 +1,33 @@
 # Product Manifest
 
 This file is your project's identity card — the one doc every agent session
-reads first (see `CLAUDE.md`/`AGENTS.md`). It starts empty on purpose: the
-`/liftoff` skill fills it in during onboarding. Every unfilled field is marked
-`<!-- liftoff:fill -->` right after it, so a skill can find what's left
-programmatically (`grep liftoff:fill docs/manifest.md`) — remove the marker
-on the same line once you fill the field, don't delete the heading.
+reads first (see `CLAUDE.md`/`AGENTS.md`). Filled during setup; keep it current
+as the product evolves.
 
 ## Product name
 
-<!-- liftoff:fill -->
+Ludvik4
 
 ## One-liner
 
-What this product does, in one sentence a stranger would understand.
-
-<!-- liftoff:fill -->
+Персональный бренд-сайт независимого инженера: витрина услуг (сайты,
+веб-приложения и SaaS, AI-инструменты, автоматизация) с формой заявки.
 
 ## Target user
 
-Who this is for — one concrete persona, not "everyone."
-
-<!-- liftoff:fill -->
+Небольшой бизнес или основатель, которому нужен цифровой продукт под ключ или
+MVP — приходит с идеей/болью, а не с готовым ТЗ. Бренд намеренно обезличен
+(«то ли человек, то ли студия»); имя владельца на сайте не раскрывается.
 
 ## Domain entities
 
-The core nouns of the product (e.g. "trips, days, waypoints, gear lists").
-These map to `src/db/schema.ts` tables once Step 4 of `/liftoff` runs.
-
-<!-- liftoff:fill -->
+Нет доменной модели/БД — сайт статический (SSG). Единственный «поток данных» —
+заявка из контакт-формы (`src/features/lead/`), которая доставляется в Telegram
+(и опционально email через Resend), нигде не хранится.
 
 ## Current phase
 
-One of: `idea` / `building v1` / `live` / `paused`.
-
-<!-- liftoff:fill -->
+`live`
 
 ## Chat language
 
@@ -45,14 +38,13 @@ Russian
 
 ## Key URLs
 
-| What       | URL                   |
-| ---------- | --------------------- |
-| Production | <!-- liftoff:fill --> |
-| Staging    | <!-- liftoff:fill --> |
-| Repo       | <!-- liftoff:fill --> |
+| What       | URL                                   |
+| ---------- | ------------------------------------- |
+| Production | https://ludvik4.dev (serves on `www`) |
+| Staging    | n/a — Vercel preview deploys per PR   |
+| Repo       | https://github.com/grooownow/ludvik4  |
 
 ## Status
 
-This manifest still has unfilled fields — run `/liftoff` to complete
-onboarding. Once every field above is filled, this line should read: "Manifest
-complete — see `docs/roadmap.md` for what's next."
+Manifest complete — MVP shipped and live. See `docs/roadmap.md` for what's next
+and `docs/site-v0.md` for the content/structure source of truth.

@@ -1,35 +1,39 @@
 # Roadmap
 
-Now / Next / Later — seeded from `docs/prd.md` during `/liftoff` Step 5, then
-maintained by the `feature` skill (each shipped feature moves from Now to
-done; new ideas land in Later until scoped). Keep it short: this is a map, not
-a backlog tool — one line per item, link out to a spec (`docs/specs/`) or ADR
-(`docs/decisions/`) instead of writing detail here.
+Now / Next / Later — the working map for Ludvik4. Keep it short: one line per
+item, link out to a doc (`docs/site-v0.md`, `docs/site-v0-setup.md`) instead of
+writing detail here.
 
 ## Now
 
-What's actively being built this cycle (typically the 2-3 features chosen in
-`/liftoff` Step 3).
-
-<!-- liftoff:fill -->
+MVP shipped and live. Nothing actively in build — polish/ideas phase.
 
 ## Next
 
-Scoped and agreed, not yet started — the next few things after Now clears.
+Scoped and agreed, not yet started:
 
-<!-- liftoff:fill -->
+- **Apex vs www canonical** — make `ludvik4.dev` (apex) the primary domain in
+  Vercel so `www` redirects to it, matching the canonical/og:url. Small SEO tidy.
+- **Email delivery (Resend)** — wire `RESEND_API_KEY` / `LEAD_EMAIL_*` after
+  verifying `ludvik4.dev` in Resend, as a second lead channel beside Telegram
+  (see `docs/site-v0-setup.md`).
 
 ## Later
 
-Ideas worth keeping, not yet scoped into a spec. It's fine for this to be
-messy; promote an item to Next only once it has a one-line rationale.
+Ideas worth keeping, not yet scoped:
 
-<!-- liftoff:fill -->
+- **Portfolio / cases** section (incl. FortNoise) — the deferred V1 cut.
+- **Turnstile captcha** on the lead form (`TURNSTILE_*` already supported).
+- Blog / short courses (AI & dev topics for beginners).
+- English version of the site.
+- Lead moderation dashboard (would introduce DB + auth — big lift).
 
 ## Shipped
 
-A running log of completed features, most recent first — one line each, link
-to the spec/PR that landed it. Gives the next session a quick "what already
-exists" scan without reading `git log`.
+Most recent first:
 
-<!-- liftoff:fill -->
+- **Landing MVP** — one-page Ludvik4 brand site: hero + illustration, services
+  catalogue, work formats, how-it-works, pricing, about, contact form → Telegram.
+  Rose brand from `design.pen`, SEO (OG/JSON-LD/sitemap), deployed to Vercel on
+  `ludvik4.dev`. Source of truth: `docs/site-v0.md`.
+- **Onboarding** — `/liftoff` Step 0 (environment verified).

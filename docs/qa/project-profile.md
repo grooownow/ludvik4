@@ -1,11 +1,10 @@
 # QA Project Profile
 
-> Pre-filled for this template on 2026-07-09. Other qa-pilot skills
-> read this file instead of re-scanning the repo. Stack/frameworks/commands
-> below are pre-filled for the box and stable across projects built on it;
-> only the product-specific fields (marked `<!-- liftoff:fill -->`) change
-> per project — `/liftoff` step 4e fills them from the PRD. Re-run
-> `qa-pilot:onboard` only if the stack or conventions change materially.
+> Product-specific fields filled on 2026-07-15 for Ludvik4. Other qa-pilot
+> skills read this file instead of re-scanning the repo. Stack/frameworks/
+> commands below are the box's baseline and stable across projects; the
+> product-specific sections (Tracker & access, Priorities) describe Ludvik4.
+> Re-run `qa-pilot:onboard` only if the stack or conventions change materially.
 
 ## Stack
 
@@ -98,11 +97,23 @@
 
 ## Tracker & access
 
-<!-- liftoff:fill -->
+No formal tracker. Work is driven ad-hoc by the owner; source of truth for the
+site's content/structure is `docs/site-v0.md`, roadmap in `docs/roadmap.md`.
+Production: https://ludvik4.dev (Vercel). Repo: github.com/grooownow/ludvik4
+(push over SSH via the `github.com-grooownow` alias — see `docs/deploy-plan.md`).
 
 ## Priorities
 
-<!-- liftoff:fill -->
+**Ludvik4** — a static (SSG) personal brand landing for an independent engineer.
+Critical user paths for coverage:
+
+1. **Home renders** — hero, services, pricing, contact all visible; responsive
+   at 375 / 768 / 1280 (chips hidden below sm; hero image hidden below lg).
+2. **Lead form** — validation (message ≥ 10 chars, contact = email or
+   messenger/phone), honeypot + rate-limit, delivery to Telegram, success/error
+   states. This is the ONE real data flow on the site.
+3. **SEO/meta correctness** — title/OG/canonical/JSON-LD/sitemap/robots present
+   and pointing at the production URL.
 
 (Product name, one-line domain description, and the 2-3 critical user paths
 that matter most for coverage — filled by `/liftoff` step 4e from
