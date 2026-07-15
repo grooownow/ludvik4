@@ -31,7 +31,7 @@ export function LeadForm({ turnstileSiteKey }: { turnstileSiteKey?: string }) {
   if (state.ok) {
     return (
       <output className="text-foreground border-border bg-muted/40 block rounded-lg border p-4 text-sm">
-        Заявка отправлена — отвечу в ближайшее время. Спасибо!
+        Заявка отправлена — ответим в ближайшее время. Спасибо!
       </output>
     );
   }

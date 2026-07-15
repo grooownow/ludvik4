@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { LeadForm } from "@/features/lead";
 import { env } from "@/lib/env";
 
-const LINKEDIN_URL = "https://www.linkedin.com/in/kate-pustovaia/";
 const TELEGRAM_URL = "https://t.me/ludvik4";
 
 const services = [
@@ -41,8 +40,8 @@ const formats = [
 const steps = [
   {
     n: "01",
-    title: "Помогу оформить задачу",
-    body: "Расскажете, что хочется или какая задача стоит, — предложу варианты и придумаю решение под вас. Задачу и результат опишем вместе.",
+    title: "Поможем оформить задачу",
+    body: "Расскажете, что хочется или какая задача стоит, — предложим варианты и придумаем решение под вас. Задачу и результат опишем вместе.",
   },
   {
     n: "02",
@@ -52,7 +51,7 @@ const steps = [
   {
     n: "03",
     title: "Формат под вас",
-    body: "Разовый продукт, развитие или поддержка с доработками. Под смежные задачи — дизайн, бренд, видео, анимацию — подключаю нужных специалистов.",
+    body: "Разовый продукт, развитие или поддержка с доработками. Под смежные задачи — дизайн, бренд, видео, анимацию — подключаем нужных специалистов.",
   },
 ];
 
@@ -103,7 +102,7 @@ const jsonLd = {
   url: env.NEXT_PUBLIC_APP_URL,
   priceRange: "от 1 990 ₽",
   areaServed: "Worldwide",
-  sameAs: [LINKEDIN_URL, TELEGRAM_URL],
+  sameAs: [TELEGRAM_URL],
   makesOffer: pricing.map((p) => ({
     "@type": "Offer",
     itemOffered: { "@type": "Service", name: p.title },
@@ -141,7 +140,7 @@ export default function HomePage() {
             </h1>
             <p className="text-muted-foreground mt-5 max-w-xl text-lg">
               Сайты, веб-приложения и SaaS, плагины, автоматизация рутины —
-              довожу до готового продукта
+              доводим до готового продукта
             </p>
             <div className="mt-7">
               <Button asChild size="lg">
@@ -165,7 +164,7 @@ export default function HomePage() {
 
       {/* Services */}
       <Section id="services">
-        <Eyebrow>Что делаю</Eyebrow>
+        <Eyebrow>Что делаем</Eyebrow>
         <div className="grid gap-4 sm:grid-cols-2">
           {services.map((s) => (
             <div
@@ -202,7 +201,7 @@ export default function HomePage() {
       <Section>
         <Eyebrow>Как это работает</Eyebrow>
         <p className="max-w-2xl text-xl font-semibold tracking-tight text-balance">
-          Вы приходите с идеей или болью — я предлагаю, как её решить
+          Вы приходите с идеей или болью — предлагаем, как её решить
         </p>
         <div className="mt-10 grid gap-8 sm:grid-cols-3">
           {steps.map((step) => (
@@ -263,19 +262,11 @@ export default function HomePage() {
       <Section>
         <Eyebrow>Кто за этим стоит</Eyebrow>
         <p className="max-w-2xl text-lg leading-relaxed text-pretty">
-          За Ludvik4 — инженер с более чем 10-летним опытом в вебе: от
-          продуктовой команды в крупном финтехе до собственных приложений.
-          Techlead за плечами, глубоко в современном фронтенде, fullstack и
-          AI-инструментах. Строю быстро и основательно.
+          Ludvik4 — небольшая команда: разработчики, дизайнеры, ML-инженер. За
+          плечами — годы в вебе, от продуктов в крупных компаниях до собственных
+          приложений. Собираем цифровые продукты под ключ, работаем быстро и
+          основательно, а под каждую задачу подключаем нужных людей.
         </p>
-        <a
-          href={LINKEDIN_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-foreground mt-4 inline-block font-mono text-sm font-bold underline underline-offset-4"
-        >
-          LinkedIn →
-        </a>
       </Section>
 
       {/* Contact */}
@@ -287,7 +278,7 @@ export default function HomePage() {
               Расскажите, что нужно
             </h2>
             <p className="text-muted-foreground mt-3 max-w-sm">
-              Опишите задачу — предложу решение и подскажу, с чего начать
+              Опишите задачу — предложим решение и подскажем, с чего начать
             </p>
             <p className="mt-6 font-mono text-sm">
               <a
@@ -310,24 +301,14 @@ export default function HomePage() {
       <footer className="bg-surface-warm">
         <div className="text-muted-foreground mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-6 font-mono text-sm">
           <span>© 2026 Ludvik4</span>
-          <div className="flex gap-4">
-            <a
-              href={TELEGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-foreground"
-            >
-              Telegram
-            </a>
-            <a
-              href={LINKEDIN_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-foreground"
-            >
-              LinkedIn
-            </a>
-          </div>
+          <a
+            href={TELEGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-foreground"
+          >
+            Telegram
+          </a>
         </div>
       </footer>
     </div>
