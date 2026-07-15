@@ -16,9 +16,13 @@ const geistMono = Geist_Mono({
 });
 
 const SITE_NAME = "Ludvik4";
+// Share-preview title (og:title / twitter) — kept short and distinct from the
+// description below so social cards don't show the same line twice.
+const SHARE_TITLE = "Ludvik4 — цифровые продукты";
+// Browser tab / SEO <title> — the fuller phrasing.
 const SITE_TITLE = "Ludvik4 — цифровые продукты от идеи до запуска";
 const SITE_DESCRIPTION =
-  "Сайты, веб-приложения и SaaS, плагины, автоматизация рутины — довожу до готового продукта. Инженер с опытом 10+ лет.";
+  "Сайты, приложения, автоматизация — от идеи до запуска.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -50,12 +54,12 @@ export const metadata: Metadata = {
     locale: "ru_RU",
     url: "/",
     siteName: SITE_NAME,
-    title: SITE_TITLE,
+    title: SHARE_TITLE,
     description: SITE_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    title: SITE_TITLE,
+    title: SHARE_TITLE,
     description: SITE_DESCRIPTION,
   },
 };
