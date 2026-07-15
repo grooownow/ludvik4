@@ -35,7 +35,7 @@ const formats = [
   "От идеи до MVP",
   "Миграция легаси",
   "Внедрение AI в разработку",
-  "Ускорение разработки с AI",
+  "AI-автоматизация",
 ];
 
 const steps = [
@@ -208,7 +208,7 @@ export default function HomePage() {
 
       {/* Contact */}
       <section id="contact" className="bg-surface-warm">
-        <div className="mx-auto grid max-w-5xl gap-10 px-6 py-14 sm:grid-cols-2">
+        <div className="mx-auto grid max-w-5xl gap-10 px-6 py-14 sm:grid-cols-[1fr_1.4fr]">
           <div>
             <Eyebrow>Контакт</Eyebrow>
             <h2 className="text-2xl font-bold tracking-tight">

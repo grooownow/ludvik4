@@ -70,10 +70,11 @@ export function LeadForm({ turnstileSiteKey }: { turnstileSiteKey?: string }) {
         <Textarea
           id="lead-message"
           name="message"
-          rows={5}
+          rows={8}
           required
           placeholder="Опишите, что нужно сделать…"
           defaultValue={state.values?.message ?? ""}
+          className="min-h-44"
         />
       </div>
 
