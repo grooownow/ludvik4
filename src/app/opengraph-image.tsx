@@ -1,7 +1,5 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
-
 export const alt = "Ludvik4 — цифровые продукты от идеи до запуска";
 export const size = {
   width: 1200,
