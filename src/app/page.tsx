@@ -56,6 +56,18 @@ const steps = [
   },
 ];
 
+const pricing = [
+  { title: "Лендинг / промо-сайт", price: "от 10 000 ₽" },
+  { title: "Многостраничный сайт", price: "от 30 000 ₽" },
+  { title: "Веб-приложение / SaaS", price: "от 50 000 ₽" },
+  { title: "Автоматизация под задачу", price: "от 10 000 ₽" },
+  {
+    title: "SaaS Starter Pack",
+    price: "от 1 990 ₽",
+    note: "готовый продукт — платите один раз, пользуетесь сколько угодно",
+  },
+];
+
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
     <p className="text-primary mb-3 font-mono text-xs font-semibold tracking-widest uppercase">
@@ -185,6 +197,35 @@ export default function HomePage() {
             </div>
           ))}
         </div>
+      </Section>
+
+      {/* Pricing */}
+      <Section>
+        <Eyebrow>Ориентиры по цене</Eyebrow>
+        <p className="text-muted-foreground max-w-2xl">
+          Точная стоимость зависит от задачи — вот ориентиры, чтобы понять
+          порядок. Оценка бесплатно.
+        </p>
+        <ul className="mt-8 max-w-2xl">
+          {pricing.map((p) => (
+            <li
+              key={p.title}
+              className="border-border flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b py-4 first:border-t"
+            >
+              <div>
+                <span className="font-semibold">{p.title}</span>
+                {p.note ? (
+                  <span className="text-muted-foreground mt-0.5 block text-sm">
+                    {p.note}
+                  </span>
+                ) : null}
+              </div>
+              <span className="text-primary font-mono font-semibold whitespace-nowrap">
+                {p.price}
+              </span>
+            </li>
+          ))}
+        </ul>
       </Section>
 
       {/* About */}
