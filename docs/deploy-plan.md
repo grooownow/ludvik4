@@ -24,12 +24,21 @@
 
 ## Шаг 1 — Запушить репозиторий на GitHub
 
-- **[АГЕНТ]** `git remote -v` — есть ли уже remote.
+> **Готово.** Репозиторий уже создан и запушен: `github.com/grooownow/ludvik4`,
+> ветка `main` актуальна. Этот шаг — только если пушишь заново.
+
+- **[АГЕНТ]** `git remote -v` — есть ли уже remote (есть: `origin` → grooownow/ludvik4).
 - **[АГЕНТ]** Проверить `gh auth status`.
   - Если `gh` залогинен → `gh repo create ludvik4 --source=. --private --push`.
   - Если `gh` НЕ залогинен → **[ТЫ]**: выполнить `gh auth login` (или создать пустой
     приватный репо на github.com и дать агенту URL). Затем **[АГЕНТ]**:
     `git remote add origin <url> && git push -u origin main`.
+- **⚠ Ловушка авторизации (было при первом пуше):** в `gh` несколько аккаунтов
+  (`grooownow` и `ludvik4`), и git-credential может подставить токен НЕ того
+  аккаунта → `403 Permission denied to ludvik4`. Репо принадлежит `grooownow`.
+  Лечение: `gh auth switch --user grooownow`, либо разовый пуш под нужным токеном:
+  `git -c credential.helper= push "https://x-access-token:$(gh auth token --user grooownow)@github.com/grooownow/ludvik4.git" main`
+  (токен не сохранять в remote URL).
 - **Готово когда:** ветка `main` видна на github.com.
 
 ## Шаг 2 — Импортировать проект в Vercel
