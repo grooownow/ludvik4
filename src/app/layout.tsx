@@ -11,10 +11,11 @@ const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
   title: {
-    default: "Liftkit",
-    template: "%s · Liftkit",
+    default: "Ludvik4 — веб-продукты от идеи до релиза",
+    template: "%s · Ludvik4",
   },
-  description: "Agent-native SaaS starter",
+  description:
+    "Сайты, веб-приложения и SaaS, плагины, автоматизация рутины — от идеи до рабочего релиза. Инженер с опытом 10+ лет.",
 };
 
 export default function RootLayout({
@@ -24,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html
-      lang="en"
+      lang="ru"
       className={cn("font-sans", geist.variable)}
       suppressHydrationWarning
     >

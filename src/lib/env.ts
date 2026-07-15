@@ -51,6 +51,22 @@ const schema = z
 
     // Analytics
     NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
+
+    // Lead form (contact) — delivery + spam captcha. All optional: with none
+    // set the form works locally/preview and logs a warning instead of
+    // dropping silently; see src/features/lead/notify.ts.
+    // Telegram: create a bot via @BotFather (token) and put your numeric chat
+    // id (from @userinfobot) in TELEGRAM_CHAT_ID.
+    TELEGRAM_BOT_TOKEN: z.string().optional(),
+    TELEGRAM_CHAT_ID: z.string().optional(),
+    // Email via Resend: verify ludvik4.dev to send from an @ludvik4.dev address.
+    RESEND_API_KEY: z.string().optional(),
+    LEAD_EMAIL_TO: z.email().optional(),
+    LEAD_EMAIL_FROM: z.string().optional(),
+    // Cloudflare Turnstile: SECRET verifies server-side, SITE_KEY renders the
+    // widget. Both needed to switch the captcha on.
+    TURNSTILE_SECRET_KEY: z.string().optional(),
+    NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().optional(),
   })
   .superRefine((val, ctx) => {
     if (val.LIFTKIT_DB === "remote" && !val.DATABASE_URL) {

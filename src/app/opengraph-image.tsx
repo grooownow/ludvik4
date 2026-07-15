@@ -1,9 +1,8 @@
-// This is a TEMPLATE — the /liftoff agent rebrands this for the user's product.
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export const alt = "Liftkit";
+export const alt = "Ludvik4 — веб-продукты от идеи до релиза";
 export const size = {
   width: 1200,
   height: 630,
@@ -35,7 +34,7 @@ export default function Image() {
           letterSpacing: "-2px",
         }}
       >
-        Liftkit
+        Ludvik4
       </div>
       <div
         style={{
@@ -44,7 +43,7 @@ export default function Image() {
           textAlign: "center",
         }}
       >
-        Agent-native SaaS starter for Claude Code
+        Веб-продукты — от идеи до релиза
       </div>
     </div>,
     {
