@@ -186,13 +186,11 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div className="mt-6 flex flex-wrap gap-2">
-          {formats.map((f, i) => (
+        <div className="mt-6 hidden flex-wrap gap-2 sm:flex">
+          {formats.map((f) => (
             <span
               key={f}
-              className={`rounded-full border border-[#f1b2d0] bg-[#fff3f8] px-3.5 py-[7px] font-mono text-xs text-[#3a3036] ${
-                i >= 3 ? "hidden sm:inline-flex" : ""
-              }`}
+              className="rounded-full border border-[#f1b2d0] bg-[#fff3f8] px-3.5 py-[7px] font-mono text-xs text-[#3a3036]"
             >
               {f}
             </span>
