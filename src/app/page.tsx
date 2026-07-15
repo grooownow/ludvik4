@@ -223,31 +223,42 @@ export default function HomePage() {
 
       {/* Pricing */}
       <Section>
-        <Eyebrow>Ориентиры по цене</Eyebrow>
-        <p className="text-muted-foreground max-w-2xl">
-          Точная стоимость зависит от задачи — вот ориентиры, чтобы понять
-          порядок. Оценка бесплатно.
-        </p>
-        <ul className="mt-8 max-w-2xl">
-          {pricing.map((p) => (
-            <li
-              key={p.title}
-              className="border-border flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b py-4 first:border-t"
-            >
-              <div>
-                <span className="font-semibold">{p.title}</span>
-                {p.note ? (
-                  <span className="text-muted-foreground mt-0.5 block text-sm">
-                    {p.note}
-                  </span>
-                ) : null}
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr]">
+          <div>
+            <Eyebrow>Ориентиры по цене</Eyebrow>
+            <h2 className="text-3xl font-semibold tracking-tight text-balance">
+              Ориентиры по цене
+            </h2>
+            <p className="text-muted-foreground mt-5 max-w-md">
+              Точная стоимость зависит от задачи — вот ориентиры, чтобы понять
+              порядок. Оценка бесплатно.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3">
+            {pricing.map((p) => (
+              <div
+                key={p.title}
+                className={`flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 rounded-2xl border px-6 py-5 ${
+                  p.note
+                    ? "border-[#f1b2d0] bg-[#fff0f6]"
+                    : "border-border bg-card"
+                }`}
+              >
+                <div>
+                  <span className="font-semibold">{p.title}</span>
+                  {p.note ? (
+                    <span className="text-muted-foreground mt-1 block max-w-xs text-sm">
+                      {p.note}
+                    </span>
+                  ) : null}
+                </div>
+                <span className="text-primary font-mono font-semibold whitespace-nowrap">
+                  {p.price}
+                </span>
               </div>
-              <span className="text-primary font-mono font-semibold whitespace-nowrap">
-                {p.price}
-              </span>
-            </li>
-          ))}
-        </ul>
+            ))}
+          </div>
+        </div>
       </Section>
 
       {/* About */}

@@ -1084,24 +1084,6 @@
               "fill": "$line-soft",
               "width": 840,
               "height": 1
-            },
-            {
-              "type": "rectangle",
-              "cornerRadius": 24,
-              "id": "oqnn7",
-              "x": 300,
-              "y": 278,
-              "name": "Pricing Visual",
-              "fill": {
-                "type": "image",
-                "enabled": true,
-                "url": "prices_image.png",
-                "mode": "fill"
-              },
-              "width": 360,
-              "height": 230,
-              "stroke": "$line-soft",
-              "strokeWidth": 1
             }
           ]
         },
