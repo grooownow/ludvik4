@@ -34,15 +34,15 @@ const formats = [
   "Под ключ",
   "От идеи до MVP",
   "Миграция легаси",
-  "Настройка под AI-агентов",
-  "Spec-driven development",
+  "Внедрение AI в разработку",
+  "Ускорение разработки с AI",
 ];
 
 const steps = [
   {
     n: "01",
-    title: "Не нужно готового ТЗ",
-    body: "Расскажете, что хочется или что не так, — я предложу варианты и придумаю решение под вас. Задачу и результат опишем вместе.",
+    title: "Помогу оформить задачу",
+    body: "Расскажете, что хочется или какая задача стоит, — предложу варианты и придумаю решение под вас. Задачу и результат опишем вместе.",
   },
   {
     n: "02",
@@ -115,7 +115,7 @@ export default function HomePage() {
               </Button>
             </div>
           </div>
-          <div className="lg:justify-self-end">
+          <div className="hidden lg:block lg:justify-self-end">
             <Image
               src="/hero-product-illustration.png"
               alt="Схема создания цифрового продукта: от идеи и макета через код к запуску и аналитике"
@@ -153,10 +153,12 @@ export default function HomePage() {
         </div>
 
         <div className="mt-6 flex flex-wrap gap-2">
-          {formats.map((f) => (
+          {formats.map((f, i) => (
             <span
               key={f}
-              className="rounded-full border border-[#f1b2d0] bg-[#fff3f8] px-3.5 py-[7px] font-mono text-xs text-[#3a3036]"
+              className={`rounded-full border border-[#f1b2d0] bg-[#fff3f8] px-3.5 py-[7px] font-mono text-xs text-[#3a3036] ${
+                i >= 3 ? "hidden sm:inline-flex" : ""
+              }`}
             >
               {f}
             </span>
@@ -192,7 +194,7 @@ export default function HomePage() {
           За Ludvik4 — инженер с более чем 10-летним опытом в вебе: от
           продуктовой команды в крупном финтехе до собственных приложений.
           Techlead за плечами, глубоко в современном фронтенде, fullstack и
-          AI-инструментах. Строю быстро, но не на выброс.
+          AI-инструментах. Строю быстро и основательно.
         </p>
         <a
           href={LINKEDIN_URL}
