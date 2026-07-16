@@ -41,6 +41,8 @@ describe("parseEnv", () => {
       SENTRY_DSN: "https://example.ingest.sentry.io/123",
       NEXT_PUBLIC_SENTRY_DSN: "https://browser.ingest.sentry.io/456",
       NEXT_PUBLIC_POSTHOG_KEY: "phc_123",
+      GOOGLE_SITE_VERIFICATION: "google-token",
+      YANDEX_VERIFICATION: "yandex-token",
       LOG_LEVEL: "debug",
     });
     expect(env.AUTH_SECRET).toBe("s3cr3t");
@@ -52,6 +54,8 @@ describe("parseEnv", () => {
       "https://browser.ingest.sentry.io/456",
     );
     expect(env.NEXT_PUBLIC_POSTHOG_KEY).toBe("phc_123");
+    expect(env.GOOGLE_SITE_VERIFICATION).toBe("google-token");
+    expect(env.YANDEX_VERIFICATION).toBe("yandex-token");
     expect(env.LOG_LEVEL).toBe("debug");
   });
 

@@ -52,6 +52,11 @@ export default function BlogPage() {
         </p>
 
         <div className="mt-10 flex flex-col gap-4">
+          {articles.length === 0 ? (
+            <p className="text-muted-foreground border-border rounded-2xl border border-dashed p-6 text-sm">
+              Первые статьи уже в работе — скоро здесь появятся
+            </p>
+          ) : null}
           {articles.map((article) => (
             <Link
               key={article.slug}

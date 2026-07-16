@@ -1,0 +1,78 @@
+import path from "node:path";
+import { describe, expect, it } from "vitest";
+import {
+  getAllArticles,
+  getPublishedArticles,
+  getPublishedArticleBySlug,
+} from "./articles";
+
+const VALID_DIR = path.join(__dirname, "__fixtures__", "valid");
+const MALFORMED_DIR = path.join(__dirname, "__fixtures__", "malformed");
+
+describe("getAllArticles", () => {
+  it("loads every .mdx file, newest first, drafts included", () => {
+    const articles = getAllArticles(VALID_DIR);
+
+    expect(articles.map((a) => a.slug)).toEqual([
+      "2026-03-draft",
+      "2026-02-newest",
+      "2026-01-published",
+    ]);
+  });
+
+  it("defaults draft to false when the flag is omitted", () => {
+    const articles = getAllArticles(VALID_DIR);
+    const newest = articles.find((a) => a.slug === "2026-02-newest");
+
+    expect(newest?.draft).toBe(false);
+  });
+
+  it("strips frontmatter from content and keeps the body", () => {
+    const articles = getAllArticles(VALID_DIR);
+    const older = articles.find((a) => a.slug === "2026-01-published");
+
+    expect(older?.content).toContain("Body of the older published article");
+    expect(older?.content).not.toContain("draft: false");
+  });
+
+  it("throws a readable error naming the file on malformed frontmatter", () => {
+    expect(() => getAllArticles(MALFORMED_DIR)).toThrow(
+      /missing-description\.mdx.*description/,
+    );
+  });
+});
+
+describe("getPublishedArticles", () => {
+  it("excludes drafts", () => {
+    const slugs = getPublishedArticles(VALID_DIR).map((a) => a.slug);
+
+    expect(slugs).toEqual(["2026-02-newest", "2026-01-published"]);
+    expect(slugs).not.toContain("2026-03-draft");
+  });
+});
+
+describe("getPublishedArticleBySlug", () => {
+  it("returns a published article by slug", () => {
+    const article = getPublishedArticleBySlug("2026-01-published", VALID_DIR);
+
+    expect(article?.title).toBe("Older published article");
+  });
+
+  it("returns undefined for a draft slug — drafts are invisible by slug too", () => {
+    expect(getPublishedArticleBySlug("2026-03-draft", VALID_DIR)).toBe(
+      undefined,
+    );
+  });
+
+  it("returns undefined for an unknown slug", () => {
+    expect(getPublishedArticleBySlug("no-such-article", VALID_DIR)).toBe(
+      undefined,
+    );
+  });
+});
+
+describe("real content dir (src/content/blog)", () => {
+  it("loads without throwing — malformed frontmatter would fail the build", () => {
+    expect(() => getAllArticles()).not.toThrow();
+  });
+});

@@ -71,8 +71,8 @@ split-signal issue already on the roadmap.
 
 - Landing gains one section (FAQ, accordion — collapsed by default) and a
   "Блог" link in the header/footer.
-- `/blog`: list of article cards (title, description, date) — empty state
-  impossible (ships with articles; drafts hidden).
+- `/blog`: list of article cards (title, description, date) — while all
+  articles are drafts the list shows a friendly "coming soon" empty state.
 - `/blog/[slug]`: article page — typographic content column, back-link to
   the list, CTA block to the contact form at the end.
 - Unknown slug → existing `not-found.tsx`.
