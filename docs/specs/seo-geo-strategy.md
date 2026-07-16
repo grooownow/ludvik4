@@ -117,4 +117,6 @@ page/feature code.
 
 ## Status
 
-`in progress` — design agreed in chat 2026-07-16; implementation started same day.
+`shipped` — implemented, reviewed and merged 2026-07-16. Off-site steps and
+article publication run per `docs/playbooks/seo-geo.md` (user actions:
+console registrations, apex switch, article review → `draft: false`).
