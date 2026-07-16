@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { jsonLdString } from "@/lib/json-ld";
 import { faqItems } from "./faq-data";
 
 // FAQPage structured data — generated from the same array the accordion
@@ -28,7 +29,7 @@ export function FaqSection() {
       <div className="border-pink-soft mx-auto max-w-5xl border-t px-6 py-14">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdString(faqJsonLd) }}
         />
         <p className="text-primary mb-3 font-mono text-xs font-semibold tracking-widest uppercase">
           Вопросы и ответы

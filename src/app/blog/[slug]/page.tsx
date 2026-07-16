@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
@@ -9,12 +9,18 @@ import {
   getPublishedArticleBySlug,
 } from "@/features/blog";
 import { env } from "@/lib/env";
+import { jsonLdString } from "@/lib/json-ld";
 
-// Published articles only — drafts get no static page. Unknown slugs 404
-// via notFound() below (dynamicParams stays enabled for dev-mode rendering).
+// Published articles only — drafts get no static page.
 export function generateStaticParams() {
   return getPublishedArticles().map((article) => ({ slug: article.slug }));
 }
+
+// Unknown slugs 404 immediately instead of triggering an on-demand render
+// (which would hit the fs-based article loader inside a serverless function
+// at request time). Drafts are filtered out of the loader in every mode, so
+// nothing is lost by disabling the dynamic fallback.
+export const dynamicParams = false;
 
 type Params = { slug: string };
 
@@ -69,11 +75,27 @@ const mdxComponents: MDXComponents = {
     <ol className="mt-5 flex list-decimal flex-col gap-2 pl-6" {...props} />
   ),
   li: (props) => <li className="leading-relaxed" {...props} />,
-  a: ({ children, ...props }) => (
-    <a className="text-primary underline underline-offset-4" {...props}>
-      {children}
-    </a>
-  ),
+  // Internal links must stay SPA (hard invariant #1): article markdown like
+  // [text](/#contact) renders as <Link>, external URLs as a plain anchor.
+  a: ({ children, href = "", ...props }) =>
+    href.startsWith("/") ? (
+      <Link
+        href={href as Route}
+        className="text-primary underline underline-offset-4"
+      >
+        {children}
+      </Link>
+    ) : (
+      <a
+        className="text-primary underline underline-offset-4"
+        target="_blank"
+        rel="noopener noreferrer"
+        href={href}
+        {...props}
+      >
+        {children}
+      </a>
+    ),
   strong: (props) => <strong className="font-semibold" {...props} />,
   code: (props) => (
     <code
@@ -111,7 +133,7 @@ export default async function ArticlePage({
     <div className="bg-background text-foreground min-h-screen">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
       <header className="border-pink-soft bg-background/90 sticky top-0 z-10 border-b backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
@@ -144,7 +166,7 @@ export default async function ArticlePage({
           <MDXRemote source={article.content} components={mdxComponents} />
         </article>
 
-        <div className="border-pink-soft mt-14 rounded-2xl border bg-[#fff3f8] p-6">
+        <div className="border-pink-soft bg-accent mt-14 rounded-2xl border p-6">
           <h2 className="text-lg font-bold">Есть похожая задача?</h2>
           <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
             Опишите её — предложим решение и оценку. Бесплатно.

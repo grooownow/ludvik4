@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { FaqSection } from "@/features/faq";
 import { LeadForm } from "@/features/lead";
 import { env } from "@/lib/env";
+import { jsonLdString } from "@/lib/json-ld";
 
 const TELEGRAM_URL = "https://t.me/ludvik4";
 
@@ -153,7 +154,7 @@ export default function HomePage() {
     <div className="bg-background text-foreground min-h-screen">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
       {/* Top bar */}
       <header className="border-pink-soft bg-background/90 sticky top-0 z-10 border-b backdrop-blur">
