@@ -44,7 +44,7 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
       // Minimal init: posthog-js defaults to capturing pageviews (incl.
       // client-side route changes) out of the box — nothing extra to wire.
       posthog.init(POSTHOG_KEY, {
-        api_host: "https://us.i.posthog.com",
+        api_host: "https://eu.i.posthog.com",
         person_profiles: "identified_only",
       });
     });

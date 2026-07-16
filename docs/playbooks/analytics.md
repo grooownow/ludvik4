@@ -30,9 +30,9 @@ are made.
    - Production: same var in Vercel (`docs/playbooks/deploy.md` step 4),
      then redeploy — `NEXT_PUBLIC_` vars are inlined at build time.
 3. Pageviews (including client-side route changes) are captured
-   automatically by the provider's init. The `api_host` is PostHog US cloud
-   (`https://us.i.posthog.com`) — change it in the provider if your PostHog
-   project is EU-hosted.
+   automatically by the provider's init. The `api_host` is PostHog EU cloud
+   (`https://eu.i.posthog.com`, where this project lives) — change it in
+   the provider if your PostHog project is US-hosted.
 
 Custom events are `posthog.capture(name, properties)` calls. Keep the same
 guard the provider uses (no key → no-op) so the app never depends on
