@@ -6,17 +6,20 @@ writing detail here.
 
 ## Now
 
-SEO/GEO rollout — code shipped (`docs/specs/seo-geo-strategy.md`); the
-remaining moves are user-driven, guided by `docs/playbooks/seo-geo.md`:
+SEO/GEO rollout — code shipped, first two articles LIVE (2026-07-16:
+`/blog/agents-ready-project`, `/blog/spec-driven-development`). Remaining
+moves, guided by `docs/playbooks/seo-geo.md`:
 
-- **Search consoles** — register Google Search Console + Yandex.Webmaster,
-  agent wires the verification tokens, submit sitemap in both.
-- **Apex vs www canonical** — make `ludvik4.dev` (apex) the primary domain in
-  Vercel so `www` redirects to it, matching the canonical/og:url.
-- **Publish first two articles** — review the drafts in `src/content/blog/`,
-  flip `draft: false` one by one.
-- **Off-site start** — Telegram brand channel, Habr account + first adapted
-  article, GitHub org with an AGENTS.md-template repo.
+- **[USER] Search consoles** — register Google Search Console +
+  Yandex.Webmaster, hand tokens to the agent (it wires
+  `GOOGLE_SITE_VERIFICATION`/`YANDEX_VERIFICATION` in Vercel + redeploy),
+  then submit `sitemap.xml` in both.
+- **[USER] Apex vs www canonical** — make `ludvik4.dev` (apex) the primary
+  domain in Vercel so `www` 308-redirects to it.
+- **[USER] Off-site start** — Telegram brand channel, Habr account + first
+  adapted article, GitHub org with an AGENTS.md-template repo.
+- **[AGENT, on go-ahead] Per-article OG covers** — generate share images
+  from article titles; agreed to do before distributing to Telegram/Habr.
 
 ## Next
 
@@ -42,9 +45,13 @@ Ideas worth keeping, not yet scoped:
 
 Most recent first:
 
+- **First two articles published** (2026-07-16) — AI-agents readiness +
+  spec-driven development, rewritten to `docs/rules/content.md` standards
+  (primary sources: agents.md, AWS Kiro, GitHub Spec Kit). Blog footer
+  layout fix rode along.
 - **SEO/GEO foundation** — FAQ section (+FAQPage schema), MDX blog with RSS
   and sitemap, llms.txt, Organization/WebSite JSON-LD graph, search-console
-  verification slots, two draft articles, `docs/playbooks/seo-geo.md`.
+  verification slots, `docs/playbooks/seo-geo.md`.
   Spec: `docs/specs/seo-geo-strategy.md`.
 - **Landing MVP** — one-page Ludvik4 brand site: hero + illustration, services
   catalogue, work formats, how-it-works, pricing, about, contact form → Telegram.

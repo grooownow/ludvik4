@@ -4,9 +4,16 @@
 
 Check `docs/manifest.md`: if it still contains `liftoff:fill` markers, this
 project hasn't been onboarded — run `/liftoff` first, before anything else.
-Otherwise, use the daily map below: `docs/roadmap.md` for what's next,
-`/feature <name>` to build it, `/review` to self-review a diff, `/verify` to
-run the full gate sequence before merging.
+
+**Session entry point** (single source of session context — do not rely on
+agent-private memory): `docs/manifest.md` for what this product is, then
+`docs/roadmap.md` → **Now** for the current tasks, pending user actions, and
+where the last session stopped. Keep roadmap's Now section current at the
+end of every working session — it is the handoff document.
+
+Daily map: `docs/roadmap.md` for what's next, `/feature <name>` to build it,
+`/review` to self-review a diff, `/verify` to run the full gate sequence
+before merging.
 
 ## Hard invariants (never violate)
 
@@ -16,6 +23,13 @@ run the full gate sequence before merging.
 4. Every server action/route validates input with `zod` before use.
 5. Every commit follows Conventional Commits (one exception: `/liftoff`
    onboarding commits — see `docs/rules/git.md`).
+
+Four of these five are not requests: a `PreToolUse` hook
+(`scripts/hooks/pretooluse.ts`, registered in `.claude/settings.json`) reads
+every proposed edit and **denies** #1, #2 and #5 outright, and escalates #4 to
+`ask` where a heuristic could be wrong. #3 is the one a hook cannot see, so it
+stays with the `feature` and `review` skills. The hook always exits 0 and fails
+open — if it breaks, you lose the guard, not the session.
 
 ## Chat language
 
@@ -33,11 +47,23 @@ user's messages.
 - `docs/rules/git.md` — commit cadence, branches, pre-commit hook
 - `docs/rules/docs.md` — docs map, ADRs, actualization rule
 - `docs/rules/sources.md` — framework claims are cited, never remembered
+- `docs/rules/content.md` — blog editorial standards and publishing flow
 
 ## Playbooks
 
 `docs/playbooks/` — step-by-step guides for deploy, billing, pricing, and
-other occasional flows.
+other occasional flows. Completed one-time plans live in `docs/archive/`.
+
+## Working agreements (user preferences)
+
+- **Files for the user:** give full absolute paths in a code block — never
+  auto-`open` anything. Review copies (e.g. articles as `.md`) go in
+  `tmp-review/` (git-ignored), never in hidden temp dirs.
+- **Autonomy:** after the spec/design is signed off, drive the feature
+  end-to-end (implement → test → verify → review → fix → merge → push)
+  without pausing for permission at each step.
+- **State lives in the repo:** anything a future session needs goes into
+  `docs/` (roadmap Now, playbooks, rules) — not into agent memory.
 
 ## Key commands
 

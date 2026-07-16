@@ -100,7 +100,7 @@
 No formal tracker. Work is driven ad-hoc by the owner; source of truth for the
 site's content/structure is `docs/site-v0.md`, roadmap in `docs/roadmap.md`.
 Production: https://ludvik4.dev (Vercel). Repo: github.com/grooownow/ludvik4
-(push over SSH via the `github.com-grooownow` alias — see `docs/deploy-plan.md`).
+(push over SSH via the `github.com-grooownow` alias — see `docs/archive/deploy-plan.md`).
 
 ## Priorities
 

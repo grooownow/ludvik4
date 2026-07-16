@@ -4,8 +4,8 @@
 > Источник правды по контенту и структуре персонального бренд-сайта.
 > Собран **прямо в этом Next.js-репо** (страница — SSG, форма — свой server action).
 > Язык сайта: **русский**. Дизайн: `design.pen` (Pencil), розовый бренд перенесён в `globals.css`.
-> Реализация: `src/app/page.tsx` + `src/features/lead/*`. Промпты для Pencil: `docs/site-v0-design-prompts.md`.
-> Секреты доставки/капчи и деплой: `docs/site-v0-setup.md`, `docs/deploy-plan.md`.
+> Реализация: `src/app/page.tsx` + `src/features/lead/*`. Промпты для Pencil: `docs/archive/site-v0-design-prompts.md`.
+> Секреты доставки/капчи: `docs/site-v0-setup.md`; выполненный план деплоя: `docs/archive/deploy-plan.md`.
 >
 > Разделы на странице (порядок): hero (+ иллюстрация, скрыта <lg) · что делаю (4 карточки) ·
 > форматы-чипсы (скрыты <sm) · как это работает (3 шага) · ориентиры по цене · FAQ (аккордеон,
