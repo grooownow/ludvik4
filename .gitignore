@@ -20,3 +20,6 @@ docs/research/
 # Design-loop scratch: mockup variants and comparison boards are a
 # conversation, not an artifact. The winner ships as components; these do not.
 .design/
+
+# Disposable review copies for the user (see tmp-review/README.md)
+tmp-review/
