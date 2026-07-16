@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { FaqSection } from "@/features/faq";
 import { LeadForm } from "@/features/lead";
 import { env } from "@/lib/env";
 
@@ -93,22 +94,58 @@ function Section({
   );
 }
 
+// Structured data as one @graph: Organization (identity for search engines
+// and LLM crawlers), WebSite, and the ProfessionalService offer catalogue —
+// cross-linked by @id (docs/specs/seo-geo-strategy.md).
+const BASE_URL = env.NEXT_PUBLIC_APP_URL;
+
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: "Ludvik4",
-  description:
-    "Цифровые продукты от идеи до запуска: сайты, веб-приложения и SaaS, плагины, автоматизация рутины.",
-  url: env.NEXT_PUBLIC_APP_URL,
-  priceRange: "от 1 990 ₽",
-  areaServed: "Worldwide",
-  sameAs: [TELEGRAM_URL],
-  makesOffer: pricing.map((p) => ({
-    "@type": "Offer",
-    itemOffered: { "@type": "Service", name: p.title },
-    priceCurrency: "RUB",
-    price: p.price.replace(/[^\d]/g, ""),
-  })),
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${BASE_URL}/#organization`,
+      name: "Ludvik4",
+      url: BASE_URL,
+      logo: `${BASE_URL}/opengraph-image`,
+      slogan: "Цифровые продукты — от идеи до запуска",
+      sameAs: [TELEGRAM_URL],
+      knowsAbout: [
+        "разработка сайтов и веб-приложений",
+        "SaaS-продукты и MVP",
+        "настройка проектов под AI-агентов (AGENTS.md, правила, спеки)",
+        "spec-driven development",
+        "AI-инструменты и плагины для разработки",
+        "автоматизация процессов с AI",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
+      url: BASE_URL,
+      name: "Ludvik4",
+      inLanguage: "ru",
+      publisher: { "@id": `${BASE_URL}/#organization` },
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": `${BASE_URL}/#service`,
+      name: "Ludvik4",
+      description:
+        "Цифровые продукты от идеи до запуска: сайты, веб-приложения и SaaS, плагины, автоматизация рутины.",
+      url: BASE_URL,
+      priceRange: "от 1 990 ₽",
+      areaServed: "Worldwide",
+      sameAs: [TELEGRAM_URL],
+      parentOrganization: { "@id": `${BASE_URL}/#organization` },
+      makesOffer: pricing.map((p) => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: p.title },
+        priceCurrency: "RUB",
+        price: p.price.replace(/[^\d]/g, ""),
+      })),
+    },
+  ],
 };
 
 export default function HomePage() {
@@ -124,9 +161,17 @@ export default function HomePage() {
           <span className="font-mono text-sm font-bold tracking-tight">
             Ludvik4
           </span>
-          <Button asChild size="sm">
-            <Link href="#contact">Обсудить задачу</Link>
-          </Button>
+          <div className="flex items-center gap-5">
+            <Link
+              href="/blog"
+              className="text-muted-foreground hover:text-foreground font-mono text-sm"
+            >
+              Блог
+            </Link>
+            <Button asChild size="sm">
+              <Link href="#contact">Обсудить задачу</Link>
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -258,6 +303,9 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {/* FAQ */}
+      <FaqSection />
+
       {/* About */}
       <Section>
         <Eyebrow>Кто за этим стоит</Eyebrow>
@@ -301,14 +349,19 @@ export default function HomePage() {
       <footer className="bg-surface-warm">
         <div className="text-muted-foreground mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-6 font-mono text-sm">
           <span>© 2026 Ludvik4</span>
-          <a
-            href={TELEGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-foreground"
-          >
-            Telegram
-          </a>
+          <span className="flex items-center gap-5">
+            <Link href="/blog" className="hover:text-foreground">
+              Блог
+            </Link>
+            <a
+              href={TELEGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground"
+            >
+              Telegram
+            </a>
+          </span>
         </div>
       </footer>
     </div>

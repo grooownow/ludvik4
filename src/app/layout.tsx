@@ -44,7 +44,10 @@ export const metadata: Metadata = {
     "Ludvik4",
   ],
   applicationName: SITE_NAME,
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    types: { "application/rss+xml": "/blog/rss.xml" },
+  },
   robots: {
     index: true,
     follow: true,
@@ -62,6 +65,14 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: SHARE_TITLE,
     description: SITE_DESCRIPTION,
+  },
+  // Search-engine ownership verification — env-driven slots (unset → no
+  // meta tag emitted), same OFF-by-default pattern as PostHog/Sentry.
+  verification: {
+    ...(env.GOOGLE_SITE_VERIFICATION && {
+      google: env.GOOGLE_SITE_VERIFICATION,
+    }),
+    ...(env.YANDEX_VERIFICATION && { yandex: env.YANDEX_VERIFICATION }),
   },
 };
 

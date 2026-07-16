@@ -52,6 +52,11 @@ const schema = z
     // Analytics
     NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
 
+    // SEO — search-engine ownership verification (meta-tag tokens). Both
+    // optional slots: unset → no <meta> tag is emitted (src/app/layout.tsx).
+    GOOGLE_SITE_VERIFICATION: z.string().optional(),
+    YANDEX_VERIFICATION: z.string().optional(),
+
     // Lead form (contact) — delivery + spam captcha. All optional: with none
     // set the form works locally/preview and logs a warning instead of
     // dropping silently; see src/features/lead/notify.ts.
