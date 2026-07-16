@@ -130,7 +130,7 @@ export default async function ArticlePage({
   };
 
   return (
-    <div className="bg-background text-foreground min-h-screen">
+    <div className="bg-background text-foreground flex min-h-screen flex-col">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
@@ -146,7 +146,7 @@ export default async function ArticlePage({
         </div>
       </header>
 
-      <main className="mx-auto max-w-3xl px-6 py-14">
+      <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-14">
         <Link
           href="/blog"
           className="text-muted-foreground hover:text-foreground font-mono text-sm"

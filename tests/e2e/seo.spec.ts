@@ -31,6 +31,21 @@ test.describe("SEO surfaces", () => {
     ).toBeVisible();
   });
 
+  test("blog footer reaches the bottom of the viewport on short content", async ({
+    page,
+  }) => {
+    await page.goto("/blog");
+
+    const footer = page.locator("footer");
+    await expect(footer).toBeVisible();
+
+    const box = await footer.boundingBox();
+    const viewport = page.viewportSize();
+    // Footer bottom edge is at (or below) the viewport bottom — a footer
+    // floating mid-page fails this by hundreds of pixels.
+    expect(box!.y + box!.height).toBeGreaterThanOrEqual(viewport!.height - 1);
+  });
+
   test("llms.txt serves the brand summary", async ({ request }) => {
     const response = await request.get("/llms.txt");
 

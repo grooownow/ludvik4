@@ -27,7 +27,7 @@ export default function BlogPage() {
   const articles = getPublishedArticles();
 
   return (
-    <div className="bg-background text-foreground min-h-screen">
+    <div className="bg-background text-foreground flex min-h-screen flex-col">
       <header className="border-pink-soft bg-background/90 sticky top-0 z-10 border-b backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
           <Link href="/" className="font-mono text-sm font-bold tracking-tight">
@@ -39,7 +39,7 @@ export default function BlogPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-3xl px-6 py-14">
+      <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-14">
         <p className="text-primary mb-3 font-mono text-xs font-semibold tracking-widest uppercase">
           Блог
         </p>
