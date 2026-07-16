@@ -117,4 +117,4 @@ page/feature code.
 
 ## Status
 
-`approved` — design agreed in chat 2026-07-16.
+`in progress` — design agreed in chat 2026-07-16; implementation started same day.
