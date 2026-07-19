@@ -33,11 +33,11 @@ moves, guided by `docs/playbooks/seo-geo.md`:
   (`docs/seo-core.md`), priority recalibrated by winnability, and
   `docs/content-plan.md` (topic clusters: pillar + supporting, cross-linked,
   publishing queue in waves). Method: `docs/specs/seo-core-research.md`; audit
-  that triggered this: `tmp-review/seo-audit.md`. **Wave 1 in progress:**
-  [DONE 2026-07-19] `/blog/github-spec-kit` (SDD supporting). **Next:**
-  AGENTS.md пример/шаблон, cursor rules — each binds to its core query via
-  the content flow. Deferred: commercial-intent pull for `/uslugi/...`
-  service pages (Layer 2, C8–C10 not yet pulled).
+  that triggered this: `tmp-review/seo-audit.md`. **Wave 1 (2/3 done
+  2026-07-19):** `/blog/github-spec-kit` (SDD), `/blog/agents-md-primer`
+  (AGENTS.md). **Next:** cursor rules (last Wave 1), then per-platform
+  adaptations for the coworker (`distribution.md`). Deferred: commercial-intent
+  pull for `/uslugi/...` service pages (Layer 2, C8–C10 not yet pulled).
 
 ## Next
 
