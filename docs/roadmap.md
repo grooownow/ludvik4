@@ -17,15 +17,13 @@ moves, guided by `docs/playbooks/seo-geo.md`:
   articles.
 - **[DONE 2026-07-16] Apex vs www canonical** — `ludvik4.dev` is now the
   primary domain in Vercel; `www.ludvik4.dev` 308-redirects to it.
-- **Off-site handles decided, accounts not yet created** — brand identity:
-  Telegram `@ludvik4pro` (site's `t.me/ludvik4` link was actually the
-  personal account — needs updating once the new channel exists), GitHub
-  `github.com/grooownow` (existing personal account, already owns the
-  `ludvik4` repo — no separate org), Habr `grooownow`, vc.ru `grooownow`
-  (both free; vc.ru offers login via the existing `ludvik4go@yandex.com`
-  Yandex ID). **[USER]** create the Telegram channel + register on
-  Habr/vc.ru under `grooownow`; then update the site's Telegram link and
-  agent adapts the first article for Habr/vc.ru.
+- **Off-site distribution** — plan: `docs/playbooks/distribution.md` (agent
+  drafts per-platform adaptations → coworker publishes). Status (2026-07-19):
+  vc.ru article 1 LIVE (2 comments, 2 likes); Habr article 1 on moderation;
+  Telegram deferred (no audience — using X for quick announces instead);
+  Reddit ruled out for RU content. GitHub `github.com/grooownow` owns the
+  repo. **[COWORKER]** publish adaptations per the matrix; **[AGENT]** draft
+  Habr/vc.ru/Дзен/X adaptations for each published article.
 - **[AGENT, on go-ahead]** first public repo on `github.com/grooownow`: an
   AGENTS.md-template matching article 1 (needs explicit go-ahead — new
   public content).

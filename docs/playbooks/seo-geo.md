@@ -61,6 +61,10 @@ steady 2–4/month. Every article targets ONE query cluster from the niche
 
 ## 4. Off-site — where LLMs and links actually come from
 
+Concrete, briefable version (per-platform adaptations by the agent, publishing
+by a coworker, tracking matrix): **`docs/playbooks/distribution.md`**. The list
+below is the rationale/order behind it.
+
 Order matters; do the top ones first.
 
 1. **Telegram channel** (brand, no personal identity) — announce each
