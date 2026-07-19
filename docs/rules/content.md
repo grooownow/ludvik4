@@ -31,9 +31,12 @@ suggestions.
    LLMs/agents) — say it in the definition.
 7. **Nothing is «once and done».** Setup/process claims reflect reality:
    frameworks get established «за раз», then grow with the project.
-8. **Keywords with intent.** Every article targets one query cluster from
-   the niche (AI-агенты, AGENTS.md, spec-driven development, автоматизация,
-   MVP) — naturally, in headings and the opening paragraph.
+8. **Keywords with intent.** Every article binds to a **specific target
+   query from the semantic core** (`docs/seo-core.md`) via `docs/content-plan.md`
+   — not a topic in general. Target that query naturally in the H1 and opening
+   paragraph, and add the internal links its content-plan row specifies
+   (supporting → pillar, pillar ↔ pillar). No article ships without a core
+   query behind it.
 
 ## Language & positioning
 

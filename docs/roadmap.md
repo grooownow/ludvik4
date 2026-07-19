@@ -10,16 +10,35 @@ SEO/GEO rollout — code shipped, first two articles LIVE (2026-07-16:
 `/blog/agents-ready-project`, `/blog/spec-driven-development`). Remaining
 moves, guided by `docs/playbooks/seo-geo.md`:
 
-- **[USER] Search consoles** — register Google Search Console +
-  Yandex.Webmaster, hand tokens to the agent (it wires
-  `GOOGLE_SITE_VERIFICATION`/`YANDEX_VERIFICATION` in Vercel + redeploy),
-  then submit `sitemap.xml` in both.
-- **[USER] Apex vs www canonical** — make `ludvik4.dev` (apex) the primary
-  domain in Vercel so `www` 308-redirects to it.
-- **[USER] Off-site start** — Telegram brand channel, Habr account + first
-  adapted article, GitHub org with an AGENTS.md-template repo.
+- **[DONE 2026-07-16] Search consoles** — GSC + Yandex.Webmaster verified for
+  `https://ludvik4.dev` (HTML tag / meta tag), `GOOGLE_SITE_VERIFICATION` +
+  `YANDEX_VERIFICATION` wired in Vercel (Production + Preview), redeployed,
+  `sitemap.xml` submitted in both. GSC indexing requested for both live
+  articles.
+- **[DONE 2026-07-16] Apex vs www canonical** — `ludvik4.dev` is now the
+  primary domain in Vercel; `www.ludvik4.dev` 308-redirects to it.
+- **Off-site handles decided, accounts not yet created** — brand identity:
+  Telegram `@ludvik4pro` (site's `t.me/ludvik4` link was actually the
+  personal account — needs updating once the new channel exists), GitHub
+  `github.com/grooownow` (existing personal account, already owns the
+  `ludvik4` repo — no separate org), Habr `grooownow`, vc.ru `grooownow`
+  (both free; vc.ru offers login via the existing `ludvik4go@yandex.com`
+  Yandex ID). **[USER]** create the Telegram channel + register on
+  Habr/vc.ru under `grooownow`; then update the site's Telegram link and
+  agent adapts the first article for Habr/vc.ru.
+- **[AGENT, on go-ahead]** first public repo on `github.com/grooownow`: an
+  AGENTS.md-template matching article 1 (needs explicit go-ahead — new
+  public content).
 - **[AGENT, on go-ahead] Per-article OG covers** — generate share images
   from article titles; agreed to do before distributing to Telegram/Habr.
+- **Semantic core + content plan** (2026-07-19) — DONE: 44-query scored core
+  (`docs/seo-core.md`), priority recalibrated by winnability, and
+  `docs/content-plan.md` (topic clusters: pillar + supporting, cross-linked,
+  publishing queue in waves). Method: `docs/specs/seo-core-research.md`; audit
+  that triggered this: `tmp-review/seo-audit.md`. **Next:** write Wave 1
+  (Spec Kit обзор, AGENTS.md пример/шаблон, cursor rules) via `/feature` /
+  the content flow — each binds to its core query. Deferred: commercial-intent
+  pull for `/uslugi/...` service pages (Layer 2, C8–C10 not yet pulled).
 
 ## Next
 

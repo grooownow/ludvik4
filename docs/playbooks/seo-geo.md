@@ -45,7 +45,9 @@ Check: `curl -I https://www.ludvik4.dev` → `308` + `location: https://ludvik4.
 
 ## 3. Publishing an article (recurring)
 
-1. Agent drafts `src/content/blog/<slug>.mdx` with `draft: true`.
+1. Agent picks the next item from `docs/content-plan.md` (bound to a core
+   query in `docs/seo-core.md`) and drafts `src/content/blog/<slug>.mdx` with
+   `draft: true`.
 2. User reviews the text (in the PR or rendered locally via `pnpm dev`).
 3. Agent flips `draft: false`, merges, deploys. The article enters the
    list, sitemap, RSS and llms.txt automatically.
