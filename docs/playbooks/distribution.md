@@ -76,13 +76,15 @@ demote duplicates, and a distinct framing earns the canonical-back link):
 
 ## Per-article distribution matrix
 
-Status: ✅ done · ⏳ pending/moderation · ▫️ todo · — n/a
+Status: ✅ done · ⏳ pending/moderation · 📝 draft ready (`tmp-review/dist/<slug>/`) · ▫️ todo · — n/a
 
 | article (slug)          | Habr            | vc.ru                         | Дзен | X   |
 | ----------------------- | --------------- | ----------------------------- | ---- | --- |
 | agents-ready-project    | ⏳ на модерации | ✅ live (2 коммента, 2 лайка) | ▫️   | ▫️  |
-| spec-driven-development | ▫️              | ▫️                            | ▫️   | ▫️  |
+| spec-driven-development | 📝              | 📝                            | ▫️   | ▫️  |
 | github-spec-kit         | ▫️              | ▫️                            | ▫️   | ▫️  |
+| agents-md-primer        | ▫️              | ▫️                            | ▫️   | ▫️  |
+| cursor-rules            | ▫️              | ▫️                            | ▫️   | ▫️  |
 
 (Agent keeps this matrix current as adaptations are drafted; coworker flips a
 cell to ✅ with the published URL when posted.)
