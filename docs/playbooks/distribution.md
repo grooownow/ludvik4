@@ -22,9 +22,11 @@ published `ludvik4.dev/blog/*` article into off-site reach + GEO signal
   separate approval gate unless the user asks — they follow the approved
   original.
 
-Brand rules on every platform: name **Ludvik4**, team voice («мы»), no personal
-names / no location (`site-v0.md` positioning). Always end with one link to the
-original on `ludvik4.dev` — that keeps the site the canonical source.
+Brand rules on **Habr / vc.ru / Дзен**: name **Ludvik4**, team voice («мы»), no
+personal names / no location (`site-v0.md` positioning). **X is the exception**
+— a personal founder account (`@groownow`, «Kate»), **first-person** voice; it
+links to `ludvik4.dev` as the author sharing her own work. Every platform ends
+with a link back to the original — the site stays the canonical source.
 
 ## Platforms — tiered
 
@@ -43,8 +45,9 @@ original on `ludvik4.dev` — that keeps the site the canonical source.
   Payoff: 30M+ visits/day + fast Yandex indexation (an SEO bonus, not just
   reach). Link back.
 - **X (Twitter)** — a 3–5 post thread: the article's key takeaways + link.
-  Low effort, and X posts feed Grok → GEO. This is our "quick announce"
-  channel _instead of_ a Telegram channel for now.
+  Low effort, and X posts feed Grok → GEO. This is the "quick announce"
+  channel _instead of_ a Telegram channel for now. **Personal founder account
+  (`@groownow`, «Kate»), first-person — not a Ludvik4 brand channel.**
 
 ### Tier 3 — opportunistic
 
@@ -80,9 +83,9 @@ Status: ✅ done · ⏳ pending/moderation · 📝 draft ready (`tmp-review/dist
 
 | article (slug)          | Habr            | vc.ru                         | Дзен | X   |
 | ----------------------- | --------------- | ----------------------------- | ---- | --- |
-| agents-ready-project    | ⏳ на модерации | ✅ live (2 коммента, 2 лайка) | ▫️   | ▫️  |
+| agents-ready-project    | ⏳ на модерации | ✅ live (2 коммента, 2 лайка) | ▫️   | 📝  |
 | spec-driven-development | 📝              | 📝                            | ▫️   | ▫️  |
-| github-spec-kit         | ▫️              | ▫️                            | ▫️   | ▫️  |
+| github-spec-kit         | 📝              | 📝                            | ▫️   | ▫️  |
 | agents-md-primer        | ▫️              | ▫️                            | ▫️   | ▫️  |
 | cursor-rules            | ▫️              | ▫️                            | ▫️   | ▫️  |
 
