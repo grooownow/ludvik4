@@ -83,11 +83,17 @@ Status: ✅ done · ⏳ pending/moderation · 📝 draft ready (`tmp-review/dist
 
 | article (slug)          | Habr            | vc.ru                         | Дзен | X   |
 | ----------------------- | --------------- | ----------------------------- | ---- | --- |
-| agents-ready-project    | ⏳ на модерации | ✅ live (2 коммента, 2 лайка) | ▫️   | 📝  |
-| spec-driven-development | 📝              | 📝                            | ▫️   | ▫️  |
-| github-spec-kit         | 📝              | 📝                            | ▫️   | ▫️  |
-| agents-md-primer        | ▫️              | ▫️                            | ▫️   | ▫️  |
-| cursor-rules            | ▫️              | ▫️                            | ▫️   | ▫️  |
+| agents-ready-project    | ⏳ на модерации | ✅ live (2 коммента, 2 лайка) | 📝   | 📝  |
+| spec-driven-development | 📝              | 📝                            | 📝   | 📝  |
+| github-spec-kit         | 📝              | 📝                            | 📝   | 📝  |
+| agents-md-primer        | 📝              | — (техн., слабый фит)         | 📝   | 📝  |
+| cursor-rules            | 📝              | — (техн., слабый фит)         | 📝   | 📝  |
+
+All adaptation drafts are ready in `tmp-review/dist/<slug>/` (habr.md, vc.md,
+dzen.md, x.md). vc.ru skipped for the two purely-technical articles (weak fit
+for a business audience) — can be added on request. Habr/vc/Дзен are brand
+(«мы»); X is first-person (personal `@groownow`). Coworker: publish per the
+matrix and flip cells to ✅ with the posted URL.
 
 (Agent keeps this matrix current as adaptations are drafted; coworker flips a
 cell to ✅ with the published URL when posted.)
