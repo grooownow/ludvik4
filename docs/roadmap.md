@@ -24,11 +24,12 @@ moves, guided by `docs/playbooks/seo-geo.md`:
   buyers). Re-tiered: vc.ru + Дзен primary, X (personal `@groownow`) for
   announces, **GitHub public repo as the GEO replacement for Habr**; Telegram
   deferred; Reddit ruled out (no RU dev segment). All vc/Дзен/X adaptation
-  drafts ready in `tmp-review/dist/`. **[COWORKER]** publish per the matrix;
-  **[AGENT]** GitHub AGENTS.md-template repo is the next off-site move.
-- **[AGENT, on go-ahead]** first public repo on `github.com/grooownow`: an
-  AGENTS.md-template matching article 1 (needs explicit go-ahead — new
-  public content).
+  drafts ready in `tmp-review/dist/`. GEO GitHub asset =
+  `grooownow/qa-pilot` — attribution to ludvik4.dev shipped (v0.2.4,
+  2026-07-20). **[COWORKER]** publish per the matrix; **[USER, GitHub UI]**
+  qa-pilot repo About (Website=ludvik4.dev + Topics) and `grooownow` profile
+  bio link. Deferred: `ai-ready-project-starter` repo (not now); `liftkit`
+  stays private.
 - **[AGENT, on go-ahead] Per-article OG covers** — generate share images
   from article titles; agreed to do before distributing to Telegram/Habr.
 - **Semantic core + content plan** (2026-07-19) — DONE: 44-query scored core
@@ -59,7 +60,9 @@ Ideas worth keeping, not yet scoped:
 - **Portfolio / cases** section (incl. FortNoise) — the deferred V1 cut.
 - **Turnstile captcha** on the lead form (`TURNSTILE_*` already supported).
 - Short courses (AI & dev topics for beginners).
-- English version of the site.
+- **Bilingual site (RU / EN)** — user wants ru/en. Extra rationale: the EN
+  audience of `grooownow/qa-pilot` (and other GitHub assets) currently lands on
+  a RU-only site; EN pages make that backlink actually useful for them.
 - Lead moderation dashboard (would introduce DB + auth — big lift).
 
 ## Shipped

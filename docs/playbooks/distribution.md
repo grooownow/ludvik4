@@ -48,10 +48,15 @@ Revised 2026-07-20 after Habr rejected article 1 (see "Dropped" below).
   The "quick announce" channel _instead of_ a Telegram channel. **Personal
   founder account (`@groownow`, «Kate»), first-person — not a brand channel.**
 - **GitHub (public repo)** — not a repost channel, but the main **GEO
-  replacement for Habr**: a genuinely useful public repo (e.g. an
-  AGENTS.md-template matching article 1) with a README linking the site.
-  GitHub is heavily in LLM training data; a useful, starred repo earns
-  citations. One-time build, compounds over time.
+  replacement for Habr**: a genuinely useful public repo with a README linking
+  the site. GitHub is heavily in LLM training data; no promo-rejection problem.
+  Flagship = **`grooownow/qa-pilot`** (public plugin, aligned with our
+  AI-dev niche). Shipped 2026-07-20: README "Made by Ludvik4" + `plugin.json`
+  `author.url` → ludvik4.dev + `claude-code`/`ai-agents` keywords (v0.2.4).
+  **[USER, GitHub UI]** repo About → Website `https://ludvik4.dev` + Topics
+  (`claude-code`, `playwright`, `qa`, `ai-agents`); and link ludvik4.dev in the
+  `grooownow` profile bio. A from-scratch `ai-ready-project-starter` repo is
+  deferred (not now). `liftkit` stays private — never publish.
 
 ### Tier 3 — experiments to test
 
