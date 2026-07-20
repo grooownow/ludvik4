@@ -60,9 +60,11 @@ Ideas worth keeping, not yet scoped:
 - **Portfolio / cases** section (incl. FortNoise) — the deferred V1 cut.
 - **Turnstile captcha** on the lead form (`TURNSTILE_*` already supported).
 - Short courses (AI & dev topics for beginners).
-- **Bilingual site (RU / EN)** — user wants ru/en. Extra rationale: the EN
-  audience of `grooownow/qa-pilot` (and other GitHub assets) currently lands on
-  a RU-only site; EN pages make that backlink actually useful for them.
+- **Full bilingual site (RU / EN)** — a lightweight EN landing `/en` shipped
+  2026-07-20 (entry point for the GitHub/qa-pilot audience). Full bilingual
+  (every page + all articles, i18n routing) is still deferred. Follow-up:
+  point the qa-pilot README "Made by" link to `ludvik4.dev/en` (next qa-pilot
+  release, to avoid update-noise churn).
 - Lead moderation dashboard (would introduce DB + auth — big lift).
 
 ## Shipped
