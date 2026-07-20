@@ -169,6 +169,12 @@ export default function HomePage() {
             >
               Блог
             </Link>
+            <Link
+              href="/en"
+              className="text-muted-foreground hover:text-foreground font-mono text-sm"
+            >
+              EN
+            </Link>
             <Button asChild size="sm">
               <Link href="#contact">Обсудить задачу</Link>
             </Button>
@@ -353,6 +359,9 @@ export default function HomePage() {
           <span className="flex items-center gap-5">
             <Link href="/blog" className="hover:text-foreground">
               Блог
+            </Link>
+            <Link href="/en" className="hover:text-foreground">
+              EN
             </Link>
             <a
               href={TELEGRAM_URL}
