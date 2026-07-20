@@ -11,11 +11,46 @@ import { TurnstileWidget } from "./turnstile-widget";
 
 const initialState: LeadFormState = {};
 
-function SubmitButton() {
+/**
+ * Visible copy for the form. Defaults to Russian (`RU_LEAD_LABELS`); the English
+ * landing (`/en`) passes its own set. Server-side validation errors stay in the
+ * language the action returns them in — out of scope for the lightweight page.
+ */
+export type LeadFormLabels = {
+  nameLabel: string;
+  nameOptional: string;
+  messageLabel: string;
+  messagePlaceholder: string;
+  contactLabel: string;
+  contactPlaceholder: string;
+  submit: string;
+  submitting: string;
+  success: string;
+};
+
+export const RU_LEAD_LABELS: LeadFormLabels = {
+  nameLabel: "Имя",
+  nameOptional: "необязательно",
+  messageLabel: "Задача",
+  messagePlaceholder: "Опишите, что нужно сделать…",
+  contactLabel: "Как с вами связаться",
+  contactPlaceholder: "email или ссылка на мессенджер / телефон",
+  submit: "Отправить заявку",
+  submitting: "Отправляю…",
+  success: "Заявка отправлена — ответим в ближайшее время. Спасибо!",
+};
+
+function SubmitButton({
+  submit,
+  submitting,
+}: {
+  submit: string;
+  submitting: string;
+}) {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" size="lg" className="w-full" disabled={pending}>
-      {pending ? "Отправляю…" : "Отправить заявку"}
+      {pending ? submitting : submit}
     </Button>
   );
 }
@@ -25,13 +60,19 @@ function SubmitButton() {
  * message replaces the form, a failure renders the error (aria-live) and keeps
  * the typed values. The Turnstile widget mounts only when a site key is set.
  */
-export function LeadForm({ turnstileSiteKey }: { turnstileSiteKey?: string }) {
+export function LeadForm({
+  turnstileSiteKey,
+  labels = RU_LEAD_LABELS,
+}: {
+  turnstileSiteKey?: string;
+  labels?: LeadFormLabels;
+}) {
   const [state, formAction] = useActionState(submitLeadAction, initialState);
 
   if (state.ok) {
     return (
       <output className="text-foreground border-border bg-muted/40 block rounded-lg border p-4 text-sm">
-        Заявка отправлена — ответим в ближайшее время. Спасибо!
+        {labels.success}
       </output>
     );
   }
@@ -55,7 +96,8 @@ export function LeadForm({ turnstileSiteKey }: { turnstileSiteKey?: string }) {
 
       <div className="flex flex-col gap-2">
         <Label htmlFor="lead-name">
-          Имя <span className="text-muted-foreground">(необязательно)</span>
+          {labels.nameLabel}{" "}
+          <span className="text-muted-foreground">({labels.nameOptional})</span>
         </Label>
         <Input
           id="lead-name"
@@ -66,25 +108,25 @@ export function LeadForm({ turnstileSiteKey }: { turnstileSiteKey?: string }) {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="lead-message">Задача</Label>
+        <Label htmlFor="lead-message">{labels.messageLabel}</Label>
         <Textarea
           id="lead-message"
           name="message"
           rows={8}
           required
-          placeholder="Опишите, что нужно сделать…"
+          placeholder={labels.messagePlaceholder}
           defaultValue={state.values?.message ?? ""}
           className="min-h-44"
         />
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="lead-contact">Как с вами связаться</Label>
+        <Label htmlFor="lead-contact">{labels.contactLabel}</Label>
         <Input
           id="lead-contact"
           name="contact"
           required
-          placeholder="email или ссылка на мессенджер / телефон"
+          placeholder={labels.contactPlaceholder}
           defaultValue={state.values?.contact ?? ""}
         />
       </div>
@@ -97,7 +139,7 @@ export function LeadForm({ turnstileSiteKey }: { turnstileSiteKey?: string }) {
         </p>
       ) : null}
 
-      <SubmitButton />
+      <SubmitButton submit={labels.submit} submitting={labels.submitting} />
     </form>
   );
 }

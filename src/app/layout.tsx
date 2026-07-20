@@ -46,6 +46,7 @@ export const metadata: Metadata = {
   applicationName: SITE_NAME,
   alternates: {
     canonical: "/",
+    languages: { ru: "/", en: "/en", "x-default": "/" },
     types: { "application/rss+xml": "/blog/rss.xml" },
   },
   robots: {

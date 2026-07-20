@@ -6,10 +6,11 @@ import sitemap from "./sitemap";
 const baseURL = env.NEXT_PUBLIC_APP_URL;
 
 describe("sitemap", () => {
-  it("includes the landing and the blog list", () => {
+  it("includes the landing, the English landing, and the blog list", () => {
     const urls = sitemap().map((entry) => entry.url);
 
     expect(urls).toContain(`${baseURL}/`);
+    expect(urls).toContain(`${baseURL}/en`);
     expect(urls).toContain(`${baseURL}/blog`);
   });
 
@@ -22,8 +23,8 @@ describe("sitemap", () => {
     for (const article of getAllArticles().filter((a) => a.draft)) {
       expect(urls).not.toContain(`${baseURL}/blog/${article.slug}`);
     }
-    // Sanity: nothing beyond landing + blog list + published articles.
-    expect(urls).toHaveLength(2 + getPublishedArticles().length);
+    // Sanity: nothing beyond landing + /en + blog list + published articles.
+    expect(urls).toHaveLength(3 + getPublishedArticles().length);
   });
 
   it("excludes authenticated and auth-entry routes", () => {

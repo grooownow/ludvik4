@@ -15,6 +15,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      // English landing (lightweight) — entry point for the international
+      // (GitHub/qa-pilot) audience; hreflang alternates live in page metadata.
+      url: `${baseURL}/en`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
       url: `${baseURL}/blog`,
       changeFrequency: "weekly",
       priority: 0.8,
