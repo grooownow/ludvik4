@@ -19,11 +19,13 @@ moves, guided by `docs/playbooks/seo-geo.md`:
   primary domain in Vercel; `www.ludvik4.dev` 308-redirects to it.
 - **Off-site distribution** — plan: `docs/playbooks/distribution.md` (agent
   drafts per-platform adaptations → coworker publishes). Status (2026-07-19):
-  vc.ru article 1 LIVE (2 comments, 2 likes); Habr article 1 on moderation;
-  Telegram deferred (no audience — using X for quick announces instead);
-  Reddit ruled out for RU content. GitHub `github.com/grooownow` owns the
-  repo. **[COWORKER]** publish adaptations per the matrix; **[AGENT]** draft
-  Habr/vc.ru/Дзен/X adaptations for each published article.
+  vc.ru article 1 LIVE (2 comments, 2 likes); **Habr DROPPED** — article 1
+  rejected 2026-07-20 (anti-promo/anti-link/AI-gen; audience = devs not
+  buyers). Re-tiered: vc.ru + Дзен primary, X (personal `@groownow`) for
+  announces, **GitHub public repo as the GEO replacement for Habr**; Telegram
+  deferred; Reddit ruled out (no RU dev segment). All vc/Дзен/X adaptation
+  drafts ready in `tmp-review/dist/`. **[COWORKER]** publish per the matrix;
+  **[AGENT]** GitHub AGENTS.md-template repo is the next off-site move.
 - **[AGENT, on go-ahead]** first public repo on `github.com/grooownow`: an
   AGENTS.md-template matching article 1 (needs explicit go-ahead — new
   public content).

@@ -30,40 +30,54 @@ with a link back to the original — the site stays the canonical source.
 
 ## Platforms — tiered
 
-### Tier 1 — every article (highest leverage)
+Revised 2026-07-20 after Habr rejected article 1 (see "Dropped" below).
 
-- **Habr** — full technical adaptation, real hubs/tags, link back. Habr is the
-  single strongest GEO lever: heavily represented in RU LLM training data.
-  Audience: 15–40M/mo, core developers.
+### Tier 1 — every article
+
 - **vc.ru** — business-flavoured adaptation (запуск MVP, автоматизация,
-  стоимость/сроки, личный опыт), discussion hook at the end, link back.
-  Working already: article 1 live with early comments/likes.
+  стоимость/сроки, личный опыт), discussion hook, link back. Best fit for us:
+  the audience is founders/business (actual buyers, unlike Habr's developers),
+  it tolerates self-links, and it already works — article 1 live with early
+  comments/likes.
+- **Яндекс Дзен** — simplified, broad-audience version (short, plain). 30M+
+  visits/day + fast Yandex indexation (an SEO bonus, not just reach). Link back.
 
-### Tier 2 — secondary, low effort
+### Tier 2 — announce / compounding, low effort
 
-- **Яндекс Дзен** — simplified, broad-audience version (short, plain framing).
-  Payoff: 30M+ visits/day + fast Yandex indexation (an SEO bonus, not just
-  reach). Link back.
-- **X (Twitter)** — a 3–5 post thread: the article's key takeaways + link.
-  Low effort, and X posts feed Grok → GEO. This is the "quick announce"
-  channel _instead of_ a Telegram channel for now. **Personal founder account
-  (`@groownow`, «Kate»), first-person — not a Ludvik4 brand channel.**
+- **X (Twitter)** — a 3–5 post thread: key takeaways + link. Feeds Grok → GEO.
+  The "quick announce" channel _instead of_ a Telegram channel. **Personal
+  founder account (`@groownow`, «Kate»), first-person — not a brand channel.**
+- **GitHub (public repo)** — not a repost channel, but the main **GEO
+  replacement for Habr**: a genuinely useful public repo (e.g. an
+  AGENTS.md-template matching article 1) with a README linking the site.
+  GitHub is heavily in LLM training data; a useful, starred repo earns
+  citations. One-time build, compounds over time.
 
-### Tier 3 — opportunistic
+### Tier 3 — experiments to test
 
-- **Tproger / Proglib** — targeted RU dev media, small traffic; pitch or
-  republish only the strongest evergreen articles.
-- **VK** (group/articles) — only if a social presence is built later.
+- **VK** — post into relevant dev/startup communities (not just an own page);
+  large RU reach, rules vary per community.
+- **Spark.ru** — startup/business community, vc.ru-like; try the business-angle
+  articles.
+- **Tproger / Proglib** — RU dev media, pitch-only, small traffic; strongest
+  evergreen pieces only.
 
-### Not now (with reason)
+### Dropped / on hold (with reason)
 
-- **Telegram channel** — deferred: zero audience, high upkeep, low early ROI.
-  Revisit once there's inbound worth announcing to a captive audience.
-- **Reddit** — not a fit for RU content: RU dev/AI communities are thin and
-  poorly indexed. English AI subs (`r/ClaudeAI`, `r/AI_Agents`, `r/cursor`,
-  `r/ChatGPTCoding`) are strong but English — a separate play for a future
-  EN version of the site, not this RU content.
-- **DTF** — audience is gamers/pop-culture; wrong fit for B2B dev services.
+- **Habr** — article 1 **rejected without explanation (2026-07-20)**. Habr
+  punishes anything that reads as content-marketing: self-links + CTAs +
+  likely AI-gen detection = exactly our format. Its audience is developers
+  (not buyers of dev services), and the bar wants genuinely authorial,
+  link-free pieces. Dropping it costs us Habr's GEO weight (it was the
+  strongest LLM-training-data lever) — compensate with **GitHub + vc/Дзен**.
+  Revisit only with an original, no-link, personal-account piece — more effort
+  than it's worth now.
+- **Telegram channel** — deferred: zero audience, high upkeep.
+- **Reddit** — no viable Russian-speaking dev segment (confirmed 2026-07-20):
+  dedicated RU programming subs are effectively absent; RU devs sit on
+  vc/Дзен/Telegram, not Reddit. English AI subs (`r/ClaudeAI`, `r/AI_Agents`,
+  `r/cursor`) are strong but English — a play for a future EN site only.
+- **DTF** — gamers/pop-culture; wrong fit.
 
 ## Adaptation rules per platform
 
@@ -79,42 +93,42 @@ demote duplicates, and a distinct framing earns the canonical-back link):
 
 ## Per-article distribution matrix
 
-Status: ✅ done · ⏳ pending/moderation · 📝 draft ready (`tmp-review/dist/<slug>/`) · ▫️ todo · — n/a
+Status: ✅ done · 📝 draft ready (`tmp-review/dist/<slug>/`) · ▫️ todo · — n/a · ✕ dropped
 
-| article (slug)          | Habr            | vc.ru                         | Дзен | X   |
-| ----------------------- | --------------- | ----------------------------- | ---- | --- |
-| agents-ready-project    | ⏳ на модерации | ✅ live (2 коммента, 2 лайка) | 📝   | 📝  |
-| spec-driven-development | 📝              | 📝                            | 📝   | 📝  |
-| github-spec-kit         | 📝              | 📝                            | 📝   | 📝  |
-| agents-md-primer        | 📝              | — (техн., слабый фит)         | 📝   | 📝  |
-| cursor-rules            | 📝              | — (техн., слабый фит)         | 📝   | 📝  |
+| article (slug)          | vc.ru                         | Дзен | X (личный) | Habr (снят) |
+| ----------------------- | ----------------------------- | ---- | ---------- | ----------- |
+| agents-ready-project    | ✅ live (2 коммента, 2 лайка) | 📝   | 📝         | ✕ отклонён  |
+| spec-driven-development | 📝                            | 📝   | 📝         | ✕           |
+| github-spec-kit         | 📝                            | 📝   | 📝         | ✕           |
+| agents-md-primer        | — (техн.)                     | 📝   | 📝         | ✕           |
+| cursor-rules            | — (техн.)                     | 📝   | 📝         | ✕           |
 
-All adaptation drafts are ready in `tmp-review/dist/<slug>/` (habr.md, vc.md,
-dzen.md, x.md). vc.ru skipped for the two purely-technical articles (weak fit
-for a business audience) — can be added on request. Habr/vc/Дзен are brand
+Drafts in `tmp-review/dist/<slug>/` (vc.md, dzen.md, x.md). **Habr dropped** —
+the `habr.md` drafts are now unused (keep as raw material for a future GitHub
+README or an original Habr piece; otherwise deletable). vc/Дзен are brand
 («мы»); X is first-person (personal `@groownow`). Coworker: publish per the
-matrix and flip cells to ✅ with the posted URL.
+matrix, flip cells to ✅ with the posted URL.
 
 (Agent keeps this matrix current as adaptations are drafted; coworker flips a
 cell to ✅ with the published URL when posted.)
 
 ## Coworker checklist (per article)
 
-1. Agent drops adaptations in `tmp-review/dist/<slug>/` (habr.md, vc.md,
-   dzen.md, x.md).
-2. Publish **Habr** + **vc.ru** (Tier 1) — paste, set tags/hubs, confirm the
-   link back to the original is intact.
-3. Repost the **Дзен** version; post the **X** thread.
+1. Agent drops adaptations in `tmp-review/dist/<slug>/` (vc.md, dzen.md, x.md).
+2. Publish **vc.ru** + **Дзен** (Tier 1) — paste, confirm the link back to the
+   original is intact.
+3. Post the **X** thread (personal `@groownow`, first-person).
 4. In the matrix above, flip the cell to ✅ and paste the published URL.
 5. After ~3–7 days, note early metrics (views / comments / likes) — feeds the
    weekly review in `analytics.md`.
 
 ## Priority order to clear the backlog
 
-1. Finish article 1 everywhere (Habr is on moderation; add Дзен + X).
-2. Article 2 (spec-driven-development) → Habr + vc.ru.
-3. Article 3 (github-spec-kit) → Habr + vc.ru.
-4. Backfill Дзен + X for articles 2–3.
+1. Finish article 1: add Дзен + X (vc.ru already live).
+2. Articles 2–3 (spec-driven, github-spec-kit) → vc.ru + Дзен + X.
+3. Articles 4–5 (agents-md-primer, cursor-rules) → Дзен + X (vc.ru n/a).
+4. Test one experiment platform (VK community or Spark.ru) with the strongest
+   article; if it lands, add it to the rotation.
 
 Cross-posting cadence trails article publishing by a few days — publish on the
 site first (canonical), then distribute.
