@@ -13,7 +13,7 @@ published `ludvik4.dev/blog/*` article into off-site reach + GEO signal
 **Division of labour (agreed 2026-07-19):**
 
 - **Agent** writes the per-platform _adaptations_ (not copy-paste) as drafts in
-  `tmp-review/dist/<slug>/` — one file per platform, each ending with a link
+  `docs/distribution/<slug>/` — one file per platform, each ending with a link
   back to the original.
 - **Coworker** publishes: pastes each adaptation into the platform, handles
   accounts/moderation, and logs status + early metrics in the tracking table
@@ -98,7 +98,7 @@ demote duplicates, and a distinct framing earns the canonical-back link):
 
 ## Per-article distribution matrix
 
-Status: ✅ done · 📝 draft ready (`tmp-review/dist/<slug>/`) · ▫️ todo · — n/a · ✕ dropped
+Status: ✅ done · 📝 draft ready (`docs/distribution/<slug>/`) · ▫️ todo · — n/a · ✕ dropped
 
 | article (slug)          | vc.ru                         | Дзен | X (личный) | Habr (снят) |
 | ----------------------- | ----------------------------- | ---- | ---------- | ----------- |
@@ -108,18 +108,19 @@ Status: ✅ done · 📝 draft ready (`tmp-review/dist/<slug>/`) · ▫️ todo 
 | agents-md-primer        | — (техн.)                     | 📝   | 📝         | ✕           |
 | cursor-rules            | — (техн.)                     | 📝   | 📝         | ✕           |
 
-Drafts in `tmp-review/dist/<slug>/` (vc.md, dzen.md, x.md). **Habr dropped** —
-the `habr.md` drafts are now unused (keep as raw material for a future GitHub
-README or an original Habr piece; otherwise deletable). vc/Дзен are brand
-(«мы»); X is first-person (personal `@groownow`). Coworker: publish per the
-matrix, flip cells to ✅ with the posted URL.
+Drafts live in `docs/distribution/<slug>/` (`vc.md`, `dzen.md`, `x.md`) —
+**committed to the repo**, not the git-ignored `tmp-review/`, so they persist
+and version (they're durable deliverables for the coworker, not throwaway
+review copies). **Habr dropped**: no `habr.md` files (removed). vc/Дзен are
+brand («мы»); X is first-person (personal `@groownow`). Coworker: publish per
+the matrix, flip cells to ✅ with the posted URL.
 
 (Agent keeps this matrix current as adaptations are drafted; coworker flips a
 cell to ✅ with the published URL when posted.)
 
 ## Coworker checklist (per article)
 
-1. Agent drops adaptations in `tmp-review/dist/<slug>/` (vc.md, dzen.md, x.md).
+1. Agent drops adaptations in `docs/distribution/<slug>/` (vc.md, dzen.md, x.md).
 2. Publish **vc.ru** + **Дзен** (Tier 1) — paste, confirm the link back to the
    original is intact.
 3. Post the **X** thread (personal `@groownow`, first-person).

@@ -24,7 +24,7 @@ moves, guided by `docs/playbooks/seo-geo.md`:
   buyers). Re-tiered: vc.ru + Дзен primary, X (personal `@groownow`) for
   announces, **GitHub public repo as the GEO replacement for Habr**; Telegram
   deferred; Reddit ruled out (no RU dev segment). All vc/Дзен/X adaptation
-  drafts ready in `tmp-review/dist/`. GEO GitHub asset =
+  drafts ready in `docs/distribution/`. GEO GitHub asset =
   `grooownow/qa-pilot` — attribution to ludvik4.dev shipped (v0.2.4,
   2026-07-20). **[COWORKER]** publish per the matrix; **[USER, GitHub UI]**
   qa-pilot repo About (Website=ludvik4.dev + Topics) and `grooownow` profile
