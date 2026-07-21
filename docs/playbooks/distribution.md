@@ -120,10 +120,14 @@ cell to ✅ with the published URL when posted.)
 
 ## Coworker checklist (per article)
 
-1. Agent drops adaptations in `docs/distribution/<slug>/` (vc.md, dzen.md, x.md).
-2. Publish **vc.ru** + **Дзен** (Tier 1) — paste, confirm the link back to the
-   original is intact.
-3. Post the **X** thread (personal `@groownow`, first-person).
+1. Adaptations are in `docs/distribution/<slug>/` (`vc.md`, `dzen.md`, `x.md`).
+   The article's **cover card** (full-res PNG) sits in the same folder — attach
+   it to every post (the web-optimised copy is at `public/blog/<slug>/card.jpg`;
+   for social, upload the full-res PNG).
+2. Publish **vc.ru** + **Дзен** (Tier 1) — paste text, **attach the card**,
+   confirm the link back to the original is intact.
+3. Post the **X** thread (personal `@groownow`, first-person) — attach the card
+   to the first post.
 4. In the matrix above, flip the cell to ✅ and paste the published URL.
 5. After ~3–7 days, note early metrics (views / comments / likes) — feeds the
    weekly review in `analytics.md`.

@@ -7,14 +7,25 @@ import { z } from "zod";
 // fields throw at load time — and loading happens during `next build`
 // (generateStaticParams / sitemap / RSS), so a bad article fails the build
 // instead of rendering a broken card (docs/specs/seo-geo-strategy.md).
-export const articleFrontmatterSchema = z.object({
-  title: z.string().min(1),
-  description: z.string().min(1),
-  // ISO calendar date (YYYY-MM-DD) — used for sorting, sitemap lastModified
-  // and RSS pubDate.
-  date: z.iso.date(),
-  draft: z.boolean().default(false),
-});
+export const articleFrontmatterSchema = z
+  .object({
+    title: z.string().min(1),
+    description: z.string().min(1),
+    // ISO calendar date (YYYY-MM-DD) — used for sorting, sitemap lastModified
+    // and RSS pubDate.
+    date: z.iso.date(),
+    draft: z.boolean().default(false),
+    // Optional cover image served from public/ (path like
+    // `/blog/<slug>/card.jpg`). When set it becomes the article hero, the list
+    // thumbnail, the OG/Twitter share image and the Article JSON-LD image.
+    // `coverAlt` is then required (a11y + SEO) — enforced below.
+    cover: z.string().min(1).optional(),
+    coverAlt: z.string().min(1).optional(),
+  })
+  .refine((data) => !data.cover || Boolean(data.coverAlt), {
+    message: "coverAlt is required when cover is set",
+    path: ["coverAlt"],
+  });
 
 export type ArticleFrontmatter = z.infer<typeof articleFrontmatterSchema>;
 

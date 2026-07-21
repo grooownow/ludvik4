@@ -1,6 +1,7 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import {
+  articleFrontmatterSchema,
   getAllArticles,
   getPublishedArticles,
   getPublishedArticleBySlug,
@@ -68,6 +69,33 @@ describe("getPublishedArticleBySlug", () => {
     expect(getPublishedArticleBySlug("no-such-article", VALID_DIR)).toBe(
       undefined,
     );
+  });
+});
+
+describe("articleFrontmatterSchema — cover", () => {
+  const base = { title: "T", description: "D", date: "2026-01-01" };
+
+  it("rejects a cover without coverAlt (a11y/SEO)", () => {
+    const result = articleFrontmatterSchema.safeParse({
+      ...base,
+      cover: "/blog/x/card.jpg",
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it("accepts a cover together with coverAlt", () => {
+    const result = articleFrontmatterSchema.safeParse({
+      ...base,
+      cover: "/blog/x/card.jpg",
+      coverAlt: "A description",
+    });
+
+    expect(result.success).toBe(true);
+  });
+
+  it("accepts an article with no cover at all", () => {
+    expect(articleFrontmatterSchema.safeParse(base).success).toBe(true);
   });
 });
 

@@ -48,6 +48,27 @@ suggestions.
   (`docs/site-v0.md` → Позиционирование). Every article ends with a CTA
   linking `/#contact`.
 
+## Cover image
+
+Every article gets one on-brand cover card. The goal is a picture on every
+article; it stays technically optional (no `cover` → article renders without a
+hero, default OG).
+
+- **Where:** the web-optimised copy at `public/blog/<slug>/card.jpg` (the site
+  serves it). The full-resolution source lives in `docs/distribution/<slug>/`
+  (the coworker attaches that to social posts).
+- **Format:** 16:9 (~1600×900), JPEG/WebP up to ~250 KB for the web copy.
+  Optimise from the source, e.g. `sips -Z 1600 -s format jpeg -s formatOptions
+80 <src>.png --out public/blog/<slug>/card.jpg`.
+- **Source:** generated or free-licensed; brand style (rose palette); no
+  copyright, watermarks or third-party logos; on-topic.
+- **Frontmatter:** `cover: /blog/<slug>/card.jpg` **plus** `coverAlt` (a
+  meaningful description — a11y + SEO). `cover` without `coverAlt` fails the
+  build (zod refine).
+
+When set, the cover is wired automatically: article hero, `/blog` list
+thumbnail, OG/Twitter share image, and the Article JSON-LD `image`.
+
 ## Publishing flow
 
 1. Draft ships with `draft: true` — invisible in list/sitemap/RSS/llms.txt.
@@ -65,4 +86,6 @@ suggestions.
 - [ ] Comparison section names concrete alternatives
 - [ ] Frontmatter valid (`title`, `description`, `date`, `draft`) — the
       build fails on malformed frontmatter, don't rely on that as review
+- [ ] Cover: `cover` + `coverAlt` set (or intentionally none) — on-brand 16:9,
+      optimised to `public/blog/<slug>/card.jpg`
 - [ ] CTA to `/#contact` present; no names/location leaked

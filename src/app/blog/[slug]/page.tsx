@@ -1,4 +1,5 @@
 import type { Metadata, Route } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
@@ -44,7 +45,20 @@ export async function generateMetadata({
       description: article.description,
       url: `/blog/${article.slug}`,
       publishedTime: article.date,
+      ...(article.cover && {
+        images: [
+          {
+            url: article.cover,
+            width: 1600,
+            height: 900,
+            alt: article.coverAlt ?? article.title,
+          },
+        ],
+      }),
     },
+    ...(article.cover && {
+      twitter: { card: "summary_large_image", images: [article.cover] },
+    }),
   };
 }
 
@@ -125,6 +139,7 @@ export default async function ArticlePage({
     datePublished: article.date,
     inLanguage: "ru",
     url: `${baseURL}/blog/${article.slug}`,
+    ...(article.cover && { image: `${baseURL}${article.cover}` }),
     author: { "@type": "Organization", name: "Ludvik4", url: baseURL },
     publisher: { "@type": "Organization", name: "Ludvik4", url: baseURL },
   };
@@ -163,6 +178,17 @@ export default async function ArticlePage({
           <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-balance sm:text-4xl">
             {article.title}
           </h1>
+          {article.cover ? (
+            <Image
+              src={article.cover}
+              alt={article.coverAlt ?? article.title}
+              width={1600}
+              height={900}
+              priority
+              sizes="(min-width: 768px) 768px, 100vw"
+              className="border-border mt-6 aspect-video w-full rounded-2xl border object-cover"
+            />
+          ) : null}
           <MDXRemote source={article.content} components={mdxComponents} />
         </article>
 

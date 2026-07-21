@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { getPublishedArticles } from "@/features/blog";
@@ -63,6 +64,16 @@ export default function BlogPage() {
               href={`/blog/${article.slug}`}
               className="border-border bg-card hover:border-primary/40 block rounded-2xl border p-6 transition-colors"
             >
+              {article.cover ? (
+                <Image
+                  src={article.cover}
+                  alt={article.coverAlt ?? article.title}
+                  width={1600}
+                  height={900}
+                  sizes="(min-width: 768px) 720px, 100vw"
+                  className="mb-4 aspect-video w-full rounded-xl object-cover"
+                />
+              ) : null}
               <time
                 dateTime={article.date}
                 className="text-muted-foreground font-mono text-xs"
