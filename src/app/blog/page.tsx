@@ -40,7 +40,7 @@ export default function BlogPage() {
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-14">
+      <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-14">
         <p className="text-primary mb-3 font-mono text-xs font-semibold tracking-widest uppercase">
           Блог
         </p>
@@ -62,28 +62,30 @@ export default function BlogPage() {
             <Link
               key={article.slug}
               href={`/blog/${article.slug}`}
-              className="border-border bg-card hover:border-primary/40 block rounded-2xl border p-6 transition-colors"
+              className="border-border bg-card hover:border-primary/40 flex flex-col gap-4 rounded-2xl border p-6 transition-colors sm:flex-row sm:items-center sm:gap-6"
             >
+              <div className="flex-1">
+                <time
+                  dateTime={article.date}
+                  className="text-muted-foreground font-mono text-xs"
+                >
+                  {formatDate(article.date)}
+                </time>
+                <h2 className="mt-2 text-lg font-bold">{article.title}</h2>
+                <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+                  {article.description}
+                </p>
+              </div>
               {article.cover ? (
                 <Image
                   src={article.cover}
                   alt={article.coverAlt ?? article.title}
                   width={1600}
                   height={900}
-                  sizes="(min-width: 768px) 720px, 100vw"
-                  className="mb-4 aspect-video w-full rounded-xl object-cover"
+                  sizes="(min-width: 640px) 224px, 100vw"
+                  className="aspect-video w-full rounded-xl object-cover sm:w-56 sm:shrink-0"
                 />
               ) : null}
-              <time
-                dateTime={article.date}
-                className="text-muted-foreground font-mono text-xs"
-              >
-                {formatDate(article.date)}
-              </time>
-              <h2 className="mt-2 text-lg font-bold">{article.title}</h2>
-              <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
-                {article.description}
-              </p>
             </Link>
           ))}
         </div>
