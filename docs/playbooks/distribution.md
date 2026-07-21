@@ -142,3 +142,13 @@ cell to ✅ with the published URL when posted.)
 
 Cross-posting cadence trails article publishing by a few days — publish on the
 site first (canonical), then distribute.
+
+## Profile assets
+
+Social-profile images live in `docs/distribution/profiles/`:
+
+- `x-avatar.png` (1254×1254), `x-cover.png` (2172×724, 3:1) — the **personal**
+  X account (`@groownow`, «Kate»).
+
+Brand accounts (vc.ru, etc.) use the Ludvik4 logo/brand from `design.pen`, not
+the personal avatar.
