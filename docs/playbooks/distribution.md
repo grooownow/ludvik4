@@ -13,7 +13,8 @@ published `ludvik4.dev/blog/*` article into off-site reach + GEO signal
 **Division of labour (agreed 2026-07-19):**
 
 - **Agent** writes the per-platform _adaptations_ (not copy-paste) as drafts in
-  `docs/distribution/<slug>/` — one file per platform, each ending with a link
+  `src/content/blog/<slug>/` (beside the article — see
+  `src/content/blog/README.md`) — one file per platform, each ending with a link
   back to the original.
 - **Coworker** publishes: pastes each adaptation into the platform, handles
   accounts/moderation, and logs status + early metrics in the tracking table
@@ -98,7 +99,7 @@ demote duplicates, and a distinct framing earns the canonical-back link):
 
 ## Per-article distribution matrix
 
-Status: ✅ done · 📝 draft ready (`docs/distribution/<slug>/`) · ▫️ todo · — n/a · ✕ dropped
+Status: ✅ done · 📝 draft ready (`src/content/blog/<slug>/`) · ▫️ todo · — n/a · ✕ dropped
 
 | article (slug)          | vc.ru                         | Дзен | X (личный) | Habr (снят) |
 | ----------------------- | ----------------------------- | ---- | ---------- | ----------- |
@@ -108,10 +109,11 @@ Status: ✅ done · 📝 draft ready (`docs/distribution/<slug>/`) · ▫️ tod
 | agents-md-primer        | — (техн.)                     | 📝   | 📝         | ✕           |
 | cursor-rules            | — (техн.)                     | 📝   | 📝         | ✕           |
 
-Drafts live in `docs/distribution/<slug>/` (`vc.md`, `dzen.md`, `x.md`) —
-**committed to the repo**, not the git-ignored `tmp-review/`, so they persist
-and version (they're durable deliverables for the coworker, not throwaway
-review copies). **Habr dropped**: no `habr.md` files (removed). vc/Дзен are
+Drafts live beside the article in `src/content/blog/<slug>/` (`vc.md`,
+`dzen.md`, `x.md` — see `src/content/blog/README.md`) — **committed to the
+repo**, not the git-ignored `tmp-review/`, so they persist and version (they're
+durable deliverables for the coworker, not throwaway review copies). **Habr
+dropped**: no `habr.md` files (removed). vc/Дзен are
 brand («мы»); X is first-person (personal `@groownow`). Coworker: publish per
 the matrix, flip cells to ✅ with the posted URL.
 
@@ -120,10 +122,10 @@ cell to ✅ with the published URL when posted.)
 
 ## Coworker checklist (per article)
 
-1. Adaptations are in `docs/distribution/<slug>/` (`vc.md`, `dzen.md`, `x.md`).
-   The article's **cover card** (full-res PNG) sits in the same folder — attach
-   it to every post (the web-optimised copy is at `public/blog/<slug>/card.jpg`;
-   for social, upload the full-res PNG).
+1. Adaptations are in `src/content/blog/<slug>/` (`vc.md`, `dzen.md`, `x.md`).
+   The article's **cover card** (full-res PNG, `card.png`) sits in the same
+   folder — attach it to every post (the web-optimised copy is at
+   `public/blog/<slug>/card.jpg`; for social, upload the full-res PNG).
 2. Publish **vc.ru** + **Дзен** (Tier 1) — paste text, **attach the card**,
    confirm the link back to the original is intact.
 3. Post the **X** thread (personal `@groownow`, first-person) — attach the card
@@ -145,7 +147,7 @@ site first (canonical), then distribute.
 
 ## Profile assets
 
-Social-profile images live in `docs/distribution/profiles/`:
+Social-profile images live in `docs/brand/`:
 
 - `x-avatar.png` (1254×1254), `x-cover.png` (2172×724, 3:1) — the **personal**
   X account (`@groownow`, «Kate»).

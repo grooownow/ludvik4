@@ -6,52 +6,22 @@ writing detail here.
 
 ## Now
 
-SEO/GEO rollout — **5 articles LIVE** with per-article cover images; blog
-layout widened to match the home (`max-w-5xl`, horizontal list cards); publish
-dates spread across 2026-06-11…07-20 for an organic cadence. Remaining moves,
+SEO/GEO rollout — **5 articles LIVE** with per-article covers. Remaining moves,
 guided by `docs/playbooks/seo-geo.md`:
 
-- **[USER] After each deploy — GSC indexing.** Request indexing in Google
-  Search Console for the three newer URLs (not yet done): `/blog/github-spec-kit`,
-  `/blog/agents-md-primer`, `/blog/cursor-rules`.
-- **[USER, optional] vc.ru brand bio** — variant not yet chosen (3 options
-  offered in chat); pick one and it gets recorded as the canonical brand bio.
-
-- **[DONE 2026-07-16] Search consoles** — GSC + Yandex.Webmaster verified for
-  `https://ludvik4.dev` (HTML tag / meta tag), `GOOGLE_SITE_VERIFICATION` +
-  `YANDEX_VERIFICATION` wired in Vercel (Production + Preview), redeployed,
-  `sitemap.xml` submitted in both. GSC indexing requested for both live
-  articles.
-- **[DONE 2026-07-16] Apex vs www canonical** — `ludvik4.dev` is now the
-  primary domain in Vercel; `www.ludvik4.dev` 308-redirects to it.
-- **Off-site distribution** — plan: `docs/playbooks/distribution.md` (agent
-  drafts per-platform adaptations → coworker publishes). Status (2026-07-19):
-  vc.ru article 1 LIVE (2 comments, 2 likes); **Habr DROPPED** — article 1
-  rejected 2026-07-20 (anti-promo/anti-link/AI-gen; audience = devs not
-  buyers). Re-tiered: vc.ru + Дзен primary, X (personal `@groownow`) for
-  announces, **GitHub public repo as the GEO replacement for Habr**; Telegram
-  deferred; Reddit ruled out (no RU dev segment). All vc/Дзен/X adaptation
-  drafts ready in `docs/distribution/`. GEO GitHub asset =
-  `grooownow/qa-pilot` — attribution to ludvik4.dev shipped (v0.2.4,
-  2026-07-20). **[COWORKER]** publish per the matrix (text + card from
-  `docs/distribution/<slug>/`); qa-pilot About-link + `grooownow` bio link
-  **DONE by user**; X profile assets saved in `docs/distribution/profiles/`.
-  Deferred: `ai-ready-project-starter` repo (not now); `liftkit` stays private.
-- **[DONE 2026-07-21] Per-article covers** — one brand card per article →
-  hero + `/blog` list thumbnail + OG/Twitter + Article JSON-LD image. Optional
-  `cover`/`coverAlt` frontmatter (zod-refined); rule in `docs/rules/content.md`.
-  Web copy `public/blog/<slug>/card.jpg`, source `docs/distribution/<slug>/card.png`.
-- **Semantic core + content plan** (2026-07-19) — DONE: 44-query scored core
-  (`docs/seo-core.md`), priority recalibrated by winnability, and
-  `docs/content-plan.md` (topic clusters: pillar + supporting, cross-linked,
-  publishing queue in waves). Method: `docs/specs/seo-core-research.md`; audit
-  that triggered this: `tmp-review/seo-audit.md`. **Wave 1 DONE (3/3,
-  2026-07-19):** github-spec-kit, agents-md-primer, cursor-rules — AGENTS.md
-  and SDD clusters now have pillar + supporting. Off-site adaptations for all 5
-  articles are drafted (`docs/distribution/`). **Next content step: Wave 2** —
-  pillar «AI-агенты для разработки» + Claude Code long-tail (настройка / vs
-  Cursor / аналоги). Deferred: commercial-intent pull for `/uslugi/...` service
-  pages (Layer 2, C8–C10 not yet pulled).
+- **[USER] GSC indexing (3 newer URLs).** Request indexing in Google Search
+  Console for `/blog/github-spec-kit`, `/blog/agents-md-primer`,
+  `/blog/cursor-rules` (both first articles already requested).
+- **[USER, optional] vc.ru brand bio** — pick one of the 3 options offered in
+  chat; the chosen one becomes the canonical brand bio.
+- **Off-site distribution (ongoing)** — plan + status matrix:
+  `docs/playbooks/distribution.md`. Adaptations for all 5 articles live beside
+  each article (`src/content/blog/<slug>/`); **[COWORKER]** publishes per the
+  matrix. Live so far: vc.ru article 1. Habr dropped; GEO now runs through the
+  public `grooownow/qa-pilot` repo (attribution shipped v0.2.4).
+- **Content — Wave 2 next** (`docs/content-plan.md`): build the pillar
+  «AI-агенты для разработки» + Claude Code long-tail (настройка / vs Cursor /
+  аналоги). Deferred: commercial-intent pull for `/uslugi/...` (Layer 2).
 
 ## Next
 
@@ -81,6 +51,18 @@ Ideas worth keeping, not yet scoped:
 
 Most recent first:
 
+- **Per-article covers** (2026-07-21) — one brand card per article → hero +
+  `/blog` thumbnail + OG/Twitter + Article JSON-LD image; optional
+  `cover`/`coverAlt` frontmatter (zod-refined), rule in `docs/rules/content.md`.
+  Blog layout widened to match the home (`max-w-5xl`, horizontal list cards),
+  publish dates spread 2026-06-11…07-20.
+- **Semantic core + content plan + Wave 1** (2026-07-19) — 44-query scored core
+  (`docs/seo-core.md`) → clustered `docs/content-plan.md` (method:
+  `docs/specs/seo-core-research.md`; audit: `docs/archive/seo-audit.md`). Wave 1
+  shipped 3/3: github-spec-kit, agents-md-primer, cursor-rules (5 articles LIVE).
+- **Search consoles + canonical** (2026-07-16) — GSC + Yandex.Webmaster verified
+  for `https://ludvik4.dev`, `sitemap.xml` submitted in both; `ludvik4.dev` set
+  as the primary Vercel domain, `www` 308-redirects to it.
 - **First two articles published** (2026-07-16) — AI-agents readiness +
   spec-driven development, rewritten to `docs/rules/content.md` standards
   (primary sources: agents.md, AWS Kiro, GitHub Spec Kit). Blog footer

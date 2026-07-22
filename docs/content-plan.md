@@ -43,17 +43,17 @@ we don't rank for the brand; the hub page links the long-tail below.
 | target query                        | freq (WS) | type              | title (working)                                                                           | priority | links                            |
 | ----------------------------------- | --------- | ----------------- | ----------------------------------------------------------------------------------------- | -------- | -------------------------------- |
 | agents md                           | 1 173     | **pillar — LIVE** | `/blog/agents-ready-project` (подготовка проекта к AI-агентам: AGENTS.md, правила, спеки) | high     | ↔ SDD pillar, → AI-агенты pillar |
-| agents md пример (+ файл agents md) | 57/84     | supporting        | AGENTS.md: пример и шаблон                                                                | high     | → pillar                         |
+| agents md пример (+ файл agents md) | 57/84     | supporting — LIVE | `/blog/agents-md-primer`                                                                  | high     | → pillar                         |
 | как писать agents md                | 13        | supporting        | Как написать AGENTS.md: пошагово                                                          | med      | → pillar, → пример               |
-| cursor rules                        | 228       | supporting        | cursor rules: как настроить правила                                                       | high     | → pillar                         |
+| cursor rules                        | 228       | supporting — LIVE | `/blog/cursor-rules`                                                                      | high     | → pillar                         |
 | claude agents md                    | 49        | supporting        | AGENTS.md для Claude Code: нюансы                                                         | med      | → pillar                         |
 
 ### Cluster 3 — Spec-driven development
 
-| target query                 | freq (WS) | type              | title (working)                        | priority | links                                  |
-| ---------------------------- | --------- | ----------------- | -------------------------------------- | -------- | -------------------------------------- |
-| spec driven development      | 687       | **pillar — LIVE** | `/blog/spec-driven-development`        | high     | ↔ AGENTS.md pillar, → AI-агенты pillar |
-| spec kit (+ github spec kit) | 425/146   | supporting        | GitHub Spec Kit: обзор и как применять | high     | → pillar                               |
+| target query                 | freq (WS) | type              | title (working)                 | priority | links                                  |
+| ---------------------------- | --------- | ----------------- | ------------------------------- | -------- | -------------------------------------- |
+| spec driven development      | 687       | **pillar — LIVE** | `/blog/spec-driven-development` | high     | ↔ AGENTS.md pillar, → AI-агенты pillar |
+| spec kit (+ github spec kit) | 425/146   | supporting — LIVE | `/blog/github-spec-kit`         | high     | → pillar                               |
 
 ### Cluster 4 — Вайб-кодинг (traffic driver)
 
@@ -100,11 +100,11 @@ Ordered by: finish clusters that already have a live pillar first (fastest path
 to topical authority), then high-priority winnable pillars, then depth.
 Cadence: 1–2/week for the first ~2 months (`seo-geo.md`).
 
-**Wave 1 — deepen the two live pillars (fastest cluster wins):**
+**Wave 1 — deepen the two live pillars (fastest cluster wins) — DONE (3/3, 2026-07-19):**
 
-1. GitHub Spec Kit: обзор (C3 supporting) — top specialty, pillar already live
-2. AGENTS.md: пример и шаблон (C2 supporting)
-3. cursor rules: как настроить правила (C2 supporting)
+1. ✅ GitHub Spec Kit: обзор (C3 supporting) — `/blog/github-spec-kit`
+2. ✅ AGENTS.md: пример и шаблон (C2 supporting) — `/blog/agents-md-primer`
+3. ✅ cursor rules: как настроить правила (C2 supporting) — `/blog/cursor-rules`
 
 **Wave 2 — build the AI-агенты pillar + its strongest long-tail:** 4. AI-агенты для разработки: что это и как применять (C1 **pillar**) 5. Как настроить Claude Code под проект (C1) 6. Claude Code vs Cursor (C1) 7. Аналоги Claude Code (C1)
 

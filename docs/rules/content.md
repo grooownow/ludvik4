@@ -55,8 +55,9 @@ article; it stays technically optional (no `cover` → article renders without a
 hero, default OG).
 
 - **Where:** the web-optimised copy at `public/blog/<slug>/card.jpg` (the site
-  serves it). The full-resolution source lives in `docs/distribution/<slug>/`
-  (the coworker attaches that to social posts).
+  serves it). The full-resolution source lives beside the article in
+  `src/content/blog/<slug>/card.png` (the coworker attaches that to social
+  posts). See `src/content/blog/README.md` for the per-article layout.
 - **Format:** 16:9 (~1600×900), JPEG/WebP up to ~250 KB for the web copy.
   Optimise from the source, e.g. `sips -Z 1600 -s format jpeg -s formatOptions
 80 <src>.png --out public/blog/<slug>/card.jpg`.
