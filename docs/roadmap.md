@@ -6,9 +6,16 @@ writing detail here.
 
 ## Now
 
-SEO/GEO rollout — code shipped, first two articles LIVE (2026-07-16:
-`/blog/agents-ready-project`, `/blog/spec-driven-development`). Remaining
-moves, guided by `docs/playbooks/seo-geo.md`:
+SEO/GEO rollout — **5 articles LIVE** with per-article cover images; blog
+layout widened to match the home (`max-w-5xl`, horizontal list cards); publish
+dates spread across 2026-06-11…07-20 for an organic cadence. Remaining moves,
+guided by `docs/playbooks/seo-geo.md`:
+
+- **[USER] After each deploy — GSC indexing.** Request indexing in Google
+  Search Console for the three newer URLs (not yet done): `/blog/github-spec-kit`,
+  `/blog/agents-md-primer`, `/blog/cursor-rules`.
+- **[USER, optional] vc.ru brand bio** — variant not yet chosen (3 options
+  offered in chat); pick one and it gets recorded as the canonical brand bio.
 
 - **[DONE 2026-07-16] Search consoles** — GSC + Yandex.Webmaster verified for
   `https://ludvik4.dev` (HTML tag / meta tag), `GOOGLE_SITE_VERIFICATION` +
@@ -26,22 +33,25 @@ moves, guided by `docs/playbooks/seo-geo.md`:
   deferred; Reddit ruled out (no RU dev segment). All vc/Дзен/X adaptation
   drafts ready in `docs/distribution/`. GEO GitHub asset =
   `grooownow/qa-pilot` — attribution to ludvik4.dev shipped (v0.2.4,
-  2026-07-20). **[COWORKER]** publish per the matrix; **[USER, GitHub UI]**
-  qa-pilot repo About (Website=ludvik4.dev + Topics) and `grooownow` profile
-  bio link. Deferred: `ai-ready-project-starter` repo (not now); `liftkit`
-  stays private.
-- **[AGENT, on go-ahead] Per-article OG covers** — generate share images
-  from article titles; agreed to do before distributing to Telegram/Habr.
+  2026-07-20). **[COWORKER]** publish per the matrix (text + card from
+  `docs/distribution/<slug>/`); qa-pilot About-link + `grooownow` bio link
+  **DONE by user**; X profile assets saved in `docs/distribution/profiles/`.
+  Deferred: `ai-ready-project-starter` repo (not now); `liftkit` stays private.
+- **[DONE 2026-07-21] Per-article covers** — one brand card per article →
+  hero + `/blog` list thumbnail + OG/Twitter + Article JSON-LD image. Optional
+  `cover`/`coverAlt` frontmatter (zod-refined); rule in `docs/rules/content.md`.
+  Web copy `public/blog/<slug>/card.jpg`, source `docs/distribution/<slug>/card.png`.
 - **Semantic core + content plan** (2026-07-19) — DONE: 44-query scored core
   (`docs/seo-core.md`), priority recalibrated by winnability, and
   `docs/content-plan.md` (topic clusters: pillar + supporting, cross-linked,
   publishing queue in waves). Method: `docs/specs/seo-core-research.md`; audit
   that triggered this: `tmp-review/seo-audit.md`. **Wave 1 DONE (3/3,
   2026-07-19):** github-spec-kit, agents-md-primer, cursor-rules — AGENTS.md
-  and SDD clusters now have pillar + supporting. **Next:** per-platform
-  adaptations for the coworker (`distribution.md`), then Wave 2 (AI-агенты
-  pillar + Claude Code long-tail). Deferred: commercial-intent pull for
-  `/uslugi/...` service pages (Layer 2, C8–C10 not yet pulled).
+  and SDD clusters now have pillar + supporting. Off-site adaptations for all 5
+  articles are drafted (`docs/distribution/`). **Next content step: Wave 2** —
+  pillar «AI-агенты для разработки» + Claude Code long-tail (настройка / vs
+  Cursor / аналоги). Deferred: commercial-intent pull for `/uslugi/...` service
+  pages (Layer 2, C8–C10 not yet pulled).
 
 ## Next
 
