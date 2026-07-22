@@ -15,8 +15,8 @@ describe("market content", () => {
     expect(ru.services.items).toHaveLength(3);
     expect(ru.services.items.map((s) => s.title)).toEqual([
       "Сайт или лендинг",
-      "Автоматизация одного бизнес-процесса",
-      "MVP одного ключевого сценария",
+      "Автоматизация бизнес-процессов",
+      "Небольшое веб-приложение или SaaS",
     ]);
     expect(ru.description).toContain("Студия цифровых продуктов");
     expect(ru.about?.body).not.toMatch(TEAM_CLAIM);

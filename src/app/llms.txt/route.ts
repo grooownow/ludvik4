@@ -20,8 +20,8 @@ function ruBody(baseURL: string): string {
 Три направления работы:
 
 - Сайт или лендинг: опубликованный адаптивный сайт с одним понятным целевым действием.
-- Автоматизация одного бизнес-процесса: перенос ручного процесса в контролируемый workflow — скрипты, интеграции, боты, AI.
-- MVP одного ключевого сценария или компактный SaaS: небольшое приложение вокруг одной задачи и одного законченного пути пользователя.
+- Автоматизация бизнес-процессов: повторяющиеся ручные процессы переносим в контролируемые workflow — скрипты, интеграции, боты, AI.
+- Небольшое веб-приложение или SaaS: приложение под одну ключевую задачу с законченным сценарием пользователя.
 
 Специализация — AI-разработка: настройка проектов под AI-агентов (Claude Code, Codex): AGENTS.md, правила, спеки; spec-driven development. Оценка бесплатно.
 
@@ -42,8 +42,8 @@ function enBody(baseURL: string): string {
 Three services:
 
 - Website or landing page: a published, responsive site with one clear call to action.
-- One business workflow automation: a repetitive manual process moved into a controlled workflow — scripts, integrations, bots, AI.
-- Focused MVP or compact SaaS: a small web app around one core task and one complete user journey.
+- Business workflow automation: repetitive manual processes moved into controlled workflows — scripts, integrations, bots, AI.
+- Web app or compact SaaS: a small app around one core task with a complete user journey.
 
 Focus: AI-assisted development — AGENTS.md, project rules and spec-driven development, plus open-source tooling such as qa-pilot.
 

@@ -16,7 +16,7 @@ describe("HomeEn", () => {
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: "Focused MVP or compact SaaS" }),
+      screen.getByRole("heading", { name: "Web app or compact SaaS" }),
     ).toBeInTheDocument();
   });
 

@@ -17,9 +17,7 @@ describe("HomeRu", () => {
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", {
-        name: "Автоматизация одного бизнес-процесса",
-      }),
+      screen.getByRole("heading", { name: "Автоматизация бизнес-процессов" }),
     ).toBeInTheDocument();
   });
 
