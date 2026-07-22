@@ -17,7 +17,7 @@ route is not published; no visible RU/EN switcher, no hreflang linking the two.
   разработчиков, дизайнеров, ML-инженер» claim is removed everywhere (copy,
   JSON-LD, llms.txt, keywords).
 - **Services 4 → 3** on both markets: (1) Сайт/лендинг · (2) Автоматизация
-  бизнес-процессов · (3) Небольшое веб-приложение / SaaS. (Titles refined
+  бизнес-процессов · (3) Веб-приложение / SaaS. (Titles refined
   2026-07-22 for plain-language clarity — dropped «один …» / the «MVP» jargon;
   EN mirrored: "Business workflow automation" / "Web app or compact SaaS".)
 - **RU pricing:** owner supplies the amounts (option «new amounts»). Until
