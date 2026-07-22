@@ -59,4 +59,13 @@ test.describe("SEO surfaces", () => {
     expect(response.status()).toBe(200);
     expect(await response.text()).toContain("<title>Блог Ludvik4</title>");
   });
+
+  test("the old second-locale route /en is not published (404)", async ({
+    request,
+  }) => {
+    // One build = one market. The RU build must not expose an /en route — its
+    // removal is what scenario 6 (“no indexable second-locale route”) locks.
+    const response = await request.get("/en");
+    expect(response.status()).toBe(404);
+  });
 });

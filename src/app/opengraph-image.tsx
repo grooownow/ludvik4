@@ -1,8 +1,24 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import { env } from "@/lib/env";
 
-export const alt = "Ludvik4 — цифровые продукты от идеи до запуска";
+const COPY = {
+  ru: {
+    alt: "Ludvik4 — студия цифровых продуктов",
+    title: "Цифровые продукты",
+    subtitle: "От идеи до запуска",
+  },
+  en: {
+    alt: "Ludvik4 — a founder-led product studio",
+    title: "Digital products",
+    subtitle: "From idea to launch",
+  },
+} as const;
+
+const copy = COPY[env.SITE_MARKET];
+
+export const alt = copy.alt;
 export const size = {
   width: 1200,
   height: 630,
@@ -58,10 +74,10 @@ export default async function Image() {
             color: "#1a1a1a",
           }}
         >
-          Цифровые продукты
+          {copy.title}
         </div>
         <div style={{ fontSize: 34, color: "#4b5563", lineHeight: 1.3 }}>
-          От идеи до запуска
+          {copy.subtitle}
         </div>
         <div
           style={{

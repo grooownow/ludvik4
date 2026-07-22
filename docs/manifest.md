@@ -10,22 +10,26 @@ Ludvik4
 
 ## One-liner
 
-Бренд-сайт команды/студии Ludvik4: витрина услуг (сайты, веб-приложения и
-SaaS, AI-инструменты, автоматизация) с формой заявки.
+Бренд-сайт студии цифровых продуктов Ludvik4: три услуги (сайт/лендинг,
+автоматизация одного бизнес-процесса, MVP/компактный SaaS). **Две рыночные
+витрины из одной кодовой базы** (`SITE_MARKET=ru|en`): русская и международная.
 
 ## Target user
 
-Небольшой бизнес или основатель, которому нужен цифровой продукт под ключ или
-MVP — приходит с идеей/болью, а не с готовым ТЗ. Позиционирование —
-**команда** (разработчики, дизайнеры, ML-инженер), а не частное лицо; личность
-владельца на сайте не раскрывается, связь только через Telegram + форму
-(никаких LinkedIn/личных ссылок).
+Небольшой бизнес или основатель, которому нужен законченный цифровой продукт
+или MVP — приходит с идеей/болью, а не с готовым ТЗ. Позиционирование —
+**founder-led студия** (RU: «студия цифровых продуктов», EN: «founder-led
+product studio», от первого лица): за проектом единая точка ответственности,
+профильные специалисты подключаются по необходимости. Не заявляем постоянный
+штат. Связь — Telegram (обе витрины) + форма заявки (**только EN-витрина**).
 
 ## Domain entities
 
 Нет доменной модели/БД — сайт статический (SSG). Единственный «поток данных» —
 заявка из контакт-формы (`src/features/lead/`), которая доставляется в Telegram
-(и опционально email через Resend), нигде не хранится.
+(и опционально email через Resend), нигде не хранится. **Форма есть только в
+EN-сборке**; RU-витрина форму не показывает и не регистрирует lead-экшен (её
+build физически не содержит lead-бэкенда — см. `docs/specs/dual-market-sites.plan.md`).
 
 ## Current phase
 
@@ -40,13 +44,18 @@ Russian
 
 ## Key URLs
 
-| What       | URL                                   |
-| ---------- | ------------------------------------- |
-| Production | https://ludvik4.dev (serves on `www`) |
-| Staging    | n/a — Vercel preview deploys per PR   |
-| Repo       | https://github.com/grooownow/ludvik4  |
+| What          | URL                                                          |
+| ------------- | ------------------------------------------------------------ |
+| Production EN | https://ludvik4.dev (international market, `SITE_MARKET=en`) |
+| Production RU | separate RU-reachable domain — provisioned in ТЗ 2           |
+| Staging       | n/a — Vercel preview deploys per PR                          |
+| Repo          | https://github.com/grooownow/ludvik4                         |
 
 ## Status
 
-Manifest complete — MVP shipped and live. See `docs/roadmap.md` for what's next
-and `docs/site-v0.md` for the content/structure source of truth.
+Manifest complete — MVP shipped and live; rebuilt into two market storefronts
+(ТЗ 1, 2026-07-22). Positioning + services SSOT: `docs/business-strategy.md` +
+`docs/agent-briefs/01-rebuild-market-sites.ru.md`; build/architecture:
+`docs/specs/dual-market-sites.plan.md`. `docs/site-v0.md` is the original
+single-market design record (superseded for positioning/services/RU-form — see
+its banner). What's next: `docs/roadmap.md` (ТЗ 2 = domains + deploy).

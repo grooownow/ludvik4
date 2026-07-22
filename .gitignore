@@ -11,6 +11,10 @@ playwright-report/
 .lighthouseci/
 next-env.d.ts
 
+# Browser-automation scratch: Playwright MCP snapshots + screenshot/report output
+.playwright-mcp/
+output/
+
 # Tier-3 behavioral eval results (opt-in, local only)
 .skill-evals/
 

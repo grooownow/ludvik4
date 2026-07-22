@@ -12,8 +12,11 @@ import {
 import { env } from "@/lib/env";
 import { jsonLdString } from "@/lib/json-ld";
 
-// Published articles only — drafts get no static page.
+// Published articles only — drafts get no static page. The blog is a RU-market
+// surface: an EN build generates no article pages (and dynamicParams=false makes
+// every /blog/* request 404 there).
 export function generateStaticParams() {
+  if (env.SITE_MARKET !== "ru") return [];
   return getPublishedArticles().map((article) => ({ slug: article.slug }));
 }
 

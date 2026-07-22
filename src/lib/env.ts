@@ -15,6 +15,13 @@ const schema = z
     // in sync).
     NEXT_PUBLIC_APP_URL: z.url().default("http://localhost:3210"),
 
+    // Which market this build serves. Selects language, copy, metadata, JSON-LD
+    // and which routes/SEO surfaces are published. A build serves exactly one
+    // market and there is no runtime RU/EN switcher: `ru` = Russian market
+    // (blog + RSS live here), `en` = international market (no Russian blog).
+    // Each market runs with its own NEXT_PUBLIC_APP_URL (its own domain).
+    SITE_MARKET: z.enum(["ru", "en"]).default("ru"),
+
     // Auth (optional — skeleton boots with zero config)
     AUTH_SECRET: z.string().optional(),
     // Read by next-auth itself (not by our own code) to trust the

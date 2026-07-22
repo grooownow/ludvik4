@@ -3,6 +3,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   typedRoutes: true,
 
+  // Inline SITE_MARKET as a build-time constant so the market dispatcher
+  // (src/features/site/market-home.tsx) can dead-code-eliminate the other
+  // market's home — and, critically, keep the EN lead form + its "use server"
+  // action out of the RU build entirely (brief §Контакты: RU has no lead
+  // backend). Runtime code still reads the validated value via src/lib/env.ts.
+  env: { SITE_MARKET: process.env.SITE_MARKET ?? "ru" },
+
   // PGlite ships a WASM binary and resolves its own assets through Node's
   // fs/URL APIs. Bundled into a server chunk it ends up with a second `URL`
   // realm, so Node rejects its own path argument at request time:

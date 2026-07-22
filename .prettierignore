@@ -6,6 +6,11 @@ src/db/migrations/
 docs/marketing/
 docs/superpowers/
 
+# Ephemeral browser-automation scratch (Playwright MCP snapshots, screenshot/
+# report output) — not source, never committed.
+.playwright-mcp/
+output/
+
 # tests/fixtures/planted-defects/ground-truth.json pins the LINE NUMBER of every
 # planted defect. A reflow here would silently invalidate the ground truth of the
 # review skill's detection eval, and nothing would go red.

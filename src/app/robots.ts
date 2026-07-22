@@ -1,17 +1,10 @@
 import type { MetadataRoute } from "next";
+import { buildRobots } from "@/features/site";
 import { env } from "@/lib/env";
 
+// Market-scoped robots — see buildRobots in the site slice. /dashboard and
+// /signin are disallowed in every build; a non-RU build also disallows /blog
+// (a RU-only surface that 404s there).
 export default function robots(): MetadataRoute.Robots {
-  const baseURL = env.NEXT_PUBLIC_APP_URL;
-
-  return {
-    rules: [
-      {
-        userAgent: "*",
-        allow: "/",
-        disallow: "/dashboard",
-      },
-    ],
-    sitemap: `${baseURL}/sitemap.xml`,
-  };
+  return buildRobots(env.SITE_MARKET, env.NEXT_PUBLIC_APP_URL);
 }

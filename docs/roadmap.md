@@ -6,6 +6,21 @@ writing detail here.
 
 ## Now
 
+**Dual-market rebuild (ТЗ 1) — DONE 2026-07-22, on branch `feat/dual-market-sites`
+(not yet merged/deployed).** Two market storefronts from one codebase via
+`SITE_MARKET=ru|en`; positioning → founder-led studio, 4→3 services, RU form
+removed, SEO split by market. Plan + deliverables: `docs/specs/dual-market-sites.plan.md`.
+Blocking follow-ups before it ships:
+
+- **[USER] RU pricing amounts.** RU pricing rows are placeholders (`TODO` in
+  `src/features/site/content.ts`); owner to supply the 3 amounts. The FAQ pricing
+  answer (`src/features/faq/faq-data.ts`) actualizes together with them.
+- **[USER, release blocker] EN privacy notice.** EN keeps the lead form; no
+  approved privacy notice exists — placeholder shown, must be replaced before EN
+  goes live (owner + gestor/lawyer).
+- **ТЗ 2 next** (`docs/agent-briefs/02-deploy-two-market-sites.ru.md`): RU domain,
+  RU-reachable hosting, DNS, two independent deploys, `/en`→`/` redirect.
+
 SEO/GEO rollout — **5 articles LIVE** with per-article covers. Remaining moves,
 guided by `docs/playbooks/seo-geo.md`:
 

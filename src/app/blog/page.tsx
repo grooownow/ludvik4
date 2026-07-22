@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { getPublishedArticles } from "@/features/blog";
+import { env } from "@/lib/env";
 
 export const metadata: Metadata = {
   title: "Блог",
@@ -25,6 +27,8 @@ function formatDate(isoDate: string): string {
 }
 
 export default function BlogPage() {
+  // The blog is a RU-market surface; an EN build 404s it.
+  if (env.SITE_MARKET !== "ru") notFound();
   const articles = getPublishedArticles();
 
   return (
@@ -49,7 +53,7 @@ export default function BlogPage() {
         </h1>
         <p className="text-muted-foreground mt-4 max-w-xl">
           AI-агенты в разработке, spec-driven development, автоматизация — из
-          практики команды Ludvik4.
+          практики Ludvik4.
         </p>
 
         <div className="mt-10 flex flex-col gap-4">

@@ -15,6 +15,10 @@ function escapeXml(value: string): string {
 }
 
 export function GET(): Response {
+  // The blog + RSS are a RU-market surface only.
+  if (env.SITE_MARKET !== "ru") {
+    return new Response("Not found", { status: 404 });
+  }
   const baseURL = env.NEXT_PUBLIC_APP_URL;
   const articles = getPublishedArticles();
 

@@ -70,6 +70,16 @@ internal file directly throws `boundaries/dependencies` error, not a warning.
 - Auth wiring is split for a reason — see `src/middleware.ts`'s header comment
   and security.md before touching either `src/lib/auth.config.ts` (edge-safe)
   or `src/lib/auth.ts` (Node/db-backed adapter).
+- **Per-market builds (`SITE_MARKET`).** One codebase serves either market
+  (`src/features/site/`); a build serves exactly one. To keep a market's code
+  (e.g. the EN lead form + its `"use server"` action) out of the OTHER market's
+  build, `next.config.ts` inlines `SITE_MARKET` (`env:` key) so the dispatcher
+  (`market-home.tsx`) branches on the inlined `process.env.SITE_MARKET` and puts
+  each market's home behind a `dynamic import()` inside that branch — webpack
+  dead-code-eliminates the unused branch, import and all. Runtime code reads the
+  validated `env.SITE_MARKET`; only the build-time branch uses the raw access.
+  Verify exclusion after changes: `SITE_MARKET=ru pnpm build` then grep
+  `.next/server` + `server-reference-manifest.json` for the other market's action.
 
 ## Evolutionary note
 

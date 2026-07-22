@@ -13,8 +13,8 @@ const initialState: LeadFormState = {};
 
 /**
  * Visible copy for the form. Defaults to Russian (`RU_LEAD_LABELS`); the English
- * landing (`/en`) passes its own set. Server-side validation errors stay in the
- * language the action returns them in — out of scope for the lightweight page.
+ * market build (SITE_MARKET=en) passes its own set. Server-side validation errors
+ * stay in the language the action returns them in — out of scope here.
  */
 export type LeadFormLabels = {
   nameLabel: string;

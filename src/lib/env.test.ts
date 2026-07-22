@@ -83,6 +83,18 @@ describe("parseEnv", () => {
     expect(() => parseEnv({ SENTRY_DSN: "not-a-url" })).toThrow(/SENTRY_DSN/);
   });
 
+  it("defaults SITE_MARKET to ru", () => {
+    expect(parseEnv({}).SITE_MARKET).toBe("ru");
+  });
+
+  it("accepts SITE_MARKET=en", () => {
+    expect(parseEnv({ SITE_MARKET: "en" }).SITE_MARKET).toBe("en");
+  });
+
+  it("rejects an unknown SITE_MARKET", () => {
+    expect(() => parseEnv({ SITE_MARKET: "de" })).toThrow(/SITE_MARKET/);
+  });
+
   it("defaults AUTH_DEV_BYPASS to false so a plain build never trips the guard", () => {
     const env = parseEnv({});
     expect(env.AUTH_DEV_BYPASS).toBe(false);
