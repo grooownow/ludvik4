@@ -11,21 +11,20 @@ actual EN enquiry flow:
 - a one-minute in-memory IP rate-limit window;
 - Telegram Bot API delivery;
 - no PostHog, Sentry, Resend, or Turnstile in the current local configuration.
+- controller identity: Ekaterina Pustovaia, trading as Ludvik4, Avenida de
+  Francia 79, 46024 Valencia, Spain.
 
 ## Required before EN production
 
-1. Replace the trading-name-only controller description with the autónomo's
-   full legal name and a valid business contact/address. Do not infer these
-   details from a workstation username.
-2. Confirm a GDPR-compliant transfer and processing arrangement for Telegram
+1. Confirm a GDPR-compliant transfer and processing arrangement for Telegram
    Bot API delivery. Telegram publishes Bot Developer Terms and a privacy
    policy, but no controller-to-processor DPA/SCC for Bot API was verified
    during this review. The lower-risk path is to deliver the EN form only by
    email through a provider with an accepted DPA/SCC, while keeping Telegram as
    an optional direct-contact link.
-3. Make the stated 12-month enquiry deletion schedule operational for every
+2. Make the stated 12-month enquiry deletion schedule operational for every
    delivery channel.
-4. Keep `NEXT_PUBLIC_POSTHOG_KEY`, Sentry, and Turnstile disabled unless this
+3. Keep `NEXT_PUBLIC_POSTHOG_KEY`, Sentry, and Turnstile disabled unless this
    notice is updated and any required consent controls and processor terms are
    in place.
 

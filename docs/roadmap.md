@@ -17,8 +17,8 @@ Blocking follow-ups before it ships:
   (`content.ts` + FAQ pricing answer aligned).
 - **[PARTIAL 2026-07-23, release blocker] EN privacy notice.** `/privacy`,
   footer/form links, and layered notice are implemented from the actual data
-  flow. Before EN production, add the autónomo's legal identity and replace or
-  legally validate Telegram Bot API delivery; see
+  flow; the controller identity and contact address are confirmed. Before EN
+  production, replace or legally validate Telegram Bot API delivery; see
   `docs/legal/privacy-notice-en.md`.
 - **ТЗ 2 next** (`docs/agent-briefs/02-deploy-two-market-sites.ru.md`): RU domain,
   RU-reachable hosting, DNS, two independent deploys, `/en`→`/` redirect.

@@ -23,9 +23,9 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
           <section>
             <h2 className="text-xl font-bold">1. Who is responsible</h2>
             <p className="text-muted-foreground mt-3">
-              The data controller is the independent business operating under
-              the Ludvik4 name in Spain. For privacy questions or to exercise
-              your rights, email{" "}
+              The data controller is Ekaterina Pustovaia, trading as Ludvik4,
+              Avenida de Francia 79, 46024 Valencia, Spain. For privacy
+              questions or to exercise your rights, email{" "}
               <a
                 className="text-foreground underline underline-offset-4"
                 href={`mailto:${PRIVACY_EMAIL}`}
