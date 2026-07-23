@@ -27,9 +27,9 @@ describe("buildSitemap", () => {
     expect(urls).toHaveLength(2 + getPublishedArticles().length);
   });
 
-  it("EN: landing only — no blog, no articles", () => {
+  it("EN: landing + privacy notice — no blog or articles", () => {
     const urls = buildSitemap("en", baseURL, articles).map((e) => e.url);
-    expect(urls).toEqual([`${baseURL}/`]);
+    expect(urls).toEqual([`${baseURL}/`, `${baseURL}/privacy`]);
   });
 });
 

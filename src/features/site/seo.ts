@@ -57,7 +57,7 @@ export type ArticleRef = { slug: string; date: string };
 
 /**
  * sitemap.xml entries for a market. RU adds the blog list + its articles; EN
- * (or any non-RU market) lists only the landing. Never the other market's URLs.
+ * adds its privacy notice. Never the other market's URLs.
  * Pure so both markets are unit-testable in one process.
  */
 export function buildSitemap(
@@ -83,6 +83,12 @@ export function buildSitemap(
         priority: 0.7,
       });
     }
+  } else {
+    entries.push({
+      url: `${baseUrl}/privacy`,
+      changeFrequency: "yearly",
+      priority: 0.2,
+    });
   }
 
   return entries;

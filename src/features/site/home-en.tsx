@@ -1,3 +1,4 @@
+import type { Route } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { LeadForm } from "@/features/lead";
@@ -132,7 +133,13 @@ export function HomeEn({
             </div>
             {form ? (
               <p className="text-muted-foreground mt-3 text-xs leading-relaxed">
-                {form.privacyNotice}
+                {form.privacyNotice.text}{" "}
+                <Link
+                  href={form.privacyNotice.href as Route}
+                  className="text-foreground underline underline-offset-4"
+                >
+                  {form.privacyNotice.linkLabel}
+                </Link>
               </p>
             ) : null}
           </div>

@@ -98,10 +98,12 @@ No hreflang linked the two markets, so there is no cross-domain alternate to
 migrate. External note: `docs/roadmap.md` / qa-pilot README still point a "Made
 by" link at `ludvik4.dev/en` — ТЗ 2's redirect covers it.
 
-**Release blockers.** (1) EN privacy notice — form ships with a placeholder,
-must be replaced before EN production. RU copy/pricing/voice updates through
-2026-07-23 are implemented (see RU refinements below); the only remaining RU copy
-item is the fuller FAQ neutral-voice pass.
+**Release blockers.** The EN `/privacy` page and layered form notice were
+implemented on 2026-07-23. Before EN production, add the autónomo's legal
+identity and replace or legally validate Telegram Bot API delivery (details:
+`docs/legal/privacy-notice-en.md`). RU copy/pricing/voice updates through
+2026-07-23 are implemented (see RU refinements below); the only remaining RU
+copy item is the fuller FAQ neutral-voice pass.
 
 **Verification.** Gates all green — vitest 317, tsc, oxlint/eslint/prettier, e2e
 26; both `SITE_MARKET` production builds succeed. RU build verified (server-

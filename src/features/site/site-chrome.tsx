@@ -35,7 +35,13 @@ export function Section({
   );
 }
 
-export function SiteHeader({ content }: { content: MarketContent }) {
+export function SiteHeader({
+  content,
+  contactHref = "#contact",
+}: {
+  content: MarketContent;
+  contactHref?: string;
+}) {
   return (
     <header className="border-pink-soft bg-background/90 sticky top-0 z-10 border-b backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
@@ -52,7 +58,7 @@ export function SiteHeader({ content }: { content: MarketContent }) {
             </Link>
           ) : null}
           <Button asChild size="sm">
-            <Link href="#contact">{content.nav.cta}</Link>
+            <Link href={contactHref as Route}>{content.nav.cta}</Link>
           </Button>
         </div>
       </div>

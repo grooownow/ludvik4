@@ -5,6 +5,7 @@ import { buildSiteMetadata } from "./seo";
 // Public API of the site (marketing home) slice. `app/` reads only from here.
 
 export { MarketHome } from "./market-home";
+export { PrivacyPage } from "./privacy-page";
 export { getMarketContent, type Market, type MarketContent } from "./content";
 export {
   buildSiteMetadata,

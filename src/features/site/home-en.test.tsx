@@ -24,16 +24,15 @@ describe("HomeEn", () => {
     ).toBeInTheDocument();
   });
 
-  it("keeps the lead form with English copy and a privacy notice", () => {
+  it("keeps the lead form with English copy and a linked privacy notice", () => {
     render(<HomeEn content={content} baseUrl="https://ludvik4.dev" />);
 
     expect(
       screen.getByRole("button", { name: "Send request" }),
     ).toBeInTheDocument();
     expect(screen.getByLabelText(/Your task/i)).toBeInTheDocument();
-    // Release-blocker placeholder sits next to the form.
     expect(
-      screen.getByText(/privacy notice is in preparation/i),
-    ).toBeInTheDocument();
+      screen.getByRole("link", { name: "Read the Privacy Notice." }),
+    ).toHaveAttribute("href", "/privacy");
   });
 });

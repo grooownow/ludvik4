@@ -15,9 +15,11 @@ Blocking follow-ups before it ships:
 - **[DONE 2026-07-23] RU pricing amounts** — set to сайт/лендинг от 40 000 ₽,
   автоматизация от 40 000 ₽, веб-приложение/компактный SaaS от 110 000 ₽
   (`content.ts` + FAQ pricing answer aligned).
-- **[USER, release blocker] EN privacy notice.** EN keeps the lead form; no
-  approved privacy notice exists — placeholder shown, must be replaced before EN
-  goes live (owner + gestor/lawyer).
+- **[PARTIAL 2026-07-23, release blocker] EN privacy notice.** `/privacy`,
+  footer/form links, and layered notice are implemented from the actual data
+  flow. Before EN production, add the autónomo's legal identity and replace or
+  legally validate Telegram Bot API delivery; see
+  `docs/legal/privacy-notice-en.md`.
 - **ТЗ 2 next** (`docs/agent-briefs/02-deploy-two-market-sites.ru.md`): RU domain,
   RU-reachable hosting, DNS, two independent deploys, `/en`→`/` redirect.
 

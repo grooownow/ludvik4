@@ -77,8 +77,11 @@ export type MarketContent = {
     /** RU has no form; EN keeps it. */
     form?: {
       labels?: LeadFormLabels;
-      /** Placeholder until an approved privacy notice exists (release blocker). */
-      privacyNotice: string;
+      privacyNotice: {
+        text: string;
+        linkLabel: string;
+        href: "/privacy";
+      };
     };
   };
   footer: { links: FooterLink[] };
@@ -449,14 +452,18 @@ const en: MarketContent = {
     telegramText: "Or message me on Telegram → t.me/ludvik4",
     form: {
       labels: EN_LEAD_LABELS,
-      // Release blocker: no approved privacy notice exists yet. Shown as plain
-      // text (no link) on purpose — see docs plan + final report.
-      privacyNotice:
-        "By sending this form your message and contact are delivered to me over Telegram. A full privacy notice is in preparation.",
+      privacyNotice: {
+        text: "Ludvik4 uses your details to reply to your enquiry and take requested pre-contractual steps. Form submissions are delivered through Telegram, which may process data outside the EEA.",
+        linkLabel: "Read the Privacy Notice.",
+        href: "/privacy",
+      },
     },
   },
   footer: {
-    links: [{ href: TELEGRAM_URL, label: "Telegram", external: true }],
+    links: [
+      { href: "/privacy", label: "Privacy", external: false },
+      { href: TELEGRAM_URL, label: "Telegram", external: true },
+    ],
   },
 };
 
