@@ -1,6 +1,7 @@
 import type { Route } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import type { MarketContent, ServiceCard } from "./content";
 
 // Shared presentational chrome for both markets. Purely visual — every string
@@ -92,26 +93,50 @@ export function SiteFooter({ content }: { content: MarketContent }) {
   );
 }
 
+// Three equal cards read as equal offers: one row on wide screens (3 cols),
+// two on tablet (the 3rd card spans the row and lays out title-left /
+// description-right so it looks intentional, not a leftover), one on phone.
 export function ServiceGrid({ items }: { items: ServiceCard[] }) {
+  const stretchLast = items.length === 3;
+
   return (
-    <div className="grid gap-4 sm:grid-cols-2">
-      {items.map((s) => (
-        <div
-          key={s.title}
-          className="border-border bg-card rounded-2xl border p-6"
-        >
-          <div className="mb-3 flex items-center gap-2">
-            <span className="bg-primary/50 h-px w-8" />
-            <span className="font-mono text-[10px] tracking-wider text-[#9ca3af] uppercase">
-              {s.module}
-            </span>
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {items.map((s, i) => {
+        const spanRow = stretchLast && i === 2;
+        return (
+          <div
+            key={s.title}
+            className={cn(
+              "border-border bg-card rounded-2xl border p-6",
+              spanRow && "sm:col-span-2 lg:col-span-1",
+            )}
+          >
+            <div
+              className={cn(
+                spanRow && "sm:flex sm:items-start sm:gap-10 lg:block",
+              )}
+            >
+              <div className={cn(spanRow && "sm:w-2/5 sm:shrink-0 lg:w-auto")}>
+                <div className="mb-3 flex items-center gap-2">
+                  <span className="bg-primary/50 h-px w-8" />
+                  <span className="font-mono text-[10px] tracking-wider text-[#9ca3af] uppercase">
+                    {s.module}
+                  </span>
+                </div>
+                <h3 className="text-lg font-bold">{s.title}</h3>
+              </div>
+              <p
+                className={cn(
+                  "text-muted-foreground text-sm leading-relaxed",
+                  spanRow ? "mt-2 sm:mt-0 lg:mt-2" : "mt-2",
+                )}
+              >
+                {s.body}
+              </p>
+            </div>
           </div>
-          <h3 className="text-lg font-bold">{s.title}</h3>
-          <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
-            {s.body}
-          </p>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

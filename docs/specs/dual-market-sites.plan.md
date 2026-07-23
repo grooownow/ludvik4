@@ -17,9 +17,9 @@ route is not published; no visible RU/EN switcher, no hreflang linking the two.
   разработчиков, дизайнеров, ML-инженер» claim is removed everywhere (copy,
   JSON-LD, llms.txt, keywords).
 - **Services 4 → 3** on both markets: (1) Сайт/лендинг · (2) Автоматизация
-  бизнес-процессов · (3) Небольшое веб-приложение / SaaS. (Titles refined
-  2026-07-22 for plain-language clarity — dropped «один …» / the «MVP» jargon;
-  EN mirrored: "Business workflow automation" / "Web app or compact SaaS".)
+  бизнес-процессов · (3) Веб-приложение / компактный SaaS. (Titles refined
+  2026-07-22..23 for clarity — dropped «один …» / the «MVP» jargon; format chips
+  removed; EN mirrored: "Business workflow automation" / "Web app or compact SaaS".)
 - **RU pricing:** owner supplies the amounts (option «new amounts»). Until
   received, the RU pricing block is left untouched. EN gets no pricing block.
 - **EN form:** kept; a privacy-notice link slot sits by the form but there is no

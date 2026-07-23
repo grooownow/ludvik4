@@ -35,8 +35,6 @@ export type MarketContent = {
     illustration: boolean;
   };
   services: { eyebrow: string; items: ServiceCard[] };
-  /** RU tag chips under the services grid. */
-  formats?: string[];
   /** RU "how it works". */
   howItWorks?: { eyebrow: string; lead: string; steps: Step[] };
   /** RU pricing block. */
@@ -121,17 +119,11 @@ const ru: MarketContent = {
       },
       {
         module: "Module / App",
-        title: "Небольшое веб-приложение или SaaS",
+        title: "Веб-приложение или компактный SaaS",
         body: "Приложение под одну ключевую задачу с понятным, законченным сценарием пользователя. При необходимости — аккаунты, база, файлы, уведомления, AI или оплата",
       },
     ],
   },
-  formats: [
-    "Под ключ",
-    "От идеи до продукта",
-    "Автоматизация процессов",
-    "Компактный SaaS",
-  ],
   howItWorks: {
     eyebrow: "Как это работает",
     lead: "Вы приходите с идеей или болью — предлагаем, как её решить",
@@ -163,7 +155,7 @@ const ru: MarketContent = {
     rows: [
       { title: "Сайт или лендинг", price: "от 10 000 ₽" },
       { title: "Автоматизация бизнес-процессов", price: "от 10 000 ₽" },
-      { title: "Небольшое веб-приложение или SaaS", price: "от 50 000 ₽" },
+      { title: "Веб-приложение или компактный SaaS", price: "от 50 000 ₽" },
     ],
   },
   faq: true,

@@ -72,19 +72,6 @@ export function HomeRu({
       <Section id="services">
         <Eyebrow>{content.services.eyebrow}</Eyebrow>
         <ServiceGrid items={content.services.items} />
-
-        {content.formats ? (
-          <div className="mt-6 hidden flex-wrap gap-2 sm:flex">
-            {content.formats.map((f) => (
-              <span
-                key={f}
-                className="rounded-full border border-[#f1b2d0] bg-[#fff3f8] px-3.5 py-[7px] font-mono text-xs text-[#3a3036]"
-              >
-                {f}
-              </span>
-            ))}
-          </div>
-        ) : null}
       </Section>
 
       {/* How it works */}
