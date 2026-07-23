@@ -5,6 +5,7 @@ import { FaqSection } from "@/features/faq";
 import { jsonLdString } from "@/lib/json-ld";
 import { type MarketContent, TELEGRAM_URL } from "./content";
 import { buildHomeJsonLd } from "./seo";
+import { ServiceScopes } from "./service-scopes";
 import {
   Eyebrow,
   Section,
@@ -73,6 +74,9 @@ export function HomeRu({
         <Eyebrow>{content.services.eyebrow}</Eyebrow>
         <ServiceGrid items={content.services.items} />
       </Section>
+
+      {/* What's included — per-service scope accordion */}
+      {content.scopes ? <ServiceScopes scopes={content.scopes} /> : null}
 
       {/* How it works */}
       {content.howItWorks ? (
