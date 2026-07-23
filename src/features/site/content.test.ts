@@ -18,7 +18,7 @@ describe("market content", () => {
       "Автоматизация бизнес-процессов",
       "Веб-приложение или компактный SaaS",
     ]);
-    expect(ru.description).toContain("Студия цифровых продуктов");
+    expect(ru.description).toContain("Разработка цифровых продуктов");
     expect(ru.about?.body).not.toMatch(TEAM_CLAIM);
   });
 

@@ -5,7 +5,7 @@ import { env } from "@/lib/env";
 
 const COPY = {
   ru: {
-    alt: "Ludvik4 — студия цифровых продуктов",
+    alt: "Ludvik4 — разработка цифровых продуктов",
     title: "Цифровые продукты",
     subtitle: "От идеи до запуска",
   },

@@ -10,18 +10,19 @@ Ludvik4
 
 ## One-liner
 
-Бренд-сайт студии цифровых продуктов Ludvik4: три услуги (сайт/лендинг,
+Бренд-сайт независимого разработчика цифровых продуктов Ludvik4: три услуги (сайт/лендинг,
 автоматизация бизнес-процессов, веб-приложение/компактный SaaS). **Две рыночные
 витрины из одной кодовой базы** (`SITE_MARKET=ru|en`): русская и международная.
 
 ## Target user
 
 Небольшой бизнес или основатель, которому нужен законченный цифровой продукт
-или MVP — приходит с идеей/болью, а не с готовым ТЗ. Позиционирование —
-**founder-led студия** (RU: «студия цифровых продуктов», EN: «founder-led
-product studio», от первого лица): за проектом единая точка ответственности,
-профильные специалисты подключаются по необходимости. Не заявляем постоянный
-штат. Связь — Telegram (обе витрины) + форма заявки (**только EN-витрина**).
+или MVP — приходит с идеей/болью, а не с готовым ТЗ. RU: Ludvik4 — бренд
+независимого продуктового разработчика; основной текст нейтральный, первое лицо
+используется в блоке о личной ответственности. EN: `founder-led product studio`,
+от первого лица. Постоянная команда не заявляется; профильные специалисты
+подключаются по необходимости. Связь — Telegram (обе витрины) + форма заявки
+(**только EN-витрина**).
 
 ## Domain entities
 
@@ -54,7 +55,7 @@ Russian
 ## Status
 
 Manifest complete — MVP shipped and live; rebuilt into two market storefronts
-(ТЗ 1, 2026-07-22). Positioning + services SSOT: `docs/business-strategy.md` +
+(ТЗ 1, 2026-07-22; RU voice updated 2026-07-23). Positioning + services SSOT: `docs/business-strategy.md` +
 `docs/agent-briefs/01-rebuild-market-sites.ru.md`; build/architecture:
 `docs/specs/dual-market-sites.plan.md`. `docs/site-v0.md` is the original
 single-market design record (superseded for positioning/services/RU-form — see

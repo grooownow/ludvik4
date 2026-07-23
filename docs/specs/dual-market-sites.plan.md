@@ -12,10 +12,11 @@ route is not published; no visible RU/EN switcher, no hreflang linking the two.
 
 ## Owner decisions (locked)
 
-- **Positioning:** founder-led studio. RU = «студия цифровых продуктов»; EN =
-  «founder-led product studio» (first person «I…»). The old «команда
-  разработчиков, дизайнеров, ML-инженер» claim is removed everywhere (copy,
-  JSON-LD, llms.txt, keywords).
+- **Positioning:** RU = бренд независимого продуктового разработчика. Services,
+  process, pricing, FAQ, and contact use neutral result-oriented language; first
+  person is reserved for the personal-accountability block. EN remains
+  «founder-led product studio» (first person «I…»). Claims about a permanent
+  team are removed everywhere (copy, JSON-LD, llms.txt, keywords).
 - **Services 4 → 3** on both markets: (1) Сайт/лендинг · (2) Автоматизация
   бизнес-процессов · (3) Веб-приложение / компактный SaaS. (Titles refined
   2026-07-22..23 for clarity — dropped «один …» / the «MVP» jargon; format chips
@@ -94,6 +95,8 @@ by" link at `ludvik4.dev/en` — ТЗ 2's redirect covers it.
 **Release blockers.** (1) EN privacy notice — form ships with a placeholder,
 must be replaced before EN production. (2) Not a blocker but pending: RU pricing
 amounts (placeholders + `TODO` in `content.ts`; FAQ pricing answer pairs with it).
+RU copy implemented on 2026-07-22 is superseded by the voice and copy decisions
+in the source brief dated 2026-07-23 and must be updated before the RU launch.
 
 **Verification.** Gates all green — vitest 317, tsc, oxlint/eslint/prettier, e2e
 26; both `SITE_MARKET` production builds succeed. RU build verified (server-
