@@ -42,14 +42,19 @@ export type MarketContent = {
     illustration: boolean;
   };
   services: { eyebrow: string; items: ServiceCard[] };
-  /** RU "what's included" — an open accordion of per-service scope (no hours). */
+  /** Open accordion of per-service scope (no public hour estimates). */
   scopes?: {
     eyebrow: string;
     title: string;
     lead: string;
+    labels: {
+      steps: string;
+      boundaries: string;
+      separate: string;
+    };
     items: ScopeItem[];
   };
-  /** RU "how it works". */
+  /** Three-step delivery process. */
   howItWorks?: { eyebrow: string; lead: string; steps: Step[] };
   /** RU pricing block. */
   pricing?: {
@@ -98,7 +103,7 @@ const ru: MarketContent = {
   title: "Ludvik4 — разработка цифровых продуктов",
   shareTitle: "Ludvik4 — разработка цифровых продуктов",
   description:
-    "Разработка цифровых продуктов: проектируем и запускаем сайты, автоматизации и веб-приложения с законченным пользовательским сценарием.",
+    "Сайты, автоматизации и веб-приложения с законченным пользовательским сценарием — от постановки задачи до запуска.",
   keywords: [
     "разработка сайтов",
     "лендинг",
@@ -114,7 +119,7 @@ const ru: MarketContent = {
   hero: {
     eyebrow: "Ludvik4",
     title: "Цифровые продукты — от идеи до запуска",
-    lead: "Проектируем и запускаем сайты, автоматизации и веб-приложения с законченным пользовательским сценарием",
+    lead: "Сайты, автоматизации и веб-приложения с законченным пользовательским сценарием — от постановки задачи до запуска",
     cta: "Обсудить задачу",
     illustration: true,
   },
@@ -129,7 +134,7 @@ const ru: MarketContent = {
       {
         module: "Module / Automation",
         title: "Автоматизация бизнес-процессов",
-        body: "Повторяющиеся ручные процессы переносим в контролируемые workflow: обработка заявок, извлечение данных из документов, подготовка контента на согласование, регулярные отчёты — на скриптах, интеграциях, ботах и AI",
+        body: "Контролируемые workflow для повторяющихся ручных процессов: обработка заявок, извлечение данных из документов, подготовка контента на согласование, регулярные отчёты — на скриптах, интеграциях, ботах и AI",
       },
       {
         module: "Module / App",
@@ -142,6 +147,11 @@ const ru: MarketContent = {
     eyebrow: "Состав работ",
     title: "Что входит в работу",
     lead: "Цена зависит от объёма. Ниже — что входит в каждую услугу: результат, этапы и границы. Точную оценку и фиксированную цену называем после разбора задачи.",
+    labels: {
+      steps: "Этапы",
+      boundaries: "Базовые границы",
+      separate: "Оценивается отдельно",
+    },
     items: [
       {
         title: "Сайт или лендинг",
@@ -242,17 +252,15 @@ const ru: MarketContent = {
       },
     ],
   },
-  // TODO(owner amounts): amounts pending owner decision (docs plan). Composition
-  // and copy are final; only the `price` values here change once received.
   pricing: {
     eyebrow: "Ориентиры по цене",
     title: "Сколько это стоит",
     intro:
-      "Точная стоимость зависит от задачи — вот ориентиры, чтобы понять порядок. Оценка бесплатно.",
+      "Точная стоимость зависит от задачи — вот ориентиры, чтобы понять порядок. Итоговую цену называем после разбора и оценки.",
     rows: [
-      { title: "Сайт или лендинг", price: "от 10 000 ₽" },
-      { title: "Автоматизация бизнес-процессов", price: "от 10 000 ₽" },
-      { title: "Веб-приложение или компактный SaaS", price: "от 50 000 ₽" },
+      { title: "Сайт или лендинг", price: "от 40 000 ₽" },
+      { title: "Автоматизация бизнес-процессов", price: "от 40 000 ₽" },
+      { title: "Веб-приложение или компактный SaaS", price: "от 110 000 ₽" },
     ],
   },
   faq: true,
@@ -262,8 +270,8 @@ const ru: MarketContent = {
   },
   contact: {
     eyebrow: "Контакт",
-    title: "Расскажите, что нужно",
-    body: "Опишите задачу — предложим решение и подскажем, с чего начать",
+    title: "Расскажите о задаче",
+    body: "Опишите задачу в Telegram — там можно обсудить контекст и определить следующий шаг",
     telegramText: "Напишите в Telegram → t.me/ludvik4",
   },
   footer: {
@@ -317,6 +325,115 @@ const en: MarketContent = {
         module: "Module / App",
         title: "Web app or compact SaaS",
         body: "A small app around one core task with a clear, complete user journey. When it needs it: accounts, a database, files, notifications, AI or payments.",
+      },
+    ],
+  },
+  howItWorks: {
+    eyebrow: "How it works",
+    lead: "From an idea or operational problem to a clear solution and a working product",
+    steps: [
+      {
+        n: "01",
+        title: "Define the problem",
+        body: "The project starts by clarifying the problem, who the product is for, and what a successful outcome looks like.",
+      },
+      {
+        n: "02",
+        title: "Build the first useful release",
+        body: "The first version focuses on the core user journey without speculative features. It can evolve after launch based on real feedback.",
+      },
+      {
+        n: "03",
+        title: "Launch and move forward",
+        body: "The product is deployed or handed over with its source code. From there, it can be extended, supported, or run independently.",
+      },
+    ],
+  },
+  scopes: {
+    eyebrow: "Project scope",
+    title: "What's included",
+    lead: "Each engagement is scoped around a clear outcome. The breakdown below shows the standard stages, baseline boundaries, and items quoted separately. After a short discovery, I provide a fixed scope and price.",
+    labels: {
+      steps: "Stages",
+      boundaries: "Baseline scope",
+      separate: "Quoted separately",
+    },
+    items: [
+      {
+        title: "Website or landing page",
+        result:
+          "A responsive, production-ready site built around one offer and one primary action — from a landing page to a focused multi-page website.",
+        steps: [
+          "Discovery and requirements",
+          "Structure and copy",
+          "Visual direction",
+          "Responsive development",
+          "Testing",
+          "Launch and handover",
+        ],
+        boundaries: [
+          "one language and one visual direction",
+          "a landing page or up to about five page types",
+          "up to two consolidated revision rounds",
+          "post-launch warranty fixes",
+        ],
+        separate: [
+          "in-depth market research and naming",
+          "legal copy supplied or approved by the client",
+          "CMS, additional languages, and complex integrations",
+          "paid fonts, assets, domain, and hosting",
+        ],
+      },
+      {
+        title: "Business workflow automation",
+        result:
+          "A controlled, working process with logs, checks, and human approval where errors carry real consequences — not just an isolated script.",
+        steps: [
+          "Review the current process",
+          "Design the workflow",
+          "Prototype with real examples",
+          "Build and integrate",
+          "Test reliability and edge cases",
+          "Launch and handover",
+        ],
+        boundaries: [
+          "one process with a clear start and outcome",
+          "a limited number of systems and integrations",
+          "access, sample data, and process details supplied by the client",
+          "post-launch warranty fixes",
+        ],
+        separate: [
+          "API, model, platform, and server costs",
+          "company-wide process redesign and large-team training",
+          "ongoing manual operation of the workflow",
+          "a discovery phase when the process is not yet defined",
+        ],
+      },
+      {
+        title: "Web app or compact SaaS",
+        result:
+          "The first production-ready version of a product built around one core task and one complete user journey.",
+        steps: [
+          "Define the first release",
+          "Product and data design",
+          "UX/UI",
+          "Frontend, backend, and database",
+          "Testing",
+          "Launch",
+          "Stabilisation",
+        ],
+        boundaries: [
+          "one product problem and one primary user journey",
+          "a limited number of roles, entities, and integrations",
+          "one web platform, without native iOS or Android apps",
+          "post-launch warranty fixes",
+        ],
+        separate: [
+          "future product iterations and ongoing support",
+          "legal documents and payment-provider fees",
+          "infrastructure and AI/API usage",
+          "scoping and delivery of later releases",
+        ],
       },
     ],
   },

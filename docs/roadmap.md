@@ -12,9 +12,9 @@ writing detail here.
 removed, SEO split by market. Plan + deliverables: `docs/specs/dual-market-sites.plan.md`.
 Blocking follow-ups before it ships:
 
-- **[USER] RU pricing amounts.** RU pricing rows are placeholders (`TODO` in
-  `src/features/site/content.ts`); owner to supply the 3 amounts. The FAQ pricing
-  answer (`src/features/faq/faq-data.ts`) actualizes together with them.
+- **[DONE 2026-07-23] RU pricing amounts** — set to сайт/лендинг от 40 000 ₽,
+  автоматизация от 40 000 ₽, веб-приложение/компактный SaaS от 110 000 ₽
+  (`content.ts` + FAQ pricing answer aligned).
 - **[USER, release blocker] EN privacy notice.** EN keeps the lead form; no
   approved privacy notice exists — placeholder shown, must be replaced before EN
   goes live (owner + gestor/lawyer).

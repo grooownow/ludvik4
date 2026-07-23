@@ -21,10 +21,14 @@ route is not published; no visible RU/EN switcher, no hreflang linking the two.
   бизнес-процессов · (3) Веб-приложение / компактный SaaS. (Titles refined
   2026-07-22..23 for clarity — dropped «один …» / the «MVP» jargon; format chips
   removed; EN mirrored: "Business workflow automation" / "Web app or compact SaaS".)
-- **RU pricing:** owner supplies the amounts (option «new amounts»). Until
-  received, the RU pricing block is left untouched. EN gets no pricing block.
+- **RU pricing:** amounts set by owner 2026-07-23 — сайт/лендинг от 40 000 ₽,
+  автоматизация от 40 000 ₽, веб-приложение/компактный SaaS от 110 000 ₽ (FAQ
+  pricing answer aligned). EN gets no pricing block.
 - **EN form:** kept; a privacy-notice link slot sits by the form but there is no
   approved privacy notice → **release blocker** (no invented legal text).
+- **EN scope update (2026-07-23):** EN now includes the shared three-step
+  process and a localized `What's included` accordion. It still has no public
+  pricing, FAQ, blog, or separate about section.
 
 ## Architecture
 
@@ -36,7 +40,9 @@ route is not published; no visible RU/EN switcher, no hreflang linking the two.
     JSON-LD from the same content.
   - shared presentational sections (header, hero, services, how-it-works,
     pricing, about, contact, footer, eyebrow, section) — market-agnostic.
-  - `home-ru.tsx` / `home-en.tsx` — thin compositions (section order per brief).
+  - `home-ru.tsx` / `home-en.tsx` — thin compositions (section order per brief);
+    both use the shared process and service-scope content, while pricing remains
+    RU-only.
   - `index.ts` — public API: `MarketHome`, `siteMetadata`, `siteContent`,
     `MARKET`, plus `buildSitemap(market)` / `buildLlmsTxt(market)` helpers.
 - `src/app/page.tsx` → thin `<MarketHome/>`. `src/app/layout.tsx` → `lang` +
@@ -93,10 +99,9 @@ migrate. External note: `docs/roadmap.md` / qa-pilot README still point a "Made
 by" link at `ludvik4.dev/en` — ТЗ 2's redirect covers it.
 
 **Release blockers.** (1) EN privacy notice — form ships with a placeholder,
-must be replaced before EN production. (2) Not a blocker but pending: RU pricing
-amounts (placeholders + `TODO` in `content.ts`; FAQ pricing answer pairs with it).
-RU copy implemented on 2026-07-22 is superseded by the voice and copy decisions
-in the source brief dated 2026-07-23 and must be updated before the RU launch.
+must be replaced before EN production. RU copy/pricing/voice updates through
+2026-07-23 are implemented (see RU refinements below); the only remaining RU copy
+item is the fuller FAQ neutral-voice pass.
 
 **Verification.** Gates all green — vitest 317, tsc, oxlint/eslint/prettier, e2e
 26; both `SITE_MARKET` production builds succeed. RU build verified (server-
@@ -120,14 +125,16 @@ Post-ТЗ1 RU copy/UX updates (owner review):
   about → contact.
 - Accordion (shared, FAQ + scopes): `cursor: pointer` + hover (pink text + pink
   bottom border).
-- Still pending: RU pricing amounts (owner; `docs/pricing-research-ru-2026.md`),
-  FAQ copy actualization to the neutral voice, EN privacy notice (blocker).
+- RU pricing amounts set 2026-07-23 (40 000 / 40 000 / 110 000 ₽); pricing block
+  and FAQ pricing answer are live (no more placeholder).
+- Still pending: fuller FAQ copy pass to the neutral voice (2 remaining «MVP»
+  mentions), EN privacy notice (blocker).
 
 ## Status
 
-- [x] Slice 1 · [x] Slice 2 (RU pricing amounts pending) · [x] Slice 3 ·
-      [x] Slice 4 · [x] Slice 5
+- [x] Slice 1 · [x] Slice 2 · [x] Slice 3 · [x] Slice 4 · [x] Slice 5
 - Reviewed (3 parallel adversarial lenses); 1 Major (RU build carried EN lead
   action) + minors — all fixed and re-verified.
 
-NO UNRESOLVED DECISIONS (except RU pricing amounts, awaited from owner)
+NO UNRESOLVED DECISIONS. Remaining before RU/EN launch: fuller FAQ neutral-voice
+pass (RU), EN privacy notice (blocker), ТЗ 2 (domains + deploy).

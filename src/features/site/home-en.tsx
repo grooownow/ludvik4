@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { LeadForm } from "@/features/lead";
 import { jsonLdString } from "@/lib/json-ld";
 import { type MarketContent, TELEGRAM_URL } from "./content";
+import { ServiceScopes } from "./service-scopes";
 import { buildHomeJsonLd } from "./seo";
 import {
   Eyebrow,
@@ -13,8 +14,8 @@ import {
 } from "./site-chrome";
 
 // International (English) market home. Shorter than RU by design (brief): text
-// hero (no illustration), services, AI-assisted-development block, contact WITH
-// the existing lead form. No pricing block, no blog.
+// hero (no illustration), services, process, scope, AI-assisted-development,
+// and contact WITH the existing lead form. No pricing block, no blog.
 
 export function HomeEn({
   content,
@@ -60,6 +61,32 @@ export function HomeEn({
         <Eyebrow>{content.services.eyebrow}</Eyebrow>
         <ServiceGrid items={content.services.items} />
       </Section>
+
+      {/* Process */}
+      {content.howItWorks ? (
+        <Section>
+          <Eyebrow>{content.howItWorks.eyebrow}</Eyebrow>
+          <p className="max-w-3xl text-xl font-semibold tracking-tight text-balance">
+            {content.howItWorks.lead}
+          </p>
+          <div className="mt-9 grid gap-8 sm:grid-cols-3">
+            {content.howItWorks.steps.map((step) => (
+              <div key={step.n}>
+                <p className="text-primary font-mono text-xs font-semibold">
+                  {step.n}
+                </p>
+                <h2 className="mt-3 font-semibold">{step.title}</h2>
+                <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+                  {step.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </Section>
+      ) : null}
+
+      {/* What's included — no public EN pricing */}
+      {content.scopes ? <ServiceScopes scopes={content.scopes} /> : null}
 
       {/* AI-assisted development — the hook for GitHub/qa-pilot visitors */}
       {content.aiBlock ? (

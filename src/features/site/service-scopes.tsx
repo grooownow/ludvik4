@@ -6,8 +6,8 @@ import {
 } from "@/components/ui/accordion";
 import type { MarketContent } from "./content";
 
-// "Что входит в работу" — an open accordion of per-service scope, placed right
-// after the three service cards (RU only). Server component; only the Radix
+// Per-service scope accordion shared by both market pages. Server component;
+// only the Radix
 // accordion primitives are client-side. Section chrome mirrors FaqSection.
 // Internal hour estimates are deliberately not shown here (see
 // docs/service-scopes-ru.md § "Как показать это на сайте").
@@ -71,7 +71,7 @@ export function ServiceScopes({
                   </p>
 
                   <div>
-                    <ScopeLabel>Этапы</ScopeLabel>
+                    <ScopeLabel>{scopes.labels.steps}</ScopeLabel>
                     {/* CSS columns fill top-to-bottom then across, so the
                         numbering reads down each column (01·02·03 | 04·05·06). */}
                     <ol className="mt-3 gap-x-8 sm:columns-2">
@@ -91,11 +91,11 @@ export function ServiceScopes({
 
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div>
-                      <ScopeLabel>Базовые границы</ScopeLabel>
+                      <ScopeLabel>{scopes.labels.boundaries}</ScopeLabel>
                       <Bullets items={item.boundaries} />
                     </div>
                     <div>
-                      <ScopeLabel>Оценивается отдельно</ScopeLabel>
+                      <ScopeLabel>{scopes.labels.separate}</ScopeLabel>
                       <Bullets items={item.separate} />
                     </div>
                   </div>

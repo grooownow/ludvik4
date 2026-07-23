@@ -16,7 +16,7 @@ import {
 
 // Russian market home. Richer than EN by design (brief §Информационная
 // архитектура): hero + illustration · services · tag chips · how-it-works ·
-// pricing · FAQ · studio · contact WITHOUT a form (Telegram is the only CTA).
+// pricing · FAQ · owner/model · contact WITHOUT a form (Telegram is the only CTA).
 
 export function HomeRu({
   content,

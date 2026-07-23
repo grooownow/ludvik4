@@ -16,7 +16,11 @@ describe("HomeEn", () => {
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: "Web app or compact SaaS" }),
+      screen.getAllByRole("heading", { name: "Web app or compact SaaS" }),
+    ).toHaveLength(2);
+    expect(screen.getByText("How it works")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "What's included" }),
     ).toBeInTheDocument();
   });
 

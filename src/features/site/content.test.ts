@@ -9,7 +9,7 @@ const EN_BASE = "https://ludvik4.example";
 const TEAM_CLAIM = /ML-инженер|команда: разработчики|команда разработчиков/;
 
 describe("market content", () => {
-  it("RU is the Russian studio positioning with exactly three services", () => {
+  it("RU is the independent-developer positioning with exactly three services", () => {
     const ru = getMarketContent("ru");
     expect(ru.lang).toBe("ru");
     expect(ru.services.items).toHaveLength(3);
@@ -18,7 +18,8 @@ describe("market content", () => {
       "Автоматизация бизнес-процессов",
       "Веб-приложение или компактный SaaS",
     ]);
-    expect(ru.description).toContain("Разработка цифровых продуктов");
+    expect(ru.description).toContain("Сайты, автоматизации и веб-приложения");
+    expect(ru.hero.lead).not.toMatch(/проектируем|предлагаем|поможем/i);
     expect(ru.about?.body).not.toMatch(TEAM_CLAIM);
   });
 
@@ -28,6 +29,9 @@ describe("market content", () => {
     expect(en.services.items).toHaveLength(3);
     expect(en.description).toContain("founder-led product studio");
     expect(en.hero.lead).toMatch(/^I design and launch/);
+    expect(en.howItWorks?.steps).toHaveLength(3);
+    expect(en.scopes?.items).toHaveLength(3);
+    expect(en.pricing).toBeUndefined();
     // EN keeps the lead form; RU does not.
     expect(en.contact.form).toBeDefined();
     expect(getMarketContent("ru").contact.form).toBeUndefined();

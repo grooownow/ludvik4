@@ -14,9 +14,10 @@ test.describe("SEO surfaces", () => {
       name: /Сколько стоит разработка/,
     });
     await firstQuestion.click();
-    // Distinct substring of the first FAQ answer (the pricing section says
-    // «бесплатно», the answer says «бесплатна» — no collision).
-    await expect(page.getByText(/оценка бесплатна/).first()).toBeVisible();
+    // Distinct substring of the first FAQ (pricing) answer.
+    await expect(
+      page.getByText(/после разбора и оценки задачи/).first(),
+    ).toBeVisible();
   });
 
   test("header link navigates to the blog list client-side", async ({
