@@ -75,9 +75,6 @@ export function HomeRu({
         <ServiceGrid items={content.services.items} />
       </Section>
 
-      {/* What's included — per-service scope accordion */}
-      {content.scopes ? <ServiceScopes scopes={content.scopes} /> : null}
-
       {/* How it works */}
       {content.howItWorks ? (
         <Section>
@@ -100,6 +97,9 @@ export function HomeRu({
           </div>
         </Section>
       ) : null}
+
+      {/* What's included — per-service scope accordion */}
+      {content.scopes ? <ServiceScopes scopes={content.scopes} /> : null}
 
       {/* Pricing */}
       {content.pricing ? (

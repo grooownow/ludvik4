@@ -72,9 +72,14 @@ export function ServiceScopes({
 
                   <div>
                     <ScopeLabel>Этапы</ScopeLabel>
-                    <ol className="mt-3 grid gap-x-6 gap-y-2 sm:grid-cols-2">
+                    {/* CSS columns fill top-to-bottom then across, so the
+                        numbering reads down each column (01·02·03 | 04·05·06). */}
+                    <ol className="mt-3 gap-x-8 sm:columns-2">
                       {item.steps.map((step, s) => (
-                        <li key={step} className="flex gap-2.5 text-sm">
+                        <li
+                          key={step}
+                          className="mb-2.5 flex break-inside-avoid gap-2.5 text-sm"
+                        >
                           <span className="text-primary pt-0.5 font-mono text-xs font-semibold">
                             {String(s + 1).padStart(2, "0")}
                           </span>

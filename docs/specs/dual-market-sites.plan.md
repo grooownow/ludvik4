@@ -104,6 +104,25 @@ reference-manifest + grep) to contain **no** lead action / Telegram delivery.
 UI: both markets at 1440×900 / 768×1024 / 390×844 — no horizontal scroll, console
 clean, design preserved.
 
+## RU refinements (2026-07-23)
+
+Post-ТЗ1 RU copy/UX updates (owner review):
+
+- Voice → independent developer: neutral result-oriented copy everywhere; first
+  person only in «Кто стоит за Ludvik4». Positioning phrase «студия цифровых
+  продуктов» → «разработка цифровых продуктов» (title/description/keywords/OG/llms).
+- Services: plain-language titles, format chips removed, 3-equal-card grid
+  (3 cols wide · 2 + full-width 3rd on tablet · 1 on phone).
+- New RU section **«Что входит в работу»** (`service-scopes.tsx`): open accordion
+  of per-service scope (result · stages · boundaries · priced-separately), no
+  hours — see `docs/service-scopes-ru.md`.
+- RU block order: services → how-it-works → what's-included → pricing → FAQ →
+  about → contact.
+- Accordion (shared, FAQ + scopes): `cursor: pointer` + hover (pink text + pink
+  bottom border).
+- Still pending: RU pricing amounts (owner; `docs/pricing-research-ru-2026.md`),
+  FAQ copy actualization to the neutral voice, EN privacy notice (blocker).
+
 ## Status
 
 - [x] Slice 1 · [x] Slice 2 (RU pricing amounts pending) · [x] Slice 3 ·
