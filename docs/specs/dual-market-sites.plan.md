@@ -100,8 +100,9 @@ by" link at `ludvik4.dev/en` — ТЗ 2's redirect covers it.
 
 **Release blockers.** The EN `/privacy` page and layered form notice were
 implemented on 2026-07-23; the autónomo's legal identity and contact address are
-confirmed. Before EN production, replace or legally validate Telegram Bot API
-delivery (details: `docs/legal/privacy-notice-en.md`). RU copy/pricing/voice
+confirmed. The form now delivers only through Resend email; Telegram is a
+separate direct-contact link. EN production still requires verified Resend
+credentials (details: `docs/legal/privacy-notice-en.md`). RU copy/pricing/voice
 updates through 2026-07-23 are implemented (see RU refinements below); the only
 remaining RU copy item is the fuller FAQ neutral-voice pass.
 

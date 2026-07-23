@@ -453,7 +453,7 @@ const en: MarketContent = {
     form: {
       labels: EN_LEAD_LABELS,
       privacyNotice: {
-        text: "Ludvik4 uses your details to reply to your enquiry and take requested pre-contractual steps. Form submissions are delivered through Telegram, which may process data outside the EEA.",
+        text: "Ludvik4 uses your details to reply to your enquiry and take requested pre-contractual steps. Form submissions are delivered by email through Resend, which may process data outside the EEA.",
         linkLabel: "Read the Privacy Notice.",
         href: "/privacy",
       },

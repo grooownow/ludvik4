@@ -80,11 +80,11 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
             </h2>
             <p className="text-muted-foreground mt-3">
               The website is hosted by Vercel. Form submissions are delivered to
-              Ludvik4 through the Telegram Bot API and are therefore processed
-              by Telegram. These providers process technical and message data as
-              needed to provide their services. Information may also be
-              disclosed to professional advisers or public authorities where
-              this is necessary and permitted by law.
+              Ludvik4 by email through Resend (Plus Five Five, Inc.). These
+              providers process technical and message data as needed to provide
+              their services. Information may also be disclosed to professional
+              advisers or public authorities where this is necessary and
+              permitted by law.
             </p>
             <p className="text-muted-foreground mt-3">
               If you contact Ludvik4 directly through Telegram, Telegram
@@ -106,13 +106,13 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
               5. International data transfers
             </h2>
             <p className="text-muted-foreground mt-3">
-              Vercel and Telegram may process personal data outside the European
-              Economic Area. Where required, transfers by service providers must
-              be covered by an adequacy decision or appropriate safeguards under
-              Chapter V GDPR. Vercel incorporates the European Commission&apos;s
-              Standard Contractual Clauses into its data processing terms.
-              Telegram is established outside the EEA and names an EEA
-              representative in its privacy policy.
+              Vercel and Resend may process personal data outside the European
+              Economic Area. Where required, transfers are covered by an
+              adequacy decision or appropriate safeguards under Chapter V GDPR.
+              Vercel incorporates the European Commission&apos;s Standard
+              Contractual Clauses into its data processing terms. Resend&apos;s
+              data processing terms include the Standard Contractual Clauses and
+              state its participation in the EU-U.S. Data Privacy Framework.
             </p>
           </section>
 

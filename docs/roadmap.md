@@ -15,11 +15,10 @@ Blocking follow-ups before it ships:
 - **[DONE 2026-07-23] RU pricing amounts** — set to сайт/лендинг от 40 000 ₽,
   автоматизация от 40 000 ₽, веб-приложение/компактный SaaS от 110 000 ₽
   (`content.ts` + FAQ pricing answer aligned).
-- **[PARTIAL 2026-07-23, release blocker] EN privacy notice.** `/privacy`,
-  footer/form links, and layered notice are implemented from the actual data
-  flow; the controller identity and contact address are confirmed. Before EN
-  production, replace or legally validate Telegram Bot API delivery; see
-  `docs/legal/privacy-notice-en.md`.
+- **[DONE 2026-07-23] EN privacy notice.** `/privacy`, footer/form links,
+  controller identity, and layered notice are implemented. The form now uses
+  Resend email only; Telegram remains a separate direct-contact link. Production
+  still needs the Resend variables listed in `docs/legal/privacy-notice-en.md`.
 - **ТЗ 2 next** (`docs/agent-briefs/02-deploy-two-market-sites.ru.md`): RU domain,
   RU-reachable hosting, DNS, two independent deploys, `/en`→`/` redirect.
 
@@ -44,9 +43,8 @@ guided by `docs/playbooks/seo-geo.md`:
 
 Scoped and agreed, not yet started:
 
-- **Email delivery (Resend)** — wire `RESEND_API_KEY` / `LEAD_EMAIL_*` after
-  verifying `ludvik4.dev` in Resend, as a second lead channel beside Telegram
-  (see `docs/site-v0-setup.md`).
+- **[USER] Resend production secrets** — verify `ludvik4.dev`, then set
+  `RESEND_API_KEY` / `LEAD_EMAIL_*` and send a live test enquiry.
 - **Per-service landing pages** (`/uslugi/...`) — phase 2 of the SEO spec,
   one page per query cluster, after the first articles index.
 
@@ -89,7 +87,7 @@ Most recent first:
   verification slots, `docs/playbooks/seo-geo.md`.
   Spec: `docs/specs/seo-geo-strategy.md`.
 - **Landing MVP** — one-page Ludvik4 brand site: hero + illustration, services
-  catalogue, work formats, how-it-works, pricing, about, contact form → Telegram.
+  catalogue, work formats, how-it-works, pricing, about, contact form → email.
   Rose brand from `design.pen`, SEO (OG/JSON-LD/sitemap), deployed to Vercel on
   `ludvik4.dev`. Source of truth: `docs/site-v0.md`.
 - **Onboarding** — `/liftoff` Step 0 (environment verified).

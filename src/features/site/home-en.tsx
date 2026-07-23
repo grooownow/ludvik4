@@ -102,7 +102,7 @@ export function HomeEn({
         </Section>
       ) : null}
 
-      {/* Contact — keeps the form + Telegram */}
+      {/* Contact — email form plus an optional direct Telegram link */}
       <section id="contact" className="bg-surface-warm">
         <div className="mx-auto grid max-w-5xl gap-10 px-6 py-14 sm:grid-cols-[1fr_1.4fr]">
           <div>
