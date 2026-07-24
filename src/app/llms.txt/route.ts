@@ -25,7 +25,7 @@ function ruBody(baseURL: string): string {
 
 Специализация — AI-разработка: настройка проектов под AI-агентов (Claude Code, Codex): AGENTS.md, правила, спеки; spec-driven development. Оценка бесплатно.
 
-Контакт: Telegram https://t.me/ludvik4.
+Контакт: Telegram https://t.me/ludvik4work.
 
 ## Основные страницы
 
@@ -47,7 +47,7 @@ Three services:
 
 Focus: AI-assisted development — AGENTS.md, project rules and spec-driven development, plus open-source tooling such as qa-pilot.
 
-Contact: Telegram https://t.me/ludvik4.
+Contact: Telegram https://t.me/ludvik4work.
 
 ## Main pages
 

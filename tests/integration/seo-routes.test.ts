@@ -41,7 +41,7 @@ describe("GET /llms.txt", () => {
     const body = await response.text();
     expect(body).toContain("# Ludvik4");
     expect(body).toContain("AI-агент");
-    expect(body).toContain("https://t.me/ludvik4");
+    expect(body).toContain("https://t.me/ludvik4work");
   });
 
   it("links published articles only", async () => {

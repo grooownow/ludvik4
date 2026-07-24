@@ -72,7 +72,7 @@ export async function submitLeadAction(
   if (!(await deliverLead(parsed.data))) {
     return {
       error:
-        "Не получилось отправить заявку. Напишите напрямую в Telegram: t.me/ludvik4",
+        "Не получилось отправить заявку. Напишите напрямую в Telegram: t.me/ludvik4work",
       values,
     };
   }

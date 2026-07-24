@@ -34,7 +34,7 @@ describe("HomeRu", () => {
     const telegram = screen.getByText(/Напишите в Telegram/);
     expect(telegram.closest("a")).toHaveAttribute(
       "href",
-      "https://t.me/ludvik4",
+      "https://t.me/ludvik4work",
     );
   });
 

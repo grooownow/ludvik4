@@ -8,7 +8,7 @@ import type { LeadFormLabels } from "@/features/lead";
 
 export type Market = "ru" | "en";
 
-export const TELEGRAM_URL = "https://t.me/ludvik4";
+export const TELEGRAM_URL = "https://t.me/ludvik4work";
 
 export type ServiceCard = { module: string; title: string; body: string };
 export type Step = { n: string; title: string; body: string };
@@ -275,7 +275,7 @@ const ru: MarketContent = {
     eyebrow: "Контакт",
     title: "Расскажите о задаче",
     body: "Опишите задачу в Telegram — там можно обсудить контекст и определить следующий шаг",
-    telegramText: "Напишите в Telegram → t.me/ludvik4",
+    telegramText: "Напишите в Telegram → t.me/ludvik4work",
   },
   footer: {
     links: [
@@ -449,7 +449,7 @@ const en: MarketContent = {
     eyebrow: "Contact",
     title: "Tell me what you need",
     body: "Describe the task — I'll suggest a solution and where to start.",
-    telegramText: "Or message me on Telegram → t.me/ludvik4",
+    telegramText: "Or message me on Telegram → t.me/ludvik4work",
     form: {
       labels: EN_LEAD_LABELS,
       privacyNotice: {

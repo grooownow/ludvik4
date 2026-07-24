@@ -68,7 +68,7 @@ below is the rationale/order behind it.
 Order matters; do the top ones first.
 
 1. **Telegram channel** (brand, no personal identity) — announce each
-   article; the site already links t.me/ludvik4.
+   article; the site already links t.me/ludvik4work.
 2. **Habr** — create a brand account; adapt (not copy-paste) each suitable
    article; end with one link to the original on ludvik4.dev. Habr is
    heavily represented in RU LLM training data — this is the single

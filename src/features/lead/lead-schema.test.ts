@@ -7,12 +7,12 @@ describe("isValidContact", () => {
   });
 
   it("accepts a messenger / url link", () => {
-    expect(isValidContact("https://t.me/ludvik4")).toBe(true);
-    expect(isValidContact("t.me/ludvik4")).toBe(true);
+    expect(isValidContact("https://t.me/ludvik4work")).toBe(true);
+    expect(isValidContact("t.me/ludvik4work")).toBe(true);
   });
 
   it("accepts a telegram @handle", () => {
-    expect(isValidContact("@ludvik4")).toBe(true);
+    expect(isValidContact("@ludvik4work")).toBe(true);
   });
 
   it("accepts a phone number", () => {
