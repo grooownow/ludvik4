@@ -53,6 +53,18 @@ const nextConfig: NextConfig = {
             },
           ];
         },
+
+        // Until ТЗ 1 the international landing lived at `/en`; the EN market
+        // now owns the domain root, so that route is gone. External links
+        // still point at it (the qa-pilot README "Made by" link), so keep
+        // them alive instead of serving a 404. Static export has no redirect
+        // support — the RU static build never published `/en` anyway.
+        async redirects() {
+          return [
+            { source: "/en", destination: "/", permanent: true },
+            { source: "/en/:path*", destination: "/", permanent: true },
+          ];
+        },
       }),
 };
 
