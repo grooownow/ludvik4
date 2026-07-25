@@ -44,12 +44,20 @@ Production env vars that define this deploy:
 `NEXT_PUBLIC_SENTRY_DSN`, `NEXT_PUBLIC_POSTHOG_KEY` are also set for
 Production + Preview.
 
-**Preview caveat:** `SITE_MARKET` is set for Production only — preview deploys
-therefore fall back to the `ru` default and do **not** mirror production. Add
-`SITE_MARKET=en` to Preview in the dashboard (CLI 54.4.1 loops on
-`vercel env add … preview`; a newer CLI or the dashboard works). Preview also
-carries its own copies of the Resend variables — production secrets do not
-belong in preview (ТЗ 2 §Этап 4); rotate or clear them there.
+**Preview** carries `SITE_MARKET=en` too, so preview deploys mirror production
+instead of falling back to the `ru` default. It deliberately has **no** Resend
+variables: preview URLs are public and production secrets do not belong there
+(ТЗ 2 §Этап 4). The consequence is that the lead form's delivery can only be
+proven on production — on a preview it renders and validates, then fails the
+submit (a Vercel preview build runs as `NODE_ENV=production`, so
+`deliverLead()` reports failure rather than logging the lead).
+
+**Editing env vars:** CLI 54.4.1 loops forever on `vercel env add … preview`
+(it re-asks for a Git branch no matter which suggested form you use). The REST
+API works — `POST/DELETE https://api.vercel.com/v10/projects/<projectId>/env`
+with `?teamId=…` and the CLI's own bearer token from
+`~/Library/Application Support/com.vercel.cli/auth.json`. A newer CLI or the
+dashboard is the other way out.
 
 ## Deploy
 
