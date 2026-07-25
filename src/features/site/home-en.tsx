@@ -1,4 +1,5 @@
 import type { Route } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { LeadForm } from "@/features/lead";
@@ -14,9 +15,9 @@ import {
   SiteHeader,
 } from "./site-chrome";
 
-// International (English) market home. Shorter than RU by design (brief): text
-// hero (no illustration), services, process, scope, AI-assisted-development,
-// and contact WITH the existing lead form. No pricing block, no blog.
+// International (English) market home. Shorter than RU by design (brief):
+// hero + illustration, services, process, scope, AI-assisted-development, and
+// contact WITH the existing lead form. No pricing block, no blog.
 
 export function HomeEn({
   content,
@@ -39,21 +40,36 @@ export function HomeEn({
 
       <SiteHeader content={content} />
 
-      {/* Hero — text only */}
+      {/* Hero — same two-column composition as the RU market */}
       <div className="mx-auto max-w-5xl px-6 py-16">
-        <div className="max-w-2xl">
-          <Eyebrow>{content.hero.eyebrow}</Eyebrow>
-          <h1 className="text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
-            {content.hero.title}
-          </h1>
-          <p className="text-muted-foreground mt-5 max-w-xl text-lg">
-            {content.hero.lead}
-          </p>
-          <div className="mt-7">
-            <Button asChild size="lg">
-              <Link href="#contact">{content.hero.cta}</Link>
-            </Button>
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          <div>
+            <Eyebrow>{content.hero.eyebrow}</Eyebrow>
+            <h1 className="text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
+              {content.hero.title}
+            </h1>
+            <p className="text-muted-foreground mt-5 max-w-xl text-lg">
+              {content.hero.lead}
+            </p>
+            <div className="mt-7">
+              <Button asChild size="lg">
+                <Link href="#contact">{content.hero.cta}</Link>
+              </Button>
+            </div>
           </div>
+          {content.hero.illustration ? (
+            <div className="hidden lg:block lg:justify-self-end">
+              <Image
+                src="/hero-product-illustration.png"
+                alt="How a digital product is built: from idea and mockup through code to launch and analytics"
+                width={1536}
+                height={1024}
+                priority
+                sizes="(min-width: 1024px) 480px, 100vw"
+                className="h-auto w-full max-w-xl"
+              />
+            </div>
+          ) : null}
         </div>
       </div>
 

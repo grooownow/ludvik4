@@ -19,6 +19,11 @@ describe("HomeEn", () => {
       screen.getAllByRole("heading", { name: "Web app or compact SaaS" }),
     ).toHaveLength(2);
     expect(screen.getByText("How it works")).toBeInTheDocument();
+    // Both markets show the same hero illustration; only its alt text is
+    // localized. It used to be RU-only ("text hero" in the ТЗ 1 brief).
+    expect(
+      screen.getByRole("img", { name: /How a digital product is built/i }),
+    ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { level: 2, name: "What's included" }),
     ).toBeInTheDocument();

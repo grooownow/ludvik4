@@ -309,7 +309,7 @@ const en: MarketContent = {
     title: "Digital products — from idea to launch",
     lead: "I design and launch focused websites, business automations, and compact web applications with a complete user journey.",
     cta: "Let's talk",
-    illustration: false,
+    illustration: true,
   },
   services: {
     eyebrow: "What I do",
