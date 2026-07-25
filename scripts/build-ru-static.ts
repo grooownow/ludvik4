@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { mkdir, rename, rm } from "node:fs/promises";
+import { cp, mkdir, rename, rm } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
 const root = process.cwd();
@@ -10,6 +10,23 @@ const serverOnlyPaths = [
   "src/app/signin",
   "src/middleware.ts",
 ];
+
+async function move(source: string, destination: string) {
+  try {
+    await rename(source, destination);
+  } catch (error) {
+    if (
+      !(error instanceof Error) ||
+      !("code" in error) ||
+      error.code !== "EXDEV"
+    ) {
+      throw error;
+    }
+
+    await cp(source, destination, { recursive: true });
+    await rm(source, { recursive: true, force: true });
+  }
+}
 
 async function runBuild(): Promise<number> {
   return new Promise((resolve, reject) => {
@@ -30,25 +47,23 @@ async function runBuild(): Promise<number> {
 }
 
 async function main() {
-  let moved: Array<{ source: string; stash: string }> = [];
+  const moved: Array<{ source: string; stash: string }> = [];
 
   try {
-    moved = await Promise.all(
-      serverOnlyPaths.map(async (relativePath) => {
-        const source = join(root, relativePath);
-        const stash = join(stashRoot, relativePath);
-        await mkdir(dirname(stash), { recursive: true });
-        await rename(source, stash);
-        return { source, stash };
-      }),
-    );
+    for (const relativePath of serverOnlyPaths) {
+      const source = join(root, relativePath);
+      const stash = join(stashRoot, relativePath);
+      await mkdir(dirname(stash), { recursive: true });
+      await move(source, stash);
+      moved.push({ source, stash });
+    }
 
     process.exitCode = await runBuild();
   } finally {
     await Promise.all(
       moved.map(async ({ source, stash }) => {
         await mkdir(dirname(source), { recursive: true });
-        await rename(stash, source);
+        await move(stash, source);
       }),
     );
     await rm(stashRoot, { recursive: true, force: true });
