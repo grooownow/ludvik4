@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
+import { buildRedirects, type Market } from "./config/redirects";
 
 const isStaticExport = process.env.STATIC_EXPORT === "true";
+const market: Market = process.env.SITE_MARKET === "en" ? "en" : "ru";
 
 const nextConfig: NextConfig = {
   typedRoutes: !isStaticExport,
@@ -54,16 +56,11 @@ const nextConfig: NextConfig = {
           ];
         },
 
-        // Until ТЗ 1 the international landing lived at `/en`; the EN market
-        // now owns the domain root, so that route is gone. External links
-        // still point at it (the qa-pilot README "Made by" link), so keep
-        // them alive instead of serving a 404. Static export has no redirect
-        // support — the RU static build never published `/en` anyway.
+        // Retired URLs, per market — config/redirects.ts documents what each
+        // rule preserves and why. Static export has no redirect support, so
+        // this stays on the Node build's side of the branch.
         async redirects() {
-          return [
-            { source: "/en", destination: "/", permanent: true },
-            { source: "/en/:path*", destination: "/", permanent: true },
-          ];
+          return buildRedirects(market);
         },
       }),
 };
