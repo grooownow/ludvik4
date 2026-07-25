@@ -35,21 +35,6 @@ test.describe("golden path smoke", () => {
     ).toBeVisible();
   });
 
-  test("the retired /en landing permanently redirects to the root", async ({
-    request,
-  }) => {
-    // Pre-ТЗ1 the international landing lived at /en and external links still
-    // point there (qa-pilot README). ТЗ 2 requires a permanent redirect to the
-    // EN root, not a 404 — see next.config.ts `redirects()`.
-    const res = await request.get("/en", { maxRedirects: 0 });
-    expect(res.status()).toBe(308);
-    expect(res.headers()["location"]).toBe("/");
-
-    const nested = await request.get("/en/anything", { maxRedirects: 0 });
-    expect(nested.status()).toBe(308);
-    expect(nested.headers()["location"]).toBe("/");
-  });
-
   test("SPA-navigation gate (spec §5.6-1): Link navigation stays client-side", async ({
     page,
   }) => {

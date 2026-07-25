@@ -61,12 +61,26 @@ test.describe("SEO surfaces", () => {
     expect(await response.text()).toContain("<title>Блог Ludvik4</title>");
   });
 
-  test("the old second-locale route /en is not published (404)", async ({
+  test("the old second-locale route /en is not published, only redirected", async ({
     request,
   }) => {
-    // One build = one market. The RU build must not expose an /en route — its
-    // removal is what scenario 6 (“no indexable second-locale route”) locks.
-    const response = await request.get("/en");
-    expect(response.status()).toBe(404);
+    // One build = one market: no build renders a second-locale page at /en —
+    // that removal is what ТЗ 1 scenario 6 (“no indexable second-locale
+    // route”) locks. ТЗ 2 then requires the retired URL to keep answering for
+    // external links (qa-pilot README), so it is a permanent redirect to the
+    // root rather than a 404. A 308 is not indexable as a duplicate locale.
+    const response = await request.get("/en", { maxRedirects: 0 });
+    expect(response.status()).toBe(308);
+    expect(response.headers()["location"]).toBe("/");
+
+    // Anything that used to live under it redirects too.
+    const nested = await request.get("/en/anything", { maxRedirects: 0 });
+    expect(nested.status()).toBe(308);
+    expect(nested.headers()["location"]).toBe("/");
+
+    // Following it lands on the market's own single canonical root.
+    const followed = await request.get("/en");
+    expect(followed.status()).toBe(200);
+    expect(new URL(followed.url()).pathname).toBe("/");
   });
 });
