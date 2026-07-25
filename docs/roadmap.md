@@ -25,8 +25,12 @@ Blocking follow-ups before it ships:
   end-to-end against live Resend. Runbook (deploy, rollback, env, diagnostics):
   `docs/playbooks/production-en-vercel.md`.
 - **ТЗ 2 — RU half in progress** (`docs/agent-briefs/02-deploy-two-market-sites.ru.md`):
-  RU domain `ludvik4.ru` bought, RU-reachable hosting (Timeweb, static build via
-  `pnpm build:ru-static`), DNS, availability checks, monitoring.
+  домен `ludvik4.ru`, DNS, Timeweb static build and GitHub `main` → SourceCraft
+  `deploy` → Timeweb API autodeploy are configured and verified at commit
+  `35cdd27`. The technical domain serves the current build. **Blocked on
+  Timeweb ticket № 12354415:** apex and `www` still resolve to an orphaned old
+  Caddy vhost even after a full detach/deploy/reattach cycle. Runbook:
+  `docs/playbooks/production-ru-timeweb.md`.
 - **[BLOCKED on RU going live] `/blog/*` → RU domain 301.** Owner's decision:
   redirect the 5 RU articles from `ludvik4.dev/blog/<slug>` to the RU domain
   once it actually answers — they 404 in the meantime. Add beside the `/en`
