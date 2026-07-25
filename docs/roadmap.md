@@ -26,10 +26,11 @@ Blocking follow-ups before it ships:
   `docs/playbooks/production-en-vercel.md`.
 - **ТЗ 2 — RU half in progress** (`docs/agent-briefs/02-deploy-two-market-sites.ru.md`):
   домен `ludvik4.ru`, DNS, Timeweb static build and GitHub `main` → SourceCraft
-  `deploy` → Timeweb API autodeploy are configured and verified at commit
-  `35cdd27`. The technical domain serves the current build. **Blocked on
-  Timeweb ticket № 12354415:** apex and `www` still resolve to an orphaned old
-  Caddy vhost even after a full detach/deploy/reattach cycle. Runbook:
+  `deploy` → Timeweb API autodeploy are configured. A clean replacement app
+  `228103` serves the current build on its technical domain, and autodeploy now
+  targets it. **Blocked on Timeweb ticket № 12354415:** apex still resolves to
+  an orphaned old Caddy vhost even after moving it to the replacement app.
+  Timeweb support agreed to rebind and redeploy it. Runbook:
   `docs/playbooks/production-ru-timeweb.md`.
 - **[DONE 2026-07-25] `/blog/*` → RU domain 301.** `ludvik4.ru` went live, so
   the blog list, all 5 articles and the RSS feed now 308 from `ludvik4.dev` to

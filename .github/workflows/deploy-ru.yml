@@ -51,7 +51,7 @@ jobs:
         env:
           TIMEWEB_TOKEN: ${{ secrets.TIMEWEB_TOKEN }}
         run: |
-          api="https://api.timeweb.cloud/api/v1/apps/228059"
+          api="https://api.timeweb.cloud/api/v1/apps/228103"
 
           for attempt in {1..12}; do
             status="$(
