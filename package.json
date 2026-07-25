@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "tsx scripts/dev.ts",
     "build": "next build",
+    "build:ru-static": "tsx scripts/build-ru-static.ts",
     "start": "next start --port 3210",
     "test": "vitest run",
     "test:e2e": "playwright test",

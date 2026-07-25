@@ -1,5 +1,7 @@
 node_modules/
 .next/
+/out/
+.static-export-*/
 .env
 .env.local
 .pglite/

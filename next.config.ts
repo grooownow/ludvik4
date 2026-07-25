@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
 
+const isStaticExport = process.env.STATIC_EXPORT === "true";
+
 const nextConfig: NextConfig = {
-  typedRoutes: true,
+  typedRoutes: !isStaticExport,
+  ...(isStaticExport
+    ? {
+        output: "export",
+        images: { unoptimized: true },
+      }
+    : {}),
 
   // Inline SITE_MARKET as a build-time constant so the market dispatcher
   // (src/features/site/market-home.tsx) can dead-code-eliminate the other
@@ -23,25 +31,29 @@ const nextConfig: NextConfig = {
   // deliberately deferred: a naive CSP breaks agent-added inline scripts
   // in this skeleton. See docs/rules/security.md for the CSP
   // rollout plan.
-  async headers() {
-    return [
-      {
-        source: "/(.*)",
-        headers: [
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          {
-            key: "Referrer-Policy",
-            value: "strict-origin-when-cross-origin",
-          },
-          { key: "X-Frame-Options", value: "DENY" },
-          {
-            key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=()",
-          },
-        ],
-      },
-    ];
-  },
+  ...(isStaticExport
+    ? {}
+    : {
+        async headers() {
+          return [
+            {
+              source: "/(.*)",
+              headers: [
+                { key: "X-Content-Type-Options", value: "nosniff" },
+                {
+                  key: "Referrer-Policy",
+                  value: "strict-origin-when-cross-origin",
+                },
+                { key: "X-Frame-Options", value: "DENY" },
+                {
+                  key: "Permissions-Policy",
+                  value: "camera=(), microphone=(), geolocation=()",
+                },
+              ],
+            },
+          ];
+        },
+      }),
 };
 
 // Sentry (@sentry/nextjs): deliberately NOT wrapped in `withSentryConfig`.

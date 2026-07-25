@@ -3,6 +3,8 @@ import { getPublishedArticles } from "@/features/blog";
 import { buildSitemap } from "@/features/site";
 import { env } from "@/lib/env";
 
+export const dynamic = "force-static";
+
 // Market-scoped sitemap — see buildSitemap in the site slice. The RU build adds
 // the blog + published articles; every other market lists only its landing. No
 // cross-market URL (the other market lives on its own domain). /dashboard and

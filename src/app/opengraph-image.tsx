@@ -18,6 +18,7 @@ const COPY = {
 
 const copy = COPY[env.SITE_MARKET];
 
+export const dynamic = "force-static";
 export const alt = copy.alt;
 export const size = {
   width: 1200,
