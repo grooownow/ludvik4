@@ -11,7 +11,13 @@ const nextConfig: NextConfig = {
         output: "export",
         images: { unoptimized: true },
       }
-    : {}),
+    : {
+        // Next 16 only serves the quality levels listed here (default: [75]),
+        // and silently falls back to 75 for anything else. The hero
+        // illustration is a large flat-colour vector export where 75 shows
+        // visible banding on the thin pink lines, so it asks for 95.
+        images: { qualities: [75, 95] },
+      }),
 
   // Inline SITE_MARKET as a build-time constant so the market dispatcher
   // (src/features/site/market-home.tsx) can dead-code-eliminate the other
