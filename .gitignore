@@ -29,3 +29,6 @@ docs/research/
 
 # Disposable review copies for the user (see tmp-review/README.md)
 tmp-review/
+
+# Vercel CLI project link (projectId/orgId) — written by `vercel link`
+.vercel/
