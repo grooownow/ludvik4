@@ -6,8 +6,8 @@ writing detail here.
 
 ## Now
 
-**Dual-market rebuild (ТЗ 1) — DONE 2026-07-22, on branch `feat/dual-market-sites`
-(not yet merged/deployed).** Two market storefronts from one codebase via
+**Dual-market rebuild (ТЗ 1) — DONE 2026-07-22, merged to `main`; EN half is
+LIVE since 2026-07-25.** Two market storefronts from one codebase via
 `SITE_MARKET=ru|en`; positioning → founder-led studio, 4→3 services, RU form
 removed, SEO split by market. Plan + deliverables: `docs/specs/dual-market-sites.plan.md`.
 Blocking follow-ups before it ships:
@@ -19,8 +19,18 @@ Blocking follow-ups before it ships:
   controller identity, and layered notice are implemented. The form now uses
   Resend email only; Telegram remains a separate direct-contact link. Production
   still needs the Resend variables listed in `docs/legal/privacy-notice-en.md`.
-- **ТЗ 2 next** (`docs/agent-briefs/02-deploy-two-market-sites.ru.md`): RU domain,
-  RU-reachable hosting, DNS, two independent deploys, `/en`→`/` redirect.
+- **[DONE 2026-07-25] ТЗ 2 — EN half.** `ludvik4.dev` now serves the EN market
+  (`SITE_MARKET=en` in the Vercel production env); `/en` 308-redirects to the
+  root; `/blog*` 404s; sitemap/robots/canonical are EN-only. Lead form verified
+  end-to-end against live Resend. Runbook (deploy, rollback, env, diagnostics):
+  `docs/playbooks/production-en-vercel.md`.
+- **ТЗ 2 — RU half in progress** (`docs/agent-briefs/02-deploy-two-market-sites.ru.md`):
+  RU domain `ludvik4.ru` bought, RU-reachable hosting (Timeweb, static build via
+  `pnpm build:ru-static`), DNS, availability checks, monitoring.
+- **[BLOCKED on RU going live] `/blog/*` → RU domain 301.** Owner's decision:
+  redirect the 5 RU articles from `ludvik4.dev/blog/<slug>` to the RU domain
+  once it actually answers — they 404 in the meantime. Add beside the `/en`
+  rule in `next.config.ts`.
 
 SEO/GEO rollout — **5 articles LIVE** with per-article covers. Remaining moves,
 guided by `docs/playbooks/seo-geo.md`:
@@ -43,8 +53,9 @@ guided by `docs/playbooks/seo-geo.md`:
 
 Scoped and agreed, not yet started:
 
-- **[USER] Resend production secrets** — verify `ludvik4.dev`, then set
-  `RESEND_API_KEY` / `LEAD_EMAIL_*` and send a live test enquiry.
+- **[DONE 2026-07-25] Resend production secrets** — set in the Vercel
+  production env and proven by a live test enquiry through the EN form
+  (delivery accepted by Resend).
 - **Per-service landing pages** (`/uslugi/...`) — phase 2 of the SEO spec,
   one page per query cluster, after the first articles index.
 

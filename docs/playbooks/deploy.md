@@ -122,6 +122,10 @@ DNS resolves, update `NEXT_PUBLIC_APP_URL` and OAuth callback URLs to match.
 
 ## Notes
 
+- **This project is already deployed.** The live EN market runs on Vercel —
+  its coordinates, env, redeploy, rollback and diagnostics live in
+  `docs/playbooks/production-en-vercel.md`. This generic playbook stays for a
+  from-scratch environment.
 - `src/lib/rate-limit.ts` is in-memory, per-instance — fine for a single
   deployment; scaling to multiple instances needs a store-backed limiter
   (`docs/rules/security.md`).
