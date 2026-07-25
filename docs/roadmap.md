@@ -32,6 +32,23 @@ Blocking follow-ups before it ships:
   once it actually answers — they 404 in the meantime. Add beside the `/en`
   rule in `next.config.ts`.
 
+**CI has been red since 2026-07-23** — one step: `pnpm audit --audit-level high`
+in the `quality` job. Every other job (lint, tests, e2e, golden-path, remote-db,
+lighthouse) is green. Owner's call 2026-07-25: bump + allowlist, executed **after
+the RU half lands**, so the lockfile is not rewritten under a parallel
+workstream.
+
+- `next` 16.2.10 → 16.2.11, `@auth/core` 0.41.2 → 0.41.3; transitive `sharp`,
+  `postcss`, `fast-uri`, `brace-expansion` via `pnpm.overrides`.
+- The two `next-auth` beta advisories (`GHSA-8fpg-xm3f-6cx3`,
+  `GHSA-7rqj-j65f-68wh`) go into `auditConfig.ignoreGhsas` with a rationale and
+  a review date: they are patched only in `>=5.0.0`, and no such version exists
+  — the newest release is `5.0.0-beta.32`, which is _below_ `5.0.0` in semver,
+  so no upgrade can clear them.
+- Real fix, separate task: drop the unused Liftkit auth stack. `/signin` (200)
+  and `/dashboard` (307) are published on a brochure site and are the only
+  reason those advisories apply at all.
+
 SEO/GEO rollout — **5 articles LIVE** with per-article covers. Remaining moves,
 guided by `docs/playbooks/seo-geo.md`:
 
