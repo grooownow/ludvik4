@@ -25,7 +25,7 @@
     "skills:evals": "tsx scripts/skill-evals.ts",
     "skills:evals:behavioral": "tsx scripts/skill-evals.ts --behavioral",
     "skills:evals:detection": "tsx scripts/skill-detection-eval.ts",
-    "prepare": "lefthook install",
+    "prepare": "command -v git >/dev/null 2>&1 && lefthook install || true",
     "db:reset": "rm -rf .pglite && pnpm db:migrate && pnpm db:seed"
   },
   "packageManager": "pnpm@11.10.0+sha512.0b7f8b98060031904c017e3a41eb187a16d40eeb829b95c4f8cb03681761fc4ab53dd219115b9b447f4dce1a05a214764461e7d3703392a9f32f9511ce8c86c8",
