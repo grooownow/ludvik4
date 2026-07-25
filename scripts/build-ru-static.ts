@@ -8,6 +8,7 @@ const serverOnlyPaths = [
   "src/app/api/auth",
   "src/app/dashboard",
   "src/app/signin",
+  "src/app/opengraph-image.tsx",
   "src/middleware.ts",
 ];
 

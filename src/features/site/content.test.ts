@@ -51,6 +51,17 @@ describe("buildSiteMetadata", () => {
       "application/rss+xml": "/blog/rss.xml",
     });
     expect(meta.openGraph?.locale).toBe("ru_RU");
+    expect(meta.openGraph?.images).toMatchObject([
+      {
+        url: "/og-image-ru.png",
+        width: 1200,
+        height: 630,
+        type: "image/png",
+      },
+    ]);
+    expect(meta.twitter?.images).toMatchObject([
+      { url: "/og-image-ru.png", width: 1200, height: 630 },
+    ]);
     expect(meta.keywords).not.toContain("команда разработчиков");
   });
 
@@ -64,6 +75,8 @@ describe("buildSiteMetadata", () => {
     expect(meta.alternates?.languages).toBeUndefined();
     expect(meta.alternates?.types).toBeUndefined();
     expect(meta.openGraph?.locale).toBe("en_US");
+    expect(meta.openGraph?.images).toBeUndefined();
+    expect(meta.twitter?.images).toBeUndefined();
   });
 });
 
@@ -72,6 +85,7 @@ describe("buildHomeJsonLd", () => {
     const jsonLd = buildHomeJsonLd(getMarketContent("ru"), RU_BASE);
     const raw = JSON.stringify(jsonLd);
     expect(raw).not.toMatch(TEAM_CLAIM);
+    expect(raw).toContain(`${RU_BASE}/og-image-ru.png`);
 
     const service = jsonLd["@graph"].find(
       (n) => n["@type"] === "ProfessionalService",

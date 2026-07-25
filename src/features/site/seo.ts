@@ -21,6 +21,17 @@ export function buildSiteMetadata(
   content: MarketContent,
   { baseUrl, hasBlog, verification }: SiteMetadataOptions,
 ): Metadata {
+  const ruShareImage =
+    content.market === "ru"
+      ? {
+          url: "/og-image-ru.png",
+          width: 1200,
+          height: 630,
+          type: "image/png",
+          alt: "Ludvik4 — разработка цифровых продуктов",
+        }
+      : undefined;
+
   return {
     metadataBase: new URL(baseUrl),
     title: { default: content.title, template: "%s · Ludvik4" },
@@ -43,11 +54,13 @@ export function buildSiteMetadata(
       siteName: "Ludvik4",
       title: content.shareTitle,
       description: content.description,
+      ...(ruShareImage ? { images: [ruShareImage] } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: content.shareTitle,
       description: content.description,
+      ...(ruShareImage ? { images: [ruShareImage] } : {}),
     },
     verification,
   };
@@ -158,7 +171,10 @@ export function buildHomeJsonLd(content: MarketContent, baseUrl: string) {
         "@id": `${baseUrl}/#organization`,
         name: "Ludvik4",
         url: baseUrl,
-        logo: `${baseUrl}/opengraph-image`,
+        logo:
+          content.market === "ru"
+            ? `${baseUrl}/og-image-ru.png`
+            : `${baseUrl}/opengraph-image`,
         description: content.description,
         sameAs: [TELEGRAM_URL],
         knowsAbout: [
