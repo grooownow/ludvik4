@@ -117,10 +117,11 @@ Resend accepted the message — confirm the mail actually lands in
 
 ## Known follow-ups
 
-- `/blog/*` returns 404 on `ludvik4.dev` since the market switch. The owner
-  chose a 301 to the RU domain **once it is live** (`/blog/<slug>` →
-  `https://<ru-domain>/blog/<slug>`) — not before, to avoid redirecting into a
-  dead host. Add it to `next.config.ts` `redirects()` beside the `/en` rule.
+- **[USER] Search Console after the blog move.** The five articles now 308 from
+  `ludvik4.dev` to `ludvik4.ru`. Google/Yandex need the RU property verified and
+  its sitemap submitted, then the redirects have to be re-crawled before the
+  signals move; expect the old URLs to linger in the index for weeks. Do not
+  remove the redirects until they have.
 - `/signin` (200) and `/dashboard` (307) are Liftkit starter auth surfaces
   still published on a marketing site; they are the reason `pnpm audit` reports
   three critical `next-auth` beta advisories in CI.

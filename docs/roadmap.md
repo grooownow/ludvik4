@@ -31,10 +31,12 @@ Blocking follow-ups before it ships:
   Timeweb ticket № 12354415:** apex and `www` still resolve to an orphaned old
   Caddy vhost even after a full detach/deploy/reattach cycle. Runbook:
   `docs/playbooks/production-ru-timeweb.md`.
-- **[BLOCKED on RU going live] `/blog/*` → RU domain 301.** Owner's decision:
-  redirect the 5 RU articles from `ludvik4.dev/blog/<slug>` to the RU domain
-  once it actually answers — they 404 in the meantime. Add beside the `/en`
-  rule in `next.config.ts`.
+- **[DONE 2026-07-25] `/blog/*` → RU domain 301.** `ludvik4.ru` went live, so
+  the blog list, all 5 articles and the RSS feed now 308 from `ludvik4.dev` to
+  the same slug on the RU domain (verified end-to-end: 308 → 200). Rules live
+  in `config/redirects.ts`, market-scoped so the RU build never redirects its
+  own blog. `Disallow: /blog` was dropped from robots at the same time — a
+  crawler forbidden to fetch a URL never follows its redirect.
 
 **CI has been red since 2026-07-23** — one step: `pnpm audit --audit-level high`
 in the `quality` job. Every other job (lint, tests, e2e, golden-path, remote-db,
