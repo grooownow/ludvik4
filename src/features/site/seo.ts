@@ -108,16 +108,18 @@ export function buildSitemap(
 }
 
 /**
- * robots rules for a market. /dashboard + /signin are disallowed everywhere;
- * a non-RU market additionally disallows /blog (the blog is a RU surface that
- * 404s there).
+ * robots rules, identical for every market: /dashboard + /signin are the only
+ * disallowed paths. No `market` parameter — the rules no longer differ.
+ *
+ * The EN build used to additionally disallow /blog, back when the blog simply
+ * 404'd outside RU. Since ТЗ 2 those paths permanently redirect to the RU
+ * domain (config/redirects.ts), and a crawler forbidden to fetch a URL never
+ * sees its 301 — disallowing them would strand the five live articles in the
+ * index as "blocked by robots.txt" and drop the link equity the redirect
+ * exists to carry.
  */
-export function buildRobots(
-  market: Market,
-  baseUrl: string,
-): MetadataRoute.Robots {
+export function buildRobots(baseUrl: string): MetadataRoute.Robots {
   const disallow = ["/dashboard", "/signin"];
-  if (market !== "ru") disallow.push("/blog");
   return {
     rules: [{ userAgent: "*", allow: "/", disallow }],
     sitemap: `${baseUrl}/sitemap.xml`,

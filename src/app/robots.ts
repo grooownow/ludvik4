@@ -4,9 +4,9 @@ import { env } from "@/lib/env";
 
 export const dynamic = "force-static";
 
-// Market-scoped robots — see buildRobots in the site slice. /dashboard and
-// /signin are disallowed in every build; a non-RU build also disallows /blog
-// (a RU-only surface that 404s there).
+// See buildRobots in the site slice: /dashboard and /signin are disallowed in
+// every build, and /blog is crawlable everywhere — on the EN build it 301s to
+// the RU domain, and a blocked URL's redirect is never followed.
 export default function robots(): MetadataRoute.Robots {
-  return buildRobots(env.SITE_MARKET, env.NEXT_PUBLIC_APP_URL);
+  return buildRobots(env.NEXT_PUBLIC_APP_URL);
 }
