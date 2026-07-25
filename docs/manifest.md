@@ -48,7 +48,7 @@ Russian
 | What          | URL                                                          |
 | ------------- | ------------------------------------------------------------ |
 | Production EN | https://ludvik4.dev (international market, `SITE_MARKET=en`) |
-| Production RU | separate RU-reachable domain — provisioned in ТЗ 2           |
+| Production RU | https://ludvik4.ru (Timeweb, `SITE_MARKET=ru`)               |
 | Staging       | n/a — Vercel preview deploys per PR                          |
 | Repo          | https://github.com/grooownow/ludvik4                         |
 

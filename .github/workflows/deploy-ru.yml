@@ -1,0 +1,96 @@
+name: Deploy RU
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-ru
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Validate the RU static build
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build:ru-static
+
+      - name: Configure SourceCraft SSH
+        env:
+          SOURCECRAFT_SSH_KEY: ${{ secrets.SOURCECRAFT_SSH_KEY }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SOURCECRAFT_SSH_KEY" > ~/.ssh/sourcecraft
+          chmod 600 ~/.ssh/sourcecraft
+          ssh-keyscan -p 443 ssh.sourcecraft.dev >> ~/.ssh/known_hosts
+
+      - name: Mirror main to the SourceCraft deploy branch
+        env:
+          GIT_SSH_COMMAND: ssh -i ~/.ssh/sourcecraft -o IdentitiesOnly=yes -o BatchMode=yes
+        run: |
+          git push ssh://ssh.sourcecraft.dev:443/ludvik4go/ludvik4.git HEAD:deploy
+
+      - name: Trigger Timeweb deployment
+        env:
+          TIMEWEB_TOKEN: ${{ secrets.TIMEWEB_TOKEN }}
+        run: |
+          api="https://api.timeweb.cloud/api/v1/apps/228059"
+
+          for attempt in {1..12}; do
+            status="$(
+              curl --silent --show-error \
+                --output timeweb-response.json \
+                --write-out '%{http_code}' \
+                --request POST \
+                --header "Authorization: Bearer $TIMEWEB_TOKEN" \
+                --header "Content-Type: application/json" \
+                --data "{\"commit_sha\":\"$GITHUB_SHA\"}" \
+                "$api/deploy"
+            )"
+
+            if [[ "$status" =~ ^2 ]]; then
+              break
+            fi
+
+            if [[ "$attempt" == 12 ]]; then
+              cat timeweb-response.json
+              exit 1
+            fi
+
+            sleep 5
+          done
+
+          for attempt in {1..60}; do
+            app="$(
+              curl --fail-with-body --silent --show-error \
+                --header "Authorization: Bearer $TIMEWEB_TOKEN" \
+                "$api"
+            )"
+            deployed_sha="$(jq -r '.app.commit_sha // empty' <<<"$app")"
+
+            if [[ "$deployed_sha" == "$GITHUB_SHA" ]]; then
+              exit 0
+            fi
+
+            sleep 10
+          done
+
+          echo "Timeweb did not publish commit $GITHUB_SHA within 10 minutes."
+          exit 1
