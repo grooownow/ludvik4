@@ -14,3 +14,22 @@ overrides:
   # GHSA-ph9p-34f9-6g65: tmp path traversal via @lhci/cli (dev-only).
   # Remove when @lhci/cli or its transitive deps (inquirer, external-editor) update.
   tmp@<0.2.6: ^0.2.6
+  # The entries below pull transitive copies up to their patched versions. Each
+  # is reachable only through a dependency that has not re-released yet
+  # (next, @sentry/nextjs, eslint, shadcn), so a direct bump cannot fix them.
+  # Drop an entry once its parent ships the patched range on its own.
+  # GHSA-f88m-g3jw-g9cj: sharp — libvips buffer overflow (via next).
+  sharp@<0.35.0: ^0.35.3
+  # GHSA-6g55-p6wh-862q + GHSA-r28c-9q8g-f849: postcss parsing issues
+  # (transitive copies via next and @sentry/nextjs).
+  postcss@<8.5.18: ^8.5.23
+  # GHSA-v2hh-gcrm-f6hx: fast-uri host confusion via a backslash authority
+  # delimiter (via @sentry/nextjs > ajv, and shadcn).
+  fast-uri@<3.1.4: ^3.1.4
+  # GHSA-mh99-v99m-4gvg: brace-expansion ReDoS (via eslint and @sentry/nextjs).
+  brace-expansion@<5.0.8: ^5.0.8
+  # GHSA-7rqj-j65f-68wh (homoglyph @ bypass in the email normalizer) and
+  # GHSA-xmf8-cvqr-rfgj (getToken() throws on a malformed Bearer header).
+  # The direct dependency is already on 0.41.3; this pulls up the copy that
+  # @auth/drizzle-adapter still pins.
+  "@auth/core@<0.41.3": ^0.41.3
