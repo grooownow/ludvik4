@@ -39,22 +39,27 @@ Blocking follow-ups before it ships:
   own blog. `Disallow: /blog` was dropped from robots at the same time — a
   crawler forbidden to fetch a URL never follows its redirect.
 
-**CI has been red since 2026-07-23** — one step: `pnpm audit --audit-level high`
-in the `quality` job. Every other job (lint, tests, e2e, golden-path, remote-db,
-lighthouse) is green. Owner's call 2026-07-25: bump + allowlist, executed **after
-the RU half lands**, so the lockfile is not rewritten under a parallel
-workstream.
+**[DONE 2026-07-26] CI is green again** (red since 2026-07-23 on a single step,
+`pnpm audit --audit-level high` in the `quality` job). Fixed by upgrading only —
+the planned `ignoreGhsas` allowlist proved unnecessary:
 
-- `next` 16.2.10 → 16.2.11, `@auth/core` 0.41.2 → 0.41.3; transitive `sharp`,
-  `postcss`, `fast-uri`, `brace-expansion` via `pnpm.overrides`.
-- The two `next-auth` beta advisories (`GHSA-8fpg-xm3f-6cx3`,
-  `GHSA-7rqj-j65f-68wh`) go into `auditConfig.ignoreGhsas` with a rationale and
-  a review date: they are patched only in `>=5.0.0`, and no such version exists
-  — the newest release is `5.0.0-beta.32`, which is _below_ `5.0.0` in semver,
-  so no upgrade can clear them.
-- Real fix, separate task: drop the unused Liftkit auth stack. `/signin` (200)
-  and `/dashboard` (307) are published on a brochure site and are the only
-  reason those advisories apply at all.
+- `next` 16.2.10 → 16.2.11, `next-auth` beta.31 → **beta.32**, `@auth/core`
+  0.41.2 → 0.41.3, `postcss` 8.5.16 → 8.5.23. Transitive copies no parent has
+  re-released (`sharp`, `postcss`, `fast-uri`, `brace-expansion`, and the
+  `@auth/core` pinned by `@auth/drizzle-adapter`) are pulled up by overrides in
+  `pnpm-workspace.yaml`, each annotated with its GHSA.
+- The next-auth advisories read as unfixable ("patched in >=5.0.0", which does
+  not exist) but their **vulnerable** ranges stop at `<=5.0.0-beta.31`, so
+  beta.32 clears all three. Correcting an earlier note in this file that said
+  no upgrade could.
+- **Do not take `next` 16.2.12** (or any hours-old release): it trips the repo's
+  `minimumReleaseAge` policy, and installing it makes pnpm write a
+  `minimumReleaseAgeExclude` block into `pnpm-workspace.yaml` — a hole in a
+  supply-chain guard. 16.2.11 already carries every fix. If that block ever
+  reappears in a diff, treat it as a red flag, not noise.
+- Still worth doing separately: drop the unused Liftkit auth stack. `/signin`
+  (200) and `/dashboard` (307) are published on a brochure site and are the only
+  reason the auth advisories apply at all.
 
 SEO/GEO rollout — **5 articles LIVE** with per-article covers. Remaining moves,
 guided by `docs/playbooks/seo-geo.md`:
