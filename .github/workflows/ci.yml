@@ -37,7 +37,34 @@ jobs:
       # positives or advisories without a fix: an `overrides:` entry in
       # pnpm-workspace.yaml, with a comment explaining why — see
       # docs/rules/security.md.
-      - run: pnpm audit --audit-level high
+      #
+      # `pnpm audit` exits 1 both when it finds an advisory and when the npm
+      # advisory endpoint misbehaves, so the two are told apart by the error
+      # text rather than the exit code. A real finding fails on the first
+      # attempt (the audit is deterministic); only an endpoint error is
+      # retried. The nightly run of 2026-07-26 went red purely because that
+      # endpoint returned malformed JSON, and a gate that cries wolf is a gate
+      # people learn to ignore.
+      - name: Audit (high/critical)
+        run: |
+          for attempt in 1 2 3; do
+            if out=$(pnpm audit --audit-level high 2>&1); then
+              echo "$out"
+              exit 0
+            fi
+            echo "$out"
+            case "$out" in
+              *ERR_PNPM_AUDIT_BAD_RESPONSE*|*ERR_PNPM_AUDIT_ENDPOINT*)
+                echo "::warning::npm advisory endpoint failed (attempt $attempt/3) — retrying"
+                sleep $((attempt * 10))
+                ;;
+              *)
+                exit 1
+                ;;
+            esac
+          done
+          echo "::error::npm advisory endpoint unreachable after 3 attempts — audit did not run"
+          exit 1
 
   # Tier 3 — the detection eval (`pnpm skills:evals:detection`, which runs the
   # `review` skill against tests/fixtures/planted-defects and asserts a
