@@ -44,9 +44,11 @@ suggestions.
   repo-is-English rule, alongside `docs/site-v0.md`. Tech terms and product
   names stay in their original form; linking English-language primary
   sources is fine and expected.
-- Team voice («мы»), no personal names, no location disclosure
-  (`docs/site-v0.md` → Позиционирование). Every article ends with a CTA
-  linking `/#contact`.
+- Neutral voice by default, consistent with the RU storefront: describe the
+  work and result without inventing a permanent team. First person singular is
+  allowed where authorship matters; avoid team voice («мы»). No personal names
+  or location disclosure (`docs/site-v0.md` → Позиционирование). Every article
+  ends with a CTA linking `/#contact`.
 
 ## Cover image
 

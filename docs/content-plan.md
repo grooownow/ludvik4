@@ -107,6 +107,12 @@ rules for later pages are in
 before expanding the AI-development cluster further: every service first needs
 one search entry that can lead to a commercial page.
 
+**Commercial article batch — DRAFT READY (2026-07-27):** all eight articles
+from `ru-commercial-seo.plan.md` have complete MDX drafts, internal links,
+full-resolution social covers, and optimized web cards. Publish as four
+two-article pairs after human review; do not expose a supporting article before
+the page it links to is live.
+
 **Wave 1 — deepen the two live pillars (fastest cluster wins) — DONE (3/3, 2026-07-19):**
 
 1. ✅ GitHub Spec Kit: обзор (C3 supporting) — `/blog/github-spec-kit`

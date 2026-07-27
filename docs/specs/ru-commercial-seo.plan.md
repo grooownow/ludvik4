@@ -31,6 +31,14 @@ Publish in this order. Each article must answer one query fully, link to the
 matching service page once contextually, and include firsthand examples,
 screenshots, decision criteria, or a reusable checklist.
 
+All eight articles and their on-brand covers were prepared as hidden drafts on
+2026-07-27. Proposed publication cadence after editorial approval:
+
+- week 1: priorities 1–2 (landing cost + brief);
+- week 2: priorities 3–4 (lead workflow + AI automation);
+- week 3: priorities 5–6 (MVP scope + cost);
+- week 4: priorities 7–8 (site choice + internal web app).
+
 | Priority | Working title / primary query                                                  | Destination     |
 | -------- | ------------------------------------------------------------------------------ | --------------- |
 | 1        | `Сколько стоит лендинг в 2026 году` / `стоимость лендинга`                     | landing page    |
