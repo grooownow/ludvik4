@@ -9,7 +9,7 @@ import {
   getPublishedArticles,
   getPublishedArticleBySlug,
 } from "@/features/blog";
-import { getMarketContent, SiteHeader } from "@/features/site";
+import { Breadcrumbs, getMarketContent, SiteHeader } from "@/features/site";
 import { env } from "@/lib/env";
 import { jsonLdString } from "@/lib/json-ld";
 
@@ -137,17 +137,49 @@ export default async function ArticlePage({
   }
 
   const baseURL = env.NEXT_PUBLIC_APP_URL;
+  const articleUrl = `${baseURL}/blog/${article.slug}`;
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Article",
-    headline: article.title,
-    description: article.description,
-    datePublished: article.date,
-    inLanguage: "ru",
-    url: `${baseURL}/blog/${article.slug}`,
-    ...(article.cover && { image: `${baseURL}${article.cover}` }),
-    author: { "@type": "Organization", name: "Ludvik4", url: baseURL },
-    publisher: { "@type": "Organization", name: "Ludvik4", url: baseURL },
+    "@graph": [
+      {
+        "@type": "Article",
+        headline: article.title,
+        description: article.description,
+        datePublished: article.date,
+        inLanguage: "ru",
+        url: articleUrl,
+        ...(article.cover && { image: `${baseURL}${article.cover}` }),
+        author: { "@type": "Organization", name: "Ludvik4", url: baseURL },
+        publisher: {
+          "@type": "Organization",
+          name: "Ludvik4",
+          url: baseURL,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Главная",
+            item: `${baseURL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Блог",
+            item: `${baseURL}/blog`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: article.title,
+            item: articleUrl,
+          },
+        ],
+      },
+    ],
   };
 
   return (
@@ -159,12 +191,9 @@ export default async function ArticlePage({
       <SiteHeader content={ruContent} contactHref="/#contact" />
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-14">
-        <Link
-          href="/blog"
-          className="text-muted-foreground hover:text-foreground font-mono text-sm"
-        >
-          ← Блог
-        </Link>
+        <Breadcrumbs
+          items={[{ label: "Блог", href: "/blog" }, { label: article.title }]}
+        />
         <article className="mt-6">
           <time
             dateTime={article.date}

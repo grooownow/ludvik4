@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPublishedArticles } from "@/features/blog";
-import { getMarketContent, SiteHeader } from "@/features/site";
+import { Breadcrumbs, getMarketContent, SiteHeader } from "@/features/site";
 import { env } from "@/lib/env";
 
 const ruContent = getMarketContent("ru");
@@ -38,7 +38,8 @@ export default function BlogPage() {
       <SiteHeader content={ruContent} contactHref="/#contact" />
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-14">
-        <p className="text-primary mb-3 font-mono text-xs font-semibold tracking-widest uppercase">
+        <Breadcrumbs items={[{ label: "Блог" }]} />
+        <p className="text-primary mt-10 mb-3 font-mono text-xs font-semibold tracking-widest uppercase">
           Блог
         </p>
         <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">

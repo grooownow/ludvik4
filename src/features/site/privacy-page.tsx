@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Breadcrumbs } from "./breadcrumbs";
 import type { MarketContent } from "./content";
 import { SiteFooter, SiteHeader } from "./site-chrome";
 
@@ -9,7 +10,8 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
     <div className="bg-background text-foreground min-h-screen">
       <SiteHeader content={content} contactHref="/#contact" />
       <main className="mx-auto max-w-3xl px-6 py-14 sm:py-16">
-        <p className="text-primary mb-3 font-mono text-xs font-semibold tracking-widest uppercase">
+        <Breadcrumbs items={[{ label: "Privacy Notice" }]} homeLabel="Home" />
+        <p className="text-primary mt-10 mb-3 font-mono text-xs font-semibold tracking-widest uppercase">
           Legal
         </p>
         <h1 className="text-4xl font-extrabold tracking-tight">

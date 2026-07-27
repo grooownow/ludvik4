@@ -8,6 +8,7 @@ import {
   type CaseStudy,
   type ServicePage,
 } from "./commercial-content";
+import { Breadcrumbs } from "./breadcrumbs";
 import { getMarketContent, TELEGRAM_URL } from "./content";
 import { Eyebrow, Section, SiteFooter, SiteHeader } from "./site-chrome";
 
@@ -26,21 +27,6 @@ function PageShell({
       <main className="flex-1">{children}</main>
       <SiteFooter content={ruContent} />
     </div>
-  );
-}
-
-function Breadcrumbs({ current }: { current: string }) {
-  return (
-    <nav
-      aria-label="Хлебные крошки"
-      className="text-muted-foreground font-mono text-sm"
-    >
-      <Link href="/" className="hover:text-foreground">
-        Главная
-      </Link>
-      <span aria-hidden="true"> / </span>
-      <span>{current}</span>
-    </nav>
   );
 }
 
@@ -103,6 +89,12 @@ export function ServicePageView({
           {
             "@type": "ListItem",
             position: 2,
+            name: "Услуги",
+            item: `${baseUrl}/#services`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
             name: service.title,
             item: url,
           },
@@ -118,7 +110,12 @@ export function ServicePageView({
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
       <div className="mx-auto max-w-5xl px-6 py-14">
-        <Breadcrumbs current={service.title} />
+        <Breadcrumbs
+          items={[
+            { label: "Услуги", href: "/#services" },
+            { label: service.title },
+          ]}
+        />
         <div className="mt-10 max-w-3xl">
           <Eyebrow>{service.eyebrow}</Eyebrow>
           <h1 className="text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
@@ -242,7 +239,7 @@ export function CasesIndexView() {
   return (
     <PageShell>
       <div className="mx-auto max-w-5xl px-6 py-14">
-        <Breadcrumbs current="Кейсы" />
+        <Breadcrumbs items={[{ label: "Кейсы" }]} />
         <div className="mt-10">
           <Eyebrow>Работы</Eyebrow>
           <h1 className="text-4xl font-extrabold tracking-tight">
@@ -268,12 +265,39 @@ export function CaseStudyPageView({
   const url = `${baseUrl}/cases/${study.slug}`;
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    name: study.title,
-    description: study.description,
-    url,
-    image: `${baseUrl}${study.image}`,
-    creator: { "@type": "Organization", name: "Ludvik4", url: baseUrl },
+    "@graph": [
+      {
+        "@type": "CreativeWork",
+        name: study.title,
+        description: study.description,
+        url,
+        image: `${baseUrl}${study.image}`,
+        creator: { "@type": "Organization", name: "Ludvik4", url: baseUrl },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Главная",
+            item: `${baseUrl}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Кейсы",
+            item: `${baseUrl}/cases`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: study.title,
+            item: url,
+          },
+        ],
+      },
+    ],
   };
 
   return (
@@ -283,7 +307,9 @@ export function CaseStudyPageView({
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
       <div className="mx-auto max-w-5xl px-6 py-14">
-        <Breadcrumbs current={study.title} />
+        <Breadcrumbs
+          items={[{ label: "Кейсы", href: "/cases" }, { label: study.title }]}
+        />
         <div className="mt-10 grid items-start gap-10 lg:grid-cols-[1fr_1.1fr]">
           <div>
             <Eyebrow>{study.kind}</Eyebrow>

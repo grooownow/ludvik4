@@ -7,6 +7,7 @@ import { buildSiteMetadata } from "./seo";
 export { MarketHome } from "./market-home";
 export { PrivacyPage } from "./privacy-page";
 export { SiteHeader } from "./site-chrome";
+export { Breadcrumbs, type BreadcrumbItem } from "./breadcrumbs";
 export { getMarketContent, type Market, type MarketContent } from "./content";
 export {
   caseStudies,
