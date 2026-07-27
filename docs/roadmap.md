@@ -6,11 +6,11 @@ writing detail here.
 
 ## Now
 
-**Dual-market rebuild (ТЗ 1) — DONE 2026-07-22, merged to `main`; EN half is
-LIVE since 2026-07-25.** Two market storefronts from one codebase via
+**Dual-market rebuild and deployment (ТЗ 1 + ТЗ 2) — DONE; EN has been live
+since 2026-07-25 and RU since 2026-07-27.** Two market storefronts from one codebase via
 `SITE_MARKET=ru|en`; positioning → founder-led studio, 4→3 services, RU form
 removed, SEO split by market. Plan + deliverables: `docs/specs/dual-market-sites.plan.md`.
-Blocking follow-ups before it ships:
+Completed follow-ups:
 
 - **[DONE 2026-07-23] RU pricing amounts** — set to сайт/лендинг от 40 000 ₽,
   автоматизация от 40 000 ₽, веб-приложение/компактный SaaS от 110 000 ₽
@@ -24,13 +24,15 @@ Blocking follow-ups before it ships:
   root; `/blog*` 404s; sitemap/robots/canonical are EN-only. Lead form verified
   end-to-end against live Resend. Runbook (deploy, rollback, env, diagnostics):
   `docs/playbooks/production-en-vercel.md`.
-- **ТЗ 2 — RU half in progress** (`docs/agent-briefs/02-deploy-two-market-sites.ru.md`):
-  домен `ludvik4.ru`, DNS, Timeweb static build and GitHub `main` → SourceCraft
-  `deploy` → Timeweb API autodeploy are configured. A clean replacement app
-  `228103` serves the current build on its technical domain, and autodeploy now
-  targets it. **Blocked on Timeweb ticket № 12354415:** apex still resolves to
-  an orphaned old Caddy vhost even after moving it to the replacement app.
-  Timeweb support agreed to rebind and redeploy it. Runbook:
+- **[DONE 2026-07-27] ТЗ 2 — RU half.** `ludvik4.ru`, DNS, the Timeweb static
+  build, and GitHub `main` → SourceCraft `deploy` → Timeweb API autodeploy are
+  live on replacement app `228103`. Timeweb fixed the orphaned Caddy vhost in
+  ticket `12354415`; apex content and assets were verified byte-for-byte
+  against the technical domain before the ticket was closed. `www` serves the
+  same build with an apex canonical; a strict `www` → apex redirect is
+  intentionally deferred because App Platform cannot configure it and a
+  dedicated backend costs 510 RUB/month. Decision:
+  `docs/decisions/0003-defer-ru-www-redirect.md`. Runbook:
   `docs/playbooks/production-ru-timeweb.md`.
 - **[DONE 2026-07-25] `/blog/*` → RU domain 301.** `ludvik4.ru` went live, so
   the blog list, all 5 articles and the RSS feed now 308 from `ludvik4.dev` to

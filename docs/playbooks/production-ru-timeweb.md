@@ -1,75 +1,71 @@
 ---
-title: RU production runbook — ludvik4.ru на Timeweb
-status: degraded
+title: RU production runbook — ludvik4.ru on Timeweb
+status: live
 owner: user's agent
 ---
 
-# RU-продакшен — ludvik4.ru (Timeweb)
+# RU production — ludvik4.ru (Timeweb)
 
-Русская витрина (`SITE_MARKET=ru`) работает на Timeweb App Platform как
-статическая сборка. GitHub остаётся единственным основным репозиторием.
+The Russian storefront (`SITE_MARKET=ru`) runs on Timeweb App Platform as a
+static build. GitHub remains the source-of-truth repository.
 
-> **Временная проблема Timeweb, 2026-07-25.** Создано чистое приложение
-> `228103`: его технический домен обслуживает актуальный деплой, но после
-> переноса `ludvik4.ru` публичный хост всё равно остаётся на старом каталоге
-> Caddy. Тикет Timeweb № `12354415` дополнен результатами проверки; поддержка
-> согласилась выполнить перепривязку и деплой со своей стороны.
+## Coordinates
 
-## Координаты
+| Item                | Value                                                        |
+| ------------------- | ------------------------------------------------------------ |
+| Canonical domain    | `https://ludvik4.ru`                                         |
+| Additional host     | `https://www.ludvik4.ru`                                     |
+| Timeweb application | `ludvik4-ru-v2`, ID `228103`, project `2747503`              |
+| Technical domain    | `https://ludvik4go-ludvik4-4387.twc1.net`                    |
+| SourceCraft mirror  | `https://sourcecraft.dev/ludvik4go/ludvik4`, branch `deploy` |
+| Build command       | `pnpm build:ru-static`                                       |
+| Build output        | `/out`                                                       |
 
-| Что                | Значение                                                    |
-| ------------------ | ----------------------------------------------------------- |
-| Основной домен     | `https://ludvik4.ru`                                        |
-| Дополнительный     | `https://www.ludvik4.ru` (временно на старом приложении)    |
-| Timeweb-приложение | `ludvik4-ru-v2`, ID `228103`, проект `2747503`              |
-| Технический домен  | `https://ludvik4go-ludvik4-4387.twc1.net`                   |
-| Старое приложение  | `ludvik4-ru`, ID `228059` (временный откат, не удалять)     |
-| SourceCraft        | `https://sourcecraft.dev/ludvik4go/ludvik4`, ветка `deploy` |
-| Команда сборки     | `pnpm build:ru-static`                                      |
-| Результат сборки   | `/out`                                                      |
+The previous app `ludvik4-ru` (`228059`) is not part of the production path.
+Confirm that no domains or deploy automation target it before deleting it.
 
-## Как работает автодеплой
+## Autodeploy flow
 
-Workflow `.github/workflows/deploy-ru.yml` запускается после каждого push в
-GitHub `main`:
+The `.github/workflows/deploy-ru.yml` workflow runs after every push to GitHub
+`main`:
 
-1. собирает RU-версию локально на GitHub runner;
-2. отправляет тот же commit SHA в ветку `deploy` зеркала SourceCraft;
-3. вызывает API Timeweb для приложения `228103`;
-4. ждёт, пока Timeweb опубликует именно этот commit SHA.
+1. build the RU storefront on the GitHub runner;
+2. push the same commit SHA to the SourceCraft mirror's `deploy` branch;
+3. call the Timeweb API for application `228103`;
+4. wait until Timeweb publishes that exact commit SHA.
 
-Отдельная ветка `deploy` нужна потому, что SourceCraft защищает зеркальную
-`main` от прямых push. Плановая синхронизация `main` из GitHub остаётся
-вспомогательной и в продакшене не участвует.
+The separate `deploy` branch is required because SourceCraft protects its
+mirrored `main` branch from direct pushes. Scheduled `main` synchronization is
+auxiliary and is not used by production.
 
-GitHub Actions использует два repository secret:
+GitHub Actions uses two repository secrets:
 
 - `SOURCECRAFT_SSH_KEY`;
 - `TIMEWEB_TOKEN`.
 
-Значения секретов в репозитории не хранятся. Токен Timeweb ограничен проектом
-`2747503`, имеет доступ только к App Platform, не разрешает удаление сервисов и
-истекает 25 июля 2027 года.
+Secret values are not stored in the repository. The Timeweb token is limited
+to project `2747503`, has App Platform access without service deletion, and
+expires on 25 July 2027.
 
-## Ручной деплой
+## Manual deploy
 
-Обычный путь — повторно запустить workflow `Deploy RU` во вкладке Actions.
-Перед ручным запуском убедиться, что нужный commit находится в GitHub `main`.
+The normal recovery path is to rerun the `Deploy RU` workflow in GitHub
+Actions. Before running it, confirm that the intended commit is on GitHub
+`main`.
 
-Для диагностики можно проверить зеркало:
+To inspect the mirror:
 
 ```bash
 git ls-remote ssh://ssh.sourcecraft.dev:443/ludvik4go/ludvik4.git refs/heads/deploy
 ```
 
-## Откат
+## Rollback
 
-В Timeweb открыть приложение `ludvik4-ru-v2` → настройки деплоя → ветка
-`deploy`, выбрать последний успешный commit и запустить деплой. После
-исправления повторный push в GitHub `main` снова возвращает обычный
-автоматический поток.
+In Timeweb, open `ludvik4-ru-v2`, select the `deploy` branch in deployment
+settings, choose the last successful commit, and deploy it. A later push to
+GitHub `main` resumes the normal automated flow.
 
-## Проверка после деплоя
+## Production checks
 
 ```bash
 curl -fsSL https://ludvik4.ru |
@@ -80,19 +76,38 @@ curl -fsSL https://ludvik4.ru/sitemap.xml |
   grep 'https://ludvik4.ru'
 ```
 
-Дополнительно проверить главную, `/blog`, один материал, `/robots.txt` и
-`/sitemap.xml`. `www.ludvik4.ru` должен возвращать постоянный редирект на apex;
-App Platform не поддерживает такой редирект, поэтому его нужно настроить
-отдельно.
+Also check `/`, `/blog`, one article, `/privacy`, `/robots.txt`, and
+`/sitemap.xml`. The HTML must use `lang="ru"`, the apex canonical, and RU-only
+metadata.
 
-## Обслуживание
+## `www` policy
 
-- До 25 июля 2027 года перевыпустить ограниченный Timeweb-токен и обновить
-  `TIMEWEB_TOKEN` в GitHub Actions.
-- При замене ключа SourceCraft сначала добавить новый публичный ключ, затем
-  обновить `SOURCECRAFT_SSH_KEY`, проверить workflow и только после этого
-  удалить старый ключ.
-- Если технический домен обновился, а собственные домены показывают старую
-  версию, сравнить `Last-Modified` и OG metadata. Если проблема повторяет тикет
-  № `12354415`, не перезапускать деплои по кругу: обратиться в Timeweb с
-  просьбой очистить осиротевший vhost Caddy.
+Both `ludvik4.ru` and `www.ludvik4.ru` currently return `200` with the same RU
+build. Every page declares the apex URL as canonical, so search engines have a
+single preferred host.
+
+A strict `www` → apex redirect is deliberately deferred. Timeweb App Platform
+does not support a per-host redirect, REG.RU forwarding cannot cover this
+HTTPS subdomain case, and a dedicated Timeweb backend costs 510 RUB/month.
+Do not create the standalone redirect service unless this decision is
+revisited. See `docs/decisions/0003-defer-ru-www-redirect.md`.
+
+## Incident history
+
+On 27 July 2026, Timeweb resolved ticket `12354415` by removing an orphaned
+Caddy vhost left by the previous app and rebinding the domains to app `228103`.
+Before closing the ticket, apex HTML and `og-image-ru.png` were verified as
+byte-identical to the technical domain.
+
+If the technical domain updates while a custom domain remains stale, compare
+`Last-Modified`, HTML hashes, and OG metadata. If the symptoms match ticket
+`12354415`, avoid repeated deployments and ask Timeweb to remove the orphaned
+Caddy vhost.
+
+## Maintenance
+
+- Rotate the limited Timeweb token before 25 July 2027 and update
+  `TIMEWEB_TOKEN` in GitHub Actions.
+- When rotating the SourceCraft key, add the new public key first, update
+  `SOURCECRAFT_SSH_KEY`, verify the workflow, and only then remove the old key.
+- Recheck apex and `www` after DNS, domain, or Timeweb application changes.

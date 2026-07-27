@@ -55,8 +55,10 @@ Russian
 ## Status
 
 Manifest complete — MVP shipped and live; rebuilt into two market storefronts
-(ТЗ 1, 2026-07-22; RU voice updated 2026-07-23). Positioning + services SSOT: `docs/business-strategy.md` +
+(ТЗ 1, 2026-07-22; RU voice updated 2026-07-23; both production deployments
+live by 2026-07-27). Positioning + services SSOT: `docs/business-strategy.md` +
 `docs/agent-briefs/01-rebuild-market-sites.ru.md`; build/architecture:
 `docs/specs/dual-market-sites.plan.md`. `docs/site-v0.md` is the original
 single-market design record (superseded for positioning/services/RU-form — see
-its banner). What's next: `docs/roadmap.md` (ТЗ 2 = domains + deploy).
+its banner). Deployment runbooks: `docs/playbooks/production-en-vercel.md` and
+`docs/playbooks/production-ru-timeweb.md`. What's next: `docs/roadmap.md`.

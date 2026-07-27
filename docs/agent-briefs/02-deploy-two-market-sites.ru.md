@@ -5,6 +5,14 @@
 Это второе задание. Начинать его только после приемки ТЗ 1
 `docs/agent-briefs/01-rebuild-market-sites.ru.md`.
 
+**Implementation status: completed 2026-07-27.** Both production storefronts
+are live with independent deployment pipelines. The accepted exception is the
+RU `www` host: it serves the same RU build with `https://ludvik4.ru` as its
+canonical URL instead of returning a strict redirect. Timeweb App Platform
+cannot configure that redirect, and the user declined a separate 510 RUB/month
+backend solely for this purpose. See
+`docs/decisions/0003-defer-ru-www-redirect.md`.
+
 ТЗ отвечает за инфраструктуру, домены, CI/CD, миграцию URL, доступность,
 наблюдаемость и откат. Оно не должно заново переписывать позиционирование и
 интерфейс. Визуальный результат, принятый по ТЗ 1, переносится без изменений;
