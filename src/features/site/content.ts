@@ -27,6 +27,7 @@ export type ScopeItem = {
 };
 export type PriceRow = { title: string; price: string; note?: string };
 export type FooterLink = { href: string; label: string; external?: boolean };
+export type NavLink = { href: string; label: string };
 
 export type MarketContent = {
   market: Market;
@@ -39,7 +40,7 @@ export type MarketContent = {
   shareTitle: string;
   description: string;
   keywords: string[];
-  nav: { cta: string; blogLabel?: string };
+  nav: { cta: string; links?: NavLink[] };
   hero: {
     eyebrow: string;
     title: string;
@@ -129,7 +130,14 @@ const ru: MarketContent = {
     "AI-разработка",
     "Ludvik4",
   ],
-  nav: { cta: "Обсудить задачу", blogLabel: "Блог" },
+  nav: {
+    cta: "Обсудить задачу",
+    links: [
+      { href: "/#services", label: "Услуги" },
+      { href: "/cases", label: "Кейсы" },
+      { href: "/blog", label: "Блог" },
+    ],
+  },
   hero: {
     eyebrow: "Ludvik4",
     title: "Сайты, автоматизация и веб-приложения — от задачи до запуска",

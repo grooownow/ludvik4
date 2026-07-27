@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { getPublishedArticles } from "@/features/blog";
+import { getMarketContent, SiteHeader } from "@/features/site";
 import { env } from "@/lib/env";
+
+const ruContent = getMarketContent("ru");
 
 export const metadata: Metadata = {
   title: "Блог",
@@ -33,16 +35,7 @@ export default function BlogPage() {
 
   return (
     <div className="bg-background text-foreground flex min-h-screen flex-col">
-      <header className="border-pink-soft bg-background/90 sticky top-0 z-10 border-b backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
-          <Link href="/" className="font-mono text-sm font-bold tracking-tight">
-            Ludvik4
-          </Link>
-          <Button asChild size="sm">
-            <Link href="/#contact">Обсудить задачу</Link>
-          </Button>
-        </div>
-      </header>
+      <SiteHeader content={ruContent} contactHref="/#contact" />
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-14">
         <p className="text-primary mb-3 font-mono text-xs font-semibold tracking-widest uppercase">

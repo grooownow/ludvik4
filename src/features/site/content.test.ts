@@ -18,6 +18,11 @@ describe("market content", () => {
       "Автоматизация бизнес-процессов",
       "Веб-приложение или компактный SaaS",
     ]);
+    expect(ru.nav.links).toEqual([
+      { href: "/#services", label: "Услуги" },
+      { href: "/cases", label: "Кейсы" },
+      { href: "/blog", label: "Блог" },
+    ]);
     expect(ru.description).toContain("Сайты, автоматизации и веб-приложения");
     expect(ru.hero.lead).not.toMatch(/проектируем|предлагаем|поможем/i);
     expect(ru.about?.body).not.toMatch(TEAM_CLAIM);

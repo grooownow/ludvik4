@@ -1,5 +1,6 @@
 import type { Route } from "next";
 import Link from "next/link";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { MarketContent, ServiceCard } from "./content";
@@ -42,29 +43,67 @@ export function SiteHeader({
   content: MarketContent;
   contactHref?: string;
 }) {
+  const navigationLabel =
+    content.lang === "ru" ? "Основная навигация" : "Main navigation";
+  const menuLabel = content.lang === "ru" ? "Открыть меню" : "Open menu";
+
   return (
     <header className="border-pink-soft bg-background/90 sticky top-0 z-10 border-b backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
         <Link
           href="/"
           className="font-mono text-sm font-bold tracking-tight"
-          aria-label="Ludvik4 — на главную"
+          aria-label={
+            content.lang === "ru" ? "Ludvik4 — на главную" : "Ludvik4 — home"
+          }
         >
           Ludvik4
         </Link>
-        <div className="flex items-center gap-5">
-          {content.nav.blogLabel ? (
+        <nav
+          aria-label={navigationLabel}
+          className="hidden items-center gap-5 sm:flex"
+        >
+          {content.nav.links?.map((link) => (
             <Link
-              href="/blog"
+              key={link.href}
+              href={link.href as Route}
               className="text-muted-foreground hover:text-foreground font-mono text-sm"
             >
-              {content.nav.blogLabel}
+              {link.label}
             </Link>
-          ) : null}
+          ))}
           <Button asChild size="sm">
             <Link href={contactHref as Route}>{content.nav.cta}</Link>
           </Button>
-        </div>
+        </nav>
+
+        <details className="group relative sm:hidden">
+          <summary
+            className="hover:bg-muted flex size-9 cursor-pointer list-none items-center justify-center rounded-md [&::-webkit-details-marker]:hidden"
+            aria-label={menuLabel}
+            title={menuLabel}
+          >
+            <Menu className="size-5 group-open:hidden" aria-hidden="true" />
+            <X className="hidden size-5 group-open:block" aria-hidden="true" />
+          </summary>
+          <nav
+            aria-label={navigationLabel}
+            className="border-pink-soft bg-background absolute top-11 right-0 flex min-w-52 flex-col border p-2 shadow-lg"
+          >
+            {content.nav.links?.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href as Route}
+                className="hover:bg-muted rounded-md px-3 py-2 font-mono text-sm"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Button asChild size="sm" className="mt-2">
+              <Link href={contactHref as Route}>{content.nav.cta}</Link>
+            </Button>
+          </nav>
+        </details>
       </div>
     </header>
   );

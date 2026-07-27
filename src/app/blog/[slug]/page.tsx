@@ -9,8 +9,11 @@ import {
   getPublishedArticles,
   getPublishedArticleBySlug,
 } from "@/features/blog";
+import { getMarketContent, SiteHeader } from "@/features/site";
 import { env } from "@/lib/env";
 import { jsonLdString } from "@/lib/json-ld";
+
+const ruContent = getMarketContent("ru");
 
 // Published articles only — drafts get no static page. The blog is a RU-market
 // surface: an EN build generates no article pages (and dynamicParams=false makes
@@ -153,16 +156,7 @@ export default async function ArticlePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
-      <header className="border-pink-soft bg-background/90 sticky top-0 z-10 border-b backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
-          <Link href="/" className="font-mono text-sm font-bold tracking-tight">
-            Ludvik4
-          </Link>
-          <Button asChild size="sm">
-            <Link href="/#contact">Обсудить задачу</Link>
-          </Button>
-        </div>
-      </header>
+      <SiteHeader content={ruContent} contactHref="/#contact" />
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-14">
         <Link

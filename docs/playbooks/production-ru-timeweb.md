@@ -21,6 +21,10 @@ static build. GitHub remains the source-of-truth repository.
 | Build command       | `pnpm build:ru-static`                                       |
 | Build output        | `/out`                                                       |
 
+The static export uses directory indexes (`/cases/index.html`,
+`/uslugi/razrabotka-lendinga/index.html`) so Timeweb can serve clean nested
+URLs without custom rewrite rules.
+
 The previous app `ludvik4-ru` (`228059`) is not part of the production path.
 Confirm that no domains or deploy automation target it before deleting it.
 
@@ -74,6 +78,8 @@ curl -fsSI https://ludvik4.ru/og-image-ru.png |
   grep -i '^content-type: image/png'
 curl -fsSL https://ludvik4.ru/sitemap.xml |
   grep 'https://ludvik4.ru'
+curl -fsSL https://ludvik4.ru/uslugi/razrabotka-lendinga/ |
+  grep -o '<title>Разработка лендинга[^<]*'
 ```
 
 Also check `/`, `/blog`, one article, `/privacy`, `/robots.txt`, and

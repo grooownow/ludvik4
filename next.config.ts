@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
   ...(isStaticExport
     ? {
         output: "export",
+        // Timeweb serves clean URLs as directories. Exporting
+        // `/cases/index.html` instead of `/cases.html` keeps every nested page
+        // reachable without provider-specific rewrite rules.
+        trailingSlash: true,
         images: { unoptimized: true },
       }
     : {
