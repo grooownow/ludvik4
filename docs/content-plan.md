@@ -100,6 +100,13 @@ Ordered by: finish clusters that already have a live pillar first (fastest path
 to topical authority), then high-priority winnable pillars, then depth.
 Cadence: 1–2/week for the first ~2 months (`seo-geo.md`).
 
+**Commercial foundation — DONE (2026-07-27):** three service pages and two
+evidence pages are live in the codebase. The ordered bridge-article queue and
+rules for later pages are in
+`docs/specs/ru-commercial-seo.plan.md`. Publish its priorities 1, 3, 5, and 6
+before expanding the AI-development cluster further: every service first needs
+one search entry that can lead to a commercial page.
+
 **Wave 1 — deepen the two live pillars (fastest cluster wins) — DONE (3/3, 2026-07-19):**
 
 1. ✅ GitHub Spec Kit: обзор (C3 supporting) — `/blog/github-spec-kit`

@@ -17,31 +17,29 @@ AI-development niche.
 ### Google Search Console
 
 1. **User does:** open search.google.com/search-console → Add property →
-   type **URL prefix** → `https://ludvik4.dev` (use the final canonical
+   type **URL prefix** → `https://ludvik4.ru` (use the final canonical
    host). Pick the **HTML tag** verification method and copy the `content`
    value of the offered meta tag.
-2. **Agent does:** set `GOOGLE_SITE_VERIFICATION=<token>` in Vercel env
-   (Production + Preview) → redeploy → user clicks Verify.
-3. **User does:** Search Console → Sitemaps → submit `sitemap.xml`.
+2. **Agent does:** add the public verification token to the RU build → deploy
+   through the SourceCraft/Timeweb pipeline → click Verify.
+3. **Agent does:** Search Console → Sitemaps → submit `sitemap.xml`.
 
 ### Yandex.Webmaster
 
 1. **User does:** webmaster.yandex.ru → Добавить сайт →
-   `https://ludvik4.dev` → способ подтверждения «Мета-тег», copy the token.
-2. **Agent does:** set `YANDEX_VERIFICATION=<token>` in Vercel → redeploy →
-   user confirms.
-3. **User does:** Индексирование → Файлы Sitemap → add
-   `https://ludvik4.dev/sitemap.xml`.
+   `https://ludvik4.ru` → способ подтверждения «Мета-тег», copy the token.
+2. **Agent does:** add the public token to the RU build → deploy → confirm.
+3. **Agent does:** Индексирование → Файлы Sitemap → add
+   `https://ludvik4.ru/sitemap.xml`.
 
 Why Yandex too: RU-based users are roughly half Yandex; the diaspora is
 mostly Google. Both are free.
 
 ## 2. Canonical domain: apex, not www (one-time, ~5 min)
 
-Canonical/OG already point to `https://ludvik4.dev` (apex). Make serving
-match: **User does:** Vercel → Project → Settings → Domains → set
-`ludvik4.dev` as primary; `www.ludvik4.dev` becomes a 308 redirect to it.
-Check: `curl -I https://www.ludvik4.dev` → `308` + `location: https://ludvik4.dev/`.
+Canonical/OG point to `https://ludvik4.ru` (apex). Timeweb App Platform serves
+both apex and `www` with a canonical to apex. A strict redirect is deliberately
+deferred in `docs/decisions/0003-defer-ru-www-redirect.md`.
 
 ## 3. Publishing an article (recurring)
 

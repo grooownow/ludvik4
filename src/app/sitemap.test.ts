@@ -11,11 +11,19 @@ const articles = getPublishedArticles().map((a) => ({
 }));
 
 describe("buildSitemap", () => {
-  it("RU: landing + blog + published articles, never the other market", () => {
+  it("RU: landing, commercial pages, cases and published articles", () => {
     const urls = buildSitemap("ru", baseURL, articles).map((e) => e.url);
 
     expect(urls).toContain(`${baseURL}/`);
     expect(urls).toContain(`${baseURL}/blog`);
+    expect(urls).toContain(`${baseURL}/uslugi/razrabotka-lendinga`);
+    expect(urls).toContain(
+      `${baseURL}/uslugi/avtomatizatsiya-biznes-processov`,
+    );
+    expect(urls).toContain(`${baseURL}/uslugi/razrabotka-mvp`);
+    expect(urls).toContain(`${baseURL}/cases`);
+    expect(urls).toContain(`${baseURL}/cases/fortnoise`);
+    expect(urls).toContain(`${baseURL}/cases/qa-pilot`);
     // No hreflang / cross-market URL — the EN storefront lives on its own domain.
     expect(urls).not.toContain(`${baseURL}/en`);
     for (const a of getPublishedArticles()) {
@@ -24,7 +32,7 @@ describe("buildSitemap", () => {
     for (const d of getAllArticles().filter((a) => a.draft)) {
       expect(urls).not.toContain(`${baseURL}/blog/${d.slug}`);
     }
-    expect(urls).toHaveLength(2 + getPublishedArticles().length);
+    expect(urls).toHaveLength(8 + getPublishedArticles().length);
   });
 
   it("EN: landing + privacy notice — no blog or articles", () => {

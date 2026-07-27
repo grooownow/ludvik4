@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { SignInPage } from "@/features/auth";
 
-export const metadata: Metadata = { title: "Sign in" };
+export const metadata: Metadata = {
+  title: "Sign in",
+  robots: { index: false, follow: false },
+};
 
 interface SignInProps {
   searchParams: Promise<{ callbackUrl?: string | string[] }>;

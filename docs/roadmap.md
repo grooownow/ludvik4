@@ -6,6 +6,14 @@ writing detail here.
 
 ## Now
 
+**[DONE 2026-07-27] RU commercial SEO pass.** The home now names the three
+services in the H1 and has a valid H1→H2→H3 hierarchy, neutral RU voice, two
+public evidence cases, and lighter desktop-only hero delivery. Three
+intent-specific service pages plus `/cases` and two case pages are included in
+the sitemap and `llms.txt`. Verification tokens for `ludvik4.ru` are present;
+console verification, sitemap submission, and seven URL inspection requests
+follow the production deploy. Plan: `docs/specs/ru-commercial-seo.plan.md`.
+
 **Dual-market rebuild and deployment (ТЗ 1 + ТЗ 2) — DONE; EN has been live
 since 2026-07-25 and RU since 2026-07-27.** Two market storefronts from one codebase via
 `SITE_MARKET=ru|en`; positioning → founder-led studio, 4→3 services, RU form
@@ -87,14 +95,14 @@ Scoped and agreed, not yet started:
 - **[DONE 2026-07-25] Resend production secrets** — set in the Vercel
   production env and proven by a live test enquiry through the EN form
   (delivery accepted by Resend).
-- **Per-service landing pages** (`/uslugi/...`) — phase 2 of the SEO spec,
-  one page per query cluster, after the first articles index.
+- **Commercial bridge articles** — first four priorities from
+  `docs/specs/ru-commercial-seo.plan.md`, one supporting entry per service.
 
 ## Later
 
 Ideas worth keeping, not yet scoped:
 
-- **Portfolio / cases** section (incl. FortNoise) — the deferred V1 cut.
+- Add the next case only when a public result and approved screenshot exist.
 - **Turnstile captcha** on the lead form (`TURNSTILE_*` already supported).
 - Short courses (AI & dev topics for beginners).
 - **Full bilingual site (RU / EN)** — a lightweight EN landing `/en` shipped

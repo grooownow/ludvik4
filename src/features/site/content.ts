@@ -10,7 +10,13 @@ export type Market = "ru" | "en";
 
 export const TELEGRAM_URL = "https://t.me/ludvik4work";
 
-export type ServiceCard = { module: string; title: string; body: string };
+export type ServiceCard = {
+  module: string;
+  title: string;
+  body: string;
+  href?: string;
+  linkLabel?: string;
+};
 export type Step = { n: string; title: string; body: string };
 export type ScopeItem = {
   title: string;
@@ -41,7 +47,7 @@ export type MarketContent = {
     cta: string;
     illustration: boolean;
   };
-  services: { eyebrow: string; items: ServiceCard[] };
+  services: { eyebrow: string; title?: string; items: ServiceCard[] };
   /** Open accordion of per-service scope (no public hour estimates). */
   scopes?: {
     eyebrow: string;
@@ -55,7 +61,12 @@ export type MarketContent = {
     items: ScopeItem[];
   };
   /** Three-step delivery process. */
-  howItWorks?: { eyebrow: string; lead: string; steps: Step[] };
+  howItWorks?: {
+    eyebrow: string;
+    title?: string;
+    lead: string;
+    steps: Step[];
+  };
   /** RU pricing block. */
   pricing?: {
     eyebrow: string;
@@ -103,10 +114,10 @@ const ru: MarketContent = {
   market: "ru",
   lang: "ru",
   ogLocale: "ru_RU",
-  title: "Ludvik4 — разработка цифровых продуктов",
-  shareTitle: "Ludvik4 — разработка цифровых продуктов",
+  title: "Разработка сайтов, автоматизаций и веб-приложений — Ludvik4",
+  shareTitle: "Ludvik4 — сайты, автоматизация и веб-приложения",
   description:
-    "Сайты, автоматизации и веб-приложения с законченным пользовательским сценарием — от постановки задачи до запуска.",
+    "Сайты, автоматизации и веб-приложения для малого бизнеса и основателей: разработка лендингов, бизнес-процессов и MVP — от задачи до запуска.",
   keywords: [
     "разработка сайтов",
     "лендинг",
@@ -121,28 +132,35 @@ const ru: MarketContent = {
   nav: { cta: "Обсудить задачу", blogLabel: "Блог" },
   hero: {
     eyebrow: "Ludvik4",
-    title: "Цифровые продукты — от идеи до запуска",
-    lead: "Сайты, автоматизации и веб-приложения с законченным пользовательским сценарием — от постановки задачи до запуска",
+    title: "Сайты, автоматизация и веб-приложения — от задачи до запуска",
+    lead: "Проектирование и запуск цифровых продуктов для малого бизнеса и основателей: понятный первый релиз, фиксированный состав работ и одна точка ответственности",
     cta: "Обсудить задачу",
     illustration: true,
   },
   services: {
     eyebrow: "Что делаем",
+    title: "Сайты, автоматизация и веб-приложения",
     items: [
       {
         module: "Module / Site",
         title: "Сайт или лендинг",
         body: "Опубликованный адаптивный сайт для продукта, услуги, события или небольшого бизнеса с одним понятным целевым действием: структура, интерфейс, базовое SEO и аналитика",
+        href: "/uslugi/razrabotka-lendinga",
+        linkLabel: "Подробнее о разработке лендинга",
       },
       {
         module: "Module / Automation",
         title: "Автоматизация бизнес-процессов",
         body: "Контролируемые workflow для повторяющихся ручных процессов: обработка заявок, извлечение данных из документов, подготовка контента на согласование, регулярные отчёты — на скриптах, интеграциях, ботах и AI",
+        href: "/uslugi/avtomatizatsiya-biznes-processov",
+        linkLabel: "Подробнее об автоматизации",
       },
       {
         module: "Module / App",
         title: "Веб-приложение или компактный SaaS",
         body: "Приложение под одну ключевую задачу с понятным, законченным сценарием пользователя. При необходимости — аккаунты, база, файлы, уведомления, AI или оплата",
+        href: "/uslugi/razrabotka-mvp",
+        linkLabel: "Подробнее о разработке MVP",
       },
     ],
   },
@@ -236,6 +254,7 @@ const ru: MarketContent = {
   },
   howItWorks: {
     eyebrow: "Как это работает",
+    title: "От задачи до рабочего продукта",
     lead: "От идеи или проблемы — к понятному решению и рабочему продукту",
     steps: [
       {
@@ -269,7 +288,7 @@ const ru: MarketContent = {
   faq: true,
   about: {
     eyebrow: "Кто стоит за Ludvik4",
-    body: "Ludvik4 — независимый проект по разработке цифровых продуктов. Я веду каждый проект от постановки задачи до запуска и остаюсь основной точкой контакта на всех этапах. Когда задаче нужны дополнительные компетенции, подключаю проверенных профильных специалистов.",
+    body: "Ludvik4 — независимый проект по разработке цифровых продуктов. Я веду каждый проект от постановки задачи до запуска и остаюсь единой точкой ответственности на всех этапах. Когда задаче нужны дополнительные компетенции, подключаю проверенных профильных специалистов.",
   },
   contact: {
     eyebrow: "Контакт",

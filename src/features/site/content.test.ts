@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { getMarketContent } from "./content";
 import { buildHomeJsonLd, buildSiteMetadata } from "./seo";
 
-const RU_BASE = "https://ludvik4.dev";
+const RU_BASE = "https://ludvik4.ru";
 const EN_BASE = "https://ludvik4.example";
 
 // The old, now-forbidden "permanent team" claim fragments (brief §Позиционирование).

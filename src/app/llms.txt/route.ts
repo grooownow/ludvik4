@@ -1,4 +1,5 @@
 import { getPublishedArticles } from "@/features/blog";
+import { caseStudies, servicePages } from "@/features/site";
 import { env } from "@/lib/env";
 
 // llms.txt — a markdown summary of the site for LLM crawlers (GPTBot,
@@ -12,25 +13,40 @@ function ruBody(baseURL: string): string {
   const articleLines = articles
     .map((a) => `- [${a.title}](${baseURL}/blog/${a.slug}): ${a.description}`)
     .join("\n");
+  const serviceLines = servicePages
+    .map(
+      (service) =>
+        `- [${service.title}](${baseURL}/uslugi/${service.slug}): ${service.description}`,
+    )
+    .join("\n");
+  const caseLines = caseStudies
+    .map(
+      (study) =>
+        `- [${study.title}](${baseURL}/cases/${study.slug}): ${study.description}`,
+    )
+    .join("\n");
 
   return `# Ludvik4
 
-> Ludvik4 — разработка цифровых продуктов: проектируем и запускаем сайты, автоматизации бизнес-процессов и компактные веб-приложения с законченным пользовательским сценарием. За проектом закреплена единая точка ответственности, а профильные специалисты подключаются по необходимости.
+> Ludvik4 — независимый проект по разработке сайтов, автоматизаций бизнес-процессов и MVP веб-приложений для малого бизнеса и основателей. Каждый проект ведётся от постановки задачи до запуска с единой точкой ответственности.
 
 Три направления работы:
 
 - Сайт или лендинг: опубликованный адаптивный сайт с одним понятным целевым действием.
-- Автоматизация бизнес-процессов: повторяющиеся ручные процессы переносим в контролируемые workflow — скрипты, интеграции, боты, AI.
+- Автоматизация бизнес-процессов: повторяющиеся ручные процессы переносятся в контролируемые workflow — скрипты, интеграции, боты, AI.
 - Веб-приложение или компактный SaaS: приложение под одну ключевую задачу с законченным сценарием пользователя.
 
-Специализация — AI-разработка: настройка проектов под AI-агентов (Claude Code, Codex): AGENTS.md, правила, спеки; spec-driven development. Оценка бесплатно.
+AI-инструменты и spec-driven development используются как метод работы, а блог и open-source продукт qa-pilot показывают практическую экспертизу в этой области.
 
 Контакт: Telegram https://t.me/ludvik4work.
 
 ## Основные страницы
 
-- [Главная](${baseURL}/): услуги, цены, контакт
+- [Главная](${baseURL}/): услуги, цены, кейсы и контакт
+- [Кейсы](${baseURL}/cases): публичные примеры работ
 - [Блог](${baseURL}/blog): статьи об AI-агентах в разработке, spec-driven development, автоматизации
+${serviceLines ? `\n## Услуги\n\n${serviceLines}\n` : ""}
+${caseLines ? `\n## Кейсы\n\n${caseLines}\n` : ""}
 ${articleLines ? `\n## Статьи\n\n${articleLines}\n` : ""}`;
 }
 

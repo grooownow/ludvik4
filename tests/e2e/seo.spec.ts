@@ -1,6 +1,21 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("SEO surfaces", () => {
+  test("commercial service and case pages are reachable", async ({ page }) => {
+    await page.goto("/uslugi/razrabotka-mvp");
+    await expect(
+      page.getByRole("heading", {
+        level: 1,
+        name: "Разработка MVP веб-приложения",
+      }),
+    ).toBeVisible();
+
+    await page.goto("/cases/fortnoise");
+    await expect(
+      page.getByRole("heading", { level: 1, name: "FortNoise" }),
+    ).toBeVisible();
+  });
+
   test("landing shows the FAQ and an item expands on click", async ({
     page,
   }) => {

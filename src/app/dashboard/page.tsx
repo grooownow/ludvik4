@@ -4,7 +4,10 @@ import { requireUser } from "@/features/auth";
 import { ProfileForm, updateName } from "@/features/profile";
 import { signOut } from "@/lib/auth";
 
-export const metadata: Metadata = { title: "Dashboard" };
+export const metadata: Metadata = {
+  title: "Dashboard",
+  robots: { index: false, follow: false },
+};
 
 async function signOutAction() {
   "use server";

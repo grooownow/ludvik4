@@ -8,21 +8,40 @@ const content = getMarketContent("ru");
 
 describe("HomeRu", () => {
   it("renders the Russian hero and services", () => {
-    render(<HomeRu content={content} baseUrl="https://ludvik4.dev" />);
+    render(<HomeRu content={content} baseUrl="https://ludvik4.ru" />);
 
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /Цифровые продукты/,
+        name: /Сайты, автоматизация и веб-приложения/,
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: "Сайты, автоматизация и веб-приложения",
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: "От задачи до рабочего продукта",
       }),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { name: "Автоматизация бизнес-процессов" }),
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /Подробнее о разработке MVP/ }),
+    ).toHaveAttribute("href", "/uslugi/razrabotka-mvp");
+    expect(screen.getByRole("link", { name: /FortNoise/ })).toHaveAttribute(
+      "href",
+      "/cases/fortnoise",
+    );
   });
 
   it("does NOT render a lead form — Telegram is the only contact action", () => {
-    render(<HomeRu content={content} baseUrl="https://ludvik4.dev" />);
+    render(<HomeRu content={content} baseUrl="https://ludvik4.ru" />);
 
     // No form fields at all on the RU page (brief §Контакты, scenario 1 & 5).
     expect(screen.queryAllByRole("textbox")).toHaveLength(0);

@@ -1,10 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { FaqSection } from "@/features/faq";
 import { jsonLdString } from "@/lib/json-ld";
 import { type MarketContent, TELEGRAM_URL } from "./content";
 import { buildHomeJsonLd } from "./seo";
+import { CasesPreview } from "./commercial-pages";
 import { ServiceScopes } from "./service-scopes";
 import {
   Eyebrow,
@@ -54,17 +54,21 @@ export function HomeRu({
             </div>
           </div>
           {content.hero.illustration ? (
-            <div className="hidden lg:block lg:justify-self-end">
-              <Image
-                src="/hero-product-illustration.png"
-                alt="Схема создания цифрового продукта: от идеи и макета через код к запуску и аналитике"
-                width={1536}
-                height={1024}
-                priority
-                sizes="(min-width: 1024px) 480px, 100vw"
-                className="h-auto w-full max-w-xl"
+            <picture className="hidden w-full max-w-xl lg:block lg:justify-self-end">
+              <source
+                media="(min-width: 1024px)"
+                srcSet="/hero-product-illustration.webp"
               />
-            </div>
+              {/* The fallback is one transparent pixel, so mobile browsers do
+                  not download a desktop-only hero asset. */}
+              <img
+                src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                alt="Схема создания цифрового продукта: от идеи и макета через код к запуску и аналитике"
+                width="960"
+                height="640"
+                className="aspect-[3/2] h-auto w-full object-contain"
+              />
+            </picture>
           ) : null}
         </div>
       </div>
@@ -72,6 +76,11 @@ export function HomeRu({
       {/* Services */}
       <Section id="services">
         <Eyebrow>{content.services.eyebrow}</Eyebrow>
+        {content.services.title ? (
+          <h2 className="mb-8 text-3xl font-semibold tracking-tight text-balance">
+            {content.services.title}
+          </h2>
+        ) : null}
         <ServiceGrid items={content.services.items} />
       </Section>
 
@@ -79,7 +88,12 @@ export function HomeRu({
       {content.howItWorks ? (
         <Section>
           <Eyebrow>{content.howItWorks.eyebrow}</Eyebrow>
-          <p className="max-w-2xl text-xl font-semibold tracking-tight text-balance">
+          {content.howItWorks.title ? (
+            <h2 className="text-3xl font-semibold tracking-tight text-balance">
+              {content.howItWorks.title}
+            </h2>
+          ) : null}
+          <p className="text-muted-foreground mt-4 max-w-2xl text-lg">
             {content.howItWorks.lead}
           </p>
           <div className="mt-10 grid gap-8 sm:grid-cols-3">
@@ -97,6 +111,8 @@ export function HomeRu({
           </div>
         </Section>
       ) : null}
+
+      <CasesPreview />
 
       {/* What's included — per-service scope accordion */}
       {content.scopes ? <ServiceScopes scopes={content.scopes} /> : null}

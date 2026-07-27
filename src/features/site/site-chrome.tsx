@@ -45,9 +45,13 @@ export function SiteHeader({
   return (
     <header className="border-pink-soft bg-background/90 sticky top-0 z-10 border-b backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
-        <span className="font-mono text-sm font-bold tracking-tight">
+        <Link
+          href="/"
+          className="font-mono text-sm font-bold tracking-tight"
+          aria-label="Ludvik4 — на главную"
+        >
           Ludvik4
-        </span>
+        </Link>
         <div className="flex items-center gap-5">
           {content.nav.blogLabel ? (
             <Link
@@ -139,6 +143,14 @@ export function ServiceGrid({ items }: { items: ServiceCard[] }) {
               >
                 {s.body}
               </p>
+              {s.href && s.linkLabel ? (
+                <Link
+                  href={s.href as Route}
+                  className="text-primary mt-4 inline-block font-mono text-xs font-semibold"
+                >
+                  {s.linkLabel} →
+                </Link>
+              ) : null}
             </div>
           </div>
         );

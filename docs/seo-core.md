@@ -9,6 +9,15 @@ Status: **Phase 5 complete — 44 queries scored, clustered, priority
 recalibrated by winnability (2026-07-19).** Content plan derived:
 `docs/content-plan.md`.
 
+Commercial mapping shipped 2026-07-27:
+
+- C7 → `/uslugi/razrabotka-lendinga`
+- C10 → `/uslugi/avtomatizatsiya-biznes-processov`
+- C6/C8 → `/uslugi/razrabotka-mvp`
+
+The next commercial pull should validate variants around `стоимость лендинга`,
+`автоматизация заявок`, `стоимость mvp`, and `веб приложение для бизнеса`.
+
 ---
 
 ## How to pull (per seed)

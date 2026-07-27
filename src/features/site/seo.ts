@@ -1,4 +1,5 @@
 import type { Metadata, MetadataRoute } from "next";
+import { caseStudies, servicePages } from "./commercial-content";
 import { type Market, type MarketContent, TELEGRAM_URL } from "./content";
 
 // Per-market SEO surfaces, built from the market content object. Pure functions
@@ -83,6 +84,25 @@ export function buildSitemap(
   ];
 
   if (market === "ru") {
+    for (const service of servicePages) {
+      entries.push({
+        url: `${baseUrl}/uslugi/${service.slug}`,
+        changeFrequency: "monthly",
+        priority: 0.9,
+      });
+    }
+    entries.push({
+      url: `${baseUrl}/cases`,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    });
+    for (const study of caseStudies) {
+      entries.push({
+        url: `${baseUrl}/cases/${study.slug}`,
+        changeFrequency: "monthly",
+        priority: 0.8,
+      });
+    }
     entries.push({
       url: `${baseUrl}/blog`,
       changeFrequency: "weekly",

@@ -10,7 +10,10 @@ test.describe("golden path smoke", () => {
     ).toBeVisible();
     // Hero headline.
     await expect(
-      page.getByRole("heading", { name: /Цифровые продукты/ }),
+      page.getByRole("heading", {
+        level: 1,
+        name: /Сайты, автоматизация и веб-приложения/,
+      }),
     ).toBeVisible();
     // Primary CTA to the contact section.
     await expect(

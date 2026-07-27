@@ -8,6 +8,20 @@ export { MarketHome } from "./market-home";
 export { PrivacyPage } from "./privacy-page";
 export { getMarketContent, type Market, type MarketContent } from "./content";
 export {
+  caseStudies,
+  getCaseStudy,
+  getServicePage,
+  servicePages,
+  type CaseStudy,
+  type ServicePage,
+} from "./commercial-content";
+export {
+  CasesIndexView,
+  CasesPreview,
+  CaseStudyPageView,
+  ServicePageView,
+} from "./commercial-pages";
+export {
   buildSiteMetadata,
   buildHomeJsonLd,
   buildSitemap,
@@ -29,6 +43,10 @@ export const siteMetadata = buildSiteMetadata(siteContent, {
   baseUrl: env.NEXT_PUBLIC_APP_URL,
   hasBlog: BLOG_ENABLED,
   verification: {
+    ...(env.SITE_MARKET === "ru" && {
+      google: "G5O_0s3CKx2RtlIVLJdoOUr-4UbeLCaWJj66HcQmrlQ",
+      yandex: "c5013f9ae7a28ef4",
+    }),
     ...(env.GOOGLE_SITE_VERIFICATION && {
       google: env.GOOGLE_SITE_VERIFICATION,
     }),
