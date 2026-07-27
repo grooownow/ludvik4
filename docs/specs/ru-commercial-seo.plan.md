@@ -1,7 +1,8 @@
 # RU commercial SEO and evidence plan
 
-Status: implemented on 2026-07-27; search-console submission pending production
-deployment.
+Status: completed on 2026-07-27. Production is live, both webmaster consoles
+are verified, the sitemap is submitted, and the seven original public URLs
+were requested for indexing.
 
 ## Goal
 
@@ -60,8 +61,11 @@ for every technology.
 
 ## Measurement
 
-- Verify `ludvik4.ru` in Google Search Console and Yandex Webmaster.
-- Submit `/sitemap.xml`; request indexing for the seven original public URLs.
+- **Done 2026-07-27:** verified `ludvik4.ru` in Google Search Console and
+  Yandex Webmaster.
+- **Done 2026-07-27:** submitted `/sitemap.xml` to both consoles and requested
+  indexing for the seven original public URLs. Google processed 13 URLs
+  successfully; Yandex queued the sitemap for processing.
 - After 3–4 weeks, map real queries to the home and service pages.
 - Track impressions and qualified Telegram contacts by landing page.
 - Rewrite titles or page intent only after there is query evidence, not from

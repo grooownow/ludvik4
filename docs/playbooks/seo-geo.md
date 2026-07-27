@@ -100,3 +100,12 @@ Add to the 15-minute weekly review from `docs/playbooks/analytics.md`:
 - Apex is primary (www → 308).
 - First two articles reviewed, `draft: false`, live and indexed.
 - Habr account exists with ≥1 adapted article; TG channel announced ≥1 post.
+
+## RU rollout status
+
+- **2026-07-27:** `ludvik4.ru` verified in Google Search Console and Yandex
+  Webmaster.
+- `sitemap.xml` submitted to both. Google processed it successfully and found
+  13 URLs; Yandex placed it in the processing queue.
+- The seven original public URLs were submitted for indexing in both consoles.
+  Submission does not guarantee when a search engine will index or rank them.

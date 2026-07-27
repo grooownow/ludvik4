@@ -11,8 +11,10 @@ services in the H1 and has a valid H1→H2→H3 hierarchy, neutral RU voice, two
 public evidence cases, and lighter desktop-only hero delivery. Three
 intent-specific service pages plus `/cases` and two case pages are included in
 the sitemap and `llms.txt`. Verification tokens for `ludvik4.ru` are present;
-console verification, sitemap submission, and seven URL inspection requests
-follow the production deploy. Plan: `docs/specs/ru-commercial-seo.plan.md`.
+Google Search Console and Yandex Webmaster are verified, the sitemap is
+submitted to both, and seven original public URLs were queued for indexing.
+Google processed the sitemap successfully and found 13 URLs; Yandex accepted
+it into its processing queue. Plan: `docs/specs/ru-commercial-seo.plan.md`.
 
 **Dual-market rebuild and deployment (ТЗ 1 + ТЗ 2) — DONE; EN has been live
 since 2026-07-25 and RU since 2026-07-27.** Two market storefronts from one codebase via
