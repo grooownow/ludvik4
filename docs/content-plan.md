@@ -107,11 +107,10 @@ rules for later pages are in
 before expanding the AI-development cluster further: every service first needs
 one search entry that can lead to a commercial page.
 
-**Commercial article batch — DRAFT READY (2026-07-27):** all eight articles
-from `ru-commercial-seo.plan.md` have complete MDX drafts, internal links,
-full-resolution social covers, and optimized web cards. Publish as four
-two-article pairs after human review; do not expose a supporting article before
-the page it links to is live.
+**Commercial article batch — LIVE 8/8 (2026-07-28):** all eight articles from
+`ru-commercial-seo.plan.md` are published with internal links, full-resolution
+social covers, optimized web cards, and separate vc.ru/Дзен adaptations. They
+enter the sitemap, RSS and `llms.txt` automatically.
 
 **Wave 1 — deepen the two live pillars (fastest cluster wins) — DONE (3/3, 2026-07-19):**
 
@@ -119,7 +118,7 @@ the page it links to is live.
 2. ✅ AGENTS.md: пример и шаблон (C2 supporting) — `/blog/agents-md-primer`
 3. ✅ cursor rules: как настроить правила (C2 supporting) — `/blog/cursor-rules`
 
-**Wave 2 — build the AI-агенты pillar + its strongest long-tail:** 4. AI-агенты для разработки: что это и как применять (C1 **pillar**) 5. Как настроить Claude Code под проект (C1) 6. Claude Code vs Cursor (C1) 7. Аналоги Claude Code (C1)
+**Wave 2 — next after the first commercial indexing check:** 4. AI-агенты для разработки: что это и как применять (C1 **pillar**) 5. Как настроить Claude Code под проект (C1) 6. Claude Code vs Cursor (C1) 7. Аналоги Claude Code (C1)
 
 **Wave 3 — traffic driver + money bridge:** 8. Вайб-кодинг: что это и как начать (C4 **pillar** — high volume) 9. Что такое вайб-кодинг простыми словами (C4) 10. MVP: что это, этапы и сроки (C5 **pillar — bridge**) 11. Сколько стоит и за сколько сделать MVP (C5 — commercial intent)
 
@@ -132,7 +131,8 @@ cadence allows; each binds to its core query.
 ## Maintenance
 
 - After ~3–4 weeks live: pull real queries from GSC/Вебмастер, fold surfaced
-  queries back into `seo-core.md`, re-prioritise this queue.
+  queries back into `seo-core.md`, re-prioritise this queue. Do not publish
+  another large batch before this first signal check.
 - New article → bind to a core query (add/confirm the row in `seo-core.md`);
   never write "about a topic in general" (`content.md` rule 8).
-- Do the deferred commercial-intent pull before building `/uslugi/...` pages.
+- Do a fresh commercial-intent pull before adding more `/uslugi/...` pages.

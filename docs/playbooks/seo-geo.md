@@ -8,7 +8,7 @@ owner: user's agent
 
 Companion to `docs/specs/seo-geo-strategy.md`. On-site foundation (FAQ,
 blog, llms.txt, JSON-LD, verification slots) ships with that spec — this
-playbook is the part only the user can do, plus the recurring rituals.
+playbook covers the console setup, distribution and recurring rituals.
 Focus: Russian-speaking audience worldwide; content bet on the
 AI-development niche.
 
@@ -63,24 +63,19 @@ Concrete, briefable version (per-platform adaptations by the agent, publishing
 by a coworker, tracking matrix): **`docs/playbooks/distribution.md`**. The list
 below is the rationale/order behind it.
 
-Order matters; do the top ones first.
+Current order:
 
-1. **Telegram channel** (brand, no personal identity) — announce each
-   article; the site already links t.me/ludvik4work.
-2. **Habr** — create a brand account; adapt (not copy-paste) each suitable
-   article; end with one link to the original on ludvik4.dev. Habr is
-   heavily represented in RU LLM training data — this is the single
-   strongest GEO lever available.
-3. **vc.ru** — same adaptation approach, more business-flavored rewrite
-   (запуск MVP, автоматизация для бизнеса).
-4. **GitHub** — org `ludvik4`; first public repo: an AGENTS.md template /
-   checklist matching article 1. README links the site. LLMs index GitHub
-   deeply; a useful template earns stars → citations.
-5. **Directories** (free tiers, brand profile, no personal names):
-   Workspace/рейтинги студий — ratingruneta.ru, workspace.ru; international
-   — Clutch (later, needs reviews). Consistent NAP: Ludvik4 + ludvik4.dev +
-   Telegram.
-6. **Дзен/VK** — optional re-posts once the above is routine.
+1. **vc.ru** — business-focused adaptations with one canonical link.
+2. **Яндекс Дзен** — shorter plain-language adaptations and Yandex discovery.
+3. **GitHub** — public, genuinely useful projects with Ludvik4 attribution;
+   `grooownow/qa-pilot` is the current flagship.
+4. **Directories** — Workspace and Рейтинг Рунета first; Clutch later when
+   client reviews exist. Keep the brand name, canonical domain and contact
+   details consistent.
+5. **VK/Spark.ru** — test only with the strongest business-focused article.
+
+Habr and a dedicated Telegram content channel are paused after the distribution
+experiments documented in `docs/playbooks/distribution.md`.
 
 ## 5. Measure (weekly, folds into the analytics ritual)
 
@@ -88,8 +83,8 @@ Add to the 15-minute weekly review from `docs/playbooks/analytics.md`:
 
 - Search Console: impressions/clicks, which queries surfaced (Performance).
 - Yandex.Webmaster: same in Поисковые запросы.
-- PostHog: traffic sources (utm/referrer) — did Habr/TG posts convert to
-  visits and form submits?
+- PostHog: traffic sources plus `contact.telegram_clicked` by path and
+  placement — which page and off-site source produced contact intent?
 - Once a month: ask ChatGPT/Gemini/Perplexity (in Russian) «кто настраивает
   проекты под AI-агентов» / «кому заказать MVP» — note whether Ludvik4
   appears. This is the GEO scoreboard; expect movement in months, not days.
@@ -97,9 +92,10 @@ Add to the 15-minute weekly review from `docs/playbooks/analytics.md`:
 ## Done when
 
 - Both consoles verified, sitemap submitted in each.
-- Apex is primary (www → 308).
-- First two articles reviewed, `draft: false`, live and indexed.
-- Habr account exists with ≥1 adapted article; TG channel announced ≥1 post.
+- Apex is canonical; the accepted `www` exception is recorded in ADR 0003.
+- Published articles are present in the sitemap, RSS and `llms.txt`.
+- Each approved article has the intended off-site adaptations and an indexing
+  request after deployment.
 
 ## RU rollout status
 
@@ -109,3 +105,5 @@ Add to the 15-minute weekly review from `docs/playbooks/analytics.md`:
   13 URLs; Yandex placed it in the processing queue.
 - The seven original public URLs were submitted for indexing in both consoles.
   Submission does not guarantee when a search engine will index or rank them.
+- **2026-07-28:** all eight commercial articles approved for publication; the
+  post-deploy sitemap refresh and URL indexing requests are pending.

@@ -23,8 +23,9 @@ published `ludvik4.dev/blog/*` article into off-site reach + GEO signal
   separate approval gate unless the user asks — they follow the approved
   original.
 
-Brand rules on **Habr / vc.ru / Дзен**: name **Ludvik4**, team voice («мы»), no
-personal names / no location (`site-v0.md` positioning). **X is the exception**
+Brand rules on **vc.ru / Дзен**: name **Ludvik4**, neutral voice by default;
+first-person singular is allowed where authorial experience matters. Do not
+invent a team voice or use personal location details. **X is the exception**
 — a personal founder account (`@groownow`, «Kate»), **first-person** voice; it
 links to `ludvik4.dev` as the author sharing her own work. Every platform ends
 with a link back to the original — the site stays the canonical source.
@@ -101,21 +102,30 @@ demote duplicates, and a distinct framing earns the canonical-back link):
 
 Status: ✅ done · 📝 draft ready (`src/content/blog/<slug>/`) · ▫️ todo · — n/a · ✕ dropped
 
-| article (slug)          | vc.ru                         | Дзен | X (личный) | Habr (снят) |
-| ----------------------- | ----------------------------- | ---- | ---------- | ----------- |
-| agents-ready-project    | ✅ live (2 коммента, 2 лайка) | 📝   | 📝         | ✕ отклонён  |
-| spec-driven-development | 📝                            | 📝   | 📝         | ✕           |
-| github-spec-kit         | 📝                            | 📝   | 📝         | ✕           |
-| agents-md-primer        | — (техн.)                     | 📝   | 📝         | ✕           |
-| cursor-rules            | — (техн.)                     | 📝   | 📝         | ✕           |
+| article (slug)                          | vc.ru                         | Дзен | X (личный) | Habr (снят) |
+| --------------------------------------- | ----------------------------- | ---- | ---------- | ----------- |
+| agents-ready-project                    | ✅ live (2 коммента, 2 лайка) | 📝   | 📝         | ✕ отклонён  |
+| spec-driven-development                 | 📝                            | 📝   | 📝         | ✕           |
+| github-spec-kit                         | 📝                            | 📝   | 📝         | ✕           |
+| agents-md-primer                        | — (техн.)                     | 📝   | 📝         | ✕           |
+| cursor-rules                            | — (техн.)                     | 📝   | 📝         | ✕           |
+| stoimost-lendinga-2026                  | 📝                            | 📝   | —          | ✕           |
+| chto-podgotovit-pered-zakazom-lendinga  | 📝                            | 📝   | —          | ✕           |
+| avtomatizatsiya-obrabotki-zayavok       | 📝                            | 📝   | —          | ✕           |
+| ai-avtomatizatsiya-malogo-biznesa       | 📝                            | 📝   | —          | ✕           |
+| mvp-etapy-sroki-pervyy-reliz            | 📝                            | 📝   | —          | ✕           |
+| stoimost-razrabotki-mvp                 | 📝                            | 📝   | —          | ✕           |
+| lending-ili-mnogostranichnyy-sayt       | 📝                            | 📝   | —          | ✕           |
+| vnutrennee-veb-prilozhenie-dlya-biznesa | 📝                            | 📝   | —          | ✕           |
 
 Drafts live beside the article in `src/content/blog/<slug>/` (`vc.md`,
 `dzen.md`, `x.md` — see `src/content/blog/README.md`) — **committed to the
 repo**, not the git-ignored `tmp-review/`, so they persist and version (they're
 durable deliverables for the coworker, not throwaway review copies). **Habr
 dropped**: no `habr.md` files (removed). vc/Дзен are
-brand («мы»); X is first-person (personal `@groownow`). Coworker: publish per
-the matrix, flip cells to ✅ with the posted URL.
+brand-neutral or first-person singular; X is first-person (personal
+`@groownow`). Coworker: publish per the matrix, flip cells to ✅ with the posted
+URL.
 
 (Agent keeps this matrix current as adaptations are drafted; coworker flips a
 cell to ✅ with the published URL when posted.)
@@ -128,8 +138,8 @@ cell to ✅ with the published URL when posted.)
    `public/blog/<slug>/card.jpg`; for social, upload the full-res PNG).
 2. Publish **vc.ru** + **Дзен** (Tier 1) — paste text, **attach the card**,
    confirm the link back to the original is intact.
-3. Post the **X** thread (personal `@groownow`, first-person) — attach the card
-   to the first post.
+3. Post an **X** thread only where an `x.md` draft exists; commercial articles
+   intentionally skip the personal account.
 4. In the matrix above, flip the cell to ✅ and paste the published URL.
 5. After ~3–7 days, note early metrics (views / comments / likes) — feeds the
    weekly review in `analytics.md`.
@@ -141,6 +151,8 @@ cell to ✅ with the published URL when posted.)
 3. Articles 4–5 (agents-md-primer, cursor-rules) → Дзен + X (vc.ru n/a).
 4. Test one experiment platform (VK community or Spark.ru) with the strongest
    article; if it lands, add it to the rotation.
+5. Publish the eight commercial adaptations in service pairs: landing pages,
+   automation, MVP, then site/internal-app choice.
 
 Cross-posting cadence trails article publishing by a few days — publish on the
 site first (canonical), then distribute.

@@ -1,6 +1,7 @@
 import type { Route } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { TelegramLink } from "@/components/telegram-link";
 import { Button } from "@/components/ui/button";
 import { LeadForm } from "@/features/lead";
 import { jsonLdString } from "@/lib/json-ld";
@@ -136,14 +137,13 @@ export function HomeEn({
               {content.contact.body}
             </p>
             <p className="mt-6 font-mono text-sm">
-              <a
+              <TelegramLink
                 href={TELEGRAM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                placement="home_contact"
                 className="text-foreground underline underline-offset-4"
               >
                 {content.contact.telegramText}
-              </a>
+              </TelegramLink>
             </p>
           </div>
           <div>

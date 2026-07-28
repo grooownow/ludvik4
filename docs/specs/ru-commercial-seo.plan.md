@@ -1,8 +1,8 @@
 # RU commercial SEO and evidence plan
 
-Status: completed on 2026-07-27. Production is live, both webmaster consoles
-are verified, the sitemap is submitted, and the seven original public URLs
-were requested for indexing.
+Status: completed on 2026-07-28. Production is live, both webmaster consoles
+are verified, the sitemap is submitted, the seven original public URLs were
+requested for indexing, and all eight commercial articles are published.
 
 ## Goal
 
@@ -25,19 +25,13 @@ Each service page has one intent, a distinct title/description/H1, scope,
 boundaries, process, price anchor, CTA, canonical URL, and Service JSON-LD.
 Cases use only publicly verifiable product facts and no invented metrics.
 
-## New article queue
+## Published commercial articles
 
-Publish in this order. Each article must answer one query fully, link to the
-matching service page once contextually, and include firsthand examples,
-screenshots, decision criteria, or a reusable checklist.
-
-All eight articles and their on-brand covers were prepared as hidden drafts on
-2026-07-27. Proposed publication cadence after editorial approval:
-
-- week 1: priorities 1–2 (landing cost + brief);
-- week 2: priorities 3–4 (lead workflow + AI automation);
-- week 3: priorities 5–6 (MVP scope + cost);
-- week 4: priorities 7–8 (site choice + internal web app).
+All eight articles were approved and published on 2026-07-28. Each answers one
+query, links contextually to the matching service page, includes decision
+criteria or a reusable checklist, and has an on-brand cover plus distinct
+vc.ru/Дзен adaptations. The priority numbers below remain the intended
+commercial importance, not a delayed publication schedule.
 
 | Priority | Working title / primary query                                                  | Destination     |
 | -------- | ------------------------------------------------------------------------------ | --------------- |
@@ -74,6 +68,8 @@ for every technology.
 - **Done 2026-07-27:** submitted `/sitemap.xml` to both consoles and requested
   indexing for the seven original public URLs. Google processed 13 URLs
   successfully; Yandex queued the sitemap for processing.
+- **2026-07-28:** eight commercial articles published; sitemap resubmission and
+  manual URL indexing requests are the immediate post-deploy task.
 - After 3–4 weeks, map real queries to the home and service pages.
 - Track impressions and qualified Telegram contacts by landing page.
 - Rewrite titles or page intent only after there is query evidence, not from

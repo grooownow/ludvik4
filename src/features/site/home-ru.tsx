@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TelegramLink } from "@/components/telegram-link";
 import { Button } from "@/components/ui/button";
 import { FaqSection } from "@/features/faq";
 import { jsonLdString } from "@/lib/json-ld";
@@ -184,9 +185,9 @@ export function HomeRu({
           </p>
           <div className="mt-7">
             <Button asChild size="lg">
-              <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">
+              <TelegramLink href={TELEGRAM_URL} placement="home_contact">
                 {content.contact.telegramText}
-              </a>
+              </TelegramLink>
             </Button>
           </div>
         </div>

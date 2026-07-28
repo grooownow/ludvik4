@@ -1,9 +1,10 @@
 import type { Route } from "next";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { TelegramLink } from "@/components/telegram-link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { MarketContent, ServiceCard } from "./content";
+import { TELEGRAM_URL, type MarketContent, type ServiceCard } from "./content";
 
 // Shared presentational chrome for both markets. Purely visual — every string
 // comes from the market content object, so the classes (and therefore the
@@ -116,7 +117,16 @@ export function SiteFooter({ content }: { content: MarketContent }) {
         <span>© 2026 Ludvik4</span>
         <span className="flex items-center gap-5">
           {content.footer.links.map((link) =>
-            link.external ? (
+            link.href === TELEGRAM_URL ? (
+              <TelegramLink
+                key={link.href}
+                href={link.href}
+                placement="footer"
+                className="hover:text-foreground"
+              >
+                {link.label}
+              </TelegramLink>
+            ) : link.external ? (
               <a
                 key={link.href}
                 href={link.href}

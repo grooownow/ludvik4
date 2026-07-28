@@ -28,21 +28,21 @@ Cover source is `<slug>/card.png` (web copy: `public/blog/<slug>/card.jpg`).
 Off-site status — ✅ live · 📝 draft ready · — n/a · ✕ dropped. Coworker flips a
 cell to ✅ with the posted URL (mirror of the matrix in `distribution.md`).
 
-| slug                                    | on site  | vc.ru | Дзен | X (@groownow) |
-| --------------------------------------- | -------- | ----- | ---- | ------------- |
-| agents-ready-project                    | ✅ live  | ✅    | 📝   | 📝            |
-| spec-driven-development                 | ✅ live  | 📝    | 📝   | 📝            |
-| github-spec-kit                         | ✅ live  | 📝    | 📝   | 📝            |
-| agents-md-primer                        | ✅ live  | —     | 📝   | 📝            |
-| cursor-rules                            | ✅ live  | —     | 📝   | 📝            |
-| stoimost-lendinga-2026                  | 📝 draft | —     | —    | —             |
-| chto-podgotovit-pered-zakazom-lendinga  | 📝 draft | —     | —    | —             |
-| avtomatizatsiya-obrabotki-zayavok       | 📝 draft | —     | —    | —             |
-| ai-avtomatizatsiya-malogo-biznesa       | 📝 draft | —     | —    | —             |
-| mvp-etapy-sroki-pervyy-reliz            | 📝 draft | —     | —    | —             |
-| stoimost-razrabotki-mvp                 | 📝 draft | —     | —    | —             |
-| lending-ili-mnogostranichnyy-sayt       | 📝 draft | —     | —    | —             |
-| vnutrennee-veb-prilozhenie-dlya-biznesa | 📝 draft | —     | —    | —             |
+| slug                                    | on site | vc.ru | Дзен | X (@groownow) |
+| --------------------------------------- | ------- | ----- | ---- | ------------- |
+| agents-ready-project                    | ✅ live | ✅    | 📝   | 📝            |
+| spec-driven-development                 | ✅ live | 📝    | 📝   | 📝            |
+| github-spec-kit                         | ✅ live | 📝    | 📝   | 📝            |
+| agents-md-primer                        | ✅ live | —     | 📝   | 📝            |
+| cursor-rules                            | ✅ live | —     | 📝   | 📝            |
+| stoimost-lendinga-2026                  | ✅ live | 📝    | 📝   | —             |
+| chto-podgotovit-pered-zakazom-lendinga  | ✅ live | 📝    | 📝   | —             |
+| avtomatizatsiya-obrabotki-zayavok       | ✅ live | 📝    | 📝   | —             |
+| ai-avtomatizatsiya-malogo-biznesa       | ✅ live | 📝    | 📝   | —             |
+| mvp-etapy-sroki-pervyy-reliz            | ✅ live | 📝    | 📝   | —             |
+| stoimost-razrabotki-mvp                 | ✅ live | 📝    | 📝   | —             |
+| lending-ili-mnogostranichnyy-sayt       | ✅ live | 📝    | 📝   | —             |
+| vnutrennee-veb-prilozhenie-dlya-biznesa | ✅ live | 📝    | 📝   | —             |
 
 Habr was dropped (see `distribution.md` → Dropped). X profile/brand assets live
 in `docs/brand/`.

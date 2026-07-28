@@ -1,6 +1,7 @@
 import type { Route } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { TelegramLink } from "@/components/telegram-link";
 import { Button } from "@/components/ui/button";
 import { jsonLdString } from "@/lib/json-ld";
 import {
@@ -179,9 +180,9 @@ export function ServicePageView({
             Коротко опишите задачу, текущую ситуацию и желаемый результат.
           </p>
           <Button asChild size="lg" className="mt-6">
-            <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">
+            <TelegramLink href={TELEGRAM_URL} placement="service_contact">
               Написать в Telegram
-            </a>
+            </TelegramLink>
           </Button>
         </div>
       </section>

@@ -73,22 +73,25 @@ the planned `ignoreGhsas` allowlist proved unnecessary:
   (200) and `/dashboard` (307) are published on a brochure site and are the only
   reason the auth advisories apply at all.
 
-SEO/GEO rollout — **5 articles LIVE** with per-article covers. Remaining moves,
+SEO/GEO rollout — **13 articles LIVE** with per-article covers. Remaining moves,
 guided by `docs/playbooks/seo-geo.md`:
 
-- **[USER] GSC indexing (3 newer URLs).** Request indexing in Google Search
-  Console for `/blog/github-spec-kit`, `/blog/agents-md-primer`,
-  `/blog/cursor-rules` (both first articles already requested).
+- **[AGENT] New-URL indexing.** After the 2026-07-28 deploy, resubmit the
+  sitemap and request indexing for the eight commercial articles in Google
+  Search Console and Yandex Webmaster. Record the completed count in the
+  SEO/GEO playbook; console acceptance is not a ranking guarantee.
 - **[USER, optional] vc.ru brand bio** — pick one of the 3 options offered in
   chat; the chosen one becomes the canonical brand bio.
 - **Off-site distribution (ongoing)** — plan + status matrix:
-  `docs/playbooks/distribution.md`. Adaptations for all 5 articles live beside
-  each article (`src/content/blog/<slug>/`); **[COWORKER]** publishes per the
-  matrix. Live so far: vc.ru article 1. Habr dropped; GEO now runs through the
-  public `grooownow/qa-pilot` repo (attribution shipped v0.2.4).
-- **Content — Wave 2 next** (`docs/content-plan.md`): build the pillar
+  `docs/playbooks/distribution.md`. The original five articles retain their
+  existing adaptations; all eight commercial articles now have fresh vc.ru and
+  Дзен drafts beside them. **[COWORKER]** publishes per the matrix. Live so far:
+  vc.ru article 1. Habr dropped; GEO also runs through the public
+  `grooownow/qa-pilot` repo (attribution shipped v0.2.4).
+- **Content — after the first indexing check** (`docs/content-plan.md`): build the pillar
   «AI-агенты для разработки» + Claude Code long-tail (настройка / vs Cursor /
-  аналоги). Deferred: commercial-intent pull for `/uslugi/...` (Layer 2).
+  аналоги). First inspect real queries for the commercial batch after 3–4
+  weeks.
 
 ## Next
 
@@ -97,8 +100,9 @@ Scoped and agreed, not yet started:
 - **[DONE 2026-07-25] Resend production secrets** — set in the Vercel
   production env and proven by a live test enquiry through the EN form
   (delivery accepted by Resend).
-- **Commercial bridge articles** — first four priorities from
-  `docs/specs/ru-commercial-seo.plan.md`, one supporting entry per service.
+- **[DONE 2026-07-28] Commercial bridge articles** — all eight priorities from
+  `docs/specs/ru-commercial-seo.plan.md` are published; each service has at
+  least two supporting search entries.
 
 ## Later
 
