@@ -1,4 +1,5 @@
 import { getPublishedArticles } from "@/features/blog";
+import { publicUrl } from "@/features/site";
 import { env } from "@/lib/env";
 
 // Statically generated at build time — content lives in the repo, so every
@@ -24,7 +25,7 @@ export function GET(): Response {
 
   const items = articles
     .map((article) => {
-      const url = `${baseURL}/blog/${article.slug}`;
+      const url = publicUrl("ru", baseURL, `/blog/${article.slug}`);
       return [
         "    <item>",
         `      <title>${escapeXml(article.title)}</title>`,
@@ -41,7 +42,7 @@ export function GET(): Response {
 <rss version="2.0">
   <channel>
     <title>Блог Ludvik4</title>
-    <link>${escapeXml(`${baseURL}/blog`)}</link>
+    <link>${escapeXml(publicUrl("ru", baseURL, "/blog"))}</link>
     <description>AI-агенты в разработке, spec-driven development, автоматизация и запуск цифровых продуктов</description>
     <language>ru</language>
 ${items}

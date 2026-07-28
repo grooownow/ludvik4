@@ -11,6 +11,7 @@ import {
 } from "./commercial-content";
 import { Breadcrumbs } from "./breadcrumbs";
 import { getMarketContent, TELEGRAM_URL } from "./content";
+import { publicUrl } from "./seo";
 import { Eyebrow, Section, SiteFooter, SiteHeader } from "./site-chrome";
 
 const ruContent = getMarketContent("ru");
@@ -56,7 +57,7 @@ export function ServicePageView({
   service: ServicePage;
   baseUrl: string;
 }) {
-  const url = `${baseUrl}/uslugi/${service.slug}`;
+  const url = publicUrl("ru", baseUrl, `/uslugi/${service.slug}`);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -263,7 +264,7 @@ export function CaseStudyPageView({
   study: CaseStudy;
   baseUrl: string;
 }) {
-  const url = `${baseUrl}/cases/${study.slug}`;
+  const url = publicUrl("ru", baseUrl, `/cases/${study.slug}`);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -288,7 +289,7 @@ export function CaseStudyPageView({
             "@type": "ListItem",
             position: 2,
             name: "Кейсы",
-            item: `${baseUrl}/cases`,
+            item: publicUrl("ru", baseUrl, "/cases"),
           },
           {
             "@type": "ListItem",

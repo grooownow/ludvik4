@@ -9,7 +9,13 @@ import {
   getPublishedArticles,
   getPublishedArticleBySlug,
 } from "@/features/blog";
-import { Breadcrumbs, getMarketContent, SiteHeader } from "@/features/site";
+import {
+  Breadcrumbs,
+  canonicalPath,
+  getMarketContent,
+  publicUrl,
+  SiteHeader,
+} from "@/features/site";
 import { env } from "@/lib/env";
 import { jsonLdString } from "@/lib/json-ld";
 
@@ -41,15 +47,16 @@ export async function generateMetadata({
   if (!article) {
     return {};
   }
+  const articlePath = canonicalPath(env.SITE_MARKET, `/blog/${article.slug}`);
   return {
     title: article.title,
     description: article.description,
-    alternates: { canonical: `/blog/${article.slug}` },
+    alternates: { canonical: articlePath },
     openGraph: {
       type: "article",
       title: article.title,
       description: article.description,
-      url: `/blog/${article.slug}`,
+      url: articlePath,
       publishedTime: article.date,
       ...(article.cover && {
         images: [
@@ -137,7 +144,7 @@ export default async function ArticlePage({
   }
 
   const baseURL = env.NEXT_PUBLIC_APP_URL;
-  const articleUrl = `${baseURL}/blog/${article.slug}`;
+  const articleUrl = publicUrl("ru", baseURL, `/blog/${article.slug}`);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -169,7 +176,7 @@ export default async function ArticlePage({
             "@type": "ListItem",
             position: 2,
             name: "Блог",
-            item: `${baseURL}/blog`,
+            item: publicUrl("ru", baseURL, "/blog"),
           },
           {
             "@type": "ListItem",

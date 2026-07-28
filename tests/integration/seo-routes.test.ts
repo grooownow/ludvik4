@@ -23,7 +23,7 @@ describe("GET /blog/rss.xml", () => {
     const body = await getRss().text();
 
     for (const article of getPublishedArticles()) {
-      expect(body).toContain(`/blog/${article.slug}</link>`);
+      expect(body).toContain(`/blog/${article.slug}/</link>`);
     }
     for (const draft of getAllArticles().filter((a) => a.draft)) {
       expect(body).not.toContain(`/blog/${draft.slug}`);

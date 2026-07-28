@@ -3,7 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPublishedArticles } from "@/features/blog";
-import { Breadcrumbs, getMarketContent, SiteHeader } from "@/features/site";
+import {
+  Breadcrumbs,
+  canonicalPath,
+  getMarketContent,
+  SiteHeader,
+} from "@/features/site";
 import { env } from "@/lib/env";
 
 const ruContent = getMarketContent("ru");
@@ -12,12 +17,12 @@ export const metadata: Metadata = {
   title: "Блог",
   description:
     "Статьи Ludvik4: AI-агенты в разработке, spec-driven development, автоматизация и запуск цифровых продуктов.",
-  alternates: { canonical: "/blog" },
+  alternates: { canonical: canonicalPath(env.SITE_MARKET, "/blog") },
   openGraph: {
     title: "Блог Ludvik4",
     description:
       "AI-агенты в разработке, spec-driven development, автоматизация и запуск цифровых продуктов.",
-    url: "/blog",
+    url: canonicalPath(env.SITE_MARKET, "/blog"),
   },
 };
 

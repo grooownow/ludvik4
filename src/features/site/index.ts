@@ -28,6 +28,8 @@ export {
   buildHomeJsonLd,
   buildSitemap,
   buildRobots,
+  canonicalPath,
+  publicUrl,
   type ArticleRef,
 } from "./seo";
 

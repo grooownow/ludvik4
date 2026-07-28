@@ -1,5 +1,5 @@
 import { getPublishedArticles } from "@/features/blog";
-import { caseStudies, servicePages } from "@/features/site";
+import { caseStudies, publicUrl, servicePages } from "@/features/site";
 import { env } from "@/lib/env";
 
 // llms.txt — a markdown summary of the site for LLM crawlers (GPTBot,
@@ -11,18 +11,21 @@ export const dynamic = "force-static";
 function ruBody(baseURL: string): string {
   const articles = getPublishedArticles();
   const articleLines = articles
-    .map((a) => `- [${a.title}](${baseURL}/blog/${a.slug}): ${a.description}`)
+    .map(
+      (a) =>
+        `- [${a.title}](${publicUrl("ru", baseURL, `/blog/${a.slug}`)}): ${a.description}`,
+    )
     .join("\n");
   const serviceLines = servicePages
     .map(
       (service) =>
-        `- [${service.title}](${baseURL}/uslugi/${service.slug}): ${service.description}`,
+        `- [${service.title}](${publicUrl("ru", baseURL, `/uslugi/${service.slug}`)}): ${service.description}`,
     )
     .join("\n");
   const caseLines = caseStudies
     .map(
       (study) =>
-        `- [${study.title}](${baseURL}/cases/${study.slug}): ${study.description}`,
+        `- [${study.title}](${publicUrl("ru", baseURL, `/cases/${study.slug}`)}): ${study.description}`,
     )
     .join("\n");
 
@@ -43,8 +46,8 @@ AI-инструменты и spec-driven development используются к
 ## Основные страницы
 
 - [Главная](${baseURL}/): услуги, цены, кейсы и контакт
-- [Кейсы](${baseURL}/cases): публичные примеры работ
-- [Блог](${baseURL}/blog): статьи об AI-агентах в разработке, spec-driven development, автоматизации
+- [Кейсы](${publicUrl("ru", baseURL, "/cases")}): публичные примеры работ
+- [Блог](${publicUrl("ru", baseURL, "/blog")}): статьи об AI-агентах в разработке, spec-driven development, автоматизации
 ${serviceLines ? `\n## Услуги\n\n${serviceLines}\n` : ""}
 ${caseLines ? `\n## Кейсы\n\n${caseLines}\n` : ""}
 ${articleLines ? `\n## Статьи\n\n${articleLines}\n` : ""}`;

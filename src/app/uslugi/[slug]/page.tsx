@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getServicePage, ServicePageView, servicePages } from "@/features/site";
+import {
+  canonicalPath,
+  getServicePage,
+  ServicePageView,
+  servicePages,
+} from "@/features/site";
 import { env } from "@/lib/env";
 
 type Params = { slug: string };
@@ -20,15 +25,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = getServicePage(slug);
   if (!service || env.SITE_MARKET !== "ru") return {};
+  const servicePath = canonicalPath("ru", `/uslugi/${service.slug}`);
 
   return {
     title: service.title,
     description: service.description,
-    alternates: { canonical: `/uslugi/${service.slug}` },
+    alternates: { canonical: servicePath },
     openGraph: {
       title: service.title,
       description: service.description,
-      url: `/uslugi/${service.slug}`,
+      url: servicePath,
       images: ["/og-image-ru.png"],
     },
   };

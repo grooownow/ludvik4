@@ -69,6 +69,22 @@ export function buildSiteMetadata(
 
 export type ArticleRef = { slug: string; date: string };
 
+/** Match the public URL style of each production host. */
+export function canonicalPath(market: Market, path: string): string {
+  if (market === "ru" && path !== "/" && !path.endsWith("/")) {
+    return `${path}/`;
+  }
+  return path;
+}
+
+export function publicUrl(
+  market: Market,
+  baseUrl: string,
+  path: string,
+): string {
+  return `${baseUrl.replace(/\/$/, "")}${canonicalPath(market, path)}`;
+}
+
 /**
  * sitemap.xml entries for a market. RU adds the blog list + its articles; EN
  * adds its privacy notice. Never the other market's URLs.
@@ -80,37 +96,41 @@ export function buildSitemap(
   articles: ArticleRef[],
 ): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [
-    { url: `${baseUrl}/`, changeFrequency: "weekly", priority: 1 },
+    {
+      url: publicUrl(market, baseUrl, "/"),
+      changeFrequency: "weekly",
+      priority: 1,
+    },
   ];
 
   if (market === "ru") {
     for (const service of servicePages) {
       entries.push({
-        url: `${baseUrl}/uslugi/${service.slug}`,
+        url: publicUrl(market, baseUrl, `/uslugi/${service.slug}`),
         changeFrequency: "monthly",
         priority: 0.9,
       });
     }
     entries.push({
-      url: `${baseUrl}/cases`,
+      url: publicUrl(market, baseUrl, "/cases"),
       changeFrequency: "monthly",
       priority: 0.8,
     });
     for (const study of caseStudies) {
       entries.push({
-        url: `${baseUrl}/cases/${study.slug}`,
+        url: publicUrl(market, baseUrl, `/cases/${study.slug}`),
         changeFrequency: "monthly",
         priority: 0.8,
       });
     }
     entries.push({
-      url: `${baseUrl}/blog`,
+      url: publicUrl(market, baseUrl, "/blog"),
       changeFrequency: "weekly",
       priority: 0.8,
     });
     for (const article of articles) {
       entries.push({
-        url: `${baseUrl}/blog/${article.slug}`,
+        url: publicUrl(market, baseUrl, `/blog/${article.slug}`),
         lastModified: article.date,
         changeFrequency: "monthly",
         priority: 0.7,
@@ -118,7 +138,7 @@ export function buildSitemap(
     }
   } else {
     entries.push({
-      url: `${baseUrl}/privacy`,
+      url: publicUrl(market, baseUrl, "/privacy"),
       changeFrequency: "yearly",
       priority: 0.2,
     });

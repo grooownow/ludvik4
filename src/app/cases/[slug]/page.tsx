@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { caseStudies, CaseStudyPageView, getCaseStudy } from "@/features/site";
+import {
+  canonicalPath,
+  caseStudies,
+  CaseStudyPageView,
+  getCaseStudy,
+} from "@/features/site";
 import { env } from "@/lib/env";
 
 type Params = { slug: string };
@@ -20,15 +25,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const study = getCaseStudy(slug);
   if (!study || env.SITE_MARKET !== "ru") return {};
+  const casePath = canonicalPath("ru", `/cases/${study.slug}`);
 
   return {
     title: `${study.title} — кейс`,
     description: study.description,
-    alternates: { canonical: `/cases/${study.slug}` },
+    alternates: { canonical: casePath },
     openGraph: {
       title: `${study.title} — кейс Ludvik4`,
       description: study.description,
-      url: `/cases/${study.slug}`,
+      url: casePath,
       images: [study.image],
     },
   };
