@@ -86,8 +86,11 @@ guided by `docs/playbooks/seo-geo.md`:
 - **Off-site distribution (ongoing)** — plan + status matrix:
   `docs/playbooks/distribution.md`. The original five articles retain their
   existing adaptations; all eight commercial articles now have fresh vc.ru and
-  Дзен drafts beside them. **[COWORKER]** publishes per the matrix. Live so far:
-  vc.ru article 1. Habr dropped; GEO also runs through the public
+  Дзен drafts beside them. vc.ru draft `3050076` is assembled with its cover
+  and waits for the free monthly publication quota to reset. The Ludvik4 Дзен
+  channel is created and awaiting domain verification plus its first
+  owner-assisted post. Live so far: vc.ru article 1. Habr dropped; GEO also
+  runs through the public
   `grooownow/qa-pilot` repo (attribution shipped v0.2.4).
 - **Content — after the first indexing check** (`docs/content-plan.md`): build the pillar
   «AI-агенты для разработки» + Claude Code long-tail (настройка / vs Cursor /

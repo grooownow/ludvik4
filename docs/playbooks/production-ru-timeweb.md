@@ -31,6 +31,10 @@ Timeweb rather than committed to the repository. It is a browser-exposed
 public project key, not a server secret; it enables page analytics and
 `contact.telegram_clicked` events in the static RU build.
 
+Дзен domain ownership is verified through the public static file
+`/zen_e6h1u9CR24KoSJLaDqT7Nvm2K1DMC6PEIbplq2l5MUmKTIc3v1vpdCyJbf2oHRU.html`.
+The token is public by design and is committed with the static storefront.
+
 The previous app `ludvik4-ru` (`228059`) is not part of the production path.
 Confirm that no domains or deploy automation target it before deleting it.
 

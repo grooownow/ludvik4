@@ -100,7 +100,8 @@ demote duplicates, and a distinct framing earns the canonical-back link):
 
 ## Per-article distribution matrix
 
-Status: ✅ done · 📝 draft ready (`src/content/blog/<slug>/`) · ▫️ todo · — n/a · ✕ dropped
+Status: ✅ done · 📝 draft ready (`src/content/blog/<slug>/`) · ⏳ waiting for
+platform quota · ▫️ todo · — n/a · ✕ dropped
 
 | article (slug)                          | vc.ru                         | Дзен | X (личный) | Habr (снят) |
 | --------------------------------------- | ----------------------------- | ---- | ---------- | ----------- |
@@ -109,7 +110,7 @@ Status: ✅ done · 📝 draft ready (`src/content/blog/<slug>/`) · ▫️ todo
 | github-spec-kit                         | 📝                            | 📝   | 📝         | ✕           |
 | agents-md-primer                        | — (техн.)                     | 📝   | 📝         | ✕           |
 | cursor-rules                            | — (техн.)                     | 📝   | 📝         | ✕           |
-| stoimost-lendinga-2026                  | 📝                            | 📝   | —          | ✕           |
+| stoimost-lendinga-2026                  | ⏳ vc.ru draft 3050076        | 📝   | —          | ✕           |
 | chto-podgotovit-pered-zakazom-lendinga  | 📝                            | 📝   | —          | ✕           |
 | avtomatizatsiya-obrabotki-zayavok       | 📝                            | 📝   | —          | ✕           |
 | ai-avtomatizatsiya-malogo-biznesa       | 📝                            | 📝   | —          | ✕           |
@@ -126,6 +127,14 @@ dropped**: no `habr.md` files (removed). vc/Дзен are
 brand-neutral or first-person singular; X is first-person (personal
 `@groownow`). Coworker: publish per the matrix, flip cells to ✅ with the posted
 URL.
+
+The Ludvik4 Дзен channel was created on 2026-07-28. Domain verification uses
+the static HTML file documented in the RU production setup; publication itself
+remains owner-assisted because the editor is unavailable to browser automation.
+
+The next vc.ru publication is already assembled in draft `3050076` with the
+Ludvik4 cover. Publish it after the free monthly publication quota resets; a
+paid Pro subscription is not part of the current rollout.
 
 (Agent keeps this matrix current as adaptations are drafted; coworker flips a
 cell to ✅ with the published URL when posted.)

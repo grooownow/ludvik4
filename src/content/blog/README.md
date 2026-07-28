@@ -25,8 +25,9 @@ never in the sitemap/RSS/llms.txt.
 ## Article map
 
 Cover source is `<slug>/card.png` (web copy: `public/blog/<slug>/card.jpg`).
-Off-site status — ✅ live · 📝 draft ready · — n/a · ✕ dropped. Coworker flips a
-cell to ✅ with the posted URL (mirror of the matrix in `distribution.md`).
+Off-site status — ✅ live · 📝 draft ready · ⏳ waiting for platform quota · —
+n/a · ✕ dropped. Coworker flips a cell to ✅ with the posted URL (mirror of the
+matrix in `distribution.md`).
 
 | slug                                    | on site | vc.ru | Дзен | X (@groownow) |
 | --------------------------------------- | ------- | ----- | ---- | ------------- |
@@ -35,7 +36,7 @@ cell to ✅ with the posted URL (mirror of the matrix in `distribution.md`).
 | github-spec-kit                         | ✅ live | 📝    | 📝   | 📝            |
 | agents-md-primer                        | ✅ live | —     | 📝   | 📝            |
 | cursor-rules                            | ✅ live | —     | 📝   | 📝            |
-| stoimost-lendinga-2026                  | ✅ live | 📝    | 📝   | —             |
+| stoimost-lendinga-2026                  | ✅ live | ⏳    | 📝   | —             |
 | chto-podgotovit-pered-zakazom-lendinga  | ✅ live | 📝    | 📝   | —             |
 | avtomatizatsiya-obrabotki-zayavok       | ✅ live | 📝    | 📝   | —             |
 | ai-avtomatizatsiya-malogo-biznesa       | ✅ live | 📝    | 📝   | —             |

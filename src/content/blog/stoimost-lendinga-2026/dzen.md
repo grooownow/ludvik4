@@ -26,4 +26,4 @@
 функции в следующий этап.
 
 Полный разбор стоимости лендинга:
-https://ludvik4.ru/blog/stoimost-lendinga-2026
+https://ludvik4.ru/blog/stoimost-lendinga-2026/
