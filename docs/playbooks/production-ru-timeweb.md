@@ -25,6 +25,12 @@ The static export uses directory indexes (`/cases/index.html`,
 `/uslugi/razrabotka-lendinga/index.html`) so Timeweb can serve clean nested
 URLs without custom rewrite rules.
 
+Timeweb deployment settings contain `NEXT_PUBLIC_POSTHOG_KEY`, using the same
+PostHog project as the EN storefront. The value is intentionally managed in
+Timeweb rather than committed to the repository. It is a browser-exposed
+public project key, not a server secret; it enables page analytics and
+`contact.telegram_clicked` events in the static RU build.
+
 The previous app `ludvik4-ru` (`228059`) is not part of the production path.
 Confirm that no domains or deploy automation target it before deleting it.
 

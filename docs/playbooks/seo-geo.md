@@ -105,5 +105,9 @@ Add to the 15-minute weekly review from `docs/playbooks/analytics.md`:
   13 URLs; Yandex placed it in the processing queue.
 - The seven original public URLs were submitted for indexing in both consoles.
   Submission does not guarantee when a search engine will index or rank them.
-- **2026-07-28:** all eight commercial articles approved for publication; the
-  post-deploy sitemap refresh and URL indexing requests are pending.
+- **2026-07-28:** all eight commercial articles are live. The final sitemap has
+  21 canonical URLs, all returning 200 without an intermediate redirect, and
+  was resubmitted to both consoles.
+- Yandex accepted all eight new article URLs for priority recrawl. Google
+  accepted five manual requests before the daily quota; the remaining three
+  remain available through the sitemap and can be requested after quota reset.

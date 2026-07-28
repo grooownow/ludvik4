@@ -68,8 +68,14 @@ for every technology.
 - **Done 2026-07-27:** submitted `/sitemap.xml` to both consoles and requested
   indexing for the seven original public URLs. Google processed 13 URLs
   successfully; Yandex queued the sitemap for processing.
-- **2026-07-28:** eight commercial articles published; sitemap resubmission and
-  manual URL indexing requests are the immediate post-deploy task.
+- **Done 2026-07-28:** all eight commercial articles published. The final
+  sitemap contains 21 direct-200 canonical URLs and was resubmitted to both
+  consoles. Yandex accepted all eight article URLs for priority recrawl.
+  Google accepted five before its daily manual-request limit; the remaining
+  three are still discoverable through the submitted sitemap.
+- **Done 2026-07-28:** Telegram contact links emit
+  `contact.telegram_clicked` with page path and placement when PostHog is
+  enabled.
 - After 3–4 weeks, map real queries to the home and service pages.
 - Track impressions and qualified Telegram contacts by landing page.
 - Rewrite titles or page intent only after there is query evidence, not from

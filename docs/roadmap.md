@@ -76,10 +76,11 @@ the planned `ignoreGhsas` allowlist proved unnecessary:
 SEO/GEO rollout — **13 articles LIVE** with per-article covers. Remaining moves,
 guided by `docs/playbooks/seo-geo.md`:
 
-- **[AGENT] New-URL indexing.** After the 2026-07-28 deploy, resubmit the
-  sitemap and request indexing for the eight commercial articles in Google
-  Search Console and Yandex Webmaster. Record the completed count in the
-  SEO/GEO playbook; console acceptance is not a ranking guarantee.
+- **[DONE 2026-07-28] New-URL indexing.** The final 21-URL sitemap was
+  resubmitted to Google and Yandex. Yandex queued all eight commercial
+  articles; Google queued five before its daily manual-request limit, while
+  all eight remain discoverable in the sitemap. Console acceptance is not a
+  ranking guarantee.
 - **[USER, optional] vc.ru brand bio** — pick one of the 3 options offered in
   chat; the chosen one becomes the canonical brand bio.
 - **Off-site distribution (ongoing)** — plan + status matrix:
