@@ -50,6 +50,10 @@ export const siteMetadata = buildSiteMetadata(siteContent, {
     ...(env.SITE_MARKET === "ru" && {
       google: "G5O_0s3CKx2RtlIVLJdoOUr-4UbeLCaWJj66HcQmrlQ",
       yandex: "c5013f9ae7a28ef4",
+      other: {
+        "zen-verification":
+          "e6h1u9CR24KoSJLaDqT7Nvm2K1DMC6PEIbplq2l5MUmKTIc3v1vpdCyJbf2oHRU",
+      },
     }),
     ...(env.GOOGLE_SITE_VERIFICATION && {
       google: env.GOOGLE_SITE_VERIFICATION,
