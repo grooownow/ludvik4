@@ -6,6 +6,7 @@ src/db/migrations/
 .superpowers/
 docs/marketing/
 docs/superpowers/
+public/zen_*.html
 
 # Ephemeral browser-automation scratch (Playwright MCP snapshots, screenshot/
 # report output) — not source, never committed.
