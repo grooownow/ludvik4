@@ -59,6 +59,8 @@ nav.links{display:none;gap:32px}
 @media(min-width:768px){nav.links{display:flex}}
 nav.links a{font-family:var(--font-caption);font-size:14px;text-decoration:none;color:var(--fg-secondary)}
 nav.links a:hover{color:var(--fg)}
+.nav-cta{font-family:var(--font-caption);font-size:14px;background:var(--accent);color:var(--fg-inverse);border:0;border-radius:4px;padding:10px 16px;cursor:pointer;white-space:nowrap}
+.nav-cta:hover{filter:brightness(1.08)}
 
 /* ---- hero ---- */
 /* Mockup YKUmX: white section, dark text column left, photo card 604x633
@@ -312,6 +314,7 @@ footer a{color:var(--term-ok)}
         <a href="#pricing">Цена</a>
         <a href="#faq">FAQ</a>
       </nav>
+      <button class="nav-cta js-request" type="button">Получить ранний доступ</button>
     </div>
   </header>
   <main>
