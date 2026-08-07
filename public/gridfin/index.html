@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gridfin — стартер для Claude Code с тестами</title>
+  <meta name="description" content="Gridfin встраивает инженерный опыт в разработку с Claude Code: скелет приложения, спеки, тесты, гейты качества. Запусти качественный SaaS или пет-проект, не техдолг.">
+  <link rel="canonical" href="https://ludvik4.ru/gridfin/">
+  <link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en/">
+  <link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/">
+  <link rel="alternate" hreflang="de" href="https://ludvik4.dev/gridfin/de/">
+  <link rel="alternate" hreflang="es" href="https://ludvik4.dev/gridfin/es/">
+  <link rel="alternate" hreflang="pt-BR" href="https://ludvik4.dev/gridfin/pt-br/">
+  <link rel="alternate" hreflang="fr" href="https://ludvik4.dev/gridfin/fr/">
+  <link rel="alternate" hreflang="ja" href="https://ludvik4.dev/gridfin/ja/">
+  <link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en/">
+  <meta property="og:title" content="Gridfin — стартер для Claude Code с тестами">
+  <meta property="og:description" content="Gridfin встраивает инженерный опыт в разработку с Claude Code: скелет приложения, спеки, тесты, гейты качества. Запусти качественный SaaS или пет-проект, не техдолг.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ludvik4.ru/gridfin/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Inter:wght@400;500;600&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Gridfin","alternateName":"Gridfin for Claude Code","applicationCategory":"DeveloperApplication","operatingSystem":"macOS, Linux, Windows","description":"Gridfin встраивает инженерный опыт в разработку с Claude Code: скелет приложения, спеки, тесты, гейты качества. Запусти качественный SaaS или пет-проект, не техдолг.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Почему не просто Claude Code?","acceptedAnswer":{"@type":"Answer","text":"Claude Code великолепно пишет код — и ничего не знает о твоём процессе. Без правил каждая сессия заново решает, как строить проект, и решает по-разному. Gridfin даёт агенту процесс: спеки до кода, тесты как обязательный шаг, хуки и гейты, которые нельзя тихо обойти."}},{"@type":"Question","name":"Чем это отличается от boilerplate — ShipFast и других?","acceptedAnswer":{"@type":"Answer","text":"Бойлерплейты продают предсобранный код, который ты кастомизируешь. Gridfin — агентный стартер (agent-native starter kit): тонкий скелет плюс процесс, который спекует, строит и тестирует именно твой продукт. Ты не выпиливаешь чужой дашборд — ты выращиваешь свой."}},{"@type":"Question","name":"Что такое Application Skeleton?","acceptedAnswer":{"@type":"Answer","text":"Это не просто шаблон проекта. Это заранее собранная архитектурная основа приложения с уже принятыми инженерными решениями — стек, структура, тесты, CI, — вокруг которой строится вся дальнейшая разработка."}},{"@type":"Question","name":"Чем это отличается от MakerKit и Supastarter?","acceptedAnswer":{"@type":"Answer","text":"Они добавили к boilerplate rules-файлы для AI-агентов — но следовать им агент не обязан. В Gridfin правила принуждаются: хук останавливает нарушение до записи кода, гейты не пропускают красное. Правила с зубами, а не пожелания."}},{"@type":"Question","name":"Почему стек фиксированный?","acceptedAnswer":{"@type":"Answer","text":"Потому что весь процесс — правила, хуки, тесты, гейты, плейбуки — проверен именно на этом стеке: Next.js + TypeScript, Tailwind + shadcn/ui, Postgres. Свобода выбора стека — это ещё сорок решений, которые придётся принимать без опыта."}},{"@type":"Question","name":"Можно ли использовать свой стек?","acceptedAnswer":{"@type":"Answer","text":"Нет — и это осознанно. Gridfin не конструктор: убери фиксированный стек, и исчезнет всё, за что он отвечает — проверенные правила, тесты и гейты. Если тебе нужен другой стек, честный ответ: Gridfin не твой инструмент."}},{"@type":"Question","name":"Я в России — у меня заработает?","acceptedAnswer":{"@type":"Answer","text":"Gridfin — обычный git-репозиторий, он работает где угодно. Единственное условие — рабочий Claude Code: если клод код у тебя уже запускается и оплачен, Gridfin ничего дополнительно не требует."}},{"@type":"Question","name":"Что будет, если проект перестанет развиваться?","acceptedAnswer":{"@type":"Answer","text":"Ничего страшного: репозиторий твой, код и процесс работают локально и не зависят от существования Gridfin как продукта. Обновления перестанут приходить — всё остальное останется."}},{"@type":"Question","name":"Подходит ли новичку?","acceptedAnswer":{"@type":"Answer","text":"Если ты готов работать с терминалом, git и Claude Code по пошаговым инструкциям — да: архитектуру, тестовую стратегию и контроль качества коробка несёт за тебя. Если терминал видишь впервые — начни с Lovable или Bolt."}}]}</script>
+  <style>:root{
+  --surface:#FFFFFF;--surface-peach:#FDE2D9;--surface-cyan:#E0F7FA;
+  --fg:#1A1A1A;--fg-secondary:#4B5563;--fg-inverse:#FFFFFF;
+  --accent:#7B61FF;--green:#003322;
+  --term-bg:#0D1023;--term-bar:#161A30;--term-muted:#AEB6D8;--term-ok:#B8FFDA;
+  --on-green:#CFFBE3;--on-violet:#F7F3FF;
+  --glass-card:#FFFFFF1F;--glass-badge:#FFFFFF26;--pill-dark:#00000033;
+  --overlay:#04100AB3;--badge-violet:#7B61FF1F;
+  --font-heading:"Oswald",sans-serif;--font-body:"Geist",system-ui,sans-serif;
+  --font-caption:"Inter",system-ui,sans-serif;--font-mono:"Geist Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font-body);color:var(--fg);background:var(--surface);line-height:1.4;font-size:16px}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--font-heading);text-transform:uppercase;line-height:1.1;margin:0;font-weight:600}
+p{margin:0}
+code{font-family:var(--font-mono);font-size:.92em;background:#0000000f;padding:.05em .3em;border-radius:4px}
+.pain code,.pain-solution code,.skeleton-card code,.comp code,.ideas code,.faq-col code,#bridge code,#box code,#cred code,#final code{background:var(--glass-badge)}
+.wrap{max-width:1272px;margin:0 auto;padding:0 24px}
+@media(min-width:1100px){.wrap{padding:0 84px;max-width:1440px}}
+section{padding:48px 0}
+@media(min-width:768px){section{padding:72px 0}}
+
+/* ---- nav ---- */
+header.nav{background:var(--surface)}
+header.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:16px;padding-bottom:16px}
+.brand{font-family:var(--font-heading);font-weight:600;font-size:28px;text-transform:uppercase;text-decoration:none;color:var(--fg)}
+nav.links{display:none;gap:32px}
+@media(min-width:768px){nav.links{display:flex}}
+nav.links a{font-family:var(--font-caption);font-size:14px;text-decoration:none;color:var(--fg-secondary)}
+nav.links a:hover{color:var(--fg)}
+nav.lang{display:flex;gap:4px;flex-wrap:wrap}
+nav.lang a{font-family:var(--font-caption);font-size:13px;text-decoration:none;color:var(--fg-secondary);padding:4px 8px;border-radius:4px}
+nav.lang a[aria-current="true"]{color:var(--fg);background:var(--surface-cyan)}
+
+/* ---- hero ---- */
+#hero{padding:0}
+.hero-panel{position:relative;background:var(--term-bg) center/cover no-repeat;border-radius:10px;overflow:hidden;margin:8px 0 0}
+.hero-panel::before{content:"";position:absolute;inset:0;background:var(--overlay)}
+.hero-inner{position:relative;display:grid;gap:48px;padding:48px 24px}
+@media(min-width:960px){.hero-inner{grid-template-columns:1.1fr .9fr;align-items:center;padding:84px 84px}}
+.hero-copy{color:var(--fg-inverse);display:flex;flex-direction:column;gap:24px;align-items:flex-start}
+.badge{font-family:var(--font-caption);font-size:13px;letter-spacing:.06em;text-transform:uppercase;background:var(--accent);color:var(--fg-inverse);padding:8px 12px;border-radius:4px}
+.hero-copy h1{font-size:34px}
+@media(min-width:768px){.hero-copy h1{font-size:56px}}
+.hero-sub{font-size:18px;line-height:1.4}
+@media(min-width:768px){.hero-sub{font-size:22px}}
+.hero-audience{font-size:16px;color:var(--term-muted);line-height:1.4}
+.cta{display:inline-block;font-family:var(--font-caption);font-size:16px;font-weight:600;background:var(--accent);color:var(--fg-inverse);text-decoration:none;padding:16px 24px;border-radius:4px}
+.cta:hover{filter:brightness(1.08)}
+.cta-note{font-family:var(--font-caption);font-size:13px;color:var(--term-muted)}
+.terminal{background:var(--term-bg);border-radius:10px;box-shadow:0 24px 48px #00000059;overflow:hidden;font-family:var(--font-mono);font-size:15px}
+@media(min-width:768px){.terminal{font-size:16px}}
+.term-bar{display:flex;align-items:center;gap:8px;background:var(--term-bar);padding:12px 16px}
+.term-dot{width:12px;height:12px;border-radius:50%}
+.term-title{margin-left:8px;font-size:13px;color:var(--term-muted)}
+.term-body{padding:24px;display:flex;flex-direction:column;gap:12px}
+.term-body .cmd{color:var(--fg-inverse)}
+.term-body .muted{color:var(--term-muted)}
+.term-body .ok{color:var(--term-ok)}
+
+/* ---- bridge ---- */
+#bridge{background:var(--green);padding:48px 0}
+#bridge p{color:var(--fg-inverse);font-size:18px;line-height:1.4;max-width:56rem}
+@media(min-width:768px){#bridge p{font-size:22px}}
+
+/* ---- problem ---- */
+#problem{background:var(--accent);padding-bottom:0}
+#problem h2{color:var(--fg-inverse);font-size:34px;max-width:64rem}
+@media(min-width:768px){#problem h2{font-size:56px}}
+.pain-grid{display:grid;gap:16px;margin-top:48px}
+@media(min-width:768px){.pain-grid{grid-template-columns:1fr 1fr;gap:24px}}
+.pain{background:var(--glass-card);border-radius:6px;padding:24px;color:var(--fg-inverse);display:flex;flex-direction:column;gap:12px}
+.pain-num{font-family:var(--font-caption);font-size:13px;background:var(--glass-badge);border-radius:18px;padding:4px 12px;align-self:flex-start}
+.pain h3{font-size:24px}
+.pain-body{font-size:15px;color:var(--on-violet);line-height:1.4}
+.pain-solution{background:var(--pill-dark);border-radius:6px;padding:12px 16px;font-size:14px;line-height:1.4;margin-top:auto}
+.ticker{background:var(--green);margin-top:48px}
+.ticker .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;padding-top:20px;padding-bottom:20px}
+.ticker span{font-family:var(--font-heading);font-weight:600;text-transform:uppercase;font-size:18px;color:var(--fg-inverse);white-space:nowrap}
+@media(min-width:768px){.ticker span{font-size:22px}}
+.ticker .dot{color:var(--on-green)}
+
+/* ---- how ---- */
+.kicker{font-family:var(--font-caption);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600}
+#how h2{font-size:34px;margin-top:16px;max-width:64rem}
+@media(min-width:768px){#how h2{font-size:64px}}
+.how-intro{font-size:18px;color:var(--fg-secondary);margin-top:16px;max-width:44rem}
+.how-grid{display:grid;gap:24px;margin-top:48px}
+@media(min-width:960px){.how-grid{grid-template-columns:1.2fr .8fr;align-items:start}}
+.steps{display:flex;flex-direction:column;gap:16px}
+.step{background:var(--surface-peach);border-radius:6px;padding:24px;display:flex;gap:24px;align-items:flex-start}
+.step.accent{background:var(--accent);color:var(--fg-inverse)}
+.step.accent .step-body{color:var(--on-violet)}
+.step-num{font-family:var(--font-heading);font-weight:600;font-size:34px;line-height:1.1;opacity:.55;min-width:56px}
+.step h3{font-size:24px}
+.step.accent h3{font-size:28px}
+.step-body{font-size:15px;color:var(--fg-secondary);margin-top:8px;line-height:1.4}
+.artifacts{display:flex;flex-direction:column;gap:16px;position:sticky;top:24px}
+.artifact{border-radius:6px;padding:24px}
+.artifact h3{font-size:24px;margin-bottom:16px}
+.artifact pre{margin:0;font-family:var(--font-mono);font-size:15px;line-height:1.6;white-space:pre-wrap}
+.artifact.cyan{background:var(--surface-cyan)}
+.artifact.dark{background:var(--term-bg);color:var(--fg-inverse)}
+.artifact.dark pre{color:var(--term-muted)}
+.artifact.green{background:var(--green);color:var(--fg-inverse)}
+.artifact.green pre{color:var(--term-ok)}
+
+/* ---- why ---- */
+#why{background:var(--surface-cyan)}
+#why h2{font-size:34px}
+@media(min-width:768px){#why h2{font-size:56px}}
+.why-grid{display:grid;gap:16px;margin-top:48px}
+@media(min-width:768px){.why-grid{grid-template-columns:repeat(2,1fr);gap:24px}}
+@media(min-width:1100px){.why-grid{grid-template-columns:repeat(4,1fr)}}
+.why-card{background:var(--surface);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:12px}
+.why-num{font-family:var(--font-caption);font-size:13px;color:var(--accent);font-weight:600}
+.why-card h3{font-size:24px}
+.why-card p{font-size:15px;color:var(--fg-secondary);line-height:1.4}
+
+/* ---- box (what you get) ---- */
+#box{background:var(--green);color:var(--fg-inverse)}
+#box h2{font-size:34px}
+@media(min-width:768px){#box h2{font-size:64px}}
+.box-intro{font-size:18px;color:var(--on-green);margin-top:16px}
+.skeleton-card{background:var(--term-bg);border-radius:10px;padding:24px;margin-top:48px}
+@media(min-width:768px){.skeleton-card{padding:40px}}
+.skeleton-card h3{font-size:28px}
+@media(min-width:768px){.skeleton-card h3{font-size:44px}}
+.skeleton-body{font-size:16px;color:var(--on-green);margin-top:12px;line-height:1.4}
+.skeleton-list{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.skeleton-list span{font-family:var(--font-mono);font-size:16px;color:var(--term-ok);background:var(--glass-card);border-radius:4px;padding:8px 12px;white-space:nowrap}
+.skeleton-divider{height:1px;background:var(--glass-badge);margin:24px 0}
+.skeleton-outro{font-size:16px;color:var(--on-green);line-height:1.4}
+.comp-grid{display:grid;gap:16px;margin-top:24px}
+@media(min-width:768px){.comp-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1100px){.comp-grid{grid-template-columns:repeat(5,1fr)}}
+.comp{background:var(--glass-card);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.comp h3{font-size:20px}
+.comp p{font-family:var(--font-body);font-size:14px;color:var(--on-green);line-height:1.4}
+.ideas{background:var(--glass-card);border-radius:6px;padding:24px;margin-top:24px;display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+@media(min-width:960px){.ideas{flex-direction:row;align-items:center;justify-content:space-between;gap:24px}}
+.ideas h3{font-size:24px}
+.ideas p{font-size:15px;color:var(--on-green);line-height:1.4;max-width:40rem}
+.micro-cta{display:inline-block;font-family:var(--font-caption);font-size:15px;font-weight:600;background:var(--surface);color:var(--fg);text-decoration:none;padding:12px 20px;border-radius:4px;white-space:nowrap}
+
+/* ---- inside ---- */
+#inside{background:var(--surface-peach)}
+#inside h2{font-size:34px}
+@media(min-width:768px){#inside h2{font-size:56px}}
+.inside-intro{font-size:18px;color:var(--fg-secondary);margin-top:16px;max-width:44rem}
+.inside-grid{display:grid;gap:24px;margin-top:48px}
+@media(min-width:960px){.inside-grid{grid-template-columns:1.1fr .9fr;align-items:start}}
+.repo-window{background:var(--term-bg);border-radius:10px;overflow:hidden}
+.repo-body{padding:24px;font-family:var(--font-mono);font-size:15px;line-height:1.8;color:var(--term-muted)}
+.repo-body .root{color:var(--fg-inverse)}
+.repo-body .hl{color:var(--term-ok)}
+.annotations{display:flex;flex-direction:column;gap:16px}
+.annotation{background:var(--surface);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:4px}
+.annotation code{font-family:var(--font-mono);font-size:16px;background:none;padding:0;color:var(--fg)}
+.annotation p{font-size:14px;color:var(--fg-secondary)}
+
+/* ---- trust ---- */
+#trust{background:var(--surface-peach);padding-top:0}
+#trust .kicker{display:block}
+#trust h2{font-size:34px;margin-top:16px}
+@media(min-width:768px){#trust h2{font-size:56px}}
+.trust-grid{display:grid;gap:24px;margin-top:48px}
+@media(min-width:960px){.trust-grid{grid-template-columns:1fr 1fr;align-items:center}}
+.trust-cards{display:flex;flex-direction:column;gap:16px}
+.trust-card{background:var(--surface);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:8px}
+.trust-card h3{font-size:24px}
+.trust-card p{font-size:15px;color:var(--fg-secondary);line-height:1.4}
+.trust-photo{border-radius:10px;overflow:hidden}
+
+/* ---- trust ticker ---- */
+#ticker2{background:var(--surface-peach);padding:0 0 48px}
+#ticker2 .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
+#ticker2 span{font-family:var(--font-heading);font-weight:600;text-transform:uppercase;font-size:18px;color:var(--accent);white-space:nowrap}
+@media(min-width:768px){#ticker2 span{font-size:22px}}
+
+/* ---- credibility ---- */
+#cred{background:var(--accent);padding:48px 0}
+#cred .line1{color:var(--fg-inverse);font-size:20px;line-height:1.4}
+#cred .line2{color:var(--on-violet);font-size:16px;margin-top:8px}
+
+/* ---- fit ---- */
+.fit-grid{display:grid;gap:24px}
+@media(min-width:960px){.fit-grid{grid-template-columns:1fr 1fr}}
+.fit-card{border-radius:6px;padding:24px}
+@media(min-width:768px){.fit-card{padding:40px}}
+.fit-card.violet{background:var(--accent);color:var(--fg-inverse)}
+.fit-card.cyan{background:var(--surface-cyan)}
+.fit-card h2{font-size:28px}
+@media(min-width:768px){.fit-card h2{font-size:44px}}
+.fit-card ul{margin:24px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:16px}
+.fit-card li{font-size:16px;line-height:1.4;padding-left:28px;position:relative}
+@media(min-width:768px){.fit-card li{font-size:18px}}
+.fit-card li::before{content:"";position:absolute;left:0;top:.35em;width:12px;height:12px;border-radius:50%}
+.fit-card.violet li::before{background:var(--term-ok)}
+.fit-card.cyan li::before{background:var(--accent)}
+.fit-card.violet li{color:var(--on-violet)}
+.fit-card.cyan li{color:var(--fg-secondary)}
+
+/* ---- price + faq ---- */
+#price-faq{background:var(--green);color:var(--fg-inverse)}
+.price-faq-grid{display:grid;gap:48px}
+@media(min-width:960px){.price-faq-grid{grid-template-columns:.9fr 1.1fr;align-items:start}}
+.price-card{background:var(--surface);color:var(--fg);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:16px;align-items:flex-start;position:sticky;top:24px}
+@media(min-width:768px){.price-card{padding:40px}}
+.price-card h2{font-size:34px}
+@media(min-width:768px){.price-card h2{font-size:56px}}
+.price-body{font-size:18px;line-height:1.4;color:var(--fg-secondary)}
+.price-note{font-family:var(--font-caption);font-size:14px;color:var(--fg-secondary)}
+.faq-col h2{font-size:34px}
+@media(min-width:768px){.faq-col h2{font-size:56px}}
+.faq-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.faq-chips span{font-family:var(--font-caption);font-size:14px;background:var(--glass-badge);border-radius:18px;padding:8px 12px}
+.faq-col details{background:var(--glass-card);border-radius:6px;margin-top:16px;padding:0}
+.faq-col summary{cursor:pointer;font-family:var(--font-heading);font-weight:600;text-transform:uppercase;font-size:18px;line-height:1.1;padding:20px 24px;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center}
+@media(min-width:768px){.faq-col summary{font-size:22px}}
+.faq-col details:first-of-type summary{font-size:22px}
+@media(min-width:768px){.faq-col details:first-of-type summary{font-size:24px}}
+.faq-col summary::-webkit-details-marker{display:none}
+.faq-col summary::after{content:"+";font-family:var(--font-caption);font-size:22px;color:var(--on-green)}
+.faq-col details[open] summary::after{content:"−"}
+.faq-col details p{padding:0 24px 20px;font-size:15px;line-height:1.5;color:var(--on-green)}
+
+/* ---- final cta ---- */
+#final{background:var(--accent);color:var(--fg-inverse)}
+#final .wrap{display:flex;flex-direction:column;gap:24px;align-items:flex-start}
+#final h2{font-size:34px;max-width:56rem}
+@media(min-width:768px){#final h2{font-size:56px}}
+#final .sub{font-size:18px;color:var(--on-violet);max-width:44rem}
+#final .cta{background:var(--surface);color:var(--fg)}
+
+/* ---- footer ---- */
+footer{background:var(--green);padding:32px 0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px 24px;justify-content:space-between;font-family:var(--font-caption);font-size:14px;color:var(--on-green)}
+footer a{color:var(--term-ok)}</style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="#hero">Gridfin</a>
+      <nav class="links" aria-label="Sections">
+        <a href="#how">Как работает</a>
+        <a href="#box">Что получаешь</a>
+        <a href="#pricing">Цена</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <nav class="lang" aria-label="Language"><a href="https://ludvik4.dev/gridfin/en/" lang="en" hreflang="en">EN</a><a href="https://ludvik4.ru/gridfin/" lang="ru" hreflang="ru" aria-current="true">RU</a><a href="https://ludvik4.dev/gridfin/de/" lang="de" hreflang="de">DE</a><a href="https://ludvik4.dev/gridfin/es/" lang="es" hreflang="es">ES</a><a href="https://ludvik4.dev/gridfin/pt-br/" lang="pt-BR" hreflang="pt-BR">PT</a><a href="https://ludvik4.dev/gridfin/fr/" lang="fr" hreflang="fr">FR</a><a href="https://ludvik4.dev/gridfin/ja/" lang="ja" hreflang="ja">JA</a></nav>
+    </div>
+  </header>
+  <main>
+    <section id="hero">
+      <div class="wrap">
+        <div class="hero-panel" style="background-image:url('https://ludvik4.ru/gridfin/assets/hero-terminal.png')">
+          <div class="hero-inner">
+            <div class="hero-copy">
+              <span class="badge">Ранний доступ — бесплатно для бета-тестеров</span>
+              <h1>Запускайте качественные сайты и приложения с Claude Code.</h1>
+              <p class="hero-sub">Gridfin превращает пустой репозиторий в Application Skeleton — готовую архитектурную основу приложения для разработки с Claude Code. Внутри уже есть спецификации, инженерные правила, тесты и гейты качества — вместо хаотичного вайб-кодинга.</p>
+              <p class="hero-audience">Если у тебя есть идея и Claude Code, но нет многолетнего инженерного опыта — Gridfin проведёт тебя по процессу, который инженерные команды обычно собирают годами.</p>
+              <a class="cta" href="mailto:ludvik4good.me@gmail.com?subject=Gridfin%20early%20access">Получить ранний доступ</a>
+              <p class="cta-note">Бесплатно на время беты · после беты — стартовые цены</p>
+            </div>
+            <div class="terminal" role="img" aria-label="Terminal: /gridfin run">
+              <div class="term-bar">
+                <span class="term-dot" style="background:#FF5F57"></span>
+                <span class="term-dot" style="background:#FEBC2E"></span>
+                <span class="term-dot" style="background:#28C840"></span>
+                <span class="term-title">gridfin — за час</span>
+              </div>
+              <div class="term-body">
+            <div class="cmd">$ /gridfin</div>
+            <div class="muted">Analyzing idea...</div>
+            <div class="ok">✓ PRD created</div>
+            <div class="ok">✓ Specification created</div>
+            <div class="ok">✓ Architecture selected</div>
+            <div class="ok">✓ Application Skeleton generated</div>
+            <div class="muted">Ready to implement.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="bridge">
+      <div class="wrap"><p>AI ускорил разработку. Но инженерный опыт всё ещё нельзя сгенерировать. Именно этот пробел закрывает Gridfin.</p></div>
+    </section>
+    <section id="problem">
+      <div class="wrap">
+        <h2>Без инженерного опыта ошибки невидимы — пока не станут дорогими</h2>
+        <div class="pain-grid">
+        <article class="pain">
+          <span class="pain-num">01</span>
+          <h3>Ты не знаешь, какие ошибки уже совершаешь</h3>
+          <p class="pain-body">Стек, архитектура, тестирование, безопасность — десятки решений принимаются молча и не глядя.</p>
+          <p class="pain-solution">Gridfin принимает инженерные решения заранее: инвариантное предрешено и переиспользуется в каждом проекте.</p>
+        </article>
+        <article class="pain">
+          <span class="pain-num">02</span>
+          <h3>Чинишь одно, ломается другое</h3>
+          <p class="pain-body">Сделать было быстро, отлаживать — бесконечно; каждая новая фича трогает предыдущие.</p>
+          <p class="pain-solution">Каждая фича проходит один и тот же цикл: спека → код → тесты → ревью. Старые тесты не дают новой фиче тихо сломать прежние.</p>
+        </article>
+        <article class="pain">
+          <span class="pain-num">03</span>
+          <h3>Каждая новая фича становится дороже предыдущей</h3>
+          <p class="pain-body">Появляются ограничения, о которых ты не знал; агент ради мелочи переписывает половину кода.</p>
+          <p class="pain-solution">Application Skeleton фиксирует архитектуру с первого дня: двадцатая фича встраивается тем же процессом, что и первая.</p>
+        </article>
+        <article class="pain">
+          <span class="pain-num">04</span>
+          <h3>Claude Code пишет код быстрее, чем ты успеваешь проверять</h3>
+          <p class="pain-body">Что именно он нагенерил вчера — уже никто не читал.</p>
+          <p class="pain-solution">Хуки и гейты качества делают проверку частью процесса: нарушение правил останавливается до записи кода, красный статус виден до мержа.</p>
+        </article>
+        </div>
+      </div>
+      <div class="ticker"><div class="wrap"><span>Gridfin чинит процесс</span><span class="dot" aria-hidden="true">·</span><span>Сначала спека</span><span class="dot" aria-hidden="true">·</span><span>Потом код</span><span class="dot" aria-hidden="true">·</span><span>Потом тесты</span><span class="dot" aria-hidden="true">·</span><span>Одни правила</span></div></div>
+    </section>
+    <section id="how">
+      <div class="wrap">
+        <span class="kicker">Одна команда: /gridfin</span>
+        <h2>Что происходит после запуска Gridfin</h2>
+        <p class="how-intro">Одна команда — <code>/gridfin</code> — запускает агента-проводника. Pipeline показывает процесс и реальные артефакты на каждом шаге.</p>
+        <div class="how-grid">
+          <div class="steps">
+          <article class="step">
+            <span class="step-num">01</span>
+            <div>
+              <h3>Идея</h3>
+              <p class="step-body">Агент интервьюирует тебя, помогает уточнить идею — и честно говорит, если она не подходит под этот стек.</p>
+            </div>
+          </article>
+          <article class="step accent">
+            <span class="step-num">02</span>
+            <div>
+              <h3>Спецификация</h3>
+              <p class="step-body">PRD: проблема, пользователь, 3–5 ключевых фич и явный список «не в v1». Спеки — до какого-либо кода.</p>
+            </div>
+          </article>
+          <article class="step">
+            <span class="step-num">03</span>
+            <div>
+              <h3>Твой Application Skeleton готов</h3>
+              <p class="step-body">Главный результат первых шагов: архитектура, стек, тесты и CI уже собраны — и подстроены под тебя: имя проекта, брендинг-токены, схема данных твоей доменной модели.</p>
+            </div>
+          </article>
+          <article class="step">
+            <span class="step-num">04</span>
+            <div>
+              <h3>Фичи через скиллы</h3>
+              <p class="step-body"><code>/feature</code> ведёт каждую фичу по циклу спека → код → тесты → ревью.</p>
+            </div>
+          </article>
+          <article class="step">
+            <span class="step-num">05</span>
+            <div>
+              <h3>Гейты качества</h3>
+              <p class="step-body">Линт, тесты, e2e и сборка одним прогоном — красное видно до мержа.</p>
+            </div>
+          </article>
+          <article class="step">
+            <span class="step-num">06</span>
+            <div>
+              <h3>Production-ready приложение</h3>
+              <p class="step-body">Деплой на Vercel по пошаговому плейбуку. Каждый шаг закоммичен — обрыв сессии ничего не теряет.</p>
+            </div>
+          </article>
+          </div>
+          <div class="artifacts">
+          <aside class="artifact cyan">
+            <h3>Спецификация</h3>
+            <pre>docs/prd.md
+## Problem
+## User
+## Features (3-5, v1 only)
+## Not in v1</pre>
+          </aside>
+          <aside class="artifact dark">
+            <h3>Application Skeleton</h3>
+            <pre>src/
+docs/rules/
+tests/
+CLAUDE.md</pre>
+          </aside>
+          <aside class="artifact green">
+            <h3>Гейты качества</h3>
+            <pre>✓ lint    ✓ secrets
+✓ tests — 306 passed (306)</pre>
+          </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="why">
+      <div class="wrap">
+        <h2>Почему это работает</h2>
+        <div class="why-grid">
+        <article class="why-card">
+          <span class="why-num">01</span>
+          <h3>Инженерные решения принимаются один раз</h3>
+          <p>Не принимай одинаковые решения заново — они уже приняты, проверены и переиспользуются.</p>
+        </article>
+        <article class="why-card">
+          <span class="why-num">02</span>
+          <h3>Сначала спецификация</h3>
+          <p>AI пишет код лучше, когда сначала знает, что строит.</p>
+        </article>
+        <article class="why-card">
+          <span class="why-num">03</span>
+          <h3>AI работает по инженерным правилам</h3>
+          <p>Правила принуждаются автоматически — хуками и гейтами, а не пожеланиями в README.</p>
+        </article>
+        <article class="why-card">
+          <span class="why-num">04</span>
+          <h3>Каждое изменение проходит гейты качества</h3>
+          <p>Качество — обязательная часть процесса, а не последний пункт перед релизом.</p>
+        </article>
+        </div>
+      </div>
+    </section>
+    <section id="box">
+      <div class="wrap">
+        <h2>Что получаешь</h2>
+        <p class="box-intro">Не список обещаний, а набор компонентов в твоём git-репозитории.</p>
+        <div class="skeleton-card">
+          <h3>Application Skeleton</h3>
+          <p class="skeleton-body">Готовая архитектурная основа приложения — Next.js + TypeScript + Postgres. Внутри неё уже живут:</p>
+          <div class="skeleton-list">
+            <span>✓ app/</span>
+            <span>✓ tests/</span>
+            <span>✓ playbooks/</span>
+            <span>✓ hooks/</span>
+            <span>✓ CLAUDE.md</span>
+            <span>✓ docs/rules/</span>
+            <span>✓ quality gates</span>
+            <span>✓ updates</span>
+          </div>
+          <div class="skeleton-divider"></div>
+          <p class="skeleton-outro">Плюс обновления навсегда. Это git-репозиторий, который принадлежит тебе. Не подписка, не сервис, не аренда конструктора.</p>
+        </div>
+        <div class="comp-grid">
+        <article class="comp">
+          <h3>Плейбуки</h3>
+          <p>Пошаговые инженерные сценарии.</p>
+        </article>
+        <article class="comp">
+          <h3>Скиллы</h3>
+          <p>Команды, которые выполняют работу за тебя.</p>
+        </article>
+        <article class="comp">
+          <h3>Инженерные правила</h3>
+          <p>Правила, которым следует AI.</p>
+        </article>
+        <article class="comp">
+          <h3>Гейты качества</h3>
+          <p>Автоматическая проверка каждого изменения.</p>
+        </article>
+        <article class="comp">
+          <h3>Документация</h3>
+          <p>Контекст, который не теряется между сессиями.</p>
+        </article>
+        </div>
+        <div class="ideas">
+          <div>
+            <h3>Идей больше, чем выходных?</h3>
+            <p>Один кит — сколько угодно проектов: SaaS, лендинги, пет-проекты. Каждый запуск — час с агентом, а не неделя настройки.</p>
+          </div>
+          <a class="micro-cta" href="#inside">Посмотреть, что внутри →</a>
+        </div>
+      </div>
+    </section>
+    <section id="inside">
+      <div class="wrap">
+        <h2>Inside Gridfin</h2>
+        <p class="inside-intro">Что ты буквально покупаешь: репозиторий, правила, спеки, тесты и workflow.</p>
+        <div class="inside-grid">
+          <div class="repo-window">
+            <div class="term-bar">
+              <span class="term-dot" style="background:#FF5F57"></span>
+              <span class="term-dot" style="background:#FEBC2E"></span>
+              <span class="term-dot" style="background:#28C840"></span>
+              <span class="term-title">gridfin/</span>
+            </div>
+            <pre class="repo-body"><span class="root">gridfin/</span>
+  <span class="hl">src/</span>
+  <span>docs/</span>
+    <span>rules/</span>
+    <span class="hl">playbooks/</span>
+    <span>templates/</span>
+  <span class="hl">tests/</span>
+  <span>modules/</span>
+  <span>scripts/</span>
+  <span>.claude/skills/</span>
+  <span class="hl">CLAUDE.md</span>
+  <span>lefthook.yml</span></pre>
+          </div>
+          <div class="annotations">
+          <div class="annotation">
+            <code>src/</code>
+            <p>Здесь появляется твой продукт.</p>
+          </div>
+          <div class="annotation">
+            <code>docs/playbooks/</code>
+            <p>Готовые инженерные процессы.</p>
+          </div>
+          <div class="annotation">
+            <code>CLAUDE.md</code>
+            <p>Правила, которым следует агент.</p>
+          </div>
+          <div class="annotation">
+            <code>tests/</code>
+            <p>Проверяют каждое изменение.</p>
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="trust">
+      <div class="wrap">
+        <span class="kicker">Твоё — значит твоё</span>
+        <h2>Коробка остаётся с тобой — что бы ни случилось</h2>
+        <div class="trust-grid">
+          <div class="trust-cards">
+          <article class="trust-card">
+            <h3>Репозиторий принадлежит тебе</h3>
+            <p>Это не SaaS: код, правила и процесс остаются с тобой и работают, даже если Gridfin как продукт исчезнет.</p>
+          </article>
+          <article class="trust-card">
+            <h3>Обновления — навсегда</h3>
+            <p>Шаблон версионируется; команда <code>/update</code> подтягивает новые релизы в твой проект, не затирая твой код.</p>
+          </article>
+          <article class="trust-card">
+            <h3>Gridfin честно говорит, чего не умеет</h3>
+            <p>Идею не по профилю агент отклонит на первом шаге, а не после недели работы. Никаких обещаний «подходит для всего».</p>
+          </article>
+          </div>
+          <div class="trust-photo">
+            <img src="https://ludvik4.ru/gridfin/assets/trust-box.jpg" alt="" loading="lazy" width="1300" height="1210">
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="ticker2">
+      <div class="wrap"><span>Твой репозиторий</span><span aria-hidden="true">·</span><span>Твои данные</span><span aria-hidden="true">·</span><span>Твои обновления</span><span aria-hidden="true">·</span><span>Без подписки</span></div>
+    </section>
+    <section id="cred">
+      <div class="wrap">
+        <p class="line1">Gridfin создаётся тем же процессом, который поставляется внутри продукта.</p>
+        <p class="line2">Этот лендинг тоже собран с Gridfin.</p>
+      </div>
+    </section>
+    <section id="fit">
+      <div class="wrap">
+        <div class="fit-grid">
+          <div class="fit-card violet">
+            <h2>Лучше всего подходит, если…</h2>
+            <ul>
+            <li>У тебя есть идея и Claude Code, но нет full-stack опыта — и ты хочешь запустить свой проект за выходные, а не после недели настройки.</li>
+            <li>Ты соло-разработчик, QA, DevOps или дизайнер — и считаешь, что спеки и тесты — не бюрократия, а скорость на дистанции.</li>
+            <li>Тебе нужен собственный настоящий репозиторий, а не no-code платформа.</li>
+            </ul>
+          </div>
+          <div class="fit-card cyan">
+            <h2>Возможно, сейчас лучше выбрать другое решение, если…</h2>
+            <ul>
+            <li>Ты ни разу не открывал терминал — сегодня тебе больше подойдут Lovable или Bolt.</li>
+            <li>Ты ждёшь готовый дашборд с 50 фичами «под кастомизацию» — Gridfin это процесс, а не демо продукта.</li>
+            <li>Тебе нужен другой стек — Gridfin намеренно не конструктор.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="price-faq">
+      <div class="wrap">
+        <div class="price-faq-grid">
+          <div id="pricing" class="price-card">
+            <span class="kicker">Условия раннего доступа</span>
+            <h2>Бета: ты тестируешь — я чиню</h2>
+            <p class="price-body">Прогони <code>/gridfin</code> на реальной идее и расскажи, где споткнулся — коробка твоя навсегда, со всеми будущими обновлениями, бесплатно.</p>
+            <a class="cta" href="mailto:ludvik4good.me@gmail.com?subject=Gridfin%20early%20access">Я в деле — дайте доступ</a>
+            <p class="price-note">После беты — стартовые цены, которые будут только расти: Gridfin Landing — $— · Gridfin App — $—</p>
+          </div>
+          <div id="faq" class="faq-col">
+            <h2>FAQ</h2>
+            <div class="faq-chips"><span>Продукт</span><span>Стек</span><span>Новичкам</span><span>Россия</span><span>Покупка</span></div>
+        <details open>
+          <summary>Почему не просто Claude Code?</summary>
+          <p>Claude Code великолепно пишет код — и ничего не знает о твоём процессе. Без правил каждая сессия заново решает, как строить проект, и решает по-разному. Gridfin даёт агенту процесс: спеки до кода, тесты как обязательный шаг, хуки и гейты, которые нельзя тихо обойти.</p>
+        </details>
+        <details>
+          <summary>Чем это отличается от boilerplate — ShipFast и других?</summary>
+          <p>Бойлерплейты продают предсобранный код, который ты кастомизируешь. Gridfin — агентный стартер (agent-native starter kit): тонкий скелет плюс процесс, который спекует, строит и тестирует именно твой продукт. Ты не выпиливаешь чужой дашборд — ты выращиваешь свой.</p>
+        </details>
+        <details>
+          <summary>Что такое Application Skeleton?</summary>
+          <p>Это не просто шаблон проекта. Это заранее собранная архитектурная основа приложения с уже принятыми инженерными решениями — стек, структура, тесты, CI, — вокруг которой строится вся дальнейшая разработка.</p>
+        </details>
+        <details>
+          <summary>Чем это отличается от MakerKit и Supastarter?</summary>
+          <p>Они добавили к boilerplate rules-файлы для AI-агентов — но следовать им агент не обязан. В Gridfin правила принуждаются: хук останавливает нарушение до записи кода, гейты не пропускают красное. Правила с зубами, а не пожелания.</p>
+        </details>
+        <details>
+          <summary>Почему стек фиксированный?</summary>
+          <p>Потому что весь процесс — правила, хуки, тесты, гейты, плейбуки — проверен именно на этом стеке: Next.js + TypeScript, Tailwind + shadcn/ui, Postgres. Свобода выбора стека — это ещё сорок решений, которые придётся принимать без опыта.</p>
+        </details>
+        <details>
+          <summary>Можно ли использовать свой стек?</summary>
+          <p>Нет — и это осознанно. Gridfin не конструктор: убери фиксированный стек, и исчезнет всё, за что он отвечает — проверенные правила, тесты и гейты. Если тебе нужен другой стек, честный ответ: Gridfin не твой инструмент.</p>
+        </details>
+        <details>
+          <summary>Я в России — у меня заработает?</summary>
+          <p>Gridfin — обычный git-репозиторий, он работает где угодно. Единственное условие — рабочий Claude Code: если клод код у тебя уже запускается и оплачен, Gridfin ничего дополнительно не требует.</p>
+        </details>
+        <details>
+          <summary>Что будет, если проект перестанет развиваться?</summary>
+          <p>Ничего страшного: репозиторий твой, код и процесс работают локально и не зависят от существования Gridfin как продукта. Обновления перестанут приходить — всё остальное останется.</p>
+        </details>
+        <details>
+          <summary>Подходит ли новичку?</summary>
+          <p>Если ты готов работать с терминалом, git и Claude Code по пошаговым инструкциям — да: архитектуру, тестовую стратегию и контроль качества коробка несёт за тебя. Если терминал видишь впервые — начни с Lovable или Bolt.</p>
+        </details>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="final">
+      <div class="wrap">
+        <h2>Есть идея? Построй следующий проект с Gridfin.</h2>
+        <p class="sub">Получи ранний доступ и начни с готового Application Skeleton, а не с пустого репозитория.</p>
+        <a class="cta" href="mailto:ludvik4good.me@gmail.com?subject=Gridfin%20early%20access">Получить ранний доступ</a>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap">
+      <span>Вопросы → <a href="mailto:ludvik4good.me@gmail.com">ludvik4good.me@gmail.com</a></span>
+      <span>Автор продукта — <a href="https://ludvik4.ru">ludvik4.ru</a></span>
+    </div>
+  </footer>
+</body>
+</html>

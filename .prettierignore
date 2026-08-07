@@ -17,3 +17,4 @@ output/
 # planted defect. A reflow here would silently invalidate the ground truth of the
 # review skill's detection eval, and nothing would go red.
 tests/fixtures/planted-defects/
+public/gridfin/
