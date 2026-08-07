@@ -61,21 +61,27 @@ nav.lang a{font-family:var(--font-caption);font-size:13px;text-decoration:none;c
 nav.lang a[aria-current="true"]{color:var(--fg);background:var(--surface-cyan)}
 
 /* ---- hero ---- */
-#hero{padding:0}
-.hero-panel{position:relative;background:var(--term-bg) center/cover no-repeat;border-radius:10px;overflow:hidden;margin:8px 0 0}
-.hero-panel::before{content:"";position:absolute;inset:0;background:var(--overlay)}
-.hero-inner{position:relative;display:grid;gap:48px;padding:48px 24px}
-@media(min-width:960px){.hero-inner{grid-template-columns:1.1fr .9fr;align-items:center;padding:84px 84px}}
-.hero-copy{color:var(--fg-inverse);display:flex;flex-direction:column;gap:24px;align-items:flex-start}
+/* Mockup YKUmX: white section, dark text column left, photo card 604x633
+   right with the terminal overlaid (22px sides, 100px top). */
+#hero{padding:24px 0 48px}
+@media(min-width:768px){#hero{padding:24px 0 72px}}
+.hero-grid{display:grid;gap:48px}
+@media(min-width:960px){.hero-grid{grid-template-columns:620fr 604fr;gap:48px;align-items:start}}
+.hero-copy{display:flex;flex-direction:column;gap:24px;align-items:flex-start}
 .badge{font-family:var(--font-caption);font-size:13px;letter-spacing:.06em;text-transform:uppercase;background:var(--accent);color:var(--fg-inverse);padding:8px 12px;border-radius:4px}
-.hero-copy h1{font-size:34px}
+.hero-copy h1{font-size:34px;color:var(--fg)}
 @media(min-width:768px){.hero-copy h1{font-size:56px}}
-.hero-sub{font-size:18px;line-height:1.4}
-@media(min-width:768px){.hero-sub{font-size:22px}}
-.hero-audience{font-size:16px;color:var(--term-muted);line-height:1.4}
+.hero-sub{font-size:18px;line-height:1.4;color:var(--fg-secondary)}
+@media(min-width:768px){.hero-sub{font-size:20px}}
+.hero-audience{font-size:16px;color:var(--fg-secondary);line-height:1.4}
+.cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .cta{display:inline-block;font-family:var(--font-caption);font-size:16px;font-weight:600;background:var(--accent);color:var(--fg-inverse);text-decoration:none;padding:16px 24px;border-radius:4px}
 .cta:hover{filter:brightness(1.08)}
-.cta-note{font-family:var(--font-caption);font-size:13px;color:var(--term-muted)}
+.cta-note{font-family:var(--font-caption);font-size:13px;color:var(--fg-secondary)}
+.cta-row .cta-note{max-width:16rem}
+.hero-photo{position:relative;border-radius:10px;overflow:hidden;background:#04100A center/cover no-repeat;aspect-ratio:604/633;padding:100px 22px 22px}
+.hero-photo::before{content:"";position:absolute;inset:0;background:var(--overlay)}
+.hero-photo .terminal{position:relative}
 .terminal{background:var(--term-bg);border-radius:10px;box-shadow:0 24px 48px #00000059;overflow:hidden;font-family:var(--font-mono);font-size:15px}
 @media(min-width:768px){.terminal{font-size:16px}}
 .term-bar{display:flex;align-items:center;gap:8px;background:var(--term-bar);padding:12px 16px}
@@ -88,7 +94,7 @@ nav.lang a[aria-current="true"]{color:var(--fg);background:var(--surface-cyan)}
 
 /* ---- bridge ---- */
 #bridge{background:var(--green);padding:48px 0}
-#bridge p{color:var(--fg-inverse);font-size:18px;line-height:1.4;max-width:56rem}
+#bridge p{color:var(--fg-inverse);font-size:18px;line-height:1.4;max-width:56rem;margin:0 auto;text-align:center}
 @media(min-width:768px){#bridge p{font-size:22px}}
 
 /* ---- problem ---- */
@@ -282,16 +288,18 @@ footer a{color:var(--term-ok)}</style>
   <main>
     <section id="hero">
       <div class="wrap">
-        <div class="hero-panel" style="background-image:url('https://ludvik4.ru/gridfin/assets/hero-terminal.png')">
-          <div class="hero-inner">
-            <div class="hero-copy">
-              <span class="badge">Ранний доступ — бесплатно для бета-тестеров</span>
-              <h1>Запускайте качественные сайты и приложения с Claude Code.</h1>
-              <p class="hero-sub">Gridfin превращает пустой репозиторий в Application Skeleton — готовую архитектурную основу приложения для разработки с Claude Code. Внутри уже есть спецификации, инженерные правила, тесты и гейты качества — вместо хаотичного вайб-кодинга.</p>
-              <p class="hero-audience">Если у тебя есть идея и Claude Code, но нет многолетнего инженерного опыта — Gridfin проведёт тебя по процессу, который инженерные команды обычно собирают годами.</p>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <span class="badge">Ранний доступ — бесплатно для бета-тестеров</span>
+            <h1>Запускайте качественные сайты и приложения с Claude Code.</h1>
+            <p class="hero-sub">Gridfin превращает пустой репозиторий в Application Skeleton — готовую архитектурную основу приложения для разработки с Claude Code. Внутри уже есть спецификации, инженерные правила, тесты и гейты качества — вместо хаотичного вайб-кодинга.</p>
+            <p class="hero-audience">Если у тебя есть идея и Claude Code, но нет многолетнего инженерного опыта — Gridfin проведёт тебя по процессу, который инженерные команды обычно собирают годами.</p>
+            <div class="cta-row">
               <a class="cta" href="mailto:ludvik4good.me@gmail.com?subject=Gridfin%20early%20access">Получить ранний доступ</a>
               <p class="cta-note">Бесплатно на время беты · после беты — стартовые цены</p>
             </div>
+          </div>
+          <div class="hero-photo" style="background-image:url('https://ludvik4.ru/gridfin/assets/hero-terminal.png')">
             <div class="terminal" role="img" aria-label="Terminal: /gridfin run">
               <div class="term-bar">
                 <span class="term-dot" style="background:#FF5F57"></span>
