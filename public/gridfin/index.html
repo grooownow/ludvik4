@@ -18,6 +18,14 @@
   <meta property="og:description" content="Gridfin встраивает инженерный опыт в разработку с Claude Code: скелет приложения, спеки, тесты, гейты качества. Запусти качественный SaaS или пет-проект, не техдолг.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ludvik4.ru/gridfin/">
+  <meta property="og:image" content="https://ludvik4.ru/gridfin/assets/og-ru.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Gridfin">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Gridfin — стартер для Claude Code с тестами">
+  <meta name="twitter:description" content="Gridfin встраивает инженерный опыт в разработку с Claude Code: скелет приложения, спеки, тесты, гейты качества. Запусти качественный SaaS или пет-проект, не техдолг.">
+  <meta name="twitter:image" content="https://ludvik4.ru/gridfin/assets/og-ru.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@400;500;600&family=Geist:wght@400;500&family=Geist+Mono:wght@400;700&display=swap">
@@ -327,7 +335,7 @@ footer a{color:var(--term-ok)}
             <p class="hero-sub">Gridfin превращает пустой репозиторий в Application Skeleton — готовую архитектурную основу приложения для разработки с Claude Code. Внутри уже есть спецификации, инженерные правила, тесты и гейты качества — вместо хаотичного вайб-кодинга.</p>
             <p class="hero-audience">Если у тебя есть идея и Claude Code, но нет многолетнего инженерного опыта — Gridfin проведёт тебя по процессу, который инженерные команды обычно собирают годами.</p>
             <div class="cta-row">
-              <a class="cta" href="mailto:ludvik4good@gmail.com?subject=Gridfin%20early%20access">Получить ранний доступ</a>
+              <a class="cta" href="https://t.me/ludvik4work">Получить ранний доступ</a>
               <p class="cta-note">Бесплатно на время беты · после беты — стартовые цены</p>
             </div>
           </div>
@@ -457,7 +465,7 @@ CLAUDE.md</pre>
           <aside class="artifact green">
             <h3>Гейты качества</h3>
             <pre>✓ lint    ✓ secrets
-✓ tests — 310 passed (310)</pre>
+✓ tests — 311 passed (311)</pre>
           </aside>
           </div>
         </div>
@@ -650,7 +658,7 @@ CLAUDE.md</pre>
             <span class="kicker">Условия раннего доступа</span>
             <h2>Бета: ты тестируешь — я чиню</h2>
             <p class="price-body">Прогони <code>/gridfin</code> на реальной идее и расскажи, где споткнулся — коробка твоя навсегда, со всеми будущими обновлениями, бесплатно.</p>
-            <a class="cta" href="mailto:ludvik4good@gmail.com?subject=Gridfin%20early%20access">Я в деле — дайте доступ</a>
+            <a class="cta" href="https://t.me/ludvik4work">Я в деле — дайте доступ</a>
             <p class="price-note">После беты — стартовые цены, которые будут только расти: Gridfin Landing — $— · Gridfin App — $—</p>
           </div>
           <div id="faq" class="faq-col">
@@ -700,13 +708,13 @@ CLAUDE.md</pre>
       <div class="wrap">
         <h2>Есть идея? Построй следующий проект с Gridfin.</h2>
         <p class="sub">Получи ранний доступ и начни с готового Application Skeleton, а не с пустого репозитория.</p>
-        <a class="cta" href="mailto:ludvik4good@gmail.com?subject=Gridfin%20early%20access">Получить ранний доступ</a>
+        <a class="cta" href="https://t.me/ludvik4work">Получить ранний доступ</a>
       </div>
     </section>
   </main>
   <footer>
     <div class="wrap">
-      <span>Вопросы → <a href="mailto:ludvik4good@gmail.com">ludvik4good@gmail.com</a> · <a href="https://t.me/ludvik4work" target="_blank" rel="noopener">Telegram</a></span>
+      <span>Вопросы → <a href="https://t.me/ludvik4work" target="_blank" rel="noopener">Telegram</a></span>
       <span>Автор продукта — <a href="https://ludvik4.ru">ludvik4.ru</a></span>
     </div>
   </footer>
@@ -830,19 +838,11 @@ CLAUDE.md</pre>
         page: location.href,
       };
       var endpoint = "https://api.web3forms.com/submit";
-      function mailtoFallback() {
-        var body =
-          "GitHub: " + payload.github +
-          "\nEmail: " + payload.email +
-          "\nRole: " + payload.role +
-          "\nUsage: " + payload.usage;
-        location.href =
-          "mailto:ludvik4good@gmail.com?subject=" +
-          encodeURIComponent(payload.subject) +
-          "&body=" + encodeURIComponent(body);
+      function telegramFallback() {
+        location.href = "https://t.me/ludvik4work";
         dlg.close();
       }
-      if (!endpoint) return mailtoFallback();
+      if (!endpoint) return telegramFallback();
       fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -855,7 +855,7 @@ CLAUDE.md</pre>
           });
           form.querySelector(".form-success").hidden = false;
         })
-        .catch(mailtoFallback);
+        .catch(telegramFallback);
     });
   })();
   </script>

@@ -39,7 +39,9 @@ export function Section({
 
 export function SiteHeader({
   content,
-  contactHref = "#contact",
+  // Root-relative: a bare "#contact" silently does nothing on subpages
+  // (blog, privacy) where the anchor does not exist.
+  contactHref = "/#contact",
 }: {
   content: MarketContent;
   contactHref?: string;

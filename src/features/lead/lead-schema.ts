@@ -23,20 +23,23 @@ export function isValidContact(value: string): boolean {
 }
 
 export const leadSchema = z.object({
-  name: z.string().trim().max(NAME_MAX, "Слишком длинное имя.").default(""),
+  name: z.string().trim().max(NAME_MAX, "Name is too long.").default(""),
   message: z
     .string()
     .trim()
-    .min(MESSAGE_MIN, "Опишите задачу подробнее — хотя бы пару предложений.")
-    .max(MESSAGE_MAX, "Слишком длинно — сократите, пожалуйста."),
+    .min(
+      MESSAGE_MIN,
+      "Tell me a bit more about the task — at least a couple of sentences.",
+    )
+    .max(MESSAGE_MAX, "Too long — please shorten it a bit."),
   contact: z
     .string()
     .trim()
-    .min(1, "Оставьте контакт для ответа.")
-    .max(CONTACT_MAX, "Слишком длинный контакт.")
+    .min(1, "Leave a contact so I can reply.")
+    .max(CONTACT_MAX, "Contact is too long.")
     .refine(
       isValidContact,
-      "Укажите email или ссылку на мессенджер / телефон.",
+      "Enter an email, a messenger link, or a phone number.",
     ),
 });
 

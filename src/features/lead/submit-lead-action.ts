@@ -46,8 +46,7 @@ export async function submitLeadAction(
   const limit = rateLimit(`lead:${ip}`, { limit: 5, windowMs: 60_000 });
   if (!limit.allowed) {
     return {
-      error:
-        "Слишком много заявок подряд — подождите минуту и попробуйте снова.",
+      error: "Too many requests in a row — wait a minute and try again.",
       values,
     };
   }
@@ -72,7 +71,7 @@ export async function submitLeadAction(
   if (!(await deliverLead(parsed.data))) {
     return {
       error:
-        "Не получилось отправить заявку. Напишите напрямую в Telegram: t.me/ludvik4work",
+        "Could not send the request. Message me directly on Telegram: t.me/ludvik4work",
       values,
     };
   }
