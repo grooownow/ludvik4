@@ -821,6 +821,7 @@ CLAUDE.md</pre>
       var f = new FormData(form);
       var usage = f.get("usage") === "custom" ? f.get("custom") : f.get("usage");
       var payload = {
+        access_key: "fd9e106d-728a-4f1b-a73e-86267e9032b1",
         subject: "Gridfin early access request",
         github: f.get("github"),
         email: f.get("email"),
@@ -828,7 +829,7 @@ CLAUDE.md</pre>
         usage: usage,
         page: location.href,
       };
-      var endpoint = "";
+      var endpoint = "https://api.web3forms.com/submit";
       function mailtoFallback() {
         var body =
           "GitHub: " + payload.github +
