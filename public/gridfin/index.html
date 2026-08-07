@@ -291,6 +291,9 @@ footer a{color:var(--term-ok)}
 .form-head h3{font-size:24px}
 .form-close{border:0;background:none;font-size:28px;cursor:pointer;color:var(--fg-secondary);line-height:1;padding:0}
 #request-form label{display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:600;color:var(--fg)}
+/* display:flex above would defeat the hidden attribute — the conditional
+   «свой вариант» field must actually disappear. */
+#request-form [hidden]{display:none!important}
 #request-form input:not([type="checkbox"]){font-family:var(--font-body);font-size:15px;font-weight:400;color:var(--fg);padding:0 16px;border:1px solid var(--fg-secondary);border-radius:4px;background:var(--surface);height:48px;width:100%}
 #request-form .cta{width:100%;text-align:center;font-size:16px}
 .field{display:flex;flex-direction:column;gap:8px}
