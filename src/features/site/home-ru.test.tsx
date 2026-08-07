@@ -40,6 +40,22 @@ describe("HomeRu", () => {
     );
   });
 
+  it("previews exactly two cases — FortNoise and Gridfin — with the all-cases link", () => {
+    render(<HomeRu content={content} baseUrl="https://ludvik4.ru" />);
+
+    expect(screen.getByRole("link", { name: /Gridfin/ })).toHaveAttribute(
+      "href",
+      "/cases/gridfin",
+    );
+    expect(
+      screen.queryByRole("link", { name: /qa-pilot/ }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Все кейсы/ })).toHaveAttribute(
+      "href",
+      "/cases",
+    );
+  });
+
   it("does NOT render a lead form — Telegram is the only contact action", () => {
     render(<HomeRu content={content} baseUrl="https://ludvik4.ru" />);
 

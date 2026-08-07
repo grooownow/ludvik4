@@ -23,6 +23,7 @@ describe("buildSitemap", () => {
     expect(urls).toContain(`${baseURL}/uslugi/razrabotka-mvp/`);
     expect(urls).toContain(`${baseURL}/cases/`);
     expect(urls).toContain(`${baseURL}/cases/fortnoise/`);
+    expect(urls).toContain(`${baseURL}/cases/gridfin/`);
     expect(urls).toContain(`${baseURL}/cases/qa-pilot/`);
     // No hreflang / cross-market URL — the EN storefront lives on its own domain.
     expect(urls).not.toContain(`${baseURL}/en`);
@@ -32,7 +33,7 @@ describe("buildSitemap", () => {
     for (const d of getAllArticles().filter((a) => a.draft)) {
       expect(urls).not.toContain(`${baseURL}/blog/${d.slug}/`);
     }
-    expect(urls).toHaveLength(8 + getPublishedArticles().length);
+    expect(urls).toHaveLength(9 + getPublishedArticles().length);
   });
 
   it("EN: landing + privacy notice — no blog or articles", () => {

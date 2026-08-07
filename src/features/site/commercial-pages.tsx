@@ -191,7 +191,44 @@ export function ServicePageView({
   );
 }
 
+/** The two-per-row card grid shared by the homepage preview and /cases. */
+function CaseGrid({ items }: { items: CaseStudy[] }) {
+  return (
+    <div className="mt-8 grid gap-5 sm:grid-cols-2">
+      {items.map((item) => (
+        <Link
+          key={item.slug}
+          href={`/cases/${item.slug}` as Route}
+          className="border-border bg-card hover:border-primary/40 overflow-hidden rounded-2xl border transition-colors"
+        >
+          <Image
+            src={item.image}
+            alt={item.imageAlt}
+            width={1200}
+            height={675}
+            sizes="(min-width: 640px) 480px, 100vw"
+            className="aspect-video w-full object-cover object-top"
+          />
+          <div className="p-6">
+            <p className="text-primary font-mono text-xs">{item.kind}</p>
+            <h3 className="mt-2 text-xl font-bold">{item.title}</h3>
+            <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+              {item.description}
+            </p>
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+/** Homepage cases slot: FortNoise + Gridfin only, with the link to /cases. */
+export const HOME_CASE_SLUGS = ["fortnoise", "gridfin"] as const;
+
 export function CasesPreview() {
+  const featured = HOME_CASE_SLUGS.map((slug) =>
+    caseStudies.find((item) => item.slug === slug)!,
+  );
   return (
     <Section id="cases">
       <Eyebrow>Работы</Eyebrow>
@@ -200,33 +237,9 @@ export function CasesPreview() {
       </h2>
       <p className="text-muted-foreground mt-4 max-w-2xl">
         Реальные продукты с публичным результатом: клиентский сервис и
-        собственный open-source инструмент.
+        собственный продукт для Claude Code.
       </p>
-      <div className="mt-8 grid gap-5 sm:grid-cols-2">
-        {caseStudies.map((item) => (
-          <Link
-            key={item.slug}
-            href={`/cases/${item.slug}` as Route}
-            className="border-border bg-card hover:border-primary/40 overflow-hidden rounded-2xl border transition-colors"
-          >
-            <Image
-              src={item.image}
-              alt={item.imageAlt}
-              width={1200}
-              height={675}
-              sizes="(min-width: 640px) 480px, 100vw"
-              className="aspect-video w-full object-cover object-top"
-            />
-            <div className="p-6">
-              <p className="text-primary font-mono text-xs">{item.kind}</p>
-              <h3 className="mt-2 text-xl font-bold">{item.title}</h3>
-              <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
-                {item.description}
-              </p>
-            </div>
-          </Link>
-        ))}
-      </div>
+      <CaseGrid items={featured} />
       <Link
         href={"/cases" as Route}
         className="text-primary mt-6 inline-block font-mono text-sm font-semibold"
@@ -250,9 +263,9 @@ export function CasesIndexView() {
           <p className="text-muted-foreground mt-4 max-w-2xl text-lg">
             Продукты, которые можно открыть, проверить и изучить подробнее.
           </p>
+          <CaseGrid items={caseStudies} />
         </div>
       </div>
-      <CasesPreview />
     </PageShell>
   );
 }

@@ -19,7 +19,7 @@ export type ServicePage = {
 };
 
 export type CaseStudy = {
-  slug: "fortnoise" | "qa-pilot";
+  slug: "fortnoise" | "gridfin" | "qa-pilot";
   title: string;
   kind: "Клиентский проект" | "Собственный продукт";
   description: string;
@@ -180,6 +180,27 @@ export const caseStudies: CaseStudy[] = [
     result:
       "Сервис опубликован на собственном домене и используется как единая точка для афиши и пользовательских событий.",
     stack: ["Next.js", "PostgreSQL", "Auth.js", "Telegram", "Timeweb"],
+  },
+  {
+    slug: "gridfin",
+    title: "Gridfin",
+    kind: "Собственный продукт",
+    description:
+      "Стартер для Claude Code: превращает пустой репозиторий в Application Skeleton — готовую основу приложения со спецификациями, тестами, хуками и гейтами качества.",
+    lead: "Коробка встраивает инженерный процесс в разработку с Claude Code: решения приняты заранее, правила принуждаются автоматически — от идеи до production-ready приложения.",
+    image: "/cases/gridfin.webp",
+    imageAlt: "Лендинг продукта Gridfin с терминалом команды /gridfin",
+    website: "https://ludvik4.ru/gridfin/",
+    task: "Дать разработчикам без многолетнего инженерного опыта процесс, в котором Claude Code строит качественные приложения, а не прототипы-однодневки.",
+    solution: [
+      "Application Skeleton: архитектура, тесты и CI собраны заранее",
+      "Скиллы ведут каждую фичу по циклу спека → код → тесты → ревью",
+      "Хуки и гейты качества автоматически не пропускают нарушения",
+      "Лендинг с формой заявки на бету собран этим же процессом",
+    ],
+    result:
+      "Продукт в закрытой бете: лендинг опубликован, заявки на ранний доступ принимаются, коробка используется в реальных проектах — включая этот сайт.",
+    stack: ["Claude Code", "Next.js", "TypeScript", "Postgres", "Playwright"],
   },
   {
     slug: "qa-pilot",

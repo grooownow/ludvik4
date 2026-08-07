@@ -20,9 +20,18 @@ describe("commercial content", () => {
   it("keeps client work and own products clearly labelled", () => {
     expect(caseStudies.map((item) => item.slug)).toEqual([
       "fortnoise",
+      "gridfin",
       "qa-pilot",
     ]);
     expect(getCaseStudy("fortnoise")?.kind).toBe("Клиентский проект");
+    expect(getCaseStudy("gridfin")?.kind).toBe("Собственный продукт");
     expect(getCaseStudy("qa-pilot")?.kind).toBe("Собственный продукт");
+  });
+
+  it("links the gridfin case to the live landing", () => {
+    expect(getCaseStudy("gridfin")?.website).toBe(
+      "https://ludvik4.ru/gridfin/",
+    );
+    expect(getCaseStudy("gridfin")?.image).toBe("/cases/gridfin.webp");
   });
 });

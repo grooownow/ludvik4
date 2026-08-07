@@ -18,3 +18,4 @@ output/
 # review skill's detection eval, and nothing would go red.
 tests/fixtures/planted-defects/
 public/gridfin/
+public/terms/
