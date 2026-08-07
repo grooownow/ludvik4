@@ -284,7 +284,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px 24px;justify-content:space-bet
 footer a{color:var(--term-ok)}
 
 /* ---- request dialog ---- */
-#request-dialog{border:0;border-radius:10px;padding:0;max-width:520px;width:calc(100% - 48px)}
+#request-dialog{border:0;border-radius:10px;padding:0;max-width:520px;width:calc(100% - 48px);max-height:calc(100dvh - 48px);overflow-y:auto;overscroll-behavior:contain}
 #request-dialog::backdrop{background:#00000066}
 #request-form{display:flex;flex-direction:column;gap:20px;padding:32px;font-family:var(--font-caption)}
 .form-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
@@ -794,6 +794,13 @@ CLAUDE.md</pre>
     btn.addEventListener("click", function () {
       list.hidden = !list.hidden;
       btn.setAttribute("aria-expanded", String(!list.hidden));
+      if (!list.hidden) {
+        // The dropdown may open past the dialog's visible edge — the dialog
+        // scrolls, so bring the whole list into view.
+        requestAnimationFrame(function () {
+          list.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        });
+      }
     });
     document.addEventListener("click", function (e) {
       if (!select.contains(e.target)) closeList();
