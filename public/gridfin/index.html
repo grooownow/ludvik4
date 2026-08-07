@@ -20,7 +20,7 @@
   <meta property="og:url" content="https://ludvik4.ru/gridfin/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Inter:wght@400;500;600&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@400;500;600&family=Geist:wght@400;500&family=Geist+Mono:wght@400;700&display=swap">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Gridfin","alternateName":"Gridfin for Claude Code","applicationCategory":"DeveloperApplication","operatingSystem":"macOS, Linux, Windows","description":"Gridfin встраивает инженерный опыт в разработку с Claude Code: скелет приложения, спеки, тесты, гейты качества. Запусти качественный SaaS или пет-проект, не техдолг.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Почему не просто Claude Code?","acceptedAnswer":{"@type":"Answer","text":"Claude Code великолепно пишет код — и ничего не знает о твоём процессе. Без правил каждая сессия заново решает, как строить проект, и решает по-разному. Gridfin даёт агенту процесс: спеки до кода, тесты как обязательный шаг, хуки и гейты, которые нельзя тихо обойти."}},{"@type":"Question","name":"Чем это отличается от boilerplate — ShipFast и других?","acceptedAnswer":{"@type":"Answer","text":"Бойлерплейты продают предсобранный код, который ты кастомизируешь. Gridfin — агентный стартер (agent-native starter kit): тонкий скелет плюс процесс, который спекует, строит и тестирует именно твой продукт. Ты не выпиливаешь чужой дашборд — ты выращиваешь свой."}},{"@type":"Question","name":"Что такое Application Skeleton?","acceptedAnswer":{"@type":"Answer","text":"Это не просто шаблон проекта. Это заранее собранная архитектурная основа приложения с уже принятыми инженерными решениями — стек, структура, тесты, CI, — вокруг которой строится вся дальнейшая разработка."}},{"@type":"Question","name":"Чем это отличается от MakerKit и Supastarter?","acceptedAnswer":{"@type":"Answer","text":"Они добавили к boilerplate rules-файлы для AI-агентов — но следовать им агент не обязан. В Gridfin правила принуждаются: хук останавливает нарушение до записи кода, гейты не пропускают красное. Правила с зубами, а не пожелания."}},{"@type":"Question","name":"Почему стек фиксированный?","acceptedAnswer":{"@type":"Answer","text":"Потому что весь процесс — правила, хуки, тесты, гейты, плейбуки — проверен именно на этом стеке: Next.js + TypeScript, Tailwind + shadcn/ui, Postgres. Свобода выбора стека — это ещё сорок решений, которые придётся принимать без опыта."}},{"@type":"Question","name":"Можно ли использовать свой стек?","acceptedAnswer":{"@type":"Answer","text":"Нет — и это осознанно. Gridfin не конструктор: убери фиксированный стек, и исчезнет всё, за что он отвечает — проверенные правила, тесты и гейты. Если тебе нужен другой стек, честный ответ: Gridfin не твой инструмент."}},{"@type":"Question","name":"Я в России — у меня заработает?","acceptedAnswer":{"@type":"Answer","text":"Gridfin — обычный git-репозиторий, он работает где угодно. Единственное условие — рабочий Claude Code: если клод код у тебя уже запускается и оплачен, Gridfin ничего дополнительно не требует."}},{"@type":"Question","name":"Что будет, если проект перестанет развиваться?","acceptedAnswer":{"@type":"Answer","text":"Ничего страшного: репозиторий твой, код и процесс работают локально и не зависят от существования Gridfin как продукта. Обновления перестанут приходить — всё остальное останется."}},{"@type":"Question","name":"Подходит ли новичку?","acceptedAnswer":{"@type":"Answer","text":"Если ты готов работать с терминалом, git и Claude Code по пошаговым инструкциям — да: архитектуру, тестовую стратегию и контроль качества коробка несёт за тебя. Если терминал видишь впервые — начни с Lovable или Bolt."}}]}</script>
   <style>:root{
@@ -39,7 +39,9 @@ html{scroll-behavior:smooth}
 body{margin:0;font-family:var(--font-body);color:var(--fg);background:var(--surface);line-height:1.4;font-size:16px}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit}
-h1,h2,h3{font-family:var(--font-heading);text-transform:uppercase;line-height:1.1;margin:0;font-weight:600}
+/* Mockup weights: Oswald has exactly two — 400 (default) and 700 (marked). */
+h1,h2,h3{font-family:var(--font-heading);text-transform:uppercase;line-height:1.1;margin:0;font-weight:400}
+h1,#how h2,#why h2,#inside h2,#trust h2,#final h2{font-weight:700}
 p{margin:0}
 code{font-family:var(--font-mono);font-size:.92em;background:#0000000f;padding:.05em .3em;border-radius:4px}
 .pain code,.pain-solution code,.skeleton-card code,.comp code,.ideas code,.faq-col code,#bridge code,#box code,#cred code,#final code{background:var(--glass-badge)}
@@ -51,14 +53,11 @@ section{padding:48px 0}
 /* ---- nav ---- */
 header.nav{background:var(--surface)}
 header.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:16px;padding-bottom:16px}
-.brand{font-family:var(--font-heading);font-weight:600;font-size:28px;text-transform:uppercase;text-decoration:none;color:var(--fg)}
+.brand{font-family:var(--font-heading);font-weight:400;font-size:28px;text-transform:uppercase;text-decoration:none;color:var(--fg)}
 nav.links{display:none;gap:32px}
 @media(min-width:768px){nav.links{display:flex}}
 nav.links a{font-family:var(--font-caption);font-size:14px;text-decoration:none;color:var(--fg-secondary)}
 nav.links a:hover{color:var(--fg)}
-nav.lang{display:flex;gap:4px;flex-wrap:wrap}
-nav.lang a{font-family:var(--font-caption);font-size:13px;text-decoration:none;color:var(--fg-secondary);padding:4px 8px;border-radius:4px}
-nav.lang a[aria-current="true"]{color:var(--fg);background:var(--surface-cyan)}
 
 /* ---- hero ---- */
 /* Mockup YKUmX: white section, dark text column left, photo card 604x633
@@ -68,27 +67,27 @@ nav.lang a[aria-current="true"]{color:var(--fg);background:var(--surface-cyan)}
 .hero-grid{display:grid;gap:48px}
 @media(min-width:960px){.hero-grid{grid-template-columns:620fr 604fr;gap:48px;align-items:start}}
 .hero-copy{display:flex;flex-direction:column;gap:24px;align-items:flex-start}
-.badge{font-family:var(--font-caption);font-size:13px;letter-spacing:.06em;text-transform:uppercase;background:var(--accent);color:var(--fg-inverse);padding:8px 12px;border-radius:4px}
+.badge{font-family:var(--font-caption);font-size:13px;text-transform:uppercase;background:var(--accent);color:var(--fg-inverse);padding:8px 12px;border-radius:4px}
 .hero-copy h1{font-size:34px;color:var(--fg)}
 @media(min-width:768px){.hero-copy h1{font-size:56px}}
-.hero-sub{font-size:18px;line-height:1.4;color:var(--fg-secondary)}
-@media(min-width:768px){.hero-sub{font-size:20px}}
-.hero-audience{font-size:16px;color:var(--fg-secondary);line-height:1.4}
+.hero-sub{font-size:18px;line-height:1.22;color:var(--fg-secondary)}
+@media(min-width:768px){.hero-sub{font-size:22px}}
+.hero-audience{font-size:16px;color:var(--fg-secondary);line-height:1.35}
 .cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.cta{display:inline-block;font-family:var(--font-caption);font-size:16px;font-weight:600;background:var(--accent);color:var(--fg-inverse);text-decoration:none;padding:16px 24px;border-radius:4px}
+.cta{display:inline-block;font-family:var(--font-caption);font-size:16px;font-weight:400;background:var(--accent);color:var(--fg-inverse);text-decoration:none;padding:16px 24px;border-radius:4px;cursor:pointer;border:0}
 .cta:hover{filter:brightness(1.08)}
 .cta-note{font-family:var(--font-caption);font-size:13px;color:var(--fg-secondary)}
 .cta-row .cta-note{max-width:16rem}
 .hero-photo{position:relative;border-radius:10px;overflow:hidden;background:#04100A center/cover no-repeat;aspect-ratio:604/633;padding:100px 22px 22px}
 .hero-photo::before{content:"";position:absolute;inset:0;background:var(--overlay)}
 .hero-photo .terminal{position:relative}
-.terminal{background:var(--term-bg);border-radius:10px;box-shadow:0 24px 48px #00000059;overflow:hidden;font-family:var(--font-mono);font-size:15px}
+.terminal{background:var(--term-bg);border-radius:10px;box-shadow:0 24px 48px #00000059;overflow:hidden;font-family:var(--font-mono);font-size:15px;line-height:1.2}
 @media(min-width:768px){.terminal{font-size:16px}}
 .term-bar{display:flex;align-items:center;gap:8px;background:var(--term-bar);padding:12px 16px}
 .term-dot{width:12px;height:12px;border-radius:50%}
 .term-title{margin-left:8px;font-size:13px;color:var(--term-muted)}
 .term-body{padding:24px;display:flex;flex-direction:column;gap:12px}
-.term-body .cmd{color:var(--fg-inverse)}
+.term-body .cmd{color:var(--fg-inverse);font-weight:700}
 .term-body .muted{color:var(--term-muted)}
 .term-body .ok{color:var(--term-ok)}
 
@@ -100,39 +99,39 @@ nav.lang a[aria-current="true"]{color:var(--fg);background:var(--surface-cyan)}
 /* ---- problem ---- */
 #problem{background:var(--accent);padding-bottom:0}
 #problem h2{color:var(--fg-inverse);font-size:34px;max-width:64rem}
-@media(min-width:768px){#problem h2{font-size:56px}}
+@media(min-width:768px){#problem h2{font-size:64px}}
 .pain-grid{display:grid;gap:16px;margin-top:48px}
 @media(min-width:768px){.pain-grid{grid-template-columns:1fr 1fr;gap:24px}}
 .pain{background:var(--glass-card);border-radius:6px;padding:24px;color:var(--fg-inverse);display:flex;flex-direction:column;gap:12px}
 .pain-num{font-family:var(--font-caption);font-size:13px;background:var(--glass-badge);border-radius:18px;padding:4px 12px;align-self:flex-start}
 .pain h3{font-size:24px}
-.pain-body{font-size:15px;color:var(--on-violet);line-height:1.4}
-.pain-solution{background:var(--pill-dark);border-radius:6px;padding:12px 16px;font-size:14px;line-height:1.4;margin-top:auto}
+.pain-body{font-size:15px;color:var(--on-violet);line-height:1.25}
+.pain-solution{background:var(--pill-dark);border-radius:6px;padding:12px 16px;font-size:14px;line-height:1.3;margin-top:auto}
 .ticker{background:var(--green);margin-top:48px}
 .ticker .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;padding-top:20px;padding-bottom:20px}
-.ticker span{font-family:var(--font-heading);font-weight:600;text-transform:uppercase;font-size:18px;color:var(--fg-inverse);white-space:nowrap}
-@media(min-width:768px){.ticker span{font-size:22px}}
+.ticker span{font-family:var(--font-heading);font-weight:400;text-transform:uppercase;font-size:18px;color:var(--fg-inverse);white-space:nowrap}
+@media(min-width:768px){.ticker span{font-size:20px}}
 .ticker .dot{color:var(--on-green)}
 
 /* ---- how ---- */
-.kicker{font-family:var(--font-caption);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.kicker{font-family:var(--font-caption);font-size:13px;text-transform:uppercase;color:var(--accent);font-weight:400}
 #how h2{font-size:34px;margin-top:16px;max-width:64rem}
 @media(min-width:768px){#how h2{font-size:64px}}
-.how-intro{font-size:18px;color:var(--fg-secondary);margin-top:16px;max-width:44rem}
+.how-intro{font-size:18px;line-height:1.28;color:var(--fg-secondary);margin-top:16px;max-width:44rem}
 .how-grid{display:grid;gap:24px;margin-top:48px}
 @media(min-width:960px){.how-grid{grid-template-columns:1.2fr .8fr;align-items:start}}
 .steps{display:flex;flex-direction:column;gap:16px}
 .step{background:var(--surface-peach);border-radius:6px;padding:24px;display:flex;gap:24px;align-items:flex-start}
 .step.accent{background:var(--accent);color:var(--fg-inverse)}
 .step.accent .step-body{color:var(--on-violet)}
-.step-num{font-family:var(--font-heading);font-weight:600;font-size:34px;line-height:1.1;opacity:.55;min-width:56px}
-.step h3{font-size:24px}
-.step.accent h3{font-size:28px}
-.step-body{font-size:15px;color:var(--fg-secondary);margin-top:8px;line-height:1.4}
+.step-num{font-family:var(--font-heading);font-weight:400;font-size:34px;line-height:1.1;opacity:.55;min-width:56px}
+.step h3{font-size:28px}
+.step.accent h3{font-size:34px}
+.step-body{font-size:15px;color:var(--fg-secondary);margin-top:8px;line-height:1.3}
 .artifacts{display:flex;flex-direction:column;gap:16px;position:sticky;top:24px}
 .artifact{border-radius:6px;padding:24px}
 .artifact h3{font-size:24px;margin-bottom:16px}
-.artifact pre{margin:0;font-family:var(--font-mono);font-size:15px;line-height:1.6;white-space:pre-wrap}
+.artifact pre{margin:0;font-family:var(--font-mono);font-size:15px;line-height:1.4;white-space:pre-wrap}
 .artifact.cyan{background:var(--surface-cyan)}
 .artifact.dark{background:var(--term-bg);color:var(--fg-inverse)}
 .artifact.dark pre{color:var(--term-muted)}
@@ -147,69 +146,69 @@ nav.lang a[aria-current="true"]{color:var(--fg);background:var(--surface-cyan)}
 @media(min-width:768px){.why-grid{grid-template-columns:repeat(2,1fr);gap:24px}}
 @media(min-width:1100px){.why-grid{grid-template-columns:repeat(4,1fr)}}
 .why-card{background:var(--surface);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:12px}
-.why-num{font-family:var(--font-caption);font-size:13px;color:var(--accent);font-weight:600}
+.why-num{font-family:var(--font-caption);font-size:13px;color:var(--accent)}
 .why-card h3{font-size:24px}
-.why-card p{font-size:15px;color:var(--fg-secondary);line-height:1.4}
+.why-card p{font-size:15px;color:var(--fg-secondary);line-height:1.3}
 
 /* ---- box (what you get) ---- */
 #box{background:var(--green);color:var(--fg-inverse)}
 #box h2{font-size:34px}
 @media(min-width:768px){#box h2{font-size:64px}}
-.box-intro{font-size:18px;color:var(--on-green);margin-top:16px}
+.box-intro{font-size:18px;line-height:1.3;color:var(--on-green);margin-top:16px}
 .skeleton-card{background:var(--term-bg);border-radius:10px;padding:24px;margin-top:48px}
 @media(min-width:768px){.skeleton-card{padding:40px}}
 .skeleton-card h3{font-size:28px}
 @media(min-width:768px){.skeleton-card h3{font-size:44px}}
-.skeleton-body{font-size:16px;color:var(--on-green);margin-top:12px;line-height:1.4}
+.skeleton-body{font-size:16px;color:var(--on-green);margin-top:12px;line-height:1.3}
 .skeleton-list{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
 .skeleton-list span{font-family:var(--font-mono);font-size:16px;color:var(--term-ok);background:var(--glass-card);border-radius:4px;padding:8px 12px;white-space:nowrap}
 .skeleton-divider{height:1px;background:var(--glass-badge);margin:24px 0}
-.skeleton-outro{font-size:16px;color:var(--on-green);line-height:1.4}
+.skeleton-outro{font-size:16px;color:var(--on-green);line-height:1.3}
 .comp-grid{display:grid;gap:16px;margin-top:24px}
 @media(min-width:768px){.comp-grid{grid-template-columns:repeat(3,1fr)}}
 @media(min-width:1100px){.comp-grid{grid-template-columns:repeat(5,1fr)}}
 .comp{background:var(--glass-card);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:8px}
 .comp h3{font-size:20px}
-.comp p{font-family:var(--font-body);font-size:14px;color:var(--on-green);line-height:1.4}
+.comp p{font-family:var(--font-body);font-size:14px;color:var(--on-green);line-height:1.3}
 .ideas{background:var(--glass-card);border-radius:6px;padding:24px;margin-top:24px;display:flex;flex-direction:column;gap:12px;align-items:flex-start}
 @media(min-width:960px){.ideas{flex-direction:row;align-items:center;justify-content:space-between;gap:24px}}
 .ideas h3{font-size:24px}
-.ideas p{font-size:15px;color:var(--on-green);line-height:1.4;max-width:40rem}
-.micro-cta{display:inline-block;font-family:var(--font-caption);font-size:15px;font-weight:600;background:var(--surface);color:var(--fg);text-decoration:none;padding:12px 20px;border-radius:4px;white-space:nowrap}
+.ideas p{font-size:15px;color:var(--on-green);line-height:1.3;max-width:40rem}
+.micro-cta{display:inline-block;font-family:var(--font-caption);font-size:15px;background:var(--surface);color:var(--fg);text-decoration:none;padding:12px 20px;border-radius:4px;white-space:nowrap}
 
 /* ---- inside ---- */
 #inside{background:var(--surface-peach)}
 #inside h2{font-size:34px}
 @media(min-width:768px){#inside h2{font-size:56px}}
-.inside-intro{font-size:18px;color:var(--fg-secondary);margin-top:16px;max-width:44rem}
+.inside-intro{font-size:18px;line-height:1.3;color:var(--fg-secondary);margin-top:16px;max-width:44rem}
 .inside-grid{display:grid;gap:24px;margin-top:48px}
 @media(min-width:960px){.inside-grid{grid-template-columns:1.1fr .9fr;align-items:start}}
 .repo-window{background:var(--term-bg);border-radius:10px;overflow:hidden}
 .repo-body{padding:24px;font-family:var(--font-mono);font-size:15px;line-height:1.8;color:var(--term-muted)}
-.repo-body .root{color:var(--fg-inverse)}
+.repo-body .root{color:var(--fg-inverse);font-weight:700}
 .repo-body .hl{color:var(--term-ok)}
 .annotations{display:flex;flex-direction:column;gap:16px}
 .annotation{background:var(--surface);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:4px}
-.annotation code{font-family:var(--font-mono);font-size:16px;background:none;padding:0;color:var(--fg)}
-.annotation p{font-size:14px;color:var(--fg-secondary)}
+.annotation code{font-family:var(--font-mono);font-size:16px;font-weight:700;background:none;padding:0;color:var(--fg)}
+.annotation p{font-size:14px;color:var(--fg-secondary);line-height:1.3}
 
 /* ---- trust ---- */
 #trust{background:var(--surface-peach);padding-top:0}
 #trust .kicker{display:block}
-#trust h2{font-size:34px;margin-top:16px}
-@media(min-width:768px){#trust h2{font-size:56px}}
+#trust h2{font-size:28px;margin-top:16px}
+@media(min-width:768px){#trust h2{font-size:44px}}
 .trust-grid{display:grid;gap:24px;margin-top:48px}
 @media(min-width:960px){.trust-grid{grid-template-columns:1fr 1fr;align-items:center}}
 .trust-cards{display:flex;flex-direction:column;gap:16px}
 .trust-card{background:var(--surface);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:8px}
-.trust-card h3{font-size:24px}
-.trust-card p{font-size:15px;color:var(--fg-secondary);line-height:1.4}
+.trust-card h3{font-size:22px}
+.trust-card p{font-size:15px;color:var(--fg-secondary);line-height:1.3}
 .trust-photo{border-radius:10px;overflow:hidden}
 
 /* ---- trust ticker ---- */
 #ticker2{background:var(--surface-peach);padding:0 0 48px}
 #ticker2 .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
-#ticker2 span{font-family:var(--font-heading);font-weight:600;text-transform:uppercase;font-size:18px;color:var(--accent);white-space:nowrap}
+#ticker2 span{font-family:var(--font-heading);font-weight:400;text-transform:uppercase;font-size:18px;color:var(--accent);white-space:nowrap}
 @media(min-width:768px){#ticker2 span{font-size:22px}}
 
 /* ---- credibility ---- */
@@ -227,7 +226,7 @@ nav.lang a[aria-current="true"]{color:var(--fg);background:var(--surface-cyan)}
 .fit-card h2{font-size:28px}
 @media(min-width:768px){.fit-card h2{font-size:44px}}
 .fit-card ul{margin:24px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:16px}
-.fit-card li{font-size:16px;line-height:1.4;padding-left:28px;position:relative}
+.fit-card li{font-size:16px;line-height:1.25;padding-left:28px;position:relative}
 @media(min-width:768px){.fit-card li{font-size:18px}}
 .fit-card li::before{content:"";position:absolute;left:0;top:.35em;width:12px;height:12px;border-radius:50%}
 .fit-card.violet li::before{background:var(--term-ok)}
@@ -243,21 +242,22 @@ nav.lang a[aria-current="true"]{color:var(--fg);background:var(--surface-cyan)}
 @media(min-width:768px){.price-card{padding:40px}}
 .price-card h2{font-size:34px}
 @media(min-width:768px){.price-card h2{font-size:56px}}
-.price-body{font-size:18px;line-height:1.4;color:var(--fg-secondary)}
-.price-note{font-family:var(--font-caption);font-size:14px;color:var(--fg-secondary)}
+.price-body{font-size:18px;line-height:1.28;color:var(--fg-secondary)}
+.price-note{font-family:var(--font-caption);font-size:14px;line-height:1.25;color:var(--fg-secondary)}
 .faq-col h2{font-size:34px}
 @media(min-width:768px){.faq-col h2{font-size:56px}}
 .faq-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
 .faq-chips span{font-family:var(--font-caption);font-size:14px;background:var(--glass-badge);border-radius:18px;padding:8px 12px}
 .faq-col details{background:var(--glass-card);border-radius:6px;margin-top:16px;padding:0}
-.faq-col summary{cursor:pointer;font-family:var(--font-heading);font-weight:600;text-transform:uppercase;font-size:18px;line-height:1.1;padding:20px 24px;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.faq-col summary{cursor:pointer;font-family:var(--font-heading);font-weight:400;text-transform:uppercase;font-size:18px;line-height:1.1;padding:20px 24px;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center}
 @media(min-width:768px){.faq-col summary{font-size:22px}}
 .faq-col details:first-of-type summary{font-size:22px}
 @media(min-width:768px){.faq-col details:first-of-type summary{font-size:24px}}
 .faq-col summary::-webkit-details-marker{display:none}
 .faq-col summary::after{content:"+";font-family:var(--font-caption);font-size:22px;color:var(--on-green)}
 .faq-col details[open] summary::after{content:"−"}
-.faq-col details p{padding:0 24px 20px;font-size:15px;line-height:1.5;color:var(--on-green)}
+.faq-col details p{padding:0 24px 20px;font-size:15px;line-height:1.25;color:var(--on-green)}
+.faq-col details:first-of-type p{font-size:16px}
 
 /* ---- final cta ---- */
 #final{background:var(--accent);color:var(--fg-inverse)}
@@ -270,7 +270,19 @@ nav.lang a[aria-current="true"]{color:var(--fg);background:var(--surface-cyan)}
 /* ---- footer ---- */
 footer{background:var(--green);padding:32px 0}
 footer .wrap{display:flex;flex-wrap:wrap;gap:16px 24px;justify-content:space-between;font-family:var(--font-caption);font-size:14px;color:var(--on-green)}
-footer a{color:var(--term-ok)}</style>
+footer a{color:var(--term-ok)}
+
+/* ---- request dialog ---- */
+#request-dialog{border:0;border-radius:10px;padding:0;max-width:520px;width:calc(100% - 48px)}
+#request-dialog::backdrop{background:#00000066}
+#request-form{display:flex;flex-direction:column;gap:20px;padding:32px;font-family:var(--font-caption)}
+.form-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.form-head h3{font-size:24px}
+.form-close{border:0;background:none;font-size:28px;cursor:pointer;color:var(--fg-secondary);line-height:1;padding:0}
+#request-form label{display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:600;color:var(--fg)}
+#request-form input,#request-form select{font-family:var(--font-body);font-size:15px;font-weight:400;color:var(--fg);padding:0 16px;border:1px solid var(--fg-secondary);border-radius:4px;background:var(--surface);height:48px;width:100%}
+#request-form select:invalid{color:var(--fg-secondary)}
+#request-form .cta{width:100%;text-align:center;font-size:16px}</style>
 </head>
 <body>
   <header class="nav">
@@ -282,7 +294,6 @@ footer a{color:var(--term-ok)}</style>
         <a href="#pricing">Цена</a>
         <a href="#faq">FAQ</a>
       </nav>
-      <nav class="lang" aria-label="Language"><a href="https://ludvik4.dev/gridfin/en/" lang="en" hreflang="en">EN</a><a href="https://ludvik4.ru/gridfin/" lang="ru" hreflang="ru" aria-current="true">RU</a><a href="https://ludvik4.dev/gridfin/de/" lang="de" hreflang="de">DE</a><a href="https://ludvik4.dev/gridfin/es/" lang="es" hreflang="es">ES</a><a href="https://ludvik4.dev/gridfin/pt-br/" lang="pt-BR" hreflang="pt-BR">PT</a><a href="https://ludvik4.dev/gridfin/fr/" lang="fr" hreflang="fr">FR</a><a href="https://ludvik4.dev/gridfin/ja/" lang="ja" hreflang="ja">JA</a></nav>
     </div>
   </header>
   <main>
@@ -425,7 +436,7 @@ CLAUDE.md</pre>
           <aside class="artifact green">
             <h3>Гейты качества</h3>
             <pre>✓ lint    ✓ secrets
-✓ tests — 306 passed (306)</pre>
+✓ tests — 307 passed (307)</pre>
           </aside>
           </div>
         </div>
@@ -678,5 +689,75 @@ CLAUDE.md</pre>
       <span>Автор продукта — <a href="https://ludvik4.ru">ludvik4.ru</a></span>
     </div>
   </footer>
+  <dialog id="request-dialog">
+    <form id="request-form">
+      <div class="form-head">
+        <h3>Заявка на ранний доступ</h3>
+        <button type="button" class="form-close" aria-label="Close">×</button>
+      </div>
+      <label>GitHub username *
+        <input name="github" required autocomplete="username" placeholder="octocat">
+      </label>
+      <label>Email для обратной связи *
+        <input type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+      </label>
+      <label>Профессиональная роль и опыт (опционально)
+        <input name="role">
+      </label>
+      <label>Для чего планируете использовать *
+        <select name="usage" id="usage-select" required>
+          <option value="" disabled selected hidden></option>
+          <option>Разработка сайта</option>
+          <option>Разработка приложения</option>
+          <option>Посмотреть, как устроен инструмент</option>
+          <option value="custom">Свой вариант</option>
+        </select>
+      </label>
+      <label id="custom-wrap" hidden>Свой вариант *
+        <input name="custom" placeholder="Опишите, что хотите построить">
+      </label>
+      <button class="cta" type="submit">Отправить заявку</button>
+    </form>
+  </dialog>
+  <script>
+  (function () {
+    var dlg = document.getElementById("request-dialog");
+    if (!dlg || !dlg.showModal) return;
+    document.querySelectorAll("a.cta").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        dlg.showModal();
+      });
+    });
+    dlg.addEventListener("click", function (e) {
+      if (e.target === dlg) dlg.close();
+    });
+    dlg.querySelector(".form-close").addEventListener("click", function () {
+      dlg.close();
+    });
+    var sel = document.getElementById("usage-select");
+    var wrap = document.getElementById("custom-wrap");
+    sel.addEventListener("change", function () {
+      var custom = sel.value === "custom";
+      wrap.hidden = !custom;
+      wrap.querySelector("input").required = custom;
+    });
+    document.getElementById("request-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var f = new FormData(e.target);
+      var usage = f.get("usage") === "custom" ? f.get("custom") : f.get("usage");
+      var body =
+        "GitHub: " + f.get("github") +
+        "\nEmail: " + f.get("email") +
+        "\nRole: " + (f.get("role") || "-") +
+        "\nUsage: " + usage;
+      location.href =
+        "mailto:ludvik4good.me@gmail.com?subject=" +
+        encodeURIComponent("Gridfin early access request") +
+        "&body=" + encodeURIComponent(body);
+      dlg.close();
+    });
+  })();
+  </script>
 </body>
 </html>
