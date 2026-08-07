@@ -35,7 +35,7 @@
   --font-caption:"Inter",system-ui,sans-serif;--font-mono:"Geist Mono",monospace;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
 body{margin:0;font-family:var(--font-body);color:var(--fg);background:var(--surface);line-height:1.4;font-size:16px}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit}
@@ -51,8 +51,9 @@ section{padding:48px 0}
 @media(min-width:768px){section{padding:72px 0}}
 
 /* ---- nav ---- */
-header.nav{background:var(--surface)}
+header.nav{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--surface);box-shadow:0 1px 0 #0000001a}
 header.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:16px;padding-bottom:16px}
+main{padding-top:64px}
 .brand{font-family:var(--font-heading);font-weight:400;font-size:28px;text-transform:uppercase;text-decoration:none;color:var(--fg)}
 nav.links{display:none;gap:32px}
 @media(min-width:768px){nav.links{display:flex}}
@@ -174,7 +175,7 @@ nav.links a:hover{color:var(--fg)}
 @media(min-width:960px){.ideas{flex-direction:row;align-items:center;justify-content:space-between;gap:24px}}
 .ideas h3{font-size:24px}
 .ideas p{font-size:15px;color:var(--on-green);line-height:1.3;max-width:40rem}
-.micro-cta{display:inline-block;font-family:var(--font-caption);font-size:15px;background:var(--surface);color:var(--fg);text-decoration:none;padding:12px 20px;border-radius:4px;white-space:nowrap}
+.micro-cta{display:inline-block;font-family:var(--font-caption);font-size:15px;background:var(--surface);color:var(--fg);text-decoration:none;padding:12px 20px;border-radius:4px;white-space:nowrap;border:0;cursor:pointer}
 
 /* ---- inside ---- */
 #inside{background:var(--surface-peach)}
@@ -280,9 +281,26 @@ footer a{color:var(--term-ok)}
 .form-head h3{font-size:24px}
 .form-close{border:0;background:none;font-size:28px;cursor:pointer;color:var(--fg-secondary);line-height:1;padding:0}
 #request-form label{display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:600;color:var(--fg)}
-#request-form input,#request-form select{font-family:var(--font-body);font-size:15px;font-weight:400;color:var(--fg);padding:0 16px;border:1px solid var(--fg-secondary);border-radius:4px;background:var(--surface);height:48px;width:100%}
-#request-form select:invalid{color:var(--fg-secondary)}
-#request-form .cta{width:100%;text-align:center;font-size:16px}</style>
+#request-form input:not([type="checkbox"]){font-family:var(--font-body);font-size:15px;font-weight:400;color:var(--fg);padding:0 16px;border:1px solid var(--fg-secondary);border-radius:4px;background:var(--surface);height:48px;width:100%}
+#request-form .cta{width:100%;text-align:center;font-size:16px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field-label{font-size:14px;font-weight:600;color:var(--fg)}
+.select{position:relative}
+.select-btn{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;height:48px;padding:0 16px;font-family:var(--font-body);font-size:15px;color:var(--fg);background:var(--surface);border:1px solid var(--fg-secondary);border-radius:4px;cursor:pointer;text-align:left}
+.select.invalid .select-btn{border-color:var(--accent);box-shadow:0 0 0 2px var(--badge-violet)}
+.select-value.placeholder{color:var(--fg-secondary)}
+.select-chevron{color:var(--fg-secondary);flex:none;transition:transform .15s}
+.select-btn[aria-expanded="true"] .select-chevron{transform:rotate(180deg)}
+.select-list{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:10;margin:0;padding:8px;list-style:none;background:var(--surface);border:1px solid var(--fg-secondary);border-radius:6px;box-shadow:0 8px 24px #00000026}
+.select-list li{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-radius:4px;font-family:var(--font-body);font-size:15px;color:var(--fg);cursor:pointer}
+.select-list li:hover{background:var(--surface-cyan)}
+.select-list li[aria-selected="true"]{background:var(--surface-cyan)}
+.select-list li[aria-selected="true"]::after{content:"✓";color:var(--accent);font-weight:600}
+.consent{flex-direction:row!important;align-items:flex-start;gap:12px;font-weight:400!important;cursor:pointer}
+.consent input[type="checkbox"]{width:18px;height:18px;margin:1px 0 0;accent-color:var(--accent);flex:none}
+.consent span{font-size:13px;line-height:1.4;color:var(--fg-secondary)}
+.consent a{color:var(--accent)}
+.form-success{font-family:var(--font-body);font-size:15px;line-height:1.4;color:var(--green);background:var(--surface-cyan);border-radius:4px;padding:12px 16px}</style>
 </head>
 <body>
   <header class="nav">
@@ -436,7 +454,7 @@ CLAUDE.md</pre>
           <aside class="artifact green">
             <h3>Гейты качества</h3>
             <pre>✓ lint    ✓ secrets
-✓ tests — 307 passed (307)</pre>
+✓ tests — 310 passed (310)</pre>
           </aside>
           </div>
         </div>
@@ -516,7 +534,7 @@ CLAUDE.md</pre>
             <h3>Идей больше, чем выходных?</h3>
             <p>Один кит — сколько угодно проектов: SaaS, лендинги, пет-проекты. Каждый запуск — час с агентом, а не неделя настройки.</p>
           </div>
-          <a class="micro-cta" href="#inside">Посмотреть, что внутри →</a>
+          <button class="micro-cta js-request" type="button">Получить ранний доступ</button>
         </div>
       </div>
     </section>
@@ -690,7 +708,7 @@ CLAUDE.md</pre>
     </div>
   </footer>
   <dialog id="request-dialog">
-    <form id="request-form">
+    <form id="request-form" novalidate>
       <div class="form-head">
         <h3>Заявка на ранний доступ</h3>
         <button type="button" class="form-close" aria-label="Close">×</button>
@@ -704,18 +722,30 @@ CLAUDE.md</pre>
       <label>Профессиональная роль и опыт (опционально)
         <input name="role">
       </label>
-      <label>Для чего планируете использовать *
-        <select name="usage" id="usage-select" required>
-          <option value="" disabled selected hidden></option>
-          <option>Разработка сайта</option>
-          <option>Разработка приложения</option>
-          <option>Посмотреть, как устроен инструмент</option>
-          <option value="custom">Свой вариант</option>
-        </select>
-      </label>
+      <div class="field">
+        <span class="field-label" id="usage-label">Для чего планируете использовать *</span>
+        <div class="select" id="usage-select">
+          <button type="button" class="select-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="usage-label">
+            <span class="select-value placeholder">Выберите вариант</span>
+            <svg class="select-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <ul class="select-list" role="listbox" hidden>
+            <li role="option" tabindex="-1">Разработка сайта</li>
+            <li role="option" tabindex="-1">Разработка приложения</li>
+            <li role="option" tabindex="-1">Посмотреть, как устроен инструмент</li>
+            <li role="option" tabindex="-1" data-value="custom">Свой вариант</li>
+          </ul>
+          <input type="hidden" name="usage">
+        </div>
+      </div>
       <label id="custom-wrap" hidden>Свой вариант *
         <input name="custom" placeholder="Опишите, что хотите построить">
       </label>
+      <label class="consent">
+        <input type="checkbox" name="consent" required>
+        <span>Принимаю <a href="https://ludvik4.ru/gridfin/terms/" target="_blank" rel="noopener">пользовательское соглашение</a> и даю согласие на обработку указанных данных</span>
+      </label>
+      <p class="form-success" hidden>Заявка отправлена. Отвечу на почту в ближайшие дни.</p>
       <button class="cta" type="submit">Отправить заявку</button>
     </form>
   </dialog>
@@ -723,8 +753,9 @@ CLAUDE.md</pre>
   (function () {
     var dlg = document.getElementById("request-dialog");
     if (!dlg || !dlg.showModal) return;
-    document.querySelectorAll("a.cta").forEach(function (a) {
-      a.addEventListener("click", function (e) {
+    var form = document.getElementById("request-form");
+    document.querySelectorAll("a.cta, .js-request").forEach(function (el) {
+      el.addEventListener("click", function (e) {
         e.preventDefault();
         dlg.showModal();
       });
@@ -735,27 +766,92 @@ CLAUDE.md</pre>
     dlg.querySelector(".form-close").addEventListener("click", function () {
       dlg.close();
     });
-    var sel = document.getElementById("usage-select");
-    var wrap = document.getElementById("custom-wrap");
-    sel.addEventListener("change", function () {
-      var custom = sel.value === "custom";
-      wrap.hidden = !custom;
-      wrap.querySelector("input").required = custom;
+
+    var select = document.getElementById("usage-select");
+    var btn = select.querySelector(".select-btn");
+    var list = select.querySelector(".select-list");
+    var value = select.querySelector(".select-value");
+    var hiddenInput = select.querySelector('input[name="usage"]');
+    var customWrap = document.getElementById("custom-wrap");
+    function closeList() {
+      list.hidden = true;
+      btn.setAttribute("aria-expanded", "false");
+    }
+    btn.addEventListener("click", function () {
+      list.hidden = !list.hidden;
+      btn.setAttribute("aria-expanded", String(!list.hidden));
     });
-    document.getElementById("request-form").addEventListener("submit", function (e) {
+    document.addEventListener("click", function (e) {
+      if (!select.contains(e.target)) closeList();
+    });
+    dlg.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !list.hidden) {
+        e.preventDefault();
+        closeList();
+      }
+    });
+    list.querySelectorAll("li").forEach(function (li) {
+      li.addEventListener("click", function () {
+        list.querySelectorAll("li").forEach(function (other) {
+          other.removeAttribute("aria-selected");
+        });
+        li.setAttribute("aria-selected", "true");
+        value.textContent = li.textContent;
+        value.classList.remove("placeholder");
+        hiddenInput.value = li.dataset.value || li.textContent;
+        select.classList.remove("invalid");
+        var custom = li.dataset.value === "custom";
+        customWrap.hidden = !custom;
+        customWrap.querySelector("input").required = custom;
+        closeList();
+      });
+    });
+
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var f = new FormData(e.target);
+      if (!hiddenInput.value) {
+        select.classList.add("invalid");
+        btn.focus();
+        return;
+      }
+      if (!form.reportValidity()) return;
+      var f = new FormData(form);
       var usage = f.get("usage") === "custom" ? f.get("custom") : f.get("usage");
-      var body =
-        "GitHub: " + f.get("github") +
-        "\nEmail: " + f.get("email") +
-        "\nRole: " + (f.get("role") || "-") +
-        "\nUsage: " + usage;
-      location.href =
-        "mailto:ludvik4good.me@gmail.com?subject=" +
-        encodeURIComponent("Gridfin early access request") +
-        "&body=" + encodeURIComponent(body);
-      dlg.close();
+      var payload = {
+        subject: "Gridfin early access request",
+        github: f.get("github"),
+        email: f.get("email"),
+        role: f.get("role") || "-",
+        usage: usage,
+        page: location.href,
+      };
+      var endpoint = "";
+      function mailtoFallback() {
+        var body =
+          "GitHub: " + payload.github +
+          "\nEmail: " + payload.email +
+          "\nRole: " + payload.role +
+          "\nUsage: " + payload.usage;
+        location.href =
+          "mailto:ludvik4good.me@gmail.com?subject=" +
+          encodeURIComponent(payload.subject) +
+          "&body=" + encodeURIComponent(body);
+        dlg.close();
+      }
+      if (!endpoint) return mailtoFallback();
+      fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error(String(res.status));
+          form.querySelectorAll("label, .field, .cta").forEach(function (el) {
+            el.hidden = true;
+          });
+          form.querySelector(".form-success").hidden = false;
+        })
+        .catch(mailtoFallback);
     });
   })();
   </script>
