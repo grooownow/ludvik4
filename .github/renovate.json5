@@ -1,0 +1,71 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["config:recommended"],
+
+  // The nightly `pnpm audit` in CI is a detector with no fixer behind it: an
+  // advisory lands on a transitive dep, main goes red, and stays red until
+  // someone re-resolves the lockfile by hand. Between 2026-08-04 and
+  // 2026-08-09 that was every night. This config is the fixer.
+  // See docs/rules/security.md.
+  dependencyDashboard: true,
+  schedule: ["before 6am on monday"],
+  // One maintainer. More than a handful of open PRs is noise that gets
+  // ignored, which is the same as having no bot at all.
+  prConcurrentLimit: 5,
+  prHourlyLimit: 2,
+
+  // Must stay at or above pnpm's own resolve-time quarantine, which pnpm 11
+  // applies by default: a PR for a release younger than that window produces a
+  // lockfile pnpm will not install cleanly (it auto-appends the version to
+  // `minimumReleaseAgeExclude` in pnpm-workspace.yaml instead, which is a
+  // config change nobody asked the bot to make). pnpm does not document the
+  // default as a number and it was measured, not read: a 22.7h-old publish is
+  // quarantined, a 37.6h-old one is not, so the true window is somewhere in
+  // between. 3 days clears the top of that bracket with room to spare, and
+  // doubles as soak time against a compromised release.
+  minimumReleaseAge: "3 days",
+
+  // The load-bearing rule. `pnpm update` inside the ranges package.json
+  // already declares is what would have prevented every high advisory this
+  // repo has hit through a transitive dep — no version bump, no manifest
+  // change, just a re-resolved pnpm-lock.yaml.
+  lockFileMaintenance: {
+    enabled: true,
+    schedule: ["before 6am on monday"],
+  },
+
+  // GitHub's own alerts cover only what Dependabot indexes; OSV catches
+  // advisories `pnpm audit` would fail CI on before the nightly cron does.
+  osvVulnerabilityAlerts: true,
+  vulnerabilityAlerts: {
+    labels: ["security"],
+    // Out of band from the Monday window — a high advisory should not wait a
+    // week. Still subject to minimumReleaseAge above, so the lockfile it
+    // produces is one pnpm will actually install.
+    schedule: ["at any time"],
+  },
+
+  packageRules: [
+    {
+      // Dev tooling moves constantly and fails loudly in CI rather than
+      // quietly in production. One PR a week instead of fifteen.
+      matchDepTypes: ["devDependencies"],
+      matchUpdateTypes: ["minor", "patch"],
+      groupName: "dev dependencies (non-major)",
+    },
+    {
+      // next/react/react-dom ship as a set; upgrading one without the others
+      // is how you get a peer-dependency wall. Majors stay separate PRs on
+      // purpose — each one needs its own read of the upgrade guide.
+      matchPackageNames: [
+        "next",
+        "react",
+        "react-dom",
+        "@types/react",
+        "@types/react-dom",
+      ],
+      matchUpdateTypes: ["minor", "patch"],
+      groupName: "next + react",
+    },
+  ],
+}

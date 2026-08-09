@@ -33,10 +33,13 @@ jobs:
       # Tier 2: do the skill descriptions still route? Deterministic, no tokens.
       - run: pnpm skills:evals
       - run: pnpm test
-      # Red on high/critical vulnerabilities. Escape hatch for false
-      # positives or advisories without a fix: an `overrides:` entry in
-      # pnpm-workspace.yaml, with a comment explaining why — see
-      # docs/rules/security.md.
+      # Red on high/critical vulnerabilities. Usually the fix is
+      # `pnpm update <pkg> --lockfile-only` — the patch is normally inside the
+      # range the parent already declares, and Renovate's weekly
+      # lockFileMaintenance PR (.github/renovate.json5) is what keeps that from
+      # reaching this step. Only when no reachable version fixes it: an
+      # `overrides:` entry in pnpm-workspace.yaml, with a comment explaining
+      # why — see docs/rules/security.md.
       #
       # `pnpm audit` exits 1 both when it finds an advisory and when the npm
       # advisory endpoint misbehaves, so the two are told apart by the error

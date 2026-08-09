@@ -37,11 +37,21 @@ line in `.env.example`, and a case in `src/lib/env.test.ts`. Verified:
 - `.env`/`.env.local` are gitignored (`.gitignore`); `.env.example` holds
   documented placeholders only, never real values.
 - `pnpm audit --audit-level high` runs in CI (`quality` job,
-  `.github/workflows/ci.yml`) — red on any high/critical advisory. Escape
-  hatch for a false positive or an advisory with no fix yet: an `overrides:`
-  entry in `pnpm-workspace.yaml` with a comment explaining why — precedent:
-  `tmp@<0.2.6: ^0.2.6` (GHSA-ph9p-34f9-6g65, via `@lhci/cli`, dev-only). Remove
-  the override once upstream updates.
+  `.github/workflows/ci.yml`) — red on any high/critical advisory. **First
+  reach for `pnpm update <pkg> --lockfile-only`, not for an override.** These
+  advisories almost always land on a transitive dep whose parent declares a
+  caret range the patch already satisfies, and then the fix is a re-resolved
+  lockfile — no config, nothing to clean up later. Read the parent's declared
+  range before concluding it pins the patch away: all seven highs that had
+  main red on 2026-08-09 (undici, fast-uri, ip-address, brace-expansion,
+  js-yaml ×2, nanoid) cleared on a plain refresh, with no override touched.
+- Escape hatch, for the case where no reachable version fixes it: an
+  `overrides:` entry in `pnpm-workspace.yaml` with a comment explaining why —
+  precedent: `tmp@<0.2.6: ^0.2.6` (GHSA-ph9p-34f9-6g65, via `@lhci/cli`,
+  dev-only). Every entry is debt; remove it once upstream updates.
+- Renovate (`.github/renovate.json5`) opens a weekly `lockFileMaintenance` PR
+  that does that refresh on a schedule, so this class of advisory stops
+  reaching CI at all. The nightly audit is the detector; Renovate is the fixer.
 
 ## Headers and rate limiting
 
@@ -98,5 +108,6 @@ line in `.env.example`, and a case in `src/lib/env.test.ts`. Verified:
 - [ ] New action/route validates input with `zod` before use
 - [ ] New env var: schema + `.env.example` + `env.test.ts` case, all three
 - [ ] No secret literal in a diff; `.env*` untouched in git
-- [ ] `pnpm audit --audit-level high` green (or a documented override)
+- [ ] `pnpm audit --audit-level high` green — by a lockfile refresh where that
+      suffices, otherwise by a documented override
 - [ ] New protected surface calls `requireUser()`, not just middleware
