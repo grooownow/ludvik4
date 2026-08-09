@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Почему AI-разработке нужны инженерные правила — Gridfin</title>
+  <meta name="description" content="Claude Code пишет код быстро, но без правил каждая сессия решает заново. Что ломается без specs и tests, почему rules-файла мало и как hooks и гейты дают правилам зубы.">
+  <link rel="canonical" href="https://ludvik4.ru/gridfin/guides/why-ai-needs-engineering-rules/">
+  <link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/guides/why-ai-needs-engineering-rules/">
+  <link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules/">
+  <link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@400;500;600&family=Geist:wght@400;500&family=Geist+Mono:wght@400;700&display=swap">
+  <style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Geist",system-ui,sans-serif;font-size:16px;line-height:1.5;color:#1A1A1A;background:#FFFFFF}
+  main{max-width:44rem;margin:0 auto;padding:48px 24px 72px}
+  h1,h2{font-family:"Oswald",sans-serif;text-transform:uppercase;line-height:1.1;font-weight:400}
+  h1{font-size:34px;margin:0 0 24px}
+  h2{font-size:22px;margin:40px 0 12px}
+  p,li{color:#4B5563}
+  a{color:#7B61FF}
+  .back{font-family:"Inter",system-ui,sans-serif;font-size:14px;margin:0 0 32px}
+  .back a{text-decoration:none}
+  </style>
+</head>
+<body>
+  <main>
+    <p class="back"><a href="https://ludvik4.ru/gridfin/">← Gridfin</a></p>
+<h1>Почему AI-разработке нужны инженерные правила</h1>
+<p>Claude Code может быстро написать код, но без инженерных правил он не знает, какие решения должны оставаться стабильными между сессиями. Каждая новая сессия начинает с чистого контекста — и заново решает, как строить проект.</p>
+<h2>AI ускоряет написание кода, но не заменяет процесс</h2>
+<p>Скорость генерации кода — не то же самое, что скорость разработки продукта. Продукт двигают решения: какой стек, где границы модулей, что считается «готово». Инженерные команды накапливают эти решения годами; агент без процесса принимает их заново каждый день — и каждый раз по-разному.</p>
+<h2>Что ломается без rules, specs и tests</h2>
+<ul>
+<li>Архитектура дрейфует: каждая сессия строит по-своему, и код перестаёт складываться в одну систему.</li>
+<li>Фичи ломают друг друга: без тестов регрессия невидима, пока на неё не наткнётся пользователь.</li>
+<li>Ревью не происходит: агент пишет код быстрее, чем ты успеваешь его читать.</li>
+<li>Мелкое изменение превращается в переписывание половины проекта.</li>
+</ul>
+<h2>Почему rules-файла недостаточно</h2>
+<p>Файл с правилами — это пожелание: агент может его прочитать и всё равно сделать по-своему, а проверить это некому. Правило работает только тогда, когда его нарушение что-то останавливает.</p>
+<h2>Как hooks и гейты качества превращают правила в механизм</h2>
+<ul>
+<li>Hooks проверяют каждое предлагаемое изменение и останавливают нарушение до записи кода.</li>
+<li>Гейты качества — lint, тесты, e2e и сборка одним прогоном — показывают красный статус до мержа.</li>
+<li>Тесты обязаны уметь падать: «зелёный» тест, который нельзя сломать, не проверяет ничего.</li>
+</ul>
+<h2>Как Gridfin применяет это в Application Skeleton</h2>
+<p>Gridfin поставляет всё это уже собранным: <a href="https://ludvik4.ru/gridfin/docs/application-skeleton/">Application Skeleton</a> с правилами, hooks, тестами и гейтами — и процесс, в котором спека предшествует коду, а проверка встроена в каждый шаг. Подробнее — на <a href="https://ludvik4.ru/gridfin/">главной странице Gridfin</a>.</p>
+  </main>
+</body>
+</html>

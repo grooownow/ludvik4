@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Что такое Application Skeleton в Gridfin</title>
+  <meta name="description" content="Application Skeleton — заранее собранная архитектурная основа приложения для Claude Code: стек, правила, тесты, quality gates, skills и playbooks в одном процессе.">
+  <link rel="canonical" href="https://ludvik4.ru/gridfin/docs/application-skeleton/">
+  <link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/docs/application-skeleton/">
+  <link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en/docs/application-skeleton/">
+  <link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en/docs/application-skeleton/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@400;500;600&family=Geist:wght@400;500&family=Geist+Mono:wght@400;700&display=swap">
+  <style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Geist",system-ui,sans-serif;font-size:16px;line-height:1.5;color:#1A1A1A;background:#FFFFFF}
+  main{max-width:44rem;margin:0 auto;padding:48px 24px 72px}
+  h1,h2{font-family:"Oswald",sans-serif;text-transform:uppercase;line-height:1.1;font-weight:400}
+  h1{font-size:34px;margin:0 0 24px}
+  h2{font-size:22px;margin:40px 0 12px}
+  p,li{color:#4B5563}
+  a{color:#7B61FF}
+  .back{font-family:"Inter",system-ui,sans-serif;font-size:14px;margin:0 0 32px}
+  .back a{text-decoration:none}
+  </style>
+</head>
+<body>
+  <main>
+    <p class="back"><a href="https://ludvik4.ru/gridfin/">← Gridfin</a></p>
+<h1>Что такое Application Skeleton в Gridfin</h1>
+<p>Application Skeleton — это заранее собранная архитектурная основа приложения для разработки с Claude Code. Он соединяет стек, структуру проекта, инженерные правила, тесты, гейты качества, skills и плейбуки в один рабочий процесс. Gridfin создаёт его в первый час работы — и дальше именно на этой основе агент строит твой продукт.</p>
+<h2>Чем Application Skeleton отличается от boilerplate</h2>
+<ul>
+<li>Boilerplate даёт готовый код: дашборд, биллинг, «50 фич под кастомизацию», из которых ты выпиливаешь лишнее.</li>
+<li>Application Skeleton даёт основу и процесс: тонкую архитектурную базу, в которой код растёт под конкретный продукт — через спеки, тесты и ревью.</li>
+</ul>
+<p>Разница видна на двадцатой фиче: в boilerplate ты борешься с чужими решениями, в Skeleton — продолжаешь свой процесс.</p>
+<h2>Что входит в Application Skeleton</h2>
+<ul>
+<li>Next.js + TypeScript — основа приложения;</li>
+<li>Tailwind + shadcn/ui — дизайн-система и компоненты;</li>
+<li>инженерные правила (<code>docs/rules</code>) — архитектура, фронтенд, тестирование, безопасность, git;</li>
+<li>тесты — unit, компонентные, интеграционные и e2e, настроенные с первого дня;</li>
+<li>плейбуки — пошаговые сценарии деплоя, аналитики, pricing и других редких задач;</li>
+<li>skills — агентные workflows: онбординг, фичи, дизайн, ревью, верификация, деплой;</li>
+<li>hooks — правила с зубами: нарушение останавливается до записи кода;</li>
+<li>гейты качества — lint, тесты, e2e и сборка одним прогоном;</li>
+<li>механизм обновлений — <code>/update</code> подтягивает новые релизы шаблона, не затирая твой код.</li>
+</ul>
+<h2>Как Claude Code работает внутри Skeleton</h2>
+<ul>
+<li>Сначала спецификация: PRD и спека фичи пишутся до какого-либо кода.</li>
+<li><code>/feature</code> ведёт каждую фичу по циклу спека → код → тесты → ревью.</li>
+<li>Тесты обязаны уметь падать: фича без честного теста не считается готовой.</li>
+<li>Ревью и гейты: красный статус виден до мержа, а не после релиза.</li>
+</ul>
+<h2>Для кого это подходит</h2>
+<ul>
+<li>У тебя есть идея и Claude Code, и ты готов работать с терминалом и git.</li>
+<li>У тебя нет многолетнего full-stack опыта — архитектурные решения уже приняты за тебя.</li>
+<li>Тебе нужен собственный настоящий репозиторий, а не no-code платформа.</li>
+</ul>
+<h2>Где границы</h2>
+<ul>
+<li>Стек фиксированный — Gridfin намеренно не конструктор «собери свой стек».</li>
+<li>Это не Lovable и не Bolt: работа идёт в терминале, через Claude Code.</li>
+<li>Это не готовый дашборд с 50 фичами — код растёт под твой продукт, а не наоборот.</li>
+</ul>
+<p>Дальше: <a href="https://ludvik4.ru/gridfin/guides/why-ai-needs-engineering-rules/">почему AI-разработке нужны инженерные правила</a> · <a href="https://ludvik4.ru/gridfin/">Gridfin — главная</a></p>
+  </main>
+</body>
+</html>

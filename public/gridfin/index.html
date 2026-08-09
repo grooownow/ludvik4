@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gridfin — agent-native скелет SaaS для Claude Code</title>
-  <meta name="description" content="Gridfin встраивает инженерный опыт в разработку с Claude Code: скелет приложения, спеки, тесты, гейты качества. Запусти качественный SaaS или пет-проект, не техдолг.">
+  <title>Gridfin — Claude Code starter с тестами и quality gates</title>
+  <meta name="description" content="Gridfin превращает пустой репозиторий в Application Skeleton для Claude Code: specs, инженерные правила, hooks, тесты и quality gates вместо вайб-кодинга.">
   <link rel="canonical" href="https://ludvik4.ru/gridfin/">
   <link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en/">
   <link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/">
@@ -14,8 +14,8 @@
   <link rel="alternate" hreflang="fr" href="https://ludvik4.dev/gridfin/fr/">
   <link rel="alternate" hreflang="ja" href="https://ludvik4.dev/gridfin/ja/">
   <link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en/">
-  <meta property="og:title" content="Gridfin — agent-native скелет SaaS для Claude Code">
-  <meta property="og:description" content="Gridfin встраивает инженерный опыт в разработку с Claude Code: скелет приложения, спеки, тесты, гейты качества. Запусти качественный SaaS или пет-проект, не техдолг.">
+  <meta property="og:title" content="Gridfin — Claude Code starter с тестами и quality gates">
+  <meta property="og:description" content="Gridfin превращает пустой репозиторий в Application Skeleton для Claude Code: specs, инженерные правила, hooks, тесты и quality gates вместо вайб-кодинга.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ludvik4.ru/gridfin/">
   <meta property="og:image" content="https://ludvik4.ru/gridfin/assets/og-ru.png">
@@ -23,14 +23,14 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Gridfin">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Gridfin — agent-native скелет SaaS для Claude Code">
-  <meta name="twitter:description" content="Gridfin встраивает инженерный опыт в разработку с Claude Code: скелет приложения, спеки, тесты, гейты качества. Запусти качественный SaaS или пет-проект, не техдолг.">
+  <meta name="twitter:title" content="Gridfin — Claude Code starter с тестами и quality gates">
+  <meta name="twitter:description" content="Gridfin превращает пустой репозиторий в Application Skeleton для Claude Code: specs, инженерные правила, hooks, тесты и quality gates вместо вайб-кодинга.">
   <meta name="twitter:image" content="https://ludvik4.ru/gridfin/assets/og-ru.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@400;500;600&family=Geist:wght@400;500&family=Geist+Mono:wght@400;700&display=swap">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Gridfin","alternateName":"Gridfin for Claude Code","applicationCategory":"DeveloperApplication","operatingSystem":"macOS, Linux, Windows","description":"Gridfin встраивает инженерный опыт в разработку с Claude Code: скелет приложения, спеки, тесты, гейты качества. Запусти качественный SaaS или пет-проект, не техдолг.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Почему не просто Claude Code?","acceptedAnswer":{"@type":"Answer","text":"Claude Code великолепно пишет код — и ничего не знает о твоём процессе. Без правил каждая сессия заново решает, как строить проект, и решает по-разному. Gridfin даёт агенту процесс: спеки до кода, тесты как обязательный шаг, хуки и гейты, которые нельзя тихо обойти."}},{"@type":"Question","name":"Чем это отличается от boilerplate — ShipFast и других?","acceptedAnswer":{"@type":"Answer","text":"Бойлерплейты продают предсобранный код, который ты кастомизируешь. Gridfin — agent-native скелет (Application Skeleton): тонкая архитектурная основа плюс процесс, который спекует, строит и тестирует именно твой продукт. Ты не выпиливаешь чужой дашборд — ты выращиваешь свой."}},{"@type":"Question","name":"Что такое Application Skeleton?","acceptedAnswer":{"@type":"Answer","text":"Это не просто шаблон проекта. Это заранее собранная архитектурная основа приложения с уже принятыми инженерными решениями — стек, структура, тесты, CI, — вокруг которой строится вся дальнейшая разработка."}},{"@type":"Question","name":"Чем это отличается от MakerKit и Supastarter?","acceptedAnswer":{"@type":"Answer","text":"Они добавили к boilerplate rules-файлы для AI-агентов — но следовать им агент не обязан. В Gridfin правила принуждаются: хук останавливает нарушение до записи кода, гейты не пропускают красное. Правила с зубами, а не пожелания."}},{"@type":"Question","name":"Почему стек фиксированный?","acceptedAnswer":{"@type":"Answer","text":"Потому что весь процесс — правила, хуки, тесты, гейты, плейбуки — проверен именно на этом стеке: Next.js + TypeScript, Tailwind + shadcn/ui, Postgres. Свобода выбора стека — это ещё сорок решений, которые придётся принимать без опыта."}},{"@type":"Question","name":"Можно ли использовать свой стек?","acceptedAnswer":{"@type":"Answer","text":"Нет — и это осознанно. Gridfin не конструктор: убери фиксированный стек, и исчезнет всё, за что он отвечает — проверенные правила, тесты и гейты. Если тебе нужен другой стек, честный ответ: Gridfin не твой инструмент."}},{"@type":"Question","name":"Я в России — у меня заработает?","acceptedAnswer":{"@type":"Answer","text":"Gridfin — обычный git-репозиторий, он работает где угодно. Единственное условие — рабочий Claude Code: если клод код у тебя уже запускается и оплачен, Gridfin ничего дополнительно не требует."}},{"@type":"Question","name":"Что будет, если проект перестанет развиваться?","acceptedAnswer":{"@type":"Answer","text":"Ничего страшного: репозиторий твой, код и процесс работают локально и не зависят от существования Gridfin как продукта. Обновления перестанут приходить — всё остальное останется."}},{"@type":"Question","name":"Подходит ли новичку?","acceptedAnswer":{"@type":"Answer","text":"Если ты готов работать с терминалом, git и Claude Code по пошаговым инструкциям — да: архитектуру, тестовую стратегию и контроль качества коробка несёт за тебя. Если терминал видишь впервые — начни с Lovable или Bolt."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Gridfin","alternateName":"Gridfin for Claude Code","applicationCategory":"DeveloperApplication","applicationSubCategory":"Claude Code starter kit","operatingSystem":"macOS, Linux, Windows","softwareRequirements":"Claude Code, Git, terminal","url":"https://ludvik4.ru/gridfin/","inLanguage":"ru","creator":{"@type":"Person","name":"Ludvik4","url":"https://ludvik4.ru"},"featureList":["Application Skeleton","Specification-first workflow","Engineering rules","Hooks","Automated tests","Quality gates","Playbooks","Skills","Update workflow"],"description":"Gridfin превращает пустой репозиторий в Application Skeleton для Claude Code: specs, инженерные правила, hooks, тесты и quality gates вместо вайб-кодинга.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Почему не просто Claude Code?","acceptedAnswer":{"@type":"Answer","text":"Просто Claude Code пишет код, но не даёт устойчивый инженерный процесс. Без Gridfin каждая сессия заново решает, как строить проект; с Gridfin агент работает по specs, rules, hooks, тестам и quality gates, которые нельзя тихо обойти. Разбор подробнее — в гайде почему AI-разработке нужны инженерные правила."}},{"@type":"Question","name":"Чем это отличается от boilerplate — ShipFast и других?","acceptedAnswer":{"@type":"Answer","text":"Бойлерплейты продают предсобранный код, который ты кастомизируешь. Gridfin — agent-native скелет (Application Skeleton): тонкая архитектурная основа плюс процесс, который спекует, строит и тестирует именно твой продукт. Ты не выпиливаешь чужой дашборд — ты выращиваешь свой."}},{"@type":"Question","name":"Что такое Application Skeleton?","acceptedAnswer":{"@type":"Answer","text":"Application Skeleton — это архитектурная основа приложения, на которой Claude Code строит конкретный продукт. Это не просто шаблон проекта: внутри уже приняты инженерные решения по стеку, структуре, тестам и CI, а дальнейшая разработка идёт через specs, skills и quality gates. Полный разбор — на странице Application Skeleton."}},{"@type":"Question","name":"Чем это отличается от MakerKit и Supastarter?","acceptedAnswer":{"@type":"Answer","text":"Они добавили к boilerplate rules-файлы для AI-агентов — но следовать им агент не обязан. В Gridfin правила принуждаются: хук останавливает нарушение до записи кода, гейты не пропускают красное. Правила с зубами, а не пожелания."}},{"@type":"Question","name":"Почему стек фиксированный?","acceptedAnswer":{"@type":"Answer","text":"Потому что весь процесс — правила, хуки, тесты, гейты, плейбуки — проверен именно на этом стеке: Next.js + TypeScript, Tailwind + shadcn/ui, Postgres. Свобода выбора стека — это ещё сорок решений, которые придётся принимать без опыта."}},{"@type":"Question","name":"Можно ли использовать свой стек?","acceptedAnswer":{"@type":"Answer","text":"Нет — и это осознанно. Gridfin не конструктор: убери фиксированный стек, и исчезнет всё, за что он отвечает — проверенные правила, тесты и гейты. Если тебе нужен другой стек, честный ответ: Gridfin не твой инструмент."}},{"@type":"Question","name":"Я в России — у меня заработает?","acceptedAnswer":{"@type":"Answer","text":"Gridfin — обычный git-репозиторий, он работает где угодно. Единственное условие — рабочий Claude Code: если клод код у тебя уже запускается и оплачен, Gridfin ничего дополнительно не требует."}},{"@type":"Question","name":"Что будет, если проект перестанет развиваться?","acceptedAnswer":{"@type":"Answer","text":"Ничего страшного: репозиторий твой, код и процесс работают локально и не зависят от существования Gridfin как продукта. Обновления перестанут приходить — всё остальное останется."}},{"@type":"Question","name":"Подходит ли новичку?","acceptedAnswer":{"@type":"Answer","text":"Если ты готов работать с терминалом, git и Claude Code по пошаговым инструкциям — да: архитектуру, тестовую стратегию и контроль качества коробка несёт за тебя. Если терминал видишь впервые — начни с Lovable или Bolt."}},{"@type":"Question","name":"Как Gridfin не даёт AI сломать проект?","acceptedAnswer":{"@type":"Answer","text":"Gridfin делает ошибку видимой до мержа: каждое изменение проходит lint, tests, e2e и build, а правила принуждаются hooks и quality gates. Агент может писать код быстро, но не может выпустить изменение без проверки."}}]}</script>
   <style>:root{
   --surface:#FFFFFF;--surface-peach:#FDE2D9;--surface-cyan:#E0F7FA;
   --fg:#1A1A1A;--fg-secondary:#4B5563;--fg-inverse:#FFFFFF;
@@ -49,7 +49,7 @@ img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 /* Mockup weights: Oswald has exactly two — 400 (default) and 700 (marked). */
 h1,h2,h3{font-family:var(--font-heading);text-transform:uppercase;line-height:1.1;margin:0;font-weight:400}
-h1,#how h2,#why h2,#inside h2,#trust h2,#final h2{font-weight:700}
+h1,#how h2,#why h2,#skeleton h2,#inside h2,#trust h2,#final h2{font-weight:700}
 p{margin:0}
 code{font-family:var(--font-mono);font-size:.92em;background:#0000000f;padding:.05em .3em;border-radius:4px}
 .pain code,.pain-solution code,.skeleton-card code,.comp code,.ideas code,.faq-col code,#bridge code,#box code,#cred code,#final code{background:var(--glass-badge)}
@@ -160,6 +160,19 @@ nav.links a:hover{color:var(--fg)}
 .why-num{font-family:var(--font-caption);font-size:13px;color:var(--accent)}
 .why-card h3{font-size:24px}
 .why-card p{font-size:15px;color:var(--fg-secondary);line-height:1.3}
+
+/* ---- skeleton explainer (central entity) ---- */
+#skeleton h2{font-size:34px;margin-top:16px;max-width:64rem}
+@media(min-width:768px){#skeleton h2{font-size:56px}}
+.skel-body{font-size:18px;line-height:1.3;color:var(--fg-secondary);margin-top:16px;max-width:44rem}
+.skel-grid{display:grid;gap:16px;margin-top:48px}
+@media(min-width:768px){.skel-grid{grid-template-columns:repeat(2,1fr);gap:24px}}
+@media(min-width:1100px){.skel-grid{grid-template-columns:repeat(4,1fr)}}
+.skel-card{background:var(--surface-peach);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:12px}
+.skel-card h3{font-size:24px}
+.skel-card p{font-size:15px;color:var(--fg-secondary);line-height:1.3}
+.skel-link{margin-top:24px;font-family:var(--font-caption);font-size:16px}
+.skel-link a{color:var(--accent)}
 
 /* ---- box (what you get) ---- */
 #box{background:var(--green);color:var(--fg-inverse)}
@@ -334,8 +347,8 @@ footer a{color:var(--term-ok)}
         <div class="hero-grid">
           <div class="hero-copy">
             <span class="badge">Ранний доступ — бесплатно для бета-тестеров</span>
-            <h1>Запускайте качественные сайты и приложения с Claude Code.</h1>
-            <p class="hero-sub">Gridfin превращает пустой репозиторий в Application Skeleton — готовую архитектурную основу приложения для разработки с Claude Code. Внутри уже есть спецификации, инженерные правила, тесты и гейты качества — вместо хаотичного вайб-кодинга.</p>
+            <h1>Claude Code starter для качественных сайтов и приложений.</h1>
+            <p class="hero-sub">Gridfin — это agent-native starter kit, который превращает пустой репозиторий в Application Skeleton: готовую архитектурную основу для разработки с Claude Code. Внутри уже есть спецификации, инженерные правила, hooks, тесты и гейты качества — вместо хаотичного вайб-кодинга.</p>
             <p class="hero-audience">Если у тебя есть идея и Claude Code, но нет многолетнего инженерного опыта — Gridfin проведёт тебя по процессу, который инженерные команды обычно собирают годами.</p>
             <div class="cta-row">
               <a class="cta" href="https://t.me/ludvik4work">Получить ранний доступ</a>
@@ -501,6 +514,32 @@ CLAUDE.md</pre>
         </div>
       </div>
     </section>
+    <section id="skeleton">
+      <div class="wrap">
+        <span class="kicker">Центральная сущность</span>
+        <h2>Что такое Application Skeleton</h2>
+        <p class="skel-body">Application Skeleton — это не демо-приложение и не папка с шаблонами, а заранее собранная архитектурная основа продукта. Gridfin фиксирует стек, структуру, правила, тестовую стратегию и гейты качества до того, как Claude Code начинает писать фичи.</p>
+        <div class="skel-grid">
+        <article class="skel-card">
+          <h3>Архитектура</h3>
+          <p>Стек, слои, границы импортов и правила изменений уже выбраны, чтобы агент не пересобирал проект заново на каждой фиче.</p>
+        </article>
+        <article class="skel-card">
+          <h3>Спецификации</h3>
+          <p>Работа начинается с PRD и feature specs: сначала понятно, что строим, потом появляется код.</p>
+        </article>
+        <article class="skel-card">
+          <h3>Проверки</h3>
+          <p>Тесты, lint, e2e и build запускаются как единый quality gate, чтобы ошибка стала видимой до мержа.</p>
+        </article>
+        <article class="skel-card">
+          <h3>Процесс</h3>
+          <p>Skills и playbooks ведут разработку по повторяемому циклу: идея → спека → код → тесты → ревью → деплой.</p>
+        </article>
+        </div>
+        <p class="skel-link"><a href="https://ludvik4.ru/gridfin/docs/application-skeleton/">Application Skeleton — подробный разбор →</a></p>
+      </div>
+    </section>
     <section id="box">
       <div class="wrap">
         <h2>Что получаешь</h2>
@@ -524,23 +563,23 @@ CLAUDE.md</pre>
         <div class="comp-grid">
         <article class="comp">
           <h3>Плейбуки</h3>
-          <p>Пошаговые инженерные сценарии.</p>
+          <p>Пошаговые сценарии для деплоя, аналитики, pricing, compliance и других инженерных задач, где нельзя полагаться на память сессии.</p>
         </article>
         <article class="comp">
-          <h3>Скиллы</h3>
-          <p>Команды, которые выполняют работу за тебя.</p>
+          <h3>Skills</h3>
+          <p>Агентные workflows для онбординга, фич, дизайна, ревью, верификации, деплоя, обновлений и записи важных learnings.</p>
         </article>
         <article class="comp">
           <h3>Инженерные правила</h3>
-          <p>Правила, которым следует AI.</p>
+          <p>Правила архитектуры, фронтенда, тестирования, безопасности, документации и git-процесса, по которым работает агент.</p>
         </article>
         <article class="comp">
-          <h3>Гейты качества</h3>
-          <p>Автоматическая проверка каждого изменения.</p>
+          <h3>Quality gates</h3>
+          <p>Единый прогон lint, tests, e2e и build показывает красный статус до мержа, а не после релиза.</p>
         </article>
         <article class="comp">
           <h3>Документация</h3>
-          <p>Контекст, который не теряется между сессиями.</p>
+          <p>PRD, спеки, ADR, playbooks и rules сохраняют контекст между сессиями, чтобы агент не начинал проект заново каждый день.</p>
         </article>
         </div>
         <div class="ideas">
@@ -669,7 +708,7 @@ CLAUDE.md</pre>
             <div class="faq-chips"><span>Продукт</span><span>Стек</span><span>Новичкам</span><span>Россия</span><span>Покупка</span></div>
         <details open>
           <summary>Почему не просто Claude Code?</summary>
-          <p>Claude Code великолепно пишет код — и ничего не знает о твоём процессе. Без правил каждая сессия заново решает, как строить проект, и решает по-разному. Gridfin даёт агенту процесс: спеки до кода, тесты как обязательный шаг, хуки и гейты, которые нельзя тихо обойти.</p>
+          <p>Просто Claude Code пишет код, но не даёт устойчивый инженерный процесс. Без Gridfin каждая сессия заново решает, как строить проект; с Gridfin агент работает по specs, rules, hooks, тестам и quality gates, которые нельзя тихо обойти. Разбор подробнее — в гайде <a href="https://ludvik4.ru/gridfin/guides/why-ai-needs-engineering-rules/">почему AI-разработке нужны инженерные правила</a>.</p>
         </details>
         <details>
           <summary>Чем это отличается от boilerplate — ShipFast и других?</summary>
@@ -677,7 +716,7 @@ CLAUDE.md</pre>
         </details>
         <details>
           <summary>Что такое Application Skeleton?</summary>
-          <p>Это не просто шаблон проекта. Это заранее собранная архитектурная основа приложения с уже принятыми инженерными решениями — стек, структура, тесты, CI, — вокруг которой строится вся дальнейшая разработка.</p>
+          <p>Application Skeleton — это архитектурная основа приложения, на которой Claude Code строит конкретный продукт. Это не просто шаблон проекта: внутри уже приняты инженерные решения по стеку, структуре, тестам и CI, а дальнейшая разработка идёт через specs, skills и quality gates. Полный разбор — на странице <a href="https://ludvik4.ru/gridfin/docs/application-skeleton/">Application Skeleton</a>.</p>
         </details>
         <details>
           <summary>Чем это отличается от MakerKit и Supastarter?</summary>
@@ -702,6 +741,10 @@ CLAUDE.md</pre>
         <details>
           <summary>Подходит ли новичку?</summary>
           <p>Если ты готов работать с терминалом, git и Claude Code по пошаговым инструкциям — да: архитектуру, тестовую стратегию и контроль качества коробка несёт за тебя. Если терминал видишь впервые — начни с Lovable или Bolt.</p>
+        </details>
+        <details>
+          <summary>Как Gridfin не даёт AI сломать проект?</summary>
+          <p>Gridfin делает ошибку видимой до мержа: каждое изменение проходит lint, tests, e2e и build, а правила принуждаются hooks и quality gates. Агент может писать код быстро, но не может выпустить изменение без проверки.</p>
         </details>
           </div>
         </div>

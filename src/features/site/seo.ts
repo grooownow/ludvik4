@@ -123,6 +123,20 @@ export function buildSitemap(
         priority: 0.8,
       });
     }
+    // The Gridfin landing and its supporting pages are static files in
+    // public/gridfin/ (built in the grooownow/gridfin repo), not Next routes —
+    // listed here because this host's sitemap is their only sitemap.
+    for (const path of [
+      "/gridfin",
+      "/gridfin/docs/application-skeleton",
+      "/gridfin/guides/why-ai-needs-engineering-rules",
+    ]) {
+      entries.push({
+        url: publicUrl(market, baseUrl, path),
+        changeFrequency: "weekly",
+        priority: 0.8,
+      });
+    }
     entries.push({
       url: publicUrl(market, baseUrl, "/blog"),
       changeFrequency: "weekly",

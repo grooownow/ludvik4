@@ -25,6 +25,12 @@ describe("buildSitemap", () => {
     expect(urls).toContain(`${baseURL}/cases/fortnoise/`);
     expect(urls).toContain(`${baseURL}/cases/gridfin/`);
     expect(urls).toContain(`${baseURL}/cases/qa-pilot/`);
+    // Gridfin landing + its supporting pages (static files in public/gridfin/).
+    expect(urls).toContain(`${baseURL}/gridfin/`);
+    expect(urls).toContain(`${baseURL}/gridfin/docs/application-skeleton/`);
+    expect(urls).toContain(
+      `${baseURL}/gridfin/guides/why-ai-needs-engineering-rules/`,
+    );
     // No hreflang / cross-market URL — the EN storefront lives on its own domain.
     expect(urls).not.toContain(`${baseURL}/en`);
     for (const a of getPublishedArticles()) {
@@ -33,7 +39,7 @@ describe("buildSitemap", () => {
     for (const d of getAllArticles().filter((a) => a.draft)) {
       expect(urls).not.toContain(`${baseURL}/blog/${d.slug}/`);
     }
-    expect(urls).toHaveLength(9 + getPublishedArticles().length);
+    expect(urls).toHaveLength(12 + getPublishedArticles().length);
   });
 
   it("EN: landing + privacy notice — no blog or articles", () => {
