@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://ludvik4.ru/gridfin/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en/"/>
+  </url>
+  <url>
+    <loc>https://ludvik4.ru/gridfin/docs/application-skeleton/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/docs/application-skeleton/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en/docs/application-skeleton/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en/docs/application-skeleton/"/>
+  </url>
+  <url>
+    <loc>https://ludvik4.ru/gridfin/guides/why-ai-needs-engineering-rules/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/guides/why-ai-needs-engineering-rules/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules/"/>
+  </url>
+</urlset>

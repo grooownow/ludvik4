@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import { getAllArticles, getPublishedArticles } from "@/features/blog";
 import { buildSitemap } from "@/features/site";
 import { env } from "@/lib/env";
@@ -55,5 +57,25 @@ describe("app sitemap() (default RU market)", () => {
     expect(urls).toContain(`${baseURL}/blog/`);
     expect(urls).not.toContain(`${baseURL}/dashboard`);
     expect(urls).not.toContain(`${baseURL}/signin`);
+  });
+});
+
+describe("public Gridfin sitemap", () => {
+  it("serves a same-host XML sitemap for /gridfin/sitemap.xml", () => {
+    const xml = readFileSync(
+      path.join(process.cwd(), "public/gridfin/sitemap.xml"),
+      "utf8",
+    );
+
+    expect(xml).toContain('<?xml version="1.0" encoding="UTF-8"?>');
+    expect(xml).toContain("<loc>https://ludvik4.ru/gridfin/</loc>");
+    expect(xml).toContain(
+      "<loc>https://ludvik4.ru/gridfin/docs/application-skeleton/</loc>",
+    );
+    expect(xml).toContain(
+      "<loc>https://ludvik4.ru/gridfin/guides/why-ai-needs-engineering-rules/</loc>",
+    );
+    expect(xml).not.toContain("<loc>https://ludvik4.dev/");
+    expect(xml).toContain('hreflang="en"');
   });
 });
