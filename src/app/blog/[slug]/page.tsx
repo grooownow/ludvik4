@@ -225,6 +225,23 @@ const relatedBySlug: Partial<Record<string, RelatedLink[]>> = {
       description: "Как сравнивать предложения на разработку.",
     },
   ],
+  "lending-vs-tilda": [
+    {
+      href: "/uslugi/razrabotka-lendinga",
+      title: "Разработка лендинга",
+      description: "Индивидуальная страница под структуру, SEO и запуск.",
+    },
+    {
+      href: "/blog/lending-ili-mnogostranichnyy-sayt",
+      title: "Лендинг или сайт",
+      description: "Как выбрать формат под рекламу, SEO и развитие.",
+    },
+    {
+      href: "/blog/stoimost-lendinga-2026",
+      title: "Стоимость лендинга",
+      description: "Что входит в цену и что оценивается отдельно.",
+    },
+  ],
   "mvp-etapy-sroki-pervyy-reliz": [
     {
       href: "/uslugi/razrabotka-mvp",
@@ -276,6 +293,23 @@ const relatedBySlug: Partial<Record<string, RelatedLink[]>> = {
       description: "Когда MVP решает внутренний рабочий сценарий.",
     },
   ],
+  "mvp-ili-vnutrenniy-instrument": [
+    {
+      href: "/uslugi/razrabotka-mvp",
+      title: "Разработка MVP",
+      description: "Первый релиз продукта вокруг одного сценария.",
+    },
+    {
+      href: "/blog/mvp-etapy-sroki-pervyy-reliz",
+      title: "Этапы MVP",
+      description: "Как ограничить первый релиз и не раздуть объём.",
+    },
+    {
+      href: "/blog/vnutrennee-veb-prilozhenie-dlya-biznesa",
+      title: "Внутреннее приложение",
+      description: "Когда задача уже про процесс команды, а не рынок.",
+    },
+  ],
   "vnutrennee-veb-prilozhenie-dlya-biznesa": [
     {
       href: "/uslugi/razrabotka-mvp",
@@ -291,6 +325,23 @@ const relatedBySlug: Partial<Record<string, RelatedLink[]>> = {
       href: "/blog/stoimost-razrabotki-mvp",
       title: "Стоимость MVP",
       description: "Какие части увеличивают бюджет веб-приложения.",
+    },
+  ],
+  "no-code-avtomatizatsiya-ili-custom-workflow": [
+    {
+      href: "/uslugi/avtomatizatsiya-biznes-processov",
+      title: "Автоматизация бизнес-процессов",
+      description: "Workflow, интеграции, AI и контроль ошибок.",
+    },
+    {
+      href: "/blog/avtomatizatsiya-obrabotki-zayavok",
+      title: "Автоматизация обработки заявок",
+      description: "Как проходит заявка от формы до ответственного.",
+    },
+    {
+      href: "/blog/vnutrennee-veb-prilozhenie-dlya-biznesa",
+      title: "Внутреннее приложение",
+      description: "Когда workflow нужен отдельный интерфейс.",
     },
   ],
   "cursor-rules": [

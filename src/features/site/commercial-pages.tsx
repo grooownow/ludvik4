@@ -78,6 +78,11 @@ const serviceRelatedLinks: Record<ServicePage["slug"], RelatedLink[]> = {
       title: "Лендинг или многостраничный сайт",
       description: "Как выбрать формат под задачу, рекламу и SEO.",
     },
+    {
+      href: "/blog/lending-vs-tilda",
+      title: "Лендинг на Tilda или разработка",
+      description: "Где конструктор экономит время, а где нужен контроль.",
+    },
   ],
   "avtomatizatsiya-biznes-processov": [
     {
@@ -95,6 +100,11 @@ const serviceRelatedLinks: Record<ServicePage["slug"], RelatedLink[]> = {
       title: "Когда нужно внутреннее приложение",
       description: "Граница между автоматизацией, таблицей и отдельным UI.",
     },
+    {
+      href: "/blog/no-code-avtomatizatsiya-ili-custom-workflow",
+      title: "No-code или custom workflow",
+      description: "Как понять, когда связки сервисов уже недостаточно.",
+    },
   ],
   "razrabotka-mvp": [
     {
@@ -111,6 +121,11 @@ const serviceRelatedLinks: Record<ServicePage["slug"], RelatedLink[]> = {
       href: "/blog/vnutrennee-veb-prilozhenie-dlya-biznesa",
       title: "Внутреннее веб-приложение",
       description: "Когда готовых сервисов и таблиц уже недостаточно.",
+    },
+    {
+      href: "/blog/mvp-ili-vnutrenniy-instrument",
+      title: "MVP или внутренний инструмент",
+      description: "Как отличить проверку рынка от автоматизации команды.",
     },
   ],
 };
