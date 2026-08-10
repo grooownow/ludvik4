@@ -6,6 +6,36 @@ writing detail here.
 
 ## Now
 
+**[DONE 2026-08-10] CI unblocked and dependency updates automated.** `main` had
+been red since 2026-08-04 — every push and every nightly — on the `Audit
+(high/critical)` step: seven high advisories, all on transitive deps (`undici`,
+`fast-uri`, `ip-address`, `brace-expansion`, `js-yaml` in both live majors,
+`nanoid` via `postcss`). None of them needed an override. Every parent already
+declared a caret range the patch satisfied; the lockfile had simply not been
+re-resolved since the patches shipped, so `pnpm update` inside the existing
+ranges cleared all seven (23 findings → 10, 0 high) with `pnpm-workspace.yaml`
+untouched. **That order is now the rule** — refresh the lockfile first, reach
+for an override only when no reachable version fixes it (`docs/rules/security.md`).
+
+Renovate (Mend GitHub App, "Renovate Only" + "Scan and Alert") now does that
+refresh on a schedule, so the nightly audit stops being a detector with no
+fixer behind it. Config: `.github/renovate.json5`; dashboard: issue #3. Three
+settings there are load-bearing and should not be casually changed:
+
+- `lockFileMaintenance`, Mondays before 06:00 `Europe/Madrid` — the whole point.
+- `minimumReleaseAge: "3 days"`, measured rather than guessed: pnpm 11 applies
+  an undocumented resolve-time quarantine (a 22.7h-old publish is refused, a
+  37.6h-old one accepted). A lower floor makes Renovate produce lockfiles pnpm
+  answers by auto-appending `minimumReleaseAgeExclude` entries on its own.
+- `pnpm-workspace.yaml` is disabled for the bot. Left enabled it reads the
+  `overrides:` block as dependencies and proposes major bumps of the security
+  pins — including `brace-expansion@1 ^1.1.16 → ^5.0.0`, which the file's own
+  `auditConfig` comment explains is unsafe. Those entries are debt to delete
+  when upstream moves, never upgrade targets.
+
+The sibling template `grooownow/gridfin-template` had the identical failure and
+got the identical treatment.
+
 **[DONE 2026-07-27] RU commercial SEO pass.** The home now names the three
 services in the H1 and has a valid H1→H2→H3 hierarchy, neutral RU voice, two
 public evidence cases, and lighter desktop-only hero delivery. Three
