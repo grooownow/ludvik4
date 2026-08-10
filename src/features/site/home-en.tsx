@@ -2,8 +2,15 @@ import type { Route } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { TelegramLink } from "@/components/telegram-link";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { LeadForm } from "@/features/lead";
+import { AnchorLink } from "./anchor-link";
 import { jsonLdString } from "@/lib/json-ld";
 import { type MarketContent, TELEGRAM_URL } from "./content";
 import { ServiceScopes } from "./service-scopes";
@@ -57,7 +64,7 @@ export function HomeEn({
             </p>
             <div className="mt-7">
               <Button asChild size="lg">
-                <Link href="#contact">{content.hero.cta}</Link>
+                <AnchorLink href="#contact">{content.hero.cta}</AnchorLink>
               </Button>
             </div>
           </div>
@@ -188,18 +195,18 @@ export function HomeEn({
         <h2 className="text-3xl font-semibold tracking-tight">
           Before you send an enquiry
         </h2>
-        <div className="divide-border mt-8 divide-y">
+        <Accordion type="single" collapsible className="mt-8">
           {internationalFaq.map((item) => (
-            <details key={item.question} className="group py-5">
-              <summary className="cursor-pointer list-none pr-8 font-semibold marker:hidden">
+            <AccordionItem key={item.question} value={item.question}>
+              <AccordionTrigger className="text-base">
                 {item.question}
-              </summary>
-              <p className="text-muted-foreground mt-3 max-w-3xl leading-relaxed">
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground max-w-3xl leading-relaxed">
                 {item.answer}
-              </p>
-            </details>
+              </AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </Section>
 
       {/* Contact — email form plus an optional direct Telegram link */}

@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { getMarketContent } from "./content";
 import { HomeEn } from "./home-en";
+import { internationalFaq } from "./international-content";
 
 const content = getMarketContent("en");
 
@@ -52,5 +53,20 @@ describe("HomeEn", () => {
     expect(
       screen.getByRole("link", { name: "Read the Privacy Notice." }),
     ).toHaveAttribute("href", "/privacy");
+  });
+
+  it("renders every FAQ item as an accordion button with a chevron", () => {
+    const { container } = render(
+      <HomeEn content={content} baseUrl="https://ludvik4.dev" />,
+    );
+
+    for (const item of internationalFaq) {
+      expect(
+        screen.getByRole("button", { name: item.question }),
+      ).toBeInTheDocument();
+    }
+    expect(
+      container.querySelectorAll('#faq [data-slot="accordion-trigger"] svg'),
+    ).toHaveLength(internationalFaq.length);
   });
 });
