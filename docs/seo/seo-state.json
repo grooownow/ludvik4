@@ -1,46 +1,46 @@
 {
   "version": 1,
-  "project_root": "/private/var/folders/mj/rrr6qpzx0mq6r9cqwr61sx340000gn/T/tmp.kY5289Up9L/ludvik4",
-  "project_url": "https://ludvik4.ru/",
+  "project_root": "/Users/ekaterinapustovaa/Documents/Pet-projects/ludvik4",
+  "project_url": "https://ludvik4.dev",
   "mode": "autopilot",
-  "created_at": "2026-08-10T16:15:13+00:00",
-  "updated_at": "2026-08-10T17:59:55+00:00",
-  "current_stage": "live-retest",
+  "created_at": "2026-08-10T17:43:23+00:00",
+  "updated_at": "2026-08-10T18:30:00+00:00",
+  "current_stage": "publish",
   "completed_stages": [
     "inventory",
     "service-files-audit",
     "indexing-preflight",
     "semantic-audit",
+    "topical-map",
+    "product-strategy",
     "implementation",
-    "retest",
-    "publish",
-    "live-retest",
-    "google-recrawl",
-    "content-expansion",
-    "comparison-publish",
-    "comparison-live-retest",
-    "google-new-article-recrawl"
+    "local-retest"
   ],
-  "next_stage": "yandex-recrawl",
+  "next_stage": "production-retest",
   "freshness": {
     "status": "fresh",
-    "latest_relevant_change": "2026-08-10T17:59:55+00:00",
-    "latest_relevant_file": "src/content/blog/no-code-avtomatizatsiya-ili-custom-workflow.mdx",
-    "scanned_relevant_files": 557
+    "latest_relevant_change": "2026-08-10T18:30:00+00:00",
+    "latest_relevant_file": "docs/seo/seo-handoff.md",
+    "scanned_relevant_files": 0
   },
   "artifacts": [
+    "docs/marketing/en/product-canon.md",
+    "docs/marketing/en/market-strategy.md",
+    "docs/marketing/en/search-and-content-strategy.md",
+    "docs/marketing/en/llm-visibility-matrix.md",
+    "docs/seo/en-audit-2026-08-10.md",
     "docs/seo/ludvik4-seo-audit-2026-08-10.md",
-    "docs/seo/seo-handoff.md",
-    "docs/seo/seo-state.json"
+    "docs/specs/en-commercial-seo.plan.md"
   ],
   "blockers": [
-    "No indexing blockers detected.",
-    "Yandex Webmaster requires user login in the browser session.",
-    "Google daily indexing request quota blocked manual recrawl for https://ludvik4.ru/blog/no-code-avtomatizatsiya-ili-custom-workflow/."
+    "The EN production deployment and live retest are still in progress.",
+    "Google Search Console submission requires an authenticated external action.",
+    "Yandex Webmaster requires user login for the pending RU recrawl."
   ],
   "next_actions": [
-    "Tomorrow, request Google indexing for https://ludvik4.ru/blog/no-code-avtomatizatsiya-ili-custom-workflow/ after the daily quota resets.",
-    "Log in to Yandex Webmaster and request recrawl / sitemap refresh for the updated sitemap and new article URLs.",
-    "Content decisions still open: deeper case outcomes and a standalone About page if wanted."
+    "Complete the main-branch EN production deployment and live retest.",
+    "Submit the expanded EN sitemap and priority URLs in Google Search Console.",
+    "Run the EN LLM visibility matrix after recrawl.",
+    "Request the remaining RU article recrawl after the Google quota resets and refresh Yandex."
   ]
 }

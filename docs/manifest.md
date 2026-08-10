@@ -63,3 +63,9 @@ live by 2026-07-27). Positioning + services SSOT: `docs/business-strategy.md` +
 single-market design record (superseded for positioning/services/RU-form — see
 its banner). Deployment runbooks: `docs/playbooks/production-en-vercel.md` and
 `docs/playbooks/production-ru-timeweb.md`. What's next: `docs/roadmap.md`.
+
+The international storefront was rebuilt locally on 2026-08-10 around the
+category `founder-led web product studio`: three intent-specific service pages,
+an English-only work/evidence layer, About, and market-scoped service files.
+Product canon and search strategy live in `docs/marketing/en/`; audit and
+retest evidence live in `docs/seo/`. Production deployment is still pending.

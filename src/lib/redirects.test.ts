@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildRedirects, RU_SITE_URL } from "../../config/redirects";
+import { buildRedirects } from "../../config/redirects";
 
 const find = (market: "ru" | "en", source: string) =>
   buildRedirects(market).find((r) => r.source === source);
@@ -18,31 +18,17 @@ describe("retired /en landing", () => {
   );
 });
 
-describe("Russian blog moved to the RU domain", () => {
-  it("EN build redirects the blog list to the RU domain", () => {
-    expect(find("en", "/blog")).toEqual({
-      source: "/blog",
-      destination: `${RU_SITE_URL}/blog`,
-      permanent: true,
-    });
-  });
+describe("market isolation", () => {
+  it.each(["ru", "en"] as const)(
+    "%s build has no cross-market blog redirect",
+    (market) => {
+      expect(find(market, "/blog")).toBeUndefined();
+      expect(find(market, "/blog/:path*")).toBeUndefined();
+    },
+  );
 
-  it("EN build carries every article slug across unchanged", () => {
-    // Slug preservation is the whole point: the 5 live articles keep their
-    // accumulated search signals and external links (vc.ru) only if
-    // /blog/<slug> lands on /blog/<slug>.
-    expect(find("en", "/blog/:path*")).toEqual({
-      source: "/blog/:path*",
-      destination: `${RU_SITE_URL}/blog/:path*`,
-      permanent: true,
-    });
-  });
-
-  it("RU build does NOT redirect its own blog", () => {
-    // On the RU build these paths are the blog itself — a redirect here would
-    // point the RU site at itself and take all 5 articles offline.
-    expect(find("ru", "/blog")).toBeUndefined();
-    expect(find("ru", "/blog/:path*")).toBeUndefined();
+  it("EN redirect targets contain no RU-market host", () => {
+    expect(JSON.stringify(buildRedirects("en"))).not.toContain("ludvik4.ru");
   });
 });
 

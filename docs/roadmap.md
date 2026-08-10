@@ -6,6 +6,23 @@ writing detail here.
 
 ## Now
 
+**[LOCAL COMPLETE 2026-08-10] EN international commercial SEO/SRO rebuild —
+production deployment pending.** `ludvik4.dev` is now designed as an independent
+English source for a Europe-based founder-led web product studio, not a
+translation of the RU storefront. It has three commercial service pages
+(websites, workflow automation, MVP/web apps), Work + the globally publishable
+qa-pilot case, About, an eight-URL sitemap, expanded `llms.txt`, market-scoped
+`humans.txt`/`security.txt`, and supported schema/internal links. RU-only
+Gridfin files are physically excluded from the EN build; `/blog*` no longer
+redirects EN visitors to a Russian-language domain. Local gates passed: lint,
+340 unit/component/integration tests, 28 desktop/mobile E2E tests, EN production
+build, RU static export, and three Lighthouse runs at 94/100/100/100 with
+accessibility regressions cleared. Strategy: `docs/marketing/en/`; audit:
+`docs/seo/en-audit-2026-08-10.md`; plan:
+`docs/specs/en-commercial-seo.plan.md`; handoff: `docs/seo/seo-handoff.md`.
+Next explicit action: deploy EN, then rerun the production retest and submit the
+expanded sitemap/priority URLs in Google Search Console.
+
 **[DONE 2026-08-10] CI unblocked and dependency updates automated.** `main` had
 been red since 2026-08-04 — every push and every nightly — on the `Audit
 (high/critical)` step: seven high advisories, all on transitive deps (`undici`,
@@ -74,12 +91,15 @@ Completed follow-ups:
   dedicated backend costs 510 RUB/month. Decision:
   `docs/decisions/0003-defer-ru-www-redirect.md`. Runbook:
   `docs/playbooks/production-ru-timeweb.md`.
-- **[DONE 2026-07-25] `/blog/*` → RU domain 301.** `ludvik4.ru` went live, so
+- **[SUPERSEDED 2026-08-10] `/blog/*` → RU domain 301.** `ludvik4.ru` went live, so
   the blog list, all 5 articles and the RSS feed now 308 from `ludvik4.dev` to
   the same slug on the RU domain (verified end-to-end: 308 → 200). Rules live
   in `config/redirects.ts`, market-scoped so the RU build never redirects its
   own blog. `Disallow: /blog` was dropped from robots at the same time — a
   crawler forbidden to fetch a URL never follows its redirect.
+  The international source audit later removed these redirects: routing an
+  English buyer to a Russian-language domain contradicted market isolation and
+  created an avoidable country association. `/blog*` now returns 404 on EN.
 
 **[DONE 2026-07-26] CI is green again** (red since 2026-07-23 on a single step,
 `pnpm audit --audit-level high` in the `quality` job). Fixed by upgrading only —
