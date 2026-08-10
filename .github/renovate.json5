@@ -51,6 +51,19 @@
 
   packageRules: [
     {
+      // Nothing in pnpm-workspace.yaml is Renovate's to move. Every entry
+      // under `overrides:` is a security pin carrying a comment that says what
+      // removes it — debt to be deleted when the parent ships the fix, never a
+      // dependency to be upgraded. Left enabled, the bot reads those pins as
+      // dependencies and proposes major bumps of them: on the sibling template
+      // it offered `brace-expansion@1 ^1.1.16` → `^5.0.0` (5.x's CommonJS
+      // entry is an object, and minimatch@3 calls it as a function) and
+      // `uuid@<11.1.1 ^11.1.1` → `^14.0.0`, a silent major of a transitive
+      // dep. Same overrides block here, same reasoning.
+      matchFileNames: ["pnpm-workspace.yaml"],
+      enabled: false,
+    },
+    {
       // Dev tooling moves constantly and fails loudly in CI rather than
       // quietly in production. One PR a week instead of fifteen.
       matchDepTypes: ["devDependencies"],
