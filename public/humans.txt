@@ -1,0 +1,15 @@
+/* TEAM */
+
+Owner: Ludvik4
+Site: https://ludvik4.ru/
+Contact: https://t.me/ludvik4work
+Location: Remote
+
+/* SITE */
+
+Language: Russian
+Primary topic: websites, business automation, compact web applications, and AI-assisted development
+Canonical URL: https://ludvik4.ru/
+Sitemap: https://ludvik4.ru/sitemap.xml
+LLM overview: https://ludvik4.ru/llms.txt
+
