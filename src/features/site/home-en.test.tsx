@@ -12,7 +12,7 @@ describe("HomeEn", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /Digital products — from idea to launch/i,
+        name: /Websites, workflow automation, and web apps/i,
       }),
     ).toBeInTheDocument();
     expect(
@@ -27,6 +27,19 @@ describe("HomeEn", () => {
     expect(
       screen.getByRole("heading", { level: 2, name: "What's included" }),
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: "Website, automation, and web app development",
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /Explore website development/ }),
+    ).toHaveAttribute("href", "/services/websites");
+    expect(screen.getAllByRole("link", { name: "Work" })[0]).toHaveAttribute(
+      "href",
+      "/work",
+    );
   });
 
   it("keeps the lead form with English copy and a linked privacy notice", () => {

@@ -1,6 +1,11 @@
 import type { Metadata, MetadataRoute } from "next";
 import { caseStudies, servicePages } from "./commercial-content";
 import { type Market, type MarketContent, TELEGRAM_URL } from "./content";
+import {
+  internationalFaq,
+  internationalServicePages,
+  internationalWork,
+} from "./international-content";
 
 // Per-market SEO surfaces, built from the market content object. Pure functions
 // of (content, baseUrl) so both markets are unit-testable without re-parsing env.
@@ -123,9 +128,9 @@ export function buildSitemap(
         priority: 0.8,
       });
     }
-    // The Gridfin landing and its supporting pages are static files in
-    // public/gridfin/ (built in the grooownow/gridfin repo), not Next routes —
-    // listed here because this host's sitemap is their only sitemap.
+    // The Gridfin landing and supporting pages are RU-only static files copied
+    // from resources/ru-public/gridfin after the RU export. They are not part
+    // of the EN server build.
     for (const path of [
       "/gridfin",
       "/gridfin/docs/application-skeleton",
@@ -151,6 +156,30 @@ export function buildSitemap(
       });
     }
   } else {
+    for (const service of internationalServicePages) {
+      entries.push({
+        url: publicUrl(market, baseUrl, `/services/${service.slug}`),
+        changeFrequency: "monthly",
+        priority: 0.9,
+      });
+    }
+    entries.push({
+      url: publicUrl(market, baseUrl, "/work"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    });
+    for (const item of internationalWork) {
+      entries.push({
+        url: publicUrl(market, baseUrl, `/work/${item.slug}`),
+        changeFrequency: "monthly",
+        priority: 0.8,
+      });
+    }
+    entries.push({
+      url: publicUrl(market, baseUrl, "/about"),
+      changeFrequency: "yearly",
+      priority: 0.7,
+    });
     entries.push({
       url: publicUrl(market, baseUrl, "/privacy"),
       changeFrequency: "yearly",
@@ -162,8 +191,9 @@ export function buildSitemap(
 }
 
 /**
- * robots rules, identical for every market: /dashboard + /signin are the only
- * disallowed paths. No `market` parameter — the rules no longer differ.
+ * robots rules are identical for every market and allow crawling. Private
+ * auth routes carry page-level noindex metadata; blocking them here would stop
+ * compliant crawlers from seeing that directive.
  *
  * The EN build used to additionally disallow /blog, back when the blog simply
  * 404'd outside RU. Since ТЗ 2 those paths permanently redirect to the RU
@@ -173,9 +203,8 @@ export function buildSitemap(
  * exists to carry.
  */
 export function buildRobots(baseUrl: string): MetadataRoute.Robots {
-  const disallow = ["/dashboard", "/signin"];
   return {
-    rules: [{ userAgent: "*", allow: "/", disallow }],
+    rules: [{ userAgent: "*", allow: "/" }],
     sitemap: `${baseUrl}/sitemap.xml`,
   };
 }
@@ -205,7 +234,6 @@ export function buildHomeJsonLd(content: MarketContent, baseUrl: string) {
     url: baseUrl,
     areaServed: "Worldwide",
     sameAs: [TELEGRAM_URL],
-    parentOrganization: { "@id": `${baseUrl}/#organization` },
   };
 
   const priceRange = priceRangeOf(content);
@@ -219,34 +247,57 @@ export function buildHomeJsonLd(content: MarketContent, baseUrl: string) {
     }));
   }
 
+  const graph: Array<Record<string, unknown>> = [
+    {
+      "@type": "Organization",
+      "@id": `${baseUrl}/#organization`,
+      name: "Ludvik4",
+      url: baseUrl,
+      logo:
+        content.market === "ru"
+          ? `${baseUrl}/og-image-ru.png`
+          : `${baseUrl}/opengraph-image`,
+      description: content.description,
+      sameAs: [TELEGRAM_URL],
+      ...(content.market === "en"
+        ? {
+            address: {
+              "@type": "PostalAddress",
+              addressCountry: "ES",
+            },
+            areaServed: "Worldwide",
+          }
+        : {}),
+      knowsAbout: [
+        ...content.services.items.map((s) => s.title),
+        "AI-assisted development",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${baseUrl}/#website`,
+      url: baseUrl,
+      name: "Ludvik4",
+      inLanguage: content.lang,
+      publisher: { "@id": `${baseUrl}/#organization` },
+    },
+    service,
+  ];
+
+  if (content.market === "en") {
+    graph.push({
+      "@type": "FAQPage",
+      "@id": `${baseUrl}/#faq`,
+      mainEntity: internationalFaq.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: { "@type": "Answer", text: item.answer },
+      })),
+    });
+  }
+
   return {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": `${baseUrl}/#organization`,
-        name: "Ludvik4",
-        url: baseUrl,
-        logo:
-          content.market === "ru"
-            ? `${baseUrl}/og-image-ru.png`
-            : `${baseUrl}/opengraph-image`,
-        description: content.description,
-        sameAs: [TELEGRAM_URL],
-        knowsAbout: [
-          ...content.services.items.map((s) => s.title),
-          "AI-assisted development",
-        ],
-      },
-      {
-        "@type": "WebSite",
-        "@id": `${baseUrl}/#website`,
-        url: baseUrl,
-        name: "Ludvik4",
-        inLanguage: content.lang,
-        publisher: { "@id": `${baseUrl}/#organization` },
-      },
-      service,
-    ],
+    "@graph": graph,
   };
 }

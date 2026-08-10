@@ -32,8 +32,8 @@ describe("market content", () => {
     const en = getMarketContent("en");
     expect(en.lang).toBe("en");
     expect(en.services.items).toHaveLength(3);
-    expect(en.description).toContain("founder-led product studio");
-    expect(en.hero.lead).toMatch(/^I design and launch/);
+    expect(en.description).toContain("founder-led web product studio");
+    expect(en.hero.lead).toMatch(/^I turn/);
     expect(en.howItWorks?.steps).toHaveLength(3);
     expect(en.scopes?.items).toHaveLength(3);
     expect(en.pricing).toBeUndefined();
@@ -103,16 +103,18 @@ describe("buildHomeJsonLd", () => {
     expect(website.inLanguage).toBe("ru");
   });
 
-  it("EN: English studio graph, no offers, no country marketing tag", () => {
+  it("EN: English studio graph, no offers, Europe-based and worldwide", () => {
     const jsonLd = buildHomeJsonLd(getMarketContent("en"), EN_BASE);
     const raw = JSON.stringify(jsonLd);
     expect(raw).not.toMatch(TEAM_CLAIM);
-    expect(raw).not.toContain("Spain");
+    expect(raw).toContain('"addressCountry":"ES"');
+    expect(raw).toContain('"areaServed":"Worldwide"');
+    expect(raw).not.toMatch(/russia|russian|\.ru\b/i);
 
     const service = jsonLd["@graph"].find(
       (n) => n["@type"] === "ProfessionalService",
     ) as Record<string, unknown>;
     expect(service.makesOffer).toBeUndefined();
-    expect(service.description).toContain("founder-led product studio");
+    expect(service.description).toContain("founder-led web product studio");
   });
 });

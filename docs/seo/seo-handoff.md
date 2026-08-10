@@ -1,44 +1,59 @@
 # SEO Handoff
 
-- Project root: `/private/var/folders/mj/rrr6qpzx0mq6r9cqwr61sx340000gn/T/tmp.kY5289Up9L/ludvik4`
-- Project URL: `https://ludvik4.ru/`
-- Mode: `autopilot`
-- Current stage: `live-retest`
-- Next stage: `yandex-recrawl`
-- Freshness: `fresh`
-- Latest relevant file: `src/content/blog/no-code-avtomatizatsiya-ili-custom-workflow.mdx`
-- Updated at: `2026-08-10T17:59:55+00:00`
+- EN project: `https://ludvik4.dev`
+- RU project: `https://ludvik4.ru`
+- Mode: full autopilot audits and implementation
+- Current stage: EN production deployment and retest
+- Updated: 2026-08-10
 
-## Completed Stages
+## EN outcome
 
-- inventory: 25 indexable URLs from `https://ludvik4.ru/sitemap.xml`.
-- service-files-audit: pass, no issues.
-- indexing-preflight: pass for `/`, `/blog/`, `/cases/gridfin/`, and priority Gridfin pages.
-- semantic-audit: safe code-side gaps implemented.
-- implementation: service-page SCN blocks, blog/cases JSON-LD, article source blocks, contextual related links.
-- retest: targeted tests, typecheck/lint, RU static build, local HTML checks.
-- publish: pushed to `main` and deployed to production; CI `31413439859` and Deploy RU `31413439943` passed.
-- live-retest: production service-files audit passed; live indexing preflight passed for `/`, `/blog/`, `/cases/`, all `/uslugi/*`, and two edited article pages.
-- google-recrawl: requested indexing in Google Search Console for `/`, `/blog/`, `/cases/`, `/uslugi/razrabotka-lendinga/`, `/uslugi/avtomatizatsiya-biznes-processov/`, and `/uslugi/razrabotka-mvp/`.
-- content-expansion: added three comparison/decision articles: `lending-vs-tilda`, `mvp-ili-vnutrenniy-instrument`, and `no-code-avtomatizatsiya-ili-custom-workflow`.
-- comparison-publish: pushed commit `c04185e`; CI `31415976618` and Deploy RU `31415976167` passed.
-- comparison-live-retest: three new articles return `200`, have Article JSON-LD/source/related links, pass live indexing preflight, and are listed in `https://ludvik4.ru/sitemap.xml` (28 URLs).
-- google-new-article-recrawl: requested indexing for `lending-vs-tilda` and `mvp-ili-vnutrenniy-instrument`; `no-code-avtomatizatsiya-ili-custom-workflow` hit Google daily quota.
+The EN storefront is a separate source for a Europe-based founder-led web
+product studio selling custom websites, workflow automation, and MVP/web app
+development. It is not a translation of the RU site. Eight indexable English
+pages form the commercial and evidence network.
 
-## Artifacts
+Completed locally:
 
-- docs/seo/ludvik4-seo-audit-2026-08-10.md
-- docs/seo/seo-handoff.md
-- docs/seo/seo-state.json
+- live pre-change indexing, service-file, semantic, search, and Lighthouse
+  audit;
+- product canon, market strategy, topical/search strategy, and LLM prompt
+  matrix under `docs/marketing/en/`;
+- Home, three service pages, Work, qa-pilot case, About, and Privacy;
+- RU-only Gridfin assets isolated from the EN build;
+- EN `/blog*` and `/gridfin*` return 404;
+- market-scoped service files and EN analytics aligned with the privacy notice;
+- lint, 340 unit/component/integration tests, 28 E2E tests, EN production build,
+  RU static export, and three Lighthouse runs at 94/100/100/100.
 
-## Blockers
+## RU completed state
 
-- No indexing blockers detected.
-- Google index state at recrawl time: `/` and `/blog/` and `/uslugi/razrabotka-lendinga/` were already indexed; `/cases/` and `/uslugi/avtomatizatsiya-biznes-processov/` were discovered but not indexed; `/uslugi/razrabotka-mvp/` was unknown to Google.
-- Yandex Webmaster was not accessible in the browser session: it opened the Yandex authorization page.
+- Production SEO/SRO audit and semantic-network implementation are recorded in
+  `docs/seo/ludvik4-seo-audit-2026-08-10.md`.
+- CI run `31413439859` and RU deployment `31413439943` passed for the first
+  implementation; comparison content CI `31415976618` and RU deployment
+  `31415976167` also passed.
+- Live service-file and indexing preflights passed. The RU sitemap contains 28
+  URLs after three comparison/decision articles were added.
+- Google recrawl was requested for the priority commercial URLs and two new
+  articles. The remaining new article hit the daily request quota.
 
-## Next Actions
+## Evidence boundary
 
-- Tomorrow, request Google indexing for `https://ludvik4.ru/blog/no-code-avtomatizatsiya-ili-custom-workflow/` after the daily quota resets.
-- Log in to Yandex Webmaster and request recrawl / sitemap refresh for the updated sitemap and new article URLs.
-- Content decisions still open: deeper case outcomes and a standalone About page if wanted.
+- qa-pilot is the only globally safe public case used on EN.
+- Gridfin and FortNoise remain RU-market evidence.
+- No pricing, client outcomes, team size, or unsupported credentials were
+  invented for EN.
+
+## Blockers and next actions
+
+1. Merge and deploy the EN candidate, then rerun the eight-URL production
+   checks and three-run Lighthouse gate.
+2. Submit `https://ludvik4.dev/sitemap.xml` and request indexing for Home plus
+   the three EN service pages in Google Search Console.
+3. Run the EN LLM visibility matrix after recrawl and record citation gaps.
+4. Improve EN LCP if the production median remains above 2.5 seconds.
+5. Request Google indexing for
+   `https://ludvik4.ru/blog/no-code-avtomatizatsiya-ili-custom-workflow/` after
+   the daily quota resets.
+6. Log in to Yandex Webmaster and request the RU sitemap/article recrawl.

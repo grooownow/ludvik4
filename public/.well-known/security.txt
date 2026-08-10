@@ -1,4 +1,0 @@
-Contact: https://t.me/ludvik4work
-Preferred-Languages: ru, en
-Canonical: https://ludvik4.ru/.well-known/security.txt
-

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { shouldLoadPostHog } from "@/lib/analytics";
 
 // Read `NEXT_PUBLIC_POSTHOG_KEY` directly via `process.env` (inlined by
 // Next.js/webpack at build time) instead of importing `src/lib/env.ts`.
@@ -12,6 +13,7 @@ import { useEffect } from "react";
 // reason, and it's the only thing Next.js statically inlines for
 // client code in the first place.
 const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+const SITE_MARKET = process.env.SITE_MARKET;
 
 /**
  * PostHog analytics slot — OFF by default.
@@ -30,7 +32,7 @@ const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
  */
 export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    if (!POSTHOG_KEY) {
+    if (!shouldLoadPostHog(SITE_MARKET, POSTHOG_KEY)) {
       return;
     }
 
@@ -43,7 +45,7 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
 
       // Minimal init: posthog-js defaults to capturing pageviews (incl.
       // client-side route changes) out of the box — nothing extra to wire.
-      posthog.init(POSTHOG_KEY, {
+      posthog.init(POSTHOG_KEY!, {
         api_host: "https://eu.i.posthog.com",
         person_profiles: "identified_only",
       });

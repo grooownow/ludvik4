@@ -316,10 +316,10 @@ const en: MarketContent = {
   market: "en",
   lang: "en",
   ogLocale: "en_US",
-  title: "Ludvik4 — a founder-led product studio",
-  shareTitle: "Ludvik4 — product studio",
+  title: "Custom Websites, Workflow Automation & Web Apps — Ludvik4",
+  shareTitle: "Ludvik4 — founder-led web product studio",
   description:
-    "A founder-led product studio working with clients worldwide: focused websites, business automations, and compact web applications with a complete user journey.",
+    "A Europe-based, founder-led web product studio designing and building custom websites, business workflow automations, MVPs, and web apps for clients worldwide.",
   keywords: [
     "product studio",
     "web development",
@@ -330,36 +330,51 @@ const en: MarketContent = {
     "AI-assisted development",
     "Ludvik4",
   ],
-  nav: { cta: "Let's talk" },
+  nav: {
+    cta: "Discuss a project",
+    links: [
+      { href: "/#services", label: "Services" },
+      { href: "/work", label: "Work" },
+      { href: "/about", label: "About" },
+    ],
+  },
   hero: {
-    eyebrow: "Ludvik4",
-    title: "Digital products — from idea to launch",
-    lead: "I design and launch focused websites, business automations, and compact web applications with a complete user journey.",
-    cta: "Let's talk",
+    eyebrow: "Founder-led product studio · Europe · Worldwide",
+    title: "Websites, workflow automation, and web apps — built for launch",
+    lead: "I turn a business problem or product idea into a focused digital product: clear scope, direct communication, production-ready delivery, and one point of accountability.",
+    cta: "Discuss your project",
     illustration: true,
   },
   services: {
     eyebrow: "What I do",
+    title: "Website, automation, and web app development",
     items: [
       {
         module: "Module / Site",
         title: "Website or landing page",
-        body: "A published, responsive site for a product, service, event or small business with one clear call to action: structure, interface, basic SEO and analytics.",
+        body: "A responsive website for a product, service, event, or small business — from offer structure and copy to technical SEO, analytics, and launch.",
+        href: "/services/websites",
+        linkLabel: "Explore website development",
       },
       {
         module: "Module / Automation",
         title: "Business workflow automation",
-        body: "Repetitive manual processes moved into controlled workflows: intake handling, document data extraction, content prepared for review, scheduled reports — with scripts, integrations, bots and AI.",
+        body: "A repetitive manual process rebuilt as a controlled workflow with integrations, validation, logs, and human approval where mistakes carry a cost.",
+        href: "/services/workflow-automation",
+        linkLabel: "Explore workflow automation",
       },
       {
         module: "Module / App",
         title: "Web app or compact SaaS",
-        body: "A small app around one core task with a clear, complete user journey. When it needs it: accounts, a database, files, notifications, AI or payments.",
+        body: "A production-ready first release around one important task and one complete user journey — with accounts, data, AI, or payments when the product needs them.",
+        href: "/services/mvp-development",
+        linkLabel: "Explore MVP development",
       },
     ],
   },
   howItWorks: {
     eyebrow: "How it works",
+    title: "From an unclear problem to a working release",
     lead: "From an idea or operational problem to a clear solution and a working product",
     steps: [
       {
@@ -468,14 +483,18 @@ const en: MarketContent = {
     ],
   },
   aiBlock: {
-    eyebrow: "AI-assisted development",
-    title: "I make projects AI-agent-ready",
-    body: "AGENTS.md, project rules, spec-driven development and the automation around them — the same discipline behind my open-source tooling, such as qa-pilot. I lead each project from definition to launch and bring in trusted specialists when the scope needs them.",
+    eyebrow: "Engineering approach",
+    title: "AI-assisted delivery, with the quality controls left on",
+    body: "AI supports research, implementation, testing, and review inside a documented engineering process. Requirements, version control, automated tests, and quality gates remain explicit — the same discipline behind my open-source qa-pilot project.",
+  },
+  about: {
+    eyebrow: "Founder-led",
+    body: "Ludvik4 is an independent web product studio based in Europe and working with clients worldwide. I lead each engagement from problem definition through launch, remain the single point of accountability, and involve trusted specialists only when the agreed scope needs them.",
   },
   contact: {
     eyebrow: "Contact",
-    title: "Tell me what you need",
-    body: "Describe the task — I'll suggest a solution and where to start.",
+    title: "Tell me what needs to work better",
+    body: "Describe the problem, the current situation, and the outcome you need. I will review it and suggest a sensible first step.",
     telegramText: "Or message me on Telegram → t.me/ludvik4work",
     form: {
       labels: EN_LEAD_LABELS,
@@ -488,6 +507,9 @@ const en: MarketContent = {
   },
   footer: {
     links: [
+      { href: "/services/websites", label: "Services", external: false },
+      { href: "/work", label: "Work", external: false },
+      { href: "/about", label: "About", external: false },
       { href: "/privacy", label: "Privacy", external: false },
       { href: TELEGRAM_URL, label: "Telegram", external: true },
     ],

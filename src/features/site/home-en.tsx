@@ -8,6 +8,7 @@ import { jsonLdString } from "@/lib/json-ld";
 import { type MarketContent, TELEGRAM_URL } from "./content";
 import { ServiceScopes } from "./service-scopes";
 import { buildHomeJsonLd } from "./seo";
+import { internationalFaq, internationalWork } from "./international-content";
 import {
   Eyebrow,
   Section,
@@ -31,6 +32,7 @@ export function HomeEn({
 }) {
   const jsonLd = buildHomeJsonLd(content, baseUrl);
   const form = content.contact.form;
+  const featuredWork = internationalWork[0]!;
 
   return (
     <div className="bg-background text-foreground min-h-screen">
@@ -66,7 +68,6 @@ export function HomeEn({
                 alt="How a digital product is built: from idea and mockup through code to launch and analytics"
                 width={1021}
                 height={622}
-                priority
                 // q=95, not the default 75: this flat-colour vector export
                 // bands visibly on its thin pink strokes when compressed
                 // harder. Next 16 serves only the levels declared in
@@ -83,6 +84,9 @@ export function HomeEn({
       {/* Services */}
       <Section id="services">
         <Eyebrow>{content.services.eyebrow}</Eyebrow>
+        <h2 className="mb-8 text-3xl font-semibold tracking-tight text-balance">
+          {content.services.title}
+        </h2>
         <ServiceGrid items={content.services.items} />
       </Section>
 
@@ -90,7 +94,10 @@ export function HomeEn({
       {content.howItWorks ? (
         <Section>
           <Eyebrow>{content.howItWorks.eyebrow}</Eyebrow>
-          <p className="max-w-3xl text-xl font-semibold tracking-tight text-balance">
+          <h2 className="max-w-3xl text-3xl font-semibold tracking-tight text-balance">
+            {content.howItWorks.title}
+          </h2>
+          <p className="text-muted-foreground mt-4 max-w-3xl leading-relaxed">
             {content.howItWorks.lead}
           </p>
           <div className="mt-9 grid gap-8 sm:grid-cols-3">
@@ -99,7 +106,7 @@ export function HomeEn({
                 <p className="text-primary font-mono text-xs font-semibold">
                   {step.n}
                 </p>
-                <h2 className="mt-3 font-semibold">{step.title}</h2>
+                <h3 className="mt-3 font-semibold">{step.title}</h3>
                 <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
                   {step.body}
                 </p>
@@ -112,18 +119,88 @@ export function HomeEn({
       {/* What's included — no public EN pricing */}
       {content.scopes ? <ServiceScopes scopes={content.scopes} /> : null}
 
+      <Section id="work">
+        <Eyebrow>Selected work</Eyebrow>
+        <h2 className="text-3xl font-semibold tracking-tight">
+          Public work you can inspect
+        </h2>
+        <p className="text-muted-foreground mt-4 max-w-2xl leading-relaxed">
+          Evidence matters more than a list of technologies. qa-pilot is an
+          open-source product with public code, documentation, releases, and a
+          working distribution path.
+        </p>
+        <div className="border-border bg-card mt-8 rounded-2xl border p-6">
+          <p className="text-muted-foreground font-mono text-xs font-semibold tracking-widest uppercase">
+            {featuredWork.kind}
+          </p>
+          <h3 className="mt-3 text-xl font-bold">{featuredWork.title}</h3>
+          <p className="text-muted-foreground mt-3 max-w-2xl leading-relaxed">
+            {featuredWork.description}
+          </p>
+          <Link
+            href={"/work/qa-pilot" as Route}
+            className="text-primary mt-5 inline-block font-mono text-sm font-semibold"
+          >
+            Read the case study →
+          </Link>
+        </div>
+        <Link
+          href={"/work" as Route}
+          className="text-primary mt-6 inline-block font-mono text-sm font-semibold"
+        >
+          View selected work →
+        </Link>
+      </Section>
+
       {/* AI-assisted development — the hook for GitHub/qa-pilot visitors */}
       {content.aiBlock ? (
         <Section>
           <Eyebrow>{content.aiBlock.eyebrow}</Eyebrow>
-          <p className="max-w-2xl text-xl font-semibold tracking-tight text-balance">
+          <h2 className="max-w-2xl text-3xl font-semibold tracking-tight text-balance">
             {content.aiBlock.title}
-          </p>
+          </h2>
           <p className="text-muted-foreground mt-4 max-w-2xl leading-relaxed">
             {content.aiBlock.body}
           </p>
         </Section>
       ) : null}
+
+      {content.about ? (
+        <Section>
+          <Eyebrow>{content.about.eyebrow}</Eyebrow>
+          <h2 className="text-3xl font-semibold tracking-tight">
+            Direct responsibility from discovery to launch
+          </h2>
+          <p className="text-muted-foreground mt-4 max-w-3xl leading-relaxed">
+            {content.about.body}
+          </p>
+          <Link
+            href={"/about" as Route}
+            className="text-primary mt-5 inline-block font-mono text-sm font-semibold"
+          >
+            How I work →
+          </Link>
+        </Section>
+      ) : null}
+
+      <Section id="faq">
+        <Eyebrow>FAQ</Eyebrow>
+        <h2 className="text-3xl font-semibold tracking-tight">
+          Before you send an enquiry
+        </h2>
+        <div className="divide-border mt-8 divide-y">
+          {internationalFaq.map((item) => (
+            <details key={item.question} className="group py-5">
+              <summary className="cursor-pointer list-none pr-8 font-semibold marker:hidden">
+                {item.question}
+              </summary>
+              <p className="text-muted-foreground mt-3 max-w-3xl leading-relaxed">
+                {item.answer}
+              </p>
+            </details>
+          ))}
+        </div>
+      </Section>
 
       {/* Contact — email form plus an optional direct Telegram link */}
       <section id="contact" className="bg-surface-warm">

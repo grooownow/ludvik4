@@ -4,11 +4,15 @@ import { dirname, join } from "node:path";
 
 const root = process.cwd();
 const stashRoot = join(root, `.static-export-${process.pid}`);
+const ruOnlyPublicRoot = join(root, "resources/ru-public");
 const serverOnlyPaths = [
   "src/app/api/auth",
   "src/app/dashboard",
   "src/app/signin",
   "src/app/opengraph-image.tsx",
+  "src/app/about",
+  "src/app/services",
+  "src/app/work",
   "src/middleware.ts",
 ];
 
@@ -60,6 +64,11 @@ async function main() {
     }
 
     process.exitCode = await runBuild();
+    if (process.exitCode === 0) {
+      await cp(join(ruOnlyPublicRoot, "gridfin"), join(root, "out/gridfin"), {
+        recursive: true,
+      });
+    }
   } finally {
     await Promise.all(
       moved.map(async ({ source, stash }) => {

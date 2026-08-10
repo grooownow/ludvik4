@@ -1,5 +1,11 @@
 import { getPublishedArticles } from "@/features/blog";
-import { caseStudies, publicUrl, servicePages } from "@/features/site";
+import {
+  caseStudies,
+  internationalServicePages,
+  internationalWork,
+  publicUrl,
+  servicePages,
+} from "@/features/site";
 import { env } from "@/lib/env";
 
 // llms.txt — a markdown summary of the site for LLM crawlers (GPTBot,
@@ -54,9 +60,22 @@ ${articleLines ? `\n## Статьи\n\n${articleLines}\n` : ""}`;
 }
 
 function enBody(baseURL: string): string {
+  const serviceLines = internationalServicePages
+    .map(
+      (service) =>
+        `- [${service.title}](${publicUrl("en", baseURL, `/services/${service.slug}`)}): ${service.description}`,
+    )
+    .join("\n");
+  const workLines = internationalWork
+    .map(
+      (item) =>
+        `- [${item.title}](${publicUrl("en", baseURL, `/work/${item.slug}`)}): ${item.description}`,
+    )
+    .join("\n");
+
   return `# Ludvik4
 
-> Ludvik4 is a founder-led product studio working with clients worldwide: focused websites, business automations, and compact web applications with a complete user journey. One point of accountability per project; trusted specialists are brought in when the scope needs them.
+> Ludvik4 is a Europe-based, founder-led web product studio working with clients worldwide. It designs and builds focused websites, controlled business workflow automations, MVPs, and custom web applications. One point of accountability leads each project from discovery through launch.
 
 Three services:
 
@@ -64,13 +83,26 @@ Three services:
 - Business workflow automation: repetitive manual processes moved into controlled workflows — scripts, integrations, bots, AI.
 - Web app or compact SaaS: a small app around one core task with a complete user journey.
 
-Focus: AI-assisted development — AGENTS.md, project rules and spec-driven development, plus open-source tooling such as qa-pilot.
+Delivery model: direct founder communication, written scope, production-ready delivery, source-code handover, and trusted specialists only when the agreed work needs them.
+
+Engineering approach: AI assists research, implementation, testing, and review inside a process with specifications, version control, automated tests, and quality gates. The public qa-pilot project demonstrates this approach.
 
 Contact: Telegram https://t.me/ludvik4work.
 
 ## Main pages
 
-- [Home](${baseURL}/): services and contact
+- [Home](${baseURL}/): positioning, services, process, proof, FAQ, and contact
+- [Selected work](${publicUrl("en", baseURL, "/work")}): public evidence and case studies
+- [About](${publicUrl("en", baseURL, "/about")}): founder-led delivery model and engineering approach
+- [Privacy](${publicUrl("en", baseURL, "/privacy")}): enquiry form data handling
+
+## Services
+
+${serviceLines}
+
+## Public work
+
+${workLines}
 `;
 }
 

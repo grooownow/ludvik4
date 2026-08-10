@@ -44,9 +44,18 @@ describe("buildSitemap", () => {
     expect(urls).toHaveLength(12 + getPublishedArticles().length);
   });
 
-  it("EN: landing + privacy notice — no blog or articles", () => {
+  it("EN: landing, service pages, proof and source pages — no RU content", () => {
     const urls = buildSitemap("en", baseURL, articles).map((e) => e.url);
-    expect(urls).toEqual([`${baseURL}/`, `${baseURL}/privacy`]);
+    expect(urls).toEqual([
+      `${baseURL}/`,
+      `${baseURL}/services/websites`,
+      `${baseURL}/services/workflow-automation`,
+      `${baseURL}/services/mvp-development`,
+      `${baseURL}/work`,
+      `${baseURL}/work/qa-pilot`,
+      `${baseURL}/about`,
+      `${baseURL}/privacy`,
+    ]);
   });
 });
 
@@ -63,7 +72,7 @@ describe("app sitemap() (default RU market)", () => {
 describe("public Gridfin sitemap", () => {
   it("serves a same-host XML sitemap for /gridfin/sitemap.xml", () => {
     const xml = readFileSync(
-      path.join(process.cwd(), "public/gridfin/sitemap.xml"),
+      path.join(process.cwd(), "resources/ru-public/gridfin/sitemap.xml"),
       "utf8",
     );
 
