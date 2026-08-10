@@ -4,8 +4,8 @@
   "project_url": "https://ludvik4.dev",
   "mode": "autopilot",
   "created_at": "2026-08-10T17:43:23+00:00",
-  "updated_at": "2026-08-10T18:30:00+00:00",
-  "current_stage": "publish",
+  "updated_at": "2026-08-10T18:47:00+00:00",
+  "current_stage": "monitoring",
   "completed_stages": [
     "inventory",
     "service-files-audit",
@@ -14,12 +14,14 @@
     "topical-map",
     "product-strategy",
     "implementation",
-    "local-retest"
+    "local-retest",
+    "publish",
+    "production-retest"
   ],
-  "next_stage": "production-retest",
+  "next_stage": "search-console-submission",
   "freshness": {
     "status": "fresh",
-    "latest_relevant_change": "2026-08-10T18:30:00+00:00",
+    "latest_relevant_change": "2026-08-10T18:47:00+00:00",
     "latest_relevant_file": "docs/seo/seo-handoff.md",
     "scanned_relevant_files": 0
   },
@@ -33,12 +35,10 @@
     "docs/specs/en-commercial-seo.plan.md"
   ],
   "blockers": [
-    "The EN production deployment and live retest are still in progress.",
     "Google Search Console submission requires an authenticated external action.",
     "Yandex Webmaster requires user login for the pending RU recrawl."
   ],
   "next_actions": [
-    "Complete the main-branch EN production deployment and live retest.",
     "Submit the expanded EN sitemap and priority URLs in Google Search Console.",
     "Run the EN LLM visibility matrix after recrawl.",
     "Request the remaining RU article recrawl after the Google quota resets and refresh Yandex."

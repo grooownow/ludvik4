@@ -6,23 +6,24 @@ writing detail here.
 
 ## Now
 
-**[LOCAL COMPLETE 2026-08-10] EN international commercial SEO/SRO rebuild —
-production deployment pending.** `ludvik4.dev` is now designed as an independent
+**[DONE 2026-08-10] EN international commercial SEO/SRO rebuild.**
+`ludvik4.dev` is now designed as an independent
 English source for a Europe-based founder-led web product studio, not a
 translation of the RU storefront. It has three commercial service pages
 (websites, workflow automation, MVP/web apps), Work + the globally publishable
 qa-pilot case, About, an eight-URL sitemap, expanded `llms.txt`, market-scoped
 `humans.txt`/`security.txt`, and supported schema/internal links. RU-only
 Gridfin files are physically excluded from the EN build; `/blog*` no longer
-redirects EN visitors to a Russian-language domain. Local gates passed: lint,
-340 unit/component/integration tests, 28 desktop/mobile E2E tests, EN production
-build and RU static export. The approved `#ff4fb6` palette remains unchanged
-across both markets; contrast improvements must preserve that visual identity.
+redirects EN visitors to a Russian-language domain. Production main-CI
+`31420244529`, Vercel, and RU deploy `31420244090` passed. The approved
+`#ff4fb6` palette is live on both markets; regression tests now lock the brand
+tokens. EN FAQ uses the shared accordion with six visible chevrons. Live DOM
+checks confirmed the final colour and icons on both domains.
 Strategy: `docs/marketing/en/`; audit:
 `docs/seo/en-audit-2026-08-10.md`; plan:
 `docs/specs/en-commercial-seo.plan.md`; handoff: `docs/seo/seo-handoff.md`.
-Next explicit action: deploy EN, then rerun the production retest and submit the
-expanded sitemap/priority URLs in Google Search Console.
+Next explicit action: submit the expanded sitemap/priority URLs in Google
+Search Console, then run the LLM visibility baseline and monitor LCP/indexing.
 
 **[DONE 2026-08-10] CI unblocked and dependency updates automated.** `main` had
 been red since 2026-08-04 — every push and every nightly — on the `Audit

@@ -3,7 +3,7 @@
 - EN project: `https://ludvik4.dev`
 - RU project: `https://ludvik4.ru`
 - Mode: full autopilot audits and implementation
-- Current stage: EN production deployment and retest
+- Current stage: production rollout complete; indexing and visibility monitoring
 - Updated: 2026-08-10
 
 ## EN outcome
@@ -13,7 +13,7 @@ product studio selling custom websites, workflow automation, and MVP/web app
 development. It is not a translation of the RU site. Eight indexable English
 pages form the commercial and evidence network.
 
-Completed locally:
+Completed:
 
 - live pre-change indexing, service-file, semantic, search, and Lighthouse
   audit;
@@ -27,6 +27,9 @@ Completed locally:
   static export;
 - the approved `#ff4fb6` brand colour is invariant across both markets; an
   earlier attempt to darken it for contrast was reverted.
+- main-CI `31420244529`, Vercel production, and RU deployment `31420244090`
+  passed. Live DOM checks confirmed `#ff4fb6` on both domains, six visible EN
+  FAQ chevrons, and seven visible RU FAQ chevrons.
 
 ## RU completed state
 
@@ -49,13 +52,12 @@ Completed locally:
 
 ## Blockers and next actions
 
-1. Merge and deploy the EN candidate, then rerun the eight-URL production
-   checks and three-run Lighthouse gate.
-2. Submit `https://ludvik4.dev/sitemap.xml` and request indexing for Home plus
+1. Submit `https://ludvik4.dev/sitemap.xml` and request indexing for Home plus
    the three EN service pages in Google Search Console.
-3. Run the EN LLM visibility matrix after recrawl and record citation gaps.
-4. Improve EN LCP if the production median remains above 2.5 seconds.
-5. Request Google indexing for
+2. Run the EN LLM visibility matrix after recrawl and record citation gaps.
+3. Improve EN LCP if the production median remains above 2.5 seconds without
+   changing the approved visual identity.
+4. Request Google indexing for
    `https://ludvik4.ru/blog/no-code-avtomatizatsiya-ili-custom-workflow/` after
    the daily quota resets.
-6. Log in to Yandex Webmaster and request the RU sitemap/article recrawl.
+5. Log in to Yandex Webmaster and request the RU sitemap/article recrawl.
