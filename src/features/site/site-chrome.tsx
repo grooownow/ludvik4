@@ -180,7 +180,7 @@ export function ServiceGrid({ items }: { items: ServiceCard[] }) {
               <div className={cn(spanRow && "sm:w-2/5 sm:shrink-0 lg:w-auto")}>
                 <div className="mb-3 flex items-center gap-2">
                   <span className="bg-primary/50 h-px w-8" />
-                  <span className="text-muted-foreground font-mono text-[10px] font-semibold tracking-wider uppercase">
+                  <span className="font-mono text-[10px] tracking-wider text-[#9ca3af] uppercase">
                     {s.module}
                   </span>
                 </div>

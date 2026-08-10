@@ -16,8 +16,9 @@ qa-pilot case, About, an eight-URL sitemap, expanded `llms.txt`, market-scoped
 Gridfin files are physically excluded from the EN build; `/blog*` no longer
 redirects EN visitors to a Russian-language domain. Local gates passed: lint,
 340 unit/component/integration tests, 28 desktop/mobile E2E tests, EN production
-build, RU static export, and three Lighthouse runs at 94/100/100/100 with
-accessibility regressions cleared. Strategy: `docs/marketing/en/`; audit:
+build and RU static export. The approved `#ff4fb6` palette remains unchanged
+across both markets; contrast improvements must preserve that visual identity.
+Strategy: `docs/marketing/en/`; audit:
 `docs/seo/en-audit-2026-08-10.md`; plan:
 `docs/specs/en-commercial-seo.plan.md`; handoff: `docs/seo/seo-handoff.md`.
 Next explicit action: deploy EN, then rerun the production retest and submit the

@@ -23,8 +23,10 @@ Completed locally:
 - RU-only Gridfin assets isolated from the EN build;
 - EN `/blog*` and `/gridfin*` return 404;
 - market-scoped service files and EN analytics aligned with the privacy notice;
-- lint, 340 unit/component/integration tests, 28 E2E tests, EN production build,
-  RU static export, and three Lighthouse runs at 94/100/100/100.
+- lint, unit/component/integration tests, E2E tests, EN production build, and RU
+  static export;
+- the approved `#ff4fb6` brand colour is invariant across both markets; an
+  earlier attempt to darken it for contrast was reverted.
 
 ## RU completed state
 
