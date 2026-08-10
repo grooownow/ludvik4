@@ -3,11 +3,11 @@
 - Project root: `/private/var/folders/mj/rrr6qpzx0mq6r9cqwr61sx340000gn/T/tmp.kY5289Up9L/ludvik4`
 - Project URL: `https://ludvik4.ru/`
 - Mode: `autopilot`
-- Current stage: `implementation`
-- Next stage: `publish-live-retest`
+- Current stage: `live-retest`
+- Next stage: `yandex-recrawl`
 - Freshness: `fresh`
 - Latest relevant file: `src/content/blog/no-code-avtomatizatsiya-ili-custom-workflow.mdx`
-- Updated at: `2026-08-10T17:48:50+00:00`
+- Updated at: `2026-08-10T17:59:55+00:00`
 
 ## Completed Stages
 
@@ -21,6 +21,9 @@
 - live-retest: production service-files audit passed; live indexing preflight passed for `/`, `/blog/`, `/cases/`, all `/uslugi/*`, and two edited article pages.
 - google-recrawl: requested indexing in Google Search Console for `/`, `/blog/`, `/cases/`, `/uslugi/razrabotka-lendinga/`, `/uslugi/avtomatizatsiya-biznes-processov/`, and `/uslugi/razrabotka-mvp/`.
 - content-expansion: added three comparison/decision articles: `lending-vs-tilda`, `mvp-ili-vnutrenniy-instrument`, and `no-code-avtomatizatsiya-ili-custom-workflow`.
+- comparison-publish: pushed commit `c04185e`; CI `31415976618` and Deploy RU `31415976167` passed.
+- comparison-live-retest: three new articles return `200`, have Article JSON-LD/source/related links, pass live indexing preflight, and are listed in `https://ludvik4.ru/sitemap.xml` (28 URLs).
+- google-new-article-recrawl: requested indexing for `lending-vs-tilda` and `mvp-ili-vnutrenniy-instrument`; `no-code-avtomatizatsiya-ili-custom-workflow` hit Google daily quota.
 
 ## Artifacts
 
@@ -32,9 +35,10 @@
 
 - No indexing blockers detected.
 - Google index state at recrawl time: `/` and `/blog/` and `/uslugi/razrabotka-lendinga/` were already indexed; `/cases/` and `/uslugi/avtomatizatsiya-biznes-processov/` were discovered but not indexed; `/uslugi/razrabotka-mvp/` was unknown to Google.
+- Yandex Webmaster was not accessible in the browser session: it opened the Yandex authorization page.
 
 ## Next Actions
 
-- Publish the three new comparison articles and rerun live indexing preflight after deploy.
-- After deploy, submit/refresh sitemap and request recrawl for the three new article URLs in Google Search Console and Yandex Webmaster.
+- Tomorrow, request Google indexing for `https://ludvik4.ru/blog/no-code-avtomatizatsiya-ili-custom-workflow/` after the daily quota resets.
+- Log in to Yandex Webmaster and request recrawl / sitemap refresh for the updated sitemap and new article URLs.
 - Content decisions still open: deeper case outcomes and a standalone About page if wanted.

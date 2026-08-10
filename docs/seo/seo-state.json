@@ -4,8 +4,8 @@
   "project_url": "https://ludvik4.ru/",
   "mode": "autopilot",
   "created_at": "2026-08-10T16:15:13+00:00",
-  "updated_at": "2026-08-10T17:48:50+00:00",
-  "current_stage": "implementation",
+  "updated_at": "2026-08-10T17:59:55+00:00",
+  "current_stage": "live-retest",
   "completed_stages": [
     "inventory",
     "service-files-audit",
@@ -16,12 +16,15 @@
     "publish",
     "live-retest",
     "google-recrawl",
-    "content-expansion"
+    "content-expansion",
+    "comparison-publish",
+    "comparison-live-retest",
+    "google-new-article-recrawl"
   ],
-  "next_stage": "publish-live-retest",
+  "next_stage": "yandex-recrawl",
   "freshness": {
     "status": "fresh",
-    "latest_relevant_change": "2026-08-10T17:48:50+00:00",
+    "latest_relevant_change": "2026-08-10T17:59:55+00:00",
     "latest_relevant_file": "src/content/blog/no-code-avtomatizatsiya-ili-custom-workflow.mdx",
     "scanned_relevant_files": 557
   },
@@ -30,10 +33,14 @@
     "docs/seo/seo-handoff.md",
     "docs/seo/seo-state.json"
   ],
-  "blockers": ["No indexing blockers detected."],
+  "blockers": [
+    "No indexing blockers detected.",
+    "Yandex Webmaster requires user login in the browser session.",
+    "Google daily indexing request quota blocked manual recrawl for https://ludvik4.ru/blog/no-code-avtomatizatsiya-ili-custom-workflow/."
+  ],
   "next_actions": [
-    "Publish the three new comparison articles and rerun live indexing preflight after deploy.",
-    "After deploy, submit/refresh sitemap and request recrawl for the three new article URLs in Google Search Console and Yandex Webmaster.",
+    "Tomorrow, request Google indexing for https://ludvik4.ru/blog/no-code-avtomatizatsiya-ili-custom-workflow/ after the daily quota resets.",
+    "Log in to Yandex Webmaster and request recrawl / sitemap refresh for the updated sitemap and new article URLs.",
     "Content decisions still open: deeper case outcomes and a standalone About page if wanted."
   ]
 }
