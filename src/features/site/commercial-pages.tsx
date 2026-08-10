@@ -50,6 +50,183 @@ function BulletSection({ title, items }: { title: string; items: string[] }) {
   );
 }
 
+type RelatedLink = {
+  href: Route;
+  title: string;
+  description: string;
+};
+
+type ReadinessItem = {
+  title: string;
+  body: string;
+};
+
+const serviceRelatedLinks: Record<ServicePage["slug"], RelatedLink[]> = {
+  "razrabotka-lendinga": [
+    {
+      href: "/blog/stoimost-lendinga-2026",
+      title: "Сколько стоит лендинг",
+      description: "Из чего складывается цена и что входит в базовую работу.",
+    },
+    {
+      href: "/blog/chto-podgotovit-pered-zakazom-lendinga",
+      title: "Что обдумать перед заказом",
+      description: "Вопросы, которые помогают быстрее собрать структуру.",
+    },
+    {
+      href: "/blog/lending-ili-mnogostranichnyy-sayt",
+      title: "Лендинг или многостраничный сайт",
+      description: "Как выбрать формат под задачу, рекламу и SEO.",
+    },
+  ],
+  "avtomatizatsiya-biznes-processov": [
+    {
+      href: "/blog/ai-avtomatizatsiya-malogo-biznesa",
+      title: "AI-автоматизация малого бизнеса",
+      description: "Где AI уместен, а где достаточно обычной логики.",
+    },
+    {
+      href: "/blog/avtomatizatsiya-obrabotki-zayavok",
+      title: "Автоматизация обработки заявок",
+      description: "Схема заявки от формы до ответственного и статуса.",
+    },
+    {
+      href: "/blog/vnutrennee-veb-prilozhenie-dlya-biznesa",
+      title: "Когда нужно внутреннее приложение",
+      description: "Граница между автоматизацией, таблицей и отдельным UI.",
+    },
+  ],
+  "razrabotka-mvp": [
+    {
+      href: "/blog/mvp-etapy-sroki-pervyy-reliz",
+      title: "Этапы и состав MVP",
+      description: "Как ограничить первый релиз одним рабочим сценарием.",
+    },
+    {
+      href: "/blog/stoimost-razrabotki-mvp",
+      title: "Стоимость разработки MVP",
+      description: "Что влияет на бюджет компактного веб-приложения.",
+    },
+    {
+      href: "/blog/vnutrennee-veb-prilozhenie-dlya-biznesa",
+      title: "Внутреннее веб-приложение",
+      description: "Когда готовых сервисов и таблиц уже недостаточно.",
+    },
+  ],
+};
+
+const serviceReadiness: Record<ServicePage["slug"], ReadinessItem[]> = {
+  "razrabotka-lendinga": [
+    {
+      title: "Входные данные",
+      body: "задача, аудитория, материалы, домен или доступы, ограничения по текстам и интеграциям",
+    },
+    {
+      title: "Критерий готовности",
+      body: "страница опубликована, адаптивна, объясняет предложение и ведёт к одному целевому действию",
+    },
+    {
+      title: "Передача",
+      body: "доступы, исходный код или проект, базовая аналитика и список гарантийных исправлений",
+    },
+  ],
+  "avtomatizatsiya-biznes-processov": [
+    {
+      title: "Входные данные",
+      body: "описание процесса, реальные примеры, доступы к системам, правила ошибок и ручных подтверждений",
+    },
+    {
+      title: "Критерий готовности",
+      body: "процесс проходит реальные сценарии, пишет логи и не теряет заявку, документ или статус",
+    },
+    {
+      title: "Передача",
+      body: "схема workflow, инструкция, доступы к коду или настройкам и границы поддержки после запуска",
+    },
+  ],
+  "razrabotka-mvp": [
+    {
+      title: "Входные данные",
+      body: "ключевой пользователь, сценарий, данные, роли, интеграции и критерий успешного первого релиза",
+    },
+    {
+      title: "Критерий готовности",
+      body: "пользователь может пройти основной сценарий в опубликованном продукте без ручной подмены результата",
+    },
+    {
+      title: "Передача",
+      body: "репозиторий, окружения, инструкция запуска, список известных ограничений и план следующих итераций",
+    },
+  ],
+};
+
+const serviceCaseLinks: Partial<Record<ServicePage["slug"], RelatedLink>> = {
+  "avtomatizatsiya-biznes-processov": {
+    href: "/cases/fortnoise",
+    title: "FortNoise",
+    description:
+      "Кейс с каталогом, модерацией и рабочими процессами публикации.",
+  },
+  "razrabotka-mvp": {
+    href: "/cases/gridfin",
+    title: "Gridfin",
+    description: "Собственный продукт с specs, тестами и quality gates.",
+  },
+};
+
+function RelatedLinksSection({
+  title,
+  items,
+}: {
+  title: string;
+  items: RelatedLink[];
+}) {
+  return (
+    <div>
+      <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
+      <div className="mt-5 grid gap-3 sm:grid-cols-3">
+        {items.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="border-border bg-card hover:border-primary/40 rounded-xl border p-4 transition-colors"
+          >
+            <h3 className="text-sm font-bold">{item.title}</h3>
+            <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+              {item.description}
+            </p>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ReadinessSection({ items }: { items: ReadinessItem[] }) {
+  return (
+    <div>
+      <h2 className="text-2xl font-semibold tracking-tight">
+        Как фиксируется результат
+      </h2>
+      <dl className="mt-5 grid gap-3 sm:grid-cols-3">
+        {items.map((item) => (
+          <div
+            key={item.title}
+            className="border-border bg-card rounded-xl border p-4"
+          >
+            <dt className="text-primary font-mono text-xs font-semibold uppercase">
+              {item.title}
+            </dt>
+            <dd className="text-muted-foreground mt-2 text-sm leading-relaxed">
+              {item.body}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
+}
+
 export function ServicePageView({
   service,
   baseUrl,
@@ -58,6 +235,10 @@ export function ServicePageView({
   baseUrl: string;
 }) {
   const url = publicUrl("ru", baseUrl, `/uslugi/${service.slug}`);
+  const caseLink = serviceCaseLinks[service.slug];
+  const relatedLinks = caseLink
+    ? [...serviceRelatedLinks[service.slug], caseLink]
+    : serviceRelatedLinks[service.slug];
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -65,13 +246,19 @@ export function ServicePageView({
         "@type": "Service",
         "@id": `${url}#service`,
         name: service.title,
+        serviceType: service.eyebrow,
         description: service.description,
         provider: {
           "@type": "Organization",
+          "@id": `${baseUrl}/#organization`,
           name: "Ludvik4",
           url: baseUrl,
         },
-        areaServed: "RU",
+        areaServed: "Worldwide",
+        audience: {
+          "@type": "Audience",
+          audienceType: "малый бизнес и основатели",
+        },
         offers: {
           "@type": "Offer",
           priceCurrency: "RUB",
@@ -169,6 +356,11 @@ export function ServicePageView({
             title="Границы базовой оценки"
             items={service.boundaries}
           />
+          <ReadinessSection items={serviceReadiness[service.slug]} />
+          <RelatedLinksSection
+            title="Связанные материалы"
+            items={relatedLinks}
+          />
         </div>
       </Section>
 
@@ -250,9 +442,54 @@ export function CasesPreview() {
   );
 }
 
-export function CasesIndexView() {
+export function CasesIndexView({ baseUrl }: { baseUrl: string }) {
+  const url = publicUrl("ru", baseUrl, "/cases");
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        name: "Кейсы Ludvik4",
+        description:
+          "Публичные примеры сайтов, автоматизаций, MVP и AI-assisted development проектов Ludvik4.",
+        url,
+        isPartOf: { "@id": `${baseUrl}/#website` },
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: caseStudies.map((item, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            url: publicUrl("ru", baseUrl, `/cases/${item.slug}`),
+            name: item.title,
+          })),
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Главная",
+            item: `${baseUrl}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Кейсы",
+            item: url,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <PageShell>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
+      />
       <div className="mx-auto max-w-5xl px-6 py-14">
         <Breadcrumbs items={[{ label: "Кейсы" }]} />
         <div className="mt-10">

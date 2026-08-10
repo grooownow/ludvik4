@@ -18,5 +18,5 @@ export const metadata: Metadata = {
 
 export default function CasesPage() {
   if (env.SITE_MARKET !== "ru") notFound();
-  return <CasesIndexView />;
+  return <CasesIndexView baseUrl={env.NEXT_PUBLIC_APP_URL} />;
 }

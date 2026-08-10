@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "project_root": "/private/var/folders/mj/rrr6qpzx0mq6r9cqwr61sx340000gn/T/tmp.kY5289Up9L/ludvik4",
+  "project_url": "https://ludvik4.ru/",
+  "mode": "autopilot",
+  "created_at": "2026-08-10T16:15:13+00:00",
+  "updated_at": "2026-08-10T17:07:58+00:00",
+  "current_stage": "retest",
+  "completed_stages": [
+    "inventory",
+    "service-files-audit",
+    "indexing-preflight",
+    "semantic-audit",
+    "implementation",
+    "retest"
+  ],
+  "next_stage": "publish",
+  "freshness": {
+    "status": "fresh",
+    "latest_relevant_change": "2026-08-10T17:07:46.851580+00:00",
+    "latest_relevant_file": "out/_not-found/__next._head.txt",
+    "scanned_relevant_files": 557
+  },
+  "artifacts": [
+    "docs/seo/ludvik4-seo-audit-2026-08-10.md",
+    "docs/seo/seo-handoff.md",
+    "docs/seo/seo-state.json"
+  ],
+  "blockers": [
+    "Changes are not committed or pushed yet; rank-in-ai-seo publish policy requires an explicit push request."
+  ],
+  "next_actions": [
+    "Commit and push the safe SEO/SRO implementation when approved.",
+    "After deploy, rerun live indexing_preflight.py for /, /blog/, /cases/, all /uslugi/*, and 2-3 edited article pages.",
+    "In Google Search Console/Yandex Webmaster, request recrawl for the three service pages and blog hub after deploy.",
+    "Content decisions still open: deeper case outcomes, comparison articles, and a standalone About page if wanted."
+  ]
+}

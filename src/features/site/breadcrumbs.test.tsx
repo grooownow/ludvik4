@@ -64,7 +64,7 @@ describe("Breadcrumbs", () => {
       within(breadcrumbs).getByText("Разработка лендинга под ключ"),
     ).toHaveAttribute("aria-current", "page");
 
-    rerender(<CasesIndexView />);
+    rerender(<CasesIndexView baseUrl="https://ludvik4.ru" />);
     breadcrumbs = screen.getByRole("navigation", {
       name: "Хлебные крошки",
     });

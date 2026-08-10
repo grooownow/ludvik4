@@ -7,9 +7,11 @@ import {
   Breadcrumbs,
   canonicalPath,
   getMarketContent,
+  publicUrl,
   SiteHeader,
 } from "@/features/site";
 import { env } from "@/lib/env";
+import { jsonLdString } from "@/lib/json-ld";
 
 const ruContent = getMarketContent("ru");
 
@@ -37,9 +39,56 @@ export default function BlogPage() {
   // The blog is a RU-market surface; an EN build 404s it.
   if (env.SITE_MARKET !== "ru") notFound();
   const articles = getPublishedArticles();
+  const baseURL = env.NEXT_PUBLIC_APP_URL;
+  const blogUrl = publicUrl("ru", baseURL, "/blog");
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Blog",
+        "@id": `${blogUrl}#blog`,
+        name: "Блог Ludvik4",
+        description:
+          "Статьи Ludvik4 об AI-агентах в разработке, spec-driven development, автоматизации и запуске цифровых продуктов.",
+        url: blogUrl,
+        inLanguage: "ru",
+        publisher: { "@id": `${baseURL}/#organization` },
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: articles.map((article, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            url: publicUrl("ru", baseURL, `/blog/${article.slug}`),
+            name: article.title,
+          })),
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Главная",
+            item: `${baseURL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Блог",
+            item: blogUrl,
+          },
+        ],
+      },
+    ],
+  };
 
   return (
     <div className="bg-background text-foreground flex min-h-screen flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
+      />
       <SiteHeader content={ruContent} contactHref="/#contact" />
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-14">

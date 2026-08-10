@@ -132,6 +132,258 @@ const mdxComponents: MDXComponents = {
   ),
 };
 
+type RelatedLink = {
+  href: Route;
+  title: string;
+  description: string;
+};
+
+const defaultRelatedLinks: RelatedLink[] = [
+  {
+    href: "/uslugi/razrabotka-lendinga",
+    title: "Разработка лендинга",
+    description: "Структура, тексты, базовое SEO, аналитика и запуск.",
+  },
+  {
+    href: "/uslugi/avtomatizatsiya-biznes-processov",
+    title: "Автоматизация бизнес-процессов",
+    description: "Workflow, интеграции, AI и контроль ошибок.",
+  },
+  {
+    href: "/uslugi/razrabotka-mvp",
+    title: "Разработка MVP",
+    description: "Первый рабочий релиз вокруг одного сценария.",
+  },
+];
+
+const relatedBySlug: Partial<Record<string, RelatedLink[]>> = {
+  "ai-avtomatizatsiya-malogo-biznesa": [
+    {
+      href: "/uslugi/avtomatizatsiya-biznes-processov",
+      title: "Автоматизация бизнес-процессов",
+      description: "Как превратить повторяющуюся ручную работу в workflow.",
+    },
+    {
+      href: "/blog/avtomatizatsiya-obrabotki-zayavok",
+      title: "Автоматизация обработки заявок",
+      description: "Пример процесса с входом, статусами и уведомлениями.",
+    },
+    {
+      href: "/blog/vnutrennee-veb-prilozhenie-dlya-biznesa",
+      title: "Внутреннее веб-приложение",
+      description: "Когда автоматизации уже нужен отдельный интерфейс.",
+    },
+  ],
+  "avtomatizatsiya-obrabotki-zayavok": [
+    {
+      href: "/uslugi/avtomatizatsiya-biznes-processov",
+      title: "Автоматизация бизнес-процессов",
+      description: "Состав работы и границы проекта автоматизации.",
+    },
+    {
+      href: "/blog/ai-avtomatizatsiya-malogo-biznesa",
+      title: "AI-автоматизация малого бизнеса",
+      description: "Где модель помогает, а где нужна обычная логика.",
+    },
+    {
+      href: "/cases/fortnoise",
+      title: "Кейс FortNoise",
+      description: "Публичный сервис с пользовательскими публикациями.",
+    },
+  ],
+  "chto-podgotovit-pered-zakazom-lendinga": [
+    {
+      href: "/uslugi/razrabotka-lendinga",
+      title: "Разработка лендинга",
+      description: "Как выглядит работа над страницей под одно действие.",
+    },
+    {
+      href: "/blog/stoimost-lendinga-2026",
+      title: "Стоимость лендинга",
+      description: "Что входит в цену и что оценивается отдельно.",
+    },
+    {
+      href: "/blog/lending-ili-mnogostranichnyy-sayt",
+      title: "Лендинг или сайт",
+      description: "Как выбрать структуру под поисковый и рекламный трафик.",
+    },
+  ],
+  "lending-ili-mnogostranichnyy-sayt": [
+    {
+      href: "/uslugi/razrabotka-lendinga",
+      title: "Разработка лендинга",
+      description: "Под одно предложение и одно целевое действие.",
+    },
+    {
+      href: "/blog/chto-podgotovit-pered-zakazom-lendinga",
+      title: "Подготовка к лендингу",
+      description: "Какие вопросы помогают собрать правильную структуру.",
+    },
+    {
+      href: "/blog/stoimost-lendinga-2026",
+      title: "Стоимость лендинга",
+      description: "Как сравнивать предложения на разработку.",
+    },
+  ],
+  "mvp-etapy-sroki-pervyy-reliz": [
+    {
+      href: "/uslugi/razrabotka-mvp",
+      title: "Разработка MVP",
+      description: "Компактное веб-приложение под одну ключевую задачу.",
+    },
+    {
+      href: "/blog/stoimost-razrabotki-mvp",
+      title: "Стоимость MVP",
+      description: "Как рассчитать бюджет первого релиза.",
+    },
+    {
+      href: "/blog/vnutrennee-veb-prilozhenie-dlya-biznesa",
+      title: "Внутреннее приложение",
+      description: "Когда первый релиз нужен для рабочих процессов.",
+    },
+  ],
+  "stoimost-lendinga-2026": [
+    {
+      href: "/uslugi/razrabotka-lendinga",
+      title: "Разработка лендинга",
+      description: "Базовый состав работы и границы оценки.",
+    },
+    {
+      href: "/blog/chto-podgotovit-pered-zakazom-lendinga",
+      title: "Что обдумать перед заказом",
+      description: "Как подготовить исходные материалы без лишнего брифа.",
+    },
+    {
+      href: "/blog/lending-ili-mnogostranichnyy-sayt",
+      title: "Лендинг или многостраничный сайт",
+      description: "Как формат влияет на цену и развитие.",
+    },
+  ],
+  "stoimost-razrabotki-mvp": [
+    {
+      href: "/uslugi/razrabotka-mvp",
+      title: "Разработка MVP",
+      description: "Проектирование, UX/UI, backend, тестирование и запуск.",
+    },
+    {
+      href: "/blog/mvp-etapy-sroki-pervyy-reliz",
+      title: "Этапы MVP",
+      description: "Как определить состав первого релиза.",
+    },
+    {
+      href: "/blog/vnutrennee-veb-prilozhenie-dlya-biznesa",
+      title: "Внутреннее веб-приложение",
+      description: "Когда MVP решает внутренний рабочий сценарий.",
+    },
+  ],
+  "vnutrennee-veb-prilozhenie-dlya-biznesa": [
+    {
+      href: "/uslugi/razrabotka-mvp",
+      title: "Разработка MVP",
+      description: "Первый релиз продукта или внутреннего инструмента.",
+    },
+    {
+      href: "/uslugi/avtomatizatsiya-biznes-processov",
+      title: "Автоматизация процесса",
+      description: "Когда достаточно workflow без отдельного приложения.",
+    },
+    {
+      href: "/blog/stoimost-razrabotki-mvp",
+      title: "Стоимость MVP",
+      description: "Какие части увеличивают бюджет веб-приложения.",
+    },
+  ],
+  "cursor-rules": [
+    {
+      href: "/blog/agents-ready-project",
+      title: "Подготовка проекта к AI-агентам",
+      description: "AGENTS.md, правила, спеки и механические ограничители.",
+    },
+    {
+      href: "/blog/agents-md-primer",
+      title: "AGENTS.md",
+      description: "Пример и шаблон файла инструкций для AI-агентов.",
+    },
+    {
+      href: "/gridfin/",
+      title: "Gridfin",
+      description: "Application Skeleton с rules, specs, tests и gates.",
+    },
+  ],
+  "github-spec-kit": [
+    {
+      href: "/blog/spec-driven-development",
+      title: "Spec-driven development",
+      description: "Разработка через спецификации на практике.",
+    },
+    {
+      href: "/gridfin/docs/application-skeleton",
+      title: "Application Skeleton",
+      description: "Чем каркас приложения отличается от boilerplate.",
+    },
+    {
+      href: "/cases/gridfin",
+      title: "Кейс Gridfin",
+      description: "Как процесс встроен в собственный продукт.",
+    },
+  ],
+  "agents-md-primer": [
+    {
+      href: "/blog/agents-ready-project",
+      title: "Проект для AI-агентов",
+      description: "Какие правила и проверки нужны вокруг AGENTS.md.",
+    },
+    {
+      href: "/blog/cursor-rules",
+      title: "Cursor rules",
+      description: "Как правила работают в Cursor и чем отличаются.",
+    },
+    {
+      href: "/gridfin/",
+      title: "Gridfin",
+      description: "Готовый каркас для Claude Code с правилами и гейтами.",
+    },
+  ],
+  "spec-driven-development": [
+    {
+      href: "/blog/github-spec-kit",
+      title: "GitHub Spec Kit",
+      description: "Инструментарий для spec-driven development.",
+    },
+    {
+      href: "/blog/agents-ready-project",
+      title: "Проект для AI-агентов",
+      description: "Как спеки, правила и тесты собираются в систему.",
+    },
+    {
+      href: "/gridfin/guides/why-ai-needs-engineering-rules",
+      title: "Зачем AI нужны инженерные правила",
+      description: "Почему rules-файла недостаточно без hooks и gates.",
+    },
+  ],
+  "agents-ready-project": [
+    {
+      href: "/blog/agents-md-primer",
+      title: "AGENTS.md",
+      description: "Конкретный пример файла инструкций для агентов.",
+    },
+    {
+      href: "/cases/qa-pilot",
+      title: "Кейс qa-pilot",
+      description: "QA-копилот для аудита, планирования и тестирования.",
+    },
+    {
+      href: "/gridfin/",
+      title: "Gridfin",
+      description: "Application Skeleton для проектов с Claude Code.",
+    },
+  ],
+};
+
+function relatedLinksFor(slug: string): RelatedLink[] {
+  return relatedBySlug[slug] ?? defaultRelatedLinks;
+}
+
 export default async function ArticlePage({
   params,
 }: {
@@ -145,6 +397,7 @@ export default async function ArticlePage({
 
   const baseURL = env.NEXT_PUBLIC_APP_URL;
   const articleUrl = publicUrl("ru", baseURL, `/blog/${article.slug}`);
+  const relatedLinks = relatedLinksFor(article.slug);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -156,12 +409,20 @@ export default async function ArticlePage({
         inLanguage: "ru",
         url: articleUrl,
         ...(article.cover && { image: `${baseURL}${article.cover}` }),
-        author: { "@type": "Organization", name: "Ludvik4", url: baseURL },
-        publisher: {
+        author: {
           "@type": "Organization",
+          "@id": `${baseURL}/#organization`,
           name: "Ludvik4",
           url: baseURL,
         },
+        publisher: {
+          "@type": "Organization",
+          "@id": `${baseURL}/#organization`,
+          name: "Ludvik4",
+          url: baseURL,
+        },
+        about: relatedLinks.map((link) => link.title),
+        mainEntityOfPage: articleUrl,
       },
       {
         "@type": "BreadcrumbList",
@@ -224,6 +485,31 @@ export default async function ArticlePage({
           ) : null}
           <MDXRemote source={article.content} components={mdxComponents} />
         </article>
+
+        <aside className="border-pink-soft mt-12 border-y py-6">
+          <p className="text-muted-foreground font-mono text-xs font-semibold tracking-widest uppercase">
+            Источник
+          </p>
+          <p className="mt-3 max-w-3xl leading-relaxed">
+            Материал подготовлен Ludvik4 на основе практики разработки сайтов,
+            автоматизаций, MVP и AI-assisted development. Связанные услуги и
+            разборы ниже помогают перейти от общей темы к конкретному сценарию.
+          </p>
+          <div className="mt-5 grid gap-3 sm:grid-cols-3">
+            {relatedLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="border-border bg-card hover:border-primary/40 rounded-xl border p-4 transition-colors"
+              >
+                <h2 className="text-sm font-bold">{link.title}</h2>
+                <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+                  {link.description}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </aside>
 
         <div className="border-pink-soft bg-accent mt-14 rounded-2xl border p-6">
           <h2 className="text-lg font-bold">Есть похожая задача?</h2>
