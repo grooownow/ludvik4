@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { LeadForm } from "@/features/lead";
-import { AnchorLink } from "./anchor-link";
 import { jsonLdString } from "@/lib/json-ld";
 import { type MarketContent, TELEGRAM_URL } from "./content";
 import { ServiceScopes } from "./service-scopes";
@@ -64,7 +63,7 @@ export function HomeEn({
             </p>
             <div className="mt-7">
               <Button asChild size="lg">
-                <AnchorLink href="#contact">{content.hero.cta}</AnchorLink>
+                <Link href="#contact">{content.hero.cta}</Link>
               </Button>
             </div>
           </div>
