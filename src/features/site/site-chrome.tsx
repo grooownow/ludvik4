@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { TelegramLink } from "@/components/telegram-link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { AnchorLink, HomeLink } from "./anchor-link";
 import { TELEGRAM_URL, type MarketContent, type ServiceCard } from "./content";
 
 // Shared presentational chrome for both markets. Purely visual — every string
@@ -53,7 +54,7 @@ export function SiteHeader({
   return (
     <header className="border-pink-soft bg-background/90 sticky top-0 z-10 border-b backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
-        <Link
+        <HomeLink
           href="/"
           className="font-mono text-sm font-bold tracking-tight"
           aria-label={
@@ -61,7 +62,7 @@ export function SiteHeader({
           }
         >
           Ludvik4
-        </Link>
+        </HomeLink>
         <nav
           aria-label={navigationLabel}
           className="hidden items-center gap-5 sm:flex"
@@ -76,7 +77,7 @@ export function SiteHeader({
             </Link>
           ))}
           <Button asChild size="sm">
-            <Link href={contactHref as Route}>{content.nav.cta}</Link>
+            <AnchorLink href={contactHref}>{content.nav.cta}</AnchorLink>
           </Button>
         </nav>
 
@@ -103,7 +104,7 @@ export function SiteHeader({
               </Link>
             ))}
             <Button asChild size="sm" className="mt-2">
-              <Link href={contactHref as Route}>{content.nav.cta}</Link>
+              <AnchorLink href={contactHref}>{content.nav.cta}</AnchorLink>
             </Button>
           </nav>
         </details>

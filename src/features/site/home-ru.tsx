@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { TelegramLink } from "@/components/telegram-link";
 import { Button } from "@/components/ui/button";
 import { FaqSection } from "@/features/faq";
 import { jsonLdString } from "@/lib/json-ld";
+import { AnchorLink } from "./anchor-link";
 import { type MarketContent, TELEGRAM_URL } from "./content";
 import { buildHomeJsonLd } from "./seo";
 import { CasesPreview } from "./commercial-pages";
@@ -50,7 +50,7 @@ export function HomeRu({
             </p>
             <div className="mt-7">
               <Button asChild size="lg">
-                <Link href="#contact">{content.hero.cta}</Link>
+                <AnchorLink href="#contact">{content.hero.cta}</AnchorLink>
               </Button>
             </div>
           </div>
