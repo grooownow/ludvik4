@@ -133,7 +133,7 @@ const mdxComponents: MDXComponents = {
 };
 
 type RelatedLink = {
-  href: Route;
+  href: string;
   title: string;
   description: string;
 };
@@ -499,7 +499,7 @@ export default async function ArticlePage({
             {relatedLinks.map((link) => (
               <Link
                 key={link.href}
-                href={link.href}
+                href={link.href as Route}
                 className="border-border bg-card hover:border-primary/40 rounded-xl border p-4 transition-colors"
               >
                 <h2 className="text-sm font-bold">{link.title}</h2>

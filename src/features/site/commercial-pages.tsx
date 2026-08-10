@@ -51,7 +51,7 @@ function BulletSection({ title, items }: { title: string; items: string[] }) {
 }
 
 type RelatedLink = {
-  href: Route;
+  href: string;
   title: string;
   description: string;
 };
@@ -188,7 +188,7 @@ function RelatedLinksSection({
         {items.map((item) => (
           <Link
             key={item.href}
-            href={item.href}
+            href={item.href as Route}
             className="border-border bg-card hover:border-primary/40 rounded-xl border p-4 transition-colors"
           >
             <h3 className="text-sm font-bold">{item.title}</h3>
