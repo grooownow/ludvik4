@@ -21,7 +21,15 @@ describe("international commercial content", () => {
   });
 
   it("uses only globally suitable proof on the English site", () => {
-    expect(internationalWork.map((item) => item.slug)).toEqual(["qa-pilot"]);
+    expect(internationalWork.map((item) => item.slug)).toEqual([
+      "qa-pilot",
+      "gridfin",
+    ]);
+    expect(internationalWork[1]?.cardLink).toEqual({
+      href: "/gridfin/en",
+      label: "View Gridfin landing",
+      newTab: true,
+    });
     expect(JSON.stringify(internationalWork)).not.toMatch(
       /\.ru\b|russia|russian|kaliningrad|fortnoise/i,
     );

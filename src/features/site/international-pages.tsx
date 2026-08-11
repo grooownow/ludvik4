@@ -202,9 +202,14 @@ export function InternationalServiceView({
 }
 
 function WorkCard({ item }: { item: InternationalWorkItem }) {
+  const href = item.cardLink?.href ?? `/work/${item.slug}`;
+
   return (
     <Link
-      href={`/work/${item.slug}` as Route}
+      href={href as Route}
+      {...(item.cardLink?.newTab
+        ? { target: "_blank", rel: "noopener noreferrer" }
+        : {})}
       className="border-border bg-card hover:border-primary/60 block rounded-2xl border p-6 transition-colors"
     >
       <p className="text-muted-foreground font-mono text-xs font-semibold tracking-widest uppercase">
@@ -215,7 +220,11 @@ function WorkCard({ item }: { item: InternationalWorkItem }) {
         {item.description}
       </p>
       <span className="text-primary mt-5 inline-block font-mono text-sm font-semibold">
-        Read the case study →
+        {item.cardLink?.label ?? "Read the case study"}{" "}
+        {item.cardLink ? "↗" : "→"}
+        {item.cardLink ? (
+          <span className="sr-only"> (opens in a new tab)</span>
+        ) : null}
       </span>
     </Link>
   );
@@ -233,8 +242,8 @@ export function InternationalWorkIndexView() {
           </h1>
           <p className="text-muted-foreground mt-5 text-lg leading-relaxed">
             Work appears here when the product, code, or outcome can be checked
-            publicly. The first case is an open-source tool built and maintained
-            in the open.
+            publicly. Explore an open-source testing tool and the working
+            product behind an enforceable AI-assisted development process.
           </p>
         </div>
         <div className="mt-10 grid gap-5">

@@ -70,7 +70,7 @@ function enBody(baseURL: string): string {
   const workLines = internationalWork
     .map(
       (item) =>
-        `- [${item.title}](${publicUrl("en", baseURL, `/work/${item.slug}`)}): ${item.description}`,
+        `- [${item.title}](${publicUrl("en", baseURL, item.cardLink?.href ?? `/work/${item.slug}`)}): ${item.description}`,
     )
     .join("\n");
   const guideLines = internationalGuides

@@ -17,8 +17,10 @@ and HTTP runtime checks are green. Commit `6390e58` is on `main`; main CI
 `31515277373` passed every job. The landing, terms, both supporting pages,
 root/product sitemaps and `llms.txt` return `200` in production. All three
 indexing preflights and the service-files audit pass with no issues; invalid
-lead input returns `400`. Next: submit the refreshed root sitemap and request
-indexing for the landing in the existing Search Console property.
+lead input returns `400`. The international `/work` page now lists Gridfin as
+a developer product and opens its landing in a new tab. Next: submit the
+refreshed root sitemap and request indexing for the landing in the existing
+Search Console property.
 
 **[PLANNED] Studio site ludvik4.dev in all landing locales
 (de/es/fr/ja/pt-br).** Author decision 2026-08-11: beyond /gridfin, the

@@ -27,6 +27,7 @@ export {
   getInternationalGuide,
   getInternationalService,
   getInternationalWork,
+  internationalCaseStudies,
   internationalFaq,
   internationalGuides,
   internationalServicePages,

@@ -6,7 +6,7 @@ import { env } from "@/lib/env";
 export const metadata: Metadata = {
   title: "Selected Work",
   description:
-    "Selected Ludvik4 work with public evidence, including open-source products, documentation, and inspectable code.",
+    "Selected Ludvik4 work with public evidence, including developer products, documentation, and inspectable code.",
   alternates: { canonical: "/work" },
   openGraph: {
     title: "Selected Work — Ludvik4",

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import {
   getInternationalWork,
+  internationalCaseStudies,
   InternationalWorkView,
-  internationalWork,
 } from "@/features/site";
 import { env } from "@/lib/env";
 
@@ -11,7 +11,7 @@ type Params = { slug: string };
 
 export function generateStaticParams() {
   if (env.SITE_MARKET !== "en") return [];
-  return internationalWork.map((item) => ({ slug: item.slug }));
+  return internationalCaseStudies.map((item) => ({ slug: item.slug }));
 }
 
 export const dynamicParams = false;

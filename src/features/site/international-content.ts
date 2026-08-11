@@ -14,7 +14,7 @@ export type InternationalServicePage = {
 };
 
 export type InternationalWorkItem = {
-  slug: "qa-pilot";
+  slug: "qa-pilot" | "gridfin";
   title: string;
   kind: string;
   description: string;
@@ -24,6 +24,11 @@ export type InternationalWorkItem = {
   result: string;
   website: string;
   websiteLabel: string;
+  cardLink?: {
+    href: "/gridfin/en";
+    label: string;
+    newTab: true;
+  };
 };
 
 export type InternationalGuide = {
@@ -191,7 +196,36 @@ export const internationalWork: InternationalWorkItem[] = [
     website: "https://github.com/grooownow/qa-pilot",
     websiteLabel: "View qa-pilot on GitHub",
   },
+  {
+    slug: "gridfin",
+    title: "Gridfin",
+    kind: "Developer product",
+    description:
+      "A Claude Code starter that combines an application skeleton, specifications, tests, hooks, quality gates, and reusable engineering workflows.",
+    lead: "Gridfin gives AI-assisted product development a working architectural baseline and an enforceable delivery process from the first commit.",
+    problem:
+      "AI coding agents can move quickly, but a prompt alone does not preserve architecture, testing discipline, product decisions, or release quality across a growing codebase.",
+    solution: [
+      "A production-oriented application skeleton with an explicit architecture",
+      "Specifications and persistent project context for repeatable decisions",
+      "Automated tests, hooks, and quality gates that enforce the agreed workflow",
+      "Reusable skills and playbooks for implementation, review, and release",
+    ],
+    result:
+      "The international product landing, technical explanation, engineering guide, and early-access path are publicly available.",
+    website: "https://ludvik4.dev/gridfin/en",
+    websiteLabel: "View Gridfin landing",
+    cardLink: {
+      href: "/gridfin/en",
+      label: "View Gridfin landing",
+      newTab: true,
+    },
+  },
 ];
+
+export const internationalCaseStudies = internationalWork.filter(
+  (item) => !item.cardLink,
+);
 
 export const internationalGuides: InternationalGuide[] = [
   {
@@ -582,7 +616,7 @@ export function getInternationalService(
 export function getInternationalWork(
   slug: string,
 ): InternationalWorkItem | undefined {
-  return internationalWork.find((item) => item.slug === slug);
+  return internationalCaseStudies.find((item) => item.slug === slug);
 }
 
 export function getInternationalGuide(

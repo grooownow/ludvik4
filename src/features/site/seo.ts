@@ -4,8 +4,8 @@ import { type Market, type MarketContent, TELEGRAM_URL } from "./content";
 import {
   internationalFaq,
   internationalGuides,
+  internationalCaseStudies,
   internationalServicePages,
-  internationalWork,
 } from "./international-content";
 
 // Per-market SEO surfaces, built from the market content object. Pure functions
@@ -169,7 +169,7 @@ export function buildSitemap(
       changeFrequency: "monthly",
       priority: 0.8,
     });
-    for (const item of internationalWork) {
+    for (const item of internationalCaseStudies) {
       entries.push({
         url: publicUrl(market, baseUrl, `/work/${item.slug}`),
         changeFrequency: "monthly",
