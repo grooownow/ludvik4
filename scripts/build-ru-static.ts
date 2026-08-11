@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import { existsSync } from "node:fs";
 import { cp, mkdir, rename, rm } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
@@ -7,6 +8,7 @@ const stashRoot = join(root, `.static-export-${process.pid}`);
 const ruOnlyPublicRoot = join(root, "resources/ru-public");
 const serverOnlyPaths = [
   "src/app/api/auth",
+  "src/app/api/gridfin-lead",
   "src/app/dashboard",
   "src/app/signin",
   "src/app/opengraph-image.tsx",
@@ -15,7 +17,17 @@ const serverOnlyPaths = [
   "src/app/services",
   "src/app/work",
   "src/middleware.ts",
+  // The international Gridfin bundle (EN first; reviewed locales may follow), served by
+  // the EN Vercel app. Left in place, `next export` would copy it into out/
+  // and the RU-bundle cp below would merge over it. Stash it like the
+  // server-only routes so only the RU bundle is copied to ludvik4.ru.
+  "public/gridfin",
 ];
+
+// Paths that may legitimately be absent. public/gridfin lands only once the
+// EN texts are ready (ADR 0005); a missing server-only route, by contrast,
+// means the tree is broken and MUST fail loudly, so the skip is not blanket.
+const optionalPaths = new Set(["public/gridfin"]);
 
 async function move(source: string, destination: string) {
   try {
@@ -58,6 +70,9 @@ async function main() {
   try {
     for (const relativePath of serverOnlyPaths) {
       const source = join(root, relativePath);
+      if (optionalPaths.has(relativePath) && !existsSync(source)) {
+        continue;
+      }
       const stash = join(stashRoot, relativePath);
       await mkdir(dirname(stash), { recursive: true });
       await move(source, stash);

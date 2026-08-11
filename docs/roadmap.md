@@ -6,6 +6,26 @@ writing detail here.
 
 ## Now
 
+**[INFRA DONE 2026-08-11 — publication pending] Gridfin international
+landing on ludvik4.dev/gridfin (ADR 0005).** Serving infrastructure is live
+and dormant: `config/rewrites.ts` (EN-only afterFiles rules, slashless URLs
+— `/gridfin/en`), `public/gridfin/` as the bundle home, RU static export
+stashes it so it cannot leak to ludvik4.ru. `/gridfin*` on `.dev` stays 404
+until the bundle is committed. **Blocked on:** the author's reworked EN
+texts (in progress in `grooownow/gridfin`, `marketing/landing/`). First
+publication is EN-only; translated locales (de/es/fr/ja/pt-br) wait for
+market-quality review and must not be advertised in sitemap/hreflang early
+— the generator still needs slashless-URL + EN-only-hreflang emission
+before publishing (deferred: the author is editing `build.ts` right now).
+Publish steps: `docs/playbooks/production-en-vercel.md` § /gridfin.
+
+**[PLANNED] Studio site ludvik4.dev in all landing locales
+(de/es/fr/ja/pt-br).** Author decision 2026-08-11: beyond /gridfin, the
+studio site itself gets localized. Big project — needs its own spec first
+(i18n routing for the Next app, ~8 pages × 5 locales of copy, per-market
+strategy, hreflang/sitemap model). Not started; next step is a spec/design
+session, not code.
+
 **[DONE 2026-08-11] EN semantic content wave 2.** The first supporting content
 network is live without changing the approved design system:
 `/guides` plus a website-project brief, an automation-priority scorecard, and

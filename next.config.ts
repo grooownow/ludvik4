@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import { buildRedirects, type Market } from "./config/redirects";
+import { buildRewrites } from "./config/rewrites";
 
 const isStaticExport = process.env.STATIC_EXPORT === "true";
 const market: Market = process.env.SITE_MARKET === "en" ? "en" : "ru";
@@ -71,6 +72,13 @@ const nextConfig: NextConfig = {
         // this stays on the Node build's side of the branch.
         async redirects() {
           return buildRedirects(market);
+        },
+        // Serving layer for the static Gridfin bundle under public/gridfin/
+        // (EN only, dormant until the bundle is committed) — the rationale
+        // and the slashless URL decision live in config/rewrites.ts and
+        // ADR 0005. afterFiles: real bundle files always win over rewrites.
+        async rewrites() {
+          return { afterFiles: buildRewrites(market) };
         },
       }),
 };

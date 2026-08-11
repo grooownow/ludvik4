@@ -105,6 +105,38 @@ The lead form is only proven by a real submission (the success message means
 Resend accepted the message — confirm the mail actually lands in
 `LEAD_EMAIL_TO`).
 
+## /gridfin — the international Gridfin landing (ADR 0005)
+
+Reviewed subset committed under `public/gridfin/`, built in
+`grooownow/gridfin` (`pnpm landing:build` → `marketing/landing/dist/`).
+ludvik4 never holds the source. Serving is `config/rewrites.ts` (EN-only
+`afterFiles` rules mapping extensionless paths to `<dir>/index.html`); URL
+style is slashless (`/gridfin/en`) — rationale in the ADR. The RU static
+export stashes `public/gridfin` (`scripts/build-ru-static.ts`), so this
+bundle can never leak onto `ludvik4.ru`.
+
+**Until a bundle is committed, `/gridfin*` answers 404 by design.**
+
+To publish (first round is EN-only per ADR 0005 — translated locales wait
+for a market-quality review and must not be advertised early):
+
+1. In `grooownow/gridfin`: finalize EN content, `pnpm i18n:check`,
+   `pnpm landing:build`.
+2. Copy into this repo: the root redirect `index.html`, `dist/en/`,
+   `dist/assets/`, and the EN-only sitemap → `public/gridfin/`.
+3. Commit, push; after deploy smoke-check:
+
+```bash
+for p in /gridfin /gridfin/en /gridfin/en/terms /gridfin/assets/og-en.png /gridfin/sitemap.xml; do
+  printf "%-28s %s\n" "$p" "$(curl -sS -o /dev/null -w '%{http_code}' https://ludvik4.dev$p)"
+done
+```
+
+Expected: all 200 (`/gridfin` serves the redirect page → `/gridfin/en`).
+Then resubmit the root `/sitemap.xml` in GSC; it is the sitemap declared by
+the EN robots file and includes all three Gridfin URLs. The smaller
+`/gridfin/sitemap.xml` remains a product-level discovery and diagnostics file.
+
 ## Diagnosing: DNS vs application
 
 - `dig +short ludvik4.dev` — empty/wrong → DNS, not Vercel.
