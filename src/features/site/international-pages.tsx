@@ -9,10 +9,8 @@ import type {
   InternationalServicePage,
   InternationalWorkItem,
 } from "./international-content";
-import {
-  internationalGuides,
-  internationalWork,
-} from "./international-content";
+import { internationalGuides } from "./international-content";
+import { InternationalWorkGrid } from "./international-work-grid";
 import { publicUrl } from "./seo";
 import { Eyebrow, Section, SiteFooter, SiteHeader } from "./site-chrome";
 
@@ -201,35 +199,6 @@ export function InternationalServiceView({
   );
 }
 
-function WorkCard({ item }: { item: InternationalWorkItem }) {
-  const href = item.cardLink?.href ?? `/work/${item.slug}`;
-
-  return (
-    <Link
-      href={href as Route}
-      {...(item.cardLink?.newTab
-        ? { target: "_blank", rel: "noopener noreferrer" }
-        : {})}
-      className="border-border bg-card hover:border-primary/60 block rounded-2xl border p-6 transition-colors"
-    >
-      <p className="text-muted-foreground font-mono text-xs font-semibold tracking-widest uppercase">
-        {item.kind}
-      </p>
-      <h2 className="mt-3 text-2xl font-bold">{item.title}</h2>
-      <p className="text-muted-foreground mt-3 max-w-2xl leading-relaxed">
-        {item.description}
-      </p>
-      <span className="text-primary mt-5 inline-block font-mono text-sm font-semibold">
-        {item.cardLink?.label ?? "Read the case study"}{" "}
-        {item.cardLink ? "↗" : "→"}
-        {item.cardLink ? (
-          <span className="sr-only"> (opens in a new tab)</span>
-        ) : null}
-      </span>
-    </Link>
-  );
-}
-
 export function InternationalWorkIndexView() {
   return (
     <InternationalShell>
@@ -246,11 +215,7 @@ export function InternationalWorkIndexView() {
             product behind an enforceable AI-assisted development process.
           </p>
         </div>
-        <div className="mt-10 grid gap-5">
-          {internationalWork.map((item) => (
-            <WorkCard key={item.slug} item={item} />
-          ))}
-        </div>
+        <InternationalWorkGrid />
       </div>
       <EnquiryCta />
     </InternationalShell>

@@ -7,11 +7,11 @@ describe("InternationalWorkIndexView", () => {
     render(<InternationalWorkIndexView />);
 
     expect(
-      screen.getByRole("heading", { level: 2, name: "Gridfin" }),
+      screen.getByRole("heading", { level: 3, name: "Gridfin" }),
     ).toBeInTheDocument();
 
     const landingLink = screen.getByRole("link", {
-      name: /View Gridfin landing/,
+      name: /Gridfin.*opens in a new tab/,
     });
     expect(landingLink).toHaveAttribute("href", "/gridfin/en");
     expect(landingLink).toHaveAttribute("target", "_blank");

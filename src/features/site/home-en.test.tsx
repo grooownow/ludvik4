@@ -55,6 +55,36 @@ describe("HomeEn", () => {
     ).toHaveAttribute("href", "/privacy");
   });
 
+  it("features Gridfin on the home page and opens its landing in a new tab", () => {
+    const { container } = render(
+      <HomeEn content={content} baseUrl="https://ludvik4.dev" />,
+    );
+
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Gridfin" }),
+    ).toBeInTheDocument();
+
+    const landingLink = screen.getByRole("link", {
+      name: /Gridfin.*opens in a new tab/,
+    });
+    expect(landingLink).toHaveAttribute("href", "/gridfin/en");
+    expect(landingLink).toHaveAttribute("target", "_blank");
+    expect(landingLink).toHaveAttribute("rel", "noopener noreferrer");
+    expect(
+      screen.getByRole("img", {
+        name: "Gridfin product landing with a Claude Code terminal preview",
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("img", {
+        name: "qa-pilot repository and testing workflow documentation",
+      }),
+    ).toBeInTheDocument();
+    expect(container.querySelector("#work .grid")).toHaveClass(
+      "sm:grid-cols-2",
+    );
+  });
+
   it("renders every FAQ item as an accordion button with a chevron", () => {
     const { container } = render(
       <HomeEn content={content} baseUrl="https://ludvik4.dev" />,

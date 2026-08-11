@@ -15,7 +15,8 @@ import { jsonLdString } from "@/lib/json-ld";
 import { type MarketContent, TELEGRAM_URL } from "./content";
 import { ServiceScopes } from "./service-scopes";
 import { buildHomeJsonLd } from "./seo";
-import { internationalFaq, internationalWork } from "./international-content";
+import { internationalFaq } from "./international-content";
+import { InternationalWorkGrid } from "./international-work-grid";
 import {
   Eyebrow,
   Section,
@@ -39,8 +40,6 @@ export function HomeEn({
 }) {
   const jsonLd = buildHomeJsonLd(content, baseUrl);
   const form = content.contact.form;
-  const featuredWork = internationalWork[0]!;
-
   return (
     <div className="bg-background text-foreground min-h-screen">
       <script
@@ -132,25 +131,11 @@ export function HomeEn({
           Public work you can inspect
         </h2>
         <p className="text-muted-foreground mt-4 max-w-2xl leading-relaxed">
-          Evidence matters more than a list of technologies. qa-pilot is an
-          open-source product with public code, documentation, releases, and a
-          working distribution path.
+          Evidence matters more than a list of technologies. These products have
+          public code, documentation, or a working product experience you can
+          inspect directly.
         </p>
-        <div className="border-border bg-card mt-8 rounded-2xl border p-6">
-          <p className="text-muted-foreground font-mono text-xs font-semibold tracking-widest uppercase">
-            {featuredWork.kind}
-          </p>
-          <h3 className="mt-3 text-xl font-bold">{featuredWork.title}</h3>
-          <p className="text-muted-foreground mt-3 max-w-2xl leading-relaxed">
-            {featuredWork.description}
-          </p>
-          <Link
-            href={"/work/qa-pilot" as Route}
-            className="text-primary mt-5 inline-block font-mono text-sm font-semibold"
-          >
-            Read the case study →
-          </Link>
-        </div>
+        <InternationalWorkGrid />
         <Link
           href={"/work" as Route}
           className="text-primary mt-6 inline-block font-mono text-sm font-semibold"

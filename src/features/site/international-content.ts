@@ -18,6 +18,8 @@ export type InternationalWorkItem = {
   title: string;
   kind: string;
   description: string;
+  image: string;
+  imageAlt: string;
   lead: string;
   problem: string;
   solution: string[];
@@ -182,6 +184,8 @@ export const internationalWork: InternationalWorkItem[] = [
     kind: "Open-source product",
     description:
       "A Codex plugin that plans, writes, audits, and runs software tests with project-specific context and evidence-based quality checks.",
+    image: "/cases/qa-pilot.webp",
+    imageAlt: "qa-pilot repository and testing workflow documentation",
     lead: "qa-pilot turns testing from an afterthought into a repeatable workflow that an AI coding agent can follow and verify.",
     problem:
       "AI coding tools can generate tests quickly, but generated coverage is often shallow, over-mocked, or unable to prove that it protects real behaviour.",
@@ -202,6 +206,8 @@ export const internationalWork: InternationalWorkItem[] = [
     kind: "Developer product",
     description:
       "A Claude Code starter that combines an application skeleton, specifications, tests, hooks, quality gates, and reusable engineering workflows.",
+    image: "/cases/gridfin.webp",
+    imageAlt: "Gridfin product landing with a Claude Code terminal preview",
     lead: "Gridfin gives AI-assisted product development a working architectural baseline and an enforceable delivery process from the first commit.",
     problem:
       "AI coding agents can move quickly, but a prompt alone does not preserve architecture, testing discipline, product decisions, or release quality across a growing codebase.",
