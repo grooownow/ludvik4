@@ -4,8 +4,8 @@
   "project_url": "https://ludvik4.dev",
   "mode": "fix-retest-publish",
   "created_at": "2026-08-10T17:43:23+00:00",
-  "updated_at": "2026-08-11T12:57:00+02:00",
-  "current_stage": "publish-wave-2",
+  "updated_at": "2026-08-11T13:12:00+02:00",
+  "current_stage": "search-index-monitoring",
   "completed_stages": [
     "inventory",
     "service-files-audit",
@@ -15,7 +15,9 @@
     "llm-visibility",
     "implementation",
     "production-retest-wave-1",
-    "content-wave-2"
+    "content-wave-2",
+    "publish-wave-2",
+    "production-retest-wave-2"
   ],
   "next_stage": "search-console-ownership-and-index-monitoring",
   "freshness": {
@@ -36,7 +38,6 @@
     "krobox@gmail.com does not have owner access to the existing Google Search Console domain property for ludvik4.dev"
   ],
   "next_actions": [
-    "Push wave 2 to main and retest the twelve-URL production surface",
     "Restore Search Console ownership and submit sitemap.xml",
     "Inspect Home, three service pages, and three guide pages",
     "Monitor public discovery weekly and choose the next guide from observed demand"

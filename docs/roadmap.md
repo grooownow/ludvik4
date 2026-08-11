@@ -6,13 +6,15 @@ writing detail here.
 
 ## Now
 
-**[IN PROGRESS 2026-08-11] EN semantic content wave 2.** The first supporting
-content network is implemented without changing the approved design system:
+**[DONE 2026-08-11] EN semantic content wave 2.** The first supporting content
+network is live without changing the approved design system:
 `/guides` plus a website-project brief, an automation-priority scorecard, and
 an MVP one-user-journey scope worksheet. Each guide links to exactly one
 commercial service; the service pages link back; header, footer, sitemap, and
-`llms.txt` expose the hub. Unit/component/integration tests, the EN production
-build, the standard RU e2e suite, and local EN runtime checks are green. Public
+`llms.txt` expose the hub. All twelve production URLs pass indexability
+preflight; service files, unit/component/integration tests, EN and RU builds,
+the standard e2e suite, and local EN runtime checks are green. Main CI
+`31485032481` and RU deploy `31485032490` passed. Public
 search checks still return no reliable result for `site:ludvik4.dev` or the
 exact EN titles. `krobox@gmail.com` is authenticated in Google Search Console
 but does not own the existing domain property, so sitemap submission and URL

@@ -1,8 +1,7 @@
 # EN commercial SEO and international source plan
 
-Status: commercial rebuild live on 2026-08-10; first semantic content wave
-implemented and verified locally on 2026-08-11; Search Console ownership and
-wave-2 production retest pending.
+Status: commercial rebuild live on 2026-08-10; first semantic content wave live
+and production-verified on 2026-08-11; Search Console ownership pending.
 
 ## Goal
 
@@ -43,13 +42,12 @@ service and is included in the twelve-URL candidate sitemap and `llms.txt`.
 
 ## Pending external actions
 
-1. Deploy the verified wave-2 candidate and retest all twelve production URLs.
-2. Restore `krobox@gmail.com` ownership of the existing Google Search Console
+1. Restore `krobox@gmail.com` ownership of the existing Google Search Console
    domain property.
-3. Submit the twelve-URL sitemap and inspect Home, the three service pages, and
+2. Submit the twelve-URL sitemap and inspect Home, the three service pages, and
    the three new guide pages.
-4. Record indexed/submitted states after 2–3 days and after 7 days.
-5. Align GitHub, Contra, and other selected public profiles with the product
+3. Record indexed/submitted states after 2–3 days and after 7 days.
+4. Align GitHub, Contra, and other selected public profiles with the product
    canon before running the first LLM-visibility comparison.
 
 No public international pricing, extra case claim, or search-console account
