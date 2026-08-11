@@ -6,6 +6,14 @@ writing detail here.
 
 ## Now
 
+**[DONE 2026-08-11] International Work preview isolation.** The Gridfin card
+now uses a dedicated English landing capture (`public/cases/gridfin-en.webp`),
+and qa-pilot is described as an AI plugin rather than a Codex plugin. The
+visible language dropdown on `/gridfin/en` no longer exposes the separate RU
+market (the machine-readable RU hreflang remains in `<head>`); the beta promise
+is locked to exactly two lines. Content and static-bundle regression tests,
+lint, 363 unit/component/integration tests, and 32/32 e2e tests are green.
+
 **[DONE 2026-08-11, round 2] Gridfin landing multilingual — all five
 translated locales live.** Same-day follow-up to the EN launch below: the
 MT locales (de/es/fr/ja/pt-br), already refreshed from the final EN source

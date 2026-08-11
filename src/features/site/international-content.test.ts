@@ -30,6 +30,10 @@ describe("international commercial content", () => {
       label: "View Gridfin landing",
       newTab: true,
     });
+    expect(internationalWork[0]?.description).toContain("An AI plugin");
+    expect(internationalWork[0]?.description).not.toContain("Codex plugin");
+    expect(internationalWork[1]?.image).toBe("/cases/gridfin-en.webp");
+    expect(internationalWork[1]?.image).not.toBe("/cases/gridfin.webp");
     expect(JSON.stringify(internationalWork)).not.toMatch(
       /\.ru\b|russia|russian|kaliningrad|fortnoise/i,
     );

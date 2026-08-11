@@ -127,6 +127,15 @@ describe("public Gridfin international bundle", () => {
     expect(html).toContain(
       '<link rel="canonical" href="https://ludvik4.dev/gridfin/en">',
     );
+    const switcher = html.match(
+      /<details class="lang">[\s\S]*?<\/details>/,
+    )?.[0];
+    expect(switcher).toBeDefined();
+    expect(switcher).not.toContain("ludvik4.ru");
+    expect(switcher).not.toContain("Русский");
+    expect(html).toContain(
+      '<h2 class="price-heading-split"><span>Beta: you test —</span><span>I fix</span></h2>',
+    );
     expect(html).not.toMatch(/Russia|functions\.yandexcloud\.net/);
     expect(terms).toContain("Gridfin International Beta Terms");
     expect(terms).toContain("laws of Spain");

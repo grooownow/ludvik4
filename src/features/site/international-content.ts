@@ -183,7 +183,7 @@ export const internationalWork: InternationalWorkItem[] = [
     title: "qa-pilot",
     kind: "Open-source product",
     description:
-      "A Codex plugin that plans, writes, audits, and runs software tests with project-specific context and evidence-based quality checks.",
+      "An AI plugin that plans, writes, audits, and runs software tests with project-specific context and evidence-based quality checks.",
     image: "/cases/qa-pilot.webp",
     imageAlt: "qa-pilot repository and testing workflow documentation",
     lead: "qa-pilot turns testing from an afterthought into a repeatable workflow that an AI coding agent can follow and verify.",
@@ -196,7 +196,7 @@ export const internationalWork: InternationalWorkItem[] = [
       "Persistent project context so quality decisions survive across sessions",
     ],
     result:
-      "The plugin is publicly available through the Codex plugin ecosystem and is developed in the open on GitHub.",
+      "The plugin is publicly available for AI coding agents and is developed in the open on GitHub.",
     website: "https://github.com/grooownow/qa-pilot",
     websiteLabel: "View qa-pilot on GitHub",
   },
@@ -206,7 +206,7 @@ export const internationalWork: InternationalWorkItem[] = [
     kind: "Developer product",
     description:
       "A Claude Code starter that combines an application skeleton, specifications, tests, hooks, quality gates, and reusable engineering workflows.",
-    image: "/cases/gridfin.webp",
+    image: "/cases/gridfin-en.webp",
     imageAlt: "Gridfin product landing with a Claude Code terminal preview",
     lead: "Gridfin gives AI-assisted product development a working architectural baseline and an enforceable delivery process from the first commit.",
     problem:
