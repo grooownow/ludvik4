@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Why AI Development Needs Engineering Rules — Gridfin</title>
+  <meta name="description" content="Claude Code writes code fast, but without rules every session re-decides everything. What breaks without specs and tests, why a rules file isn't enough, and how hooks and quality gates enforce the process.">
+  <link rel="canonical" href="https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules">
+  <link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/guides/why-ai-needs-engineering-rules/">
+  <link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules">
+  <link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules">
+  <meta property="og:title" content="Why AI Development Needs Engineering Rules — Gridfin">
+  <meta property="og:description" content="Claude Code writes code fast, but without rules every session re-decides everything. What breaks without specs and tests, why a rules file isn't enough, and how hooks and quality gates enforce the process.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules">
+  <meta property="og:image" content="https://ludvik4.dev/gridfin/assets/og-en.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Why AI Development Needs Engineering Rules — Gridfin">
+  <meta name="twitter:description" content="Claude Code writes code fast, but without rules every session re-decides everything. What breaks without specs and tests, why a rules file isn't enough, and how hooks and quality gates enforce the process.">
+  <meta name="twitter:image" content="https://ludvik4.dev/gridfin/assets/og-en.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@400;500;600&family=Geist:wght@400;500&family=Geist+Mono:wght@400;700&display=swap">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Why AI Development Needs Engineering Rules — Gridfin","description":"Claude Code writes code fast, but without rules every session re-decides everything. What breaks without specs and tests, why a rules file isn't enough, and how hooks and quality gates enforce the process.","url":"https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules","inLanguage":"en","author":{"@type":"Person","name":"Ludvik4","url":"https://ludvik4.dev"},"publisher":{"@type":"Person","name":"Ludvik4","url":"https://ludvik4.dev"},"image":"https://ludvik4.dev/gridfin/assets/og-en.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Gridfin","item":"https://ludvik4.dev/gridfin/en"},{"@type":"ListItem","position":2,"name":"Why AI Development Needs Engineering Rules — Gridfin","item":"https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules"}]}]}</script>
+  <style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Geist",system-ui,sans-serif;font-size:16px;line-height:1.5;color:#1A1A1A;background:#FFFFFF}
+  main{max-width:44rem;margin:0 auto;padding:48px 24px 72px}
+  h1,h2{font-family:"Oswald",sans-serif;text-transform:uppercase;line-height:1.1;font-weight:400}
+  h1{font-size:34px;margin:0 0 24px}
+  h2{font-size:22px;margin:40px 0 12px}
+  p,li{color:#4B5563}
+  a{color:#7B61FF}
+  .back{font-family:"Inter",system-ui,sans-serif;font-size:14px;margin:0 0 32px}
+  .back a{text-decoration:none}
+  </style>
+</head>
+<body>
+  <main>
+    <p class="back"><a href="https://ludvik4.dev/gridfin/en">← Gridfin</a></p>
+<h1>Why AI development needs engineering rules</h1>
+<p>Claude Code can write code fast, but without engineering rules it doesn't know which decisions must stay stable between sessions. Every new session starts from a clean context — and re-decides how to build the project.</p>
+<h2>AI speeds up writing code, but doesn't replace the process</h2>
+<p>The speed of generating code is not the same as the speed of building a product. A product is driven by decisions: which stack, where the module boundaries are, what counts as &quot;done&quot;. Engineering teams accumulate those decisions over years; an agent without a process makes them anew every day — and differently every time.</p>
+<h2>What breaks without rules, specs and tests</h2>
+<ul>
+<li>The architecture drifts: every session builds its own way, and the code stops adding up to one system.</li>
+<li>Features break each other: without tests a regression is invisible until a user runs into it.</li>
+<li>Review doesn't happen: the agent writes code faster than you can read it.</li>
+<li>A small change turns into rewriting half the project.</li>
+</ul>
+<h2>Why a rules file is not enough</h2>
+<p>A file with rules is a wish: the agent can read it and still do things its own way, and nobody is there to check. A rule only works when violating it stops something.</p>
+<h2>How hooks and quality gates turn rules into a mechanism</h2>
+<ul>
+<li>Hooks inspect every proposed change and stop a violation before the code is written.</li>
+<li>Quality gates — lint, tests, e2e and the build in one run — show red status before the merge.</li>
+<li>Tests must be able to fail: a &quot;green&quot; test that can't break verifies nothing.</li>
+</ul>
+<h2>How Gridfin applies this in the Application Skeleton</h2>
+<p>Gridfin ships all of this pre-assembled: an <a href="https://ludvik4.dev/gridfin/en/docs/application-skeleton">Application Skeleton</a> with rules, hooks, tests and gates — and a process where the spec precedes the code and verification is built into every step. More on the <a href="https://ludvik4.dev/gridfin/en">Gridfin home page</a>.</p>
+  </main>
+</body>
+</html>

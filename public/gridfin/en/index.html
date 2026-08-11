@@ -1,0 +1,921 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gridfin — Claude Code Starter with Tests &amp; Quality Gates</title>
+  <meta name="description" content="Gridfin turns an empty repository into an Application Skeleton for Claude Code: specs, engineering rules, hooks, tests and quality gates instead of vibe-code chaos.">
+  <link rel="canonical" href="https://ludvik4.dev/gridfin/en">
+  <link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en">
+  <link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/">
+  <link rel="alternate" hreflang="de" href="https://ludvik4.dev/gridfin/de">
+  <link rel="alternate" hreflang="es" href="https://ludvik4.dev/gridfin/es">
+  <link rel="alternate" hreflang="pt-BR" href="https://ludvik4.dev/gridfin/pt-br">
+  <link rel="alternate" hreflang="fr" href="https://ludvik4.dev/gridfin/fr">
+  <link rel="alternate" hreflang="ja" href="https://ludvik4.dev/gridfin/ja">
+  <link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en/">
+  <meta property="og:title" content="Gridfin — Claude Code Starter with Tests &amp; Quality Gates">
+  <meta property="og:description" content="Gridfin turns an empty repository into an Application Skeleton for Claude Code: specs, engineering rules, hooks, tests and quality gates instead of vibe-code chaos.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ludvik4.dev/gridfin/en">
+  <meta property="og:image" content="https://ludvik4.dev/gridfin/assets/og-en.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Gridfin">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Gridfin — Claude Code Starter with Tests &amp; Quality Gates">
+  <meta name="twitter:description" content="Gridfin turns an empty repository into an Application Skeleton for Claude Code: specs, engineering rules, hooks, tests and quality gates instead of vibe-code chaos.">
+  <meta name="twitter:image" content="https://ludvik4.dev/gridfin/assets/og-en.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@400;500;600&family=Geist:wght@400;500&family=Geist+Mono:wght@400;700&display=swap">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Gridfin","alternateName":"Gridfin for Claude Code","applicationCategory":"DeveloperApplication","applicationSubCategory":"Claude Code starter kit","operatingSystem":"macOS, Linux, Windows","softwareRequirements":"Claude Code, Git, terminal","url":"https://ludvik4.dev/gridfin/en","inLanguage":"en","creator":{"@type":"Person","name":"Ludvik4","url":"https://ludvik4.dev"},"featureList":["Application Skeleton","Specification-first workflow","Engineering rules","Hooks","Automated tests","Quality gates","Playbooks","Skills","Update workflow"],"description":"Gridfin turns an empty repository into an Application Skeleton for Claude Code: specs, engineering rules, hooks, tests and quality gates instead of vibe-code chaos.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why not just Claude Code?","acceptedAnswer":{"@type":"Answer","text":"Plain Claude Code writes code but doesn't give you a stable engineering process. Without Gridfin, every session re-decides how to build the project; with Gridfin the agent works by specs, rules, hooks, tests and quality gates that can't be silently bypassed. The full story: why AI development needs engineering rules."}},{"@type":"Question","name":"How is this different from boilerplate — ShipFast and the others?","acceptedAnswer":{"@type":"Answer","text":"Boilerplates sell pre-assembled code that you customize. Gridfin is an agent-native starter kit: a thin skeleton plus a process that specs, builds and tests your product specifically. You don't strip down someone else's dashboard — you grow your own."}},{"@type":"Question","name":"What is an Application Skeleton?","acceptedAnswer":{"@type":"Answer","text":"An Application Skeleton is the architectural foundation on which Claude Code builds your specific product. It's not just a project template: the engineering decisions about the stack, the structure, the tests and CI are already made, and further development runs through specs, skills and quality gates. The full breakdown: what is an Application Skeleton."}},{"@type":"Question","name":"How is this different from MakerKit and Supastarter?","acceptedAnswer":{"@type":"Answer","text":"MakerKit and Supastarter are feature-rich SaaS boilerplates with agent instructions and testing support. Gridfin solves a different problem: it starts with your product idea and runs a spec-driven delivery process whose hooks block known violations, whose tests must be proven able to fail, and whose gate ledger records whether the whole change is ready. Choose them for prebuilt SaaS features; choose Gridfin for an enforced build process around a focused product."}},{"@type":"Question","name":"Why is the stack fixed?","acceptedAnswer":{"@type":"Answer","text":"Because the whole process — rules, hooks, tests, gates, playbooks — is proven on exactly this stack: Next.js + TypeScript, Tailwind + shadcn/ui, Postgres. Freedom to pick a stack is another forty decisions you'd have to make without the experience."}},{"@type":"Question","name":"Can I use my own stack?","acceptedAnswer":{"@type":"Answer","text":"No — and that's deliberate. Gridfin is not a pick-your-own-stack kit: remove the fixed stack and everything built on it disappears — the proven rules, tests and gates. If you need a different stack, the honest answer is: Gridfin is not your tool."}},{"@type":"Question","name":"What do I need to run Gridfin?","acceptedAnswer":{"@type":"Answer","text":"You need Claude Code, Git, a terminal and the supported Node.js/pnpm toolchain. Gridfin runs locally as a git repository and does not require a hosted Gridfin account or a proprietary runtime."}},{"@type":"Question","name":"What if the project stops being developed?","acceptedAnswer":{"@type":"Answer","text":"Nothing terrible: the repository is yours, the code and the process work locally and don't depend on Gridfin existing as a product. Updates would stop coming — everything else stays."}},{"@type":"Question","name":"Is it right for a beginner?","acceptedAnswer":{"@type":"Answer","text":"If you're ready to work with a terminal, git and Claude Code by step-by-step instructions — yes: the box carries the architecture, the testing strategy and the quality control for you. If you're seeing a terminal for the first time — start with Lovable or Bolt."}},{"@type":"Question","name":"How does Gridfin keep AI from breaking the project?","acceptedAnswer":{"@type":"Answer","text":"Gridfin makes a mistake visible before the merge: every change passes lint, tests, e2e and build, and the rules are enforced by hooks and quality gates. The agent can write code fast, but it can't ship a change without the checks."}}]}</script>
+  <style>:root{
+  --surface:#FFFFFF;--surface-peach:#FDE2D9;--surface-cyan:#E0F7FA;
+  --fg:#1A1A1A;--fg-secondary:#4B5563;--fg-inverse:#FFFFFF;
+  --accent:#7B61FF;--green:#003322;
+  --term-bg:#0D1023;--term-bar:#161A30;--term-muted:#AEB6D8;--term-ok:#B8FFDA;
+  --on-green:#CFFBE3;--on-violet:#F7F3FF;
+  --glass-card:#FFFFFF1F;--glass-badge:#FFFFFF26;--pill-dark:#00000033;
+  --overlay:#04100AB3;--badge-violet:#7B61FF1F;
+  --font-heading:"Oswald",sans-serif;--font-body:"Geist",system-ui,sans-serif;
+  --font-caption:"Inter",system-ui,sans-serif;--font-mono:"Geist Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;font-family:var(--font-body);color:var(--fg);background:var(--surface);line-height:1.4;font-size:16px}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+/* Mockup weights: Oswald has exactly two — 400 (default) and 700 (marked). */
+h1,h2,h3{font-family:var(--font-heading);text-transform:uppercase;line-height:1.1;margin:0;font-weight:400}
+h1,#how h2,#why h2,#skeleton h2,#inside h2,#trust h2,#final h2{font-weight:700}
+p{margin:0}
+code{font-family:var(--font-mono);font-size:.92em;background:#0000000f;padding:.05em .3em;border-radius:4px}
+.pain code,.pain-solution code,.skeleton-card code,.comp code,.ideas code,.faq-col code,#bridge code,#box code,#cred code,#final code{background:var(--glass-badge)}
+.wrap{max-width:1272px;margin:0 auto;padding:0 24px}
+@media(min-width:1100px){.wrap{padding:0 84px;max-width:1440px}}
+section{padding:48px 0}
+@media(min-width:768px){section{padding:72px 0}}
+
+/* ---- nav ---- */
+header.nav{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--surface);box-shadow:0 1px 0 #0000001a}
+header.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:16px;padding-bottom:16px}
+main{padding-top:64px}
+.brand{font-family:var(--font-heading);font-weight:400;font-size:28px;text-transform:uppercase;text-decoration:none;color:var(--fg)}
+nav.links{display:none;gap:32px}
+@media(min-width:768px){nav.links{display:flex}}
+nav.links a{font-family:var(--font-caption);font-size:14px;text-decoration:none;color:var(--fg-secondary)}
+nav.links a:hover{color:var(--fg)}
+.nav-cta{font-family:var(--font-caption);font-size:14px;background:var(--accent);color:var(--fg-inverse);border:0;border-radius:4px;padding:10px 16px;cursor:pointer;white-space:nowrap}
+.nav-cta:hover{filter:brightness(1.08)}
+
+/* ---- hero ---- */
+/* Mockup YKUmX: white section, dark text column left, photo card 604x633
+   right with the terminal overlaid (22px sides, 100px top). */
+#hero{padding:24px 0 48px}
+@media(min-width:768px){#hero{padding:24px 0 72px}}
+.hero-grid{display:grid;gap:48px}
+@media(min-width:960px){.hero-grid{grid-template-columns:620fr 604fr;gap:48px;align-items:start}}
+.hero-copy{display:flex;flex-direction:column;gap:24px;align-items:flex-start}
+.badge{font-family:var(--font-caption);font-size:13px;text-transform:uppercase;background:var(--accent);color:var(--fg-inverse);padding:8px 12px;border-radius:4px}
+.hero-copy h1{font-size:34px;color:var(--fg)}
+@media(min-width:768px){.hero-copy h1{font-size:56px}}
+.hero-sub{font-size:18px;line-height:1.22;color:var(--fg-secondary)}
+@media(min-width:768px){.hero-sub{font-size:22px}}
+.hero-audience{font-size:16px;color:var(--fg-secondary);line-height:1.35}
+.cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.cta{display:inline-block;font-family:var(--font-caption);font-size:16px;font-weight:400;background:var(--accent);color:var(--fg-inverse);text-decoration:none;padding:16px 24px;border-radius:4px;cursor:pointer;border:0}
+.cta:hover{filter:brightness(1.08)}
+.cta-note{font-family:var(--font-caption);font-size:13px;color:var(--fg-secondary)}
+.cta-row .cta-note{max-width:16rem}
+.hero-photo{position:relative;border-radius:10px;overflow:hidden;background:#04100A center/cover no-repeat;aspect-ratio:604/633;padding:100px 22px 22px}
+.hero-photo::before{content:"";position:absolute;inset:0;background:var(--overlay)}
+.hero-photo .terminal{position:relative}
+.terminal{background:var(--term-bg);border-radius:10px;box-shadow:0 24px 48px #00000059;overflow:hidden;font-family:var(--font-mono);font-size:15px;line-height:1.2}
+@media(min-width:768px){.terminal{font-size:16px}}
+.term-bar{display:flex;align-items:center;gap:8px;background:var(--term-bar);padding:12px 16px}
+.term-dot{width:12px;height:12px;border-radius:50%}
+.term-title{margin-left:8px;font-size:13px;color:var(--term-muted)}
+.term-body{padding:24px;display:flex;flex-direction:column;gap:12px}
+.term-body .cmd{color:var(--fg-inverse);font-weight:700}
+.term-body .muted{color:var(--term-muted)}
+.term-body .ok{color:var(--term-ok)}
+
+/* ---- bridge ---- */
+#bridge{background:var(--green);padding:48px 0}
+#bridge p{color:var(--fg-inverse);font-size:18px;line-height:1.4;max-width:56rem;margin:0 auto;text-align:center}
+@media(min-width:768px){#bridge p{font-size:22px}}
+
+/* ---- problem ---- */
+#problem{background:var(--accent);padding-bottom:0}
+#problem h2{color:var(--fg-inverse);font-size:34px;max-width:64rem}
+@media(min-width:768px){#problem h2{font-size:64px}}
+.pain-grid{display:grid;gap:16px;margin-top:48px}
+@media(min-width:768px){.pain-grid{grid-template-columns:1fr 1fr;gap:24px}}
+.pain{background:var(--glass-card);border-radius:6px;padding:24px;color:var(--fg-inverse);display:flex;flex-direction:column;gap:12px}
+.pain-num{font-family:var(--font-caption);font-size:13px;background:var(--glass-badge);border-radius:18px;padding:4px 12px;align-self:flex-start}
+.pain h3{font-size:24px}
+.pain-body{font-size:15px;color:var(--on-violet);line-height:1.25}
+.pain-solution{background:var(--pill-dark);border-radius:6px;padding:12px 16px;font-size:14px;line-height:1.3;margin-top:auto}
+.ticker{background:var(--green);margin-top:48px}
+.ticker .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;padding-top:20px;padding-bottom:20px}
+.ticker span{font-family:var(--font-heading);font-weight:400;text-transform:uppercase;font-size:18px;color:var(--fg-inverse);white-space:nowrap}
+@media(min-width:768px){.ticker span{font-size:20px}}
+.ticker .dot{color:var(--on-green)}
+
+/* ---- how ---- */
+.kicker{font-family:var(--font-caption);font-size:13px;text-transform:uppercase;color:var(--accent);font-weight:400}
+#how h2{font-size:34px;margin-top:16px;max-width:64rem}
+@media(min-width:768px){#how h2{font-size:64px}}
+.how-intro{font-size:18px;line-height:1.28;color:var(--fg-secondary);margin-top:16px;max-width:44rem}
+.how-grid{display:grid;gap:24px;margin-top:48px}
+@media(min-width:960px){.how-grid{grid-template-columns:1.2fr .8fr;align-items:start}}
+.steps{display:flex;flex-direction:column;gap:16px}
+.step{background:var(--surface-peach);border-radius:6px;padding:24px;display:flex;gap:24px;align-items:flex-start}
+.step.accent{background:var(--accent);color:var(--fg-inverse)}
+.step.accent .step-body{color:var(--on-violet)}
+.step-num{font-family:var(--font-heading);font-weight:400;font-size:34px;line-height:1.1;opacity:.55;min-width:56px}
+.step h3{font-size:28px}
+.step.accent h3{font-size:34px}
+.step-body{font-size:15px;color:var(--fg-secondary);margin-top:8px;line-height:1.3}
+.artifacts{display:flex;flex-direction:column;gap:16px;position:sticky;top:24px}
+.artifact{border-radius:6px;padding:24px}
+.artifact h3{font-size:24px;margin-bottom:16px}
+.artifact pre{margin:0;font-family:var(--font-mono);font-size:15px;line-height:1.4;white-space:pre-wrap}
+.artifact.cyan{background:var(--surface-cyan)}
+.artifact.dark{background:var(--term-bg);color:var(--fg-inverse)}
+.artifact.dark pre{color:var(--term-muted)}
+.artifact.green{background:var(--green);color:var(--fg-inverse)}
+.artifact.green pre{color:var(--term-ok)}
+
+/* ---- why ---- */
+#why{background:var(--surface-cyan)}
+#why h2{font-size:34px}
+@media(min-width:768px){#why h2{font-size:56px}}
+.why-grid{display:grid;gap:16px;margin-top:48px}
+@media(min-width:768px){.why-grid{grid-template-columns:repeat(2,1fr);gap:24px}}
+@media(min-width:1100px){.why-grid{grid-template-columns:repeat(4,1fr)}}
+.why-card{background:var(--surface);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:12px}
+.why-num{font-family:var(--font-caption);font-size:13px;color:var(--accent)}
+.why-card h3{font-size:24px}
+.why-card p{font-size:15px;color:var(--fg-secondary);line-height:1.3}
+
+/* ---- skeleton explainer (central entity) ---- */
+#skeleton h2{font-size:34px;margin-top:16px;max-width:64rem}
+@media(min-width:768px){#skeleton h2{font-size:56px}}
+.skel-body{font-size:18px;line-height:1.3;color:var(--fg-secondary);margin-top:16px;max-width:44rem}
+.skel-grid{display:grid;gap:16px;margin-top:48px}
+@media(min-width:768px){.skel-grid{grid-template-columns:repeat(2,1fr);gap:24px}}
+@media(min-width:1100px){.skel-grid{grid-template-columns:repeat(4,1fr)}}
+.skel-card{background:var(--surface-peach);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:12px}
+.skel-card h3{font-size:24px}
+.skel-card p{font-size:15px;color:var(--fg-secondary);line-height:1.3}
+.skel-link{margin-top:24px;font-family:var(--font-caption);font-size:16px}
+.skel-link a{color:var(--accent)}
+
+/* ---- box (what you get) ---- */
+#box{background:var(--green);color:var(--fg-inverse)}
+#box h2{font-size:34px}
+@media(min-width:768px){#box h2{font-size:64px}}
+.box-intro{font-size:18px;line-height:1.3;color:var(--on-green);margin-top:16px}
+.skeleton-card{background:var(--term-bg);border-radius:10px;padding:24px;margin-top:48px}
+@media(min-width:768px){.skeleton-card{padding:40px}}
+.skeleton-card h3{font-size:28px}
+@media(min-width:768px){.skeleton-card h3{font-size:44px}}
+.skeleton-body{font-size:16px;color:var(--on-green);margin-top:12px;line-height:1.3}
+.skeleton-list{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.skeleton-list span{font-family:var(--font-mono);font-size:16px;color:var(--term-ok);background:var(--glass-card);border-radius:4px;padding:8px 12px;white-space:nowrap}
+.skeleton-divider{height:1px;background:var(--glass-badge);margin:24px 0}
+.skeleton-outro{font-size:16px;color:var(--on-green);line-height:1.3}
+.comp-grid{display:grid;gap:16px;margin-top:24px}
+@media(min-width:768px){.comp-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1100px){.comp-grid{grid-template-columns:repeat(5,1fr)}}
+.comp{background:var(--glass-card);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.comp h3{font-size:20px}
+.comp p{font-family:var(--font-body);font-size:14px;color:var(--on-green);line-height:1.3}
+.ideas{background:var(--glass-card);border-radius:6px;padding:24px;margin-top:24px;display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+@media(min-width:960px){.ideas{flex-direction:row;align-items:center;justify-content:space-between;gap:24px}}
+.ideas h3{font-size:24px}
+.ideas p{font-size:15px;color:var(--on-green);line-height:1.3;max-width:40rem}
+.micro-cta{display:inline-block;font-family:var(--font-caption);font-size:15px;background:var(--surface);color:var(--fg);text-decoration:none;padding:12px 20px;border-radius:4px;white-space:nowrap;border:0;cursor:pointer}
+
+/* ---- inside ---- */
+#inside{background:var(--surface-peach)}
+#inside h2{font-size:34px}
+@media(min-width:768px){#inside h2{font-size:56px}}
+.inside-intro{font-size:18px;line-height:1.3;color:var(--fg-secondary);margin-top:16px;max-width:44rem}
+.inside-grid{display:grid;gap:24px;margin-top:48px}
+@media(min-width:960px){.inside-grid{grid-template-columns:1.1fr .9fr;align-items:start}}
+.repo-window{background:var(--term-bg);border-radius:10px;overflow:hidden}
+.repo-body{padding:24px;font-family:var(--font-mono);font-size:15px;line-height:1.8;color:var(--term-muted)}
+.repo-body .root{color:var(--fg-inverse);font-weight:700}
+.repo-body .hl{color:var(--term-ok)}
+.annotations{display:flex;flex-direction:column;gap:16px}
+.annotation{background:var(--surface);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:4px}
+.annotation code{font-family:var(--font-mono);font-size:16px;font-weight:700;background:none;padding:0;color:var(--fg)}
+.annotation p{font-size:14px;color:var(--fg-secondary);line-height:1.3}
+
+/* ---- trust ---- */
+#trust{background:var(--surface-peach);padding-top:0}
+#trust .kicker{display:block}
+#trust h2{font-size:28px;margin-top:16px}
+@media(min-width:768px){#trust h2{font-size:44px}}
+.trust-grid{display:grid;gap:24px;margin-top:48px}
+@media(min-width:960px){.trust-grid{grid-template-columns:1fr 1fr;align-items:center}}
+.trust-cards{display:flex;flex-direction:column;gap:16px}
+.trust-card{background:var(--surface);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:8px}
+.trust-card h3{font-size:22px}
+.trust-card p{font-size:15px;color:var(--fg-secondary);line-height:1.3}
+.trust-photo{border-radius:10px;overflow:hidden}
+
+/* ---- trust ticker ---- */
+#ticker2{background:var(--surface-peach);padding:0 0 48px}
+#ticker2 .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
+#ticker2 span{font-family:var(--font-heading);font-weight:400;text-transform:uppercase;font-size:18px;color:var(--accent);white-space:nowrap}
+@media(min-width:768px){#ticker2 span{font-size:22px}}
+
+/* ---- credibility ---- */
+#cred{background:var(--accent);padding:48px 0}
+#cred .line1{color:var(--fg-inverse);font-size:20px;line-height:1.4}
+#cred .line2{color:var(--on-violet);font-size:16px;margin-top:8px}
+
+/* ---- fit ---- */
+.fit-grid{display:grid;gap:24px}
+@media(min-width:960px){.fit-grid{grid-template-columns:1fr 1fr}}
+.fit-card{border-radius:6px;padding:24px}
+@media(min-width:768px){.fit-card{padding:40px}}
+.fit-card.violet{background:var(--accent);color:var(--fg-inverse)}
+.fit-card.cyan{background:var(--surface-cyan)}
+.fit-card h2{font-size:28px}
+@media(min-width:768px){.fit-card h2{font-size:44px}}
+.fit-card ul{margin:24px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:16px}
+.fit-card li{font-size:16px;line-height:1.25;padding-left:28px;position:relative}
+@media(min-width:768px){.fit-card li{font-size:18px}}
+.fit-card li::before{content:"";position:absolute;left:0;top:.35em;width:12px;height:12px;border-radius:50%}
+.fit-card.violet li::before{background:var(--term-ok)}
+.fit-card.cyan li::before{background:var(--accent)}
+.fit-card.violet li{color:var(--on-violet)}
+.fit-card.cyan li{color:var(--fg-secondary)}
+
+/* ---- price + faq ---- */
+#price-faq{background:var(--green);color:var(--fg-inverse)}
+.price-faq-grid{display:grid;gap:48px}
+@media(min-width:960px){.price-faq-grid{grid-template-columns:.9fr 1.1fr;align-items:start}}
+.price-card{background:var(--surface);color:var(--fg);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:16px;align-items:flex-start;position:sticky;top:24px}
+@media(min-width:768px){.price-card{padding:40px}}
+.price-card h2{font-size:34px}
+@media(min-width:768px){.price-card h2{font-size:56px}}
+.price-body{font-size:18px;line-height:1.28;color:var(--fg-secondary)}
+.price-note{font-family:var(--font-caption);font-size:14px;line-height:1.25;color:var(--fg-secondary)}
+.faq-col h2{font-size:34px}
+@media(min-width:768px){.faq-col h2{font-size:56px}}
+.faq-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.faq-chips span{font-family:var(--font-caption);font-size:14px;background:var(--glass-badge);border-radius:18px;padding:8px 12px}
+.faq-col details{background:var(--glass-card);border-radius:6px;margin-top:16px;padding:0}
+.faq-col summary{cursor:pointer;font-family:var(--font-heading);font-weight:400;text-transform:uppercase;font-size:18px;line-height:1.1;padding:20px 24px;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center}
+@media(min-width:768px){.faq-col summary{font-size:22px}}
+.faq-col details:first-of-type summary{font-size:22px}
+@media(min-width:768px){.faq-col details:first-of-type summary{font-size:24px}}
+.faq-col summary::-webkit-details-marker{display:none}
+.faq-col summary::after{content:"+";font-family:var(--font-caption);font-size:22px;color:var(--on-green)}
+.faq-col details[open] summary::after{content:"−"}
+.faq-col details p{padding:0 24px 20px;font-size:15px;line-height:1.25;color:var(--on-green)}
+.faq-col details:first-of-type p{font-size:16px}
+
+/* ---- final cta ---- */
+#final{background:var(--accent);color:var(--fg-inverse)}
+#final .wrap{display:flex;flex-direction:column;gap:24px;align-items:flex-start}
+#final h2{font-size:34px;max-width:56rem}
+@media(min-width:768px){#final h2{font-size:56px}}
+#final .sub{font-size:18px;color:var(--on-violet);max-width:44rem}
+#final .cta{background:var(--surface);color:var(--fg)}
+
+/* ---- footer ---- */
+footer{background:var(--green);padding:32px 0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px 24px;justify-content:space-between;font-family:var(--font-caption);font-size:14px;color:var(--on-green)}
+footer a{color:var(--term-ok)}
+.footer-links{display:flex;flex-wrap:wrap;gap:8px 24px;width:100%}
+
+/* ---- request dialog ---- */
+#request-dialog{border:0;border-radius:10px;padding:0;max-width:520px;width:calc(100% - 48px);max-height:calc(100dvh - 48px);overflow-y:auto;overscroll-behavior:contain}
+#request-dialog::backdrop{background:#00000066}
+#request-form{display:flex;flex-direction:column;gap:20px;padding:32px;font-family:var(--font-caption)}
+.form-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.form-head h3{font-size:24px}
+.form-close{border:0;background:none;font-size:28px;cursor:pointer;color:var(--fg-secondary);line-height:1;padding:0}
+#request-form label{display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:600;color:var(--fg)}
+/* display:flex above would defeat the hidden attribute — the conditional
+   «свой вариант» field must actually disappear. */
+#request-form [hidden]{display:none!important}
+#request-form input:not([type="checkbox"]){font-family:var(--font-body);font-size:15px;font-weight:400;color:var(--fg);padding:0 16px;border:1px solid var(--fg-secondary);border-radius:4px;background:var(--surface);height:48px;width:100%}
+#request-form .cta{width:100%;text-align:center;font-size:16px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field-label{font-size:14px;font-weight:600;color:var(--fg)}
+.select{position:relative}
+.select-btn{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;height:48px;padding:0 16px;font-family:var(--font-body);font-size:15px;color:var(--fg);background:var(--surface);border:1px solid var(--fg-secondary);border-radius:4px;cursor:pointer;text-align:left}
+.select.invalid .select-btn{border-color:var(--accent);box-shadow:0 0 0 2px var(--badge-violet)}
+.select-value.placeholder{color:var(--fg-secondary)}
+.select-chevron{color:var(--fg-secondary);flex:none;transition:transform .15s}
+.select-btn[aria-expanded="true"] .select-chevron{transform:rotate(180deg)}
+.select-list{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:10;margin:0;padding:8px;list-style:none;background:var(--surface);border:1px solid var(--fg-secondary);border-radius:6px;box-shadow:0 8px 24px #00000026}
+.select-list li{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-radius:4px;font-family:var(--font-body);font-size:15px;color:var(--fg);cursor:pointer}
+.select-list li:hover{background:var(--surface-cyan)}
+.select-list li[aria-selected="true"]{background:var(--surface-cyan)}
+.select-list li[aria-selected="true"]::after{content:"✓";color:var(--accent);font-weight:600}
+.consent{flex-direction:row!important;align-items:flex-start;gap:12px;font-weight:400!important;cursor:pointer}
+.consent input[type="checkbox"]{width:18px;height:18px;margin:1px 0 0;accent-color:var(--accent);flex:none}
+.consent span{font-size:13px;line-height:1.4;color:var(--fg-secondary)}
+.consent a{color:var(--accent)}
+.form-success{font-family:var(--font-body);font-size:15px;line-height:1.4;color:var(--green);background:var(--surface-cyan);border-radius:4px;padding:12px 16px}</style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="#hero">Gridfin</a>
+      <nav class="links" aria-label="Sections">
+        <a href="#how">How it works</a>
+        <a href="#box">What you get</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <button class="nav-cta js-request" type="button">Get early access</button>
+    </div>
+  </header>
+  <main>
+    <section id="hero">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <span class="badge">Early access — free for beta testers</span>
+            <h1>Claude Code starter for quality websites and apps.</h1>
+            <p class="hero-sub">Gridfin is an agent-native starter kit that turns an empty repository into an Application Skeleton: a ready-made architectural foundation for building with Claude Code. Specs, engineering rules, hooks, tests and quality gates are built in — instead of chaotic vibe coding.</p>
+            <p class="hero-audience">If you have an idea and Claude Code but not years of engineering experience, Gridfin walks you through the process that engineering teams usually spend years assembling.</p>
+            <div class="cta-row">
+              <a class="cta" href="https://t.me/ludvik4work">Get early access</a>
+              <p class="cta-note">Free during the beta · starter prices after the beta</p>
+            </div>
+          </div>
+          <div class="hero-photo" style="background-image:url('https://ludvik4.dev/gridfin/assets/hero-terminal.png')">
+            <div class="terminal" role="img" aria-label="Terminal: /gridfin run">
+              <div class="term-bar">
+                <span class="term-dot" style="background:#FF5F57"></span>
+                <span class="term-dot" style="background:#FEBC2E"></span>
+                <span class="term-dot" style="background:#28C840"></span>
+                <span class="term-title">gridfin — in an hour</span>
+              </div>
+              <div class="term-body">
+            <div class="cmd">$ /gridfin</div>
+            <div class="muted">Analyzing idea...</div>
+            <div class="ok">✓ PRD created</div>
+            <div class="ok">✓ Specification created</div>
+            <div class="ok">✓ Architecture selected</div>
+            <div class="ok">✓ Application Skeleton generated</div>
+            <div class="muted">Ready to implement.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="bridge">
+      <div class="wrap"><p>AI made development faster. But engineering experience still can't be generated. That is the gap Gridfin closes.</p></div>
+    </section>
+    <section id="problem">
+      <div class="wrap">
+        <h2>Without engineering experience, mistakes are invisible — until they get expensive</h2>
+        <div class="pain-grid">
+        <article class="pain">
+          <span class="pain-num">01</span>
+          <h3>You don't know which mistakes you're already making</h3>
+          <p class="pain-body">Stack, architecture, testing, security — dozens of decisions get made silently, without a second look.</p>
+          <p class="pain-solution">Gridfin makes the engineering decisions up front: the invariant part is pre-decided and reused in every project.</p>
+        </article>
+        <article class="pain">
+          <span class="pain-num">02</span>
+          <h3>You fix one thing, another breaks</h3>
+          <p class="pain-body">Building was fast, debugging is endless; every new feature touches the previous ones.</p>
+          <p class="pain-solution">Every feature goes through the same cycle: spec → code → tests → review. Old tests keep a new feature from silently breaking the previous ones.</p>
+        </article>
+        <article class="pain">
+          <span class="pain-num">03</span>
+          <h3>Every new feature costs more than the last one</h3>
+          <p class="pain-body">Constraints you didn't know about start surfacing; the agent rewrites half the codebase over a small change.</p>
+          <p class="pain-solution">The Application Skeleton locks the architecture from day one: the twentieth feature lands through the same process as the first.</p>
+        </article>
+        <article class="pain">
+          <span class="pain-num">04</span>
+          <h3>Claude Code writes code faster than you can review it</h3>
+          <p class="pain-body">What exactly it generated yesterday — nobody has read it.</p>
+          <p class="pain-solution">Hooks and quality gates make review part of the process: a rule violation is stopped before the code is written, red status is visible before the merge.</p>
+        </article>
+        </div>
+      </div>
+      <div class="ticker"><div class="wrap"><span>Gridfin fixes the process</span><span class="dot" aria-hidden="true">·</span><span>Spec first</span><span class="dot" aria-hidden="true">·</span><span>Then code</span><span class="dot" aria-hidden="true">·</span><span>Then tests</span><span class="dot" aria-hidden="true">·</span><span>One set of rules</span></div></div>
+    </section>
+    <section id="how">
+      <div class="wrap">
+        <span class="kicker">One command: /gridfin</span>
+        <h2>What happens after you run Gridfin</h2>
+        <p class="how-intro">One command — <code>/gridfin</code> — starts a guide agent. The pipeline shows the process and real artifacts at every step.</p>
+        <div class="how-grid">
+          <div class="steps">
+          <article class="step">
+            <span class="step-num">01</span>
+            <div>
+              <h3>Idea</h3>
+              <p class="step-body">The agent interviews you, helps sharpen the idea — and says honestly if it doesn't fit this stack.</p>
+            </div>
+          </article>
+          <article class="step">
+            <span class="step-num">02</span>
+            <div>
+              <h3>Specification</h3>
+              <p class="step-body">A PRD: the problem, the user, 3–5 key features and an explicit &quot;not in v1&quot; list. Specs come before any code.</p>
+            </div>
+          </article>
+          <article class="step accent">
+            <span class="step-num">03</span>
+            <div>
+              <h3>Your Application Skeleton is ready</h3>
+              <p class="step-body">The main result of the first steps: architecture, stack, tests and CI are already assembled — and tailored to you: project name, branding tokens, the data schema of your domain model.</p>
+            </div>
+          </article>
+          <article class="step">
+            <span class="step-num">04</span>
+            <div>
+              <h3>Features through skills</h3>
+              <p class="step-body"><code>/feature</code> drives every feature through the spec → code → tests → review cycle.</p>
+            </div>
+          </article>
+          <article class="step">
+            <span class="step-num">05</span>
+            <div>
+              <h3>Quality gates</h3>
+              <p class="step-body">Lint, tests, e2e and the build in one run — red is visible before the merge.</p>
+            </div>
+          </article>
+          <article class="step">
+            <span class="step-num">06</span>
+            <div>
+              <h3>Production-ready application</h3>
+              <p class="step-body">Deploy to Vercel by a step-by-step playbook. Every step is committed — a dropped session loses nothing.</p>
+            </div>
+          </article>
+          </div>
+          <div class="artifacts">
+          <aside class="artifact cyan">
+            <h3>Specification</h3>
+            <pre>docs/prd.md
+## Problem
+## User
+## Features (3-5, v1 only)
+## Not in v1</pre>
+          </aside>
+          <aside class="artifact dark">
+            <h3>Application Skeleton</h3>
+            <pre>src/
+docs/rules/
+tests/
+CLAUDE.md</pre>
+          </aside>
+          <aside class="artifact green">
+            <h3>Quality gates</h3>
+            <pre>✓ lint    ✓ secrets
+✓ tests — 311 passed (311)</pre>
+          </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="why">
+      <div class="wrap">
+        <h2>Why it works</h2>
+        <div class="why-grid">
+        <article class="why-card">
+          <span class="why-num">01</span>
+          <h3>Engineering decisions are made once</h3>
+          <p>Don't make the same decisions again — they are already made, proven and reused.</p>
+        </article>
+        <article class="why-card">
+          <span class="why-num">02</span>
+          <h3>Specification first</h3>
+          <p>AI writes better code when it knows what it's building first.</p>
+        </article>
+        <article class="why-card">
+          <span class="why-num">03</span>
+          <h3>AI works by engineering rules</h3>
+          <p>Rules are enforced automatically — by hooks and gates, not wishes in a README.</p>
+        </article>
+        <article class="why-card">
+          <span class="why-num">04</span>
+          <h3>Every change passes quality gates</h3>
+          <p>Quality is a mandatory part of the process, not the last item before release.</p>
+        </article>
+        </div>
+      </div>
+    </section>
+    <section id="skeleton">
+      <div class="wrap">
+        <span class="kicker">Core concept</span>
+        <h2>What is an Application Skeleton</h2>
+        <p class="skel-body">An Application Skeleton is not a demo app and not a folder of templates — it is a pre-assembled architectural foundation for a product. Gridfin fixes the stack, the structure, the rules, the testing strategy and the quality gates before Claude Code starts writing features.</p>
+        <div class="skel-grid">
+        <article class="skel-card">
+          <h3>Architecture</h3>
+          <p>The stack, the layers, import boundaries and change rules are already chosen, so the agent doesn't rebuild the project from scratch on every feature.</p>
+        </article>
+        <article class="skel-card">
+          <h3>Specifications</h3>
+          <p>Work starts with a PRD and feature specs: first it is clear what you are building, then the code appears.</p>
+        </article>
+        <article class="skel-card">
+          <h3>Checks</h3>
+          <p>Tests, lint, e2e and the build run as one quality gate, so a mistake becomes visible before the merge.</p>
+        </article>
+        <article class="skel-card">
+          <h3>Process</h3>
+          <p>Skills and playbooks drive development through a repeatable cycle: idea → spec → code → tests → review → deploy.</p>
+        </article>
+        </div>
+        <p class="skel-link"><a href="https://ludvik4.dev/gridfin/en/docs/application-skeleton/">What is an Application Skeleton — the full breakdown →</a></p>
+      </div>
+    </section>
+    <section id="box">
+      <div class="wrap">
+        <h2>What you get</h2>
+        <p class="box-intro">Not a list of promises — a set of components in your own git repository.</p>
+        <div class="skeleton-card">
+          <h3>Application Skeleton</h3>
+          <p class="skeleton-body">A ready-made architectural foundation for your application — Next.js + TypeScript + Postgres. What's already inside:</p>
+          <div class="skeleton-list">
+            <span>✓ app/</span>
+            <span>✓ tests/</span>
+            <span>✓ playbooks/</span>
+            <span>✓ hooks/</span>
+            <span>✓ CLAUDE.md</span>
+            <span>✓ docs/rules/</span>
+            <span>✓ quality gates</span>
+            <span>✓ updates</span>
+          </div>
+          <div class="skeleton-divider"></div>
+          <p class="skeleton-outro">Plus updates forever. It's a git repository that belongs to you. Not a subscription, not a service, not a rented site builder.</p>
+        </div>
+        <div class="comp-grid">
+        <article class="comp">
+          <h3>Playbooks</h3>
+          <p>Step-by-step scenarios for deploys, analytics, pricing, compliance and other engineering tasks where session memory can't be trusted.</p>
+        </article>
+        <article class="comp">
+          <h3>Skills</h3>
+          <p>Agent workflows for onboarding, features, design, review, verification, deploys, updates and recording learnings.</p>
+        </article>
+        <article class="comp">
+          <h3>Engineering rules</h3>
+          <p>Rules for architecture, frontend, testing, security, documentation and the git process the agent works by.</p>
+        </article>
+        <article class="comp">
+          <h3>Quality gates</h3>
+          <p>One run of lint, tests, e2e and build shows red before the merge, not after the release.</p>
+        </article>
+        <article class="comp">
+          <h3>Documentation</h3>
+          <p>PRD, specs, ADRs, playbooks and rules keep the context between sessions, so the agent doesn't start the project over every day.</p>
+        </article>
+        </div>
+        <div class="ideas">
+          <div>
+            <h3>More ideas than weekends?</h3>
+            <p>One kit — any number of projects: SaaS, landing pages, pet projects. Every launch is an hour with the agent, not a week of setup.</p>
+          </div>
+          <button class="micro-cta js-request" type="button">Get early access</button>
+        </div>
+      </div>
+    </section>
+    <section id="inside">
+      <div class="wrap">
+        <h2>Inside Gridfin</h2>
+        <p class="inside-intro">What you are literally buying: a repository, rules, specs, tests and a workflow.</p>
+        <div class="inside-grid">
+          <div class="repo-window">
+            <div class="term-bar">
+              <span class="term-dot" style="background:#FF5F57"></span>
+              <span class="term-dot" style="background:#FEBC2E"></span>
+              <span class="term-dot" style="background:#28C840"></span>
+              <span class="term-title">gridfin/</span>
+            </div>
+            <pre class="repo-body"><span class="root">gridfin/</span>
+  <span class="hl">src/</span>
+  <span>docs/</span>
+    <span>rules/</span>
+    <span class="hl">playbooks/</span>
+    <span>templates/</span>
+  <span class="hl">tests/</span>
+  <span>modules/</span>
+  <span>scripts/</span>
+  <span>.claude/skills/</span>
+  <span class="hl">CLAUDE.md</span>
+  <span>lefthook.yml</span></pre>
+          </div>
+          <div class="annotations">
+          <div class="annotation">
+            <code>src/</code>
+            <p>Your product grows here.</p>
+          </div>
+          <div class="annotation">
+            <code>docs/playbooks/</code>
+            <p>Ready-made engineering processes.</p>
+          </div>
+          <div class="annotation">
+            <code>CLAUDE.md</code>
+            <p>The rules the agent follows.</p>
+          </div>
+          <div class="annotation">
+            <code>tests/</code>
+            <p>They check every change.</p>
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="trust">
+      <div class="wrap">
+        <span class="kicker">Yours means yours</span>
+        <h2>The box stays with you — no matter what</h2>
+        <div class="trust-grid">
+          <div class="trust-cards">
+          <article class="trust-card">
+            <h3>The repository belongs to you</h3>
+            <p>This is not SaaS: the code, the rules and the process stay with you and keep working even if Gridfin the product disappears.</p>
+          </article>
+          <article class="trust-card">
+            <h3>Updates, forever</h3>
+            <p>The template is versioned; the <code>/update</code> command pulls new releases into your project without overwriting your code.</p>
+          </article>
+          <article class="trust-card">
+            <h3>Gridfin is honest about what it can't do</h3>
+            <p>An idea outside its profile gets declined at step one, not after a week of work. No &quot;fits everything&quot; promises.</p>
+          </article>
+          </div>
+          <div class="trust-photo">
+            <img src="https://ludvik4.dev/gridfin/assets/trust-box.jpg" alt="" loading="lazy" width="1300" height="1210">
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="ticker2">
+      <div class="wrap"><span>Your repository</span><span aria-hidden="true">·</span><span>Your data</span><span aria-hidden="true">·</span><span>Your updates</span><span aria-hidden="true">·</span><span>No subscription</span></div>
+    </section>
+    <section id="cred">
+      <div class="wrap">
+        <p class="line1">Gridfin is built with the same process that ships inside the product.</p>
+        <p class="line2">This landing page was built with Gridfin too.</p>
+      </div>
+    </section>
+    <section id="fit">
+      <div class="wrap">
+        <div class="fit-grid">
+          <div class="fit-card violet">
+            <h2>Best fit if…</h2>
+            <ul>
+            <li>You have an idea and Claude Code but no full-stack experience — and you want to launch your project over a weekend, not after a week of setup.</li>
+            <li>You're a solo developer, QA, DevOps or designer — and you believe specs and tests are not bureaucracy but speed in the long run.</li>
+            <li>You want your own real repository, not a no-code platform.</li>
+            </ul>
+          </div>
+          <div class="fit-card cyan">
+            <h2>You might be better served elsewhere if…</h2>
+            <ul>
+            <li>You have never opened a terminal — today Lovable or Bolt will serve you better.</li>
+            <li>You expect a ready-made dashboard with 50 features &quot;to customize&quot; — Gridfin is a process, not a product demo.</li>
+            <li>You need a different stack — Gridfin is deliberately not a pick-your-own-stack kit.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="price-faq">
+      <div class="wrap">
+        <div class="price-faq-grid">
+          <div id="pricing" class="price-card">
+            <span class="kicker">Early access terms</span>
+            <h2>Beta: you test — I fix</h2>
+            <p class="price-body">Run <code>/gridfin</code> on a real idea and tell me where you stumbled — the box is yours forever, with all future updates, free.</p>
+            <a class="cta" href="https://t.me/ludvik4work">I'm in — give me access</a>
+            <p class="price-note">After the beta — starter prices that will only go up: Gridfin Landing — $— · Gridfin App — $—</p>
+          </div>
+          <div id="faq" class="faq-col">
+            <h2>FAQ</h2>
+            <div class="faq-chips"><span>Product</span><span>Stack</span><span>Beginners</span><span>Requirements</span><span>Buying</span></div>
+        <details open>
+          <summary>Why not just Claude Code?</summary>
+          <p>Plain Claude Code writes code but doesn't give you a stable engineering process. Without Gridfin, every session re-decides how to build the project; with Gridfin the agent works by specs, rules, hooks, tests and quality gates that can't be silently bypassed. The full story: <a href="https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules/">why AI development needs engineering rules</a>.</p>
+        </details>
+        <details>
+          <summary>How is this different from boilerplate — ShipFast and the others?</summary>
+          <p>Boilerplates sell pre-assembled code that you customize. Gridfin is an agent-native starter kit: a thin skeleton plus a process that specs, builds and tests your product specifically. You don't strip down someone else's dashboard — you grow your own.</p>
+        </details>
+        <details>
+          <summary>What is an Application Skeleton?</summary>
+          <p>An Application Skeleton is the architectural foundation on which Claude Code builds your specific product. It's not just a project template: the engineering decisions about the stack, the structure, the tests and CI are already made, and further development runs through specs, skills and quality gates. The full breakdown: <a href="https://ludvik4.dev/gridfin/en/docs/application-skeleton/">what is an Application Skeleton</a>.</p>
+        </details>
+        <details>
+          <summary>How is this different from MakerKit and Supastarter?</summary>
+          <p>MakerKit and Supastarter are feature-rich SaaS boilerplates with agent instructions and testing support. Gridfin solves a different problem: it starts with your product idea and runs a spec-driven delivery process whose hooks block known violations, whose tests must be proven able to fail, and whose gate ledger records whether the whole change is ready. Choose them for prebuilt SaaS features; choose Gridfin for an enforced build process around a focused product.</p>
+        </details>
+        <details>
+          <summary>Why is the stack fixed?</summary>
+          <p>Because the whole process — rules, hooks, tests, gates, playbooks — is proven on exactly this stack: Next.js + TypeScript, Tailwind + shadcn/ui, Postgres. Freedom to pick a stack is another forty decisions you'd have to make without the experience.</p>
+        </details>
+        <details>
+          <summary>Can I use my own stack?</summary>
+          <p>No — and that's deliberate. Gridfin is not a pick-your-own-stack kit: remove the fixed stack and everything built on it disappears — the proven rules, tests and gates. If you need a different stack, the honest answer is: Gridfin is not your tool.</p>
+        </details>
+        <details>
+          <summary>What do I need to run Gridfin?</summary>
+          <p>You need Claude Code, Git, a terminal and the supported Node.js/pnpm toolchain. Gridfin runs locally as a git repository and does not require a hosted Gridfin account or a proprietary runtime.</p>
+        </details>
+        <details>
+          <summary>What if the project stops being developed?</summary>
+          <p>Nothing terrible: the repository is yours, the code and the process work locally and don't depend on Gridfin existing as a product. Updates would stop coming — everything else stays.</p>
+        </details>
+        <details>
+          <summary>Is it right for a beginner?</summary>
+          <p>If you're ready to work with a terminal, git and Claude Code by step-by-step instructions — yes: the box carries the architecture, the testing strategy and the quality control for you. If you're seeing a terminal for the first time — start with Lovable or Bolt.</p>
+        </details>
+        <details>
+          <summary>How does Gridfin keep AI from breaking the project?</summary>
+          <p>Gridfin makes a mistake visible before the merge: every change passes lint, tests, e2e and build, and the rules are enforced by hooks and quality gates. The agent can write code fast, but it can't ship a change without the checks.</p>
+        </details>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="final">
+      <div class="wrap">
+        <h2>Got an idea? Build your next project with Gridfin.</h2>
+        <p class="sub">Get early access and start from a ready Application Skeleton, not an empty repository.</p>
+        <a class="cta" href="https://t.me/ludvik4work">Get early access</a>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap">
+      <nav class="footer-links" aria-label="Gridfin docs">
+        <a href="https://ludvik4.dev/gridfin/en/docs/application-skeleton">What is an Application Skeleton</a>
+        <a href="https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules">Why AI development needs engineering rules</a>
+      </nav>
+      <span>Questions → <a href="https://t.me/ludvik4work" target="_blank" rel="noopener">Telegram</a></span>
+      <span>Built by — <a href="https://ludvik4.dev">ludvik4.dev</a></span>
+    </div>
+  </footer>
+  <dialog id="request-dialog">
+    <form id="request-form" novalidate>
+      <div class="form-head">
+        <h3>Early access request</h3>
+        <button type="button" class="form-close" aria-label="Close">×</button>
+      </div>
+      <label>GitHub username *
+        <input name="github" required autocomplete="username" placeholder="octocat">
+      </label>
+      <label>Email for follow-up *
+        <input type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+      </label>
+      <label>Your professional role and experience (optional)
+        <input name="role">
+      </label>
+      <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+      <div class="field">
+        <span class="field-label" id="usage-label">What do you plan to use it for *</span>
+        <div class="select" id="usage-select">
+          <button type="button" class="select-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="usage-label">
+            <span class="select-value placeholder">Select an option</span>
+            <svg class="select-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <ul class="select-list" role="listbox" hidden>
+            <li role="option" tabindex="-1">Building a website</li>
+            <li role="option" tabindex="-1">Building an application</li>
+            <li role="option" tabindex="-1">Seeing how the tool works</li>
+            <li role="option" tabindex="-1" data-value="custom">Something else</li>
+          </ul>
+          <input type="hidden" name="usage">
+        </div>
+      </div>
+      <label id="custom-wrap" hidden>Something else *
+        <input name="custom" placeholder="Describe what you want to build">
+      </label>
+      <label class="consent">
+        <input type="checkbox" name="consent" required>
+        <span>I accept the <a href="https://ludvik4.dev/gridfin/en/terms" target="_blank" rel="noopener">terms of service</a> and consent to the processing of the data above</span>
+      </label>
+      <p class="form-success" hidden>Request sent. I'll reply by email within a few days.</p>
+      <button class="cta" type="submit">Send request</button>
+    </form>
+  </dialog>
+  <script>
+  (function () {
+    var dlg = document.getElementById("request-dialog");
+    if (!dlg || !dlg.showModal) return;
+    var form = document.getElementById("request-form");
+    document.querySelectorAll("a.cta, .js-request").forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        dlg.showModal();
+      });
+    });
+    dlg.addEventListener("click", function (e) {
+      if (e.target === dlg) dlg.close();
+    });
+    dlg.querySelector(".form-close").addEventListener("click", function () {
+      dlg.close();
+    });
+
+    var select = document.getElementById("usage-select");
+    var btn = select.querySelector(".select-btn");
+    var list = select.querySelector(".select-list");
+    var value = select.querySelector(".select-value");
+    var hiddenInput = select.querySelector('input[name="usage"]');
+    var customWrap = document.getElementById("custom-wrap");
+    function closeList() {
+      list.hidden = true;
+      btn.setAttribute("aria-expanded", "false");
+    }
+    btn.addEventListener("click", function () {
+      list.hidden = !list.hidden;
+      btn.setAttribute("aria-expanded", String(!list.hidden));
+      if (!list.hidden) {
+        // The dropdown may open past the dialog's visible edge — the dialog
+        // scrolls, so bring the whole list into view.
+        requestAnimationFrame(function () {
+          list.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        });
+      }
+    });
+    document.addEventListener("click", function (e) {
+      if (!select.contains(e.target)) closeList();
+    });
+    dlg.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !list.hidden) {
+        e.preventDefault();
+        closeList();
+      }
+    });
+    list.querySelectorAll("li").forEach(function (li) {
+      li.addEventListener("click", function () {
+        list.querySelectorAll("li").forEach(function (other) {
+          other.removeAttribute("aria-selected");
+        });
+        li.setAttribute("aria-selected", "true");
+        value.textContent = li.textContent;
+        value.classList.remove("placeholder");
+        hiddenInput.value = li.dataset.value || li.textContent;
+        select.classList.remove("invalid");
+        var custom = li.dataset.value === "custom";
+        customWrap.hidden = !custom;
+        customWrap.querySelector("input").required = custom;
+        closeList();
+      });
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!hiddenInput.value) {
+        select.classList.add("invalid");
+        btn.focus();
+        return;
+      }
+      if (!form.reportValidity()) return;
+      var f = new FormData(form);
+      var usage = f.get("usage") === "custom" ? f.get("custom") : f.get("usage");
+      var payload = {
+        github: f.get("github"),
+        email: f.get("email"),
+        role: f.get("role") || "-",
+        usage: usage,
+        page: location.href,
+        website: f.get("website"),
+      };
+      var endpoint = "/api/gridfin-lead";
+      function telegramFallback() {
+        location.href = "https://t.me/ludvik4work";
+        dlg.close();
+      }
+      if (!endpoint) return telegramFallback();
+      fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error(String(res.status));
+          form.querySelectorAll("label, .field, .cta").forEach(function (el) {
+            el.hidden = true;
+          });
+          form.querySelector(".form-success").hidden = false;
+        })
+        .catch(telegramFallback);
+    });
+  })();
+  </script>
+</body>
+</html>

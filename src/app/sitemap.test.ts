@@ -59,6 +59,9 @@ describe("buildSitemap", () => {
       `${baseURL}/guides/automation-priority-scorecard`,
       `${baseURL}/guides/mvp-scope-one-user-journey`,
       `${baseURL}/privacy`,
+      `${baseURL}/gridfin/en`,
+      `${baseURL}/gridfin/en/docs/application-skeleton`,
+      `${baseURL}/gridfin/en/guides/why-ai-needs-engineering-rules`,
     ]);
   });
 });
@@ -90,5 +93,24 @@ describe("public Gridfin sitemap", () => {
     );
     expect(xml).not.toContain("<loc>https://ludvik4.dev/");
     expect(xml).toContain('hreflang="en"');
+  });
+});
+
+describe("public Gridfin EN bundle", () => {
+  it("contains only the deployed EN URLs and no RU delivery endpoint", () => {
+    const root = path.join(process.cwd(), "public/gridfin");
+    const html = readFileSync(path.join(root, "en/index.html"), "utf8");
+    const terms = readFileSync(path.join(root, "en/terms/index.html"), "utf8");
+    const xml = readFileSync(path.join(root, "sitemap.xml"), "utf8");
+
+    expect(html).toContain(
+      '<link rel="canonical" href="https://ludvik4.dev/gridfin/en">',
+    );
+    expect(html).not.toMatch(/Russia|functions\.yandexcloud\.net/);
+    expect(terms).toContain("Gridfin International Beta Terms");
+    expect(terms).toContain("laws of Spain");
+    expect(terms).not.toMatch(/Yandex|Russia|Russian/);
+    expect(xml.match(/<loc>/g)).toHaveLength(3);
+    expect(xml).not.toContain("<loc>https://ludvik4.dev/gridfin/de");
   });
 });

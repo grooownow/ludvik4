@@ -6,18 +6,16 @@ writing detail here.
 
 ## Now
 
-**[INFRA DONE 2026-08-11 — publication pending] Gridfin international
-landing on ludvik4.dev/gridfin (ADR 0005).** Serving infrastructure is live
-and dormant: `config/rewrites.ts` (EN-only afterFiles rules, slashless URLs
-— `/gridfin/en`), `public/gridfin/` as the bundle home, RU static export
-stashes it so it cannot leak to ludvik4.ru. `/gridfin*` on `.dev` stays 404
-until the bundle is committed. **Blocked on:** the author's reworked EN
-texts (in progress in `grooownow/gridfin`, `marketing/landing/`). First
-publication is EN-only; translated locales (de/es/fr/ja/pt-br) wait for
-market-quality review and must not be advertised in sitemap/hreflang early
-— the generator still needs slashless-URL + EN-only-hreflang emission
-before publishing (deferred: the author is editing `build.ts` right now).
-Publish steps: `docs/playbooks/production-en-vercel.md` § /gridfin.
+**[LOCAL COMPLETE 2026-08-11 — publication pending] Gridfin EN landing on
+ludvik4.dev/gridfin (ADR 0005).** The reviewed EN bundle, same-origin lead
+route, three sitemap entries and llms.txt passages are integrated. Gridfin
+canonicals/hreflang use the `.dev` app's slashless URL style; the product
+sitemap advertises only the three reviewed EN pages. The RU static export
+was rebuilt and contains no EN bundle. Local verification: lint, 358 unit/
+component/integration tests, EN production build, 32/32 e2e tests, RU export
+and HTTP runtime checks are green. Production remains unchanged until an
+explicit commit/push; publish and live-retest steps:
+`docs/playbooks/production-en-vercel.md` § /gridfin.
 
 **[PLANNED] Studio site ludvik4.dev in all landing locales
 (de/es/fr/ja/pt-br).** Author decision 2026-08-11: beyond /gridfin, the

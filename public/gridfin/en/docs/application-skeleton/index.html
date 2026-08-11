@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What is an Application Skeleton in Gridfin</title>
+  <meta name="description" content="An Application Skeleton is a pre-assembled architectural foundation for building with Claude Code: stack, rules, tests, quality gates, skills and playbooks in one workflow.">
+  <link rel="canonical" href="https://ludvik4.dev/gridfin/en/docs/application-skeleton">
+  <link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/docs/application-skeleton/">
+  <link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en/docs/application-skeleton">
+  <link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en/docs/application-skeleton">
+  <meta property="og:title" content="What is an Application Skeleton in Gridfin">
+  <meta property="og:description" content="An Application Skeleton is a pre-assembled architectural foundation for building with Claude Code: stack, rules, tests, quality gates, skills and playbooks in one workflow.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ludvik4.dev/gridfin/en/docs/application-skeleton">
+  <meta property="og:image" content="https://ludvik4.dev/gridfin/assets/og-en.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What is an Application Skeleton in Gridfin">
+  <meta name="twitter:description" content="An Application Skeleton is a pre-assembled architectural foundation for building with Claude Code: stack, rules, tests, quality gates, skills and playbooks in one workflow.">
+  <meta name="twitter:image" content="https://ludvik4.dev/gridfin/assets/og-en.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@400;500;600&family=Geist:wght@400;500&family=Geist+Mono:wght@400;700&display=swap">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","headline":"What is an Application Skeleton in Gridfin","description":"An Application Skeleton is a pre-assembled architectural foundation for building with Claude Code: stack, rules, tests, quality gates, skills and playbooks in one workflow.","url":"https://ludvik4.dev/gridfin/en/docs/application-skeleton","inLanguage":"en","author":{"@type":"Person","name":"Ludvik4","url":"https://ludvik4.dev"},"publisher":{"@type":"Person","name":"Ludvik4","url":"https://ludvik4.dev"},"image":"https://ludvik4.dev/gridfin/assets/og-en.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Gridfin","item":"https://ludvik4.dev/gridfin/en"},{"@type":"ListItem","position":2,"name":"What is an Application Skeleton in Gridfin","item":"https://ludvik4.dev/gridfin/en/docs/application-skeleton"}]}]}</script>
+  <style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Geist",system-ui,sans-serif;font-size:16px;line-height:1.5;color:#1A1A1A;background:#FFFFFF}
+  main{max-width:44rem;margin:0 auto;padding:48px 24px 72px}
+  h1,h2{font-family:"Oswald",sans-serif;text-transform:uppercase;line-height:1.1;font-weight:400}
+  h1{font-size:34px;margin:0 0 24px}
+  h2{font-size:22px;margin:40px 0 12px}
+  p,li{color:#4B5563}
+  a{color:#7B61FF}
+  .back{font-family:"Inter",system-ui,sans-serif;font-size:14px;margin:0 0 32px}
+  .back a{text-decoration:none}
+  </style>
+</head>
+<body>
+  <main>
+    <p class="back"><a href="https://ludvik4.dev/gridfin/en">← Gridfin</a></p>
+<h1>What is an Application Skeleton in Gridfin</h1>
+<p>An Application Skeleton is a pre-assembled architectural foundation for building an application with Claude Code. It connects the stack, the project structure, engineering rules, tests, quality gates, skills and playbooks into one working process. Gridfin creates it within the first hour — and from then on the agent builds your product on that foundation.</p>
+<h2>How an Application Skeleton differs from a boilerplate</h2>
+<ul>
+<li>A boilerplate gives you finished code: a dashboard, billing, &quot;50 features to customize&quot; that you carve down.</li>
+<li>An Application Skeleton gives you a foundation and a process: a thin architectural base in which code grows toward your specific product — through specs, tests and review.</li>
+</ul>
+<p>The difference shows on the twentieth feature: in a boilerplate you fight someone else's decisions, in a Skeleton you continue your own process.</p>
+<h2>What's inside an Application Skeleton</h2>
+<ul>
+<li>Next.js + TypeScript — the application foundation;</li>
+<li>Tailwind + shadcn/ui — the design system and components;</li>
+<li>engineering rules (<code>docs/rules</code>) — architecture, frontend, testing, security, git;</li>
+<li>tests — unit, component, integration and e2e, configured from day one;</li>
+<li>playbooks — step-by-step scenarios for deploys, analytics, pricing and other occasional tasks;</li>
+<li>skills — agent workflows: onboarding, features, design, review, verification, deploys;</li>
+<li>hooks — rules with teeth: a violation is stopped before the code is written;</li>
+<li>quality gates — lint, tests, e2e and the build in one run;</li>
+<li>an update mechanism — <code>/update</code> pulls new template releases without overwriting your code.</li>
+</ul>
+<h2>How Claude Code works inside the Skeleton</h2>
+<ul>
+<li>Specification first: the PRD and the feature spec are written before any code.</li>
+<li><code>/feature</code> drives every feature through the spec → code → tests → review cycle.</li>
+<li>Tests must be able to fail: a feature without an honest test doesn't count as done.</li>
+<li>Review and gates: red status is visible before the merge, not after the release.</li>
+</ul>
+<h2>Who it fits</h2>
+<ul>
+<li>You have an idea and Claude Code, and you're ready to work with a terminal and git.</li>
+<li>You don't have years of full-stack experience — the architectural decisions are already made for you.</li>
+<li>You want your own real repository, not a no-code platform.</li>
+</ul>
+<h2>Where the limits are</h2>
+<ul>
+<li>The stack is fixed — Gridfin is deliberately not a pick-your-own-stack kit.</li>
+<li>It's not Lovable or Bolt: the work happens in a terminal, through Claude Code.</li>
+<li>It's not a ready-made dashboard with 50 features — the code grows toward your product, not the other way around.</li>
+</ul>
+<p>Next: <a href="https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules">why AI development needs engineering rules</a> · <a href="https://ludvik4.dev/gridfin/en">Gridfin — home</a></p>
+  </main>
+</body>
+</html>

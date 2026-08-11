@@ -198,6 +198,17 @@ export function buildSitemap(
       changeFrequency: "yearly",
       priority: 0.2,
     });
+    for (const path of [
+      "/gridfin/en",
+      "/gridfin/en/docs/application-skeleton",
+      "/gridfin/en/guides/why-ai-needs-engineering-rules",
+    ]) {
+      entries.push({
+        url: publicUrl(market, baseUrl, path),
+        changeFrequency: "weekly",
+        priority: 0.8,
+      });
+    }
   }
 
   return entries;
