@@ -24,10 +24,13 @@ const serverOnlyPaths = [
   "public/gridfin",
 ];
 
-// Paths that may legitimately be absent. public/gridfin lands only once the
-// EN texts are ready (ADR 0005); a missing server-only route, by contrast,
-// means the tree is broken and MUST fail loudly, so the skip is not blanket.
-const optionalPaths = new Set(["public/gridfin"]);
+// Paths that may legitimately be absent. Both gridfin surfaces land only
+// with the EN publication round (ADR 0005): the bundle and its same-origin
+// lead route are being built in a parallel working tree, so main can hold
+// the stash entries before the paths exist. A missing CORE server-only
+// route, by contrast, means the tree is broken and MUST fail loudly, so
+// the skip is not blanket.
+const optionalPaths = new Set(["public/gridfin", "src/app/api/gridfin-lead"]);
 
 async function move(source: string, destination: string) {
   try {
