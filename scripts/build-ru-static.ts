@@ -11,6 +11,7 @@ const serverOnlyPaths = [
   "src/app/signin",
   "src/app/opengraph-image.tsx",
   "src/app/about",
+  "src/app/guides",
   "src/app/services",
   "src/app/work",
   "src/middleware.ts",
