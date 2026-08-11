@@ -4,7 +4,7 @@
 - Market: English, Europe-based, worldwide delivery
 - Updated: 2026-08-11
 - Current stage: index monitoring after live content wave 2
-- Next stage: Google Search Console ownership + indexing baseline
+- Next stage: weekly Google Search Console indexing and query monitoring
 
 ## Production state confirmed before wave 2
 
@@ -45,27 +45,38 @@ Verification completed:
 
 - Public web search on 2026-08-11 returned no reliable Ludvik4 result for
   `site:ludvik4.dev`, the exact homepage title, or exact commercial H1s.
-- This means the pages are technically indexable but not yet demonstrably
-  indexed or discoverable. No ranking claim is made.
 - Google Search Console was opened in the authenticated account
-  `krobox@gmail.com`. That account has no access to the existing
-  `sc-domain:ludvik4.dev` property; Google offers ownership verification.
-- URL-prefix property creation in the current Search Console UI did not
-  complete, so sitemap submission and URL Inspection were not performed.
-
-## External blocker
-
-Grant `krobox@gmail.com` owner access to the existing domain property, or
-verify ownership through DNS. Repository work cannot safely manufacture DNS
-control.
+  `krobox@gmail.com`. The account already has access to the URL-prefix property
+  `https://ludvik4.dev/`; a separate `sc-domain:ludvik4.dev` property is not
+  required for the current HTTPS host. The earlier ownership-blocker diagnosis
+  was incorrect and is superseded by this live console check.
+- On 2026-08-11, GSC reported 6 indexed pages and 1 discovered-but-not-indexed
+  page (`/privacy`), with its indexing report last updated on 2026-08-07.
+- The sitemap was successfully resubmitted on 2026-08-11. Its displayed
+  discovery count remains the stale pre-processing value of 2 until Google
+  processes the new 12-URL version.
+- `/guides` was present in the sitemap but reported as discovered and not yet
+  crawled. A priority indexing request was submitted successfully on
+  2026-08-11. Do not repeat the request while it is queued.
+- The three-month performance view showed 120 impressions, 1 click, 0.8% CTR,
+  and average position 23.1. Almost all visibility belongs to legacy `/blog/*`
+  URLs; the only click was to `/blog/spec-driven-development`. Those legacy EN
+  URLs now correctly return `404`, so this is residual historical visibility,
+  not evidence for the new commercial information architecture.
+- A weekly Codex heartbeat named `Ludvik4 weekly search monitoring` is active
+  for Mondays at 09:00 local time. It compares sitemap processing, indexing,
+  P1 URL states, clicks, impressions, CTR, position, queries, and landing pages,
+  while separating legacy blog 404s from the new commercial URLs.
 
 ## Next actions
 
-1. After Search Console ownership is restored, submit `sitemap.xml` and inspect
-   Home, all three service pages, and the three guide pages.
-2. Record the distinction between submitted, discovered, crawled, indexed, and
-   ranking states; do not treat console acceptance as indexing.
-3. Re-run exact-title and `site:` checks weekly until discovery begins.
-4. After 3–4 weeks of impressions, choose only one next guide from observed
+1. On the next weekly run, confirm that Google has reprocessed the 12-URL
+   sitemap and check `/guides` after its priority crawl request.
+2. Inspect Home, all three service pages, the guide hub, and all three guide
+   pages; record submitted, discovered, crawled, indexed, and ranking states
+   separately.
+3. Track new commercial queries/pages separately from residual `/blog/*` data;
+   use exact-title and `site:` checks only as supporting evidence.
+4. After 3–4 weeks of commercial impressions, choose only one next guide from observed
    demand: landing vs multi-page, human approval in automation, or MVP vs
    prototype/internal tool.

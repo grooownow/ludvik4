@@ -16,10 +16,14 @@ preflight; service files, unit/component/integration tests, EN and RU builds,
 the standard e2e suite, and local EN runtime checks are green. Main CI
 `31485032481` and RU deploy `31485032490` passed. Public
 search checks still return no reliable result for `site:ludvik4.dev` or the
-exact EN titles. `krobox@gmail.com` is authenticated in Google Search Console
-but does not own the existing domain property, so sitemap submission and URL
-inspection wait on ownership verification. Current evidence and next action:
-`docs/seo/seo-handoff.md`.
+exact EN titles. A live console check corrected the earlier ownership
+diagnosis: `krobox@gmail.com` already has access to the URL-prefix property
+`https://ludvik4.dev/`. The 12-URL sitemap was resubmitted on 2026-08-11 and
+`/guides` was added to Google's priority crawl queue. GSC currently reports 6
+indexed pages, `/privacy` as discovered-not-indexed, and 120 historical
+impressions / 1 click dominated by legacy `/blog/*` URLs that now return 404.
+A weekly Monday 09:00 Codex monitor is active for indexing and query deltas.
+Current evidence and next action: `docs/seo/seo-handoff.md`.
 
 **[DONE 2026-08-10] EN international commercial SEO/SRO rebuild.**
 `ludvik4.dev` is now designed as an independent
