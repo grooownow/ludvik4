@@ -70,6 +70,23 @@ nav.links a:hover{color:var(--fg)}
 .nav-cta{font-family:var(--font-caption);font-size:14px;background:var(--accent);color:var(--fg-inverse);border:0;border-radius:4px;padding:10px 16px;cursor:pointer;white-space:nowrap}
 .nav-cta:hover{filter:brightness(1.08)}
 
+/* ---- language dropdown ---- */
+/* details.lang disclosure in the fixed header: compact code collapsed, the
+   endonym list in a right-aligned panel when open. margin-left:auto keeps it
+   glued to the CTA side while nav.links is display:none on mobile. NB: this
+   comment ships inside the page's inline <style>, so it must never contain
+   markup-shaped text — the tests count tags with plain string matches. */
+details.lang{position:relative;margin-left:auto}
+details.lang summary{list-style:none;cursor:pointer;font-family:var(--font-caption);font-size:14px;color:var(--fg-secondary);border:1px solid #00000026;border-radius:4px;padding:9px 12px;user-select:none;white-space:nowrap}
+details.lang summary::-webkit-details-marker{display:none}
+details.lang summary::after{content:"▾";margin-left:6px;font-size:10px}
+details.lang[open] summary{color:var(--fg)}
+details.lang ul{position:absolute;right:0;top:calc(100% + 8px);margin:0;padding:6px;list-style:none;background:var(--surface);border:1px solid #00000026;border-radius:4px;box-shadow:0 8px 24px #00000022;min-width:176px;z-index:60}
+details.lang li a{display:block;padding:8px 12px;border-radius:4px;font-family:var(--font-caption);font-size:14px;text-decoration:none;color:var(--fg-secondary);white-space:nowrap}
+details.lang li a:hover{background:#00000008;color:var(--fg)}
+details.lang li a[aria-current="true"]{color:var(--fg);font-weight:600}
+details.lang li a[aria-current="true"]::after{content:"✓";float:right;color:var(--accent)}
+
 /* ---- hero ---- */
 /* Mockup YKUmX: white section, dark text column left, photo card 604x633
    right with the terminal overlaid (22px sides, 100px top). */
@@ -265,6 +282,7 @@ nav.links a:hover{color:var(--fg)}
 .price-card{background:var(--surface);color:var(--fg);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:16px;align-items:flex-start;position:sticky;top:24px}
 @media(min-width:768px){.price-card{padding:40px}}
 .price-card h2{font-size:34px}
+.price-card h2 span{display:block}
 @media(min-width:768px){.price-card h2{font-size:56px}}
 .price-body{font-size:18px;line-height:1.28;color:var(--fg-secondary)}
 .price-note{font-family:var(--font-caption);font-size:14px;line-height:1.25;color:var(--fg-secondary)}
@@ -339,6 +357,7 @@ footer a{color:var(--term-ok)}
         <a href="#pricing">Tarifs</a>
         <a href="#faq">FAQ</a>
       </nav>
+      <details class="lang"><summary aria-label="Langue" title="Langue">FR</summary><ul><li><a href="https://ludvik4.dev/gridfin/en" lang="en" hreflang="en">English</a></li><li><a href="https://ludvik4.ru/gridfin/" lang="ru" hreflang="ru">Русский</a></li><li><a href="https://ludvik4.dev/gridfin/de" lang="de" hreflang="de">Deutsch</a></li><li><a href="https://ludvik4.dev/gridfin/es" lang="es" hreflang="es">Español</a></li><li><a href="https://ludvik4.dev/gridfin/pt-br" lang="pt-BR" hreflang="pt-BR">Português (BR)</a></li><li><a href="https://ludvik4.dev/gridfin/fr" lang="fr" hreflang="fr" aria-current="true">Français</a></li><li><a href="https://ludvik4.dev/gridfin/ja" lang="ja" hreflang="ja">日本語</a></li></ul></details>
       <button class="nav-cta js-request" type="button">Obtenir l'accès anticipé</button>
     </div>
   </header>
