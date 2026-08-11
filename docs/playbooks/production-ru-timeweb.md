@@ -26,11 +26,15 @@ The static export uses directory indexes (`/cases/index.html`,
 URLs without custom rewrite rules.
 
 `/gridfin/` is the Gridfin product landing (RU). It is NOT built by this
-repository: the self-contained bundle (index.html + assets/) is generated in
-`grooownow/gridfin` (`pnpm landing:build` → `landing/dist/ru/`) and committed
-verbatim into `public/gridfin/`, which the static export copies into `out/`.
-To update it, rebuild there and re-copy; the folder is excluded from prettier.
-Live since 2026-08-07 (commit `15a717a`).
+repository: the self-contained bundle (index.html + assets/ + subpages) is
+generated in `grooownow/gridfin` (`pnpm landing:build` →
+`marketing/landing/dist/ru/`; the source moved from `landing/` to
+`marketing/landing/` in that repo's marketing reorganization, 2026-08-11)
+and committed verbatim into `resources/ru-public/gridfin/`, which
+`scripts/build-ru-static.ts` copies into `out/gridfin` for the RU export
+only — the EN build never ships it. To update it, rebuild there and
+re-copy; the folder is excluded from prettier. Live since 2026-08-07
+(commit `15a717a`).
 
 Timeweb deployment settings contain `NEXT_PUBLIC_POSTHOG_KEY`, using the same
 PostHog project as the EN storefront. The value is intentionally managed in
