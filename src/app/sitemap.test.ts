@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { getAllArticles, getPublishedArticles } from "@/features/blog";
 import { buildSitemap } from "@/features/site";
@@ -96,12 +96,12 @@ describe("public Gridfin sitemap", () => {
   });
 });
 
-describe("public Gridfin EN bundle", () => {
-  it("contains only the deployed EN URLs and no RU delivery endpoint", () => {
-    const root = path.join(process.cwd(), "public/gridfin");
+describe("public Gridfin international bundle", () => {
+  const root = path.join(process.cwd(), "public/gridfin");
+
+  it("keeps the RU market out of the .dev bundle", () => {
     const html = readFileSync(path.join(root, "en/index.html"), "utf8");
     const terms = readFileSync(path.join(root, "en/terms/index.html"), "utf8");
-    const xml = readFileSync(path.join(root, "sitemap.xml"), "utf8");
 
     expect(html).toContain(
       '<link rel="canonical" href="https://ludvik4.dev/gridfin/en">',
@@ -110,7 +110,46 @@ describe("public Gridfin EN bundle", () => {
     expect(terms).toContain("Gridfin International Beta Terms");
     expect(terms).toContain("laws of Spain");
     expect(terms).not.toMatch(/Yandex|Russia|Russian/);
-    expect(xml.match(/<loc>/g)).toHaveLength(3);
-    expect(xml).not.toContain("<loc>https://ludvik4.dev/gridfin/de");
+  });
+
+  it("advertises only what is deployed: every sitemap <loc> resolves to a committed file", () => {
+    // The ADR 0005 rule generalized past a hardcoded count (the launch round
+    // pinned 3 EN URLs; the locale round made that stale in the honest
+    // direction). A <loc> whose index.html is missing from public/gridfin is
+    // a 404 promised to crawlers — the exact defect this bundle shipped to
+    // fix, so it stays impossible by construction.
+    const xml = readFileSync(path.join(root, "sitemap.xml"), "utf8");
+    const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]!);
+
+    expect(locs.length).toBeGreaterThanOrEqual(3);
+    for (const loc of locs) {
+      const rel = loc.replace("https://ludvik4.dev/gridfin/", "");
+      expect(
+        existsSync(path.join(root, rel, "index.html")),
+        `${loc} is advertised but ${rel}/index.html is not deployed`,
+      ).toBe(true);
+    }
+    // Slashless style throughout — a trailing slash here would promise a URL
+    // that 308s through the app's trailingSlash redirect.
+    for (const loc of locs) {
+      expect(loc.endsWith("/")).toBe(false);
+    }
+  });
+
+  it("ships every locale the live hreflang block advertises", () => {
+    const html = readFileSync(path.join(root, "en/index.html"), "utf8");
+    const alternates = [
+      ...html.matchAll(
+        /hreflang="[^"]+" href="https:\/\/ludvik4\.dev\/gridfin\/([a-z-]+)"/g,
+      ),
+    ].map((m) => m[1]!);
+
+    expect(alternates.length).toBeGreaterThanOrEqual(6); // en + 5 locales
+    for (const locale of alternates) {
+      expect(
+        existsSync(path.join(root, locale, "index.html")),
+        `hreflang advertises /gridfin/${locale} but the locale is not deployed`,
+      ).toBe(true);
+    }
   });
 });

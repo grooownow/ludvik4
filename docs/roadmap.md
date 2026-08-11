@@ -6,6 +6,19 @@ writing detail here.
 
 ## Now
 
+**[DONE 2026-08-11, round 2] Gridfin landing multilingual — all five
+translated locales live.** Same-day follow-up to the EN launch below: the
+MT locales (de/es/fr/ja/pt-br), already refreshed from the final EN source
+by the launch round (i18n:check 7 locales × 169 keys, 0 issues), are
+published under /gridfin/<locale>; /gridfin/sitemap.xml advertises all six
+locale roots; the page-level x-default lost its stray trailing slash (the
+generator fix is `37c6554` in grooownow/gridfin). `src/app/sitemap.test.ts`
+now enforces advertised ⇔ deployed for every sitemap `<loc>` and every
+hreflang alternate — proven able to fail by hiding a locale's index.html.
+The RU bundle was rebuilt from the same generator so ludvik4.ru/gridfin/
+carries slashless dev alternates. Smoke list:
+`docs/playbooks/production-en-vercel.md` § /gridfin.
+
 **[DONE 2026-08-11] Gridfin EN landing on
 ludvik4.dev/gridfin (ADR 0005).** The reviewed EN bundle, same-origin lead
 route, three sitemap entries and llms.txt passages are integrated. Gridfin

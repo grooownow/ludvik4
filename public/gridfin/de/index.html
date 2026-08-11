@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="ru">
+<html lang="de">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gridfin — Claude Code starter с тестами и quality gates</title>
-  <meta name="description" content="Gridfin превращает пустой репозиторий в Application Skeleton для Claude Code: specs, инженерные правила, hooks, тесты и quality gates вместо вайб-кодинга.">
-  <link rel="canonical" href="https://ludvik4.ru/gridfin/">
+  <title>Gridfin — Claude Code Starter mit Tests &amp; Quality Gates</title>
+  <meta name="description" content="Gridfin macht aus einem leeren Repository ein Application Skeleton für Claude Code: Specs, Regeln, Hooks, Tests und Quality Gates statt Vibe-Coding-Chaos.">
+  <link rel="canonical" href="https://ludvik4.dev/gridfin/de">
   <link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en">
   <link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/">
   <link rel="alternate" hreflang="de" href="https://ludvik4.dev/gridfin/de">
@@ -14,23 +14,23 @@
   <link rel="alternate" hreflang="fr" href="https://ludvik4.dev/gridfin/fr">
   <link rel="alternate" hreflang="ja" href="https://ludvik4.dev/gridfin/ja">
   <link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en">
-  <meta property="og:title" content="Gridfin — Claude Code starter с тестами и quality gates">
-  <meta property="og:description" content="Gridfin превращает пустой репозиторий в Application Skeleton для Claude Code: specs, инженерные правила, hooks, тесты и quality gates вместо вайб-кодинга.">
+  <meta property="og:title" content="Gridfin — Claude Code Starter mit Tests &amp; Quality Gates">
+  <meta property="og:description" content="Gridfin macht aus einem leeren Repository ein Application Skeleton für Claude Code: Specs, Regeln, Hooks, Tests und Quality Gates statt Vibe-Coding-Chaos.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://ludvik4.ru/gridfin/">
-  <meta property="og:image" content="https://ludvik4.ru/gridfin/assets/og-ru.png">
+  <meta property="og:url" content="https://ludvik4.dev/gridfin/de">
+  <meta property="og:image" content="https://ludvik4.dev/gridfin/assets/og-en.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Gridfin">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Gridfin — Claude Code starter с тестами и quality gates">
-  <meta name="twitter:description" content="Gridfin превращает пустой репозиторий в Application Skeleton для Claude Code: specs, инженерные правила, hooks, тесты и quality gates вместо вайб-кодинга.">
-  <meta name="twitter:image" content="https://ludvik4.ru/gridfin/assets/og-ru.png">
+  <meta name="twitter:title" content="Gridfin — Claude Code Starter mit Tests &amp; Quality Gates">
+  <meta name="twitter:description" content="Gridfin macht aus einem leeren Repository ein Application Skeleton für Claude Code: Specs, Regeln, Hooks, Tests und Quality Gates statt Vibe-Coding-Chaos.">
+  <meta name="twitter:image" content="https://ludvik4.dev/gridfin/assets/og-en.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@400;500;600&family=Geist:wght@400;500&family=Geist+Mono:wght@400;700&display=swap">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Gridfin","alternateName":"Gridfin for Claude Code","applicationCategory":"DeveloperApplication","applicationSubCategory":"Claude Code starter kit","operatingSystem":"macOS, Linux, Windows","softwareRequirements":"Claude Code, Git, terminal","url":"https://ludvik4.ru/gridfin/","inLanguage":"ru","creator":{"@type":"Person","name":"Ludvik4","url":"https://ludvik4.ru"},"featureList":["Application Skeleton","Specification-first workflow","Engineering rules","Hooks","Automated tests","Quality gates","Playbooks","Skills","Update workflow"],"description":"Gridfin превращает пустой репозиторий в Application Skeleton для Claude Code: specs, инженерные правила, hooks, тесты и quality gates вместо вайб-кодинга.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Почему не просто Claude Code?","acceptedAnswer":{"@type":"Answer","text":"Просто Claude Code пишет код, но не даёт устойчивый инженерный процесс. Без Gridfin каждая сессия заново решает, как строить проект; с Gridfin агент работает по specs, rules, hooks, тестам и quality gates, которые нельзя тихо обойти. Разбор подробнее — в гайде почему AI-разработке нужны инженерные правила."}},{"@type":"Question","name":"Чем это отличается от boilerplate — ShipFast и других?","acceptedAnswer":{"@type":"Answer","text":"Бойлерплейты продают предсобранный код, который ты кастомизируешь. Gridfin — agent-native скелет (Application Skeleton): тонкая архитектурная основа плюс процесс, который спекует, строит и тестирует именно твой продукт. Ты не выпиливаешь чужой дашборд — ты выращиваешь свой."}},{"@type":"Question","name":"Что такое Application Skeleton?","acceptedAnswer":{"@type":"Answer","text":"Application Skeleton — это архитектурная основа приложения, на которой Claude Code строит конкретный продукт. Это не просто шаблон проекта: внутри уже приняты инженерные решения по стеку, структуре, тестам и CI, а дальнейшая разработка идёт через specs, skills и quality gates. Полный разбор — на странице Application Skeleton."}},{"@type":"Question","name":"Чем это отличается от MakerKit и Supastarter?","acceptedAnswer":{"@type":"Answer","text":"Они добавили к boilerplate rules-файлы для AI-агентов — но следовать им агент не обязан. В Gridfin правила принуждаются: хук останавливает нарушение до записи кода, гейты не пропускают красное. Правила с зубами, а не пожелания."}},{"@type":"Question","name":"Почему стек фиксированный?","acceptedAnswer":{"@type":"Answer","text":"Потому что весь процесс — правила, хуки, тесты, гейты, плейбуки — проверен именно на этом стеке: Next.js + TypeScript, Tailwind + shadcn/ui, Postgres. Свобода выбора стека — это ещё сорок решений, которые придётся принимать без опыта."}},{"@type":"Question","name":"Можно ли использовать свой стек?","acceptedAnswer":{"@type":"Answer","text":"Нет — и это осознанно. Gridfin не конструктор: убери фиксированный стек, и исчезнет всё, за что он отвечает — проверенные правила, тесты и гейты. Если тебе нужен другой стек, честный ответ: Gridfin не твой инструмент."}},{"@type":"Question","name":"Я в России — у меня заработает?","acceptedAnswer":{"@type":"Answer","text":"Gridfin — обычный git-репозиторий, он работает где угодно. Единственное условие — рабочий Claude Code: если клод код у тебя уже запускается и оплачен, Gridfin ничего дополнительно не требует."}},{"@type":"Question","name":"Что будет, если проект перестанет развиваться?","acceptedAnswer":{"@type":"Answer","text":"Ничего страшного: репозиторий твой, код и процесс работают локально и не зависят от существования Gridfin как продукта. Обновления перестанут приходить — всё остальное останется."}},{"@type":"Question","name":"Подходит ли новичку?","acceptedAnswer":{"@type":"Answer","text":"Если ты готов работать с терминалом, git и Claude Code по пошаговым инструкциям — да: архитектуру, тестовую стратегию и контроль качества коробка несёт за тебя. Если терминал видишь впервые — начни с Lovable или Bolt."}},{"@type":"Question","name":"Как Gridfin не даёт AI сломать проект?","acceptedAnswer":{"@type":"Answer","text":"Gridfin делает ошибку видимой до мержа: каждое изменение проходит lint, tests, e2e и build, а правила принуждаются hooks и quality gates. Агент может писать код быстро, но не может выпустить изменение без проверки."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Gridfin","alternateName":"Gridfin for Claude Code","applicationCategory":"DeveloperApplication","applicationSubCategory":"Claude Code starter kit","operatingSystem":"macOS, Linux, Windows","softwareRequirements":"Claude Code, Git, terminal","url":"https://ludvik4.dev/gridfin/de","inLanguage":"de","creator":{"@type":"Person","name":"Ludvik4","url":"https://ludvik4.dev"},"featureList":["Application Skeleton","Specification-first workflow","Engineering rules","Hooks","Automated tests","Quality gates","Playbooks","Skills","Update workflow"],"description":"Gridfin macht aus einem leeren Repository ein Application Skeleton für Claude Code: Specs, Regeln, Hooks, Tests und Quality Gates statt Vibe-Coding-Chaos.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Warum nicht einfach Claude Code?","acceptedAnswer":{"@type":"Answer","text":"Claude Code allein schreibt Code, gibt dir aber keinen stabilen Engineering-Prozess. Ohne Gridfin entscheidet jede Session neu, wie das Projekt gebaut wird; mit Gridfin arbeitet der Agent nach Specs, Regeln, Hooks, Tests und Quality Gates, die sich nicht still umgehen lassen. Die ganze Analyse: warum KI-Entwicklung Engineering-Regeln braucht."}},{"@type":"Question","name":"Was unterscheidet das von Boilerplates wie ShipFast?","acceptedAnswer":{"@type":"Answer","text":"Boilerplates verkaufen vorgefertigten Code, den du anpasst. Gridfin ist ein agent-natives Starter-Kit: ein schlankes Skeleton plus ein Prozess, der genau dein Produkt spezifiziert, baut und testet. Du meißelst kein fremdes Dashboard zurecht — du lässt dein eigenes wachsen."}},{"@type":"Question","name":"Was ist ein Application Skeleton?","acceptedAnswer":{"@type":"Answer","text":"Ein Application Skeleton ist das architektonische Fundament, auf dem Claude Code dein konkretes Produkt baut. Es ist nicht nur ein Projekt-Template: Die Engineering-Entscheidungen zu Stack, Struktur, Tests und CI sind schon getroffen, und die weitere Entwicklung läuft über Specs, Skills und Quality Gates. Der ausführliche Beitrag: was ein Application Skeleton ist."}},{"@type":"Question","name":"Was unterscheidet das von MakerKit und Supastarter?","acceptedAnswer":{"@type":"Answer","text":"MakerKit und Supastarter sind umfangreiche SaaS-Boilerplates mit Agentenanweisungen und Test-Unterstützung. Gridfin löst ein anderes Problem: Es beginnt mit deiner Produktidee und führt einen spec-getriebenen Prozess aus, dessen Hooks bekannte Verstöße blockieren, dessen Tests nachweislich fehlschlagen müssen und dessen Gate-Ledger die Lieferbereitschaft festhält. Wähle sie für fertige SaaS-Funktionen; wähle Gridfin für einen durchgesetzten Entwicklungsprozess rund um ein fokussiertes Produkt."}},{"@type":"Question","name":"Warum ist der Stack fest?","acceptedAnswer":{"@type":"Answer","text":"Weil der ganze Prozess — Regeln, Hooks, Tests, Gates, Playbooks — genau auf diesem Stack bewährt ist: Next.js + TypeScript, Tailwind + shadcn/ui, Postgres. Freie Stack-Wahl bedeutet vierzig weitere Entscheidungen, die du ohne die nötige Erfahrung treffen müsstest."}},{"@type":"Question","name":"Kann ich meinen eigenen Stack nutzen?","acceptedAnswer":{"@type":"Answer","text":"Nein — und das ist Absicht. Gridfin ist kein Baukasten mit freier Stack-Wahl: Ohne den festen Stack verschwindet alles, wofür er steht — die bewährten Regeln, Tests und Gates. Brauchst du einen anderen Stack, lautet die ehrliche Antwort: Gridfin ist nicht dein Tool."}},{"@type":"Question","name":"Was brauche ich, um Gridfin auszuführen?","acceptedAnswer":{"@type":"Answer","text":"Du brauchst Claude Code, Git, ein Terminal und die unterstützte Node.js/pnpm-Toolchain. Gridfin läuft lokal als git-Repository und benötigt weder ein gehostetes Gridfin-Konto noch eine proprietäre Laufzeit."}},{"@type":"Question","name":"Was, wenn das Projekt nicht mehr weiterentwickelt wird?","acceptedAnswer":{"@type":"Answer","text":"Nichts Schlimmes: Das Repository gehört dir, Code und Prozess laufen lokal und hängen nicht davon ab, dass es Gridfin als Produkt gibt. Updates würden ausbleiben — alles andere bleibt."}},{"@type":"Question","name":"Ist das für Einsteiger geeignet?","acceptedAnswer":{"@type":"Answer","text":"Wenn du bereit bist, mit Terminal, git und Claude Code nach Schritt-für-Schritt-Anleitung zu arbeiten — ja: Die Box übernimmt Architektur, Teststrategie und Qualitätskontrolle für dich. Siehst du zum ersten Mal ein Terminal — starte mit Lovable oder Bolt."}},{"@type":"Question","name":"Wie verhindert Gridfin, dass KI das Projekt kaputt macht?","acceptedAnswer":{"@type":"Answer","text":"Gridfin macht einen Fehler vor dem Merge sichtbar: Jede Änderung durchläuft Lint, Tests, E2E und Build, und die Regeln werden durch Hooks und Quality Gates erzwungen. Der Agent darf schnell Code schreiben, aber keine Änderung ohne Prüfungen ausliefern."}}]}</script>
   <style>:root{
   --surface:#FFFFFF;--surface-peach:#FDE2D9;--surface-cyan:#E0F7FA;
   --fg:#1A1A1A;--fg-secondary:#4B5563;--fg-inverse:#FFFFFF;
@@ -334,12 +334,12 @@ footer a{color:var(--term-ok)}
     <div class="wrap">
       <a class="brand" href="#hero">Gridfin</a>
       <nav class="links" aria-label="Sections">
-        <a href="#how">Как работает</a>
-        <a href="#box">Что получаешь</a>
-        <a href="#pricing">Цена</a>
+        <a href="#how">Wie es funktioniert</a>
+        <a href="#box">Was du bekommst</a>
+        <a href="#pricing">Preise</a>
         <a href="#faq">FAQ</a>
       </nav>
-      <button class="nav-cta js-request" type="button">Получить ранний доступ</button>
+      <button class="nav-cta js-request" type="button">Early Access sichern</button>
     </div>
   </header>
   <main>
@@ -347,22 +347,22 @@ footer a{color:var(--term-ok)}
       <div class="wrap">
         <div class="hero-grid">
           <div class="hero-copy">
-            <span class="badge">Ранний доступ — бесплатно для бета-тестеров</span>
-            <h1>Claude Code starter для качественных сайтов и приложений.</h1>
-            <p class="hero-sub">Gridfin — это agent-native starter kit, который превращает пустой репозиторий в Application Skeleton: готовую архитектурную основу для разработки с Claude Code. Внутри уже есть спецификации, инженерные правила, hooks, тесты и гейты качества — вместо хаотичного вайб-кодинга.</p>
-            <p class="hero-audience">Если у тебя есть идея и Claude Code, но нет многолетнего инженерного опыта — Gridfin проведёт тебя по процессу, который инженерные команды обычно собирают годами.</p>
+            <span class="badge">Early Access — kostenlos für Beta-Tester</span>
+            <h1>Claude Code starter für hochwertige Websites und Apps.</h1>
+            <p class="hero-sub">Gridfin ist ein agent-natives Starter-Kit, das ein leeres Repository in ein Application Skeleton verwandelt: ein fertiges architektonisches Fundament für die Arbeit mit Claude Code. Specs, Engineering-Regeln, Hooks, Tests und Quality Gates sind eingebaut — statt chaotischem Vibe-Coding.</p>
+            <p class="hero-audience">Wenn du eine Idee und Claude Code hast, aber keine jahrelange Engineering-Erfahrung, führt Gridfin dich durch den Prozess, den Engineering-Teams sonst über Jahre aufbauen.</p>
             <div class="cta-row">
-              <a class="cta" href="https://t.me/ludvik4work">Получить ранний доступ</a>
-              <p class="cta-note">Бесплатно на время беты · после беты — стартовые цены</p>
+              <a class="cta" href="https://t.me/ludvik4work">Early Access sichern</a>
+              <p class="cta-note">Kostenlos in der Beta · Starterpreise danach</p>
             </div>
           </div>
-          <div class="hero-photo" style="background-image:url('https://ludvik4.ru/gridfin/assets/hero-terminal.png')">
+          <div class="hero-photo" style="background-image:url('https://ludvik4.dev/gridfin/assets/hero-terminal.png')">
             <div class="terminal" role="img" aria-label="Terminal: /gridfin run">
               <div class="term-bar">
                 <span class="term-dot" style="background:#FF5F57"></span>
                 <span class="term-dot" style="background:#FEBC2E"></span>
                 <span class="term-dot" style="background:#28C840"></span>
-                <span class="term-title">gridfin — за час</span>
+                <span class="term-title">gridfin — in einer Stunde</span>
               </div>
               <div class="term-body">
             <div class="cmd">$ /gridfin</div>
@@ -379,93 +379,93 @@ footer a{color:var(--term-ok)}
       </div>
     </section>
     <section id="bridge">
-      <div class="wrap"><p>AI ускорил разработку. Но инженерный опыт всё ещё нельзя сгенерировать. Именно этот пробел закрывает Gridfin.</p></div>
+      <div class="wrap"><p>KI hat Entwicklung schneller gemacht. Aber Engineering-Erfahrung lässt sich nicht generieren. Genau diese Lücke schließt Gridfin.</p></div>
     </section>
     <section id="problem">
       <div class="wrap">
-        <h2>Без инженерного опыта ошибки невидимы — пока не станут дорогими</h2>
+        <h2>Ohne Engineering-Erfahrung sind Fehler unsichtbar — bis sie teuer werden</h2>
         <div class="pain-grid">
         <article class="pain">
           <span class="pain-num">01</span>
-          <h3>Ты не знаешь, какие ошибки уже совершаешь</h3>
-          <p class="pain-body">Стек, архитектура, тестирование, безопасность — десятки решений принимаются молча и не глядя.</p>
-          <p class="pain-solution">Gridfin принимает инженерные решения заранее: инвариантное предрешено и переиспользуется в каждом проекте.</p>
+          <h3>Du weißt nicht, welche Fehler du schon machst</h3>
+          <p class="pain-body">Stack, Architektur, Tests, Security — Dutzende Entscheidungen fallen still, ohne zweiten Blick.</p>
+          <p class="pain-solution">Gridfin trifft die Engineering-Entscheidungen im Voraus: Der invariante Teil steht fest und wird in jedem Projekt wiederverwendet.</p>
         </article>
         <article class="pain">
           <span class="pain-num">02</span>
-          <h3>Чинишь одно, ломается другое</h3>
-          <p class="pain-body">Сделать было быстро, отлаживать — бесконечно; каждая новая фича трогает предыдущие.</p>
-          <p class="pain-solution">Каждая фича проходит один и тот же цикл: спека → код → тесты → ревью. Старые тесты не дают новой фиче тихо сломать прежние.</p>
+          <h3>Du reparierst eine Sache — eine andere geht kaputt</h3>
+          <p class="pain-body">Bauen war schnell, Debugging endlos; jedes neue Feature berührt die vorherigen.</p>
+          <p class="pain-solution">Jedes Feature durchläuft denselben Zyklus: Spec → Code → Tests → Review. Alte Tests verhindern, dass ein neues Feature die alten still bricht.</p>
         </article>
         <article class="pain">
           <span class="pain-num">03</span>
-          <h3>Новая фича становится дороже предыдущей</h3>
-          <p class="pain-body">Появляются ограничения, о которых ты не знал; агент ради мелочи переписывает половину кода.</p>
-          <p class="pain-solution">Application Skeleton фиксирует архитектуру с первого дня: двадцатая фича встраивается тем же процессом, что и первая.</p>
+          <h3>Jedes neue Feature kostet mehr als das letzte</h3>
+          <p class="pain-body">Unbekannte Constraints tauchen plötzlich auf; der Agent schreibt für eine kleine Änderung die halbe Codebase um.</p>
+          <p class="pain-solution">Das Application Skeleton fixiert die Architektur ab Tag eins: Das zwanzigste Feature durchläuft denselben Prozess wie das erste.</p>
         </article>
         <article class="pain">
           <span class="pain-num">04</span>
-          <h3>Claude Code пишет код быстрее, чем ты успеваешь проверять</h3>
-          <p class="pain-body">Что именно он нагенерил вчера — уже никто не читал.</p>
-          <p class="pain-solution">Хуки и гейты качества делают проверку частью процесса: нарушение правил останавливается до записи кода, красный статус виден до мержа.</p>
+          <h3>Claude Code schreibt Code schneller, als du reviewen kannst</h3>
+          <p class="pain-body">Was es gestern genau generiert hat — hat niemand gelesen.</p>
+          <p class="pain-solution">Hooks und Quality Gates machen Review zum Teil des Prozesses: Ein Regelverstoß wird gestoppt, bevor Code geschrieben wird — Rot ist sichtbar vor dem Merge.</p>
         </article>
         </div>
       </div>
-      <div class="ticker"><div class="wrap"><span>Gridfin настраивает процесс</span><span class="dot" aria-hidden="true">·</span><span>Сначала спека</span><span class="dot" aria-hidden="true">·</span><span>Потом код</span><span class="dot" aria-hidden="true">·</span><span>Потом тесты</span><span class="dot" aria-hidden="true">·</span><span>Правила с зубами</span></div></div>
+      <div class="ticker"><div class="wrap"><span>Gridfin repariert den Prozess</span><span class="dot" aria-hidden="true">·</span><span>Spec zuerst</span><span class="dot" aria-hidden="true">·</span><span>Dann Code</span><span class="dot" aria-hidden="true">·</span><span>Dann Tests</span><span class="dot" aria-hidden="true">·</span><span>Ein Regelwerk</span></div></div>
     </section>
     <section id="how">
       <div class="wrap">
-        <span class="kicker">Одна команда: /gridfin</span>
-        <h2>Что происходит после запуска Gridfin</h2>
-        <p class="how-intro">Одна команда — <code>/gridfin</code> — запускает агента-проводника. Pipeline показывает процесс и реальные артефакты на каждом шаге.</p>
+        <span class="kicker">Ein Befehl: /gridfin</span>
+        <h2>Was passiert, nachdem du Gridfin startest</h2>
+        <p class="how-intro">Ein Befehl — <code>/gridfin</code> — startet einen Guide-Agenten. Die Pipeline zeigt den Prozess und echte Artefakte bei jedem Schritt.</p>
         <div class="how-grid">
           <div class="steps">
           <article class="step">
             <span class="step-num">01</span>
             <div>
-              <h3>Идея</h3>
-              <p class="step-body">Агент интервьюирует тебя, помогает уточнить идею и проработать её под твою цель и ограничения: разбирает конкурентов и альтернативы, помогает найти киллер-фичу и собрать MVP-скоуп.</p>
+              <h3>Idee</h3>
+              <p class="step-body">Der Agent befragt dich, schärft die Idee — und sagt ehrlich, wenn sie nicht zu diesem Stack passt.</p>
             </div>
           </article>
           <article class="step">
             <span class="step-num">02</span>
             <div>
-              <h3>Спецификация</h3>
-              <p class="step-body">Помогает проработать каждую фичу и составить ТЗ: пишет спеки на полную реализацию — до какого-либо кода.</p>
+              <h3>Spezifikation</h3>
+              <p class="step-body">Ein PRD: das Problem, der Nutzer, 3–5 Kernfeatures und eine explizite „Nicht in v1“-Liste. Specs kommen vor jedem Code.</p>
             </div>
           </article>
           <article class="step accent">
             <span class="step-num">03</span>
             <div>
-              <h3>Application Skeleton</h3>
-              <p class="step-body">Собирает архитектуру, стек и инфраструктуру. Вместе с тобой настраивает под продукт: имя проекта, дизайн-токены, схему данных твоей доменной модели.</p>
+              <h3>Dein Application Skeleton ist fertig</h3>
+              <p class="step-body">Das Hauptergebnis der ersten Schritte: Architektur, Stack, Tests und CI sind schon zusammengebaut — und auf dich zugeschnitten: Projektname, Branding-Tokens, das Datenschema deines Domain-Modells.</p>
             </div>
           </article>
           <article class="step">
             <span class="step-num">04</span>
             <div>
-              <h3>Имплементация</h3>
-              <p class="step-body">Spec-driven development: команды вроде <code>/feature</code> ведут каждую фичу по циклу спека → код → тесты → ревью. Компонентный подход.</p>
+              <h3>Features per Skill</h3>
+              <p class="step-body"><code>/feature</code> führt jedes Feature durch den Zyklus Spec → Code → Tests → Review.</p>
             </div>
           </article>
           <article class="step">
             <span class="step-num">05</span>
             <div>
-              <h3>Гейты качества</h3>
-              <p class="step-body">Линт, тесты, e2e и сборка одним прогоном — красное видно до мержа.</p>
+              <h3>Quality Gates</h3>
+              <p class="step-body">Lint, Tests, E2E und Build in einem Lauf — Rot ist sichtbar vor dem Merge.</p>
             </div>
           </article>
           <article class="step">
             <span class="step-num">06</span>
             <div>
-              <h3>Production-ready приложение</h3>
-              <p class="step-body">Деплой на Vercel по пошаговому плейбуку. Каждый шаг закоммичен — обрыв сессии ничего не теряет.</p>
+              <h3>Produktionsreife Anwendung</h3>
+              <p class="step-body">Deployment auf Vercel per Schritt-für-Schritt-Playbook. Jeder Schritt wird committet — eine abgebrochene Session verliert nichts.</p>
             </div>
           </article>
           </div>
           <div class="artifacts">
           <aside class="artifact cyan">
-            <h3>Спецификация</h3>
+            <h3>Spezifikation</h3>
             <pre>docs/prd.md
 ## Problem
 ## User
@@ -480,7 +480,7 @@ tests/
 CLAUDE.md</pre>
           </aside>
           <aside class="artifact green">
-            <h3>Гейты качества</h3>
+            <h3>Quality Gates</h3>
             <pre>✓ lint    ✓ secrets
 ✓ tests — 311 passed (311)</pre>
           </aside>
@@ -490,64 +490,64 @@ CLAUDE.md</pre>
     </section>
     <section id="why">
       <div class="wrap">
-        <h2>Почему это работает</h2>
+        <h2>Warum es funktioniert</h2>
         <div class="why-grid">
         <article class="why-card">
           <span class="why-num">01</span>
-          <h3>Инженерные решения принимаются один раз</h3>
-          <p>Не принимай одинаковые решения заново — они уже приняты, проверены и переиспользуются.</p>
+          <h3>Engineering-Entscheidungen fallen einmal</h3>
+          <p>Triff dieselben Entscheidungen nicht noch mal — sie sind schon getroffen und bewährt und werden wiederverwendet.</p>
         </article>
         <article class="why-card">
           <span class="why-num">02</span>
-          <h3>Сначала спецификация</h3>
-          <p>AI пишет код лучше, когда сначала знает, что строит.</p>
+          <h3>Spezifikation zuerst</h3>
+          <p>KI schreibt besseren Code, wenn sie vorher weiß, was sie baut.</p>
         </article>
         <article class="why-card">
           <span class="why-num">03</span>
-          <h3>AI работает по инженерным правилам</h3>
-          <p>Правила принуждаются автоматически — хуками и гейтами, а не пожеланиями в README.</p>
+          <h3>KI arbeitet nach Engineering-Regeln</h3>
+          <p>Regeln werden automatisch durchgesetzt — von Hooks und Gates, nicht als Wunsch in einem README.</p>
         </article>
         <article class="why-card">
           <span class="why-num">04</span>
-          <h3>Каждое изменение проходит гейты качества</h3>
-          <p>Качество — обязательная часть процесса, а не последний пункт перед релизом.</p>
+          <h3>Jede Änderung durchläuft Quality Gates</h3>
+          <p>Qualität ist Pflichtteil des Prozesses, nicht der letzte Punkt vor dem Release.</p>
         </article>
         </div>
       </div>
     </section>
     <section id="skeleton">
       <div class="wrap">
-        <span class="kicker">Центральная сущность</span>
-        <h2>Что такое Application Skeleton</h2>
-        <p class="skel-body">Application Skeleton — это не демо-приложение и не папка с шаблонами, а заранее собранная архитектурная основа продукта. Gridfin фиксирует стек, структуру, правила, тестовую стратегию и гейты качества до того, как Claude Code начинает писать фичи.</p>
+        <span class="kicker">Kernkonzept</span>
+        <h2>Was ist ein Application Skeleton</h2>
+        <p class="skel-body">Ein Application Skeleton ist keine Demo-App und kein Ordner voller Templates — es ist ein vormontiertes architektonisches Fundament für ein Produkt. Gridfin legt Stack, Struktur, Regeln, Teststrategie und Quality Gates fest, bevor Claude Code die ersten Features schreibt.</p>
         <div class="skel-grid">
         <article class="skel-card">
-          <h3>Архитектура</h3>
-          <p>Стек, слои, границы импортов и правила изменений уже выбраны, чтобы агент не пересобирал проект заново на каждой фиче.</p>
+          <h3>Architektur</h3>
+          <p>Stack, Schichten, Importgrenzen und Änderungsregeln sind schon gewählt, damit der Agent das Projekt nicht bei jedem Feature neu aufbaut.</p>
         </article>
         <article class="skel-card">
-          <h3>Спецификации</h3>
-          <p>Работа начинается с PRD и feature specs: сначала понятно, что строим, потом появляется код.</p>
+          <h3>Spezifikationen</h3>
+          <p>Die Arbeit beginnt mit einem PRD und Feature-Specs: Erst ist klar, was gebaut wird, dann entsteht der Code.</p>
         </article>
         <article class="skel-card">
-          <h3>Проверки</h3>
-          <p>Тесты, lint, e2e и build запускаются как единый quality gate, чтобы ошибка стала видимой до мержа.</p>
+          <h3>Prüfungen</h3>
+          <p>Tests, Lint, E2E und Build laufen als ein Quality Gate, damit ein Fehler vor dem Merge sichtbar wird.</p>
         </article>
         <article class="skel-card">
-          <h3>Процесс</h3>
-          <p>Skills и playbooks ведут разработку по повторяемому циклу: идея → спека → код → тесты → ревью → деплой.</p>
+          <h3>Prozess</h3>
+          <p>Skills und Playbooks führen die Entwicklung durch einen wiederholbaren Zyklus: Idee → Spec → Code → Tests → Review → Deploy.</p>
         </article>
         </div>
-        <p class="skel-link"><a href="https://ludvik4.ru/gridfin/docs/application-skeleton/">Application Skeleton — подробный разбор →</a></p>
+        <p class="skel-link"><a href="https://ludvik4.dev/gridfin/en/docs/application-skeleton/">Was ein Application Skeleton ist — die ausführliche Analyse →</a></p>
       </div>
     </section>
     <section id="box">
       <div class="wrap">
-        <h2>Что получаешь</h2>
-        <p class="box-intro">Готовая основа приложения в твоём git-репозитории — с полностью выстроенным процессом разработки и тестирования.</p>
+        <h2>Was du bekommst</h2>
+        <p class="box-intro">Keine Liste von Versprechen — Komponenten in deinem eigenen git-Repository.</p>
         <div class="skeleton-card">
           <h3>Application Skeleton</h3>
-          <p class="skeleton-body">Готовая архитектурная основа приложения — Next.js + TypeScript + Postgres. Внутри неё уже живут:</p>
+          <p class="skeleton-body">Ein fertiges architektonisches Fundament für deine Anwendung — Next.js + TypeScript + Postgres. Bereits enthalten:</p>
           <div class="skeleton-list">
             <span>✓ app/</span>
             <span>✓ tests/</span>
@@ -559,43 +559,43 @@ CLAUDE.md</pre>
             <span>✓ updates</span>
           </div>
           <div class="skeleton-divider"></div>
-          <p class="skeleton-outro">Плюс обновления навсегда. Это git-репозиторий, который принадлежит тебе. Не подписка, не сервис, не аренда конструктора.</p>
+          <p class="skeleton-outro">Plus Updates für immer. Es ist ein git-Repository, das dir gehört. Kein Abo, kein Service, kein gemieteter Baukasten.</p>
         </div>
         <div class="comp-grid">
         <article class="comp">
-          <h3>Плейбуки</h3>
-          <p>Пошаговые сценарии для деплоя, аналитики, pricing, compliance и других инженерных задач, где нельзя полагаться на память сессии.</p>
+          <h3>Playbooks</h3>
+          <p>Schritt-für-Schritt-Szenarien für Deploys, Analytics, Pricing, Compliance und andere Engineering-Aufgaben, bei denen man sich nicht auf das Gedächtnis der Session verlassen kann.</p>
         </article>
         <article class="comp">
           <h3>Skills</h3>
-          <p>Агентные workflows для онбординга, фич, дизайна, ревью, верификации, деплоя, обновлений и записи важных learnings.</p>
+          <p>Agenten-Workflows für Onboarding, Features, Design, Review, Verifikation, Deploys, Updates und das Festhalten von Learnings.</p>
         </article>
         <article class="comp">
-          <h3>Инженерные правила</h3>
-          <p>Правила архитектуры, фронтенда, тестирования, безопасности, документации и git-процесса, по которым работает агент.</p>
+          <h3>Engineering-Regeln</h3>
+          <p>Regeln für Architektur, Frontend, Testing, Security, Dokumentation und den Git-Prozess, nach denen der Agent arbeitet.</p>
         </article>
         <article class="comp">
-          <h3>Quality gates</h3>
-          <p>Единый прогон lint, tests, e2e и build показывает красный статус до мержа, а не после релиза.</p>
+          <h3>Quality Gates</h3>
+          <p>Ein Lauf aus Lint, Tests, E2E und Build zeigt Rot vor dem Merge — nicht nach dem Release.</p>
         </article>
         <article class="comp">
-          <h3>Документация</h3>
-          <p>PRD, спеки, ADR, playbooks и rules сохраняют контекст между сессиями, чтобы агент не начинал проект заново каждый день.</p>
+          <h3>Dokumentation</h3>
+          <p>PRD, Specs, ADRs, Playbooks und Regeln halten den Kontext zwischen Sessions, damit der Agent das Projekt nicht jeden Tag neu beginnt.</p>
         </article>
         </div>
         <div class="ideas">
           <div>
-            <h3>Идей больше, чем выходных?</h3>
-            <p>Один кит — сколько угодно проектов: SaaS, лендинги, пет-проекты. Каждый запуск — час с агентом, а не неделя настройки.</p>
+            <h3>Mehr Ideen als Wochenenden?</h3>
+            <p>Ein Kit — beliebig viele Projekte: SaaS, Landingpages, Pet-Projekte. Jeder Launch ist eine Stunde mit dem Agenten, keine Woche Setup.</p>
           </div>
-          <button class="micro-cta js-request" type="button">Получить ранний доступ</button>
+          <button class="micro-cta js-request" type="button">Early Access sichern</button>
         </div>
       </div>
     </section>
     <section id="inside">
       <div class="wrap">
-        <h2>Inside Gridfin</h2>
-        <p class="inside-intro">Что ты буквально покупаешь: репозиторий, правила, спеки, тесты и workflow.</p>
+        <h2>Gridfin von innen</h2>
+        <p class="inside-intro">Was du wirklich kaufst: ein Repository, Regeln, Specs, Tests und einen Workflow.</p>
         <div class="inside-grid">
           <div class="repo-window">
             <div class="term-bar">
@@ -620,19 +620,19 @@ CLAUDE.md</pre>
           <div class="annotations">
           <div class="annotation">
             <code>src/</code>
-            <p>Здесь появляется твой продукт.</p>
+            <p>Hier wächst dein Produkt.</p>
           </div>
           <div class="annotation">
             <code>docs/playbooks/</code>
-            <p>Готовые инженерные процессы.</p>
+            <p>Fertige Engineering-Prozesse.</p>
           </div>
           <div class="annotation">
             <code>CLAUDE.md</code>
-            <p>Правила, которым следует агент.</p>
+            <p>Die Regeln, denen der Agent folgt.</p>
           </div>
           <div class="annotation">
             <code>tests/</code>
-            <p>Проверяют каждое изменение.</p>
+            <p>Sie prüfen jede Änderung.</p>
           </div>
           </div>
         </div>
@@ -640,55 +640,55 @@ CLAUDE.md</pre>
     </section>
     <section id="trust">
       <div class="wrap">
-        <span class="kicker">Твоё — значит твоё</span>
-        <h2>Коробка остаётся с тобой — что бы ни случилось</h2>
+        <span class="kicker">Deins heißt deins</span>
+        <h2>Die Box bleibt bei dir — egal, was passiert</h2>
         <div class="trust-grid">
           <div class="trust-cards">
           <article class="trust-card">
-            <h3>Репозиторий принадлежит тебе</h3>
-            <p>Это не SaaS: код, правила и процесс остаются с тобой и работают, даже если Gridfin как продукт исчезнет.</p>
+            <h3>Das Repository gehört dir</h3>
+            <p>Das ist kein SaaS: Code, Regeln und Prozess bleiben bei dir und funktionieren weiter, selbst wenn Gridfin als Produkt verschwindet.</p>
           </article>
           <article class="trust-card">
-            <h3>Обновления — навсегда</h3>
-            <p>Шаблон версионируется; команда <code>/update</code> подтягивает новые релизы в твой проект, не затирая твой код.</p>
+            <h3>Updates — für immer</h3>
+            <p>Das Template ist versioniert; der Befehl <code>/update</code> zieht neue Releases in dein Projekt, ohne deinen Code zu überschreiben.</p>
           </article>
           <article class="trust-card">
-            <h3>Gridfin честно говорит, чего не умеет</h3>
-            <p>Идею не по профилю агент отклонит на первом шаге, а не после недели работы. Никаких обещаний «подходит для всего».</p>
+            <h3>Gridfin ist ehrlich, was es nicht kann</h3>
+            <p>Eine Idee außerhalb seines Profils wird gleich am Anfang abgelehnt, nicht nach einer Woche Arbeit. Kein „passt für alles“-Versprechen.</p>
           </article>
           </div>
           <div class="trust-photo">
-            <img src="https://ludvik4.ru/gridfin/assets/trust-box.jpg" alt="" loading="lazy" width="1300" height="1210">
+            <img src="https://ludvik4.dev/gridfin/assets/trust-box.jpg" alt="" loading="lazy" width="1300" height="1210">
           </div>
         </div>
       </div>
     </section>
     <section id="ticker2">
-      <div class="wrap"><span>Твой репозиторий</span><span aria-hidden="true">·</span><span>Твои данные</span><span aria-hidden="true">·</span><span>Твои обновления</span><span aria-hidden="true">·</span><span>Без подписки</span></div>
+      <div class="wrap"><span>Dein Repository</span><span aria-hidden="true">·</span><span>Deine Daten</span><span aria-hidden="true">·</span><span>Deine Updates</span><span aria-hidden="true">·</span><span>Kein Abo</span></div>
     </section>
     <section id="cred">
       <div class="wrap">
-        <p class="line1">Gridfin создаётся тем же процессом, который поставляется внутри продукта.</p>
-        <p class="line2">Этот лендинг тоже собран с Gridfin.</p>
+        <p class="line1">Gridfin wird mit demselben Prozess gebaut, der im Produkt steckt.</p>
+        <p class="line2">Auch diese Landingpage wurde mit Gridfin gebaut.</p>
       </div>
     </section>
     <section id="fit">
       <div class="wrap">
         <div class="fit-grid">
           <div class="fit-card violet">
-            <h2>Лучше всего подходит, если…</h2>
+            <h2>Perfekt für dich, wenn …</h2>
             <ul>
-            <li>У тебя есть идея и Claude Code, но нет full-stack опыта — и ты хочешь запустить свой проект за выходные, а не после недели настройки.</li>
-            <li>Ты соло-разработчик, QA, DevOps или дизайнер — и считаешь, что спеки и тесты — не бюрократия, а скорость на дистанции.</li>
-            <li>Тебе нужен собственный настоящий репозиторий, а не no-code платформа.</li>
+            <li>Du hast eine Idee und Claude Code, aber keine Full-Stack-Erfahrung — und willst dein Projekt an einem Wochenende starten, nicht nach einer Woche Setup.</li>
+            <li>Du bist Solo-Entwickler, QA, DevOps oder Designer — und glaubst, dass Specs und Tests keine Bürokratie sind, sondern Tempo auf Dauer.</li>
+            <li>Du willst ein echtes eigenes Repository, keine No-Code-Plattform.</li>
             </ul>
           </div>
           <div class="fit-card cyan">
-            <h2>Возможно, сейчас лучше выбрать другое решение, если…</h2>
+            <h2>Vielleicht besser ein anderes Tool, wenn …</h2>
             <ul>
-            <li>Ты ни разу не открывал терминал — сегодня тебе больше подойдут Lovable или Bolt.</li>
-            <li>Ты ждёшь готовый дашборд с 50 фичами «под кастомизацию» — Gridfin это процесс, а не демо продукта.</li>
-            <li>Тебе нужен другой стек — Gridfin намеренно не конструктор.</li>
+            <li>Du hast noch nie ein Terminal geöffnet — dann sind Lovable oder Bolt heute die bessere Wahl.</li>
+            <li>Du erwartest ein fertiges Dashboard mit 50 „anpassbaren“ Features — Gridfin ist ein Prozess, keine Produktdemo.</li>
+            <li>Du brauchst einen anderen Stack — Gridfin ist bewusst kein Baukasten mit freier Stack-Wahl.</li>
             </ul>
           </div>
         </div>
@@ -698,54 +698,54 @@ CLAUDE.md</pre>
       <div class="wrap">
         <div class="price-faq-grid">
           <div id="pricing" class="price-card">
-            <span class="kicker">Условия раннего доступа</span>
-            <h2>Бета: ты тестируешь — я чиню</h2>
-            <p class="price-body">Прогони <code>/gridfin</code> на реальной идее и расскажи, где споткнулся — коробка твоя навсегда, со всеми будущими обновлениями, бесплатно.</p>
-            <a class="cta" href="https://t.me/ludvik4work">Я в деле — дайте доступ</a>
-            <p class="price-note">После беты — стартовые цены, которые будут только расти: Gridfin Landing — $— · Gridfin App — $—</p>
+            <span class="kicker">Early-Access-Konditionen</span>
+            <h2>Beta: Du testest — ich fixe</h2>
+            <p class="price-body">Starte <code>/gridfin</code> mit einer echten Idee und sag mir, wo es hakt — die Box gehört dir für immer, mit allen künftigen Updates, kostenlos.</p>
+            <a class="cta" href="https://t.me/ludvik4work">Ich bin dabei — gib mir Zugang</a>
+            <p class="price-note">Nach der Beta — Starterpreise, die nur steigen: Gridfin Landing — $— · Gridfin App — $—</p>
           </div>
           <div id="faq" class="faq-col">
             <h2>FAQ</h2>
-            <div class="faq-chips"><span>Продукт</span><span>Стек</span><span>Новичкам</span><span>Россия</span><span>Покупка</span></div>
+            <div class="faq-chips"><span>Produkt</span><span>Stack</span><span>Einsteiger</span><span>Voraussetzungen</span><span>Kauf</span></div>
         <details open>
-          <summary>Почему не просто Claude Code?</summary>
-          <p>Просто Claude Code пишет код, но не даёт устойчивый инженерный процесс. Без Gridfin каждая сессия заново решает, как строить проект; с Gridfin агент работает по specs, rules, hooks, тестам и quality gates, которые нельзя тихо обойти. Разбор подробнее — в гайде <a href="https://ludvik4.ru/gridfin/guides/why-ai-needs-engineering-rules/">почему AI-разработке нужны инженерные правила</a>.</p>
+          <summary>Warum nicht einfach Claude Code?</summary>
+          <p>Claude Code allein schreibt Code, gibt dir aber keinen stabilen Engineering-Prozess. Ohne Gridfin entscheidet jede Session neu, wie das Projekt gebaut wird; mit Gridfin arbeitet der Agent nach Specs, Regeln, Hooks, Tests und Quality Gates, die sich nicht still umgehen lassen. Die ganze Analyse: <a href="https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules/">warum KI-Entwicklung Engineering-Regeln braucht</a>.</p>
         </details>
         <details>
-          <summary>Чем это отличается от boilerplate — ShipFast и других?</summary>
-          <p>Бойлерплейты продают предсобранный код, который ты кастомизируешь. Gridfin — agent-native скелет (Application Skeleton): тонкая архитектурная основа плюс процесс, который спекует, строит и тестирует именно твой продукт. Ты не выпиливаешь чужой дашборд — ты выращиваешь свой.</p>
+          <summary>Was unterscheidet das von Boilerplates wie ShipFast?</summary>
+          <p>Boilerplates verkaufen vorgefertigten Code, den du anpasst. Gridfin ist ein agent-natives Starter-Kit: ein schlankes Skeleton plus ein Prozess, der genau dein Produkt spezifiziert, baut und testet. Du meißelst kein fremdes Dashboard zurecht — du lässt dein eigenes wachsen.</p>
         </details>
         <details>
-          <summary>Что такое Application Skeleton?</summary>
-          <p>Application Skeleton — это архитектурная основа приложения, на которой Claude Code строит конкретный продукт. Это не просто шаблон проекта: внутри уже приняты инженерные решения по стеку, структуре, тестам и CI, а дальнейшая разработка идёт через specs, skills и quality gates. Полный разбор — на странице <a href="https://ludvik4.ru/gridfin/docs/application-skeleton/">Application Skeleton</a>.</p>
+          <summary>Was ist ein Application Skeleton?</summary>
+          <p>Ein Application Skeleton ist das architektonische Fundament, auf dem Claude Code dein konkretes Produkt baut. Es ist nicht nur ein Projekt-Template: Die Engineering-Entscheidungen zu Stack, Struktur, Tests und CI sind schon getroffen, und die weitere Entwicklung läuft über Specs, Skills und Quality Gates. Der ausführliche Beitrag: <a href="https://ludvik4.dev/gridfin/en/docs/application-skeleton/">was ein Application Skeleton ist</a>.</p>
         </details>
         <details>
-          <summary>Чем это отличается от MakerKit и Supastarter?</summary>
-          <p>Они добавили к boilerplate rules-файлы для AI-агентов — но следовать им агент не обязан. В Gridfin правила принуждаются: хук останавливает нарушение до записи кода, гейты не пропускают красное. Правила с зубами, а не пожелания.</p>
+          <summary>Was unterscheidet das von MakerKit und Supastarter?</summary>
+          <p>MakerKit und Supastarter sind umfangreiche SaaS-Boilerplates mit Agentenanweisungen und Test-Unterstützung. Gridfin löst ein anderes Problem: Es beginnt mit deiner Produktidee und führt einen spec-getriebenen Prozess aus, dessen Hooks bekannte Verstöße blockieren, dessen Tests nachweislich fehlschlagen müssen und dessen Gate-Ledger die Lieferbereitschaft festhält. Wähle sie für fertige SaaS-Funktionen; wähle Gridfin für einen durchgesetzten Entwicklungsprozess rund um ein fokussiertes Produkt.</p>
         </details>
         <details>
-          <summary>Почему стек фиксированный?</summary>
-          <p>Потому что весь процесс — правила, хуки, тесты, гейты, плейбуки — проверен именно на этом стеке: Next.js + TypeScript, Tailwind + shadcn/ui, Postgres. Свобода выбора стека — это ещё сорок решений, которые придётся принимать без опыта.</p>
+          <summary>Warum ist der Stack fest?</summary>
+          <p>Weil der ganze Prozess — Regeln, Hooks, Tests, Gates, Playbooks — genau auf diesem Stack bewährt ist: Next.js + TypeScript, Tailwind + shadcn/ui, Postgres. Freie Stack-Wahl bedeutet vierzig weitere Entscheidungen, die du ohne die nötige Erfahrung treffen müsstest.</p>
         </details>
         <details>
-          <summary>Можно ли использовать свой стек?</summary>
-          <p>Нет — и это осознанно. Gridfin не конструктор: убери фиксированный стек, и исчезнет всё, за что он отвечает — проверенные правила, тесты и гейты. Если тебе нужен другой стек, честный ответ: Gridfin не твой инструмент.</p>
+          <summary>Kann ich meinen eigenen Stack nutzen?</summary>
+          <p>Nein — und das ist Absicht. Gridfin ist kein Baukasten mit freier Stack-Wahl: Ohne den festen Stack verschwindet alles, wofür er steht — die bewährten Regeln, Tests und Gates. Brauchst du einen anderen Stack, lautet die ehrliche Antwort: Gridfin ist nicht dein Tool.</p>
         </details>
         <details>
-          <summary>Я в России — у меня заработает?</summary>
-          <p>Gridfin — обычный git-репозиторий, он работает где угодно. Единственное условие — рабочий Claude Code: если клод код у тебя уже запускается и оплачен, Gridfin ничего дополнительно не требует.</p>
+          <summary>Was brauche ich, um Gridfin auszuführen?</summary>
+          <p>Du brauchst Claude Code, Git, ein Terminal und die unterstützte Node.js/pnpm-Toolchain. Gridfin läuft lokal als git-Repository und benötigt weder ein gehostetes Gridfin-Konto noch eine proprietäre Laufzeit.</p>
         </details>
         <details>
-          <summary>Что будет, если проект перестанет развиваться?</summary>
-          <p>Ничего страшного: репозиторий твой, код и процесс работают локально и не зависят от существования Gridfin как продукта. Обновления перестанут приходить — всё остальное останется.</p>
+          <summary>Was, wenn das Projekt nicht mehr weiterentwickelt wird?</summary>
+          <p>Nichts Schlimmes: Das Repository gehört dir, Code und Prozess laufen lokal und hängen nicht davon ab, dass es Gridfin als Produkt gibt. Updates würden ausbleiben — alles andere bleibt.</p>
         </details>
         <details>
-          <summary>Подходит ли новичку?</summary>
-          <p>Если ты готов работать с терминалом, git и Claude Code по пошаговым инструкциям — да: архитектуру, тестовую стратегию и контроль качества коробка несёт за тебя. Если терминал видишь впервые — начни с Lovable или Bolt.</p>
+          <summary>Ist das für Einsteiger geeignet?</summary>
+          <p>Wenn du bereit bist, mit Terminal, git und Claude Code nach Schritt-für-Schritt-Anleitung zu arbeiten — ja: Die Box übernimmt Architektur, Teststrategie und Qualitätskontrolle für dich. Siehst du zum ersten Mal ein Terminal — starte mit Lovable oder Bolt.</p>
         </details>
         <details>
-          <summary>Как Gridfin не даёт AI сломать проект?</summary>
-          <p>Gridfin делает ошибку видимой до мержа: каждое изменение проходит lint, tests, e2e и build, а правила принуждаются hooks и quality gates. Агент может писать код быстро, но не может выпустить изменение без проверки.</p>
+          <summary>Wie verhindert Gridfin, dass KI das Projekt kaputt macht?</summary>
+          <p>Gridfin macht einen Fehler vor dem Merge sichtbar: Jede Änderung durchläuft Lint, Tests, E2E und Build, und die Regeln werden durch Hooks und Quality Gates erzwungen. Der Agent darf schnell Code schreiben, aber keine Änderung ohne Prüfungen ausliefern.</p>
         </details>
           </div>
         </div>
@@ -753,63 +753,63 @@ CLAUDE.md</pre>
     </section>
     <section id="final">
       <div class="wrap">
-        <h2>Есть идея? Построй следующий проект с Gridfin.</h2>
-        <p class="sub">Получи ранний доступ и начни с готового Application Skeleton, а не с пустого репозитория.</p>
-        <a class="cta" href="https://t.me/ludvik4work">Получить ранний доступ</a>
+        <h2>Hast du eine Idee? Bau dein nächstes Projekt mit Gridfin.</h2>
+        <p class="sub">Hol dir Early Access und starte mit einem fertigen Application Skeleton statt einem leeren Repository.</p>
+        <a class="cta" href="https://t.me/ludvik4work">Early Access sichern</a>
       </div>
     </section>
   </main>
   <footer>
     <div class="wrap">
       <nav class="footer-links" aria-label="Gridfin docs">
-        <a href="https://ludvik4.ru/gridfin/docs/application-skeleton/">Что такое Application Skeleton</a>
-        <a href="https://ludvik4.ru/gridfin/guides/why-ai-needs-engineering-rules/">Почему AI-разработке нужны правила</a>
+        <a href="https://ludvik4.dev/gridfin/en/docs/application-skeleton">Was ist ein Application Skeleton</a>
+        <a href="https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules">Warum KI-Entwicklung Engineering-Regeln braucht</a>
       </nav>
-      <span>Вопросы → <a href="https://t.me/ludvik4work" target="_blank" rel="noopener">Telegram</a></span>
-      <span>Автор продукта — <a href="https://ludvik4.ru">ludvik4.ru</a></span>
+      <span>Fragen → <a href="https://t.me/ludvik4work" target="_blank" rel="noopener">Telegram</a></span>
+      <span>Gebaut von — <a href="https://ludvik4.dev">ludvik4.dev</a></span>
     </div>
   </footer>
   <dialog id="request-dialog">
     <form id="request-form" novalidate>
       <div class="form-head">
-        <h3>Заявка на ранний доступ</h3>
+        <h3>Early-Access-Anfrage</h3>
         <button type="button" class="form-close" aria-label="Close">×</button>
       </div>
-      <label>GitHub username *
+      <label>GitHub-Username *
         <input name="github" required autocomplete="username" placeholder="octocat">
       </label>
-      <label>Email для обратной связи *
+      <label>E-Mail für Rückmeldung *
         <input type="email" name="email" required autocomplete="email" placeholder="you@example.com">
       </label>
-      <label>Профессиональная роль и опыт (опционально)
+      <label>Deine Rolle und Erfahrung (optional)
         <input name="role">
       </label>
       <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
       <div class="field">
-        <span class="field-label" id="usage-label">Для чего планируете использовать *</span>
+        <span class="field-label" id="usage-label">Wofür willst du es nutzen *</span>
         <div class="select" id="usage-select">
           <button type="button" class="select-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="usage-label">
-            <span class="select-value placeholder">Выберите вариант</span>
+            <span class="select-value placeholder">Option wählen</span>
             <svg class="select-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <ul class="select-list" role="listbox" hidden>
-            <li role="option" tabindex="-1">Разработка сайта</li>
-            <li role="option" tabindex="-1">Разработка приложения</li>
-            <li role="option" tabindex="-1">Посмотреть, как устроен инструмент</li>
-            <li role="option" tabindex="-1" data-value="custom">Свой вариант</li>
+            <li role="option" tabindex="-1">Website bauen</li>
+            <li role="option" tabindex="-1">Anwendung bauen</li>
+            <li role="option" tabindex="-1">Sehen, wie das Tool funktioniert</li>
+            <li role="option" tabindex="-1" data-value="custom">Eigene Variante</li>
           </ul>
           <input type="hidden" name="usage">
         </div>
       </div>
-      <label id="custom-wrap" hidden>Свой вариант *
-        <input name="custom" placeholder="Опишите, что хотите построить">
+      <label id="custom-wrap" hidden>Eigene Variante *
+        <input name="custom" placeholder="Beschreib, was du bauen willst">
       </label>
       <label class="consent">
         <input type="checkbox" name="consent" required>
-        <span>Принимаю <a href="https://ludvik4.ru/terms/" target="_blank" rel="noopener">пользовательское соглашение</a> и даю согласие на обработку указанных данных</span>
+        <span>Ich akzeptiere die <a href="https://ludvik4.dev/gridfin/en/terms" target="_blank" rel="noopener">Nutzungsbedingungen</a> und willige in die Verarbeitung der angegebenen Daten ein</span>
       </label>
-      <p class="form-success" hidden>Заявка отправлена. Отвечу на почту в ближайшие дни.</p>
-      <button class="cta" type="submit">Отправить заявку</button>
+      <p class="form-success" hidden>Anfrage gesendet. Ich melde mich in den nächsten Tagen per E-Mail.</p>
+      <button class="cta" type="submit">Anfrage senden</button>
     </form>
   </dialog>
   <script>
@@ -895,7 +895,7 @@ CLAUDE.md</pre>
         page: location.href,
         website: f.get("website"),
       };
-      var endpoint = "https://functions.yandexcloud.net/d4e4h31fkcaqdrj3356i";
+      var endpoint = "/api/gridfin-lead";
       function telegramFallback() {
         location.href = "https://t.me/ludvik4work";
         dlg.close();

@@ -127,12 +127,18 @@ for a market-quality review and must not be advertised early):
 3. Commit, push; after deploy smoke-check:
 
 ```bash
-for p in /gridfin /gridfin/en /gridfin/en/terms /gridfin/assets/og-en.png /gridfin/sitemap.xml; do
+for p in /gridfin /gridfin/en /gridfin/de /gridfin/es /gridfin/fr /gridfin/ja /gridfin/pt-br \
+         /gridfin/en/terms /gridfin/assets/og-en.png /gridfin/sitemap.xml; do
   printf "%-28s %s\n" "$p" "$(curl -sS -o /dev/null -w '%{http_code}' https://ludvik4.dev$p)"
 done
 ```
 
 Expected: all 200 (`/gridfin` serves the redirect page → `/gridfin/en`).
+All six locales have been live since 2026-08-11 (the MT round following the
+EN launch); `src/app/sitemap.test.ts` enforces that every sitemap `<loc>`
+and every hreflang alternate resolves to a committed file, so an
+advertised-but-missing locale fails `pnpm test` before it can 404 in
+production.
 Then resubmit the root `/sitemap.xml` in GSC; it is the sitemap declared by
 the EN robots file and includes all three Gridfin URLs. The smaller
 `/gridfin/sitemap.xml` remains a product-level discovery and diagnostics file.

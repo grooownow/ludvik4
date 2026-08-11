@@ -1,7 +1,7 @@
 # ADR 0005: Serve the international Gridfin landing on ludvik4.dev
 
 - Date: 2026-08-11
-- Status: accepted (infrastructure live, publication pending EN texts)
+- Status: accepted (EN live 2026-08-11; all five translated locales live later the same day)
 - Amends: ADR 0004 (the Gridfin carve-out only; every other 0004 rule stands)
 
 ## Context
@@ -26,6 +26,9 @@ author has now decided they belong on `ludvik4.dev/gridfin`.
   keeps directory-index URLs on its own static host.
 - Additional translated locales stay unpublished until their copy receives
   a market-quality review; the EN sitemap must not advertise them early.
+  (Resolved 2026-08-11: the MT locales were refreshed from the final EN
+  source, i18n:check green, and published together with the full sitemap —
+  advertised ⇔ deployed is now enforced by `src/app/sitemap.test.ts`.)
 - The RU static export stashes `public/gridfin` for the duration of the
   build (`scripts/build-ru-static.ts`), so the international bundle can
   never leak onto `ludvik4.ru`, whose `/gridfin/` remains the RU bundle from

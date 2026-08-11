@@ -4,6 +4,66 @@
     <loc>https://ludvik4.dev/gridfin/en</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ludvik4.dev/gridfin/de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ludvik4.dev/gridfin/es"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ludvik4.dev/gridfin/pt-br"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ludvik4.dev/gridfin/fr"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ludvik4.dev/gridfin/ja"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en"/>
+  </url>
+  <url>
+    <loc>https://ludvik4.dev/gridfin/de</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ludvik4.dev/gridfin/de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ludvik4.dev/gridfin/es"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ludvik4.dev/gridfin/pt-br"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ludvik4.dev/gridfin/fr"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ludvik4.dev/gridfin/ja"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en"/>
+  </url>
+  <url>
+    <loc>https://ludvik4.dev/gridfin/es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ludvik4.dev/gridfin/de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ludvik4.dev/gridfin/es"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ludvik4.dev/gridfin/pt-br"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ludvik4.dev/gridfin/fr"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ludvik4.dev/gridfin/ja"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en"/>
+  </url>
+  <url>
+    <loc>https://ludvik4.dev/gridfin/pt-br</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ludvik4.dev/gridfin/de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ludvik4.dev/gridfin/es"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ludvik4.dev/gridfin/pt-br"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ludvik4.dev/gridfin/fr"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ludvik4.dev/gridfin/ja"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en"/>
+  </url>
+  <url>
+    <loc>https://ludvik4.dev/gridfin/fr</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ludvik4.dev/gridfin/de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ludvik4.dev/gridfin/es"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ludvik4.dev/gridfin/pt-br"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ludvik4.dev/gridfin/fr"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ludvik4.dev/gridfin/ja"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en"/>
+  </url>
+  <url>
+    <loc>https://ludvik4.dev/gridfin/ja</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ludvik4.dev/gridfin/en"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ludvik4.ru/gridfin/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://ludvik4.dev/gridfin/de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ludvik4.dev/gridfin/es"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ludvik4.dev/gridfin/pt-br"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://ludvik4.dev/gridfin/fr"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://ludvik4.dev/gridfin/ja"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/gridfin/en"/>
   </url>
   <url>
