@@ -6,6 +6,18 @@
 - Current stage: index monitoring after live content wave 2
 - Next stage: weekly Google Search Console indexing and query monitoring
 
+## Gridfin RU central entity corrected
+
+The committed RU static bundle now uses `Application Skeleton` consistently
+across title, H1, hero copy, Open Graph, Twitter metadata and
+SoftwareApplication JSON-LD. A repository test rejects `starter`/`стартер` in
+the RU title and H1 while leaving the international Gridfin positioning
+unchanged.
+
+Local publication checks passed: Ludvik4 lint, all 362 tests and the production
+`pnpm build:ru-static` export. The exported `out/gridfin/index.html` contains
+the approved RU title, H1 and schema category.
+
 ## Gridfin EN live in production
 
 The Gridfin EN landing and two supporting pages are live at

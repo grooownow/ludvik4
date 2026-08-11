@@ -96,6 +96,27 @@ describe("public Gridfin sitemap", () => {
   });
 });
 
+describe("public Gridfin RU landing", () => {
+  it("uses Application Skeleton as the central product entity", () => {
+    const html = readFileSync(
+      path.join(process.cwd(), "resources/ru-public/gridfin/index.html"),
+      "utf8",
+    );
+
+    expect(html).toContain(
+      "<title>Gridfin — agent-native скелет SaaS для Claude Code</title>",
+    );
+    expect(html).toContain(
+      '"applicationSubCategory":"Application Skeleton for Claude Code"',
+    );
+    expect(html).toContain(
+      "<h1>Запускайте качественные сайты и приложения с Claude Code.</h1>",
+    );
+    expect(html).not.toMatch(/<title>[^<]*(?:starter|стартер)/i);
+    expect(html).not.toMatch(/<h1>[^<]*(?:starter|стартер)/i);
+  });
+});
+
 describe("public Gridfin international bundle", () => {
   const root = path.join(process.cwd(), "public/gridfin");
 
