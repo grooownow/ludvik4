@@ -68,4 +68,6 @@ The international storefront was rebuilt locally on 2026-08-10 around the
 category `founder-led web product studio`: three intent-specific service pages,
 an English-only work/evidence layer, About, and market-scoped service files.
 Product canon and search strategy live in `docs/marketing/en/`; audit and
-retest evidence live in `docs/seo/`. Production deployment is still pending.
+retest evidence live in `docs/seo/`. The commercial rebuild reached production
+on 2026-08-10. The 2026-08-11 content wave adds an English planning-guide hub
+and one original decision worksheet for each service cluster.

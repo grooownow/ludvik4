@@ -75,6 +75,27 @@ https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
 | P2 | AI-assisted development without unverified code | delivery method | About + MVP | qa-pilot artefacts and a test-that-can-fail example |
 | P2 | Custom software or no-code automation? | build/buy boundary | Automation + MVP | maintenance, ownership, risk, and data criteria |
 
+### Wave 2 implementation — 2026-08-11
+
+The first release deliberately covers one decision tool per commercial hub,
+instead of publishing all query variants at once:
+
+| Status | Route | Commercial bridge | Original value |
+| --- | --- | --- | --- |
+| implemented | `/guides/website-project-brief` | Websites | seven-row brief worksheet plus website-shape decision rules |
+| implemented | `/guides/automation-priority-scorecard` | Workflow automation | transparent 0–2 readiness model, risk checks, and interpretation rules |
+| implemented | `/guides/mvp-scope-one-user-journey` | MVP development | journey-first scope worksheet, release-boundary test, and operational path |
+
+`/guides` is the index. Every guide is self-canonical, emits `Article` and
+`BreadcrumbList` structured data, appears in the EN sitemap and `llms.txt`,
+and is linked bidirectionally with its service page. The visual implementation
+reuses the existing layout and colour tokens; no design token changed.
+
+The remaining first-wave topics stay queued until indexing begins and real
+queries or buyer conversations show which adjacent decision deserves the next
+page: landing page vs multi-page site, human-in-the-loop approval placement,
+and MVP vs prototype vs internal tool.
+
 ## Cannibalisation boundaries
 
 | Boundary | Separate pages? | Rule |

@@ -54,6 +54,10 @@ describe("buildSitemap", () => {
       `${baseURL}/work`,
       `${baseURL}/work/qa-pilot`,
       `${baseURL}/about`,
+      `${baseURL}/guides`,
+      `${baseURL}/guides/website-project-brief`,
+      `${baseURL}/guides/automation-priority-scorecard`,
+      `${baseURL}/guides/mvp-scope-one-user-journey`,
       `${baseURL}/privacy`,
     ]);
   });

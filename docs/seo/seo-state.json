@@ -2,28 +2,26 @@
   "version": 1,
   "project_root": "/Users/ekaterinapustovaa/Documents/Pet-projects/ludvik4",
   "project_url": "https://ludvik4.dev",
-  "mode": "autopilot",
+  "mode": "fix-retest-publish",
   "created_at": "2026-08-10T17:43:23+00:00",
-  "updated_at": "2026-08-10T18:47:00+00:00",
-  "current_stage": "monitoring",
+  "updated_at": "2026-08-11T12:57:00+02:00",
+  "current_stage": "publish-wave-2",
   "completed_stages": [
     "inventory",
     "service-files-audit",
     "indexing-preflight",
     "semantic-audit",
     "topical-map",
-    "product-strategy",
+    "llm-visibility",
     "implementation",
-    "local-retest",
-    "publish",
-    "production-retest"
+    "production-retest-wave-1",
+    "content-wave-2"
   ],
-  "next_stage": "search-console-submission",
+  "next_stage": "search-console-ownership-and-index-monitoring",
   "freshness": {
     "status": "fresh",
-    "latest_relevant_change": "2026-08-10T18:47:00+00:00",
-    "latest_relevant_file": "docs/seo/seo-handoff.md",
-    "scanned_relevant_files": 0
+    "latest_relevant_change": "2026-08-11",
+    "latest_relevant_file": "src/features/site/international-content.ts"
   },
   "artifacts": [
     "docs/marketing/en/product-canon.md",
@@ -31,16 +29,16 @@
     "docs/marketing/en/search-and-content-strategy.md",
     "docs/marketing/en/llm-visibility-matrix.md",
     "docs/seo/en-audit-2026-08-10.md",
-    "docs/seo/ludvik4-seo-audit-2026-08-10.md",
+    "docs/seo/seo-handoff.md",
     "docs/specs/en-commercial-seo.plan.md"
   ],
   "blockers": [
-    "Google Search Console submission requires an authenticated external action.",
-    "Yandex Webmaster requires user login for the pending RU recrawl."
+    "krobox@gmail.com does not have owner access to the existing Google Search Console domain property for ludvik4.dev"
   ],
   "next_actions": [
-    "Submit the expanded EN sitemap and priority URLs in Google Search Console.",
-    "Run the EN LLM visibility matrix after recrawl.",
-    "Request the remaining RU article recrawl after the Google quota resets and refresh Yandex."
+    "Push wave 2 to main and retest the twelve-URL production surface",
+    "Restore Search Console ownership and submit sitemap.xml",
+    "Inspect Home, three service pages, and three guide pages",
+    "Monitor public discovery weekly and choose the next guide from observed demand"
   ]
 }

@@ -6,12 +6,25 @@ writing detail here.
 
 ## Now
 
+**[IN PROGRESS 2026-08-11] EN semantic content wave 2.** The first supporting
+content network is implemented without changing the approved design system:
+`/guides` plus a website-project brief, an automation-priority scorecard, and
+an MVP one-user-journey scope worksheet. Each guide links to exactly one
+commercial service; the service pages link back; header, footer, sitemap, and
+`llms.txt` expose the hub. Unit/component/integration tests, the EN production
+build, the standard RU e2e suite, and local EN runtime checks are green. Public
+search checks still return no reliable result for `site:ludvik4.dev` or the
+exact EN titles. `krobox@gmail.com` is authenticated in Google Search Console
+but does not own the existing domain property, so sitemap submission and URL
+inspection wait on ownership verification. Current evidence and next action:
+`docs/seo/seo-handoff.md`.
+
 **[DONE 2026-08-10] EN international commercial SEO/SRO rebuild.**
 `ludvik4.dev` is now designed as an independent
 English source for a Europe-based founder-led web product studio, not a
 translation of the RU storefront. It has three commercial service pages
 (websites, workflow automation, MVP/web apps), Work + the globally publishable
-qa-pilot case, About, an eight-URL sitemap, expanded `llms.txt`, market-scoped
+qa-pilot case, About, an eight-URL initial sitemap, expanded `llms.txt`, market-scoped
 `humans.txt`/`security.txt`, and supported schema/internal links. RU-only
 Gridfin files are physically excluded from the EN build; `/blog*` no longer
 redirects EN visitors to a Russian-language domain. Production main-CI

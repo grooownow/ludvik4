@@ -1,63 +1,68 @@
-# SEO Handoff
+# SEO Handoff — Ludvik4 International
 
-- EN project: `https://ludvik4.dev`
-- RU project: `https://ludvik4.ru`
-- Mode: full autopilot audits and implementation
-- Current stage: production rollout complete; indexing and visibility monitoring
-- Updated: 2026-08-10
+- Project: `https://ludvik4.dev`
+- Market: English, Europe-based, worldwide delivery
+- Updated: 2026-08-11
+- Current stage: publish and index content wave 2
+- Next stage: Google Search Console ownership + indexing baseline
 
-## EN outcome
+## Production state confirmed before wave 2
 
-The EN storefront is a separate source for a Europe-based founder-led web
-product studio selling custom websites, workflow automation, and MVP/web app
-development. It is not a translation of the RU site. Eight indexable English
-pages form the commercial and evidence network.
+- Commit `e46fcb8` is on `main` and the existing international rebuild is live.
+- All eight public URLs return `200`, are self-canonical and indexable, and
+  appear in the production sitemap.
+- `robots.txt`, `sitemap.xml`, `llms.txt`, `humans.txt`, `security.txt`,
+  `ads.txt`, and `app-ads.txt` return the expected parseable content.
+- The approved `#ff4fb6` primary palette and FAQ chevrons remain protected by
+  regression tests; wave 2 changes no colour token or shared chrome class.
 
-Completed:
+## Wave 2 implemented locally
 
-- live pre-change indexing, service-file, semantic, search, and Lighthouse
-  audit;
-- product canon, market strategy, topical/search strategy, and LLM prompt
-  matrix under `docs/marketing/en/`;
-- Home, three service pages, Work, qa-pilot case, About, and Privacy;
-- RU-only Gridfin assets isolated from the EN build;
-- EN `/blog*` and `/gridfin*` return 404;
-- market-scoped service files and EN analytics aligned with the privacy notice;
-- lint, unit/component/integration tests, E2E tests, EN production build, and RU
-  static export;
-- the approved `#ff4fb6` brand colour is invariant across both markets; an
-  earlier attempt to darken it for contrast was reverted.
-- main-CI `31420244529`, Vercel production, and RU deployment `31420244090`
-  passed. Live DOM checks confirmed `#ff4fb6` on both domains, six visible EN
-  FAQ chevrons, and seven visible RU FAQ chevrons.
+- `/guides`
+- `/guides/website-project-brief`
+- `/guides/automation-priority-scorecard`
+- `/guides/mvp-scope-one-user-journey`
+- Bidirectional service ↔ guide links, plus header/footer discovery.
+- Twelve-URL EN sitemap and expanded `llms.txt`.
+- `Article` + `BreadcrumbList` schema and self-canonical metadata per guide.
 
-## RU completed state
+Verification completed:
 
-- Production SEO/SRO audit and semantic-network implementation are recorded in
-  `docs/seo/ludvik4-seo-audit-2026-08-10.md`.
-- CI run `31413439859` and RU deployment `31413439943` passed for the first
-  implementation; comparison content CI `31415976618` and RU deployment
-  `31415976167` also passed.
-- Live service-file and indexing preflights passed. The RU sitemap contains 28
-  URLs after three comparison/decision articles were added.
-- Google recrawl was requested for the priority commercial URLs and two new
-  articles. The remaining new article hit the daily request quota.
+- New tests were observed failing before implementation, then passing.
+- `pnpm lint`: pass, pre-existing warnings only.
+- `pnpm test`: 49 files and 347 tests passed.
+- EN production build: pass; all four guide routes statically generated.
+- `pnpm test:e2e`: 32/32 passed in the repository's standard RU gate.
+- Local EN production runtime: all four guide routes, sitemap, and `llms.txt`
+  returned `200`; exact titles, H1s, canonicals, and Article schema checked.
 
-## Evidence boundary
+## Search and console baseline
 
-- qa-pilot is the only globally safe public case used on EN.
-- Gridfin and FortNoise remain RU-market evidence.
-- No pricing, client outcomes, team size, or unsupported credentials were
-  invented for EN.
+- Public web search on 2026-08-11 returned no reliable Ludvik4 result for
+  `site:ludvik4.dev`, the exact homepage title, or exact commercial H1s.
+- This means the pages are technically indexable but not yet demonstrably
+  indexed or discoverable. No ranking claim is made.
+- Google Search Console was opened in the authenticated account
+  `krobox@gmail.com`. That account has no access to the existing
+  `sc-domain:ludvik4.dev` property; Google offers ownership verification.
+- URL-prefix property creation in the current Search Console UI did not
+  complete, so sitemap submission and URL Inspection were not performed.
 
-## Blockers and next actions
+## External blocker
 
-1. Submit `https://ludvik4.dev/sitemap.xml` and request indexing for Home plus
-   the three EN service pages in Google Search Console.
-2. Run the EN LLM visibility matrix after recrawl and record citation gaps.
-3. Improve EN LCP if the production median remains above 2.5 seconds without
-   changing the approved visual identity.
-4. Request Google indexing for
-   `https://ludvik4.ru/blog/no-code-avtomatizatsiya-ili-custom-workflow/` after
-   the daily quota resets.
-5. Log in to Yandex Webmaster and request the RU sitemap/article recrawl.
+Grant `krobox@gmail.com` owner access to the existing domain property, or
+verify ownership through DNS. Repository work cannot safely manufacture DNS
+control.
+
+## Next actions
+
+1. Push wave 2 to `main`, wait for CI and Vercel, then retest all twelve live
+   URLs and the production sitemap/llms surfaces.
+2. After Search Console ownership is restored, submit `sitemap.xml` and inspect
+   Home, all three service pages, and the three guide pages.
+3. Record the distinction between submitted, discovered, crawled, indexed, and
+   ranking states; do not treat console acceptance as indexing.
+4. Re-run exact-title and `site:` checks weekly until discovery begins.
+5. After 3–4 weeks of impressions, choose only one next guide from observed
+   demand: landing vs multi-page, human approval in automation, or MVP vs
+   prototype/internal tool.

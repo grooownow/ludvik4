@@ -24,16 +24,21 @@ export {
   ServicePageView,
 } from "./commercial-pages";
 export {
+  getInternationalGuide,
   getInternationalService,
   getInternationalWork,
   internationalFaq,
+  internationalGuides,
   internationalServicePages,
   internationalWork,
+  type InternationalGuide,
   type InternationalServicePage,
   type InternationalWorkItem,
 } from "./international-content";
 export {
   InternationalAboutView,
+  InternationalGuideIndexView,
+  InternationalGuideView,
   InternationalServiceView,
   InternationalWorkIndexView,
   InternationalWorkView,

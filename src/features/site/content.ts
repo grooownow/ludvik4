@@ -335,6 +335,7 @@ const en: MarketContent = {
     links: [
       { href: "/#services", label: "Services" },
       { href: "/work", label: "Work" },
+      { href: "/guides", label: "Guides" },
       { href: "/about", label: "About" },
     ],
   },
@@ -509,6 +510,7 @@ const en: MarketContent = {
     links: [
       { href: "/services/websites", label: "Services", external: false },
       { href: "/work", label: "Work", external: false },
+      { href: "/guides", label: "Guides", external: false },
       { href: "/about", label: "About", external: false },
       { href: "/privacy", label: "Privacy", external: false },
       { href: TELEGRAM_URL, label: "Telegram", external: true },

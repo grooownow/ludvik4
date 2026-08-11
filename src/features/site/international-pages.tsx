@@ -5,10 +5,14 @@ import { jsonLdString } from "@/lib/json-ld";
 import { Breadcrumbs } from "./breadcrumbs";
 import { getMarketContent } from "./content";
 import type {
+  InternationalGuide,
   InternationalServicePage,
   InternationalWorkItem,
 } from "./international-content";
-import { internationalWork } from "./international-content";
+import {
+  internationalGuides,
+  internationalWork,
+} from "./international-content";
 import { publicUrl } from "./seo";
 import { Eyebrow, Section, SiteFooter, SiteHeader } from "./site-chrome";
 
@@ -69,6 +73,9 @@ export function InternationalServiceView({
   baseUrl: string;
 }) {
   const url = publicUrl("en", baseUrl, `/services/${service.slug}`);
+  const relatedGuide = internationalGuides.find(
+    (guide) => guide.relatedService.href === `/services/${service.slug}`,
+  );
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -169,6 +176,24 @@ export function InternationalServiceView({
             title="Baseline boundaries"
             items={service.boundaries}
           />
+          {relatedGuide ? (
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                Related planning guide
+              </h2>
+              <p className="text-muted-foreground mt-4 max-w-3xl leading-relaxed">
+                Use the practical worksheet before requesting an estimate. It
+                makes the starting context, open questions, and first useful
+                scope easier to review.
+              </p>
+              <Link
+                href={`/guides/${relatedGuide.slug}` as Route}
+                className="text-primary mt-5 inline-block font-mono text-sm font-semibold"
+              >
+                {relatedGuide.title} →
+              </Link>
+            </section>
+          ) : null}
         </div>
       </Section>
       <EnquiryCta />
@@ -346,6 +371,218 @@ export function InternationalAboutView() {
               open-source work such as qa-pilot shows how those controls are
               applied in practice.
             </p>
+          </section>
+        </div>
+      </Section>
+      <EnquiryCta />
+    </InternationalShell>
+  );
+}
+
+function GuideCard({ guide }: { guide: InternationalGuide }) {
+  return (
+    <Link
+      href={`/guides/${guide.slug}` as Route}
+      className="border-border bg-card hover:border-primary/60 block rounded-2xl border p-6 transition-colors"
+    >
+      <p className="text-muted-foreground font-mono text-xs font-semibold tracking-widest uppercase">
+        {guide.eyebrow}
+      </p>
+      <h2 className="mt-3 text-2xl font-bold">{guide.title}</h2>
+      <p className="text-muted-foreground mt-3 max-w-2xl leading-relaxed">
+        {guide.summary}
+      </p>
+      <span className="text-primary mt-5 inline-block font-mono text-sm font-semibold">
+        Open the guide →
+      </span>
+    </Link>
+  );
+}
+
+export function InternationalGuideIndexView() {
+  return (
+    <InternationalShell>
+      <div className="mx-auto max-w-5xl px-6 py-14">
+        <Breadcrumbs homeLabel="Home" items={[{ label: "Guides" }]} />
+        <div className="mt-10 max-w-3xl">
+          <Eyebrow>Decision tools</Eyebrow>
+          <h1 className="text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
+            Practical guides for planning a digital product
+          </h1>
+          <p className="text-muted-foreground mt-5 text-lg leading-relaxed">
+            Short, reusable worksheets for clarifying a website brief, choosing
+            an automation opportunity, and defining a credible MVP boundary
+            before development starts.
+          </p>
+        </div>
+        <div className="mt-10 grid gap-5">
+          {internationalGuides.map((guide) => (
+            <GuideCard key={guide.slug} guide={guide} />
+          ))}
+        </div>
+      </div>
+      <EnquiryCta />
+    </InternationalShell>
+  );
+}
+
+export function InternationalGuideView({
+  guide,
+  baseUrl,
+}: {
+  guide: InternationalGuide;
+  baseUrl: string;
+}) {
+  const url = publicUrl("en", baseUrl, `/guides/${guide.slug}`);
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": `${url}#article`,
+        headline: guide.h1,
+        description: guide.description,
+        url,
+        datePublished: "2026-08-11",
+        dateModified: "2026-08-11",
+        author: { "@id": `${baseUrl}/#organization` },
+        publisher: { "@id": `${baseUrl}/#organization` },
+        inLanguage: "en",
+        mainEntityOfPage: url,
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${baseUrl}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Guides",
+            item: `${baseUrl}/guides`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: guide.title,
+            item: url,
+          },
+        ],
+      },
+    ],
+  };
+
+  return (
+    <InternationalShell>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
+      />
+      <div className="mx-auto max-w-5xl px-6 py-14">
+        <Breadcrumbs
+          homeLabel="Home"
+          items={[
+            { label: "Guides", href: "/guides" as Route },
+            { label: guide.title },
+          ]}
+        />
+        <div className="mt-10 max-w-3xl">
+          <Eyebrow>{guide.eyebrow}</Eyebrow>
+          <h1 className="text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
+            {guide.h1}
+          </h1>
+          <p className="text-muted-foreground mt-5 text-lg leading-relaxed">
+            {guide.lead}
+          </p>
+        </div>
+      </div>
+
+      <Section>
+        <div className="grid max-w-4xl gap-12">
+          {guide.sections.map((section) => (
+            <section key={section.title}>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                {section.title}
+              </h2>
+              <p className="text-muted-foreground mt-4 max-w-3xl leading-relaxed">
+                {section.body}
+              </p>
+              <div className="mt-5 grid gap-4 sm:grid-cols-3">
+                {section.items.map((item) => (
+                  <article
+                    key={item.title}
+                    className="border-border bg-card rounded-xl border p-4"
+                  >
+                    <h3 className="font-semibold">{item.title}</h3>
+                    <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+                      {item.body}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ))}
+
+          <section>
+            <h2 className="text-2xl font-semibold tracking-tight">
+              {guide.worksheetTitle}
+            </h2>
+            <p className="text-muted-foreground mt-4 max-w-3xl leading-relaxed">
+              {guide.worksheetIntro}
+            </p>
+            <dl className="mt-5 grid gap-3">
+              {guide.worksheet.map((row) => (
+                <div
+                  key={row.label}
+                  className="border-border bg-card grid gap-2 rounded-xl border p-4 sm:grid-cols-[minmax(0,12rem)_1fr] sm:gap-5"
+                >
+                  <dt className="font-semibold">{row.label}</dt>
+                  <dd className="text-muted-foreground text-sm leading-relaxed">
+                    {row.prompt}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold tracking-tight">
+              {guide.decisionTitle}
+            </h2>
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              {guide.decisions.map((decision) => (
+                <article
+                  key={decision.signal}
+                  className="border-border rounded-xl border p-4"
+                >
+                  <h3 className="font-semibold">{decision.signal}</h3>
+                  <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+                    {decision.action}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="border-pink-soft border-t pt-10">
+            <h2 className="text-2xl font-semibold tracking-tight">
+              Turn the worksheet into a delivery scope
+            </h2>
+            <p className="text-muted-foreground mt-4 max-w-3xl leading-relaxed">
+              The guide is a planning aid, not an estimate. The related service
+              page explains the normal deliverables, process, and baseline
+              boundaries for this kind of engagement.
+            </p>
+            <Link
+              href={guide.relatedService.href as Route}
+              className="text-primary mt-5 inline-block font-mono text-sm font-semibold"
+            >
+              {guide.relatedService.label} →
+            </Link>
           </section>
         </div>
       </Section>

@@ -3,6 +3,7 @@ import { caseStudies, servicePages } from "./commercial-content";
 import { type Market, type MarketContent, TELEGRAM_URL } from "./content";
 import {
   internationalFaq,
+  internationalGuides,
   internationalServicePages,
   internationalWork,
 } from "./international-content";
@@ -180,6 +181,18 @@ export function buildSitemap(
       changeFrequency: "yearly",
       priority: 0.7,
     });
+    entries.push({
+      url: publicUrl(market, baseUrl, "/guides"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    });
+    for (const guide of internationalGuides) {
+      entries.push({
+        url: publicUrl(market, baseUrl, `/guides/${guide.slug}`),
+        changeFrequency: "monthly",
+        priority: 0.7,
+      });
+    }
     entries.push({
       url: publicUrl(market, baseUrl, "/privacy"),
       changeFrequency: "yearly",

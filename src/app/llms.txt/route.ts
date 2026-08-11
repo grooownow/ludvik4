@@ -1,6 +1,7 @@
 import { getPublishedArticles } from "@/features/blog";
 import {
   caseStudies,
+  internationalGuides,
   internationalServicePages,
   internationalWork,
   publicUrl,
@@ -72,6 +73,12 @@ function enBody(baseURL: string): string {
         `- [${item.title}](${publicUrl("en", baseURL, `/work/${item.slug}`)}): ${item.description}`,
     )
     .join("\n");
+  const guideLines = internationalGuides
+    .map(
+      (guide) =>
+        `- [${guide.title}](${publicUrl("en", baseURL, `/guides/${guide.slug}`)}): ${guide.description}`,
+    )
+    .join("\n");
 
   return `# Ludvik4
 
@@ -93,6 +100,7 @@ Contact: Telegram https://t.me/ludvik4work.
 
 - [Home](${baseURL}/): positioning, services, process, proof, FAQ, and contact
 - [Selected work](${publicUrl("en", baseURL, "/work")}): public evidence and case studies
+- [Planning guides](${publicUrl("en", baseURL, "/guides")}): practical decision tools for website, automation, and MVP projects
 - [About](${publicUrl("en", baseURL, "/about")}): founder-led delivery model and engineering approach
 - [Privacy](${publicUrl("en", baseURL, "/privacy")}): enquiry form data handling
 
@@ -103,6 +111,10 @@ ${serviceLines}
 ## Public work
 
 ${workLines}
+
+## Planning guides
+
+${guideLines}
 `;
 }
 
