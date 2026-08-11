@@ -6,12 +6,12 @@
 - Current stage: index monitoring after live content wave 2
 - Next stage: weekly Google Search Console indexing and query monitoring
 
-## Gridfin EN publication pending
+## Gridfin EN live in production
 
-The Gridfin EN landing and two supporting pages are complete locally at
+The Gridfin EN landing and two supporting pages are live at
 `/gridfin/en`, `/gridfin/en/docs/application-skeleton` and
-`/gridfin/en/guides/why-ai-needs-engineering-rules`. They remain 404 on the
-live domain until an explicit commit/push triggers Vercel.
+`/gridfin/en/guides/why-ai-needs-engineering-rules`. Commit `6390e58` is on
+`main`; main CI `31515277373` passed every job.
 
 Repo-side verification completed on 2026-08-11:
 
@@ -31,9 +31,11 @@ Repo-side verification completed on 2026-08-11:
   RU export contains no EN Gridfin bundle and restores the EN source after the
   build.
 
-After publication: wait for CI/Vercel, rerun indexability preflight on all
-three URLs, resubmit the root sitemap in the existing GSC property, and request
-indexing for the landing first.
+Production retest completed on 2026-08-11: the landing, terms, both supporting
+pages, Gridfin sitemap, root sitemap and `llms.txt` return `200`; invalid form
+input returns `400`. The service-files audit and all three indexability
+preflights pass without issues. Next: resubmit the root sitemap in the existing
+GSC property and request indexing for the landing first.
 
 ## Production state confirmed before wave 2
 

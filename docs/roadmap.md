@@ -6,16 +6,19 @@ writing detail here.
 
 ## Now
 
-**[LOCAL COMPLETE 2026-08-11 — publication pending] Gridfin EN landing on
+**[DONE 2026-08-11] Gridfin EN landing on
 ludvik4.dev/gridfin (ADR 0005).** The reviewed EN bundle, same-origin lead
 route, three sitemap entries and llms.txt passages are integrated. Gridfin
 canonicals/hreflang use the `.dev` app's slashless URL style; the product
 sitemap advertises only the three reviewed EN pages. The RU static export
 was rebuilt and contains no EN bundle. Local verification: lint, 358 unit/
 component/integration tests, EN production build, 32/32 e2e tests, RU export
-and HTTP runtime checks are green. Production remains unchanged until an
-explicit commit/push; publish and live-retest steps:
-`docs/playbooks/production-en-vercel.md` § /gridfin.
+and HTTP runtime checks are green. Commit `6390e58` is on `main`; main CI
+`31515277373` passed every job. The landing, terms, both supporting pages,
+root/product sitemaps and `llms.txt` return `200` in production. All three
+indexing preflights and the service-files audit pass with no issues; invalid
+lead input returns `400`. Next: submit the refreshed root sitemap and request
+indexing for the landing in the existing Search Console property.
 
 **[PLANNED] Studio site ludvik4.dev in all landing locales
 (de/es/fr/ja/pt-br).** Author decision 2026-08-11: beyond /gridfin, the
