@@ -1,4 +1,4 @@
-import { getPublishedArticles } from "@/features/blog";
+import { getPublishedArticlesForMarket } from "@/features/blog";
 import {
   caseStudies,
   internationalGuides,
@@ -11,12 +11,12 @@ import { env } from "@/lib/env";
 
 // llms.txt — a markdown summary of the site for LLM crawlers (GPTBot,
 // ClaudeBot, PerplexityBot, ...): https://llmstxt.org convention. Statically
-// generated at build time. Market-scoped: the RU build lists the blog +
-// articles; the EN build describes the international studio without them.
+// generated at build time. Market-scoped: each build lists only its own
+// localized blog articles and commercial surfaces.
 export const dynamic = "force-static";
 
 function ruBody(baseURL: string): string {
-  const articles = getPublishedArticles();
+  const articles = getPublishedArticlesForMarket("ru");
   const articleLines = articles
     .map(
       (a) =>
@@ -61,6 +61,13 @@ ${articleLines ? `\n## Статьи\n\n${articleLines}\n` : ""}`;
 }
 
 function enBody(baseURL: string): string {
+  const articles = getPublishedArticlesForMarket("en");
+  const articleLines = articles
+    .map(
+      (article) =>
+        `- [${article.title}](${publicUrl("en", baseURL, `/blog/${article.slug}`)}): ${article.description}`,
+    )
+    .join("\n");
   const serviceLines = internationalServicePages
     .map(
       (service) =>
@@ -100,6 +107,7 @@ Contact: Telegram https://t.me/ludvik4work.
 
 - [Home](${baseURL}/): positioning, services, process, proof, FAQ, and contact
 - [Selected work](${publicUrl("en", baseURL, "/work")}): public evidence and case studies
+- [Articles](${publicUrl("en", baseURL, "/blog")}): comparisons and engineering notes on AI-assisted development
 - [Planning guides](${publicUrl("en", baseURL, "/guides")}): practical decision tools for website, automation, and MVP projects
 - [About](${publicUrl("en", baseURL, "/about")}): founder-led delivery model and engineering approach
 - [Privacy](${publicUrl("en", baseURL, "/privacy")}): enquiry form data handling
@@ -115,6 +123,10 @@ ${workLines}
 ## Planning guides
 
 ${guideLines}
+
+## Articles
+
+${articleLines}
 
 ## Gridfin
 

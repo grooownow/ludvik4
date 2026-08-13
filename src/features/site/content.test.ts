@@ -40,6 +40,7 @@ describe("market content", () => {
     // EN keeps the lead form; RU does not.
     expect(en.contact.form).toBeDefined();
     expect(getMarketContent("ru").contact.form).toBeUndefined();
+    expect(en.nav.links).toContainEqual({ href: "/blog", label: "Articles" });
   });
 });
 
@@ -70,15 +71,17 @@ describe("buildSiteMetadata", () => {
     expect(meta.keywords).not.toContain("команда разработчиков");
   });
 
-  it("EN: no RSS alternate (no blog) and no hreflang", () => {
+  it("EN: RSS alternate for the international blog and no hreflang", () => {
     const meta = buildSiteMetadata(getMarketContent("en"), {
       baseUrl: EN_BASE,
-      hasBlog: false,
+      hasBlog: true,
       verification: undefined,
     });
     expect(meta.alternates?.canonical).toBe("/");
     expect(meta.alternates?.languages).toBeUndefined();
-    expect(meta.alternates?.types).toBeUndefined();
+    expect(meta.alternates?.types).toMatchObject({
+      "application/rss+xml": "/blog/rss.xml",
+    });
     expect(meta.openGraph?.locale).toBe("en_US");
     expect(meta.openGraph?.images).toBeUndefined();
     expect(meta.twitter?.images).toBeUndefined();

@@ -97,9 +97,10 @@ done
 curl -sS https://ludvik4.dev/ | grep -oE '<html lang="[a-z]+"|<title>[^<]*</title>'
 ```
 
-Expected on the EN build: `/` 200 · `/en` 308 → `/` · `/blog*` 404 ·
-`/privacy` 200 · `lang="en"` · sitemap lists only `/` and `/privacy` ·
-robots disallows `/blog`, `/dashboard`, `/signin`.
+Expected on the EN build: `/` 200 · `/en` 308 → `/` · `/blog` and the current
+published EN article return 200 · legacy untranslated blog slugs return 404 ·
+`/privacy` 200 · `lang="en"` · sitemap lists the international pages and only
+published EN articles · robots allows public routes.
 
 The lead form is only proven by a real submission (the success message means
 Resend accepted the message — confirm the mail actually lands in

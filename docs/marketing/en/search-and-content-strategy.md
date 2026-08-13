@@ -75,6 +75,37 @@ https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
 | P2 | AI-assisted development without unverified code | delivery method | About + MVP | qa-pilot artefacts and a test-that-can-fail example |
 | P2 | Custom software or no-code automation? | build/buy boundary | Automation + MVP | maintenance, ownership, risk, and data criteria |
 
+## Technical article network
+
+General engineering authority belongs to Ludvik4, not to one product. ADR 0006
+therefore separates three content surfaces:
+
+- `/blog` — general AI-assisted development, specifications, agent
+  instructions, testing, and engineering controls;
+- `/guides` — buyer-facing planning worksheets connected to one commercial
+  service;
+- `/gridfin/<locale>/guides` and docs — Gridfin-specific operation,
+  architecture, skills, and modules.
+
+The first paired RU/EN technical wave follows long-tail topics already present
+in the RU semantic core and the engineering-method queries that received early
+international impressions. Only the first pair is published in this release;
+the rest stay in the content repository as drafts so indexing and query data can
+choose the next release.
+
+| Status | Working article | Intent boundary |
+| --- | --- | --- |
+| implemented | AGENTS.md vs CLAUDE.md vs Cursor Rules | choose and combine agent instruction formats |
+| draft | Spec-driven development vs vibe coding | transition from prototype exploration to a durable release contract |
+| draft | GitHub Spec Kit vs an Application Skeleton | distinguish a process harness from an architectural product foundation |
+| draft | Spec-first, spec-anchored, or spec-as-source | choose specification persistence after implementation |
+| draft | How to write Cursor Rules that stay small | scope and enforce project rules without prompt bloat |
+
+Published technical articles link to About or inspectable Work for source
+quality. A Gridfin link is contextual evidence only when the article discusses
+an Application Skeleton or enforced agent workflow; it does not relocate the
+general topic into the product surface.
+
 ### Wave 2 implementation — 2026-08-11
 
 The first release deliberately covers one decision tool per commercial hub,

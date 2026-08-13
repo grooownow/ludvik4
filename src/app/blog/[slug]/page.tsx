@@ -6,8 +6,8 @@ import { MDXRemote } from "next-mdx-remote-client/rsc";
 import type { MDXComponents } from "next-mdx-remote-client/rsc";
 import { Button } from "@/components/ui/button";
 import {
-  getPublishedArticles,
-  getPublishedArticleBySlug,
+  getPublishedArticlesForMarket,
+  getPublishedArticleBySlugForMarket,
 } from "@/features/blog";
 import {
   Breadcrumbs,
@@ -19,14 +19,38 @@ import {
 import { env } from "@/lib/env";
 import { jsonLdString } from "@/lib/json-ld";
 
-const ruContent = getMarketContent("ru");
+const marketContent = getMarketContent(env.SITE_MARKET);
+const isRu = env.SITE_MARKET === "ru";
+const articleCopy = isRu
+  ? {
+      home: "Главная",
+      blog: "Блог",
+      sourceEyebrow: "Источник",
+      sourceBody:
+        "Материал подготовлен Ludvik4 на основе практики разработки сайтов, автоматизаций, MVP и AI-assisted development. Связанные услуги и разборы ниже помогают перейти от общей темы к конкретному сценарию.",
+      ctaTitle: "Есть похожая задача?",
+      ctaBody: "Опишите её — предложим решение и оценку. Бесплатно.",
+      ctaLabel: "Обсудить задачу",
+      allArticles: "Все статьи",
+    }
+  : {
+      home: "Home",
+      blog: "Articles",
+      sourceEyebrow: "About this article",
+      sourceBody:
+        "Ludvik4 publishes practical engineering notes from building websites, workflow automations, MVPs, and AI-assisted development systems. The links below connect the method to inspectable work and project planning.",
+      ctaTitle: "Planning a product or workflow?",
+      ctaBody:
+        "Describe the problem and the outcome you need. I will suggest a sensible first step.",
+      ctaLabel: "Discuss your project",
+      allArticles: "All articles",
+    };
 
-// Published articles only — drafts get no static page. The blog is a RU-market
-// surface: an EN build generates no article pages (and dynamicParams=false makes
-// every /blog/* request 404 there).
+// Published articles only — drafts get no static page in either market build.
 export function generateStaticParams() {
-  if (env.SITE_MARKET !== "ru") return [];
-  return getPublishedArticles().map((article) => ({ slug: article.slug }));
+  return getPublishedArticlesForMarket(env.SITE_MARKET).map((article) => ({
+    slug: article.slug,
+  }));
 }
 
 // Unknown slugs 404 immediately instead of triggering an on-demand render
@@ -43,7 +67,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = getPublishedArticleBySlug(slug);
+  const article = getPublishedArticleBySlugForMarket(env.SITE_MARKET, slug);
   if (!article) {
     return {};
   }
@@ -138,7 +162,7 @@ type RelatedLink = {
   description: string;
 };
 
-const defaultRelatedLinks: RelatedLink[] = [
+const defaultRelatedLinksRu: RelatedLink[] = [
   {
     href: "/uslugi/razrabotka-lendinga",
     title: "Разработка лендинга",
@@ -156,7 +180,46 @@ const defaultRelatedLinks: RelatedLink[] = [
   },
 ];
 
+const defaultRelatedLinksEn: RelatedLink[] = [
+  {
+    href: "/about",
+    title: "Founder-led delivery",
+    description:
+      "How written scope, tests, and quality gates fit the studio model.",
+  },
+  {
+    href: "/work/qa-pilot",
+    title: "qa-pilot",
+    description:
+      "Inspect an open-source quality workflow for AI-assisted development.",
+  },
+  {
+    href: "/guides/mvp-scope-one-user-journey",
+    title: "Scope one complete user journey",
+    description:
+      "A worksheet for turning a product idea into a focused first release.",
+  },
+];
+
 const relatedBySlug: Partial<Record<string, RelatedLink[]>> = {
+  "agents-md-vs-claude-md-vs-cursor-rules": [
+    {
+      href: "/blog/agents-md-primer",
+      title: "AGENTS.md: пример и шаблон",
+      description: "Рабочая структура файла инструкций для coding agents.",
+    },
+    {
+      href: "/blog/cursor-rules",
+      title: "Cursor Rules",
+      description: "Формат MDC, области действия и типы подключения правил.",
+    },
+    {
+      href: "/gridfin/",
+      title: "Gridfin",
+      description:
+        "Application Skeleton, где правила связаны с тестами и gates.",
+    },
+  ],
   "ai-avtomatizatsiya-malogo-biznesa": [
     {
       href: "/uslugi/avtomatizatsiya-biznes-processov",
@@ -432,7 +495,9 @@ const relatedBySlug: Partial<Record<string, RelatedLink[]>> = {
 };
 
 function relatedLinksFor(slug: string): RelatedLink[] {
-  return relatedBySlug[slug] ?? defaultRelatedLinks;
+  return isRu
+    ? (relatedBySlug[slug] ?? defaultRelatedLinksRu)
+    : defaultRelatedLinksEn;
 }
 
 export default async function ArticlePage({
@@ -441,13 +506,17 @@ export default async function ArticlePage({
   params: Promise<Params>;
 }) {
   const { slug } = await params;
-  const article = getPublishedArticleBySlug(slug);
+  const article = getPublishedArticleBySlugForMarket(env.SITE_MARKET, slug);
   if (!article) {
     notFound();
   }
 
   const baseURL = env.NEXT_PUBLIC_APP_URL;
-  const articleUrl = publicUrl("ru", baseURL, `/blog/${article.slug}`);
+  const articleUrl = publicUrl(
+    env.SITE_MARKET,
+    baseURL,
+    `/blog/${article.slug}`,
+  );
   const relatedLinks = relatedLinksFor(article.slug);
   const jsonLd = {
     "@context": "https://schema.org",
@@ -457,7 +526,7 @@ export default async function ArticlePage({
         headline: article.title,
         description: article.description,
         datePublished: article.date,
-        inLanguage: "ru",
+        inLanguage: marketContent.lang,
         url: articleUrl,
         ...(article.cover && { image: `${baseURL}${article.cover}` }),
         author: {
@@ -481,14 +550,14 @@ export default async function ArticlePage({
           {
             "@type": "ListItem",
             position: 1,
-            name: "Главная",
+            name: articleCopy.home,
             item: `${baseURL}/`,
           },
           {
             "@type": "ListItem",
             position: 2,
-            name: "Блог",
-            item: publicUrl("ru", baseURL, "/blog"),
+            name: articleCopy.blog,
+            item: publicUrl(env.SITE_MARKET, baseURL, "/blog"),
           },
           {
             "@type": "ListItem",
@@ -507,11 +576,14 @@ export default async function ArticlePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
-      <SiteHeader content={ruContent} contactHref="/#contact" />
+      <SiteHeader content={marketContent} contactHref="/#contact" />
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-14">
         <Breadcrumbs
-          items={[{ label: "Блог", href: "/blog" }, { label: article.title }]}
+          items={[
+            { label: articleCopy.blog, href: "/blog" },
+            { label: article.title },
+          ]}
         />
         <article className="mt-6">
           <time
@@ -539,12 +611,10 @@ export default async function ArticlePage({
 
         <aside className="border-pink-soft mt-12 border-y py-6">
           <p className="text-muted-foreground font-mono text-xs font-semibold tracking-widest uppercase">
-            Источник
+            {articleCopy.sourceEyebrow}
           </p>
           <p className="mt-3 max-w-3xl leading-relaxed">
-            Материал подготовлен Ludvik4 на основе практики разработки сайтов,
-            автоматизаций, MVP и AI-assisted development. Связанные услуги и
-            разборы ниже помогают перейти от общей темы к конкретному сценарию.
+            {articleCopy.sourceBody}
           </p>
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
             {relatedLinks.map((link) => (
@@ -563,13 +633,13 @@ export default async function ArticlePage({
         </aside>
 
         <div className="border-pink-soft bg-accent mt-14 rounded-2xl border p-6">
-          <h2 className="text-lg font-bold">Есть похожая задача?</h2>
+          <h2 className="text-lg font-bold">{articleCopy.ctaTitle}</h2>
           <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
-            Опишите её — предложим решение и оценку. Бесплатно.
+            {articleCopy.ctaBody}
           </p>
           <div className="mt-4">
             <Button asChild size="sm">
-              <Link href="/#contact">Обсудить задачу</Link>
+              <Link href="/#contact">{articleCopy.ctaLabel}</Link>
             </Button>
           </div>
         </div>
@@ -579,7 +649,7 @@ export default async function ArticlePage({
         <div className="text-muted-foreground mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-6 font-mono text-sm">
           <span>© 2026 Ludvik4</span>
           <Link href="/blog" className="hover:text-foreground">
-            Все статьи
+            {articleCopy.allArticles}
           </Link>
         </div>
       </footer>

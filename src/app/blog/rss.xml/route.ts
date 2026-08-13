@@ -1,4 +1,4 @@
-import { getPublishedArticles } from "@/features/blog";
+import { getPublishedArticlesForMarket } from "@/features/blog";
 import { publicUrl } from "@/features/site";
 import { env } from "@/lib/env";
 
@@ -16,16 +16,17 @@ function escapeXml(value: string): string {
 }
 
 export function GET(): Response {
-  // The blog + RSS are a RU-market surface only.
-  if (env.SITE_MARKET !== "ru") {
-    return new Response("Not found", { status: 404 });
-  }
   const baseURL = env.NEXT_PUBLIC_APP_URL;
-  const articles = getPublishedArticles();
+  const articles = getPublishedArticlesForMarket(env.SITE_MARKET);
+  const isRu = env.SITE_MARKET === "ru";
+  const title = isRu ? "Блог Ludvik4" : "Ludvik4 Articles";
+  const description = isRu
+    ? "AI-агенты в разработке, spec-driven development, автоматизация и запуск цифровых продуктов"
+    : "Practical notes on AI coding agents, spec-driven development, engineering controls, and focused digital products";
 
   const items = articles
     .map((article) => {
-      const url = publicUrl("ru", baseURL, `/blog/${article.slug}`);
+      const url = publicUrl(env.SITE_MARKET, baseURL, `/blog/${article.slug}`);
       return [
         "    <item>",
         `      <title>${escapeXml(article.title)}</title>`,
@@ -41,10 +42,10 @@ export function GET(): Response {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>Блог Ludvik4</title>
-    <link>${escapeXml(publicUrl("ru", baseURL, "/blog"))}</link>
-    <description>AI-агенты в разработке, spec-driven development, автоматизация и запуск цифровых продуктов</description>
-    <language>ru</language>
+    <title>${title}</title>
+    <link>${escapeXml(publicUrl(env.SITE_MARKET, baseURL, "/blog"))}</link>
+    <description>${description}</description>
+    <language>${env.SITE_MARKET}</language>
 ${items}
   </channel>
 </rss>

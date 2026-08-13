@@ -1,16 +1,15 @@
 import type { MetadataRoute } from "next";
-import { getPublishedArticles } from "@/features/blog";
+import { getPublishedArticlesForMarket } from "@/features/blog";
 import { buildSitemap } from "@/features/site";
 import { env } from "@/lib/env";
 
 export const dynamic = "force-static";
 
-// Market-scoped sitemap — see buildSitemap in the site slice. The RU build adds
-// the blog + published articles; every other market lists only its landing. No
-// cross-market URL (the other market lives on its own domain). /dashboard and
+// Market-scoped sitemap — see buildSitemap in the site slice. Each build adds
+// only its localized articles; no cross-market URL is emitted. /dashboard and
 // /signin are never listed.
 export default function sitemap(): MetadataRoute.Sitemap {
-  const articles = getPublishedArticles().map((a) => ({
+  const articles = getPublishedArticlesForMarket(env.SITE_MARKET).map((a) => ({
     slug: a.slug,
     date: a.date,
   }));

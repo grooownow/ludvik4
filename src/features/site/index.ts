@@ -58,8 +58,8 @@ export {
 /** The market this build serves. */
 export const MARKET: Market = env.SITE_MARKET;
 
-/** The blog (+ RSS + articles) exists only in the Russian market. */
-export const BLOG_ENABLED = env.SITE_MARKET === "ru";
+/** Both storefronts have market-localized blog content and RSS feeds. */
+export const BLOG_ENABLED = true;
 
 /** Resolved content for this build's market. */
 export const siteContent = getMarketContent(env.SITE_MARKET);

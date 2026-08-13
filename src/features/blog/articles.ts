@@ -3,7 +3,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import { z } from "zod";
 
-// Frontmatter contract for src/content/blog/*.mdx. Malformed or missing
+// Frontmatter contract for src/content/blog/*.mdx and its EN mirror. Malformed or missing
 // fields throw at load time — and loading happens during `next build`
 // (generateStaticParams / sitemap / RSS), so a bad article fails the build
 // instead of rendering a broken card (docs/specs/seo-geo-strategy.md).
@@ -36,6 +36,14 @@ export type Article = ArticleFrontmatter & {
 };
 
 const CONTENT_DIR = path.join(process.cwd(), "src", "content", "blog");
+const EN_CONTENT_DIR = path.join(CONTENT_DIR, "en");
+
+export type ArticleMarket = "ru" | "en";
+
+/** The non-recursive content directory for one market. */
+export function getArticleContentDir(market: ArticleMarket): string {
+  return market === "ru" ? CONTENT_DIR : EN_CONTENT_DIR;
+}
 
 /** All articles (drafts included), newest first. */
 export function getAllArticles(dir: string = CONTENT_DIR): Article[] {
@@ -65,10 +73,25 @@ export function getPublishedArticles(dir: string = CONTENT_DIR): Article[] {
   return getAllArticles(dir).filter((article) => !article.draft);
 }
 
+/** Published articles for the market represented by the current build. */
+export function getPublishedArticlesForMarket(
+  market: ArticleMarket,
+): Article[] {
+  return getPublishedArticles(getArticleContentDir(market));
+}
+
 /** A single published article, or undefined (drafts stay invisible by slug too). */
 export function getPublishedArticleBySlug(
   slug: string,
   dir: string = CONTENT_DIR,
 ): Article | undefined {
   return getPublishedArticles(dir).find((article) => article.slug === slug);
+}
+
+/** A published market-localized article, or undefined for drafts/unknown slugs. */
+export function getPublishedArticleBySlugForMarket(
+  market: ArticleMarket,
+  slug: string,
+): Article | undefined {
+  return getPublishedArticleBySlug(slug, getArticleContentDir(market));
 }

@@ -1,0 +1,151 @@
+---
+title: "Spec-Driven Development vs Vibe Coding: What Changes After the Prototype"
+description: "A practical comparison of spec-driven development and vibe coding: exploration speed, durable intent, tests, review, and the transition from prototype to product."
+date: "2026-08-12"
+draft: true
+---
+
+Spec-driven development and vibe coding are two modes of AI-assisted software
+development with different ways of preserving intent. In spec-driven
+development, expected behaviour is written as a testable contract that guides
+planning, implementation, and validation. In vibe coding, intent evolves in a
+conversation with the model and the output is judged through a rapid interactive
+loop.
+
+Both modes can produce useful code. The deciding question is **what must survive
+the current session**: only a discovered idea, or a reproducible contract for
+the next change as well.
+
+## What vibe coding is
+
+Andrej Karpathy introduced the term
+[vibe coding](https://x.com/karpathy/status/1886192184808149383) in 2025 to
+describe a workflow where a developer accepts model suggestions, runs the
+result, reports errors, and continues without understanding every line.
+
+That is not a synonym for all AI-assisted development. When an engineer defines
+requirements, reads the diff, checks invariants, and owns the outcome, AI is an
+implementation tool. Vibe coding begins when the main contract lives in the
+conversation and in the judgement that the result appears to work.
+
+This mode is useful for exploration:
+
+- checking whether an integration is feasible;
+- building a disposable interface prototype;
+- comparing approaches to a data-processing problem;
+- creating a low-risk internal script;
+- discovering unknowns before requirements are fixed.
+
+Its strength is the short distance between a hypothesis and an observable
+result.
+
+## What spec-driven development is
+
+Spec-driven development makes the specification an active contract between
+intent and implementation. It describes observable behaviour, boundaries,
+failure paths, and acceptance criteria before the agent chooses the code.
+
+[GitHub Spec Kit](https://github.github.com/spec-kit/) packages one version of
+the workflow as `Spec → Plan → Tasks → Implement`. Each artefact narrows the
+solution space: the spec captures what and why, the plan explains how it fits
+the system, tasks order the changes, and implementation is validated against
+the original intent.
+
+SDD does not require perfect knowledge in advance. Unknowns become explicit
+questions. Decisions enter the plan. A discovery made during implementation
+returns to the specification when it changes expected behaviour.
+
+## The boundary after a prototype
+
+A prototype asks whether an idea can work and how it feels. A product release
+must answer different questions:
+
+- What happens with invalid input?
+- Which data is stored, and who can see it?
+- What happens when an integration is unavailable?
+- Which behaviour counts as a regression?
+- How will another engineer continue the work?
+- How can the change be rolled back safely?
+
+Conversational context can be enough while these questions do not matter. Once
+the result has users, data, money, or a support obligation, implicit intent
+becomes risk. The move to SDD is not an admission that the prototype was bad.
+It reflects a higher cost of ambiguity.
+
+## What changes in the workflow
+
+### A prompt becomes a contract
+
+A vibe-coding request may optimise for the nearest result: “add CSV upload and
+show a chart.” An SDD contract defines allowed formats, parsing failures, empty
+states, accessibility expectations, and the acceptance criteria for completion.
+
+### A successful run stops being the only check
+
+A prototype may be accepted after one manual path. A release needs contract
+tests, static analysis, review, and a production build. A test must be capable
+of failing when the requirement is violated; otherwise it does not demonstrate
+the behaviour.
+
+### The diff becomes an accountability object
+
+Generation speed does not remove collateral changes. SDD limits touch points in
+the plan and requires deviations to be explained. That reduces the chance that
+an agent silently changes architecture or data shape while adding a feature.
+
+### Decisions survive the chat
+
+A new agent session should not reconstruct requirements from code and guesses.
+Specifications, architecture decisions, and project rules become external
+memory. Conversation remains working material rather than the only source of
+truth.
+
+## SDD is not waterfall or BDD
+
+SDD is sometimes mistaken for a large specification completed before any code.
+Unlike waterfall, it can be iterative: the contract is refined as constraints
+are discovered, and delivery can proceed in small vertical slices.
+
+BDD expresses behaviour through examples and scenarios; TDD begins with an
+executable test. Both can be part of SDD, but neither is the entire system. The
+spec connects purpose, boundaries, and acceptance criteria. BDD and TDD provide
+ways to verify parts of that contract.
+
+## A practical hybrid
+
+A disciplined process does not need to ban vibe coding. It can bound it to the
+exploration phase:
+
+1. State the hypothesis and acceptable risk.
+2. Build a disposable prototype in an isolated branch or directory.
+3. Record what was learned: API constraints, UX decisions, and data shape.
+4. Decide which code is evidence and which code is production-worthy.
+5. Write the product spec and acceptance criteria before implementation.
+6. Implement, prove the tests can fail, and review the diff against the spec.
+
+This preserves exploration speed without carrying accidental decisions into
+production.
+
+## When the transition is essential
+
+A durable contract matters most when a change touches:
+
+- authentication, permissions, or personal data;
+- payments, quotas, or irreversible operations;
+- data migrations and compatibility;
+- several systems or teams;
+- a public API;
+- a workflow that someone else must operate after handover.
+
+A visual experiment may need only a few precise criteria. A critical workflow
+needs more depth. The amount of specification should follow the cost of failure,
+not a preference for ceremony.
+
+Vibe coding optimises the discovery of the next result. Spec-driven development
+optimises durable intent, verification, and maintainability. Use the first when
+code helps you learn the answer; use the second when the code becomes an
+obligation.
+
+If a prototype has proved the idea and the next step is a focused first release,
+[describe the project](/#contact). I can help turn the user journey, unknowns,
+and failure boundaries into a contract suitable for production delivery.

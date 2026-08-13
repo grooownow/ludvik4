@@ -1,0 +1,158 @@
+---
+title: "Spec-First, Spec-Anchored, or Spec-as-Source: How Long Should a Specification Live?"
+description: "Three specification persistence models after implementation: when spec-first is enough, how spec-anchored avoids drift, and where spec-as-source earns its cost."
+date: "2026-08-10"
+draft: true
+---
+
+Spec-first, spec-anchored, and spec-as-source are three models for the
+relationship between a specification and code after implementation begins.
+They do not ask whether a specification is useful. They ask a more operational
+question: **which artefact remains authoritative as the product changes**?
+
+In spec-first, the specification leads to the first implementation and code
+then becomes primary. In spec-anchored, specification and code continue to
+evolve together. In spec-as-source, the specification stays primary and
+generates a meaningful part of the implementation.
+
+The models are described in the
+[GitHub Spec Kit documentation](https://github.github.com/spec-kit/concepts/spec-persistence.html).
+The choice affects review, documentation, code generation, and the cost of
+drift.
+
+## Spec-first: the specification as a starting contract
+
+In a spec-first workflow, the team records expected behaviour and a plan before
+implementation. After release, code becomes the main source of truth and the
+original specification remains as historical decision context.
+
+This model can fit when:
+
+- a feature is small or deliberately temporary;
+- code and tests express the current behaviour clearly;
+- the product is exploring direction quickly;
+- support does not need a separate normative document;
+- synchronising prose with frequent small changes would add little value.
+
+The main risk is treating an old specification as current. If the document
+stays in the repository, give it an explicit lifecycle state such as
+implemented, superseded, or historical. Otherwise the next agent may trust the
+clean prose over the running behaviour.
+
+## Spec-anchored: the specification as a durable reference
+
+With spec-anchored development, code and specification remain connected after
+release. A change to observable behaviour requires both artefacts to be
+updated. The specification explains the contract and intent, tests demonstrate
+parts of the behaviour, and code implements it.
+
+This model is useful for:
+
+- core user journeys;
+- public APIs and integration contracts;
+- permissions and security boundaries;
+- business rules that are difficult to infer from implementation details;
+- products handed between engineers or agents;
+- features that drive ongoing product decisions.
+
+Spec-anchored does not mean narrating every line of code. The specification
+holds the observable contract: inputs, results, failures, exceptions, and
+acceptance criteria. Local function names and low-level refactoring stay in
+code.
+
+Its main risk is drift. Process reduces that risk: review checks spec
+conformance, the definition of done requires actualisation, and the change is
+linked to a specific section of the contract.
+
+## Spec-as-source: the specification generates the system
+
+In spec-as-source, a change begins in a formal description and code or other
+artefacts are generated from it. Familiar examples of the principle include
+OpenAPI generating clients and server stubs, schemas generating types and
+validators, and declarative infrastructure producing environment state.
+
+The model earns its cost when:
+
+- the format is strict enough for machine processing;
+- several consumers need consistent artefacts;
+- manual synchronisation repeatedly causes errors;
+- the generator is stable and part of the build;
+- generated output is not edited by hand.
+
+Free-form Markdown rarely works as complete spec-as-source because too much
+meaning cannot be converted to code unambiguously. A layered approach is more
+practical: product behaviour remains spec-anchored while an OpenAPI document or
+schema acts as the source for a narrow technical contract.
+
+## Why one model for the whole repository is awkward
+
+Different artefacts have different drift costs. A disposable experiment may
+need spec-first. An authorisation contract benefits from spec-anchored. API
+types can be generated from a schema.
+
+Choose per decision type:
+
+- **Feature intent:** spec-first for an experiment, spec-anchored for a core
+  flow.
+- **API shape:** spec-anchored or spec-as-source.
+- **Database schema:** migrations and schema code as executable source, with an
+  architecture decision explaining non-obvious choices.
+- **UI details:** design tokens and components as source; a feature spec for
+  states and accessibility.
+- **Operations:** an anchored runbook, with infrastructure as source where the
+  platform supports it.
+
+## Five questions to choose a model
+
+### Who needs the contract after release?
+
+Spec-first may be enough for the author of a disposable experiment. If support,
+QA, the next agent, or an external integrator needs the contract, it must remain
+current.
+
+### Can intent be reconstructed from tests and code?
+
+A test proves an example but may not explain why an exception exists. The more
+hidden product context a decision carries, the more useful spec-anchored becomes.
+
+### How many consumers share one format?
+
+If one schema must feed frontend types, backend validation, and documentation,
+generation can remove drift. One consumer does not always justify a custom
+generator.
+
+### How is divergence detected?
+
+“In a meeting” or “after a bug” is not a reliable answer. Detection needs to
+live in review, CI, or generation. Spec-anchored without actualisation quickly
+becomes spec-first with an ambiguous status.
+
+### How is a decision retired?
+
+Documents need lifecycle states: active, implemented, superseded, archived. A
+new specification should link to the one it replaces rather than rewriting
+history as if the old contract never existed.
+
+## A minimal actualisation loop
+
+A spec-anchored feature can use a short mandatory cycle:
+
+1. Record observable behaviour and open questions before implementation.
+2. Name the code, tests, and documentation touch points in the plan.
+3. Update the spec before continuing when a discovery changes the contract.
+4. Review the diff against acceptance criteria, not only against tasks.
+5. After green gates, update status and connected documentation.
+6. Mark a replaced contract as superseded and link to the new one.
+
+This is cheaper than maintaining parallel documentation without a purpose and
+more reliable than asking the next developer to reconstruct intent from commit
+history.
+
+Spec-first optimises the start and preserves historical context. Spec-anchored
+preserves a durable product contract. Spec-as-source removes manual
+synchronisation where a formal description can reliably generate artefacts.
+
+Need a specification workflow that does not become an archive of stale
+Markdown? [Describe the current process](/#contact). I can help assign a
+persistence model to each contract type and put actualisation into the quality
+gates.

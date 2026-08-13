@@ -22,6 +22,10 @@ crawlers, and answer engines.
   evidence layer until there is a market-safe reason and source context.
 - Treat the EN storefront as its own source, not as a translated RU page set.
 
+ADR 0006 later added an EN-native `/blog` while preserving this isolation: it
+loads English content from its own directory and never redirects to or renders
+the RU article set.
+
 ## Consequences
 
 The international host has consistent language, geography, evidence, and

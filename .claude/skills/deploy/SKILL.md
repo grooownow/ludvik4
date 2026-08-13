@@ -39,7 +39,7 @@ disagree, the playbook wins; update it, don't fork logic in here.
   not from memory, and not all of them up front:
 
   - `docs/rules/architecture.md` — new routes, feature slices, data access, import direction, schema changes.
-  - `docs/rules/content.md` — any blog article (`src/content/blog/*.mdx`) — writing, editing, reviewing, or publishing one.
+  - `docs/rules/content.md` — any blog article (`src/content/blog/*.mdx` for RU and `src/content/blog/en/*.mdx` for EN) — writing, editing, reviewing, or publishing one.
   - `docs/rules/definition-of-done.md` — every change, without exception — this is the standing bar, and the one rules file that is never out of scope.
   - `docs/rules/docs.md` — any change to `docs/`, `CLAUDE.md`/`AGENTS.md`, or a decision worth remembering across sessions. Docs are the interface between agent sessions — stale docs are worse than missing ones.
   - `docs/rules/frontend.md` — any page, component, mutation, or loading state — responsiveness is an invariant here, not a nice-to-have.

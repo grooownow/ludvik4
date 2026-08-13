@@ -1,7 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { getAllArticles, getPublishedArticles } from "@/features/blog";
+import {
+  getAllArticles,
+  getArticleContentDir,
+  getPublishedArticles,
+} from "@/features/blog";
 import { buildSitemap } from "@/features/site";
 import { env } from "@/lib/env";
 import sitemap from "./sitemap";
@@ -11,6 +15,12 @@ const articles = getPublishedArticles().map((a) => ({
   slug: a.slug,
   date: a.date,
 }));
+const enArticles = getPublishedArticles(getArticleContentDir("en")).map(
+  (a) => ({
+    slug: a.slug,
+    date: a.date,
+  }),
+);
 
 describe("buildSitemap", () => {
   it("RU: landing, commercial pages, cases and published articles", () => {
@@ -44,8 +54,8 @@ describe("buildSitemap", () => {
     expect(urls).toHaveLength(12 + getPublishedArticles().length);
   });
 
-  it("EN: landing, service pages, proof and source pages — no RU content", () => {
-    const urls = buildSitemap("en", baseURL, articles).map((e) => e.url);
+  it("EN: landing, service pages, proof, source pages and EN articles", () => {
+    const urls = buildSitemap("en", baseURL, enArticles).map((e) => e.url);
     expect(urls).toEqual([
       `${baseURL}/`,
       `${baseURL}/services/websites`,
@@ -62,6 +72,8 @@ describe("buildSitemap", () => {
       `${baseURL}/gridfin/en`,
       `${baseURL}/gridfin/en/docs/application-skeleton`,
       `${baseURL}/gridfin/en/guides/why-ai-needs-engineering-rules`,
+      `${baseURL}/blog`,
+      `${baseURL}/blog/agents-md-vs-claude-md-vs-cursor-rules`,
     ]);
   });
 });

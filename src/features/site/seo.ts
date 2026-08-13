@@ -15,7 +15,7 @@ import {
 // - no `languages`/hreflang linking the RU and EN storefronts;
 // - metadata never references the other market's domain (baseUrl is this
 //   market's own NEXT_PUBLIC_APP_URL);
-// - the RSS alternate is emitted only where a blog exists (RU);
+// - the RSS alternate is emitted when the market has a blog;
 // - JSON-LD claims no permanent team and uses no country as a marketing tag.
 
 export type SiteMetadataOptions = {
@@ -92,8 +92,8 @@ export function publicUrl(
 }
 
 /**
- * sitemap.xml entries for a market. RU adds the blog list + its articles; EN
- * adds its privacy notice. Never the other market's URLs.
+ * sitemap.xml entries for a market. Each market adds its own blog list and
+ * localized articles. Never the other market's URLs.
  * Pure so both markets are unit-testable in one process.
  */
 export function buildSitemap(
@@ -211,6 +211,22 @@ export function buildSitemap(
     }
   }
 
+  if (market === "en") {
+    entries.push({
+      url: publicUrl(market, baseUrl, "/blog"),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    });
+    for (const article of articles) {
+      entries.push({
+        url: publicUrl(market, baseUrl, `/blog/${article.slug}`),
+        lastModified: article.date,
+        changeFrequency: "monthly",
+        priority: 0.7,
+      });
+    }
+  }
+
   return entries;
 }
 
@@ -219,12 +235,7 @@ export function buildSitemap(
  * auth routes carry page-level noindex metadata; blocking them here would stop
  * compliant crawlers from seeing that directive.
  *
- * The EN build used to additionally disallow /blog, back when the blog simply
- * 404'd outside RU. Since ТЗ 2 those paths permanently redirect to the RU
- * domain (config/redirects.ts), and a crawler forbidden to fetch a URL never
- * sees its 301 — disallowing them would strand the five live articles in the
- * index as "blocked by robots.txt" and drop the link equity the redirect
- * exists to carry.
+ * Blog routes are crawlable in both market builds.
  */
 export function buildRobots(baseUrl: string): MetadataRoute.Robots {
   return {

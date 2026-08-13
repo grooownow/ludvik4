@@ -9,6 +9,7 @@ import {
 
 const VALID_DIR = path.join(__dirname, "__fixtures__", "valid");
 const MALFORMED_DIR = path.join(__dirname, "__fixtures__", "malformed");
+const EN_CONTENT_DIR = path.join(process.cwd(), "src", "content", "blog", "en");
 
 describe("getAllArticles", () => {
   it("loads every .mdx file, newest first, drafts included", () => {
@@ -102,5 +103,35 @@ describe("articleFrontmatterSchema — cover", () => {
 describe("real content dir (src/content/blog)", () => {
   it("loads without throwing — malformed frontmatter would fail the build", () => {
     expect(() => getAllArticles()).not.toThrow();
+  });
+
+  it.each(["github-spec-kit", "spec-driven-development", "cursor-rules"])(
+    "%s connects its engineering topic to both Gridfin market pages",
+    (slug) => {
+      const article = getPublishedArticleBySlug(slug);
+
+      expect(article?.content).toContain("https://ludvik4.ru/gridfin/");
+      expect(article?.content).toContain("https://ludvik4.dev/gridfin/en");
+    },
+  );
+
+  it("keeps all five new English articles in content but publishes only the first", () => {
+    const articles = getAllArticles(EN_CONTENT_DIR);
+    const newSlugs = [
+      "agents-md-vs-claude-md-vs-cursor-rules",
+      "spec-driven-development-vs-vibe-coding",
+      "github-spec-kit-vs-application-skeleton",
+      "spec-first-spec-anchored-spec-as-source",
+      "cursor-rules-best-practices",
+    ];
+
+    expect(articles.map((article) => article.slug)).toEqual(
+      expect.arrayContaining(newSlugs),
+    );
+    expect(
+      getPublishedArticles(EN_CONTENT_DIR)
+        .filter((article) => newSlugs.includes(article.slug))
+        .map((article) => article.slug),
+    ).toEqual(["agents-md-vs-claude-md-vs-cursor-rules"]);
   });
 });

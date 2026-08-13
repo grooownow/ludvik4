@@ -126,6 +126,25 @@ enter the sitemap, RSS and `llms.txt` automatically.
 subagents, AGENTS.md how-to, вайб-кодинг tooling, automation bridge — fill as
 cadence allows; each binds to its core query.
 
+### Paired RU/EN engineering wave — 2026-08-13
+
+ADR 0006 adds a market-localized Ludvik4 blog for general engineering topics.
+The RU and EN files share a slug but are loaded only by their own market build.
+`/guides` remains the international commercial worksheet hub; Gridfin-specific
+material remains on the product surface.
+
+| Status         | Slug                                      | Core query / intent                                                |
+| -------------- | ----------------------------------------- | ------------------------------------------------------------------ |
+| **LIVE RU+EN** | `agents-md-vs-claude-md-vs-cursor-rules`  | `agents md` + `claude agents md` + instruction-file comparison     |
+| draft RU+EN    | `spec-driven-development-vs-vibe-coding`  | `spec driven development` + `vibe coding`, post-prototype decision |
+| draft RU+EN    | `github-spec-kit-vs-application-skeleton` | `github spec kit`, process harness vs project foundation           |
+| draft RU+EN    | `spec-first-spec-anchored-spec-as-source` | specification persistence models                                   |
+| draft RU+EN    | `cursor-rules-best-practices`             | `как писать agents md` / `cursor rules`, scoped-rule how-to        |
+
+Release rule: publish no second pair until the first article has an indexing
+state and query/impression signal in both market properties. Drafts remain
+invisible to routes, sitemap, RSS, and `llms.txt`.
+
 ---
 
 ## Maintenance

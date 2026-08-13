@@ -1,0 +1,151 @@
+---
+title: "GitHub Spec Kit vs an Application Skeleton: Workflow, Architecture, and Enforcement"
+description: "How GitHub Spec Kit differs from an Application Skeleton: specification workflow, pre-decided architecture, tests, hooks, quality gates, and selection criteria."
+date: "2026-08-11"
+draft: true
+---
+
+GitHub Spec Kit and an Application Skeleton address different parts of
+AI-assisted software development. Spec Kit is an extensible process that turns
+intent into a specification, plan, tasks, and implementation. An Application
+Skeleton is a runnable product foundation where architecture, invariants,
+tests, and quality gates already form one system.
+
+They are not alternatives of the same type. Spec Kit primarily organises the
+path **from an idea to development artefacts**. An Application Skeleton reduces
+repeated architecture decisions and defines **the environment in which those
+artefacts are implemented and verified**.
+
+## What GitHub Spec Kit provides
+
+[GitHub Spec Kit](https://github.github.com/spec-kit/) is an open-source harness
+for spec-driven development and custom processes. Its default workflow is
+`Spec → Plan → Tasks → Implement`. Commands and templates help an agent:
+
+- clarify user intent;
+- separate expected behaviour from technical decisions;
+- create an implementation plan;
+- break work into ordered tasks;
+- analyse consistency across artefacts;
+- implement against the recorded plan.
+
+Spec Kit does not require a particular frontend framework, database, or feature
+structure. That portability is a strength: the process can sit above different
+stacks and coding agents. It also means the project must still make and enforce
+its own architecture decisions.
+
+## What an Application Skeleton is
+
+An Application Skeleton is a runnable product foundation containing more than
+a dependency list. It fixes architecture boundaries, working commands, feature
+shape, mandatory checks, and operational playbooks. The agent starts inside a
+system of inspectable decisions rather than an empty repository.
+
+A useful skeleton can include:
+
+- an agreed stack and build configuration;
+- module boundaries and allowed dependency direction;
+- design tokens and UI primitives;
+- test levels and executable quality gates;
+- security and input-validation rules;
+- agent instructions, skills, hooks, and playbooks;
+- product, decision, and roadmap documentation;
+- a deployment and handover path.
+
+[Gridfin](/gridfin/en) is one example of an Application Skeleton for Claude
+Code. It connects specifications, skills, rules, tests, and gates instead of
+stopping at starter files.
+
+## The central difference: process generation vs project state
+
+After initialisation, Spec Kit adds machinery that creates and evolves process
+artefacts. Its central asset is the guided path from intent to implementation.
+
+An Application Skeleton already is a project state. Decisions have been made
+about business-logic placement, input validation, required tests, and release
+checks. Its central asset is the coherence of those decisions.
+
+In shorthand:
+
+- Spec Kit asks: “Which steps and artefacts should carry this feature?”
+- An Application Skeleton asks: “Which system will receive the feature, and
+  which constraints must it pass?”
+
+## Where enforcement lives
+
+An instruction template can ask an agent to add a test. Enforcement appears
+when a missing or broken test makes a gate fail. A rule about feature imports
+becomes stronger when a linter verifies the module boundary.
+
+Spec Kit provides quality checklists and cross-artefact analysis, but it cannot
+know every invariant of a specific application. A skeleton can encode them in
+project tooling:
+
+- schema validation for input;
+- lint rules for architecture;
+- unit, integration, and end-to-end tests;
+- hooks that block hazardous calls;
+- build and deployment gates;
+- browser smoke checks for changed surfaces.
+
+A long rules file does not make a skeleton strict. There must be an observable
+chain from rule to check to a failing result when the rule is violated.
+
+## Choosing for a new product
+
+Spec Kit fits when stack and architecture are already established but the team
+needs one way to convert ideas into specifications and tasks. It can also fit a
+brownfield repository where replacing the foundation would cost more than
+adding a process around it.
+
+An Application Skeleton helps when projects repeat the same product shape and
+re-decide authentication, layout, tests, observability, deployment, and agent
+workflow each time. It creates value only when the foundation is maintained
+rather than freezing an old stack.
+
+Using both can make sense: the skeleton provides architecture and gates, while
+Spec Kit provides the feature-level workflow. In that setup, plan templates
+should reference the skeleton's actual rules, and generated tasks should run
+its real verification commands.
+
+## Common integration failures
+
+### Two sources of truth
+
+If a Spec Kit constitution requires one test workflow and the skeleton requires
+another, the agent receives a contradiction. Keep the durable contract in one
+place and let process templates refer to it.
+
+### A false sense of product readiness
+
+Authentication, a database, and UI components do not prove fit for a new idea.
+A skeleton reduces infrastructure setup; discovery, domain modelling, and
+release scope remain product-specific work.
+
+### Process artefacts without feedback
+
+Specifications and tasks become stale when implementation discoveries never
+flow back into them. Actualisation after implementation must be an explicit
+step.
+
+### A foundation without updates
+
+A skeleton accumulates dependency versions, security practices, and deployment
+constraints. It needs a reproducible update path, or every new product inherits
+old decisions.
+
+Choose by the missing layer, not the number of installed files:
+
+- architecture exists, but requirements live in chats: add a spec workflow;
+- the process is sound, but every project starts from zero: add a skeleton;
+- both exist, but rules are advisory: add enforcement;
+- all layers exist but disagree: restore one source of truth and actualisation.
+
+Spec Kit manages the transformation of intent. An Application Skeleton manages
+the implementation environment. They reinforce each other only when their
+contracts are aligned and testable.
+
+Need to identify the missing layer in an AI-assisted delivery process?
+[Describe the repository and product shape](/#contact). I can review the
+workflow, architecture, and gates without replacing working parts for the sake
+of a new tool.

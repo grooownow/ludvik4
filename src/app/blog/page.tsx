@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { getPublishedArticles } from "@/features/blog";
+import { getPublishedArticlesForMarket } from "@/features/blog";
 import {
   Breadcrumbs,
   canonicalPath,
@@ -13,17 +12,47 @@ import {
 import { env } from "@/lib/env";
 import { jsonLdString } from "@/lib/json-ld";
 
-const ruContent = getMarketContent("ru");
+const marketContent = getMarketContent(env.SITE_MARKET);
+const isRu = env.SITE_MARKET === "ru";
+const copy = isRu
+  ? {
+      metadataTitle: "Блог",
+      metadataDescription:
+        "Статьи Ludvik4: AI-агенты в разработке, spec-driven development, автоматизация и запуск цифровых продуктов.",
+      shareTitle: "Блог Ludvik4",
+      breadcrumbHome: "Главная",
+      breadcrumbBlog: "Блог",
+      eyebrow: "Блог",
+      title: "Заметки о разработке с AI",
+      intro:
+        "AI-агенты в разработке, spec-driven development, автоматизация — из практики Ludvik4.",
+      empty: "Первые статьи уже в работе — скоро здесь появятся",
+      homeLink: "На главную",
+      language: "ru",
+    }
+  : {
+      metadataTitle: "Articles",
+      metadataDescription:
+        "Ludvik4 articles on AI coding agents, spec-driven development, engineering controls, and building focused digital products.",
+      shareTitle: "Ludvik4 Articles",
+      breadcrumbHome: "Home",
+      breadcrumbBlog: "Articles",
+      eyebrow: "Articles",
+      title: "AI-assisted development, examined in practice",
+      intro:
+        "Practical comparisons and engineering notes on coding agents, specifications, rules, tests, and quality gates.",
+      empty: "The first articles are in progress.",
+      homeLink: "Back to home",
+      language: "en",
+    };
 
 export const metadata: Metadata = {
-  title: "Блог",
-  description:
-    "Статьи Ludvik4: AI-агенты в разработке, spec-driven development, автоматизация и запуск цифровых продуктов.",
+  title: copy.metadataTitle,
+  description: copy.metadataDescription,
   alternates: { canonical: canonicalPath(env.SITE_MARKET, "/blog") },
   openGraph: {
-    title: "Блог Ludvik4",
-    description:
-      "AI-агенты в разработке, spec-driven development, автоматизация и запуск цифровых продуктов.",
+    title: copy.shareTitle,
+    description: copy.metadataDescription,
     url: canonicalPath(env.SITE_MARKET, "/blog"),
   },
 };
@@ -31,34 +60,32 @@ export const metadata: Metadata = {
 // Formats "2026-07-16" for display without constructing a Date in render
 // (content dates are plain ISO strings by contract).
 function formatDate(isoDate: string): string {
+  if (!isRu) return isoDate;
   const [year, month, day] = isoDate.split("-");
   return `${day}.${month}.${year}`;
 }
 
 export default function BlogPage() {
-  // The blog is a RU-market surface; an EN build 404s it.
-  if (env.SITE_MARKET !== "ru") notFound();
-  const articles = getPublishedArticles();
+  const articles = getPublishedArticlesForMarket(env.SITE_MARKET);
   const baseURL = env.NEXT_PUBLIC_APP_URL;
-  const blogUrl = publicUrl("ru", baseURL, "/blog");
+  const blogUrl = publicUrl(env.SITE_MARKET, baseURL, "/blog");
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Blog",
         "@id": `${blogUrl}#blog`,
-        name: "Блог Ludvik4",
-        description:
-          "Статьи Ludvik4 об AI-агентах в разработке, spec-driven development, автоматизации и запуске цифровых продуктов.",
+        name: copy.shareTitle,
+        description: copy.metadataDescription,
         url: blogUrl,
-        inLanguage: "ru",
+        inLanguage: copy.language,
         publisher: { "@id": `${baseURL}/#organization` },
         mainEntity: {
           "@type": "ItemList",
           itemListElement: articles.map((article, index) => ({
             "@type": "ListItem",
             position: index + 1,
-            url: publicUrl("ru", baseURL, `/blog/${article.slug}`),
+            url: publicUrl(env.SITE_MARKET, baseURL, `/blog/${article.slug}`),
             name: article.title,
           })),
         },
@@ -69,13 +96,13 @@ export default function BlogPage() {
           {
             "@type": "ListItem",
             position: 1,
-            name: "Главная",
+            name: copy.breadcrumbHome,
             item: `${baseURL}/`,
           },
           {
             "@type": "ListItem",
             position: 2,
-            name: "Блог",
+            name: copy.breadcrumbBlog,
             item: blogUrl,
           },
         ],
@@ -89,25 +116,22 @@ export default function BlogPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
-      <SiteHeader content={ruContent} contactHref="/#contact" />
+      <SiteHeader content={marketContent} contactHref="/#contact" />
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-14">
-        <Breadcrumbs items={[{ label: "Блог" }]} />
+        <Breadcrumbs items={[{ label: copy.breadcrumbBlog }]} />
         <p className="text-primary mt-10 mb-3 font-mono text-xs font-semibold tracking-widest uppercase">
-          Блог
+          {copy.eyebrow}
         </p>
         <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-          Заметки о разработке с AI
+          {copy.title}
         </h1>
-        <p className="text-muted-foreground mt-4 max-w-xl">
-          AI-агенты в разработке, spec-driven development, автоматизация — из
-          практики Ludvik4.
-        </p>
+        <p className="text-muted-foreground mt-4 max-w-xl">{copy.intro}</p>
 
         <div className="mt-10 flex flex-col gap-4">
           {articles.length === 0 ? (
             <p className="text-muted-foreground border-border rounded-2xl border border-dashed p-6 text-sm">
-              Первые статьи уже в работе — скоро здесь появятся
+              {copy.empty}
             </p>
           ) : null}
           {articles.map((article) => (
@@ -147,7 +171,7 @@ export default function BlogPage() {
         <div className="text-muted-foreground mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-6 font-mono text-sm">
           <span>© 2026 Ludvik4</span>
           <Link href="/" className="hover:text-foreground">
-            На главную
+            {copy.homeLink}
           </Link>
         </div>
       </footer>

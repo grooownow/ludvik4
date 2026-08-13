@@ -2,9 +2,37 @@
 
 - Project: `https://ludvik4.dev`
 - Market: English, Europe-based, worldwide delivery
-- Updated: 2026-08-11
-- Current stage: index monitoring after live content wave 2
+- Updated: 2026-08-13
+- Current stage: publishing the first market-localized technical article
 - Next stage: weekly Google Search Console indexing and query monitoring
+
+## Gridfin contextual links added
+
+The published RU articles for GitHub Spec Kit, spec-driven development, and
+Cursor Rules now connect their exact engineering topic to both Gridfin market
+pages. Each article uses the RU landing as the primary product example and the
+EN landing as the explicitly labelled international version. A focused content
+test requires both URLs in all three articles; it was observed failing before
+the links were added and passing afterwards.
+
+The GSC signal that motivated the follow-up needs careful interpretation: the
+international property's 120 impressions and one click belonged almost
+entirely to legacy `/blog/*` URLs. ADR 0006 does not restore those Russian
+routes. It adds an EN-native Ludvik4 blog with separate content loading,
+canonical URLs, sitemap, RSS and `llms.txt`. General engineering topics belong
+there; commercial worksheets stay in `/guides`, and Gridfin-specific material
+stays on the product surface.
+
+Five paired RU/EN technical articles are now in the content source. Only
+`/blog/agents-md-vs-claude-md-vs-cursor-rules` is published in this wave; the
+other four pairs remain drafts and are excluded from every discovery surface.
+The live pair has bidirectional links into the existing RU AGENTS.md/Cursor
+cluster and links to About/qa-pilot evidence on the international site.
+
+The optional domain-level Search Console property is still unverified. Current
+DNS nameservers are at Porkbun; domain-property verification requires adding
+Google's TXT record there. The existing URL-prefix property remains sufficient
+for the current HTTPS host and continues to collect its data.
 
 ## Gridfin RU central entity corrected
 

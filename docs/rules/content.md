@@ -1,7 +1,8 @@
 # Rule: Content (blog articles)
 
-**Applies to:** any blog article (`src/content/blog/*.mdx`) — writing,
-editing, reviewing, or publishing one.
+**Applies to:** any blog article (`src/content/blog/*.mdx` for RU and
+`src/content/blog/en/*.mdx` for EN) — writing, editing, reviewing, or publishing
+one.
 
 Articles are the SEO/GEO engine (see `docs/specs/seo-geo-strategy.md`):
 credibility and depth matter more than cadence. These standards came from
@@ -38,12 +39,14 @@ suggestions.
    (supporting → pillar, pillar ↔ pillar). No article ships without a core
    query behind it.
 
-## Language & positioning
+## Language, market, and positioning
 
-- Articles are Russian (the site's language) — the one exception to the
-  repo-is-English rule, alongside `docs/site-v0.md`. Tech terms and product
-  names stay in their original form; linking English-language primary
-  sources is fine and expected.
+- RU articles are Russian; EN articles are original English localizations for
+  the international storefront. Tech terms and product names stay in their
+  original form; primary English sources are preferred in both markets.
+- General AI-assisted development articles belong to Ludvik4 Blog. Commercial
+  planning worksheets stay in `/guides`; Gridfin product internals and
+  operating guidance stay under `/gridfin/<locale>/` (ADR 0006).
 - Neutral voice by default, consistent with the RU storefront: describe the
   work and result without inventing a permanent team. First person singular is
   allowed where authorship matters; avoid team voice («мы»). No personal names
@@ -57,7 +60,7 @@ article; it stays technically optional (no `cover` → article renders without a
 hero, default OG).
 
 - **Where:** the web-optimised copy at `public/blog/<slug>/card.jpg` (the site
-  serves it). The full-resolution source lives beside the article in
+  serves it). A localized pair may share one visual. The full-resolution source lives in
   `src/content/blog/<slug>/card.png` (the coworker attaches that to social
   posts). See `src/content/blog/README.md` for the per-article layout.
 - **Format:** 16:9 (~1600×900), JPEG/WebP up to ~250 KB for the web copy.
@@ -74,11 +77,13 @@ thumbnail, OG/Twitter share image, and the Article JSON-LD `image`.
 
 ## Publishing flow
 
-1. Draft ships with `draft: true` — invisible in list/sitemap/RSS/llms.txt.
+1. Draft ships with `draft: true` — invisible in that market's
+   list/sitemap/RSS/llms.txt.
 2. Review copies for the user: `.md` copies in `<repo>/tmp-review/`
    (git-ignored) — give full paths, never auto-open files.
-3. User approves → flip `draft: false`, run gates, push. The article enters
-   list, sitemap, RSS and llms.txt automatically.
+3. User approves → flip the approved market files to `draft: false`, run gates,
+   push. Each article enters its own list, sitemap, RSS and llms.txt
+   automatically.
 4. After deploy: request indexing in Search Console (see
    `docs/playbooks/seo-geo.md` §3).
 
