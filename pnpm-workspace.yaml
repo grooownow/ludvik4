@@ -10,6 +10,14 @@ allowBuilds:
   lefthook: true
   sharp: true
   unrs-resolver: true
+auditConfig:
+  # GHSA-jmr9-qjv8-65gv: extract-zip symlink path traversal. The advisory has
+  # no patched npm release. It is reachable only through the dev-only
+  # Lighthouse stack; this project does not pass untrusted archives to it.
+  # Remove once Lighthouse moves to @puppeteer/browsers 3.x (which dropped
+  # extract-zip) or extract-zip publishes a fixed version.
+  ignoreGhsas:
+    - GHSA-jmr9-qjv8-65gv
 overrides:
   # GHSA-ph9p-34f9-6g65: tmp path traversal via @lhci/cli (dev-only).
   # Remove when @lhci/cli or its transitive deps (inquirer, external-editor) update.

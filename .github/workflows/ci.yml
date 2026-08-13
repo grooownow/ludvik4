@@ -37,9 +37,10 @@ jobs:
       # `pnpm update <pkg> --lockfile-only` — the patch is normally inside the
       # range the parent already declares, and Renovate's weekly
       # lockFileMaintenance PR (.github/renovate.json5) is what keeps that from
-      # reaching this step. Only when no reachable version fixes it: an
-      # `overrides:` entry in pnpm-workspace.yaml, with a comment explaining
-      # why — see docs/rules/security.md.
+      # reaching this step. When a patched version exists but no parent exposes
+      # it, use a documented `overrides:` entry. When upstream has no patched
+      # release at all, a single-GHSA audit exception is allowed only after a
+      # documented reachability check — see pnpm-workspace.yaml.
       #
       # `pnpm audit` exits 1 both when it finds an advisory and when the npm
       # advisory endpoint misbehaves, so the two are told apart by the error

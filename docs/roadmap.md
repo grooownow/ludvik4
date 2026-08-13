@@ -207,6 +207,16 @@ the planned `ignoreGhsas` allowlist proved unnecessary:
   (200) and `/dashboard` (307) are published on a brochure site and are the only
   reason the auth advisories apply at all.
 
+**[DONE 2026-08-13] CI audit recovery for unfixable `extract-zip` advisory.**
+GHSA-jmr9-qjv8-65gv affects every published `extract-zip` version; upstream has
+no patched npm release. The package is present only in the dev-only Lighthouse
+dependency chain, and the configured Lighthouse job neither accepts untrusted
+archives nor downloads a browser through that package. A targeted
+`auditConfig.ignoreGhsas` entry suppresses only this GHSA while every other
+high/critical advisory still fails CI. Remove it when Lighthouse adopts
+`@puppeteer/browsers` 3.x (which no longer depends on `extract-zip`) or upstream
+publishes a fixed release.
+
 SEO/GEO rollout — **13 articles LIVE** with per-article covers. Remaining moves,
 guided by `docs/playbooks/seo-geo.md`:
 
