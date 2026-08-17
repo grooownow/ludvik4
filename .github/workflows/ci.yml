@@ -2,12 +2,10 @@ name: CI
 on:
   push: { branches: [main] }
   pull_request:
-  # The nightly cron catches drift in the outside world, which no commit of ours
-  # would trigger: `pnpm audit` goes red on a newly published advisory, and the
-  # golden-path bootstrap goes red when a dependency moves under us. Both are
-  # things a buyer would hit on a clean clone tomorrow morning, so they are
-  # worth their minutes overnight.
-  schedule: [{ cron: "0 3 * * *" }]
+  # There is deliberately no nightly cron here. Actions minutes are free on this
+  # public repo, but the nightly run was red on `pnpm audit` half the time and
+  # nobody acted on it, so it was pure noise. Run `pnpm audit --audit-level high`
+  # by hand, or trigger this workflow via workflow_dispatch, when you want it.
   workflow_dispatch:
 
 jobs:

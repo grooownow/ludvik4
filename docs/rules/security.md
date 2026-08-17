@@ -51,7 +51,10 @@ line in `.env.example`, and a case in `src/lib/env.test.ts`. Verified:
   dev-only). Every entry is debt; remove it once upstream updates.
 - Renovate (`.github/renovate.json5`) opens a weekly `lockFileMaintenance` PR
   that does that refresh on a schedule, so this class of advisory stops
-  reaching CI at all. The nightly audit is the detector; Renovate is the fixer.
+  reaching CI at all. Renovate is both halves now: CI dropped its nightly cron
+  on 2026-08-17, so `pnpm audit` only speaks on a push or a PR, and Renovate's
+  OSV alerts (`osvVulnerabilityAlerts`, scheduled `at any time`) are what
+  detects an advisory published on a day nobody commits.
 
 ## Headers and rate limiting
 
