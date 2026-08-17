@@ -105,6 +105,23 @@ describe("real content dir (src/content/blog)", () => {
     expect(() => getAllArticles()).not.toThrow();
   });
 
+  it("assigns at most one Russian article to each calendar date", () => {
+    const articles = getAllArticles();
+    const slugsByDate = new Map<string, string[]>();
+
+    for (const article of articles) {
+      const slugs = slugsByDate.get(article.date) ?? [];
+      slugs.push(article.slug);
+      slugsByDate.set(article.date, slugs);
+    }
+
+    const duplicateDates = [...slugsByDate.entries()].filter(
+      ([, slugs]) => slugs.length > 1,
+    );
+
+    expect(duplicateDates).toEqual([]);
+  });
+
   it.each(["github-spec-kit", "spec-driven-development", "cursor-rules"])(
     "%s connects its engineering topic to both Gridfin market pages",
     (slug) => {
@@ -115,8 +132,7 @@ describe("real content dir (src/content/blog)", () => {
     },
   );
 
-  it("keeps all five new English articles in content but publishes only the first", () => {
-    const articles = getAllArticles(EN_CONTENT_DIR);
+  it("publishes the scheduled technical wave in both markets", () => {
     const newSlugs = [
       "agents-md-vs-claude-md-vs-cursor-rules",
       "spec-driven-development-vs-vibe-coding",
@@ -124,14 +140,29 @@ describe("real content dir (src/content/blog)", () => {
       "spec-first-spec-anchored-spec-as-source",
       "cursor-rules-best-practices",
     ];
+    const publishedSlugs = [
+      "github-spec-kit-vs-application-skeleton",
+      "spec-driven-development-vs-vibe-coding",
+      "agents-md-vs-claude-md-vs-cursor-rules",
+    ];
+    const marketDirs = [undefined, EN_CONTENT_DIR];
 
-    expect(articles.map((article) => article.slug)).toEqual(
-      expect.arrayContaining(newSlugs),
-    );
-    expect(
-      getPublishedArticles(EN_CONTENT_DIR)
-        .filter((article) => newSlugs.includes(article.slug))
-        .map((article) => article.slug),
-    ).toEqual(["agents-md-vs-claude-md-vs-cursor-rules"]);
+    for (const contentDir of marketDirs) {
+      const articles = contentDir
+        ? getAllArticles(contentDir)
+        : getAllArticles();
+      const published = contentDir
+        ? getPublishedArticles(contentDir)
+        : getPublishedArticles();
+
+      expect(articles.map((article) => article.slug)).toEqual(
+        expect.arrayContaining(newSlugs),
+      );
+      expect(
+        published
+          .filter((article) => newSlugs.includes(article.slug))
+          .map((article) => article.slug),
+      ).toEqual(publishedSlugs);
+    }
   });
 });
