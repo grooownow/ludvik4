@@ -4,7 +4,7 @@
   "project_url": "https://ludvik4.dev",
   "mode": "fix-retest-publish",
   "created_at": "2026-08-10T17:43:23+00:00",
-  "updated_at": "2026-08-11T13:12:00+02:00",
+  "updated_at": "2026-08-17T21:44:55+02:00",
   "current_stage": "search-index-monitoring",
   "completed_stages": [
     "inventory",
@@ -17,13 +17,15 @@
     "production-retest-wave-1",
     "content-wave-2",
     "publish-wave-2",
-    "production-retest-wave-2"
+    "production-retest-wave-2",
+    "technical-blog-wave-1",
+    "technical-blog-wave-2"
   ],
-  "next_stage": "search-console-ownership-and-index-monitoring",
+  "next_stage": "search-index-monitoring",
   "freshness": {
     "status": "fresh",
-    "latest_relevant_change": "2026-08-11",
-    "latest_relevant_file": "src/features/site/international-content.ts"
+    "latest_relevant_change": "2026-08-17",
+    "latest_relevant_file": "docs/roadmap.md"
   },
   "artifacts": [
     "docs/marketing/en/product-canon.md",
@@ -35,11 +37,11 @@
     "docs/specs/en-commercial-seo.plan.md"
   ],
   "blockers": [
-    "krobox@gmail.com does not have owner access to the existing Google Search Console domain property for ludvik4.dev"
+    "PostHog is not authenticated in the available browser session, so total page views are unavailable"
   ],
   "next_actions": [
-    "Restore Search Console ownership and submit sitemap.xml",
-    "Inspect Home, three service pages, and three guide pages",
-    "Monitor public discovery weekly and choose the next guide from observed demand"
+    "Verify the August 15 and 17 article pairs on both production sites",
+    "Monitor discovery, indexing, impressions, clicks, CTR, position, queries, and pages weekly",
+    "Authenticate PostHog to measure total page views and non-search traffic"
   ]
 }

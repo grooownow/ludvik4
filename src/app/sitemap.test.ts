@@ -73,6 +73,8 @@ describe("buildSitemap", () => {
       `${baseURL}/gridfin/en/docs/application-skeleton`,
       `${baseURL}/gridfin/en/guides/why-ai-needs-engineering-rules`,
       `${baseURL}/blog`,
+      `${baseURL}/blog/github-spec-kit-vs-application-skeleton`,
+      `${baseURL}/blog/spec-driven-development-vs-vibe-coding`,
       `${baseURL}/blog/agents-md-vs-claude-md-vs-cursor-rules`,
     ]);
   });

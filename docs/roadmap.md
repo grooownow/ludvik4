@@ -6,15 +6,21 @@ writing detail here.
 
 ## Now
 
+**[DONE 2026-08-17] RU blog publication chronology and scheduled wave.** All 21 Russian articles
+now have unique calendar dates. The commercial batch is distributed across
+2026-07-27–2026-08-10. The paired articles dated 2026-08-15 and 2026-08-17 are
+now published in RU and EN; the 2026-08-19/21 pairs remain drafts. A regression
+test enforces at most one RU article per date, including drafts, and verifies
+the same three-pair publication wave in both markets.
+
 **[DONE 2026-08-13] Market-localized Ludvik4 engineering blog (ADR 0006).**
 Author decision: general AI-assisted development belongs to the Ludvik4 brand;
 only Gridfin-specific product operation and internals belong in its guides.
-Five substantial topics now exist as paired RU/EN MDX files. Only
-`agents-md-vs-claude-md-vs-cursor-rules` is live in both builds with one shared
-original cover; the other four pairs are drafts and remain absent from routes,
-sitemaps, RSS, and `llms.txt`. The EN header/footer now expose `/blog`, while
-commercial planning worksheets remain in `/guides`. Next publication waits for
-indexing and real query evidence from this first pair.
+Five substantial topics now exist as paired RU/EN MDX files. Three are live in
+both builds: AGENTS.md vs CLAUDE.md vs Cursor Rules, SDD vs vibe coding, and
+GitHub Spec Kit vs Application Skeleton. The 2026-08-19/21 pairs remain drafts
+and absent from routes, sitemaps, RSS, and `llms.txt`. The EN header/footer
+expose `/blog`, while commercial planning worksheets remain in `/guides`.
 
 **[DONE 2026-08-13] Gridfin contextual-link reinforcement.** The published
 GitHub Spec Kit, spec-driven development, and Cursor Rules articles now connect
