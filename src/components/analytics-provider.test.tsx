@@ -232,6 +232,27 @@ describe("AnalyticsProvider engagement", () => {
     ).toHaveLength(1);
   });
 
+  it("does not count time spent in a background tab", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    await renderProvider(<p>content</p>);
+    track.mockClear();
+
+    const visibility = vi.spyOn(document, "visibilityState", "get");
+
+    visibility.mockReturnValue("hidden");
+    document.dispatchEvent(new Event("visibilitychange"));
+    await vi.advanceTimersByTimeAsync(600_000);
+
+    expect(track).not.toHaveBeenCalledWith("page.engaged", expect.anything());
+
+    visibility.mockReturnValue("visible");
+    document.dispatchEvent(new Event("visibilitychange"));
+    await vi.advanceTimersByTimeAsync(31_000);
+
+    expect(track).toHaveBeenCalledWith("page.engaged", { path: "/" });
+    visibility.mockRestore();
+  });
+
   it("does not report a visitor who left before the threshold", async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     await renderProvider(<p>content</p>);

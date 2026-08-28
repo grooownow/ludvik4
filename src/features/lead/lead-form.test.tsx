@@ -141,6 +141,56 @@ describe("LeadForm analytics", () => {
     });
   });
 
+  // The honeypot deliberately answers a caught bot with a success, so it stops
+  // retrying. That reply must not also become a completed enquiry in the data:
+  // conversion is the one number this whole slice exists to produce.
+  it("does not count a caught bot as a completed enquiry", async () => {
+    const user = userEvent.setup();
+    submitLeadAction.mockResolvedValue({ ok: true });
+
+    render(<LeadForm />);
+    await fillRequired(user);
+    await user.type(
+      document.getElementById("lead-website") as HTMLInputElement,
+      "http://spam.example",
+    );
+    await user.click(
+      screen.getByRole("button", { name: RU_LEAD_LABELS.submit }),
+    );
+
+    await screen.findByText(RU_LEAD_LABELS.success);
+    expect(track).not.toHaveBeenCalledWith(
+      "lead.form_submitted",
+      expect.anything(),
+    );
+  });
+
+  // Guards the interception itself: the form dispatches through a wrapper so it
+  // can read the honeypot before the action runs, and useFormStatus has to keep
+  // driving the button's pending state through it.
+  it("still shows the pending label while the action runs", async () => {
+    const user = userEvent.setup();
+    let release!: () => void;
+    submitLeadAction.mockReturnValue(
+      new Promise((resolve) => {
+        release = () => resolve({ ok: true });
+      }),
+    );
+
+    render(<LeadForm />);
+    await fillRequired(user);
+    await user.click(
+      screen.getByRole("button", { name: RU_LEAD_LABELS.submit }),
+    );
+
+    expect(
+      await screen.findByRole("button", { name: RU_LEAD_LABELS.submitting }),
+    ).toBeDisabled();
+
+    release();
+    await screen.findByText(RU_LEAD_LABELS.success);
+  });
+
   it("reports the submit press separately from the outcome", async () => {
     const user = userEvent.setup();
     submitLeadAction.mockResolvedValue({ ok: true });

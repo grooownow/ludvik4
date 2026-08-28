@@ -88,10 +88,27 @@ export function LeadForm({
   const journey = useRef({
     started: false,
     succeeded: false,
+    caughtByHoneypot: false,
     touchedFields: new Set<string>(),
     path: pathname,
   });
   journey.current.path = pathname;
+
+  /**
+   * Dispatches the action, reading the honeypot on the way past.
+   *
+   * The action answers a caught bot with a plain `{ ok: true }` so it stops
+   * retrying — and that reply is indistinguishable from a real enquiry, which
+   * would put every caught bot into `lead.form_submitted`, the one number this
+   * instrumentation exists to produce. The check lives here rather than in the
+   * action's result so the server's reply to a bot stays a bare success with
+   * nothing in it to detect.
+   */
+  function dispatch(formData: FormData) {
+    journey.current.caughtByHoneypot =
+      String(formData.get("website") ?? "").trim() !== "";
+    formAction(formData);
+  }
 
   function handleFieldFocus(field: string) {
     journey.current.touchedFields.add(field);
@@ -104,8 +121,14 @@ export function LeadForm({
 
   useEffect(() => {
     if (state.ok) {
+      // Marked succeeded either way: a caught bot is not an abandoned form.
       journey.current.succeeded = true;
-      track(ANALYTICS_EVENTS.leadFormSubmitted, { path: journey.current.path });
+
+      if (!journey.current.caughtByHoneypot) {
+        track(ANALYTICS_EVENTS.leadFormSubmitted, {
+          path: journey.current.path,
+        });
+      }
       return;
     }
 
@@ -146,7 +169,7 @@ export function LeadForm({
   }
 
   return (
-    <form action={formAction} className="flex flex-col gap-4">
+    <form action={dispatch} className="flex flex-col gap-4">
       {/* Honeypot: hidden from users, tempting for bots. Must stay empty. */}
       <div
         aria-hidden="true"

@@ -48,6 +48,14 @@ export default function RootLayout({
           served from Timeweb, where /_vercel/insights/* does not exist.
           Custom events are deliberately not routed here — the Vercel team is
           on Hobby, which has none (docs/specs/analytics-events.md).
+
+          Off Vercel this logs two console errors per page load, because
+          /_vercel/insights/script.js exists only on a Vercel deployment. That
+          is accepted rather than gated behind `process.env.VERCEL`: that flag
+          is only exposed when "Enable access to System Environment Variables"
+          is ticked in project settings, so gating on it would silently stop
+          collection in production the day someone unticks it. Local console
+          noise is the cheaper failure.
         */}
         {shouldLoadVercelAnalytics(MARKET) ? <Analytics /> : null}
       </body>

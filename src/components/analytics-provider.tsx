@@ -90,12 +90,29 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
     const scroll = createScrollTracker();
     const engaged = createEngagedTimer(ENGAGED_THRESHOLD_MS);
 
-    // `poll` is referenced by `reportEngaged` and assigned below it. That is
-    // safe because the callback only ever runs once the interval exists.
+    // The poll only runs while it can still learn something: it stops once the
+    // threshold is reported, and while the tab is hidden — where the timer
+    // accumulates nothing anyway, so ticking would be pure waste. A tab left
+    // in a background window overnight costs nothing.
+    let poll: ReturnType<typeof setInterval> | undefined;
+    let engagedReported = false;
+
+    const stopPolling = () => {
+      clearInterval(poll);
+      poll = undefined;
+    };
+
     const reportEngaged = () => {
       if (engaged.hasEngaged(Date.now())) {
+        engagedReported = true;
         track(ANALYTICS_EVENTS.pageEngaged, { path: pathname });
-        clearInterval(poll);
+        stopPolling();
+      }
+    };
+
+    const startPolling = () => {
+      if (!engagedReported && poll === undefined) {
+        poll = setInterval(reportEngaged, ENGAGED_POLL_MS);
       }
     };
 
@@ -115,25 +132,27 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
       const now = Date.now();
       if (document.visibilityState === "visible") {
         engaged.resume(now);
+        startPolling();
       } else {
         engaged.pause(now);
+        stopPolling();
       }
     };
 
     if (document.visibilityState === "visible") {
       engaged.resume(Date.now());
+      startPolling();
     }
 
     // A page can be entered already scrolled — an in-page anchor, or a browser
     // restoring a position — so the first measurement cannot wait for a scroll.
     reportScroll();
 
-    const poll = setInterval(reportEngaged, ENGAGED_POLL_MS);
     window.addEventListener("scroll", reportScroll, { passive: true });
     document.addEventListener("visibilitychange", onVisibilityChange);
 
     return () => {
-      clearInterval(poll);
+      stopPolling();
       window.removeEventListener("scroll", reportScroll);
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
