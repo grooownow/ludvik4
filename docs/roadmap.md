@@ -6,6 +6,22 @@ writing detail here.
 
 ## Now
 
+**[SHIPPED 2026-08-28] Analytics event layer on ludvik4.dev.** Two layers:
+Vercel Web Analytics on the EN build for pageviews, referrers and the
+geolocation PostHog cannot see (cookieless mode strips the IP), and PostHog for
+wave-1 named events — `cta.clicked`, the four `lead.form_*` events,
+`page.engaged`, `content.scroll_depth`, `nav.outbound_clicked`,
+`faq.item_opened`. Fixed a silent bug found on the way: posthog-js@1.398.2
+resolved `capture_pageview` to the legacy `true` without a `defaults` option,
+so no `<Link>` navigation was ever captured and `$pageleave` — dwell time and
+scroll depth with it — never fired. Spec `docs/specs/analytics-events.md`,
+decision `docs/decisions/0007-two-layer-analytics.md`, operations
+`docs/playbooks/analytics.md`. **Two user actions still open:** enable Web
+Analytics in the Vercel dashboard for project `ludvik4`, and confirm
+**Cookieless server hash mode** is on in PostHog Project Settings → Web
+analytics — PostHog discards cookieless events while it is off. Deferred to
+wave 2: `page.exit_intent`, `blog.article_read`, `error.page_viewed`.
+
 **[MONITOR 2026-08-28] RU + EN search and audience baseline.** DEV GSC reached
 134 impressions / 3 clicks this week versus 43 / 3, but all current clicks and
 almost all impressions belong to legacy `/blog/*` 404s; the canonical P1 set

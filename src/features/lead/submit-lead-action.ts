@@ -7,11 +7,23 @@ import { leadSchema } from "./lead-schema";
 import { verifyTurnstile } from "./turnstile";
 import { deliverLead } from "./notify";
 
+/**
+ * Why a submission was rejected, as a stable token rather than a message.
+ *
+ * The `error` string is copy: it is localized, rewritten, and never safe to
+ * group by. This is what analytics reports as `lead.form_failed`'s `reason`,
+ * which is the difference between knowing that enquiries fail and knowing that
+ * they fail on the captcha.
+ */
+export type LeadFailureReason =
+  "rate_limit" | "validation" | "captcha" | "delivery";
+
 /** State surfaced under the lead form. On failure `values` echoes the input
  * back so a rejected attempt keeps what the visitor typed. */
 export interface LeadFormState {
   ok?: boolean;
   error?: string;
+  reason?: LeadFailureReason;
   values?: { name: string; message: string; contact: string };
 }
 
@@ -47,6 +59,7 @@ export async function submitLeadAction(
   if (!limit.allowed) {
     return {
       error: "Too many requests in a row — wait a minute and try again.",
+      reason: "rate_limit",
       values,
     };
   }
@@ -55,6 +68,7 @@ export async function submitLeadAction(
   if (!parsed.success) {
     return {
       error: parsed.error.issues[0]?.message ?? "Проверьте поля формы.",
+      reason: "validation",
       values,
     };
   }
@@ -64,6 +78,7 @@ export async function submitLeadAction(
     return {
       error:
         "Не прошла проверка «я не робот». Обновите страницу и попробуйте снова.",
+      reason: "captcha",
       values,
     };
   }
@@ -72,6 +87,7 @@ export async function submitLeadAction(
     return {
       error:
         "Could not send the request. Message me directly on Telegram: t.me/ludvik4work",
+      reason: "delivery",
       values,
     };
   }

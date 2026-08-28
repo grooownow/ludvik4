@@ -1,6 +1,7 @@
 import type { Route } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { CtaLink } from "./cta-link";
 import { jsonLdString } from "@/lib/json-ld";
 import { Breadcrumbs } from "./breadcrumbs";
 import { getMarketContent } from "./content";
@@ -56,7 +57,9 @@ function EnquiryCta() {
           suggest a sensible first step.
         </p>
         <Button asChild size="lg" className="mt-6">
-          <Link href="/#contact">Send a project enquiry</Link>
+          <CtaLink href="/#contact" placement="service">
+            Send a project enquiry
+          </CtaLink>
         </Button>
       </div>
     </section>

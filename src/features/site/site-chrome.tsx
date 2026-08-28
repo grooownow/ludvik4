@@ -4,7 +4,8 @@ import { Menu, X } from "lucide-react";
 import { TelegramLink } from "@/components/telegram-link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { AnchorLink, HomeLink } from "./anchor-link";
+import { HomeLink } from "./anchor-link";
+import { CtaLink } from "./cta-link";
 import { TELEGRAM_URL, type MarketContent, type ServiceCard } from "./content";
 
 // Shared presentational chrome for both markets. Purely visual — every string
@@ -77,7 +78,9 @@ export function SiteHeader({
             </Link>
           ))}
           <Button asChild size="sm">
-            <AnchorLink href={contactHref}>{content.nav.cta}</AnchorLink>
+            <CtaLink href={contactHref} placement="nav">
+              {content.nav.cta}
+            </CtaLink>
           </Button>
         </nav>
 
@@ -104,7 +107,9 @@ export function SiteHeader({
               </Link>
             ))}
             <Button asChild size="sm" className="mt-2">
-              <AnchorLink href={contactHref}>{content.nav.cta}</AnchorLink>
+              <CtaLink href={contactHref} placement="nav_mobile">
+                {content.nav.cta}
+              </CtaLink>
             </Button>
           </nav>
         </details>

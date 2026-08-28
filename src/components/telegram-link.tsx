@@ -2,10 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import type { ComponentPropsWithoutRef } from "react";
-import { shouldLoadPostHog } from "@/lib/analytics";
-
-const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-const SITE_MARKET = process.env.SITE_MARKET;
+import { ANALYTICS_EVENTS, track } from "@/lib/analytics";
 
 type TelegramLinkProps = Omit<
   ComponentPropsWithoutRef<"a">,
@@ -29,19 +26,14 @@ export function TelegramLink({
   ) => {
     onClick?.(event);
 
-    if (
-      !shouldLoadPostHog(SITE_MARKET, POSTHOG_KEY) ||
-      event.defaultPrevented
-    ) {
+    if (event.defaultPrevented) {
       return;
     }
 
-    void import("posthog-js").then(({ default: posthog }) => {
-      posthog.capture("contact.telegram_clicked", {
-        path: pathname,
-        placement,
-      });
-    });
+    // `track` owns the market/key guard and the lazy posthog-js import, so
+    // this component no longer carries either. The event name is the one
+    // already in production and must not change — old data would not follow.
+    track(ANALYTICS_EVENTS.telegramClicked, { path: pathname, placement });
   };
 
   return (
