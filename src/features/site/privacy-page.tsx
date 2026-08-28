@@ -18,7 +18,7 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
           Privacy Notice
         </h1>
         <p className="text-muted-foreground mt-3 text-sm">
-          Last updated: 23 July 2026
+          Last updated: 28 August 2026
         </p>
 
         <div className="mt-10 space-y-9 text-[15px] leading-7">
@@ -53,6 +53,13 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
               ordinary request and security logs needed to operate and protect
               the website.
             </p>
+            <p className="text-muted-foreground mt-3">
+              On the international website, PostHog receives limited technical
+              usage data such as page URLs, referrers, device and browser
+              information, and interaction events. It operates in cookieless
+              mode: the website does not store an analytics identifier in your
+              browser and does not create persistent person profiles.
+            </p>
           </section>
 
           <section>
@@ -69,6 +76,12 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
                 and communications under Article 6(1)(f) GDPR.
               </li>
               <li>
+                To understand aggregate website use and improve the service. The
+                legal basis is Ludvik4&apos;s legitimate interest in measuring
+                and improving the website under Article 6(1)(f) GDPR. Analytics
+                operates without browser storage or persistent person profiles.
+              </li>
+              <li>
                 To retain information where required to establish, exercise, or
                 defend legal claims or comply with a legal obligation. The legal
                 bases are Articles 6(1)(f) and 6(1)(c) GDPR, as applicable.
@@ -82,11 +95,12 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
             </h2>
             <p className="text-muted-foreground mt-3">
               The website is hosted by Vercel. Form submissions are delivered to
-              Ludvik4 by email through Resend (Plus Five Five, Inc.). These
-              providers process technical and message data as needed to provide
-              their services. Information may also be disclosed to professional
-              advisers or public authorities where this is necessary and
-              permitted by law.
+              Ludvik4 by email through Resend (Plus Five Five, Inc.). Limited
+              cookieless usage analytics are provided by PostHog, using its EU
+              cloud service. These providers process technical and message data
+              as needed to provide their services. Information may also be
+              disclosed to professional advisers or public authorities where
+              this is necessary and permitted by law.
             </p>
             <p className="text-muted-foreground mt-3">
               If you contact Ludvik4 directly through Telegram, Telegram
@@ -108,10 +122,10 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
               5. International data transfers
             </h2>
             <p className="text-muted-foreground mt-3">
-              Vercel and Resend may process personal data outside the European
-              Economic Area. Where required, transfers are covered by an
-              adequacy decision or appropriate safeguards under Chapter V GDPR.
-              Vercel incorporates the European Commission&apos;s Standard
+              Vercel, Resend, and PostHog may process personal data outside the
+              European Economic Area. Where required, transfers are covered by
+              an adequacy decision or appropriate safeguards under Chapter V
+              GDPR. Vercel incorporates the European Commission&apos;s Standard
               Contractual Clauses into its data processing terms. Resend&apos;s
               data processing terms include the Standard Contractual Clauses and
               state its participation in the EU-U.S. Data Privacy Framework.
@@ -127,7 +141,9 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
               contract, relevant correspondence may be retained for the
               applicable statutory limitation, tax, accounting, and legal record
               periods. Security data is retained only for as long as needed to
-              investigate or prevent abuse.
+              investigate or prevent abuse. Analytics events are retained
+              according to the retention period configured in PostHog and are
+              reviewed periodically for deletion or reduction.
             </p>
           </section>
 
@@ -175,10 +191,12 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
           <section>
             <h2 className="text-xl font-bold">9. Cookies and analytics</h2>
             <p className="text-muted-foreground mt-3">
-              Ludvik4 does not currently use non-essential analytics or
-              advertising cookies on this website. If this changes, this notice
-              and the website&apos;s consent controls will be updated before
-              non-essential tracking is enabled.
+              Ludvik4 uses PostHog for limited audience measurement and product
+              analytics on the international website. PostHog is configured in
+              cookieless mode and does not store analytics cookies or analytics
+              identifiers in local or session storage. Ludvik4 does not use
+              advertising cookies. Analytics is disabled on the Russian-language
+              website.
             </p>
           </section>
 

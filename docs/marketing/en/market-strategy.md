@@ -128,7 +128,6 @@ Supporting metrics:
 - LLM discovery, understanding, selection, and citation as separate monthly
   observations, never as one “visibility score”.
 
-The EN privacy notice currently states that non-essential analytics are off.
-The code therefore hard-disables PostHog in the EN build. Enquiry attribution
-must remain server/log or privacy-compatible until consent and the notice are
-deliberately changed.
+PostHog is enabled only in the EN build when `NEXT_PUBLIC_POSTHOG_KEY` is set.
+It uses PostHog EU Cloud in always-cookieless mode with person profiles
+disabled. The RU build hard-disables PostHog even if a key remains configured.

@@ -19,9 +19,10 @@ answers one question: is anyone getting value, and where do they drop off?
 
 ## Enable the existing slot
 
-`src/components/analytics-provider.tsx` is a PostHog slot that is OFF by
-default: with no key set, no `posthog-js` code loads and no network calls
-are made.
+`src/components/analytics-provider.tsx` enables PostHog only for the EN build
+and only when a key is set. The RU build never initializes PostHog, even if an
+old key remains in its deployment environment. With no key set, no
+`posthog-js` code loads and no network calls are made.
 
 1. **User does:** create a free PostHog project (posthog.com) and copy the
    project API key.
@@ -33,6 +34,11 @@ are made.
    automatically by the provider's init. The `api_host` is PostHog EU cloud
    (`https://eu.i.posthog.com`, where this project lives) — change it in
    the provider if your PostHog project is US-hosted.
+4. In PostHog Project Settings → Web analytics, enable **Cookieless server hash
+   mode**. The client uses `cookieless_mode: "always"` and
+   `person_profiles: "never"`: no analytics cookies/local storage and no
+   persistent person profiles. Do not change these settings without reviewing
+   the privacy notice and consent requirements.
 
 Custom events are `posthog.capture(name, properties)` calls. Keep the same
 guard the provider uses (no key → no-op) so the app never depends on

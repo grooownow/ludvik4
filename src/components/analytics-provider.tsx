@@ -47,7 +47,8 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
       // client-side route changes) out of the box — nothing extra to wire.
       posthog.init(POSTHOG_KEY!, {
         api_host: "https://eu.i.posthog.com",
-        person_profiles: "identified_only",
+        cookieless_mode: "always",
+        person_profiles: "never",
       });
     });
 

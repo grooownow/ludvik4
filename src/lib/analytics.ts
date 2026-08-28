@@ -3,5 +3,5 @@ export function shouldLoadPostHog(
   market: string | undefined,
   publicKey: string | undefined,
 ): boolean {
-  return market === "ru" && Boolean(publicKey);
+  return market === "en" && Boolean(publicKey);
 }

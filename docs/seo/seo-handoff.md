@@ -1,173 +1,219 @@
-# SEO Handoff — Ludvik4 International
+# SEO and analytics handoff — Ludvik4 RU + International
 
-- Project: `https://ludvik4.dev`
-- Market: English, Europe-based, worldwide delivery
-- Updated: 2026-08-17
-- Current stage: publishing and monitoring the first three market-localized technical articles
-- Next stage: weekly Google Search Console indexing and query monitoring
+- Properties: `https://ludvik4.dev/` and `sc-domain:ludvik4.ru`
+- PostHog project: EU Cloud `225446`
+- Updated: 2026-08-28 18:05 Europe/Madrid
+- GSC performance freshness: data through 2026-08-26
+- GSC indexing freshness: report updated 2026-08-21
+- PostHog period: last 30 days through 2026-08-28 (UTC)
 
-## Current technical article wave
+## Verdict
 
-Five paired RU/EN technical articles are in the content source. Three are now
-published in both markets:
+Both sites are visible in Google, but they are at different stages.
 
-- `agents-md-vs-claude-md-vs-cursor-rules` — 2026-08-13
-- `spec-driven-development-vs-vibe-coding` — 2026-08-15
-- `github-spec-kit-vs-application-skeleton` — 2026-08-17
+- **DEV:** impressions accelerated from 43 to 134 week over week, but the
+  current 3 clicks and 130 of 134 impressions belong to legacy `/blog/*` URLs.
+  Those old URLs correctly return `404`; they are not evidence of performance
+  from the new international commercial site. The new network has only four
+  visible impressions this week and no clicks. Indexing is healthy at 24
+  indexed / 6 excluded; the one unresolved P1 page remains
+  `/services/workflow-automation` (discovered, never crawled).
+- **RU:** impressions softened from 92 to 83, while average position improved
+  from 15.5 to 13.5 and the site earned its first weekly click. The click went
+  to the live spec-driven-vs-vibe-coding article. Three new agent/AI articles
+  started receiving impressions. Indexing is 30 indexed / 10 excluded; nine
+  exclusions are expected canonical/redirect variants and one live article is
+  crawled but not indexed.
+- **PostHog:** the historical project contains RU traffic only. In the last 30
+  days it recorded 48 unique visitors, 68 sessions and 80 page views. The code
+  previously enabled PostHog on RU and disabled it on DEV. On 2026-08-28 this
+  was reversed in the working tree; the PostHog project was also configured for
+  cookieless server hashing and `https://ludvik4.dev` was authorized. A deploy
+  is still required before the production traffic source changes.
 
-The remaining pairs dated 2026-08-19 and 2026-08-21 stay as drafts and are
-excluded from routes and discovery surfaces. The Russian blog now has at most
-one article per calendar date; a regression test protects the chronology and
-the three-pair bilingual publication state.
+## Google Search Console — DEV
 
-General AI-assisted development belongs in the Ludvik4 blog. Commercial
-worksheets stay in `/guides`, while only Gridfin-specific product operation and
-internals belong on the Gridfin product surface.
+### Search performance
 
-## Search performance snapshot
+Week comparison: 2026-08-20–26 versus 2026-08-13–19.
 
-Google Search Console was checked on 2026-08-17 for the seven-day period
-2026-08-09 through 2026-08-15. These figures are Google Search impressions,
-not total site page views.
+| Metric           | Current | Previous |          Change |
+| ---------------- | ------: | -------: | --------------: |
+| Clicks           |       3 |        3 |               0 |
+| Impressions      |     134 |       43 |     +91 (+212%) |
+| CTR              |    2.2% |     7.0% |         -4.8 pp |
+| Average position |    42.8 |     31.9 | -10.9 positions |
 
-- `sc-domain:ludvik4.ru`: 88 impressions, 0 clicks, 0% CTR, average position
-  13.8. Daily impressions were 0, 16, 22, 15, 18, 10, and 7. The leading
-  pages were `/blog/github-spec-kit/` (36), `/blog/cursor-rules/` (34),
-  `/blog/avtomatizatsiya-obrabotki-zayavok/` (12), and
-  `/blog/spec-driven-development/` (9).
-- `https://ludvik4.dev/`: 3 impressions, 0 clicks, 0% CTR, average position
-  6.3. One impression arrived on each of August 13–15. All visibility remained
-  on legacy URLs: `/blog/agents-ready-project` (2) and
-  `/blog/cursor-rules` (1).
+Rolling 28 days: **6 clicks, 220 impressions, 2.7% CTR, average position
+38.3**.
 
-PostHog was not authenticated in the available browser session, so total page
-views and non-search traffic could not be measured in this run.
+Growing visible queries:
 
-## Gridfin contextual links added
+| Query                                    | Current impressions | Previous | Change |
+| ---------------------------------------- | ------------------: | -------: | -----: |
+| `spec driven development vs vibe coding` |                  52 |       11 |    +41 |
+| `vibe coding vs spec coding`             |                  36 |        7 |    +29 |
+| `spec coding vs vibe coding`             |                  27 |        8 |    +19 |
+| `vibe coding vs spec driven development` |                   2 |        0 |     +2 |
+| `spec kit vs`                            |                   1 |        0 |     +1 |
 
-The published RU articles for GitHub Spec Kit, spec-driven development, and
-Cursor Rules connect their exact engineering topic to both Gridfin market
-pages. Each article uses the RU landing as the primary product example and the
-EN landing as the explicitly labelled international version. A focused content
-test requires both URLs in all three articles; it was observed failing before
-the links were added and passing afterwards.
+Landing pages, separated by lifecycle:
 
-The earlier GSC signal needs careful interpretation: the international
-property's historical 120 impressions and one click belonged almost entirely
-to legacy `/blog/*` URLs. ADR 0006 does not restore those Russian routes. It
-adds an EN-native Ludvik4 blog with separate content loading, canonical URLs,
-sitemap, RSS and `llms.txt`.
+| Group / page                                          | Clicks current / previous | Impressions current / previous | Assessment                          |
+| ----------------------------------------------------- | ------------------------: | -----------------------------: | ----------------------------------- |
+| Legacy `/blog/agents-md-primer`                       |                     3 / 0 |                          6 / 3 | 404; all current DEV clicks         |
+| Legacy `/blog/spec-driven-development-vs-vibe-coding` |                     0 / 0 |                       120 / 26 | 404; dominant impression growth     |
+| Other legacy `/blog/*` rows                           |                     0 / 2 |                         7 / 10 | 404; index cleanup still incomplete |
+| `/gridfin/en/docs/application-skeleton`               |                     0 / 0 |                          1 / 0 | live, first new impression          |
+| `/guides`                                             |                     0 / 1 |                          0 / 3 | live, no impressions this week      |
+| `/services/mvp-development`                           |                     0 / 0 |                          0 / 1 | live, no impressions this week      |
 
-The optional domain-level Search Console property is still unverified. Current
-DNS nameservers are at Porkbun; domain-property verification requires adding
-Google's TXT record there. The existing URL-prefix property is sufficient for
-the current HTTPS host and continues to collect its data.
+Visible table totals can differ from headline totals because GSC suppresses
+low-volume query rows.
 
-## Gridfin RU central entity corrected
+### Indexing and sitemaps
 
-The committed RU static bundle uses `Application Skeleton` consistently across
-title, H1, hero copy, Open Graph, Twitter metadata and SoftwareApplication
-JSON-LD. A repository test rejects `starter`/`стартер` in the RU title and H1
-while leaving the international Gridfin positioning unchanged.
+| Signal                        | Current | Previous check (2026-08-24) |
+| ----------------------------- | ------: | --------------------------: |
+| Submitted sitemaps            |       2 |                           2 |
+| Root sitemap detected URLs    |      19 |                          19 |
+| Gridfin sitemap detected URLs |       8 |                           8 |
+| All processed indexed         |      24 |                          24 |
+| All processed excluded        |       6 |                           6 |
+| Submitted indexed             |      24 |                          19 |
+| Submitted excluded            |       6 |                           5 |
 
-Local publication checks passed: Ludvik4 lint, all 362 tests and the production
-`pnpm build:ru-static` export. The exported `out/gridfin/index.html` contains
-the approved RU title, H1 and schema category.
+Both sitemaps are successful. Latest processing: root 2026-08-25, Gridfin
+2026-08-27. Exclusions are unchanged in substance:
 
-## Gridfin EN live in production
+- 5 discovered/not indexed: `/services/workflow-automation`, plus Gridfin
+  locales `/gridfin/es`, `/gridfin/fr`, `/gridfin/ja`, `/gridfin/pt-br`;
+- 1 redirect: `/gridfin/en/` to canonical `/gridfin/en`;
+- 0 crawled/not indexed.
 
-The Gridfin EN landing and two supporting pages are live at `/gridfin/en`,
-`/gridfin/en/docs/application-skeleton` and
-`/gridfin/en/guides/why-ai-needs-engineering-rules`. Commit `6390e58` is on
-`main`; main CI `31515277373` passed every job.
+Canonical P1 set: **7/8 indexed (87.5%)**. All canonical P1 URLs are live,
+self-canonical and present in the sitemap. Only
+`/services/workflow-automation` is excluded. The monitor's old aliases
+`/services/automations` and `/services/mvp` are intentionally not canonical
+routes; use `/services/workflow-automation` and `/services/mvp-development`.
 
-Repo-side verification completed on 2026-08-11:
+## Google Search Console — RU
 
-- EN pages use slashless self-canonicals and contain no Russia-specific copy
-  or Yandex endpoint.
-- `/gridfin/en/terms` is a separate international agreement under Spanish law
-  and links to the existing `.dev` Vercel/Resend privacy notice.
-- Root sitemap and `llms.txt` expose all three URLs; the product sitemap
-  contains exactly three EN `<loc>` entries.
-- The early-access form uses a strict zod boundary, honeypot, per-IP rate limit
-  and the existing Resend delivery path.
-- Local EN production runtime returned `200` for the landing, terms, both
-  supporting pages, Gridfin sitemap, root sitemap and `llms.txt`; invalid form
-  input returned `400`.
-- `pnpm lint`, 358 tests, EN build, RU static export and 32/32 e2e passed. The
-  RU export contains no EN Gridfin bundle and restores the EN source after the
-  build.
+### Search performance
 
-Production retest completed on 2026-08-11: the landing, terms, supporting
-pages, product sitemap, root sitemap and `llms.txt` returned `200`; invalid
-form input returned `400`. The service-file audit and indexability preflight
-passed without issues.
+Week comparison: 2026-08-20–26 versus 2026-08-13–19.
 
-## Production state confirmed before wave 2
+| Metric           | Current | Previous |         Change |
+| ---------------- | ------: | -------: | -------------: |
+| Clicks           |       1 |        0 |             +1 |
+| Impressions      |      83 |       92 |     -9 (-9.8%) |
+| CTR              |    1.2% |       0% |        +1.2 pp |
+| Average position |    13.5 |     15.5 | +2.0 positions |
 
-- Commit `e46fcb8` is on `main` and the existing international rebuild is live.
-- All eight public URLs return `200`, are self-canonical and indexable, and
-  appear in the production sitemap.
-- `robots.txt`, `sitemap.xml`, `llms.txt`, `humans.txt`, `security.txt`,
-  `ads.txt`, and `app-ads.txt` return the expected parseable content.
-- The approved `#ff4fb6` primary palette and FAQ chevrons remain protected by
-  regression tests; wave 2 changes no colour token or shared chrome class.
+Rolling 28 days (the property only has data from 2026-08-09): **1 click, 228
+impressions, 0.4% CTR, average position 13.8**.
 
-## Wave 2 live in production
+Visible query changes:
 
-- `/guides`
-- `/guides/website-project-brief`
-- `/guides/automation-priority-scorecard`
-- `/guides/mvp-scope-one-user-journey`
-- Bidirectional service ↔ guide links, plus header/footer discovery
-- Twelve-URL EN sitemap and expanded `llms.txt`
-- `Article` + `BreadcrumbList` schema and self-canonical metadata per guide
+| Query                                                | Current impressions | Previous | Change |
+| ---------------------------------------------------- | ------------------: | -------: | -----: |
+| `spec kit`                                           |                   6 |        6 |      0 |
+| `github spec kit`                                    |                   3 |        2 |     +1 |
+| `spec-kit`                                           |                   3 |        0 |     +3 |
+| `application skeleton`                               |                   1 |        0 |     +1 |
+| `spec github`                                        |                   1 |        0 |     +1 |
+| `автоматизация механизма обработки шаблонных заявок` |                   0 |        3 |     -3 |
 
-Verification completed:
+Leading and emerging landing pages:
 
-- New tests were observed failing before implementation, then passing.
-- `pnpm lint`: pass, pre-existing warnings only.
-- `pnpm test`: 49 files and 347 tests passed.
-- EN production build: pass; all four guide routes statically generated.
-- `pnpm test:e2e`: 32/32 passed in the repository's standard RU gate.
-- Local EN production runtime and live Vercel: all four guide routes, sitemap,
-  and `llms.txt` returned `200`; exact titles, H1s, canonicals, and Article
-  schema checked.
-- Production indexability preflight: 12/12 URLs passed with 200, index/follow,
-  self-canonical metadata, and sitemap membership.
-- GitHub Actions main CI `31485032481` passed every job; RU deploy
-  `31485032490` reached active in Timeweb.
+| Page                                            | Clicks current / previous | Impressions current / previous |
+| ----------------------------------------------- | ------------------------: | -----------------------------: |
+| `/blog/spec-driven-development-vs-vibe-coding/` |                     1 / 0 |                          6 / 5 |
+| `/blog/github-spec-kit/`                        |                     0 / 0 |                        25 / 38 |
+| `/blog/cursor-rules/`                           |                     0 / 0 |                        25 / 35 |
+| `/blog/agents-md-primer/`                       |                     0 / 0 |                         12 / 0 |
+| `/blog/agents-ready-project/`                   |                     0 / 0 |                          7 / 0 |
+| `/blog/agents-md-vs-claude-md-vs-cursor-rules/` |                     0 / 0 |                          4 / 0 |
 
-## Search and console baseline
+The new agent/AI cluster generated **23 new visible impressions** this week.
 
-- Public web search on 2026-08-11 returned no reliable Ludvik4 result for
-  `site:ludvik4.dev`, the exact homepage title, or exact commercial H1s.
-- Google Search Console is authenticated as `krobox@gmail.com`. The account
-  has access to the URL-prefix property `https://ludvik4.dev/`; a separate
-  `sc-domain:ludvik4.dev` property is not required for the current host. The
-  earlier ownership-blocker diagnosis was incorrect and is superseded by the
-  live console check.
-- On 2026-08-11, GSC reported 6 indexed pages and 1 discovered-but-not-indexed
-  page (`/privacy`), with its report last updated on 2026-08-07.
-- The sitemap was resubmitted on 2026-08-11. Its displayed discovery count
-  remained the stale pre-processing value of 2 until Google processed the new
-  12-URL version.
-- `/guides` was discovered but not yet crawled, and a priority indexing request
-  was submitted. Do not repeat it while it is queued.
-- The three-month view then showed 120 impressions, 1 click, 0.8% CTR, and
-  average position 23.1. Almost all visibility belonged to legacy `/blog/*`
-  URLs, which now correctly return `404`.
-- A weekly Codex heartbeat named `Ludvik4 weekly search monitoring` is active
-  for Mondays at 09:00 local time. It compares sitemap processing, indexing,
-  P1 URL states, clicks, impressions, CTR, position, queries, and landing pages,
-  while separating legacy blog 404s from the new commercial URLs.
+### Indexing and sitemap
 
-## Next actions
+| Signal                 | Current |
+| ---------------------- | ------: |
+| Successful sitemaps    |       1 |
+| Detected sitemap URLs  |      31 |
+| All processed indexed  |      30 |
+| All processed excluded |      10 |
+| Submitted indexed      |      30 |
+| Submitted excluded     |      10 |
 
-1. Confirm the newly published article pairs are present in production
-   sitemaps, RSS and `llms.txt`, then monitor their discovery and indexing.
-2. Track new RU and EN queries/pages separately from residual legacy URL data.
-3. Keep the 2026-08-19 and 2026-08-21 article pairs in draft until their
-   scheduled publication decisions.
-4. Use PostHog after authentication to separate total page views from search
-   impressions.
+Exclusions:
+
+- 5 alternate pages with a canonical tag — expected;
+- 4 redirecting pages — expected;
+- 1 crawled/not indexed:
+  `/blog/ai-avtomatizatsiya-malogo-biznesa/`, last crawled 2026-08-18;
+- 0 discovered/not indexed.
+
+## PostHog — historical RU audience
+
+The domain selector contains only `https://ludvik4.ru`, so these figures must
+not be attributed to DEV.
+
+Last 30 days versus the preceding 30 days:
+
+| Metric                   | Current | Previous | Change |
+| ------------------------ | ------: | -------: | -----: |
+| Unique visitors          |      48 |       75 |   -36% |
+| Sessions                 |      68 |       94 |   -28% |
+| Page views               |      80 |      109 |   -27% |
+| Average session duration |  1m 53s |   1m 45s |    +7% |
+| Bounce rate              |     53% |      73% | -20 pp |
+
+Top paths:
+
+| Path                                            | Visitors | Views | Bounce rate |
+| ----------------------------------------------- | -------: | ----: | ----------: |
+| `/`                                             |       38 |    62 |       53.7% |
+| `/blog/cursor-rules/`                           |        7 |     7 |       71.4% |
+| `/blog/spec-driven-development-vs-vibe-coding/` |        2 |     2 |          0% |
+| `/cases/gridfin/`                               |        2 |     2 |       33.3% |
+| `/gridfin`                                      |        1 |     2 |          0% |
+
+Acquisition: direct 37 visitors / 61 views; referral 8 / 14; organic search
+4 / 4; organic social 1 / 1. Devices: desktop 34 visitors / 63 views; mobile
+14 / 17. Seven-day snapshot: 7 visitors, 7 sessions, 7 views, 41.7s average
+session duration and 57% bounce rate.
+
+After the next production deploy, PostHog will collect DEV only in always-
+cookieless mode, with person profiles disabled. Historical DEV users cannot be
+reconstructed retroactively, and future RU users will no longer be collected.
+
+## Actions
+
+### P0
+
+1. Deploy the analytics market switch and updated EN privacy notice. Until
+   deployment, production still records RU and does not record DEV.
+
+### P1
+
+1. Request indexing for `/services/workflow-automation` once. It has remained
+   discovered and uncrawled for more than one weekly cycle; do not resubmit
+   repeatedly.
+2. Keep legacy DEV 404 traffic isolated from current-site KPIs. Do not redirect
+   Russian-origin article slugs into unrelated English pages.
+3. Monitor `/blog/ai-avtomatizatsiya-malogo-biznesa/` for one more RU cycle;
+   inspect content/internal links only if it remains crawled-not-indexed.
+4. Verify after deploy that DEV emits `$pageview` and
+   `contact.telegram_clicked`, while RU emits no PostHog network requests.
+
+### P2
+
+1. Build PostHog goals for successful enquiry submission and Telegram click;
+   page views alone do not measure qualified demand.
+2. Track whether the DEV spec-vs-vibe queries improve from positions around 40
+   and begin producing clicks to a live English URL.
+3. Track the RU agent/AI cluster: it has early impressions but no clicks yet.
+4. Continue weekly GSC comparison with a rolling 28-day audience snapshot.

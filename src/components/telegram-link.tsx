@@ -2,8 +2,10 @@
 
 import { usePathname } from "next/navigation";
 import type { ComponentPropsWithoutRef } from "react";
+import { shouldLoadPostHog } from "@/lib/analytics";
 
 const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+const SITE_MARKET = process.env.SITE_MARKET;
 
 type TelegramLinkProps = Omit<
   ComponentPropsWithoutRef<"a">,
@@ -27,7 +29,10 @@ export function TelegramLink({
   ) => {
     onClick?.(event);
 
-    if (!POSTHOG_KEY || event.defaultPrevented) {
+    if (
+      !shouldLoadPostHog(SITE_MARKET, POSTHOG_KEY) ||
+      event.defaultPrevented
+    ) {
       return;
     }
 

@@ -2,9 +2,9 @@
   "version": 1,
   "project_root": "/Users/ekaterinapustovaa/Documents/Pet-projects/ludvik4",
   "project_url": "https://ludvik4.dev",
-  "mode": "fix-retest-publish",
+  "mode": "autopilot",
   "created_at": "2026-08-10T17:43:23+00:00",
-  "updated_at": "2026-08-17T21:44:55+02:00",
+  "updated_at": "2026-08-28T18:05:00+02:00",
   "current_stage": "search-index-monitoring",
   "completed_stages": [
     "inventory",
@@ -19,29 +19,37 @@
     "publish-wave-2",
     "production-retest-wave-2",
     "technical-blog-wave-1",
-    "technical-blog-wave-2"
+    "technical-blog-wave-2",
+    "weekly-search-monitoring-2026-08-24",
+    "cross-market-search-and-audience-monitoring-2026-08-28"
   ],
   "next_stage": "search-index-monitoring",
   "freshness": {
     "status": "fresh",
-    "latest_relevant_change": "2026-08-17",
-    "latest_relevant_file": "docs/roadmap.md"
+    "latest_relevant_change": "2026-08-28T18:05:00+02:00",
+    "latest_relevant_file": "docs/seo/seo-handoff.md",
+    "scanned_relevant_files": 719
   },
   "artifacts": [
-    "docs/marketing/en/product-canon.md",
-    "docs/marketing/en/market-strategy.md",
-    "docs/marketing/en/search-and-content-strategy.md",
     "docs/marketing/en/llm-visibility-matrix.md",
+    "docs/marketing/en/market-strategy.md",
+    "docs/marketing/en/product-canon.md",
+    "docs/marketing/en/search-and-content-strategy.md",
     "docs/seo/en-audit-2026-08-10.md",
+    "docs/seo/ludvik4-seo-audit-2026-08-10.md",
     "docs/seo/seo-handoff.md",
+    "docs/seo/seo-state.json",
     "docs/specs/en-commercial-seo.plan.md"
   ],
   "blockers": [
-    "PostHog is not authenticated in the available browser session, so total page views are unavailable"
+    "The canonical P1 URL /services/workflow-automation remains discovered but not indexed and has no recorded crawl",
+    "The PostHog market switch is only in the working tree until the next production deployment",
+    "Historical PostHog data is RU-only; DEV audience data cannot be reconstructed retroactively"
   ],
   "next_actions": [
-    "Verify the August 15 and 17 article pairs on both production sites",
-    "Monitor discovery, indexing, impressions, clicks, CTR, position, queries, and pages weekly",
-    "Authenticate PostHog to measure total page views and non-search traffic"
+    "Deploy and verify the PostHog EN-only cookieless configuration",
+    "Request indexing for /services/workflow-automation once",
+    "Compare weekly queries and landing pages while separating legacy .dev/blog 404 traffic",
+    "Monitor the RU agent/AI article cluster and the crawled-not-indexed AI automation article"
   ]
 }

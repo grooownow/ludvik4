@@ -36,11 +36,11 @@ only — the EN build never ships it. To update it, rebuild there and
 re-copy; the folder is excluded from prettier. Live since 2026-08-07
 (commit `15a717a`).
 
-Timeweb deployment settings contain `NEXT_PUBLIC_POSTHOG_KEY`, using the same
-PostHog project as the EN storefront. The value is intentionally managed in
-Timeweb rather than committed to the repository. It is a browser-exposed
-public project key, not a server secret; it enables page analytics and
-`contact.telegram_clicked` events in the static RU build.
+Timeweb deployment settings may still contain `NEXT_PUBLIC_POSTHOG_KEY`, but
+the RU build hard-disables PostHog in code. The library is not initialized and
+`contact.telegram_clicked` is not captured. Remove the variable from Timeweb
+when convenient as defence in depth; the browser-exposed project key is not a
+server secret.
 
 Дзен domain ownership is verified through the public static file
 `/zen_e6h1u9CR24KoSJLaDqT7Nvm2K1DMC6PEIbplq2l5MUmKTIc3v1vpdCyJbf2oHRU.html`.

@@ -6,6 +6,17 @@ writing detail here.
 
 ## Now
 
+**[MONITOR 2026-08-28] RU + EN search and audience baseline.** DEV GSC reached
+134 impressions / 3 clicks this week versus 43 / 3, but all current clicks and
+almost all impressions belong to legacy `/blog/*` 404s; the canonical P1 set
+remains 7/8 indexed, with workflow automation still uncrawled. RU reached 83
+impressions / 1 click versus 92 / 0 and improved average position from 15.5 to
+13.5; three new agent/AI articles started receiving impressions. Historical
+PostHog data is RU-only: 48 visitors, 68 sessions and 80 views in 30 days. The
+working tree now enables PostHog only on DEV in always-cookieless mode and
+updates the EN privacy notice; deploy and cross-market verification remain.
+Details: `docs/seo/seo-handoff.md`.
+
 **[DONE 2026-08-17] RU blog publication chronology and scheduled wave.** All 21 Russian articles
 now have unique calendar dates. The commercial batch is distributed across
 2026-07-27–2026-08-10. The paired articles dated 2026-08-15 and 2026-08-17 are

@@ -1,7 +1,7 @@
 # Ludvik4 EN privacy notice
 
 Status: implementation draft
-Last reviewed: 2026-07-23
+Last reviewed: 2026-08-28
 
 The public version is implemented at `/privacy`. Its wording is based on the
 actual EN enquiry flow:
@@ -10,7 +10,10 @@ actual EN enquiry flow:
 - Vercel hosts the application;
 - a one-minute in-memory IP rate-limit window;
 - email delivery through Resend;
-- no PostHog, Sentry, or Turnstile in the current local configuration.
+- PostHog EU Cloud for limited usage analytics, configured with
+  `cookieless_mode: "always"` and `person_profiles: "never"` on the EN build
+  only; no PostHog initialization on the RU build;
+- no Sentry or Turnstile in the current local configuration.
 - controller identity: Ekaterina Pustovaia, trading as Ludvik4, Avenida de
   Francia 79, 46024 Valencia, Spain.
 
@@ -21,9 +24,12 @@ actual EN enquiry flow:
    verified in Resend.
 2. Make the stated 12-month enquiry deletion schedule operational for every
    delivery channel.
-3. Keep `NEXT_PUBLIC_POSTHOG_KEY`, Sentry, and Turnstile disabled unless this
-   notice is updated and any required consent controls and processor terms are
-   in place.
+3. Keep Sentry and Turnstile disabled unless this notice is updated and any
+   required consent controls and processor terms are in place. Keep PostHog in
+   cookieless mode unless a consent flow is deliberately implemented.
+4. Enable **Cookieless server hash mode** in PostHog Project Settings → Web
+   analytics; PostHog ignores cookieless events when this project setting is
+   disabled.
 
 ## Primary sources checked
 
@@ -35,3 +41,5 @@ actual EN enquiry flow:
   https://vercel.com/legal/dpa
 - Resend DPA:
   https://resend.com/legal/dpa
+- PostHog cookieless analytics:
+  https://posthog.com/tutorials/cookieless-tracking
