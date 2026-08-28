@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { shouldLoadVercelAnalytics } from "@/lib/analytics";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AnalyticsProvider } from "@/components/analytics-provider";
 import { MARKET, siteMetadata } from "@/features/site";
@@ -39,6 +41,15 @@ export default function RootLayout({
         <ThemeProvider>
           <AnalyticsProvider>{children}</AnalyticsProvider>
         </ThemeProvider>
+        {/*
+          Vercel Web Analytics carries the traffic baseline — and the
+          geolocation PostHog cannot see, because cookieless server hash mode
+          strips the IP before enrichment runs. EN only: the RU export is
+          served from Timeweb, where /_vercel/insights/* does not exist.
+          Custom events are deliberately not routed here — the Vercel team is
+          on Hobby, which has none (docs/specs/analytics-events.md).
+        */}
+        {shouldLoadVercelAnalytics(MARKET) ? <Analytics /> : null}
       </body>
     </html>
   );
