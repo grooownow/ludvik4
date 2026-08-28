@@ -2,15 +2,10 @@ import type { Route } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { TelegramLink } from "@/components/telegram-link";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { LeadForm } from "@/features/lead";
-import { AnchorLink } from "./anchor-link";
+import { CtaLink } from "./cta-link";
+import { TrackedFaqAccordion } from "./tracked-accordion";
 import { jsonLdString } from "@/lib/json-ld";
 import { type MarketContent, TELEGRAM_URL } from "./content";
 import { ServiceScopes } from "./service-scopes";
@@ -63,7 +58,9 @@ export function HomeEn({
             </p>
             <div className="mt-7">
               <Button asChild size="lg">
-                <AnchorLink href="#contact">{content.hero.cta}</AnchorLink>
+                <CtaLink href="#contact" placement="hero">
+                  {content.hero.cta}
+                </CtaLink>
               </Button>
             </div>
           </div>
@@ -180,18 +177,7 @@ export function HomeEn({
         <h2 className="text-3xl font-semibold tracking-tight">
           Before you send an enquiry
         </h2>
-        <Accordion type="single" collapsible className="mt-8">
-          {internationalFaq.map((item) => (
-            <AccordionItem key={item.question} value={item.question}>
-              <AccordionTrigger className="text-base">
-                {item.question}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground max-w-3xl leading-relaxed">
-                {item.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+        <TrackedFaqAccordion items={internationalFaq} />
       </Section>
 
       {/* Contact — email form plus an optional direct Telegram link */}

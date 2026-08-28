@@ -1,7 +1,9 @@
 "use client";
 
-import { useActionState } from "react";
+import { usePathname } from "next/navigation";
+import { useActionState, useEffect, useRef } from "react";
 import { useFormStatus } from "react-dom";
+import { ANALYTICS_EVENTS, track } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -43,13 +45,21 @@ export const RU_LEAD_LABELS: LeadFormLabels = {
 function SubmitButton({
   submit,
   submitting,
+  onPress,
 }: {
   submit: string;
   submitting: string;
+  onPress: () => void;
 }) {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" size="lg" className="w-full" disabled={pending}>
+    <Button
+      type="submit"
+      size="lg"
+      className="w-full"
+      disabled={pending}
+      onClick={onPress}
+    >
       {pending ? submitting : submit}
     </Button>
   );
@@ -68,6 +78,64 @@ export function LeadForm({
   labels?: LeadFormLabels;
 }) {
   const [state, formAction] = useActionState(submitLeadAction, initialState);
+  const pathname = usePathname();
+
+  // Analytics bookkeeping in one ref-held object, not in state: none of it may
+  // cause a render. One object rather than four refs so the unmount cleanup can
+  // read it after capturing the object *in the effect body* — the identity is
+  // stable for the component's lifetime, so its fields are current at cleanup
+  // without the cleanup reaching through `.current` itself.
+  const journey = useRef({
+    started: false,
+    succeeded: false,
+    touchedFields: new Set<string>(),
+    path: pathname,
+  });
+  journey.current.path = pathname;
+
+  function handleFieldFocus(field: string) {
+    journey.current.touchedFields.add(field);
+
+    if (!journey.current.started) {
+      journey.current.started = true;
+      track(ANALYTICS_EVENTS.leadFormStarted, { path: pathname });
+    }
+  }
+
+  useEffect(() => {
+    if (state.ok) {
+      journey.current.succeeded = true;
+      track(ANALYTICS_EVENTS.leadFormSubmitted, { path: journey.current.path });
+      return;
+    }
+
+    if (state.reason) {
+      track(ANALYTICS_EVENTS.leadFormFailed, {
+        path: journey.current.path,
+        reason: state.reason,
+      });
+    }
+  }, [state]);
+
+  // Abandonment: the visitor engaged with the form and left without ever
+  // getting a success back. This cannot key off unmount alone — the form is
+  // replaced by the success message in the same component, so a completed
+  // enquiry would otherwise be filed as an abandoned one.
+  //
+  // The field *count* is reported, never the field values: nothing the
+  // visitor typed reaches analytics (see the spec's edge cases).
+  useEffect(() => {
+    const visit = journey.current;
+
+    return () => {
+      if (visit.started && !visit.succeeded) {
+        track(ANALYTICS_EVENTS.leadFormAbandoned, {
+          path: visit.path,
+          fields_touched: visit.touchedFields.size,
+        });
+      }
+    };
+  }, []);
 
   if (state.ok) {
     return (
@@ -103,6 +171,7 @@ export function LeadForm({
           id="lead-name"
           name="name"
           autoComplete="name"
+          onFocus={() => handleFieldFocus("name")}
           defaultValue={state.values?.name ?? ""}
         />
       </div>
@@ -113,6 +182,7 @@ export function LeadForm({
           id="lead-message"
           name="message"
           rows={8}
+          onFocus={() => handleFieldFocus("message")}
           required
           placeholder={labels.messagePlaceholder}
           defaultValue={state.values?.message ?? ""}
@@ -126,6 +196,7 @@ export function LeadForm({
           id="lead-contact"
           name="contact"
           required
+          onFocus={() => handleFieldFocus("contact")}
           placeholder={labels.contactPlaceholder}
           defaultValue={state.values?.contact ?? ""}
         />
@@ -139,7 +210,17 @@ export function LeadForm({
         </p>
       ) : null}
 
-      <SubmitButton submit={labels.submit} submitting={labels.submitting} />
+      <SubmitButton
+        submit={labels.submit}
+        submitting={labels.submitting}
+        onPress={() =>
+          track(ANALYTICS_EVENTS.ctaClicked, {
+            placement: "form_submit",
+            target: "lead_form",
+            path: pathname,
+          })
+        }
+      />
     </form>
   );
 }
