@@ -211,9 +211,11 @@ observed failing for the right reason before it passes.
   event name and properties are unchanged
 - `faq.item_opened` fires on accordion open, not on close
 
-**Build assertion:** the existing RU static-bundle regression test gains a check
-that the export contains no Vercel Analytics script and no PostHog
-initialization.
+**Market gating (unit):** `shouldLoadVercelAnalytics(market)` is true for `en`
+and false for `ru`, mirroring `shouldLoadPostHog`. There is no RU
+static-export regression test in this repo to extend — `scripts/build-ru-static.ts`
+has no test harness — so the gate is proven at the level where the decision is
+actually made, as a pure function, rather than by asserting over build output.
 
 **E2e:** a `<Link>` navigation produces a second `$pageview` — this is the one
 scenario only a real browser with real routing can prove, and it is the
@@ -261,8 +263,8 @@ rediscovers them as bugs:
 - [ ] No event property carries user-entered text
 - [ ] With `NEXT_PUBLIC_POSTHOG_KEY` unset, no posthog-js chunk is requested and
       no analytics network call is made
-- [ ] The RU static export contains no Vercel Analytics script and no PostHog
-      initialization
+- [ ] The RU build renders no Vercel Analytics script and initializes no
+      PostHog, gated by a unit-tested pure function
 - [ ] Vercel's dashboard shows pageviews for `ludvik4.dev` after deploy
 
 ## Pending user actions
