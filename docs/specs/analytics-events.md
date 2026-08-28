@@ -133,15 +133,29 @@ split across two event names:
 
 | Event                  | Properties                                  | What it answers                                                                             |
 | ---------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| `cta.clicked`          | `placement`, `target`                       | Which call to action gets pressed, and where on the page                                    |
+| `cta.clicked`          | `placement`, `target`, `path`               | Which call to action gets pressed, and where on the page                                    |
 | `lead.form_started`    | `path`                                      | Separates "saw the form" from "tried to fill it"                                            |
 | `lead.form_submitted`  | `path`                                      | Completed enquiries                                                                         |
-| `lead.form_failed`     | `reason` (`validation`\|`server`)           | Whether the form itself is losing people                                                    |
+| `lead.form_failed`     | `path`, `reason` (see below)                | Whether the form itself is losing people, and at which gate                                 |
 | `lead.form_abandoned`  | `path`, `fields_touched` (count, not names) | Started, then left without submitting — the direct answer to "why do they leave"            |
 | `page.engaged`         | `path`                                      | Fires once at 30s of _active_ time (tab visible). Separates "opened and closed" from "read" |
 | `content.scroll_depth` | `path`, `depth` (25\|50\|75\|100)           | Where attention stops on a page                                                             |
 | `nav.outbound_clicked` | `host`                                      | Exits to Gridfin/GitHub — a departure that is not a bounce                                  |
 | `faq.item_opened`      | `question`                                  | Which questions are unclear, and therefore why visitors do not convert                      |
+
+`lead.form_failed`'s `reason` is a stable token from `LeadFailureReason`, not
+the error copy shown to the visitor: `rate_limit`, `validation`, `captcha`,
+`delivery`. The message is localized prose and unsafe to group by; the token is
+the difference between knowing enquiries fail and knowing they fail on the
+captcha.
+
+`lead.form_submitted` is **not** emitted when the honeypot caught the
+submission. The action answers a caught bot with a plain `{ ok: true }` so it
+stops retrying, and that reply is indistinguishable from a real enquiry — left
+alone it would file every caught bot as a completed enquiry, corrupting the one
+conversion number this whole slice exists to produce. The form reads the
+honeypot as it dispatches, so the server's reply to a bot stays a bare success
+with nothing in it to detect.
 
 `content.scroll_depth` deliberately duplicates information PostHog already
 attaches to `$pageleave`. Mobile Safari drops `beforeunload` often enough that
@@ -183,6 +197,14 @@ definitions:
   counts as outbound.
 - **User-entered text** — never becomes an event property. `fields_touched` is
   a count. The lead form's name, email and message values never reach analytics.
+- **Honeypot success** — the action returns `{ ok: true }` to a caught bot; it
+  must not be counted as a completed enquiry.
+- **Off-Vercel hosting** — `<Analytics />` requests
+  `/_vercel/insights/script.js`, which exists only on a Vercel deployment, so a
+  local production build logs two console errors per page load. Accepted, not
+  gated on `process.env.VERCEL`: that flag is exposed only while "Enable access
+  to System Environment Variables" is ticked in project settings, so gating on
+  it would silently stop collection in production the day it is unticked.
 
 ## Test scenarios
 
@@ -217,9 +239,21 @@ static-export regression test in this repo to extend — `scripts/build-ru-stati
 has no test harness — so the gate is proven at the level where the decision is
 actually made, as a pure function, rather than by asserting over build output.
 
-**E2e:** a `<Link>` navigation produces a second `$pageview` — this is the one
-scenario only a real browser with real routing can prove, and it is the
-prerequisite fix's only honest verification.
+**E2e:** the RU build issues no analytics request and serves no analytics
+script — asserted across a real `<Link>` navigation.
+
+The scenario originally planned here — a `<Link>` navigation producing a second
+`$pageview` — is **not achievable in this suite and is deferred**.
+`playwright.config.ts` builds with the default market, so the whole e2e suite
+runs the **RU** storefront, where PostHog never initializes by design. Proving
+the EN behaviour would mean switching the suite to `SITE_MARKET=en`, taking
+every existing RU-facing test with it — a change far outside this slice.
+
+What that scenario was guarding against is the `defaults` option being dropped,
+silently reverting `capture_pageview` to initial-load-only. That regression is
+pinned by `src/components/analytics-provider.test.tsx`, which asserts the
+option reaches `posthog.init` and was proven to fail without it. The live EN
+behaviour is verified in production instead — see Pending user actions.
 
 ## Out-of-scope
 
@@ -251,6 +285,7 @@ rediscovers them as bugs:
 
 - [ ] A `<Link>` navigation on the EN build produces a second `$pageview`, and
       the following `$pageleave` carries a non-zero `$prev_pageview_duration`
+      — verified in production, not by the e2e suite (see Test scenarios)
 - [ ] Every one of the eight EN call-to-action controls emits its event with a
       distinct `placement`
 - [ ] A visitor who focuses the lead form and then leaves without submitting
@@ -277,4 +312,5 @@ rediscovers them as bugs:
 
 ## Status
 
-`in progress` — design approved 2026-08-28.
+`shipped` — design approved and implemented 2026-08-28.
+Decision record: `docs/decisions/0007-two-layer-analytics.md`.
