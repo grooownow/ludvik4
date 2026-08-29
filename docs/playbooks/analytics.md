@@ -163,6 +163,27 @@ Issue & Event and Alerts read+write. Sentry has no project-level token — org i
 the narrowest scope it offers — so the token also covers the other project in
 that org. It is disclosed as a processor in `/privacy` section 4.
 
+**An empty `issue list` does not mean zero live issues.** The list is an event
+search: a group whose events have aged out of retention has no `lastSeen`, so it
+matches no time window and silently drops out — while its status stays
+`unresolved`. `LUDVIK4-SITE-1` sat that way for weeks. Count live issues against
+the status instead, which has no period filter:
+
+```bash
+sentry api "/api/0/projects/ludvik4/ludvik4-site/issues/?query=is:unresolved&limit=100"
+```
+
+The org-wide view (`/api/0/organizations/ludvik4/issues/?statsPeriod=90d`) also
+returns `pawfile-web`, the other project the org token reaches — read the
+`project.slug` before acting on anything there.
+
+Before blaming a server error on a real visitor, read the request headers on the
+event. A hand-rolled `multipart/form-data` boundary, `Accept: */*`, a lone
+`Accept-Encoding: gzip`, `Connection: close`, a stale browser UA, or a hosting-AS
+`X-Vercel-Ip-*` block all say scanner. Archive those **until a user is
+affected** rather than filtering them in code: the affected-user count is what
+separates a bot from a genuine regression, and a code filter erases it.
+
 ## Weekly review ritual — 3 questions
 
 Same day every week, 15 minutes:
