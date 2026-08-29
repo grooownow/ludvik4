@@ -35,6 +35,23 @@ export function ConsentBanner({
   }, []);
 
   useEffect(() => {
+    // The bar is fixed, so without this it sits on top of the last screenful —
+    // on a phone that is most of the footer. Reserve exactly its height, and
+    // re-measure on resize, where the copy reflows to a different line count.
+    const reserve = () => {
+      document.body.style.paddingBottom = `${region.current?.offsetHeight ?? 0}px`;
+    };
+
+    reserve();
+    window.addEventListener("resize", reserve);
+
+    return () => {
+      window.removeEventListener("resize", reserve);
+      document.body.style.paddingBottom = "";
+    };
+  }, []);
+
+  useEffect(() => {
     // Escape declines, from anywhere. On the banner itself the handler would
     // only fire while focus happened to be inside it — and since focus is
     // deliberately not trapped, that is most of the time not the case.

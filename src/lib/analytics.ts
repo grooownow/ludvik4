@@ -137,6 +137,32 @@ export async function clearConsent(): Promise<void> {
   posthog.clear_opt_in_out_capturing();
 }
 
+/**
+ * Session replay, started only by an explicit grant and stopped the moment one
+ * is withdrawn.
+ *
+ * These live here rather than being called on the SDK directly so they inherit
+ * the same guard as everything else in this module: with no key, no posthog-js
+ * chunk is ever requested.
+ */
+export async function startReplay(): Promise<void> {
+  if (!analyticsEnabled()) {
+    return;
+  }
+
+  const { default: posthog } = await import("posthog-js");
+  posthog.startSessionRecording();
+}
+
+export async function stopReplay(): Promise<void> {
+  if (!analyticsEnabled()) {
+    return;
+  }
+
+  const { default: posthog } = await import("posthog-js");
+  posthog.stopSessionRecording();
+}
+
 export const SCROLL_MILESTONES = [25, 50, 75, 100] as const;
 
 export type ScrollMilestone = (typeof SCROLL_MILESTONES)[number];

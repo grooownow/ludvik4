@@ -1,7 +1,14 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { createContext, use, useCallback, useEffect, useState } from "react";
+import {
+  createContext,
+  use,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   ANALYTICS_EVENTS,
   clearConsent,
@@ -10,6 +17,8 @@ import {
   readConsent,
   setConsent,
   shouldLoadPostHog,
+  startReplay,
+  stopReplay,
   track,
   type ConsentStatus,
 } from "@/lib/analytics";
@@ -148,17 +157,18 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
     await setConsent(granted);
     setStatus(granted ? "granted" : "denied");
 
-    const { default: posthog } = await import("posthog-js");
     if (granted) {
-      posthog.startSessionRecording();
+      await startReplay();
     }
   }, []);
+
+  const accept = useCallback(() => void decide(true), [decide]);
+  const decline = useCallback(() => void decide(false), [decide]);
 
   const withdraw = useCallback(async () => {
     // Stop recording before forgetting the choice: clearing consent alone
     // would leave a live recorder running for someone who just withdrew.
-    const { default: posthog } = await import("posthog-js");
-    posthog.stopSessionRecording();
+    await stopReplay();
 
     await clearConsent();
     setStatus(await readConsent());
@@ -291,21 +301,23 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
+  // Memoized: the provider re-renders on every route change, and a fresh object
+  // here would re-render every consumer of the context with it.
+  const consent = useMemo(
+    () => ({
+      status,
+      withdraw: () => {
+        void withdraw();
+      },
+    }),
+    [status, withdraw],
+  );
+
   return (
-    <ConsentContext
-      value={{
-        status,
-        withdraw: () => {
-          void withdraw();
-        },
-      }}
-    >
+    <ConsentContext value={consent}>
       {children}
       {status === "pending" ? (
-        <ConsentBanner
-          onAccept={() => void decide(true)}
-          onDecline={() => void decide(false)}
-        />
+        <ConsentBanner onAccept={accept} onDecline={decline} />
       ) : null}
     </ConsentContext>
   );

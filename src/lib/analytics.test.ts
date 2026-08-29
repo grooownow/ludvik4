@@ -8,6 +8,8 @@ import {
   scrollMilestone,
   setConsent,
   shouldLoadPostHog,
+  startReplay,
+  stopReplay,
   shouldLoadVercelAnalytics,
   track,
 } from "./analytics";
@@ -16,6 +18,8 @@ const capture = vi.fn();
 const optIn = vi.fn();
 const optOut = vi.fn();
 const clearOptInOut = vi.fn();
+const startRecording = vi.fn();
+const stopRecording = vi.fn();
 
 vi.mock("posthog-js", () => ({
   default: {
@@ -23,6 +27,8 @@ vi.mock("posthog-js", () => ({
     opt_in_capturing: () => optIn(),
     opt_out_capturing: () => optOut(),
     clear_opt_in_out_capturing: () => clearOptInOut(),
+    startSessionRecording: () => startRecording(),
+    stopSessionRecording: () => stopRecording(),
     get_explicit_consent_status: () => "pending",
   },
 }));
@@ -33,6 +39,8 @@ afterEach(() => {
   optIn.mockClear();
   optOut.mockClear();
   clearOptInOut.mockClear();
+  startRecording.mockClear();
+  stopRecording.mockClear();
 });
 
 describe("shouldLoadPostHog", () => {
@@ -164,6 +172,28 @@ describe("consent wrappers", () => {
 
     expect(optIn).not.toHaveBeenCalled();
     expect(clearOptInOut).not.toHaveBeenCalled();
+  });
+
+  it("never touches session replay where analytics does not run", async () => {
+    vi.stubEnv("SITE_MARKET", "ru");
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_KEY", "phc_live_key");
+
+    await startReplay();
+    await stopReplay();
+
+    expect(startRecording).not.toHaveBeenCalled();
+    expect(stopRecording).not.toHaveBeenCalled();
+  });
+
+  it("starts and stops session replay when analytics runs", async () => {
+    vi.stubEnv("SITE_MARKET", "en");
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_KEY", "phc_live_key");
+
+    await startReplay();
+    expect(startRecording).toHaveBeenCalledTimes(1);
+
+    await stopReplay();
+    expect(stopRecording).toHaveBeenCalledTimes(1);
   });
 
   it("clears the choice so the banner can ask again", async () => {

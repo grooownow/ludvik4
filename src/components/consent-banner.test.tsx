@@ -40,6 +40,17 @@ describe("ConsentBanner", () => {
     expect(onDecline).toHaveBeenCalledTimes(1);
   });
 
+  it("reserves its own height so it does not sit on top of the footer", () => {
+    const { unmount } = render(
+      <ConsentBanner onAccept={vi.fn()} onDecline={vi.fn()} />,
+    );
+
+    expect(document.body.style.paddingBottom).not.toBe("");
+
+    unmount();
+    expect(document.body.style.paddingBottom).toBe("");
+  });
+
   it("links to the privacy notice", () => {
     render(<ConsentBanner onAccept={vi.fn()} onDecline={vi.fn()} />);
 
