@@ -1,14 +1,19 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { createContext, use, useCallback, useEffect, useState } from "react";
 import {
   ANALYTICS_EVENTS,
+  clearConsent,
   createEngagedTimer,
   createScrollTracker,
+  readConsent,
+  setConsent,
   shouldLoadPostHog,
   track,
+  type ConsentStatus,
 } from "@/lib/analytics";
+import { ConsentBanner } from "@/components/consent-banner";
 
 // Read `NEXT_PUBLIC_POSTHOG_KEY` directly via `process.env` (inlined by
 // Next.js/webpack at build time) instead of importing `src/lib/env.ts`.
@@ -21,6 +26,23 @@ import {
 // client code in the first place.
 const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
 const SITE_MARKET = process.env.SITE_MARKET;
+
+/**
+ * Consent, published so the withdrawal control can reach it from anywhere under
+ * the provider — the footer renders in a different subtree from the banner.
+ *
+ * `status` is `null` until PostHog has answered, and stays `null` forever when
+ * analytics is off. Consumers use that to render nothing rather than a control
+ * that would do nothing.
+ */
+const ConsentContext = createContext<{
+  status: ConsentStatus | null;
+  withdraw: () => void;
+}>({ status: null, withdraw: () => {} });
+
+export function useAnalyticsConsent() {
+  return use(ConsentContext);
+}
 
 /** A visitor who stayed this long, with the tab actually in front of them. */
 const ENGAGED_THRESHOLD_MS = 30_000;
@@ -45,6 +67,7 @@ const ENGAGED_POLL_MS = 1_000;
  */
 export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [status, setStatus] = useState<ConsentStatus | null>(null);
 
   useEffect(() => {
     if (!shouldLoadPostHog(SITE_MARKET, POSTHOG_KEY)) {
@@ -60,8 +83,36 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
 
       posthog.init(POSTHOG_KEY!, {
         api_host: "https://eu.i.posthog.com",
-        cookieless_mode: "always",
+
+        // Consent is an upgrade, not a gate. These two options are a pair and
+        // only make sense together: `on_reject` alone would leave a visitor who
+        // ignores the banner uncaptured, because posthog-js treats an
+        // undecided visitor as opted out. Defaulting them to opt-out flips
+        // `isRejected()` true, which is what routes them into cookieless mode —
+        // the behaviour that shipped before any banner existed. Read from
+        // dist/module.js at posthog-js@1.398.2:
+        //   Ci(){ return cookieless_mode==="always"
+        //          || (cookieless_mode==="on_reject" && consent.isRejected()) }
+        cookieless_mode: "on_reject",
+        opt_out_capturing_by_default: true,
         person_profiles: "never",
+
+        // Replay never starts on a key alone — only on an explicit grant.
+        disable_session_recording: true,
+
+        // The contact form carries a client's business problem, their name and
+        // their address. Masking rather than blocking keeps the interaction
+        // visible in a replay while the content never is: we learn that
+        // someone struggled with the form, never what they typed.
+        session_recording: {
+          maskAllInputs: true,
+          maskInputOptions: {
+            text: true,
+            textarea: true,
+            email: true,
+            password: true,
+          },
+        },
 
         // `defaults` is what switches `capture_pageview` from the legacy
         // `true` (initial document load only) to `"history_change"`. Without
@@ -73,11 +124,44 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
         //   capture_pageleave: "if_capture_pageview"
         defaults: "2025-05-24",
       });
+
+      // Only now is the consent status real. Reading it before `init` would
+      // answer for an SDK that has not loaded its persistence yet — which is
+      // also why this provider renders the banner itself rather than letting a
+      // child mount it: React runs child effects first.
+      const current = posthog.get_explicit_consent_status();
+      setStatus(current);
+
+      // A visitor who granted consent on an earlier visit gets replay back
+      // without being asked again.
+      if (current === "granted") {
+        posthog.startSessionRecording();
+      }
     });
 
     return () => {
       cancelled = true;
     };
+  }, []);
+
+  const decide = useCallback(async (granted: boolean) => {
+    await setConsent(granted);
+    setStatus(granted ? "granted" : "denied");
+
+    const { default: posthog } = await import("posthog-js");
+    if (granted) {
+      posthog.startSessionRecording();
+    }
+  }, []);
+
+  const withdraw = useCallback(async () => {
+    // Stop recording before forgetting the choice: clearing consent alone
+    // would leave a live recorder running for someone who just withdrew.
+    const { default: posthog } = await import("posthog-js");
+    posthog.stopSessionRecording();
+
+    await clearConsent();
+    setStatus(await readConsent());
   }, []);
 
   // Per-page engagement. Keyed on the pathname so scroll depth and dwell time
@@ -207,5 +291,22 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  return <>{children}</>;
+  return (
+    <ConsentContext
+      value={{
+        status,
+        withdraw: () => {
+          void withdraw();
+        },
+      }}
+    >
+      {children}
+      {status === "pending" ? (
+        <ConsentBanner
+          onAccept={() => void decide(true)}
+          onDecline={() => void decide(false)}
+        />
+      ) : null}
+    </ConsentContext>
+  );
 }

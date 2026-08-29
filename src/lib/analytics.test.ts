@@ -1,23 +1,38 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   ANALYTICS_EVENTS,
+  clearConsent,
   createEngagedTimer,
   createScrollTracker,
+  readConsent,
   scrollMilestone,
+  setConsent,
   shouldLoadPostHog,
   shouldLoadVercelAnalytics,
   track,
 } from "./analytics";
 
 const capture = vi.fn();
+const optIn = vi.fn();
+const optOut = vi.fn();
+const clearOptInOut = vi.fn();
 
 vi.mock("posthog-js", () => ({
-  default: { capture: (...args: unknown[]) => capture(...args) },
+  default: {
+    capture: (...args: unknown[]) => capture(...args),
+    opt_in_capturing: () => optIn(),
+    opt_out_capturing: () => optOut(),
+    clear_opt_in_out_capturing: () => clearOptInOut(),
+    get_explicit_consent_status: () => "pending",
+  },
 }));
 
 afterEach(() => {
   vi.unstubAllEnvs();
   capture.mockClear();
+  optIn.mockClear();
+  optOut.mockClear();
+  clearOptInOut.mockClear();
 });
 
 describe("shouldLoadPostHog", () => {
@@ -107,6 +122,57 @@ describe("track", () => {
         target: "contact",
       }),
     );
+  });
+});
+
+describe("consent wrappers", () => {
+  it("report no status where analytics does not run", async () => {
+    vi.stubEnv("SITE_MARKET", "ru");
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_KEY", "phc_live_key");
+    expect(await readConsent()).toBeNull();
+
+    vi.stubEnv("SITE_MARKET", "en");
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_KEY", "");
+    expect(await readConsent()).toBeNull();
+  });
+
+  it("reads the explicit choice when analytics runs", async () => {
+    vi.stubEnv("SITE_MARKET", "en");
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_KEY", "phc_live_key");
+
+    expect(await readConsent()).toBe("pending");
+  });
+
+  it("maps a granted choice to opting in, and a refusal to opting out", async () => {
+    vi.stubEnv("SITE_MARKET", "en");
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_KEY", "phc_live_key");
+
+    await setConsent(true);
+    expect(optIn).toHaveBeenCalledTimes(1);
+    expect(optOut).not.toHaveBeenCalled();
+
+    await setConsent(false);
+    expect(optOut).toHaveBeenCalledTimes(1);
+  });
+
+  it("records nothing where analytics does not run", async () => {
+    vi.stubEnv("SITE_MARKET", "ru");
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_KEY", "phc_live_key");
+
+    await setConsent(true);
+    await clearConsent();
+
+    expect(optIn).not.toHaveBeenCalled();
+    expect(clearOptInOut).not.toHaveBeenCalled();
+  });
+
+  it("clears the choice so the banner can ask again", async () => {
+    vi.stubEnv("SITE_MARKET", "en");
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_KEY", "phc_live_key");
+
+    await clearConsent();
+
+    expect(clearOptInOut).toHaveBeenCalledTimes(1);
   });
 });
 

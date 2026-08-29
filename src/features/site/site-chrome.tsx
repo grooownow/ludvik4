@@ -1,6 +1,7 @@
 import type { Route } from "next";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { ConsentSettingsButton } from "@/components/consent-settings-button";
 import { TelegramLink } from "@/components/telegram-link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -154,6 +155,9 @@ export function SiteFooter({ content }: { content: MarketContent }) {
               </Link>
             ),
           )}
+          {/* Renders nothing on RU and on any build without a PostHog key —
+              the footer is shared, so the control suppresses itself. */}
+          <ConsentSettingsButton className="text-muted-foreground hover:text-foreground h-auto p-0 font-mono text-sm font-normal" />
         </span>
       </div>
     </footer>

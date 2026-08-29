@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Breadcrumbs } from "./breadcrumbs";
+import { ConsentSettingsButton } from "@/components/consent-settings-button";
 import type { MarketContent } from "./content";
 import { SiteFooter, SiteHeader } from "./site-chrome";
 
@@ -18,7 +19,7 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
           Privacy Notice
         </h1>
         <p className="text-muted-foreground mt-3 text-sm">
-          Last updated: 28 August 2026
+          Last updated: 29 August 2026
         </p>
 
         <div className="mt-10 space-y-9 text-[15px] leading-7">
@@ -56,9 +57,16 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
             <p className="text-muted-foreground mt-3">
               On the international website, PostHog receives limited technical
               usage data such as page URLs, referrers, device and browser
-              information, and interaction events. It operates in cookieless
-              mode: the website does not store an analytics identifier in your
-              browser and does not create persistent person profiles.
+              information, and interaction events. By default it operates in
+              cookieless mode: the website stores no analytics identifier in
+              your browser and creates no persistent person profiles.
+            </p>
+            <p className="text-muted-foreground mt-3">
+              If you allow cookies, PostHog additionally stores an analytics
+              identifier in your browser and records a replay of your visit —
+              the pages you view and where you click, scroll and move. Text you
+              type into the contact form is masked and is never recorded.
+              Persistent person profiles remain switched off. See section 9.
             </p>
           </section>
 
@@ -192,12 +200,32 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
             <h2 className="text-xl font-bold">9. Cookies and analytics</h2>
             <p className="text-muted-foreground mt-3">
               Ludvik4 uses PostHog for limited audience measurement and product
-              analytics on the international website. PostHog is configured in
-              cookieless mode and does not store analytics cookies or analytics
-              identifiers in local or session storage. Ludvik4 does not use
-              advertising cookies. Analytics is disabled on the Russian-language
-              website.
+              analytics on the international website. Ludvik4 does not use
+              advertising cookies, and analytics is switched off entirely on the
+              Russian-language website.
             </p>
+            <p className="text-muted-foreground mt-3">
+              Unless you allow cookies, PostHog runs in cookieless mode and
+              stores nothing in your browser — no analytics cookie and no
+              identifier in local or session storage. The legal basis for that
+              measurement is Ludvik4&apos;s legitimate interest under Article
+              6(1)(f) GDPR. Declining, or simply ignoring the banner, leaves the
+              website in this state.
+            </p>
+            <p className="text-muted-foreground mt-3">
+              Allowing cookies is optional and adds two things: an analytics
+              identifier stored in your browser, so returning visits can be
+              recognised as the same visitor, and session replay. The legal
+              basis for both is your consent under Article 6(1)(a) GDPR.
+            </p>
+            <p className="text-muted-foreground mt-3">
+              You can withdraw your consent at any time, as easily as it was
+              given — the control below, also in the footer of every page,
+              clears your choice, stops any session replay and lets you decide
+              again. Withdrawal does not affect processing carried out before
+              you withdrew.
+            </p>
+            <ConsentSettingsButton className="text-foreground mt-3 h-auto p-0 underline underline-offset-4" />
           </section>
 
           <section>
