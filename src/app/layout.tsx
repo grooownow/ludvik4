@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { shouldLoadVercelAnalytics } from "@/lib/analytics";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AnalyticsProvider } from "@/components/analytics-provider";
+import { VercelAnalytics } from "@/components/vercel-analytics";
 import { MARKET, siteMetadata } from "@/features/site";
 
 const geist = Geist({
@@ -56,8 +56,12 @@ export default function RootLayout({
           is ticked in project settings, so gating on it would silently stop
           collection in production the day someone unticks it. Local console
           noise is the cheaper failure.
+
+          Wrapped rather than mounted directly so a device muted with
+          `?ludvik4_internal=1` drops its own events here too — see
+          src/components/vercel-analytics.tsx.
         */}
-        {shouldLoadVercelAnalytics(MARKET) ? <Analytics /> : null}
+        {shouldLoadVercelAnalytics(MARKET) ? <VercelAnalytics /> : null}
       </body>
     </html>
   );

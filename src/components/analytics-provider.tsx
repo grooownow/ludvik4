@@ -11,18 +11,22 @@ import {
 } from "react";
 import {
   ANALYTICS_EVENTS,
+  analyticsEnabled,
   clearConsent,
   createEngagedTimer,
   createScrollTracker,
+  internalStore,
   readConsent,
+  readInternalParam,
+  rememberInternalDevice,
   setConsent,
-  shouldLoadPostHog,
   startReplay,
   stopReplay,
   track,
   type ConsentStatus,
 } from "@/lib/analytics";
 import { ConsentBanner } from "@/components/consent-banner";
+import { InternalNotice } from "@/components/internal-notice";
 
 // Read `NEXT_PUBLIC_POSTHOG_KEY` directly via `process.env` (inlined by
 // Next.js/webpack at build time) instead of importing `src/lib/env.ts`.
@@ -34,7 +38,6 @@ import { ConsentBanner } from "@/components/consent-banner";
 // reason, and it's the only thing Next.js statically inlines for
 // client code in the first place.
 const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-const SITE_MARKET = process.env.SITE_MARKET;
 
 /**
  * Consent, published so the withdrawal control can reach it from anywhere under
@@ -78,8 +81,26 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [status, setStatus] = useState<ConsentStatus | null>(null);
 
+  // `null` unless this page load carried `?ludvik4_internal=…`; then, what it
+  // asked for. Drives the confirmation bar and nothing else — the decision
+  // itself lives in localStorage, read through `analyticsEnabled()`.
+  const [internalAnswer, setInternalAnswer] = useState<boolean | null>(null);
+
   useEffect(() => {
-    if (!shouldLoadPostHog(SITE_MARKET, POSTHOG_KEY)) {
+    // Runs before the gate below so `?ludvik4_internal=1` takes effect on the
+    // page load that carries it, rather than on the next one. The later
+    // effects in this component read the stored answer in the same commit.
+    // `document.baseURI` rather than `window.location`, which this repo lints
+    // as an error (eslint.config.mjs — the no-full-page-navigation invariant).
+    // Same substitution the outbound-click effect below already makes; with no
+    // `<base>` element in the layout it is the document URL, query included.
+    const asked = readInternalParam(new URL(document.baseURI).search);
+    if (asked !== null) {
+      rememberInternalDevice(internalStore(), asked);
+      setInternalAnswer(asked);
+    }
+
+    if (!analyticsEnabled()) {
       return;
     }
 
@@ -177,7 +198,7 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
   // Per-page engagement. Keyed on the pathname so scroll depth and dwell time
   // are measured per page and never accumulate across a client-side navigation.
   useEffect(() => {
-    if (!shouldLoadPostHog(SITE_MARKET, POSTHOG_KEY)) {
+    if (!analyticsEnabled()) {
       return;
     }
 
@@ -255,7 +276,7 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
   // Outbound clicks, by delegation — one listener instead of props threaded
   // through every external link in the tree.
   useEffect(() => {
-    if (!shouldLoadPostHog(SITE_MARKET, POSTHOG_KEY)) {
+    if (!analyticsEnabled()) {
       return;
     }
 
@@ -316,9 +337,15 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
   return (
     <ConsentContext value={consent}>
       {children}
-      {status === "pending" ? (
+      {status === "pending" && internalAnswer === null ? (
         <ConsentBanner onAccept={accept} onDecline={decline} />
       ) : null}
+      {internalAnswer === null ? null : (
+        <InternalNotice
+          muted={internalAnswer}
+          onDismiss={() => setInternalAnswer(null)}
+        />
+      )}
     </ConsentContext>
   );
 }

@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { INTERNAL_STORAGE_KEY } from "@/lib/analytics";
 
 vi.mock("next/navigation", () => ({
   usePathname: () => "/",
@@ -464,5 +465,140 @@ describe("AnalyticsProvider engagement", () => {
     await vi.advanceTimersByTimeAsync(20_000);
 
     expect(track).not.toHaveBeenCalledWith("page.engaged", expect.anything());
+  });
+});
+
+/**
+ * Muting the owner's own devices (`?ludvik4_internal=1`).
+ *
+ * The first traffic audit found 36 of 73 sessions were the owner's, and
+ * cookieless mode leaves nothing to filter them out by afterwards — so the
+ * device has to say so itself. These assertions are the contract: a muted
+ * browser must reach `posthog.init` never, and an ordinary visitor must be
+ * untouched by any of it.
+ */
+describe("AnalyticsProvider internal-device muting", () => {
+  const setSearch = (search: string) =>
+    window.history.replaceState({}, "", `/${search}`);
+
+  beforeEach(() => {
+    window.localStorage.clear();
+    setSearch("");
+  });
+
+  it("initializes nothing on a device that was muted earlier", async () => {
+    window.localStorage.setItem(INTERNAL_STORAGE_KEY, "1");
+
+    await renderProvider(<p>content</p>);
+
+    expect(await screen.findByText("content")).toBeInTheDocument();
+    expect(init).not.toHaveBeenCalled();
+  });
+
+  it("mutes on the very page load carrying ?ludvik4_internal=1", async () => {
+    setSearch("?ludvik4_internal=1");
+
+    await renderProvider(<p>content</p>);
+
+    expect(await screen.findByText("content")).toBeInTheDocument();
+    expect(init).not.toHaveBeenCalled();
+    expect(window.localStorage.getItem(INTERNAL_STORAGE_KEY)).toBe("1");
+  });
+
+  it("un-mutes again on ?ludvik4_internal=0", async () => {
+    window.localStorage.setItem(INTERNAL_STORAGE_KEY, "1");
+    setSearch("?ludvik4_internal=0");
+
+    await renderProvider(<p>content</p>);
+
+    await waitFor(() => expect(init).toHaveBeenCalled());
+    expect(window.localStorage.getItem(INTERNAL_STORAGE_KEY)).toBeNull();
+  });
+
+  it("asks a muted device for no cookie consent", async () => {
+    window.localStorage.setItem(INTERNAL_STORAGE_KEY, "1");
+
+    await renderProvider(<p>content</p>);
+
+    expect(await screen.findByText("content")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("region", { name: "Cookie choice" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("leaves an ordinary visitor captured", async () => {
+    await renderProvider(<p>content</p>);
+
+    await waitFor(() => expect(init).toHaveBeenCalled());
+  });
+});
+
+/**
+ * The confirmation bar. It exists because the device this feature is for is
+ * usually a phone, where a console line cannot be read — without a visible
+ * answer there is no way to tell a muted browser from a mistyped link.
+ */
+describe("AnalyticsProvider internal-device confirmation", () => {
+  const notice = () =>
+    screen.queryByRole("status", { name: "Analytics on this device" });
+
+  const setSearch = (search: string) =>
+    window.history.replaceState({}, "", `/${search}`);
+
+  beforeEach(() => {
+    window.localStorage.clear();
+    setSearch("");
+  });
+
+  it("says nothing to a visitor who did not ask", async () => {
+    await renderProvider(<p>content</p>);
+
+    expect(await screen.findByText("content")).toBeInTheDocument();
+    expect(notice()).not.toBeInTheDocument();
+  });
+
+  it("confirms in words that this device is now muted", async () => {
+    setSearch("?ludvik4_internal=1");
+
+    await renderProvider(<p>content</p>);
+
+    expect(
+      await screen.findByText(/Analytics is off on this device/),
+    ).toBeInTheDocument();
+    expect(notice()).toBeInTheDocument();
+  });
+
+  it("confirms when the device is un-muted again", async () => {
+    setSearch("?ludvik4_internal=0");
+
+    await renderProvider(<p>content</p>);
+
+    expect(
+      await screen.findByText(/Analytics is on again on this device/),
+    ).toBeInTheDocument();
+  });
+
+  it("does not ask for cookies in the same breath as confirming", async () => {
+    setSearch("?ludvik4_internal=0");
+
+    await renderProvider(<p>content</p>);
+
+    expect(await notice()).toBeInTheDocument();
+    expect(
+      screen.queryByRole("region", { name: "Cookie choice" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("goes away when dismissed", async () => {
+    setSearch("?ludvik4_internal=1");
+
+    await renderProvider(<p>content</p>);
+    await userEvent.click(
+      await screen.findByRole("button", { name: "Got it" }),
+    );
+
+    expect(notice()).not.toBeInTheDocument();
+    // Dismissing the confirmation must not un-mute the device.
+    expect(window.localStorage.getItem(INTERNAL_STORAGE_KEY)).toBe("1");
   });
 });

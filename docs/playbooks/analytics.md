@@ -146,6 +146,49 @@ is truncated, and the schema is version-specific.
 Geography is the one thing the dashboard cannot show: cookieless server hash
 mode strips the IP before enrichment, so countries live in Vercel Analytics.
 
+## Muting your own devices
+
+You are the heaviest visitor of your own site — the first traffic audit found
+36 of 73 sessions were yours — and cookieless mode leaves nothing to filter
+them out by afterwards: PostHog's own internal-user filtering keys on person
+properties, and this project creates no persons. So the browser has to say so
+itself.
+
+Open any page with the parameter, once per browser:
+
+```
+https://ludvik4.dev/?ludvik4_internal=1   # stop counting this browser
+https://ludvik4.dev/?ludvik4_internal=0   # start counting it again
+```
+
+A bar confirms in words which of the two just happened — deliberately visible
+rather than a console line, because the device this exists for is usually a
+phone, where there is no console to read.
+
+Three things follow from where the answer is stored (`localStorage`, key
+`ludvik4:internal`):
+
+- **Per browser and per device.** The laptop and the phone are two separate
+  decisions, and so are Safari and Chrome on the same phone. Do it once in
+  each browser you actually browse the live site from.
+- **Per origin.** Muting `ludvik4.dev` says nothing about `ludvik4.ru` — which
+  costs nothing, since the RU storefront runs no analytics at all.
+- **Lost when site data is cleared**, or in a private window. Re-open the link
+  if you have wiped storage.
+
+It silences both layers: PostHog (through `analyticsEnabled()`, so events,
+consent and replay all stop together) and Vercel Web Analytics (through
+`beforeSend` returning `null` in `src/components/vercel-analytics.tsx`). A
+muted browser is also never asked for cookie consent, since there is nothing
+left to consent to.
+
+**Sentry is deliberately not muted.** An error you hit yourself is still a real
+error, and it carries no visitor identity to skew.
+
+When you are testing analytics changes from your own machine and want your
+events to show up, turn it off for that session with `?ludvik4_internal=0` and
+back on when you are done.
+
 ## Error monitoring
 
 Sentry (org `ludvik4`, project `ludvik4-site`) carries errors, not behaviour.

@@ -55,6 +55,93 @@ export type AnalyticsEvent =
 export type AnalyticsProperties = Record<string, string | number | boolean>;
 
 /**
+ * Muting the people who build the site.
+ *
+ * The owner is by far the heaviest visitor of their own site — the first
+ * traffic audit found 36 of 73 sessions were theirs — and cookieless mode
+ * leaves nothing to exclude them by after the fact: PostHog's own
+ * internal-user filtering keys on person properties, and this project creates
+ * no persons. Guessing from device fingerprints works only until a real
+ * visitor shares a timezone with the owner.
+ *
+ * So the device says so itself. Opening any page with `?ludvik4_internal=1`
+ * remembers the answer and every analytics path goes quiet; `=0` undoes it.
+ *
+ * Two consequences worth knowing before wondering why events still arrive:
+ * the answer lives in `localStorage`, so it is **per browser and per device**
+ * (the phone and the laptop are two separate decisions, and so are Safari and
+ * Chrome on the same phone), and `localStorage` is per origin, so muting
+ * ludvik4.dev says nothing about ludvik4.ru.
+ */
+export const INTERNAL_PARAM = "ludvik4_internal";
+
+/** Namespaced, because localStorage is one flat map shared with everything. */
+export const INTERNAL_STORAGE_KEY = "ludvik4:internal";
+
+/** The slice of `Storage` this needs — injected so the tests need no jsdom. */
+export type InternalStore = Pick<Storage, "getItem" | "setItem" | "removeItem">;
+
+/**
+ * What `?ludvik4_internal=…` asked for, or `null` when it was not asked.
+ *
+ * Anything but an explicit off is an on: a bare `?ludvik4_internal` typed from
+ * a phone should mute rather than silently do nothing.
+ */
+export function readInternalParam(search: string): boolean | null {
+  const raw = new URLSearchParams(search).get(INTERNAL_PARAM);
+  if (raw === null) {
+    return null;
+  }
+
+  return !["0", "false", "off", "no"].includes(raw.trim().toLowerCase());
+}
+
+/** Whether this browser has been muted. */
+export function isInternalDevice(store: InternalStore | null): boolean {
+  try {
+    return store?.getItem(INTERNAL_STORAGE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+/** Remember the answer. Un-muting removes the key rather than storing a "0". */
+export function rememberInternalDevice(
+  store: InternalStore | null,
+  internal: boolean,
+): void {
+  try {
+    if (internal) {
+      store?.setItem(INTERNAL_STORAGE_KEY, "1");
+    } else {
+      store?.removeItem(INTERNAL_STORAGE_KEY);
+    }
+  } catch {
+    // Private windows, blocked site data and storage quotas all throw here.
+    // Failing to remember is not worth breaking a page render over — the
+    // visitor stays counted, which is the same as before this existed.
+  }
+}
+
+/**
+ * `localStorage`, or `null` where there is none.
+ *
+ * The property access itself throws in browsers configured to block site data,
+ * which is why this is a function with a `try` rather than a module constant.
+ */
+export function internalStore(): InternalStore | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  try {
+    return window.localStorage;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * The single capture choke point.
  *
  * `process.env` is read here rather than at module scope so the values stay
@@ -68,10 +155,12 @@ export type AnalyticsProperties = Record<string, string | number | boolean>;
  * the runtime check. Every new call site inherits that contract through this
  * function — do not reintroduce inline imports at call sites.
  */
-function analyticsEnabled(): boolean {
-  return shouldLoadPostHog(
-    process.env.SITE_MARKET,
-    process.env.NEXT_PUBLIC_POSTHOG_KEY,
+export function analyticsEnabled(): boolean {
+  return (
+    shouldLoadPostHog(
+      process.env.SITE_MARKET,
+      process.env.NEXT_PUBLIC_POSTHOG_KEY,
+    ) && !isInternalDevice(internalStore())
   );
 }
 

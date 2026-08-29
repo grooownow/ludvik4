@@ -1,10 +1,16 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   ANALYTICS_EVENTS,
+  analyticsEnabled,
   clearConsent,
+  INTERNAL_STORAGE_KEY,
   createEngagedTimer,
   createScrollTracker,
+  internalStore,
+  isInternalDevice,
   readConsent,
+  readInternalParam,
+  rememberInternalDevice,
   scrollMilestone,
   setConsent,
   shouldLoadPostHog,
@@ -300,5 +306,120 @@ describe("createEngagedTimer", () => {
     timer.resume(20_000);
 
     expect(timer.hasEngaged(40_000)).toBe(true);
+  });
+});
+
+/** The two calls `isInternalDevice` / `rememberInternalDevice` actually make. */
+function fakeStore(initial: Record<string, string> = {}) {
+  const map = new Map(Object.entries(initial));
+  return {
+    getItem: (key: string) => map.get(key) ?? null,
+    setItem: (key: string, value: string) => void map.set(key, value),
+    removeItem: (key: string) => void map.delete(key),
+    get size() {
+      return map.size;
+    },
+  };
+}
+
+describe("readInternalParam", () => {
+  it("returns null when the param is absent, so nothing is overwritten", () => {
+    expect(readInternalParam("")).toBeNull();
+    expect(readInternalParam("?utm_source=vk")).toBeNull();
+  });
+
+  it.each([
+    "?ludvik4_internal=1",
+    "?ludvik4_internal",
+    "?ludvik4_internal=yes",
+  ])("reads %s as a request to mute", (search) => {
+    expect(readInternalParam(search)).toBe(true);
+  });
+
+  it.each([
+    "?ludvik4_internal=0",
+    "?ludvik4_internal=false",
+    "?ludvik4_internal=OFF",
+  ])("reads %s as a request to un-mute", (search) => {
+    expect(readInternalParam(search)).toBe(false);
+  });
+
+  it("survives other params sitting alongside it", () => {
+    expect(readInternalParam("?utm_source=vk&ludvik4_internal=1#contact")).toBe(
+      true,
+    );
+  });
+});
+
+describe("remembering a muted device", () => {
+  it("is not muted until asked", () => {
+    expect(isInternalDevice(fakeStore())).toBe(false);
+  });
+
+  it("stays muted across page loads once asked", () => {
+    const store = fakeStore();
+    rememberInternalDevice(store, true);
+
+    expect(isInternalDevice(store)).toBe(true);
+    expect(store.getItem(INTERNAL_STORAGE_KEY)).toBe("1");
+  });
+
+  it("removes the key when un-muted rather than storing a falsy value", () => {
+    const store = fakeStore({ [INTERNAL_STORAGE_KEY]: "1" });
+    rememberInternalDevice(store, false);
+
+    expect(isInternalDevice(store)).toBe(false);
+    expect(store.size).toBe(0);
+  });
+
+  it("treats a browser with no storage as a normal visitor", () => {
+    expect(isInternalDevice(null)).toBe(false);
+    expect(() => rememberInternalDevice(null, true)).not.toThrow();
+  });
+
+  it("never breaks a render when storage throws", () => {
+    const throwing = {
+      getItem: () => {
+        throw new Error("The operation is insecure.");
+      },
+      setItem: () => {
+        throw new Error("The operation is insecure.");
+      },
+      removeItem: () => {
+        throw new Error("The operation is insecure.");
+      },
+    };
+
+    expect(isInternalDevice(throwing)).toBe(false);
+    expect(() => rememberInternalDevice(throwing, true)).not.toThrow();
+  });
+
+  it("returns no store on the server, where there is no localStorage", () => {
+    expect(internalStore()).toBeNull();
+  });
+});
+
+describe("analyticsEnabled", () => {
+  const withEnv = (
+    market: string,
+    key: string | undefined,
+    body: () => void,
+  ) => {
+    vi.stubEnv("SITE_MARKET", market);
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_KEY", key);
+    try {
+      body();
+    } finally {
+      vi.unstubAllEnvs();
+    }
+  };
+
+  it("is off without a key, and off outside the international market", () => {
+    withEnv("en", undefined, () => expect(analyticsEnabled()).toBe(false));
+    withEnv("ru", "phc_test", () => expect(analyticsEnabled()).toBe(false));
+  });
+
+  it("is on for the international market with a key", () => {
+    withEnv("en", "phc_test", () => expect(analyticsEnabled()).toBe(true));
   });
 });
