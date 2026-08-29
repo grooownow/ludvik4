@@ -6,6 +6,40 @@ writing detail here.
 
 ## Now
 
+**[PENDING USER] Two open actions from the analytics work.** Neither blocks
+anything, both are one-off:
+
+1. Revoke the old Sentry personal token (`sntryu_…`) at
+   sentry.io → Personal Tokens. It is superseded by an internal-integration
+   token and is no longer referenced anywhere.
+2. Open one session replay in PostHog and confirm with your own eyes that the
+   contact form's **Your task** textarea is masked. Inputs are masked in both
+   the client config and the PostHog project default, but `<textarea>` is
+   handled separately by rrweb and this is the one privacy-notice promise never
+   verified against a live recording.
+
+**[SHIPPED 2026-08-29] Sentry disclosed, and the analytics stack documented.**
+Sentry had been live in production for weeks (`SENTRY_DSN` /
+`NEXT_PUBLIC_SENTRY_DSN` in Vercel) while `/privacy` named only Vercel, Resend
+and PostHog, and the legal source still said "no Sentry … keep disabled". It is
+now disclosed as a processor with its own legal basis; `sendDefaultPii` stays
+off and the notice records that as a precondition.
+
+Working coordinates, so a later session does not rediscover them:
+
+| What                | Where                                                                                                                                                                 |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Behaviour dashboard | `https://eu.posthog.com/project/225446/dashboard/922602` — "Ludvik4 — behaviour", 9 tiles, pinned                                                                     |
+| Dashboard source    | `scripts/build-posthog-dashboard.ts` — rebuild, do not click                                                                                                          |
+| Errors              | Sentry org `ludvik4`, project `ludvik4-site`                                                                                                                          |
+| Access              | `SENTRY_AUTH_TOKEN` in `.env.local` — internal integration, Issue & Event + Alerts read/write. Run with `SENTRY_FORCE_ENV_TOKEN=1`, or the CLI prefers a stored login |
+| Geography           | Vercel Analytics only — cookieless mode strips the IP before PostHog enriches it                                                                                      |
+
+`LUDVIK4-SITE-2` ("Failed to find Server Action", bot traffic, 0 users) is
+archived **until one real user is affected**, not forever — a genuine
+regression will resurface it and trigger the existing high-priority alert.
+Operations: `docs/playbooks/analytics.md`.
+
 **[SHIPPED 2026-08-29] Cookie consent and session replay on ludvik4.dev.** The
 EN site now asks for cookies with a banner built from the project's own
 primitives, and consent is an upgrade rather than a gate: a visitor who
