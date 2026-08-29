@@ -8,13 +8,29 @@ vi.mock("next/navigation", () => ({
 
 const track = vi.hoisted(() => vi.fn());
 const init = vi.hoisted(() => vi.fn());
+const optIn = vi.hoisted(() => vi.fn());
+const optOut = vi.hoisted(() => vi.fn());
+const clearOptInOut = vi.hoisted(() => vi.fn());
+const startRecording = vi.hoisted(() => vi.fn());
+const stopRecording = vi.hoisted(() => vi.fn());
+const consentStatus = vi.hoisted(() => ({ value: "pending" as string }));
 
 vi.mock("@/lib/analytics", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/analytics")>()),
   track,
 }));
 
-vi.mock("posthog-js", () => ({ default: { init } }));
+vi.mock("posthog-js", () => ({
+  default: {
+    init,
+    opt_in_capturing: optIn,
+    opt_out_capturing: optOut,
+    clear_opt_in_out_capturing: clearOptInOut,
+    startSessionRecording: startRecording,
+    stopSessionRecording: stopRecording,
+    get_explicit_consent_status: () => consentStatus.value,
+  },
+}));
 
 /**
  * The provider reads `SITE_MARKET` and `NEXT_PUBLIC_POSTHOG_KEY` at module
@@ -31,6 +47,30 @@ async function renderProvider(
 
   const { AnalyticsProvider } = await import("./analytics-provider");
   return render(<AnalyticsProvider>{children}</AnalyticsProvider>);
+}
+
+/**
+ * Renders the provider together with the withdrawal control.
+ *
+ * Both are imported from the *same* module graph on purpose. `vi.resetModules()`
+ * gives each call a fresh `analytics-provider` module, and with it a fresh
+ * React context object — a statically imported `ConsentSettingsButton` would
+ * hold the previous one, read the default value, and silently render nothing.
+ */
+async function renderWithSettings(options?: { market?: string; key?: string }) {
+  const { market = "en", key = "phc_test_key" } = options ?? {};
+  vi.stubEnv("SITE_MARKET", market);
+  vi.stubEnv("NEXT_PUBLIC_POSTHOG_KEY", key);
+  vi.resetModules();
+
+  const { AnalyticsProvider } = await import("./analytics-provider");
+  const { ConsentSettingsButton } = await import("./consent-settings-button");
+
+  return render(
+    <AnalyticsProvider>
+      <ConsentSettingsButton />
+    </AnalyticsProvider>,
+  );
 }
 
 function setPageGeometry({
@@ -56,6 +96,12 @@ function setPageGeometry({
 beforeEach(() => {
   track.mockClear();
   init.mockClear();
+  optIn.mockClear();
+  optOut.mockClear();
+  clearOptInOut.mockClear();
+  startRecording.mockClear();
+  stopRecording.mockClear();
+  consentStatus.value = "pending";
   setPageGeometry({ scrollY: 0, innerHeight: 500, scrollHeight: 4000 });
 });
 
@@ -80,16 +126,16 @@ describe("AnalyticsProvider initialization", () => {
     );
   });
 
-  it("keeps the cookieless privacy posture the notice promises", async () => {
+  it("keeps the privacy posture the notice promises", async () => {
     await renderProvider(<p>content</p>);
 
+    // Person profiles stay off even after consent: cookies buy a stable
+    // visitor id, which is what fixes the daily-salt inflation, but the notice
+    // promises no persistent person profiles and consent does not change that.
     await waitFor(() =>
       expect(init).toHaveBeenCalledWith(
         "phc_test_key",
-        expect.objectContaining({
-          cookieless_mode: "always",
-          person_profiles: "never",
-        }),
+        expect.objectContaining({ person_profiles: "never" }),
       ),
     );
   });
@@ -106,6 +152,163 @@ describe("AnalyticsProvider initialization", () => {
 
     expect(await screen.findByText("content")).toBeInTheDocument();
     expect(init).not.toHaveBeenCalled();
+  });
+});
+
+describe("AnalyticsProvider consent", () => {
+  it("keeps an undecided visitor on the cookieless path", async () => {
+    await renderProvider(<p>content</p>);
+
+    // These two options are a pair. `on_reject` alone would leave a visitor who
+    // ignores the banner uncaptured; defaulting them to opt-out is what routes
+    // them into cookieless mode instead.
+    await waitFor(() =>
+      expect(init).toHaveBeenCalledWith(
+        "phc_test_key",
+        expect.objectContaining({
+          cookieless_mode: "on_reject",
+          opt_out_capturing_by_default: true,
+        }),
+      ),
+    );
+  });
+
+  it("never starts replay on a key alone, and masks form input when it does", async () => {
+    await renderProvider(<p>content</p>);
+
+    await waitFor(() =>
+      expect(init).toHaveBeenCalledWith(
+        "phc_test_key",
+        expect.objectContaining({
+          disable_session_recording: true,
+          session_recording: expect.objectContaining({
+            maskAllInputs: true,
+            maskInputOptions: expect.objectContaining({
+              text: true,
+              textarea: true,
+              email: true,
+            }),
+          }),
+        }),
+      ),
+    );
+    expect(startRecording).not.toHaveBeenCalled();
+  });
+
+  it("shows the banner only while the choice is pending", async () => {
+    await renderProvider(<p>content</p>);
+
+    expect(
+      await screen.findByRole("region", { name: "Cookie choice" }),
+    ).toBeInTheDocument();
+  });
+
+  it("does not show the banner to a visitor who already decided", async () => {
+    consentStatus.value = "denied";
+    await renderProvider(<p>content</p>);
+
+    expect(await screen.findByText("content")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("region", { name: "Cookie choice" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("restores replay for a visitor who granted consent earlier", async () => {
+    consentStatus.value = "granted";
+    await renderProvider(<p>content</p>);
+
+    await waitFor(() => expect(startRecording).toHaveBeenCalled());
+    expect(
+      screen.queryByRole("region", { name: "Cookie choice" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("shows no banner without a key", async () => {
+    await renderProvider(<p>content</p>, { key: "" });
+
+    expect(await screen.findByText("content")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("region", { name: "Cookie choice" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("shows no banner on the Russian market", async () => {
+    await renderProvider(<p>content</p>, { market: "ru" });
+
+    expect(await screen.findByText("content")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("region", { name: "Cookie choice" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("grants consent and starts replay on accept", async () => {
+    await renderProvider(<p>content</p>);
+
+    await userEvent.click(
+      await screen.findByRole("button", { name: "Allow cookies" }),
+    );
+
+    await waitFor(() => expect(optIn).toHaveBeenCalled());
+    expect(startRecording).toHaveBeenCalled();
+    await waitFor(() =>
+      expect(
+        screen.queryByRole("region", { name: "Cookie choice" }),
+      ).not.toBeInTheDocument(),
+    );
+  });
+
+  it("declines without starting replay, and keeps analytics running", async () => {
+    await renderProvider(<p>content</p>);
+
+    await userEvent.click(
+      await screen.findByRole("button", { name: "Decline" }),
+    );
+
+    await waitFor(() => expect(optOut).toHaveBeenCalled());
+    expect(startRecording).not.toHaveBeenCalled();
+    expect(optIn).not.toHaveBeenCalled();
+  });
+});
+
+describe("consent withdrawal", () => {
+  it("offers no control to a visitor who has not decided", async () => {
+    await renderWithSettings();
+
+    await screen.findByRole("region", { name: "Cookie choice" });
+    expect(
+      screen.queryByRole("button", { name: "Cookie settings" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("offers no control where analytics does not run", async () => {
+    consentStatus.value = "granted";
+    await renderWithSettings({ market: "ru" });
+
+    // A control that cannot do anything is worse than no control.
+    await waitFor(() =>
+      expect(
+        screen.queryByRole("button", { name: "Cookie settings" }),
+      ).not.toBeInTheDocument(),
+    );
+  });
+
+  it("stops replay before forgetting the choice, and asks again", async () => {
+    consentStatus.value = "granted";
+    await renderWithSettings();
+
+    await userEvent.click(
+      await screen.findByRole("button", { name: "Cookie settings" }),
+    );
+
+    // Order matters: clearing consent while a recorder is still running would
+    // keep recording someone who just withdrew.
+    await waitFor(() => expect(clearOptInOut).toHaveBeenCalled());
+    expect(stopRecording).toHaveBeenCalled();
+    expect(stopRecording.mock.invocationCallOrder[0]).toBeLessThan(
+      clearOptInOut.mock.invocationCallOrder[0]!,
+    );
+
+    consentStatus.value = "pending";
   });
 });
 

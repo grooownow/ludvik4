@@ -38,4 +38,25 @@ test.describe("analytics stays off the Russian storefront", () => {
     expect(html).not.toContain("_vercel/insights");
     expect(html).not.toContain("posthog");
   });
+
+  test("no consent banner is shown, and no analytics cookie is set", async ({
+    page,
+    context,
+  }) => {
+    await page.goto("/");
+
+    // Nothing to consent to here, so asking would be noise — and a banner that
+    // set a cookie to remember a pointless choice would be worse than noise.
+    await expect(
+      page.getByRole("region", { name: "Cookie choice" }),
+    ).toHaveCount(0);
+    await expect(
+      page.getByRole("button", { name: "Cookie settings" }),
+    ).toHaveCount(0);
+
+    const cookies = await context.cookies();
+    expect(cookies.filter((cookie) => cookie.name.startsWith("ph_"))).toEqual(
+      [],
+    );
+  });
 });

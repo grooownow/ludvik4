@@ -68,22 +68,99 @@ export type AnalyticsProperties = Record<string, string | number | boolean>;
  * the runtime check. Every new call site inherits that contract through this
  * function — do not reintroduce inline imports at call sites.
  */
+function analyticsEnabled(): boolean {
+  return shouldLoadPostHog(
+    process.env.SITE_MARKET,
+    process.env.NEXT_PUBLIC_POSTHOG_KEY,
+  );
+}
+
 export function track(
   event: AnalyticsEvent,
   properties?: AnalyticsProperties,
 ): void {
-  if (
-    !shouldLoadPostHog(
-      process.env.SITE_MARKET,
-      process.env.NEXT_PUBLIC_POSTHOG_KEY,
-    )
-  ) {
+  if (!analyticsEnabled()) {
     return;
   }
 
   void import("posthog-js").then(({ default: posthog }) => {
     posthog.capture(event, properties);
   });
+}
+
+/**
+ * Whether the visitor has made an explicit choice about cookies.
+ *
+ * `pending` is not a third kind of refusal: with `cookieless_mode: "on_reject"`
+ * and `opt_out_capturing_by_default: true`, a pending visitor is captured
+ * cookielessly exactly like a denying one. Consent adds cookies, a persistent
+ * id and session replay — it does not switch analytics on.
+ */
+export type ConsentStatus = "granted" | "denied" | "pending";
+
+/** The explicit choice, or `null` when analytics is off entirely. */
+export async function readConsent(): Promise<ConsentStatus | null> {
+  if (!analyticsEnabled()) {
+    return null;
+  }
+
+  const { default: posthog } = await import("posthog-js");
+  return posthog.get_explicit_consent_status();
+}
+
+/** Record the visitor's choice. Granting is what starts cookie-based capture. */
+export async function setConsent(granted: boolean): Promise<void> {
+  if (!analyticsEnabled()) {
+    return;
+  }
+
+  const { default: posthog } = await import("posthog-js");
+  if (granted) {
+    posthog.opt_in_capturing();
+  } else {
+    posthog.opt_out_capturing();
+  }
+}
+
+/**
+ * Forget the choice, returning the visitor to `pending`.
+ *
+ * This is the withdrawal path: GDPR wants withdrawing consent to be as easy as
+ * giving it, so the banner comes back and the visitor can decide again.
+ */
+export async function clearConsent(): Promise<void> {
+  if (!analyticsEnabled()) {
+    return;
+  }
+
+  const { default: posthog } = await import("posthog-js");
+  posthog.clear_opt_in_out_capturing();
+}
+
+/**
+ * Session replay, started only by an explicit grant and stopped the moment one
+ * is withdrawn.
+ *
+ * These live here rather than being called on the SDK directly so they inherit
+ * the same guard as everything else in this module: with no key, no posthog-js
+ * chunk is ever requested.
+ */
+export async function startReplay(): Promise<void> {
+  if (!analyticsEnabled()) {
+    return;
+  }
+
+  const { default: posthog } = await import("posthog-js");
+  posthog.startSessionRecording();
+}
+
+export async function stopReplay(): Promise<void> {
+  if (!analyticsEnabled()) {
+    return;
+  }
+
+  const { default: posthog } = await import("posthog-js");
+  posthog.stopSessionRecording();
 }
 
 export const SCROLL_MILESTONES = [25, 50, 75, 100] as const;
