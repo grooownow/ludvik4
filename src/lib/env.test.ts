@@ -122,3 +122,31 @@ describe("parseEnv", () => {
     expect(env.SEED_ADMIN_PASSWORD.length).toBeGreaterThanOrEqual(8);
   });
 });
+
+describe("parseEnv with blanked vars", () => {
+  // The RU static build blanks these rather than deleting them, so Next.js
+  // cannot repopulate them from .env — see config/ru-static-env.ts.
+  it("treats a blanked optional URL as unset rather than as an invalid URL", () => {
+    expect(
+      parseEnv({ NEXT_PUBLIC_SENTRY_DSN: "" }).NEXT_PUBLIC_SENTRY_DSN,
+    ).toBeUndefined();
+    expect(parseEnv({ SENTRY_DSN: "" }).SENTRY_DSN).toBeUndefined();
+  });
+
+  it("treats a blanked optional string as unset", () => {
+    expect(
+      parseEnv({ NEXT_PUBLIC_POSTHOG_KEY: "" }).NEXT_PUBLIC_POSTHOG_KEY,
+    ).toBeUndefined();
+  });
+
+  it("falls back to the default when a defaulted var is blanked", () => {
+    expect(parseEnv({ NEXT_PUBLIC_APP_URL: "" }).NEXT_PUBLIC_APP_URL).toBe(
+      "http://localhost:3210",
+    );
+    expect(parseEnv({ SITE_MARKET: "" }).SITE_MARKET).toBe("ru");
+  });
+
+  it("still rejects a non-empty invalid value", () => {
+    expect(() => parseEnv({ NEXT_PUBLIC_SENTRY_DSN: "not-a-url" })).toThrow();
+  });
+});

@@ -97,8 +97,29 @@ const schema = z
 
 export type Env = z.infer<typeof schema>;
 
+/**
+ * An env var set to the empty string means "unset" here, not "set to nothing".
+ *
+ * Process environments have no way to express absence: a build system that
+ * blanks a variable and one that never defines it produce the same intent but
+ * different shapes, and `z.url().optional()` accepts the second and rejects the
+ * first. The RU static build depends on this — it deliberately blanks
+ * `NEXT_PUBLIC_SENTRY_DSN` and `NEXT_PUBLIC_POSTHOG_KEY` so no foreign-service
+ * key is inlined into the artifact served from ludvik4.ru
+ * (`config/ru-static-env.ts`), and blanking has to read as unset rather than as
+ * an invalid URL. Slots with a `.default()` fall back to it, as they would for
+ * an absent var.
+ */
+function omitBlanks(
+  raw: Partial<NodeJS.ProcessEnv>,
+): Partial<NodeJS.ProcessEnv> {
+  return Object.fromEntries(
+    Object.entries(raw).filter(([, value]) => value !== ""),
+  );
+}
+
 export function parseEnv(raw: Partial<NodeJS.ProcessEnv>): Env {
-  const result = schema.safeParse(raw);
+  const result = schema.safeParse(omitBlanks(raw));
   if (!result.success) {
     const details = result.error.issues
       .map((i) => `${i.path.join(".")}: ${i.message}`)

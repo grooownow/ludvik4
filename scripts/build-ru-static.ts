@@ -2,6 +2,7 @@ import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 import { cp, mkdir, rename, rm } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { ruStaticEnv } from "../config/ru-static-env";
 
 const root = process.cwd();
 const stashRoot = join(root, `.static-export-${process.pid}`);
@@ -54,13 +55,10 @@ async function runBuild(): Promise<number> {
     const child = spawn("next", ["build"], {
       stdio: "inherit",
       shell: false,
-      env: {
-        ...process.env,
-        STATIC_EXPORT: "true",
-        SITE_MARKET: "ru",
-        NEXT_PUBLIC_APP_URL:
-          process.env.NEXT_PUBLIC_APP_URL ?? "https://ludvik4.ru",
-      },
+      // config/ru-static-env.ts — market, export mode, and the blanking of
+      // the public analytics vars so no foreign-service key is inlined into
+      // the artifact served from ludvik4.ru.
+      env: ruStaticEnv(process.env),
     });
     child.once("error", reject);
     child.once("exit", (code) => resolve(code ?? 1));
