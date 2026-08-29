@@ -69,12 +69,10 @@ Three things follow, in order of weight:
    creates no persons; the timezone heuristic used for this audit would also
    swallow a genuine visitor from Spain. Proposed: a `?ludvik4_internal=1` visit
    that stores a flag in `localStorage`, after which the provider either stops
-   capturing or stamps `internal: true` for a global filter. Not built.
+   capturing or stamps `internal: true` for a global filter. **Shipped the same
+   day** — see the entry above.
 3. **`/blog/cursor-rules/` is the only page with repeat search traffic** — 3 of
    the 5 search visits, all from Yandex.
-
-Report (artifact, private): "Кто приходил на ludvik4" —
-https://claude.ai/code/artifact/d6d55252-3c5f-4dc0-9344-893a24ef46b2
 
 **[SHIPPED 2026-08-29] Sentry disclosed, and the analytics stack documented.**
 Sentry had been live in production for weeks (`SENTRY_DSN` /
