@@ -18,6 +18,35 @@ anything, both are one-off:
    handled separately by rrweb and this is the one privacy-notice promise never
    verified against a live recording.
 
+**[SHIPPED 2026-08-29] The RU storefront is provably free of foreign
+analytics, and any device can now mute itself.** Two changes, from the same
+question.
+
+Sentry was never on `ludvik4.ru` — no DSN and no `sentry.io` string in any
+chunk of the live site, and a static export has no server runtime to hold the
+Node SDK either; a browser check of `/` and `/blog/cursor-rules/` records zero
+third-party requests. PostHog _was_, until the `market === "en"` gate shipped
+on 2026-08-28 (`6a61fbd`): 191 events over 65 sessions between 28 Jul and
+28 Aug are still in PostHog EU. **Deleting them is a pending user decision** —
+the owner chose to keep them for now.
+
+What did need fixing was that the guarantee lived in an `if`. Timeweb's deploy
+settings still carry `NEXT_PUBLIC_POSTHOG_KEY`, and Next.js inlines every
+`NEXT_PUBLIC_*` it can see, so the key literal shipped inside JavaScript served
+from ludvik4.ru as dead data. `config/ru-static-env.ts` now blanks it (and
+`NEXT_PUBLIC_SENTRY_DSN`) for the RU build; `parseEnv` reads a blank as unset
+rather than as an invalid URL. Verified by building with sentinel values and
+grepping `out/`. Still worth doing when convenient: remove the variable from
+the Timeweb dashboard too.
+
+Second, `?ludvik4_internal=1` on any page mutes that browser — PostHog through
+`analyticsEnabled()`, Vercel Web Analytics through `beforeSend`, `=0` to undo.
+A visible bar confirms which happened, because the device this exists for is
+usually a phone with no console. **The setting is per browser and per device**,
+so it has to be opened once on the laptop and once on each phone browser.
+Sentry is deliberately not muted. Operations: `docs/playbooks/analytics.md`
+→ "Muting your own devices".
+
 **[FINDING 2026-08-29] First traffic audit — 14 real visitors in 30 days, none
 on the EN storefront.** PostHog recorded 73 sessions between 30 Jul and 29 Aug.
 Classified by device fingerprint (`$timezone` + OS + screen vs. viewport, since
