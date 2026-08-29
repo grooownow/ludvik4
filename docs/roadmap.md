@@ -6,6 +6,21 @@ writing detail here.
 
 ## Now
 
+**[SHIPPED 2026-08-29] Cookie consent and session replay on ludvik4.dev.** The
+EN site now asks for cookies with a banner built from the project's own
+primitives, and consent is an upgrade rather than a gate: a visitor who
+declines or ignores it keeps exactly the cookieless analytics shipped the day
+before, while allowing cookies adds a stable visitor id (so uniques and
+retention stop being inflated by the daily salt rotation) and **session replay**
+— the tool ADR 0007 named as missing for "why did they leave". Replay masks all
+inputs, so it never records what anyone typed into the contact form. Withdrawal
+sits in the footer of every page and in §9 of `/privacy`; it stops the recorder
+before clearing the choice. `/privacy` and `docs/legal/privacy-notice-en.md` now
+separate the two legal bases: legitimate interest for the cookieless path,
+consent for cookies and replay. Spec `docs/specs/analytics-consent.md`, decision
+`docs/decisions/0008-consent-as-an-upgrade.md`. Verified in a browser: no cookie
+before the choice, one after Allow, none again after withdrawing.
+
 **[SHIPPED 2026-08-28] Analytics event layer on ludvik4.dev.** Two layers:
 Vercel Web Analytics on the EN build for pageviews, referrers and the
 geolocation PostHog cannot see (cookieless mode strips the IP), and PostHog for

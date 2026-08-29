@@ -169,4 +169,5 @@ gains the cookie assertion.
 
 ## Status
 
-`in progress` — approved 2026-08-29.
+`shipped` — approved and implemented 2026-08-29.
+Decision record: `docs/decisions/0008-consent-as-an-upgrade.md`.

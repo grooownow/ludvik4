@@ -93,15 +93,29 @@ Beyond these, posthog-js **autocapture** records every click on every button and
 link, and `$pageview`/`$pageleave` carry `$prev_pageview_duration` and
 `$prev_pageview_max_scroll_percentage` for free — no code needed.
 
-## What this cannot tell you
+## Consent, and what each state can tell you
 
-Consequences of cookieless mode, so they are not rediscovered as bugs:
+The EN site asks for cookies with a banner, and consent is an upgrade rather
+than a gate (`docs/decisions/0008-consent-as-an-upgrade.md`):
 
-- **No session replay.** It needs browser storage, which needs a consent
-  banner. The strongest "why did they leave" tool is deliberately not available.
+| Visitor state      | What you get                                                                       |
+| ------------------ | ---------------------------------------------------------------------------------- |
+| Ignored the banner | Cookieless analytics. No storage, no profile. This is most of your traffic.        |
+| Declined           | The same, and the banner does not come back.                                       |
+| Allowed cookies    | A stable visitor id — so uniques and retention are real — plus **session replay**. |
+
+For the cookieless majority, know what the numbers cannot say:
+
 - Unique-visitor counts over more than a day are inflated (the hash salt rotates
-  daily), and retention and cohort analysis are not trustworthy.
-- No geolocation in PostHog — read it in Vercel instead.
+  daily), and retention and cohort analysis are not trustworthy. Consenting
+  visitors are exempt.
+- No geolocation in PostHog — read it in Vercel instead. This does not change
+  with consent; the IP is stripped before enrichment either way.
+- Session replay exists only for consenting visitors, and never records what
+  anyone typed into the contact form — inputs are masked.
+
+Visitors can withdraw at any time from the footer control on any page, which
+clears the choice, stops replay and brings the banner back.
 
 ## Weekly review ritual — 3 questions
 

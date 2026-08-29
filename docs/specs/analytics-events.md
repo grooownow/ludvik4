@@ -265,8 +265,9 @@ Deferred deliberately, so a later session does not assume this spec covers it:
   404 and the error boundary — the roadmap tracks live legacy `.dev/blog/*`
   404s this would quantify).
 - **Session replay.** It is the strongest tool for "why did they leave", and it
-  needs browser storage, which needs a consent banner. Not in scope, and the
-  decision not to build a consent flow was taken explicitly.
+  needs browser storage, which needs a consent banner. Out of scope _here_ —
+  shipped afterwards by `docs/specs/analytics-consent.md`, which added the
+  banner and starts replay for visitors who allow cookies.
 - **Vercel custom events.** Hobby has none; this is not worked around.
 - **Speed Insights.** Related but a separate concern.
 - **The RU storefront and `/gridfin/*`.**

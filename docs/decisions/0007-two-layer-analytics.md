@@ -53,7 +53,10 @@ capability: **session replay is off** — the strongest tool for "why did they
 leave" — the daily-rotating hash salt inflates unique-visitor counts over any
 window longer than a day, and retention and cohort analysis are not
 trustworthy. Buying those back means a consent banner, which is a product
-decision, not a technical one.
+decision, not a technical one. **That decision was since taken — see
+`docs/decisions/0008-consent-as-an-upgrade.md`: session replay and a stable
+identifier are now available to visitors who allow cookies, while everyone else
+stays on the cookieless path described here.**
 
 **Foreclosed for now.** Vercel custom events. If the team ever moves to Pro for
 another reason, revisit whether the conversion funnel belongs there instead —
