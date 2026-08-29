@@ -117,6 +117,52 @@ For the cookieless majority, know what the numbers cannot say:
 Visitors can withdraw at any time from the footer control on any page, which
 clears the choice, stops replay and brings the banner back.
 
+## The dashboard
+
+One pinned dashboard answers most of it, so the weekly review is a read rather
+than a query-building exercise:
+
+**https://eu.posthog.com/project/225446/dashboard/922602** — "Ludvik4 — behaviour"
+
+Nine tiles, top to bottom as one visit: arrivals, the enquiry funnel, engaged
+versus bounced, where scrolling stops, why the form rejects people, started-but-
+never-sent, which FAQ entries get opened, where visitors leave to, and which
+contact control gets pressed.
+
+It is built by `scripts/build-posthog-dashboard.ts` rather than by hand, so it
+can be changed in review and rebuilt. Re-running reuses the dashboard of the
+same name instead of creating a second one. The script needs a PostHog personal
+API key (Insight:Write, Dashboard:Write, Query:Read) in `.env.local`:
+
+```bash
+set -a; . ./.env.local; set +a
+pnpm tsx scripts/build-posthog-dashboard.ts
+```
+
+Query shapes in the script were read back from the project's own existing
+insights, not copied from documentation — the API reference for insight queries
+is truncated, and the schema is version-specific.
+
+Geography is the one thing the dashboard cannot show: cookieless server hash
+mode strips the IP before enrichment, so countries live in Vercel Analytics.
+
+## Error monitoring
+
+Sentry (org `ludvik4`, project `ludvik4-site`) carries errors, not behaviour.
+The `sentry` CLI reads it:
+
+```bash
+set -a; . ./.env.local; set +a
+export SENTRY_FORCE_ENV_TOKEN=1
+sentry issue list ludvik4/ludvik4-site --query "is:unresolved"
+sentry issue view LUDVIK4-SITE-1
+```
+
+`SENTRY_AUTH_TOKEN` is an internal-integration token scoped to the org, with
+Issue & Event and Alerts read+write. Sentry has no project-level token — org is
+the narrowest scope it offers — so the token also covers the other project in
+that org. It is disclosed as a processor in `/privacy` section 4.
+
 ## Weekly review ritual — 3 questions
 
 Same day every week, 15 minutes:

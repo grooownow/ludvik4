@@ -19,7 +19,7 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
           Privacy Notice
         </h1>
         <p className="text-muted-foreground mt-3 text-sm">
-          Last updated: 29 August 2026
+          Last updated: 30 August 2026
         </p>
 
         <div className="mt-10 space-y-9 text-[15px] leading-7">
@@ -68,6 +68,14 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
               type into the contact form is masked and is never recorded.
               Persistent person profiles remain switched off. See section 9.
             </p>
+            <p className="text-muted-foreground mt-3">
+              When something on the website fails, Sentry receives a diagnostic
+              report: the error and its technical stack trace, the page address
+              it happened on, your browser and operating system, and an
+              approximate location derived from the network address the request
+              came from. These reports are not tied to an analytics identifier
+              and are not used to build a profile of you.
+            </p>
           </section>
 
           <section>
@@ -90,6 +98,12 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
                 operates without browser storage or persistent person profiles.
               </li>
               <li>
+                To detect, diagnose, and fix faults so the website keeps
+                working. The legal basis is Ludvik4&apos;s legitimate interest
+                in the security and reliability of the service under Article
+                6(1)(f) GDPR.
+              </li>
+              <li>
                 To retain information where required to establish, exercise, or
                 defend legal claims or comply with a legal obligation. The legal
                 bases are Articles 6(1)(f) and 6(1)(c) GDPR, as applicable.
@@ -104,9 +118,10 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
             <p className="text-muted-foreground mt-3">
               The website is hosted by Vercel. Form submissions are delivered to
               Ludvik4 by email through Resend (Plus Five Five, Inc.). Limited
-              cookieless usage analytics are provided by PostHog, using its EU
-              cloud service. These providers process technical and message data
-              as needed to provide their services. Information may also be
+              usage analytics are provided by PostHog, using its EU cloud
+              service. Error diagnostics are processed by Sentry (Functional
+              Software, Inc.). These providers process technical and message
+              data as needed to provide their services. Information may also be
               disclosed to professional advisers or public authorities where
               this is necessary and permitted by law.
             </p>
@@ -130,13 +145,14 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
               5. International data transfers
             </h2>
             <p className="text-muted-foreground mt-3">
-              Vercel, Resend, and PostHog may process personal data outside the
-              European Economic Area. Where required, transfers are covered by
-              an adequacy decision or appropriate safeguards under Chapter V
-              GDPR. Vercel incorporates the European Commission&apos;s Standard
-              Contractual Clauses into its data processing terms. Resend&apos;s
-              data processing terms include the Standard Contractual Clauses and
-              state its participation in the EU-U.S. Data Privacy Framework.
+              Vercel, Resend, PostHog, and Sentry may process personal data
+              outside the European Economic Area. Where required, transfers are
+              covered by an adequacy decision or appropriate safeguards under
+              Chapter V GDPR. Vercel incorporates the European Commission&apos;s
+              Standard Contractual Clauses into its data processing terms.
+              Resend&apos;s data processing terms include the Standard
+              Contractual Clauses and state its participation in the EU-U.S.
+              Data Privacy Framework.
             </p>
           </section>
 
