@@ -18,6 +18,35 @@ anything, both are one-off:
    handled separately by rrweb and this is the one privacy-notice promise never
    verified against a live recording.
 
+**[FINDING 2026-08-29] First traffic audit — 14 real visitors in 30 days, none
+on the EN storefront.** PostHog recorded 73 sessions between 30 Jul and 29 Aug.
+Classified by device fingerprint (`$timezone` + OS + screen vs. viewport, since
+cookieless mode leaves no person to group by): **36 are the owner's own**
+(`Europe/Madrid` + macOS + screens `1728x1117`/`1920x1080`), **23 are
+automated** (800x600 screens with 1920x1080 viewports, 2000x2000 Facebook
+crawlers, viewport equal to screen, `Etc/Unknown`/UTC clocks), leaving
+**14 genuine visits — all of them on `ludvik4.ru`**.
+
+Three things follow, in order of weight:
+
+1. **`ludvik4.dev` has had no identifiable real visitor in a month** — and the
+   lead form ships only in the EN build. The only working contact channel for
+   real traffic is the Telegram link, which produced the month's only two
+   conversions (Kaliningrad 05-08, Lisbon 08-08, the latter a 21-minute return
+   visit that clicked it three times). No lead form submission all month: the
+   single `lead.form_submitted` is the owner's own test on 28-08.
+2. **Excluding yourself needs a code switch, not a dashboard filter.** PostHog's
+   internal-user filtering keys on person properties, and cookieless mode
+   creates no persons; the timezone heuristic used for this audit would also
+   swallow a genuine visitor from Spain. Proposed: a `?ludvik4_internal=1` visit
+   that stores a flag in `localStorage`, after which the provider either stops
+   capturing or stamps `internal: true` for a global filter. Not built.
+3. **`/blog/cursor-rules/` is the only page with repeat search traffic** — 3 of
+   the 5 search visits, all from Yandex.
+
+Report (artifact, private): "Кто приходил на ludvik4" —
+https://claude.ai/code/artifact/d6d55252-3c5f-4dc0-9344-893a24ef46b2
+
 **[SHIPPED 2026-08-29] Sentry disclosed, and the analytics stack documented.**
 Sentry had been live in production for weeks (`SENTRY_DSN` /
 `NEXT_PUBLIC_SENTRY_DSN` in Vercel) while `/privacy` named only Vercel, Resend
@@ -86,11 +115,11 @@ resolved `capture_pageview` to the legacy `true` without a `defaults` option,
 so no `<Link>` navigation was ever captured and `$pageleave` — dwell time and
 scroll depth with it — never fired. Spec `docs/specs/analytics-events.md`,
 decision `docs/decisions/0007-two-layer-analytics.md`, operations
-`docs/playbooks/analytics.md`. **Two user actions still open:** enable Web
-Analytics in the Vercel dashboard for project `ludvik4`, and confirm
-**Cookieless server hash mode** is on in PostHog Project Settings → Web
-analytics — PostHog discards cookieless events while it is off. Deferred to
-wave 2: `page.exit_intent`, `blog.article_read`, `error.page_viewed`.
+`docs/playbooks/analytics.md`. **Both user actions are now closed** (verified
+2026-08-29): Vercel Web Analytics reports `enabledAt` + `hasData: true` on
+project `ludvik4`, and stored events carry `$cookieless_mode: True`, which only
+happens once cookieless server hash mode is on. Deferred to wave 2:
+`page.exit_intent`, `blog.article_read`, `error.page_viewed`.
 
 **[MONITOR 2026-08-28] RU + EN search and audience baseline.** DEV GSC reached
 134 impressions / 3 clicks this week versus 43 / 3, but all current clicks and
