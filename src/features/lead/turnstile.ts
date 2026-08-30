@@ -9,17 +9,25 @@ const SITEVERIFY_URL =
  * Verify a Cloudflare Turnstile token server-side.
  *
  * When no secret is configured (local dev / preview before the captcha is set
- * up) verification is skipped and returns `true` — the form stays usable. Once
- * `TURNSTILE_SECRET_KEY` is set, a missing or invalid token is rejected, and a
- * network error fails closed (returns `false`) so a broken check can never wave
- * a bot through silently.
+ * up) verification is skipped and returns `true` — the form stays usable. In
+ * production that skip is logged on every submission: the captcha is the only
+ * layer a bot that POSTs the action directly cannot bypass, so running without
+ * it is a gap that must show up in the logs, not disappear into a `return`.
+ * Once `TURNSTILE_SECRET_KEY` is set, a missing or invalid token is rejected,
+ * and a network error fails closed (returns `false`) so a broken check can
+ * never wave a bot through silently.
  */
 export async function verifyTurnstile(
   token: string,
   ip: string,
 ): Promise<boolean> {
   const secret = env.TURNSTILE_SECRET_KEY;
-  if (!secret) return true; // not configured — skip
+  if (!secret) {
+    if (env.NODE_ENV === "production") {
+      logger.warn("turnstile: no secret configured — captcha skipped");
+    }
+    return true;
+  }
   if (!token) return false;
 
   try {

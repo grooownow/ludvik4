@@ -22,16 +22,46 @@ export function isValidContact(value: string): boolean {
   return false;
 }
 
+/**
+ * A link, with or without a scheme: `http://x.y/z`, `www.x.y`, or a bare
+ * `x.y` domain-ish token (a dot between two label characters). Loose on
+ * purpose — it is a spam heuristic, not a URL parser.
+ */
+const LINK_RE = /\bhttps?:\/\/\S+|\bwww\.\S+|\b[\w-]+\.[a-z]{2,}(?:\/\S*)?/gi;
+
+function containsLink(value: string): boolean {
+  return new RegExp(LINK_RE.source, "i").test(value);
+}
+
+/** The message with every link removed — what is left is what the visitor
+ * actually wrote about the task. */
+function withoutLinks(value: string): string {
+  return value.replace(LINK_RE, " ").replace(/\s+/g, " ").trim();
+}
+
+const MESSAGE_TOO_SHORT =
+  "Tell me a bit more about the task — at least a couple of sentences.";
+
+/**
+ * Field rules. Two of them exist because of link spam, the only kind of bot
+ * traffic the form has actually received (a bot that POSTs the server action
+ * directly never sees the honeypot, and one submission never trips the rate
+ * limit): a name is never a link, and the message has to say something once
+ * its links are taken out — "Hi <link> Owner" is not an enquiry.
+ */
 export const leadSchema = z.object({
-  name: z.string().trim().max(NAME_MAX, "Name is too long.").default(""),
+  name: z
+    .string()
+    .trim()
+    .max(NAME_MAX, "Name is too long.")
+    .refine((v) => !containsLink(v), "A name cannot be a link.")
+    .default(""),
   message: z
     .string()
     .trim()
-    .min(
-      MESSAGE_MIN,
-      "Tell me a bit more about the task — at least a couple of sentences.",
-    )
-    .max(MESSAGE_MAX, "Too long — please shorten it a bit."),
+    .min(MESSAGE_MIN, MESSAGE_TOO_SHORT)
+    .max(MESSAGE_MAX, "Too long — please shorten it a bit.")
+    .refine((v) => withoutLinks(v).length >= MESSAGE_MIN, MESSAGE_TOO_SHORT),
   contact: z
     .string()
     .trim()

@@ -61,4 +61,42 @@ describe("leadSchema", () => {
     const parsed = leadSchema.safeParse({ ...valid, contact: "позвоните" });
     expect(parsed.success).toBe(false);
   });
+
+  // The pattern the form actually receives from SEO-spam bots (2026-08-23):
+  // a link where a person's name goes, and a "message" that is nothing but a
+  // greeting around that same link. Real enquiries never put a URL in a name.
+  describe("link spam", () => {
+    it("rejects a name that carries a URL", () => {
+      const parsed = leadSchema.safeParse({
+        ...valid,
+        name: "To the http://ludvik4.dev/fekal0911 Admin",
+      });
+      expect(parsed.success).toBe(false);
+    });
+
+    it("rejects a name that carries a bare domain", () => {
+      const parsed = leadSchema.safeParse({
+        ...valid,
+        name: "ludvik4.dev Admin",
+      });
+      expect(parsed.success).toBe(false);
+    });
+
+    it("rejects a message that is only a greeting around a link", () => {
+      const parsed = leadSchema.safeParse({
+        ...valid,
+        message: "Hi http://ludvik4.dev/fekal0911 Owner",
+      });
+      expect(parsed.success).toBe(false);
+    });
+
+    it("still accepts a real task that includes a link", () => {
+      const parsed = leadSchema.safeParse({
+        ...valid,
+        message:
+          "We need a redesign of https://example.com — the current site loses mobile users.",
+      });
+      expect(parsed.success).toBe(true);
+    });
+  });
 });
