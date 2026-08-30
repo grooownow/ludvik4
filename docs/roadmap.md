@@ -6,20 +6,40 @@ writing detail here.
 
 ## Now
 
-**[SHIPPED 2026-08-30] Turnstile captcha is live on ludvik4.dev.** On
-2026-08-23 the contact form delivered its first spam ("To the
-http://ludvik4.dev/fekal0911 Admin"). The form already had a honeypot, a
-per-IP rate limit and Turnstile verification in code, but Vercel Production
-carried no `TURNSTILE_*` variables, so the captcha was skipped — and the
-Sentry event `LUDVIK4-SITE-2` shows bots POST the server action directly,
-which a honeypot never sees and a single request never rate-limits. Both keys
-(`NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`, widget mode
-_Managed_, hostname `ludvik4.dev`) now sit in Vercel Production and the
-redeploy (`ludvik4-7apk92xxv`) renders the widget on `/` — verified by
-grepping the live HTML for `cf-turnstile` and the Cloudflare script. A
-submission without a valid token is rejected with `reason: captcha`. **Worth
-doing once when convenient:** submit the form yourself on ludvik4.dev to see
-the enquiry arrive end-to-end with the captcha in the path.
+**[PENDING USER] Turnstile: rotate the secret, then hand over the _site_
+key.** First attempt on 2026-08-30 went in with the **secret key in both
+slots** — Turnstile site and secret keys look alike (`0x4AAAAAA…`), and the
+secret was pasted twice. The widget failed with `TurnstileError 400020`
+("Invalid sitekey" per
+[Cloudflare's error codes](https://developers.cloudflare.com/turnstile/troubleshooting/client-side-errors/error-codes/)),
+every submission was rejected with `reason: captcha` (fail-closed working as
+designed), and — the real problem — the secret was inlined into the public
+HTML of ludvik4.dev as `data-sitekey` for about an hour. Both variables were
+removed from Vercel Production and production redeployed; the form is back to
+honeypot + rate limit + validation, no captcha. To finish:
+
+1. Cloudflare → Turnstile → the `ludvik4.dev` widget → **Rotate secret key**
+   (the old one was public; treat it as burned).
+2. Copy the **Site Key** — the _shorter_ of the two (site keys are ~24
+   characters, secrets ~35) — and add it:
+   `vercel env add NEXT_PUBLIC_TURNSTILE_SITE_KEY production`.
+3. Copy the **new Secret Key** and add it:
+   `vercel env add TURNSTILE_SECRET_KEY production`.
+4. Redeploy (`vercel --prod`) — `NEXT_PUBLIC_*` is inlined at build time.
+5. Verify: the widget renders above the button on `/` (no "Troubleshoot"
+   link — that link is Turnstile's own fallback when it cannot render), the
+   browser console shows no `TurnstileError`, and a test enquiry arrives.
+
+Background: bots POST the server action directly (Sentry `LUDVIK4-SITE-2`),
+which a honeypot never sees and a single request never rate-limits; the
+captcha is the one layer they cannot bypass. Until it is on, every
+production submission logs `turnstile: no secret configured — captcha
+skipped`.
+
+**[SHIPPED 2026-08-30] Server-side form errors are English.** The captcha
+rejection and the validation fallback were still Russian copy on a form that
+ships only on the EN storefront; both now match the rest of the action's
+messages, with a test on the action pinning every visible string to ASCII.
 
 **[SHIPPED 2026-08-30] Link spam rejected at validation.** Shipped the same
 day as the finding above, as the layer that needs no keys: `leadSchema` now

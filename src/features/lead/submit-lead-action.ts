@@ -67,7 +67,7 @@ export async function submitLeadAction(
   const parsed = leadSchema.safeParse(values);
   if (!parsed.success) {
     return {
-      error: parsed.error.issues[0]?.message ?? "Проверьте поля формы.",
+      error: parsed.error.issues[0]?.message ?? "Please check the form fields.",
       reason: "validation",
       values,
     };
@@ -76,8 +76,7 @@ export async function submitLeadAction(
   const token = String(formData.get("cf-turnstile-response") ?? "");
   if (!(await verifyTurnstile(token, ip))) {
     return {
-      error:
-        "Не прошла проверка «я не робот». Обновите страницу и попробуйте снова.",
+      error: "The anti-bot check did not pass. Reload the page and try again.",
       reason: "captcha",
       values,
     };
