@@ -6,27 +6,20 @@ writing detail here.
 
 ## Now
 
-**[PENDING USER] Switch the Turnstile captcha on for ludvik4.dev.** On
+**[SHIPPED 2026-08-30] Turnstile captcha is live on ludvik4.dev.** On
 2026-08-23 the contact form delivered its first spam ("To the
-http://ludvik4.dev/fekal0911 Admin"). The form already has a honeypot, a
+http://ludvik4.dev/fekal0911 Admin"). The form already had a honeypot, a
 per-IP rate limit and Turnstile verification in code, but Vercel Production
-carries no `TURNSTILE_*` variables, so the captcha is skipped — and the
+carried no `TURNSTILE_*` variables, so the captcha was skipped — and the
 Sentry event `LUDVIK4-SITE-2` shows bots POST the server action directly,
-which a honeypot never sees and a single request never rate-limits. The captcha
-is the one layer that traffic cannot bypass. To enable it:
-
-1. Cloudflare dashboard → **Turnstile** → _Add widget_: hostname `ludvik4.dev`,
-   widget mode _Managed_ (invisible for most visitors, a checkbox for the
-   rest). Copy the **Site Key** and **Secret Key**.
-2. Hand both to the agent (or run yourself):
-   `vercel env add NEXT_PUBLIC_TURNSTILE_SITE_KEY production` and
-   `vercel env add TURNSTILE_SECRET_KEY production`, then redeploy —
-   `NEXT_PUBLIC_*` is inlined at build time, so an env change alone does
-   nothing until the next build.
-3. Verify: submit the form once on ludvik4.dev; the widget should render
-   above the button and the enquiry should arrive. Until step 2 lands, every
-   production submission logs `turnstile: no secret configured — captcha
-skipped` (Vercel → Logs), so the gap stays visible.
+which a honeypot never sees and a single request never rate-limits. Both keys
+(`NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`, widget mode
+_Managed_, hostname `ludvik4.dev`) now sit in Vercel Production and the
+redeploy (`ludvik4-7apk92xxv`) renders the widget on `/` — verified by
+grepping the live HTML for `cf-turnstile` and the Cloudflare script. A
+submission without a valid token is rejected with `reason: captcha`. **Worth
+doing once when convenient:** submit the form yourself on ludvik4.dev to see
+the enquiry arrive end-to-end with the captcha in the path.
 
 **[SHIPPED 2026-08-30] Link spam rejected at validation.** Shipped the same
 day as the finding above, as the layer that needs no keys: `leadSchema` now
