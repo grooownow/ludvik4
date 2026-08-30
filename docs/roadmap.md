@@ -6,6 +6,36 @@ writing detail here.
 
 ## Now
 
+**[PENDING USER] Switch the Turnstile captcha on for ludvik4.dev.** On
+2026-08-23 the contact form delivered its first spam ("To the
+http://ludvik4.dev/fekal0911 Admin"). The form already has a honeypot, a
+per-IP rate limit and Turnstile verification in code, but Vercel Production
+carries no `TURNSTILE_*` variables, so the captcha is skipped — and the
+Sentry event `LUDVIK4-SITE-2` shows bots POST the server action directly,
+which a honeypot never sees and a single request never rate-limits. The captcha
+is the one layer that traffic cannot bypass. To enable it:
+
+1. Cloudflare dashboard → **Turnstile** → _Add widget_: hostname `ludvik4.dev`,
+   widget mode _Managed_ (invisible for most visitors, a checkbox for the
+   rest). Copy the **Site Key** and **Secret Key**.
+2. Hand both to the agent (or run yourself):
+   `vercel env add NEXT_PUBLIC_TURNSTILE_SITE_KEY production` and
+   `vercel env add TURNSTILE_SECRET_KEY production`, then redeploy —
+   `NEXT_PUBLIC_*` is inlined at build time, so an env change alone does
+   nothing until the next build.
+3. Verify: submit the form once on ludvik4.dev; the widget should render
+   above the button and the enquiry should arrive. Until step 2 lands, every
+   production submission logs `turnstile: no secret configured — captcha
+skipped` (Vercel → Logs), so the gap stays visible.
+
+**[SHIPPED 2026-08-30] Link spam rejected at validation.** Shipped the same
+day as the finding above, as the layer that needs no keys: `leadSchema` now
+rejects a name containing a link (a scheme, `www.`, or a bare domain) and
+requires the message to still be ≥ 10 characters once every link is stripped,
+so "Hi <link> Owner" fails validation while "redesign https://example.com —
+the site loses mobile users" still passes. `verifyTurnstile` logs a warning on
+every production submission it skips for lack of a secret.
+
 **[PENDING USER] Two open actions from the analytics work.** Neither blocks
 anything, both are one-off:
 
@@ -416,7 +446,6 @@ Scoped and agreed, not yet started:
 Ideas worth keeping, not yet scoped:
 
 - Add the next case only when a public result and approved screenshot exist.
-- **Turnstile captcha** on the lead form (`TURNSTILE_*` already supported).
 - Short courses (AI & dev topics for beginners).
 - **Full bilingual site (RU / EN)** — a lightweight EN landing `/en` shipped
   2026-07-20 (entry point for the GitHub/qa-pilot audience). Full bilingual
