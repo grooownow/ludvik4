@@ -18,6 +18,9 @@ const serverOnlyPaths = [
   "src/app/services",
   "src/app/work",
   "src/middleware.ts",
+  // Next 16.3 type-checks tests during build; this integration test imports
+  // the auth route stashed above and is irrelevant to the static RU export.
+  "tests/integration/auth-route.test.ts",
   // The international Gridfin bundle (EN first; reviewed locales may follow), served by
   // the EN Vercel app. Left in place, `next export` would copy it into out/
   // and the RU-bundle cp below would merge over it. Stash it like the
@@ -69,6 +72,11 @@ async function main() {
   const moved: Array<{ source: string; stash: string }> = [];
 
   try {
+    // Next's generated route validators include the full app tree. Reusing
+    // `.next` after the EN build leaves references to routes intentionally
+    // stashed below, so the RU export must always start from a clean cache.
+    await rm(join(root, ".next"), { recursive: true, force: true });
+
     for (const relativePath of serverOnlyPaths) {
       const source = join(root, relativePath);
       if (optionalPaths.has(relativePath) && !existsSync(source)) {

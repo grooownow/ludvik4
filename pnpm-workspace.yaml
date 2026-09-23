@@ -18,10 +18,24 @@ auditConfig:
   # extract-zip) or extract-zip publishes a fixed version.
   ignoreGhsas:
     - GHSA-jmr9-qjv8-65gv
+    # GHSA-7pqw-9j4j-h8q3: a second extract-zip symlink-write advisory with
+    # the same dev-only reachability and no patched npm release (2.0.1 is
+    # still latest). Remove alongside the exception above once the parent
+    # dependency drops extract-zip or a fixed version is published.
+    - GHSA-7pqw-9j4j-h8q3
 overrides:
   # GHSA-ph9p-34f9-6g65: tmp path traversal via @lhci/cli (dev-only).
   # Remove when @lhci/cli or its transitive deps (inquirer, external-editor) update.
   tmp@<0.2.6: ^0.2.6
+  # GHSA-c83g-rgw3-j3cx + GHSA-73wf-gq98-2v4g: browserslist memory growth
+  # and prototype-write issues (via @sentry/webpack-plugin > webpack).
+  browserslist@<=4.28.6: ^4.28.7
+  # GHSA-67mh-4wv8-2f99: esbuild dev-server request exposure through the
+  # legacy @esbuild-kit loader bundled by the latest drizzle-kit.
+  esbuild@<=0.24.2: ^0.25.0
+  # GHSA-w5hq-g745-h8pq: uuid buffer bounds issue in the latest @lhci/cli.
+  # LHCI only calls UUID generation during local/CI Lighthouse collection.
+  uuid@<11.1.1: ^11.1.1
   # The entries below pull transitive copies up to their patched versions. Each
   # is reachable only through a dependency that has not re-released yet
   # (next, @sentry/nextjs, eslint, shadcn), so a direct bump cannot fix them.
