@@ -1,8 +1,10 @@
 ---
 title: "How to Write Cursor Rules That Stay Small and Actually Apply"
 description: "Practical Cursor Rules: choosing Always Apply, intelligent, glob, or manual activation; reducing duplication; and connecting instructions to enforceable checks."
-date: "2026-08-09"
-draft: true
+date: "2026-09-23"
+draft: false
+cover: /blog/cursor-rules-best-practices/card.jpg
+coverAlt: "A compact set of Cursor Rules connected to four scoped activation methods"
 ---
 
 Good Cursor Rules are short project instructions with a clear scope and a
@@ -19,6 +21,8 @@ another. The agent receives more tokens and less clarity.
 [Cursor Project Rules](https://cursor.com/docs/rules) live in
 `.cursor/rules/*.mdc`. Frontmatter controls when a rule enters context. The
 activation choice is part of the rule's meaning, not an implementation detail.
+For the boundary between project-wide and tool-specific instructions, see
+[AGENTS.md vs CLAUDE.md vs Cursor Rules](/blog/agents-md-vs-claude-md-vs-cursor-rules).
 
 ### Always Apply
 

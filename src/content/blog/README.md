@@ -30,29 +30,29 @@ Off-site status — ✅ live · 📝 draft ready · ⏳ waiting for platform quo
 n/a · ✕ dropped. Coworker flips a cell to ✅ with the posted URL (mirror of the
 matrix in `distribution.md`).
 
-| slug                                        | on site  | vc.ru | Дзен | X (@groownow) |
-| ------------------------------------------- | -------- | ----- | ---- | ------------- |
-| agents-ready-project                        | ✅ live  | ✅    | 📝   | 📝            |
-| agents-md-vs-claude-md-vs-cursor-rules      | ✅ live  | —     | —    | —             |
-| spec-driven-development-vs-vibe-coding      | 📝 draft | —     | —    | —             |
-| github-spec-kit-vs-application-skeleton     | 📝 draft | —     | —    | —             |
-| spec-first-spec-anchored-spec-as-source     | 📝 draft | —     | —    | —             |
-| cursor-rules-best-practices                 | 📝 draft | —     | —    | —             |
-| spec-driven-development                     | ✅ live  | 📝    | 📝   | 📝            |
-| github-spec-kit                             | ✅ live  | 📝    | 📝   | 📝            |
-| agents-md-primer                            | ✅ live  | —     | 📝   | 📝            |
-| cursor-rules                                | ✅ live  | —     | 📝   | 📝            |
-| stoimost-lendinga-2026                      | ✅ live  | ⏳    | 📝   | —             |
-| chto-podgotovit-pered-zakazom-lendinga      | ✅ live  | 📝    | 📝   | —             |
-| avtomatizatsiya-obrabotki-zayavok           | ✅ live  | 📝    | 📝   | —             |
-| ai-avtomatizatsiya-malogo-biznesa           | ✅ live  | 📝    | 📝   | —             |
-| mvp-etapy-sroki-pervyy-reliz                | ✅ live  | 📝    | 📝   | —             |
-| stoimost-razrabotki-mvp                     | ✅ live  | 📝    | 📝   | —             |
-| lending-ili-mnogostranichnyy-sayt           | ✅ live  | 📝    | 📝   | —             |
-| vnutrennee-veb-prilozhenie-dlya-biznesa     | ✅ live  | 📝    | 📝   | —             |
-| lending-vs-tilda                            | ✅ live  | 📝    | 📝   | —             |
-| mvp-ili-vnutrenniy-instrument               | ✅ live  | 📝    | 📝   | —             |
-| no-code-avtomatizatsiya-ili-custom-workflow | ✅ live  | 📝    | 📝   | —             |
+| slug                                        | on site | vc.ru | Дзен | X (@groownow) |
+| ------------------------------------------- | ------- | ----- | ---- | ------------- |
+| agents-ready-project                        | ✅ live | ✅    | 📝   | 📝            |
+| agents-md-vs-claude-md-vs-cursor-rules      | ✅ live | —     | —    | —             |
+| spec-driven-development-vs-vibe-coding      | ✅ live | —     | —    | —             |
+| github-spec-kit-vs-application-skeleton     | ✅ live | —     | —    | —             |
+| spec-first-spec-anchored-spec-as-source     | ✅ live | —     | —    | —             |
+| cursor-rules-best-practices                 | ✅ live | —     | —    | —             |
+| spec-driven-development                     | ✅ live | 📝    | 📝   | 📝            |
+| github-spec-kit                             | ✅ live | 📝    | 📝   | 📝            |
+| agents-md-primer                            | ✅ live | —     | 📝   | 📝            |
+| cursor-rules                                | ✅ live | —     | 📝   | 📝            |
+| stoimost-lendinga-2026                      | ✅ live | ⏳    | 📝   | —             |
+| chto-podgotovit-pered-zakazom-lendinga      | ✅ live | 📝    | 📝   | —             |
+| avtomatizatsiya-obrabotki-zayavok           | ✅ live | 📝    | 📝   | —             |
+| ai-avtomatizatsiya-malogo-biznesa           | ✅ live | 📝    | 📝   | —             |
+| mvp-etapy-sroki-pervyy-reliz                | ✅ live | 📝    | 📝   | —             |
+| stoimost-razrabotki-mvp                     | ✅ live | 📝    | 📝   | —             |
+| lending-ili-mnogostranichnyy-sayt           | ✅ live | 📝    | 📝   | —             |
+| vnutrennee-veb-prilozhenie-dlya-biznesa     | ✅ live | 📝    | 📝   | —             |
+| lending-vs-tilda                            | ✅ live | 📝    | 📝   | —             |
+| mvp-ili-vnutrenniy-instrument               | ✅ live | 📝    | 📝   | —             |
+| no-code-avtomatizatsiya-ili-custom-workflow | ✅ live | 📝    | 📝   | —             |
 
 Habr was dropped (see `distribution.md` → Dropped). X profile/brand assets live
 in `docs/brand/`.

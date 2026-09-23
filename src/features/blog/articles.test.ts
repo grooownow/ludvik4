@@ -141,6 +141,8 @@ describe("real content dir (src/content/blog)", () => {
       "cursor-rules-best-practices",
     ];
     const publishedSlugs = [
+      "cursor-rules-best-practices",
+      "spec-first-spec-anchored-spec-as-source",
       "github-spec-kit-vs-application-skeleton",
       "spec-driven-development-vs-vibe-coding",
       "agents-md-vs-claude-md-vs-cursor-rules",

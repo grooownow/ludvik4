@@ -136,14 +136,14 @@ material remains on the product surface.
 | Status         | Slug                                      | Core query / intent                                                |
 | -------------- | ----------------------------------------- | ------------------------------------------------------------------ |
 | **LIVE RU+EN** | `agents-md-vs-claude-md-vs-cursor-rules`  | `agents md` + `claude agents md` + instruction-file comparison     |
-| draft RU+EN    | `spec-driven-development-vs-vibe-coding`  | `spec driven development` + `vibe coding`, post-prototype decision |
-| draft RU+EN    | `github-spec-kit-vs-application-skeleton` | `github spec kit`, process harness vs project foundation           |
-| draft RU+EN    | `spec-first-spec-anchored-spec-as-source` | specification persistence models                                   |
-| draft RU+EN    | `cursor-rules-best-practices`             | `как писать agents md` / `cursor rules`, scoped-rule how-to        |
+| **LIVE RU+EN** | `spec-driven-development-vs-vibe-coding`  | `spec driven development` + `vibe coding`, post-prototype decision |
+| **LIVE RU+EN** | `github-spec-kit-vs-application-skeleton` | `github spec kit`, process harness vs project foundation           |
+| **LIVE RU+EN** | `spec-first-spec-anchored-spec-as-source` | specification persistence models                                   |
+| **LIVE RU+EN** | `cursor-rules-best-practices`             | `как писать agents md` / `cursor rules`, scoped-rule how-to        |
 
-Release rule: publish no second pair until the first article has an indexing
-state and query/impression signal in both market properties. Drafts remain
-invisible to routes, sitemap, RSS, and `llms.txt`.
+Release sequence completed on 2026-09-23 after the earlier pairs produced
+indexing and query/impression signals. All five pairs are now visible in their
+market routes, sitemaps, RSS feeds, and `llms.txt` files.
 
 ---
 
