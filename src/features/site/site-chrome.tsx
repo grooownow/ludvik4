@@ -124,7 +124,7 @@ export function SiteFooter({ content }: { content: MarketContent }) {
     <footer className="bg-surface-warm">
       <div className="text-muted-foreground mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-6 font-mono text-sm">
         <span>© 2026 Ludvik4</span>
-        <span className="flex items-center gap-5">
+        <span className="flex flex-wrap items-center gap-5">
           {content.footer.links.map((link) =>
             link.href === TELEGRAM_URL ? (
               <TelegramLink

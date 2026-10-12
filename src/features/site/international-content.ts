@@ -14,7 +14,7 @@ export type InternationalServicePage = {
 };
 
 export type InternationalWorkItem = {
-  slug: "qa-pilot" | "gridfin";
+  slug: "qa-pilot" | "gridfin" | "smallfriendfiles";
   title: string;
   kind: string;
   description: string;
@@ -226,6 +226,30 @@ export const internationalWork: InternationalWorkItem[] = [
       label: "View Gridfin landing",
       newTab: true,
     },
+  },
+  {
+    slug: "smallfriendfiles",
+    title: "smallFriendFiles",
+    kind: "Web application",
+    description:
+      "A pet's digital medical file: passports, lab results and vet reports in one place, with document extraction, search and selected files ready to share.",
+    image: "/cases/smallfriendfiles-en.webp",
+    imageAlt:
+      "smallFriendFiles English landing page showing the pet medical file on desktop and mobile",
+    lead: "smallFriendFiles turns scattered pet records into an organised history that owners can search, check and share with a vet.",
+    problem:
+      "Pet passports, lab results and vet reports often end up in separate folders and phone photos. Finding the right record and preparing documents for a new clinic, a move or a second opinion becomes a repeated manual task.",
+    solution: [
+      "A separate medical file for each pet, including passport details, vaccinations and original documents",
+      "Automatic extraction and short document summaries that owners can check against the original and correct",
+      "Search and filters by document type, date, clinic, vet and tags",
+      "Selected document packs with a temporary link or QR code, revocable access, and PDF or archive downloads; recipients need no account",
+      "A responsive browser interface in English, Spanish, Ukrainian and Russian",
+    ],
+    result:
+      "The application is live in open beta. It brings document upload, organisation, retrieval and sharing into one usable flow. Document processing handles routine work while medical decisions remain with the vet.",
+    website: "https://smallfriendfiles.fyi/en",
+    websiteLabel: "Open smallFriendFiles",
   },
 ];
 

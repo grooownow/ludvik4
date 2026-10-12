@@ -80,6 +80,9 @@ describe("HomeEn", () => {
         name: "qa-pilot repository and testing workflow documentation",
       }),
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /smallFriendFiles/i }),
+    ).toHaveAttribute("href", "/work/smallfriendfiles");
     expect(container.querySelector("#work .grid")).toHaveClass(
       "sm:grid-cols-2",
     );

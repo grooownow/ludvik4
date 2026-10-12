@@ -429,8 +429,12 @@ function CaseGrid({ items }: { items: CaseStudy[] }) {
   );
 }
 
-/** Homepage cases slot: FortNoise + Gridfin only, with the link to /cases. */
-export const HOME_CASE_SLUGS = ["fortnoise", "gridfin"] as const;
+/** Selected public projects, with the link to the full cases index. */
+export const HOME_CASE_SLUGS = [
+  "smallfriendfiles",
+  "fortnoise",
+  "gridfin",
+] as const;
 
 export function CasesPreview() {
   const featured = HOME_CASE_SLUGS.map((slug) =>
@@ -443,8 +447,8 @@ export function CasesPreview() {
         Примеры проектов
       </h2>
       <p className="text-muted-foreground mt-4 max-w-2xl">
-        Реальные продукты с публичным результатом: клиентский сервис и
-        собственный продукт для Claude Code.
+        Реальные продукты с публичным результатом: медкарта питомца, городской
+        сервис событий и инструмент для разработки приложений.
       </p>
       <CaseGrid items={featured} />
       <Link
