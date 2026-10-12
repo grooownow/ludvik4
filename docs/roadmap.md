@@ -6,12 +6,14 @@ writing detail here.
 
 ## Now
 
-**[PUBLISHING 2026-10-12] Two client-facing RU/EN article pairs.**
-The user explicitly instructed autonomous publication. All four articles now
-have `draft: false` and the actual release date 2026-10-12. The quote-composition
-and DIY-AI-versus-developer essays include localized metadata and shared covers.
-Release gates and production checks: `docs/specs/client-editorial-pair-2026-10.md`.
-Same-day release policy: `docs/decisions/0009-same-day-editorial-releases.md`.
+**[SHIPPED 2026-10-12] Two client-facing RU/EN article pairs are live.**
+The quote-composition and DIY-AI-versus-developer articles are published on
+ludvik4.ru and ludvik4.dev with localized metadata and shared covers. PR #10,
+all five CI checks, Vercel and Timeweb deploys passed. All four live URLs,
+canonicals, covers, mobile layouts and discovery feeds were verified. Evidence:
+`docs/specs/client-editorial-pair-2026-10.md` and
+`docs/seo/client-article-publication-2026-10-12.json`. The user explicitly
+instructed autonomous publication through completion.
 
 **[SHIPPED 2026-08-31] Turnstile captcha is live on ludvik4.dev — second
 attempt, after a key mix-up.** The first attempt (2026-08-30) went in with the

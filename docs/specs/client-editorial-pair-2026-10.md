@@ -2,7 +2,7 @@
 
 ## Brief and status
 
-**Status: publication approved; four articles enabled for the 2026-10-12 release.**
+**Status: LIVE RU+EN — all four articles verified on 2026-10-12.**
 
 The user requested two additional topics in Russian and English for prospective
 website and small-web-app clients, explicitly delegating topic and style
@@ -141,4 +141,39 @@ No application implementation or public route was changed.
 The generated RU hosting export was checked for both pages, covers, `lang="ru"`,
 apex canonical URLs, the release date, and discovery through sitemap/llms.txt.
 The writing-session browser screenshots above cover the unchanged article copy
-and layout. Production checks and indexing results will follow deployment.
+and layout. Production deployment and verification are complete; indexing request outcomes
+are recorded below.
+
+## Production release
+
+- PR: [#10](https://github.com/grooownow/ludvik4/pull/10), merged as
+  `5e2d82d102ea33218ccfdcdfcafcd3bfa8a4b0ee`.
+- All five required PR checks passed: quality, golden-path, remote-db, E2E,
+  Lighthouse. The main CI run passed as well.
+- EN: Vercel production deployment `dpl_Hf3b5mjbK7BHTqY8sEaqqYJVmBNN`
+  reached Ready and is aliased to ludvik4.dev.
+- RU: [Deploy RU run 38286919191](https://github.com/grooownow/ludvik4/actions/runs/38286919191)
+  completed successfully, including publication of the exact merge SHA in
+  Timeweb application 228103.
+- Production check at 19:56 Europe/Madrid: all four article URLs return 200
+  with their expected H1, description, language, canonical and release date.
+  Both covers are byte-identical to the committed assets. Each market's blog
+  list, sitemap, RSS and llms.txt contains both new articles.
+- Mobile browser checks passed for all four live pages: no horizontal overflow,
+  covers loaded, no page or console errors. The inspection traffic on EN was
+  marked internal.
+
+| Topic             | Russian                                                             | English                                                             |
+| ----------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Quote composition | [Article](https://ludvik4.ru/blog/what-development-quote-pays-for/) | [Article](https://ludvik4.dev/blog/what-development-quote-pays-for) |
+| DIY AI decision   | [Article](https://ludvik4.ru/blog/ai-website-diy-or-developer/)     | [Article](https://ludvik4.dev/blog/ai-website-diy-or-developer)     |
+
+Machine-readable evidence: `docs/seo/client-article-publication-2026-10-12.json`.
+Local screenshots and raw checks remain in git-ignored `tmp-review/`.
+
+All four Google Search Console indexing requests were accepted on 2026-10-12.
+The authenticated Chrome session was used separately for each verified market
+property. Each displayed “Отправлен запрос на индексирование”; screenshots are
+`tmp-review/index-request-<ru|en>-<price|ai>.png`. This confirms queue submission,
+not that Google has already indexed or ranked the pages. No social posting was
+performed.

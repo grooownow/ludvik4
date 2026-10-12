@@ -1,0 +1,120 @@
+{
+  "verified_at": "2026-10-12T19:56:18.034054+02:00",
+  "results": [
+    {
+      "market": "ru",
+      "articles": [
+        {
+          "url": "https://ludvik4.ru/blog/what-development-quote-pays-for/",
+          "status": 200,
+          "language": "ru",
+          "canonical": "https://ludvik4.ru/blog/what-development-quote-pays-for/",
+          "title": "Из чего складывается стоимость разработки сайта и приложения",
+          "cover_bytes": 122663,
+          "cover_sha256": "acba91776ac09f3983bc21e6a6f8c90eaeb1000376eaef47e11f2a20f04f736f"
+        },
+        {
+          "url": "https://ludvik4.ru/blog/ai-website-diy-or-developer/",
+          "status": 200,
+          "language": "ru",
+          "canonical": "https://ludvik4.ru/blog/ai-website-diy-or-developer/",
+          "title": "Сайт с AI: сделать самому или заказать разработку",
+          "cover_bytes": 142037,
+          "cover_sha256": "384fc785b987a0b47cd0437e0295cd0151774fd2c5e4441b16f5eec5cd96c1d3"
+        }
+      ],
+      "discovery": [
+        {
+          "url": "https://ludvik4.ru/blog/",
+          "status": 200,
+          "both_articles": true
+        },
+        {
+          "url": "https://ludvik4.ru/sitemap.xml",
+          "status": 200,
+          "both_articles": true
+        },
+        {
+          "url": "https://ludvik4.ru/blog/rss.xml",
+          "status": 200,
+          "both_articles": true
+        },
+        {
+          "url": "https://ludvik4.ru/llms.txt",
+          "status": 200,
+          "both_articles": true
+        }
+      ]
+    },
+    {
+      "market": "en",
+      "articles": [
+        {
+          "url": "https://ludvik4.dev/blog/what-development-quote-pays-for",
+          "status": 200,
+          "language": "en",
+          "canonical": "https://ludvik4.dev/blog/what-development-quote-pays-for",
+          "title": "What a Website or Web App Development Quote Actually Pays For",
+          "cover_bytes": 122663,
+          "cover_sha256": "acba91776ac09f3983bc21e6a6f8c90eaeb1000376eaef47e11f2a20f04f736f"
+        },
+        {
+          "url": "https://ludvik4.dev/blog/ai-website-diy-or-developer",
+          "status": 200,
+          "language": "en",
+          "canonical": "https://ludvik4.dev/blog/ai-website-diy-or-developer",
+          "title": "AI Website or Web App: Build It Yourself or Hire a Developer?",
+          "cover_bytes": 142037,
+          "cover_sha256": "384fc785b987a0b47cd0437e0295cd0151774fd2c5e4441b16f5eec5cd96c1d3"
+        }
+      ],
+      "discovery": [
+        {
+          "url": "https://ludvik4.dev/blog",
+          "status": 200,
+          "both_articles": true
+        },
+        {
+          "url": "https://ludvik4.dev/sitemap.xml",
+          "status": 200,
+          "both_articles": true
+        },
+        {
+          "url": "https://ludvik4.dev/blog/rss.xml",
+          "status": 200,
+          "both_articles": true
+        },
+        {
+          "url": "https://ludvik4.dev/llms.txt",
+          "status": 200,
+          "both_articles": true
+        }
+      ]
+    }
+  ],
+  "release_commit": "5e2d82d102ea33218ccfdcdfcafcd3bfa8a4b0ee",
+  "pull_request": "https://github.com/grooownow/ludvik4/pull/10",
+  "ci_run": "https://github.com/grooownow/ludvik4/actions/runs/38286588064",
+  "ru_deploy_run": "https://github.com/grooownow/ludvik4/actions/runs/38286919191",
+  "vercel_deployment_id": "dpl_Hf3b5mjbK7BHTqY8sEaqqYJVmBNN",
+  "google_indexing_requests": [
+    {
+      "url": "https://ludvik4.ru/blog/what-development-quote-pays-for/",
+      "status": "accepted"
+    },
+    {
+      "url": "https://ludvik4.ru/blog/ai-website-diy-or-developer/",
+      "status": "accepted"
+    },
+    {
+      "url": "https://ludvik4.dev/blog/what-development-quote-pays-for",
+      "status": "accepted"
+    },
+    {
+      "url": "https://ludvik4.dev/blog/ai-website-diy-or-developer",
+      "status": "accepted"
+    }
+  ],
+  "indexing_requests_verified_at": "2026-10-12T20:01:52.784351+02:00",
+  "indexing_note": "Google confirmed that all four URLs were added to its priority crawl queue; this does not assert indexing or rankings."
+}
