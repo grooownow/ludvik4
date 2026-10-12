@@ -26,7 +26,7 @@ clusters. These are qualitative intent hypotheses, not additions to the
 ongoing costs, and AI builder alternatives have relevant result sets; no search
 volume or ranking opportunity has been measured.
 
-| Market | Target query                                    | Cluster / intent                       | Draft slug                        |
+| Market | Target query                                    | Cluster / intent                       | Article slug                      |
 | ------ | ----------------------------------------------- | -------------------------------------- | --------------------------------- |
 | RU     | из чего складывается стоимость разработки сайта | C7 + C6, proposal composition          | `what-development-quote-pays-for` |
 | EN     | what does a website development quote include   | Website/MVP buyer, proposal comparison | `what-development-quote-pays-for` |

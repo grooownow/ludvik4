@@ -73,6 +73,8 @@ describe("buildSitemap", () => {
       `${baseURL}/gridfin/en/docs/application-skeleton`,
       `${baseURL}/gridfin/en/guides/why-ai-needs-engineering-rules`,
       `${baseURL}/blog`,
+      `${baseURL}/blog/ai-website-diy-or-developer`,
+      `${baseURL}/blog/what-development-quote-pays-for`,
       `${baseURL}/blog/cursor-rules-best-practices`,
       `${baseURL}/blog/spec-first-spec-anchored-spec-as-source`,
       `${baseURL}/blog/github-spec-kit-vs-application-skeleton`,

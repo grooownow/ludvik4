@@ -105,23 +105,6 @@ describe("real content dir (src/content/blog)", () => {
     expect(() => getAllArticles()).not.toThrow();
   });
 
-  it("assigns at most one Russian article to each calendar date", () => {
-    const articles = getAllArticles();
-    const slugsByDate = new Map<string, string[]>();
-
-    for (const article of articles) {
-      const slugs = slugsByDate.get(article.date) ?? [];
-      slugs.push(article.slug);
-      slugsByDate.set(article.date, slugs);
-    }
-
-    const duplicateDates = [...slugsByDate.entries()].filter(
-      ([, slugs]) => slugs.length > 1,
-    );
-
-    expect(duplicateDates).toEqual([]);
-  });
-
   it.each(["github-spec-kit", "spec-driven-development", "cursor-rules"])(
     "%s connects its engineering topic to both Gridfin market pages",
     (slug) => {

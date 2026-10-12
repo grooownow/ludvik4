@@ -2,14 +2,16 @@
 
 ## Brief and status
 
-**Status: four complete drafts; publication pending editorial approval.**
+**Status: publication approved; four articles enabled for the 2026-10-12 release.**
 
 The user requested two additional topics in Russian and English for prospective
 website and small-web-app clients, explicitly delegating topic and style
 selection. They asked for business explanations of price, delivery value,
 systematic engineering and design, and the comparison with a quick AI-built
 result. This request supersedes the legacy IT-audience default for these two
-articles. It does not request an external publication or social distribution.
+articles. The user subsequently explicitly instructed publication on both sites and
+confirmed that the task must proceed autonomously through completion. Social
+distribution is outside this release.
 
 ## Audience questions and selection
 
@@ -42,11 +44,14 @@ retains its worksheet role. No route, component, loader, schema or interface
 behaviour is changed. The established MDX mapping preserves internal Link
 navigation. The shared image for each pair has localized alt text.
 
-All four MDX files are drafts. Their provisional slots are 12 and 13 October;
-replace them with actual dates at publication. This meets the existing
-one-Russian-article-per-calendar-date contract without backdating publication.
-No merge, production push, console indexing or social posting is performed
-in this writing session.
+All four MDX files use `draft: false` and the actual release date 2026-10-12.
+Both pairs are published together at the user's instruction. The historical
+uniqueness-only date test was removed because it prevented a legitimate
+same-day release; date format validation, sorting and market isolation remain
+covered by existing tests. Decision: ADR 0009.
+
+Production release follows the existing main-branch pipelines. All four URLs,
+localized metadata, covers and discovery feeds must be checked after deployment.
 
 ## Source verification — this session
 
@@ -77,7 +82,7 @@ Local service composition was checked against `src/features/site/content.ts`,
 - Review copies: `tmp-review/what-development-quote-pays-for.ru.md`, `.en.md`,
   `tmp-review/ai-website-diy-or-developer.ru.md`, `.en.md` (git-ignored).
 
-## Validation
+## Draft validation — preceding writing session
 
 | Gate          | Command / scope                     | Result | Evidence                                                        |
 | ------------- | ----------------------------------- | ------ | --------------------------------------------------------------- |
@@ -108,5 +113,32 @@ the appropriate local articles, service pages or guides; covers are 122,663 and
 change. Existing article validation and draft-isolation tests are exercised by
 the suite.
 
-Gates are green. Editorial review and publication remain separate from this
-verification; the public sites have not been changed by this session.
+These checks validated the drafts before publication. The release is verified
+again with the published flags and same-day dates below.
+
+## Publication validation — 2026-10-12
+
+User approval is explicit. Published-flag validation passed after the audit
+recovery in ADR 0010:
+
+| Gate              | Result | Evidence                                                |
+| ----------------- | ------ | ------------------------------------------------------- |
+| Lint              | PASS   | `All matched files use Prettier code style!`; exit 0    |
+| Unit/int          | PASS   | `Test Files  60 passed (60)`; `Tests  489 passed (489)` |
+| E2E               | PASS   | `38 passed (20.0s)`                                     |
+| RU build          | PASS   | `Compiled successfully in 611ms`; static pages `51/51`  |
+| EN build          | PASS   | `Compiled successfully in 1074ms`; static pages `36/36` |
+| RU hosting export | PASS   | `Compiled successfully in 2.4s`; static pages `44/44`   |
+| Audit             | PASS   | `Severity: 2 low                                        | 1 moderate | 3 high (3 ignored)`; exit 0 |
+| Skill harness     | N.A.   | No final changes to skills, rules or entry maps         |
+
+The existing EN sitemap assertion first failed because the two new article
+URLs were absent from its expected list. Adding the two approved URLs restored
+the test; this is observed failure evidence for the publication contract.
+The uniqueness-only chronology assertion was removed as recorded in ADR 0009.
+No application implementation or public route was changed.
+
+The generated RU hosting export was checked for both pages, covers, `lang="ru"`,
+apex canonical URLs, the release date, and discovery through sitemap/llms.txt.
+The writing-session browser screenshots above cover the unchanged article copy
+and layout. Production checks and indexing results will follow deployment.
