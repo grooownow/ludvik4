@@ -165,6 +165,11 @@ A bar confirms in words which of the two just happened — deliberately visible
 rather than a console line, because the device this exists for is usually a
 phone, where there is no console to read.
 
+The confirmation is a compact status line with a 44px dismiss button. Closing
+it preserves the browser's analytics exclusion. It appears only when the URL
+explicitly carries the internal-device parameter; ordinary page visits do not
+show the notice. Technical instructions belong here rather than in the banner.
+
 Three things follow from where the answer is stored (`localStorage`, key
 `ludvik4:internal`):
 
