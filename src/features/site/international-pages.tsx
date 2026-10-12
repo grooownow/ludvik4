@@ -1,4 +1,5 @@
 import type { Route } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CtaLink } from "./cta-link";
@@ -214,8 +215,8 @@ export function InternationalWorkIndexView() {
           </h1>
           <p className="text-muted-foreground mt-5 text-lg leading-relaxed">
             Work appears here when the product, code, or outcome can be checked
-            publicly. Explore an open-source testing tool and the working
-            product behind an enforceable AI-assisted development process.
+            publicly. Explore a pet records application, an open-source testing
+            tool, and a product for structured AI-assisted development.
           </p>
         </div>
         <InternationalWorkGrid />
@@ -273,6 +274,15 @@ export function InternationalWorkView({
           >
             {item.websiteLabel} →
           </a>
+          <Image
+            src={item.image}
+            alt={item.imageAlt}
+            width={1200}
+            height={675}
+            priority
+            sizes="(min-width: 1024px) 768px, 100vw"
+            className="border-border mt-8 aspect-video w-full rounded-2xl border object-cover object-top"
+          />
         </div>
       </div>
       <Section>

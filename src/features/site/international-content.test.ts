@@ -24,6 +24,7 @@ describe("international commercial content", () => {
     expect(internationalWork.map((item) => item.slug)).toEqual([
       "qa-pilot",
       "gridfin",
+      "smallfriendfiles",
     ]);
     expect(internationalWork[1]?.cardLink).toEqual({
       href: "/gridfin/en",
@@ -34,9 +35,13 @@ describe("international commercial content", () => {
     expect(internationalWork[0]?.description).not.toContain("Codex plugin");
     expect(internationalWork[1]?.image).toBe("/cases/gridfin-en.webp");
     expect(internationalWork[1]?.image).not.toBe("/cases/gridfin.webp");
-    expect(JSON.stringify(internationalWork)).not.toMatch(
-      /\.ru\b|russia|russian|kaliningrad|fortnoise/i,
-    );
+    // Supported interface languages are product capabilities, not market proof.
+    expect(
+      JSON.stringify(internationalWork).replace(
+        "English, Spanish, Ukrainian and Russian",
+        "supported interface languages",
+      ),
+    ).not.toMatch(/\.ru\b|russia|russian|kaliningrad|fortnoise/i);
   });
 
   it("defines one practical decision guide for each service cluster", () => {

@@ -8,6 +8,7 @@ describe("CasesIndexView", () => {
     render(<CasesIndexView baseUrl="https://ludvik4.ru" />);
 
     for (const [name, href] of [
+      [/smallFriendFiles/i, "/cases/smallfriendfiles"],
       [/FortNoise/, "/cases/fortnoise"],
       [/Gridfin/, "/cases/gridfin"],
       [/qa-pilot/, "/cases/qa-pilot"],

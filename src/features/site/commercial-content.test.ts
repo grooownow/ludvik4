@@ -19,6 +19,7 @@ describe("commercial content", () => {
 
   it("keeps client work and own products clearly labelled", () => {
     expect(caseStudies.map((item) => item.slug)).toEqual([
+      "smallfriendfiles",
       "fortnoise",
       "gridfin",
       "qa-pilot",

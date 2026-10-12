@@ -40,8 +40,12 @@ describe("HomeRu", () => {
     );
   });
 
-  it("previews exactly two cases — FortNoise and Gridfin — with the all-cases link", () => {
+  it("previews smallFriendFiles, FortNoise and Gridfin with the all-cases link", () => {
     render(<HomeRu content={content} baseUrl="https://ludvik4.ru" />);
+
+    expect(
+      screen.getByRole("link", { name: /smallFriendFiles/i }),
+    ).toHaveAttribute("href", "/cases/smallfriendfiles");
 
     expect(screen.getByRole("link", { name: /Gridfin/ })).toHaveAttribute(
       "href",

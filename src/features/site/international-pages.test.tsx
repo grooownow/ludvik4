@@ -7,6 +7,10 @@ describe("InternationalWorkIndexView", () => {
     render(<InternationalWorkIndexView />);
 
     expect(
+      screen.getByRole("link", { name: /smallFriendFiles/i }),
+    ).toHaveAttribute("href", "/work/smallfriendfiles");
+
+    expect(
       screen.getByRole("heading", { level: 3, name: "Gridfin" }),
     ).toBeInTheDocument();
 

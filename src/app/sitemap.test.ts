@@ -34,6 +34,7 @@ describe("buildSitemap", () => {
     );
     expect(urls).toContain(`${baseURL}/uslugi/razrabotka-mvp/`);
     expect(urls).toContain(`${baseURL}/cases/`);
+    expect(urls).toContain(`${baseURL}/cases/smallfriendfiles/`);
     expect(urls).toContain(`${baseURL}/cases/fortnoise/`);
     expect(urls).toContain(`${baseURL}/cases/gridfin/`);
     expect(urls).toContain(`${baseURL}/cases/qa-pilot/`);
@@ -51,7 +52,7 @@ describe("buildSitemap", () => {
     for (const d of getAllArticles().filter((a) => a.draft)) {
       expect(urls).not.toContain(`${baseURL}/blog/${d.slug}/`);
     }
-    expect(urls).toHaveLength(12 + getPublishedArticles().length);
+    expect(urls).toHaveLength(13 + getPublishedArticles().length);
   });
 
   it("EN: landing, service pages, proof, source pages and EN articles", () => {
@@ -63,6 +64,7 @@ describe("buildSitemap", () => {
       `${baseURL}/services/mvp-development`,
       `${baseURL}/work`,
       `${baseURL}/work/qa-pilot`,
+      `${baseURL}/work/smallfriendfiles`,
       `${baseURL}/about`,
       `${baseURL}/guides`,
       `${baseURL}/guides/website-project-brief`,
