@@ -147,6 +147,29 @@ market routes, sitemaps, RSS feeds, and `llms.txt` files.
 
 ---
 
+## Client editorial pair — drafted 2026-10-12
+
+The user explicitly delegated topic selection and writing for prospective
+clients in both markets. These explanatory articles address buying decisions;
+they contain no programming tutorial or fill-in planning worksheet. Their
+unscored intent seeds are recorded in `docs/seo-core.md`. Brief, sources and
+validation evidence: `docs/specs/client-editorial-pair-2026-10.md`.
+
+| Status      | Slug                              | RU / EN target intent                      | Internal links                                                                                           |
+| ----------- | --------------------------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| DRAFT RU+EN | `what-development-quote-pays-for` | Quote composition and comparable scope     | ↔ AI decision article; RU → landing/MVP cost articles and services; EN → website/MVP services and guides |
+| DRAFT RU+EN | `ai-website-diy-or-developer`     | DIY suitability and business-use readiness | ↔ quote article; RU → MVP service; EN → MVP service and one-user-journey guide                           |
+
+Both pairs have localized metadata, original English adaptations and one
+shared on-brand cover per topic. Dates `2026-10-12` and `2026-10-13` are
+provisional release slots, preserving the repository's one-RU-article-per-date
+contract; update to actual publication dates when approved. All four files
+retain `draft: true` and stay absent from public routes and discovery feeds.
+
+Review copies are in git-ignored `tmp-review/`; new copy is ready for editorial
+review. No automatic publication or indexing request is part of this writing
+session.
+
 ## Maintenance
 
 - After ~3–4 weeks live: pull real queries from GSC/Вебмастер, fold surfaced

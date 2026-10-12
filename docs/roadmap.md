@@ -6,6 +6,13 @@ writing detail here.
 
 ## Now
 
+**[DRAFTED 2026-10-12] Two client-facing RU/EN article pairs are ready.**
+The quote-composition and DIY-AI-versus-developer essays explain delivery value
+without programming tutorials. Four MDX drafts, localized metadata, two shared
+covers and review copies are prepared. They retain `draft: true`; public feeds
+are unchanged. Brief, provisional release dates and validation:
+`docs/specs/client-editorial-pair-2026-10.md`. Review files live in `tmp-review/`.
+
 **[SHIPPED 2026-08-31] Turnstile captcha is live on ludvik4.dev — second
 attempt, after a key mix-up.** The first attempt (2026-08-30) went in with the
 **secret key in both slots** — Turnstile site and secret keys look alike
