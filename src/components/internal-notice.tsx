@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { INTERNAL_PARAM } from "@/lib/analytics";
 
 /**
  * Confirmation that `?ludvik4_internal=…` took effect on this device.
@@ -27,36 +26,33 @@ export function InternalNotice({
   return (
     <output
       aria-label="Analytics on this device"
-      className="motion-safe:animate-in motion-safe:slide-in-from-bottom-4 motion-safe:fade-in border-pink-soft bg-card fixed inset-x-0 bottom-0 z-50 block border-t shadow-[0_-14px_40px_-24px_rgba(26,26,26,0.25)] motion-safe:duration-300"
+      className="motion-safe:animate-in motion-safe:slide-in-from-bottom-4 motion-safe:fade-in border-pink-soft bg-card fixed inset-x-0 bottom-0 z-50 block max-h-[50dvh] overflow-y-auto border-t shadow-lg motion-safe:duration-300"
     >
-      <div className="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-          {muted ? (
-            <>
-              <span className="text-foreground font-medium">
-                Analytics is off on this device.
-              </span>{" "}
-              Visits from this browser are no longer counted. The setting is
-              remembered per browser, so a phone and a laptop are two separate
-              decisions. Add{" "}
-              <code className="text-foreground">?{INTERNAL_PARAM}=0</code> to
-              any page here to switch it back on.
-            </>
-          ) : (
-            <>
-              <span className="text-foreground font-medium">
-                Analytics is on again on this device.
-              </span>{" "}
-              Visits from this browser are counted like anyone else&apos;s.
-            </>
-          )}
+      <div className="mx-auto flex max-w-5xl items-start justify-between gap-3 px-4 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:px-6">
+        <p className="text-foreground min-w-0 py-3 text-sm leading-snug font-medium">
+          {muted
+            ? "Analytics is off on this device."
+            : "Analytics is on again on this device."}
         </p>
-
-        <div className="shrink-0">
-          <Button variant="outline" size="lg" onClick={onDismiss}>
-            Got it
-          </Button>
-        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-11 shrink-0"
+          aria-label="Dismiss analytics notice"
+          onClick={onDismiss}
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            className="size-4"
+          >
+            <path d="m6 6 12 12M18 6 6 18" />
+          </svg>
+        </Button>
       </div>
     </output>
   );

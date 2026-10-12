@@ -6,6 +6,12 @@ writing detail here.
 
 ## Now
 
+**[FIXING 2026-10-12] Compact internal analytics confirmation.**
+The owner-facing notice obscured article text and placed its dismiss action
+below the mobile viewport. A short status line and accessible close control
+are implemented; browser checks, gates and deployment are in progress.
+`docs/specs/internal-analytics-notice-fix.md`.
+
 **[SHIPPED 2026-10-12] Two client-facing RU/EN article pairs are live.**
 The quote-composition and DIY-AI-versus-developer articles are published on
 ludvik4.ru and ludvik4.dev with localized metadata and shared covers. PR #10,

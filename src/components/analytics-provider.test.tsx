@@ -594,7 +594,7 @@ describe("AnalyticsProvider internal-device confirmation", () => {
 
     await renderProvider(<p>content</p>);
     await userEvent.click(
-      await screen.findByRole("button", { name: "Got it" }),
+      await screen.findByRole("button", { name: "Dismiss analytics notice" }),
     );
 
     expect(notice()).not.toBeInTheDocument();
