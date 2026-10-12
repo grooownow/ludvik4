@@ -6,7 +6,7 @@ The user's mobile screenshot showed the internal-device confirmation occupying
 a large part of the article. Its long explanatory text pushed the bottom
 "Got it" control beyond the visible area. The user could not dismiss it.
 
-Status: locally verified; publication in progress.
+Status: LIVE on ludvik4.dev — verified 2026-10-12.
 
 ## Fix
 
@@ -56,3 +56,19 @@ The measurement awaited the actual entry animation rather than using a fixed
 sleep. The updated dismissal test failed against the previous component and
 passed with the fix restored (`tmp-review/compact-analytics-red-proof.log` and
 `compact-analytics-green-proof.log`).
+
+## Production
+
+PR [#11](https://github.com/grooownow/ludvik4/pull/11) passed all five checks and
+merged as `86f2b6526ad95dbab1063667db27d5bd994fbd1a`. Vercel production deployment
+`dpl_5HPUekm8BPWD1f9ss4oXbrT5r31H` reached Ready and is aliased to ludvik4.dev.
+
+Live checks at 375×844 with normal text and 320×360 with 200% text confirmed
+that the close target is fully visible and clickable. Dismissal removes the
+notice while retaining the stored exclusion; ordinary reloads do not show it.
+There were no page or console errors. The default-size notice measured 61px.
+
+Screenshots: `tmp-review/compact-analytics-live-375-100.png`,
+`tmp-review/compact-analytics-live-320-200.png` and the cropped detail
+`tmp-review/compact-analytics-live-detail.png`. Original unrelated SEO working
+changes were preserved outside the fix's commits.

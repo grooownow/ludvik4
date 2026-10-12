@@ -6,10 +6,11 @@ writing detail here.
 
 ## Now
 
-**[FIXING 2026-10-12] Compact internal analytics confirmation.**
-The owner-facing notice obscured article text and placed its dismiss action
-below the mobile viewport. A short status line and accessible close control
-are implemented; browser checks, gates and deployment are in progress.
+**[FIXED 2026-10-12] Compact internal analytics confirmation is live on EN.**
+The status is now a short line with a visible accessible close control, safe-
+area padding and a height cap for enlarged text. Dismissal preserves the
+analytics exclusion. CI, both builds and local/live mobile checks passed,
+including 320×360 with 200% text. Evidence and deployment:
 `docs/specs/internal-analytics-notice-fix.md`.
 
 **[SHIPPED 2026-10-12] Two client-facing RU/EN article pairs are live.**
