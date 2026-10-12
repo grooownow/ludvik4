@@ -6,12 +6,12 @@ writing detail here.
 
 ## Now
 
-**[READY 2026-10-12] smallFriendFiles portfolio case in both markets.**
+**[SHIPPED 2026-10-12] smallFriendFiles portfolio case is live in both markets.**
 Localized homepage cards, index entries and detailed cases describe the pet
-medical-file workflow with actual product screenshots. Local gates and both
-production builds passed; footer wrapping fixes observed mobile overflow.
-Publication and live checks are in progress. Evidence:
-`docs/specs/smallfriendfiles-case.md`.
+medical-file workflow with actual product screenshots. PR #12, all five CI
+checks, Vercel and Timeweb deploys passed. Both live cases, discovery feeds
+and mobile/tablet/desktop layouts were verified. Footer links now wrap on
+small screens. Evidence: `docs/specs/smallfriendfiles-case.md`.
 
 **[FIXED 2026-10-12] Compact internal analytics confirmation is live on EN.**
 The status is now a short line with a visible accessible close control, safe-

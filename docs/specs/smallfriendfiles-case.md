@@ -1,6 +1,6 @@
 # smallFriendFiles portfolio case
 
-Status: implementation complete; verification and publication in progress.
+Status: published on both production domains on 2026-10-12.
 
 ## Request and scope
 
@@ -74,3 +74,20 @@ no `/_vercel/insights/script.js` endpoint; its local 404 is infrastructure-only.
 The existing unused ESLint disable warning in `opengraph-image.tsx` is
 unchanged. The screenshots are 1200×675 WebP, 56,218 bytes (RU) and 54,506
 bytes (EN). Public-data browser checks required no login or new records.
+
+## Production publication
+
+PR #12: <https://github.com/grooownow/ludvik4/pull/12>. All five CI jobs passed
+before merge; merge commit `738a7bd34a255568a17ccedead72d9c78ce3f097`.
+
+- EN Vercel deployment `dpl_51hr1Prc2Mh6g3DneVVB7wAbtLK2` is Ready and
+  aliased to ludvik4.dev.
+- RU Timeweb workflow `38296183401` completed successfully for the same merge.
+- Both live cases, homepage/index links, languages, canonical URLs, sitemap,
+  llms.txt and byte-identical cover images were verified.
+- Live homepage-to-case clicks and layouts passed at 375/768/1280px in both
+  markets. Both detailed cases have no console errors on direct navigation.
+- The pre-existing EN Work hub triggers a Gridfin static-landing RSC prefetch 404. Its normal landing destination works; it does not affect the new case.
+
+Machine-readable publication checks:
+`docs/seo/smallfriendfiles-publication-2026-10-12.json`.

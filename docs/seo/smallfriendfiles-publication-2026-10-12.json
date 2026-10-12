@@ -1,0 +1,48 @@
+{
+  "checked_at": "2026-10-12T19:18:54.070754+00:00",
+  "merge_commit": "738a7bd34a255568a17ccedead72d9c78ce3f097",
+  "pull_request": "https://github.com/grooownow/ludvik4/pull/12",
+  "ci_run": 38295834570,
+  "ci_jobs": {
+    "quality": "success",
+    "golden-path": "success",
+    "remote-db": "success",
+    "e2e": "success",
+    "lighthouse": "success"
+  },
+  "vercel_deployment": "dpl_51hr1Prc2Mh6g3DneVVB7wAbtLK2",
+  "timeweb_workflow": 38296183401,
+  "live_checks": [
+    {
+      "market": "ru",
+      "url": "https://ludvik4.ru/cases/smallfriendfiles/",
+      "title": "smallFriendFiles — кейс · Ludvik4",
+      "language": "ru",
+      "canonical": "https://ludvik4.ru/cases/smallfriendfiles/",
+      "project": "https://smallfriendfiles.fyi/ru",
+      "homepage_and_index": true,
+      "sitemap_and_llms": true,
+      "cover_bytes": 56218,
+      "cover_sha256": "a225608c478cb1d18b6dc71fcf9fdfe705f92f77d55ee86538474abbe3de8d0a"
+    },
+    {
+      "market": "en",
+      "url": "https://ludvik4.dev/work/smallfriendfiles",
+      "title": "smallFriendFiles — Case Study · Ludvik4",
+      "language": "en",
+      "canonical": "https://ludvik4.dev/work/smallfriendfiles",
+      "project": "https://smallfriendfiles.fyi/en",
+      "homepage_and_index": true,
+      "sitemap_and_llms": true,
+      "cover_bytes": 54506,
+      "cover_sha256": "eadc918645735d3b7a4c8593cc59cf96a072c9fc47aed5c7a22ccca6de5c080c"
+    }
+  ],
+  "browser": {
+    "widths": [375, 768, 1280],
+    "homepage_to_case": "passed in both markets",
+    "horizontal_overflow": false,
+    "direct_case_console_errors": 0,
+    "existing_en_work_prefetch_issue": "Gridfin static landing RSC prefetch returns 404; new case unaffected"
+  }
+}
