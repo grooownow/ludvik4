@@ -147,6 +147,30 @@ market routes, sitemaps, RSS feeds, and `llms.txt` files.
 
 ---
 
+## Client editorial pair — publication approved 2026-10-12
+
+The user explicitly delegated topic selection and writing for prospective
+clients in both markets. These explanatory articles address buying decisions;
+they contain no programming tutorial or fill-in planning worksheet. Their
+unscored intent seeds are recorded in `docs/seo-core.md`. Brief, sources and
+validation evidence: `docs/specs/client-editorial-pair-2026-10.md`.
+
+| Status        | Slug                              | RU / EN target intent                      | Internal links                                                                                           |
+| ------------- | --------------------------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| PUBLISH RU+EN | `what-development-quote-pays-for` | Quote composition and comparable scope     | ↔ AI decision article; RU → landing/MVP cost articles and services; EN → website/MVP services and guides |
+| PUBLISH RU+EN | `ai-website-diy-or-developer`     | DIY suitability and business-use readiness | ↔ quote article; RU → MVP service; EN → MVP service and one-user-journey guide                           |
+
+Both pairs have localized metadata, original English adaptations and one
+shared on-brand cover per topic. The user explicitly instructed publication of
+both pairs on 2026-10-12, so all four files use that actual release date and
+`draft: false`. Same-day releases are supported; the former uniqueness-only
+editorial test was removed (ADR 0009). List, sitemap, RSS and `llms.txt`
+publication remains automatic and market-specific.
+
+Review copies remain in git-ignored `tmp-review/`. Deploy through the existing
+GitHub main → Vercel / SourceCraft-Timeweb paths, then verify all four URLs and
+request indexing where an authenticated console session is available.
+
 ## Maintenance
 
 - After ~3–4 weeks live: pull real queries from GSC/Вебмастер, fold surfaced

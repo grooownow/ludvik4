@@ -23,7 +23,23 @@ auditConfig:
     # still latest). Remove alongside the exception above once the parent
     # dependency drops extract-zip or a fixed version is published.
     - GHSA-7pqw-9j4j-h8q3
+    # GHSA-vfj7-8cjw-p6xm: braces stack exhaustion on deeply nested globs.
+    # npm's latest is still 3.0.3 (no patched release). All five paths are
+    # dev-only lint/shadcn tooling using repository-controlled glob patterns;
+    # src/ has no braces/micromatch entry point or request-supplied patterns.
+    # Remove when braces publishes a patched release or parents replace it.
+    - GHSA-vfj7-8cjw-p6xm
 overrides:
+  # GHSA-8r5x-fm3f-whwj + GHSA-p8wg-vrv2-v86f: AST injection. The latest
+  # eslint-plugin-boundaries 7.2.0 pins 4.7.9; 4.7.10 preserves the 4.x API.
+  # Remove when that plugin and @boundaries/elements ship a patched range.
+  handlebars@<=4.7.9: ^4.7.10
+  # GHSA-c475-qrg2-pj4r: FTP directory-listing DoS (dev-only LHCI proxy chain).
+  # Even get-uri 8.0.1 still requests basic-ftp 5.x. Version 6 retains the
+  # Client API; its breaking change rejects separate transfer hosts by default,
+  # a secure restriction not needed by this project's HTTP-only Lighthouse run.
+  # Remove when get-uri's range reaches a patched version.
+  "get-uri>basic-ftp": ^6.2.3
   # GHSA-ph9p-34f9-6g65: tmp path traversal via @lhci/cli (dev-only).
   # Remove when @lhci/cli or its transitive deps (inquirer, external-editor) update.
   tmp@<0.2.6: ^0.2.6

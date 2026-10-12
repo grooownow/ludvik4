@@ -18,6 +18,24 @@ Commercial mapping shipped 2026-07-27:
 The next commercial pull should validate variants around `стоимость лендинга`,
 `автоматизация заявок`, `стоимость mvp`, and `веб приложение для бизнеса`.
 
+## Client editorial seeds — 2026-10-12
+
+User-requested buyer content extends the existing cost and AI-development
+clusters. These are qualitative intent hypotheses, not additions to the
+44-query scored dataset. A current search-result review confirmed that scope,
+ongoing costs, and AI builder alternatives have relevant result sets; no search
+volume or ranking opportunity has been measured.
+
+| Market | Target query                                    | Cluster / intent                       | Article slug                      |
+| ------ | ----------------------------------------------- | -------------------------------------- | --------------------------------- |
+| RU     | из чего складывается стоимость разработки сайта | C7 + C6, proposal composition          | `what-development-quote-pays-for` |
+| EN     | what does a website development quote include   | Website/MVP buyer, proposal comparison | `what-development-quote-pays-for` |
+| RU     | сайт с ai самостоятельно или разработчик        | C5, DIY-versus-delegation decision     | `ai-website-diy-or-developer`     |
+| EN     | AI website builder or hire a developer          | Website/MVP buyer, launch readiness    | `ai-website-diy-or-developer`     |
+
+Research, topic boundaries, verified sources and review-copy locations:
+`docs/specs/client-editorial-pair-2026-10.md`.
+
 ---
 
 ## How to pull (per seed)
