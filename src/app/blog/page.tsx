@@ -119,7 +119,10 @@ export default function BlogPage() {
       <SiteHeader content={marketContent} contactHref="/#contact" />
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-14">
-        <Breadcrumbs items={[{ label: copy.breadcrumbBlog }]} />
+        <Breadcrumbs
+          homeLabel={copy.breadcrumbHome}
+          items={[{ label: copy.breadcrumbBlog }]}
+        />
         <p className="text-primary mt-10 mb-3 font-mono text-xs font-semibold tracking-widest uppercase">
           {copy.eyebrow}
         </p>
