@@ -257,6 +257,25 @@ describe("public qa-pilot landing", () => {
     }
   });
 
+  it("keeps the qa-pilot title on one line on phones", () => {
+    for (const html of [ru(), en()]) {
+      const mobile = html.match(
+        /@media \(max-width: 820px\) \{[\s\S]*?\n\}/,
+      )?.[0];
+      expect(mobile).toContain(
+        ".slide h1 { white-space: nowrap; font-size: clamp(56px, 17vw, 84px) !important; }",
+      );
+    }
+  });
+
+  it("does not underline the pill-shaped GitHub buttons", () => {
+    for (const html of [ru(), en()]) {
+      expect(html).toContain(
+        ".slide a.repo-link, .slide a.repo-cta { text-decoration: none; }",
+      );
+    }
+  });
+
   it("ships the share images both pages advertise", () => {
     expect(
       existsSync(

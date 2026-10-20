@@ -75,6 +75,7 @@ h1, h2 { text-wrap: balance; }
 .lang-btn { font: 600 14px/1 var(--mono); letter-spacing: 1px; color: var(--muted); background: none; border: 0; border-radius: 999px; padding: 9px 14px; cursor: pointer; }
 .lang-btn[aria-pressed="true"] { background: var(--yellow); color: var(--ink); }
 .repo-link, .repo-cta { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; border-radius: 999px; }
+.slide a.repo-link, .slide a.repo-cta { text-decoration: none; }
 .repo-link { font: 500 15px/1 var(--text); color: var(--fg) !important; padding: 10px 16px; border: 1px solid rgba(244,242,255,0.3); background: rgba(17,15,36,0.35); }
 .repo-cta { align-self: flex-start; font: 600 max(17px, calc(30 * var(--u)))/1 var(--text); color: var(--ink) !important; background: var(--yellow); padding: max(14px, calc(24 * var(--u))) max(20px, calc(36 * var(--u))); }
 .gh { width: 1.15em; height: 1.15em; flex: none; }
@@ -99,7 +100,7 @@ h1, h2 { text-wrap: balance; }
   .slide div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
   .slide .wide { width: auto !important; }
   .slide .arrow { transform: rotate(90deg); align-self: center; }
-  .slide h1 { overflow-wrap: anywhere; }
+  .slide h1 { white-space: nowrap; font-size: clamp(56px, 17vw, 84px) !important; }
   .nav { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
