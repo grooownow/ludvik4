@@ -247,6 +247,16 @@ describe("public qa-pilot landing", () => {
     expect(html).not.toContain("claude:");
   });
 
+  it("hides the slide navigator on phone widths in both languages", () => {
+    for (const html of [ru(), en()]) {
+      const mobile = html.match(
+        /@media \(max-width: 820px\) \{[\s\S]*?\n\}/,
+      )?.[0];
+      expect(mobile).toBeDefined();
+      expect(mobile).toContain(".nav { display: none; }");
+    }
+  });
+
   it("ships the share images both pages advertise", () => {
     expect(
       existsSync(

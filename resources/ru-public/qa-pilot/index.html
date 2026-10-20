@@ -94,13 +94,13 @@ h1, h2 { text-wrap: balance; }
 .nav .count { font: 500 13px/1 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; padding: 4px 0; }
 
 @media (max-width: 820px) {
-  .slide { padding-block: 64px 88px; }
+  .slide { padding-block: 64px; }
   .slide div[style*="display:flex"]:not([style*="flex-direction:column"]):not(.keep-row) { flex-direction: column; align-items: stretch !important; }
   .slide div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
   .slide .wide { width: auto !important; }
   .slide .arrow { transform: rotate(90deg); align-self: center; }
   .slide h1 { overflow-wrap: anywhere; }
-  .nav { flex-direction: row; }
+  .nav { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
 </style>
