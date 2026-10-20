@@ -25,8 +25,8 @@ describe("commercial content", () => {
       "qa-pilot",
     ]);
     expect(getCaseStudy("fortnoise")?.kind).toBe("Клиентский проект");
-    expect(getCaseStudy("gridfin")?.kind).toBe("Собственный продукт");
-    expect(getCaseStudy("qa-pilot")?.kind).toBe("Собственный продукт");
+    expect(getCaseStudy("gridfin")?.kind).toBe("Скелет приложения");
+    expect(getCaseStudy("qa-pilot")?.kind).toBe("AI-плагин");
   });
 
   it("links the gridfin case to the live landing", () => {

@@ -22,24 +22,28 @@ describe("international commercial content", () => {
 
   it("uses only globally suitable proof on the English site", () => {
     expect(internationalWork.map((item) => item.slug)).toEqual([
-      "qa-pilot",
-      "gridfin",
       "smallfriendfiles",
+      "gridfin",
+      "qa-pilot",
     ]);
-    expect(internationalWork[1]?.cardLink).toEqual({
+    const gridfin = internationalWork.find((item) => item.slug === "gridfin");
+    const qaPilot = internationalWork.find((item) => item.slug === "qa-pilot");
+    expect(gridfin?.kind).toBe("Application skeleton");
+    expect(qaPilot?.kind).toBe("AI plugin");
+    expect(gridfin?.cardLink).toEqual({
       href: "/gridfin/en",
       label: "View Gridfin landing",
       newTab: true,
     });
-    expect(internationalWork[0]?.description).toContain("An AI plugin");
-    expect(internationalWork[0]?.description).not.toContain("Codex plugin");
-    expect(internationalWork[1]?.image).toBe("/cases/gridfin-en.webp");
-    expect(internationalWork[1]?.image).not.toBe("/cases/gridfin.webp");
+    expect(qaPilot?.description).toContain("An AI plugin");
+    expect(qaPilot?.description).not.toContain("Codex plugin");
+    expect(gridfin?.image).toBe("/cases/gridfin-en.webp");
+    expect(gridfin?.image).not.toBe("/cases/gridfin.webp");
     // qa-pilot keeps its /work case page; the page links to the EN landing.
-    expect(internationalWork[0]?.cardLink).toBeUndefined();
-    expect(internationalWork[0]?.website).toBe("https://ludvik4.dev/qa-pilot");
-    expect(internationalWork[0]?.websiteLabel).toBe("View qa-pilot landing");
-    expect(internationalWork[0]?.image).toBe("/cases/qa-pilot-en.webp");
+    expect(qaPilot?.cardLink).toBeUndefined();
+    expect(qaPilot?.website).toBe("https://ludvik4.dev/qa-pilot");
+    expect(qaPilot?.websiteLabel).toBe("View qa-pilot landing");
+    expect(qaPilot?.image).toBe("/cases/qa-pilot-en.webp");
     // Supported interface languages are product capabilities, not market proof.
     expect(
       JSON.stringify(internationalWork).replace(

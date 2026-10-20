@@ -179,31 +179,33 @@ export const internationalServicePages: InternationalServicePage[] = [
 
 export const internationalWork: InternationalWorkItem[] = [
   {
-    slug: "qa-pilot",
-    title: "qa-pilot",
-    kind: "Open-source product",
+    slug: "smallfriendfiles",
+    title: "smallFriendFiles",
+    kind: "Web application",
     description:
-      "An AI plugin that plans, writes, audits, and runs software tests with project-specific context and evidence-based quality checks.",
-    image: "/cases/qa-pilot-en.webp",
-    imageAlt: "qa-pilot landing: a QA plugin for Claude Code",
-    lead: "qa-pilot turns testing from an afterthought into a repeatable workflow that an AI coding agent can follow and verify.",
+      "A pet's digital medical file: passports, lab results and vet reports in one place, with document extraction, search and selected files ready to share.",
+    image: "/cases/smallfriendfiles-en.webp",
+    imageAlt:
+      "smallFriendFiles English landing page showing the pet medical file on desktop and mobile",
+    lead: "smallFriendFiles turns scattered pet records into an organised history that owners can search, check and share with a vet.",
     problem:
-      "AI coding tools can generate tests quickly, but generated coverage is often shallow, over-mocked, or unable to prove that it protects real behaviour.",
+      "Pet passports, lab results and vet reports often end up in separate folders and phone photos. Finding the right record and preparing documents for a new clinic, a move or a second opinion becomes a repeated manual task.",
     solution: [
-      "A project onboarding flow that records the actual stack and test conventions",
-      "Separate workflows for test planning, implementation, exploratory testing, and suite audits",
-      "A mandatory proof that every new automated test can fail for the intended reason",
-      "Persistent project context so quality decisions survive across sessions",
+      "A separate medical file for each pet, including passport details, vaccinations and original documents",
+      "Automatic extraction and short document summaries that owners can check against the original and correct",
+      "Search and filters by document type, date, clinic, vet and tags",
+      "Selected document packs with a temporary link or QR code, revocable access, and PDF or archive downloads; recipients need no account",
+      "A responsive browser interface in English, Spanish, Ukrainian and Russian",
     ],
     result:
-      "The plugin is publicly available for AI coding agents and is developed in the open on GitHub.",
-    website: "https://ludvik4.dev/qa-pilot",
-    websiteLabel: "View qa-pilot landing",
+      "The application is live in open beta. It brings document upload, organisation, retrieval and sharing into one usable flow. Document processing handles routine work while medical decisions remain with the vet.",
+    website: "https://smallfriendfiles.fyi/en",
+    websiteLabel: "Open smallFriendFiles",
   },
   {
     slug: "gridfin",
     title: "Gridfin",
-    kind: "Developer product",
+    kind: "Application skeleton",
     description:
       "A Claude Code starter that combines an application skeleton, specifications, tests, hooks, quality gates, and reusable engineering workflows.",
     image: "/cases/gridfin-en.webp",
@@ -228,28 +230,26 @@ export const internationalWork: InternationalWorkItem[] = [
     },
   },
   {
-    slug: "smallfriendfiles",
-    title: "smallFriendFiles",
-    kind: "Web application",
+    slug: "qa-pilot",
+    title: "qa-pilot",
+    kind: "AI plugin",
     description:
-      "A pet's digital medical file: passports, lab results and vet reports in one place, with document extraction, search and selected files ready to share.",
-    image: "/cases/smallfriendfiles-en.webp",
-    imageAlt:
-      "smallFriendFiles English landing page showing the pet medical file on desktop and mobile",
-    lead: "smallFriendFiles turns scattered pet records into an organised history that owners can search, check and share with a vet.",
+      "An AI plugin that plans, writes, audits, and runs software tests with project-specific context and evidence-based quality checks.",
+    image: "/cases/qa-pilot-en.webp",
+    imageAlt: "qa-pilot landing: a QA plugin for Claude Code",
+    lead: "qa-pilot turns testing from an afterthought into a repeatable workflow that an AI coding agent can follow and verify.",
     problem:
-      "Pet passports, lab results and vet reports often end up in separate folders and phone photos. Finding the right record and preparing documents for a new clinic, a move or a second opinion becomes a repeated manual task.",
+      "AI coding tools can generate tests quickly, but generated coverage is often shallow, over-mocked, or unable to prove that it protects real behaviour.",
     solution: [
-      "A separate medical file for each pet, including passport details, vaccinations and original documents",
-      "Automatic extraction and short document summaries that owners can check against the original and correct",
-      "Search and filters by document type, date, clinic, vet and tags",
-      "Selected document packs with a temporary link or QR code, revocable access, and PDF or archive downloads; recipients need no account",
-      "A responsive browser interface in English, Spanish, Ukrainian and Russian",
+      "A project onboarding flow that records the actual stack and test conventions",
+      "Separate workflows for test planning, implementation, exploratory testing, and suite audits",
+      "A mandatory proof that every new automated test can fail for the intended reason",
+      "Persistent project context so quality decisions survive across sessions",
     ],
     result:
-      "The application is live in open beta. It brings document upload, organisation, retrieval and sharing into one usable flow. Document processing handles routine work while medical decisions remain with the vet.",
-    website: "https://smallfriendfiles.fyi/en",
-    websiteLabel: "Open smallFriendFiles",
+      "The plugin is publicly available for AI coding agents and is developed in the open on GitHub.",
+    website: "https://ludvik4.dev/qa-pilot",
+    websiteLabel: "View qa-pilot landing",
   },
 ];
 

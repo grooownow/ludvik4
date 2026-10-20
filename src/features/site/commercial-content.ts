@@ -21,7 +21,8 @@ export type ServicePage = {
 export type CaseStudy = {
   slug: "smallfriendfiles" | "fortnoise" | "gridfin" | "qa-pilot";
   title: string;
-  kind: "Клиентский проект" | "Собственный продукт" | "Веб-приложение";
+  kind:
+    "Клиентский проект" | "Веб-приложение" | "Скелет приложения" | "AI-плагин";
   description: string;
   lead: string;
   image: string;
@@ -207,7 +208,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "gridfin",
     title: "Gridfin",
-    kind: "Собственный продукт",
+    kind: "Скелет приложения",
     description:
       "Agent-native скелет приложения для Claude Code: превращает пустой репозиторий в готовую основу со спецификациями, тестами, хуками и гейтами качества.",
     lead: "Коробка встраивает инженерный процесс в разработку с Claude Code: решения приняты заранее, правила принуждаются автоматически — от идеи до production-ready приложения.",
@@ -228,7 +229,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "qa-pilot",
     title: "qa-pilot",
-    kind: "Собственный продукт",
+    kind: "AI-плагин",
     description:
       "Открытый QA-копилот для Claude Code: аудит тестовой базы, планирование покрытия, написание тестов и исследовательское тестирование в браузере.",
     lead: "Инструмент превращает разрозненные QA-задачи в повторяемый процесс с явными результатами и проверкой качества.",
