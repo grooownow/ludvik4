@@ -28,7 +28,7 @@ describe("international commercial content", () => {
     ]);
     const gridfin = internationalWork.find((item) => item.slug === "gridfin");
     const qaPilot = internationalWork.find((item) => item.slug === "qa-pilot");
-    expect(gridfin?.kind).toBe("Application skeleton");
+    expect(gridfin?.kind).toBe("SaaS");
     expect(qaPilot?.kind).toBe("AI plugin");
     expect(gridfin?.cardLink).toEqual({
       href: "/gridfin/en",

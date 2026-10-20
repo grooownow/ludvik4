@@ -21,8 +21,7 @@ export type ServicePage = {
 export type CaseStudy = {
   slug: "smallfriendfiles" | "fortnoise" | "gridfin" | "qa-pilot";
   title: string;
-  kind:
-    "Клиентский проект" | "Веб-приложение" | "Скелет приложения" | "AI-плагин";
+  kind: "Клиентский проект" | "Веб-приложение" | "SaaS" | "AI-плагин";
   description: string;
   lead: string;
   image: string;
@@ -208,7 +207,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "gridfin",
     title: "Gridfin",
-    kind: "Скелет приложения",
+    kind: "SaaS",
     description:
       "Agent-native скелет приложения для Claude Code: превращает пустой репозиторий в готовую основу со спецификациями, тестами, хуками и гейтами качества.",
     lead: "Коробка встраивает инженерный процесс в разработку с Claude Code: решения приняты заранее, правила принуждаются автоматически — от идеи до production-ready приложения.",

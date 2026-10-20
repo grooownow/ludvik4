@@ -205,7 +205,7 @@ export const internationalWork: InternationalWorkItem[] = [
   {
     slug: "gridfin",
     title: "Gridfin",
-    kind: "Application skeleton",
+    kind: "SaaS",
     description:
       "A Claude Code starter that combines an application skeleton, specifications, tests, hooks, quality gates, and reusable engineering workflows.",
     image: "/cases/gridfin-en.webp",
