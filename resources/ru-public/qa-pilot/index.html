@@ -60,7 +60,9 @@ h1, h2 { text-wrap: balance; }
 .stage-monsoon { --stage: var(--monsoon); }
 .stage-backwater { --stage: var(--backwater); }
 .stage-hibiscus { --stage: var(--hibiscus); }
-.slide a { color: var(--yellow); }
+.slide a { color: var(--yellow); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; text-decoration-color: rgba(247,211,92,0.55); transition: text-decoration-color .15s; }
+.slide a:hover { text-decoration-color: var(--yellow); }
+.slide a:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; border-radius: 4px; }
 .ico { display: block; width: 100%; height: 100%; }
 .arrow { display: block; flex: none; }
 .tw { overflow-x: auto; max-width: 100%; }
@@ -437,29 +439,30 @@ h1, h2 { text-wrap: balance; }
 <p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4;color:var(--muted)">Риски, исключённые фильтрами проекта, перечисляются в отдельном разделе отчёта.</p>
 </section>
 
-<section class="slide stage-backwater" id="ru-knowledge" data-index="12" aria-label="12 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(48 * var(--u))">
+<section class="slide stage-backwater" id="ru-knowledge" data-index="12" aria-label="12 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
 
 <div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">НА ЧЁМ ОСНОВАНО · 2</p>
-<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">База правил тестирования</h2>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">База знаний по тестированию</h2>
 </div>
 <div style="display:flex;gap:calc(40 * var(--u))">
 <div class="wide" style="width:calc(620 * var(--u));background:var(--panel-deep);border-radius:calc(16 * var(--u));padding:calc(44 * var(--u));display:flex;flex-direction:column;gap:calc(16 * var(--u))">
-<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(50px, calc(120 * var(--u)));font-weight:600;line-height:1;color:var(--lav)">~1000</p>
-<p style="font-size:max(15px, calc(30 * var(--u)));line-height:1.4;color:var(--fg)">правил из базы знаний</p>
-<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.5;color:var(--muted)">Тест-дизайн, требования, API, формы, доступность (WCAG 2.2), локализация, производительность, мобильные гайдлайны, UX</p>
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(50px, calc(120 * var(--u)));font-weight:600;line-height:1;color:var(--lav)">1300+</p>
+<p style="font-size:max(15px, calc(30 * var(--u)));line-height:1.4;color:var(--fg)">правил в базе знаний по тестированию</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.5;color:var(--muted)">Тест-дизайн, требования, API, формы, доступность (WCAG 2.2), безопасность, локализация, производительность, мобильные платформы, UX, AI-фичи, качество тест-кода</p>
 </div>
-<div style="flex:1;display:flex;flex-direction:column;gap:calc(28 * var(--u))">
-<div style="display:flex;flex-direction:column;gap:calc(8 * var(--u))">
-<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(32 * var(--u)));font-weight:600">Каждое правило сверено с источником</h3>
-<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">И со стандартами: RFC, W3C, ISTQB, OWASP, NIST. У правила есть уровень авторитета — стандарт, практика индустрии, гайд вендора или мнение автора. Правило уровня «мнение автора» не может быть обязательным.</p>
+<div style="flex:1;display:flex;flex-direction:column;gap:calc(36 * var(--u))">
+<div style="display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(32 * var(--u)));font-weight:600">Каждое правило сверено со стандартами</h3>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">RFC, W3C, ISTQB, OWASP, NIST. У правила есть уровень авторитета — стандарт, практика индустрии, гайд вендора или мнение автора. Правило уровня «мнение автора» не может быть обязательным.</p>
 </div>
-<div style="display:flex;flex-direction:column;gap:calc(8 * var(--u))">
-<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(32 * var(--u)));font-weight:600">Плюс собственные домены qa-pilot</h3>
-<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">Веб-паттерны поломок, безопасность (OWASP ASVS), HTTP API, аутентификация (NIST), стратегия (ISTQB), тестирование AI-фич, качество тест-кода — и правила, выученные на реальных аудитах.</p>
+<div style="display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(32 * var(--u)));font-weight:600">Расширено для продуктовых команд</h3>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">Собственные домены qa-pilot: веб-паттерны поломок, безопасность (OWASP ASVS), HTTP API, аутентификация (NIST), стратегия тестирования, AI-фичи, качество тест-кода — и правила, выученные на реальных аудитах.</p>
 </div>
 </div>
 </div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--muted);border-top:1px solid rgba(244,242,255,0.22);padding-top:calc(24 * var(--u))">Отдельное спасибо <a target="_blank" rel="noopener" href="https://www.threads.com/@roman_surkov_qa" style="color:var(--yellow);font-weight:600">Роману Суркову</a>: базовый свод правил взят из его книги <a target="_blank" rel="noopener" href="https://docs.google.com/document/d/1hystekfHLC9a2fiL7ZBmjFdUPeg5QfYyoPFqo65T05M" style="color:var(--yellow);font-weight:600">«Качество решает всё»</a>.</p>
 </section>
 
 <section class="slide stage-backwater" id="ru-determinism" data-index="13" aria-label="13 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
@@ -952,29 +955,30 @@ h1, h2 { text-wrap: balance; }
 <p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4;color:var(--muted)">Risks excluded by project filters are listed in a separate section of the report.</p>
 </section>
 
-<section class="slide stage-backwater" id="en-knowledge" data-index="12" aria-label="12 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(48 * var(--u))">
+<section class="slide stage-backwater" id="en-knowledge" data-index="12" aria-label="12 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
 
 <div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">WHAT IT RELIES ON · 2</p>
-<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">The testing rule base</h2>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">The testing knowledge base</h2>
 </div>
 <div style="display:flex;gap:calc(40 * var(--u))">
 <div class="wide" style="width:calc(620 * var(--u));background:var(--panel-deep);border-radius:calc(16 * var(--u));padding:calc(44 * var(--u));display:flex;flex-direction:column;gap:calc(16 * var(--u))">
-<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(50px, calc(120 * var(--u)));font-weight:600;line-height:1;color:var(--lav)">~1000</p>
-<p style="font-size:max(15px, calc(30 * var(--u)));line-height:1.4;color:var(--fg)">rules from the knowledge base</p>
-<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.5;color:var(--muted)">Test design, requirements, API, forms, accessibility (WCAG 2.2), localisation, performance, mobile guidelines, UX</p>
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(50px, calc(120 * var(--u)));font-weight:600;line-height:1;color:var(--lav)">1300+</p>
+<p style="font-size:max(15px, calc(30 * var(--u)));line-height:1.4;color:var(--fg)">rules in the testing knowledge base</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.5;color:var(--muted)">Test design, requirements, APIs, forms, accessibility (WCAG 2.2), security, localisation, performance, mobile platforms, UX, AI features, test-code quality</p>
 </div>
-<div style="flex:1;display:flex;flex-direction:column;gap:calc(28 * var(--u))">
-<div style="display:flex;flex-direction:column;gap:calc(8 * var(--u))">
-<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(32 * var(--u)));font-weight:600">Every rule is checked against its source</h3>
-<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">And against standards: RFC, W3C, ISTQB, OWASP, NIST. Each rule has an authority level — standard, industry practice, vendor guideline or author’s opinion. An author’s-opinion rule cannot be mandatory.</p>
+<div style="flex:1;display:flex;flex-direction:column;gap:calc(36 * var(--u))">
+<div style="display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(32 * var(--u)));font-weight:600">Every rule is checked against standards</h3>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">RFC, W3C, ISTQB, OWASP, NIST. Each rule has an authority level — standard, industry practice, vendor guideline or author’s opinion. An author’s-opinion rule cannot be mandatory.</p>
 </div>
-<div style="display:flex;flex-direction:column;gap:calc(8 * var(--u))">
-<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(32 * var(--u)));font-weight:600">Plus qa-pilot’s own domains</h3>
-<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">Web failure patterns, security (OWASP ASVS), HTTP APIs, authentication (NIST), strategy (ISTQB), testing AI features, test-code quality — and rules learned on real audits.</p>
+<div style="display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(32 * var(--u)));font-weight:600">Extended for product teams</h3>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">qa-pilot’s own domains: web failure patterns, security (OWASP ASVS), HTTP APIs, authentication (NIST), test strategy, AI features, test-code quality — and rules learned on real audits.</p>
 </div>
 </div>
 </div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--muted);border-top:1px solid rgba(244,242,255,0.22);padding-top:calc(24 * var(--u))">Special thanks to <a target="_blank" rel="noopener" href="https://www.threads.com/@roman_surkov_qa" style="color:var(--yellow);font-weight:600">Roman Surkov</a>: the core rule set comes from his book <a target="_blank" rel="noopener" href="https://docs.google.com/document/d/1hystekfHLC9a2fiL7ZBmjFdUPeg5QfYyoPFqo65T05M" style="color:var(--yellow);font-weight:600">“Quality Decides Everything”</a>.</p>
 </section>
 
 <section class="slide stage-backwater" id="en-determinism" data-index="13" aria-label="13 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
