@@ -77,7 +77,7 @@ describe("HomeEn", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByRole("img", {
-        name: "qa-pilot repository and testing workflow documentation",
+        name: "qa-pilot landing: a QA plugin for Claude Code",
       }),
     ).toBeInTheDocument();
     expect(

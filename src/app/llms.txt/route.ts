@@ -133,6 +133,10 @@ ${articleLines}
 - [Gridfin for Claude Code](${publicUrl("en", baseURL, "/gridfin/en")}): an Application Skeleton and enforced spec-driven workflow for focused products built with Claude Code
 - [What is an Application Skeleton?](${publicUrl("en", baseURL, "/gridfin/en/docs/application-skeleton")}): the stack, rules, tests, quality gates, skills and playbooks that form Gridfin's architectural foundation
 - [Why AI development needs engineering rules](${publicUrl("en", baseURL, "/gridfin/en/guides/why-ai-needs-engineering-rules")}): why instructions alone are insufficient and how hooks, proven-failing tests and gates make the workflow enforceable
+
+## qa-pilot
+
+- [qa-pilot for Claude Code](${publicUrl("en", baseURL, "/qa-pilot")}): an open-source QA plugin — a QA plan per task, coverage analysis, requirement and test audits, and tests proven able to fail
 `;
 }
 

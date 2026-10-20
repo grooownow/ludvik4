@@ -1,0 +1,1225 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>qa-pilot — QA-плагин для Claude Code</title>
+  <meta name="description" content="qa-pilot — открытый плагин для Claude Code: QA-план задачи, анализ покрытия, аудит требований и тестов, написание тестов, которые доказанно умеют падать.">
+  <link rel="canonical" href="https://ludvik4.ru/qa-pilot/">
+  <link rel="alternate" hreflang="ru" href="https://ludvik4.ru/qa-pilot/">
+  <link rel="alternate" hreflang="en" href="https://ludvik4.dev/qa-pilot">
+  <link rel="alternate" hreflang="x-default" href="https://ludvik4.dev/qa-pilot">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:url" content="https://ludvik4.ru/qa-pilot/">
+  <meta property="og:title" content="qa-pilot — QA-плагин для Claude Code">
+  <meta property="og:description" content="qa-pilot — открытый плагин для Claude Code: QA-план задачи, анализ покрытия, аудит требований и тестов, написание тестов, которые доказанно умеют падать.">
+  <meta property="og:image" content="https://ludvik4.ru/qa-pilot/assets/og-ru.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="qa-pilot">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="qa-pilot — QA-плагин для Claude Code">
+  <meta name="twitter:description" content="qa-pilot — открытый плагин для Claude Code: QA-план задачи, анализ покрытия, аудит требований и тестов, написание тестов, которые доказанно умеют падать.">
+  <meta name="twitter:image" content="https://ludvik4.ru/qa-pilot/assets/og-ru.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"qa-pilot","applicationCategory":"DeveloperApplication","operatingSystem":"macOS, Linux, Windows","description":"qa-pilot — открытый плагин для Claude Code: QA-план задачи, анализ покрытия, аудит требований и тестов, написание тестов, которые доказанно умеют падать.","url":"https://ludvik4.ru/qa-pilot/","sameAs":"https://github.com/grooownow/qa-pilot","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"Ludvik4","url":"https://ludvik4.ru/"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Rubik:wght@400..700&display=swap">
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<style>
+:root {
+  /* Layout: one screen per slide, stacked vertically; every length is N × --u, where --u fits a 1920×1080 slide to the viewport. */
+  --indigo: #545388; --monsoon: #3E5591; --backwater: #2B6468; --hibiscus: #7B3F6E;
+  --fg: #F4F2FF; --body: #E6E3FA; --muted: #D4D0F0; --faint: #A9A6D6;
+  --yellow: #F7D35C; --lav: #C9C8FF; --ink: #1B1838; --panel-deep: #1E1A40; --code: #16132F;
+  --frame: #110F24;
+  --display: 'Rubik', Arial, sans-serif; --text: 'IBM Plex Sans', Arial, sans-serif; --mono: 'JetBrains Mono', 'Courier New', monospace;
+  --u: clamp(0.45px, min(calc(100vw / 1920), calc(100vh / 1080)), 1.6px);
+  color-scheme: dark;
+}
+html { background: var(--frame); scroll-behavior: auto; }
+body { background: var(--frame); color: var(--fg); font-family: var(--text); -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+h1, h2, h3, p, ul, ol { margin: 0; }
+ul { padding-left: 1.2em; }
+h1, h2 { text-wrap: balance; }
+.slide {
+  position: relative; min-height: 100vh; min-height: 100svh; overflow: hidden;
+  padding-block: max(56px, calc(128 * var(--u)));
+  padding-left: max(16px, env(safe-area-inset-left, 0px), calc(128 * var(--u)));
+  padding-right: max(16px, env(safe-area-inset-right, 0px), calc(128 * var(--u)));
+  background-color: var(--stage);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='173' height='173'><circle cx='111' cy='4' r='0.9' fill='%23F4F2FF' fill-opacity='0.24'/><circle cx='127' cy='117' r='1.5' fill='%23F4F2FF' fill-opacity='0.20'/><circle cx='73' cy='5' r='0.9' fill='%23F4F2FF' fill-opacity='0.32'/><circle cx='5' cy='34' r='1.3' fill='%23F4F2FF' fill-opacity='0.33'/><circle cx='38' cy='102' r='1.4' fill='%23F4F2FF' fill-opacity='0.18'/><circle cx='139' cy='121' r='1.0' fill='%23F4F2FF' fill-opacity='0.22'/></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='311' height='311'><circle cx='298' cy='105' r='0.9' fill='%23F4F2FF' fill-opacity='0.28'/><circle cx='264' cy='188' r='2.1' fill='%23F4F2FF' fill-opacity='0.51'/><circle cx='167' cy='303' r='1.3' fill='%23F4F2FF' fill-opacity='0.44'/><circle cx='258' cy='192' r='2.2' fill='%23F4F2FF' fill-opacity='0.45'/><circle cx='219' cy='14' r='1.1' fill='%23F4F2FF' fill-opacity='0.35'/></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' seed='3' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.35 -0.13'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='2' seed='7' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.45 -0.16'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    radial-gradient(ellipse at 30% 20%, rgba(244,242,255,0.10), rgba(244,242,255,0) 70%);
+  background-size: 173px 173px, 311px 311px, 260px 260px, 260px 260px, 100% 100%;
+}
+.slide > * { position: relative; min-width: 0; }
+.slide div, .slide p, .slide td { min-width: 0; }
+.stage-indigo { --stage: var(--indigo); }
+.stage-monsoon { --stage: var(--monsoon); }
+.stage-backwater { --stage: var(--backwater); }
+.stage-hibiscus { --stage: var(--hibiscus); }
+.slide a { color: var(--yellow); }
+.ico { display: block; width: 100%; height: 100%; }
+.arrow { display: block; flex: none; }
+.tw { overflow-x: auto; max-width: 100%; }
+.tw table { border-collapse: collapse; width: 100%; }
+.tw th, .tw td { padding: 0.45em 0.7em; text-align: left; vertical-align: top; border-top: 1px solid rgba(244,242,255,0.18); }
+.tw th { color: var(--fg); }
+
+.cover-tools { display: flex; justify-content: flex-end; align-items: center; gap: 12px; flex-wrap: wrap; }
+.lang-switch { display: inline-flex; padding: 3px; border-radius: 999px; background: rgba(17,15,36,0.45); border: 1px solid rgba(244,242,255,0.25); }
+.lang-btn { font: 600 14px/1 var(--mono); letter-spacing: 1px; color: var(--muted); background: none; border: 0; border-radius: 999px; padding: 9px 14px; cursor: pointer; }
+.lang-btn[aria-pressed="true"] { background: var(--yellow); color: var(--ink); }
+.repo-link, .repo-cta { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; border-radius: 999px; }
+.repo-link { font: 500 15px/1 var(--text); color: var(--fg) !important; padding: 10px 16px; border: 1px solid rgba(244,242,255,0.3); background: rgba(17,15,36,0.35); }
+.repo-cta { align-self: flex-start; font: 600 max(17px, calc(30 * var(--u)))/1 var(--text); color: var(--ink) !important; background: var(--yellow); padding: max(14px, calc(24 * var(--u))) max(20px, calc(36 * var(--u))); }
+.gh { width: 1.15em; height: 1.15em; flex: none; }
+.lang-btn:focus-visible, .repo-link:focus-visible, .repo-cta:focus-visible, .nav button:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+
+.nav {
+  position: fixed; z-index: 20; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  right: calc(max(12px, calc(40 * var(--u))) + env(safe-area-inset-right, 0px));
+  bottom: calc(max(12px, calc(40 * var(--u))) + env(safe-area-inset-bottom, 0px));
+  padding: 6px; border-radius: 999px; background: rgba(17,15,36,0.55); border: 1px solid rgba(244,242,255,0.2);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.nav button { width: 40px; height: 40px; border-radius: 50%; border: 0; background: none; color: var(--fg); cursor: pointer; display: grid; place-items: center; }
+.nav button:hover:not(:disabled) { background: rgba(244,242,255,0.12); }
+.nav button:disabled { opacity: 0.3; cursor: default; }
+.nav svg { width: 20px; height: 20px; }
+.nav .count { font: 500 13px/1 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; padding: 4px 0; }
+
+@media (max-width: 820px) {
+  .slide { padding-block: 64px 88px; }
+  .slide div[style*="display:flex"]:not([style*="flex-direction:column"]):not(.keep-row) { flex-direction: column; align-items: stretch !important; }
+  .slide div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+  .slide .wide { width: auto !important; }
+  .slide .arrow { transform: rotate(90deg); align-self: center; }
+  .slide h1 { overflow-wrap: anywhere; }
+  .nav { flex-direction: row; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<main class="deck" data-lang="ru" lang="ru">
+<section class="slide stage-indigo" id="ru-cover" data-index="1" aria-label="1 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;justify-content:space-between"><div class="cover-tools"><div class="lang-switch" role="group" aria-label="Язык"><button type="button" class="lang-btn" data-set-lang="ru" aria-pressed="true">RU</button><button type="button" class="lang-btn" data-set-lang="en" aria-pressed="false">EN</button></div><a class="repo-link" href="https://github.com/grooownow/qa-pilot" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true" class="gh"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span>Репозиторий на GitHub</span></a></div>
+
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(28 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">ПЛАГИН ДЛЯ CLAUDE CODE · ОНБОРДИНГ</p>
+<div style="display:flex;flex-direction:column;gap:calc(40 * var(--u))">
+<h1 style="font-family:'Rubik', Arial, sans-serif;font-size:max(84px, calc(200 * var(--u)));font-weight:600;line-height:1;color:var(--fg)">qa-pilot</h1>
+<p class="wide" style="font-size:max(18px, calc(44 * var(--u)));line-height:1.3;color:var(--muted);width:calc(1300 * var(--u))">Скиллы для Claude Code: QA-план задачи, анализ покрытия, аудит требований и тестов, написание тестов.</p>
+</div>
+<div style="display:flex;gap:calc(24 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));color:var(--ink);background:var(--yellow);padding:calc(12 * var(--u)) calc(28 * var(--u));border-radius:calc(999 * var(--u));font-weight:600">3 команды</p>
+<p style="font-size:max(15px, calc(28 * var(--u)));color:var(--fg);border:2px solid rgba(244,242,255,0.30);padding:calc(10 * var(--u)) calc(28 * var(--u));border-radius:calc(999 * var(--u))">1100+ правил QA</p>
+<p style="font-size:max(15px, calc(28 * var(--u)));color:var(--fg);border:2px solid rgba(244,242,255,0.30);padding:calc(10 * var(--u)) calc(28 * var(--u));border-radius:calc(999 * var(--u))">проверки скриптами</p></div>
+</section>
+
+<section class="slide stage-indigo" id="ru-pain" data-index="2" aria-label="2 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(36 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">ПРАВИЛА · ТЕСТЫ</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">Четыре правила для тестов</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:calc(20 * var(--u))">
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600">Тест должен доказать, что умеет падать</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Новый тест: агент ломает проверяемый код или саму проверку, видит падение, откатывает; основная сессия перепроверяет выборочно. Существующие: аудит тестов ломает код под выборкой тестов скриптом, который сам откатывает файл.</p>
+<p style="font-size:max(15px, calc(22 * var(--u)));line-height:1.4;color:var(--muted)">Убирает тесты, которые проходят при любом поведении.</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600">Ожидаемый результат — с источником</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Источник — строка спеки или AC, решение проекта, инвариант из базы или конвенция в другом месте кода. Проверяемый код источником не бывает. Нет источника — вопрос владельцу, а не тест.</p>
+<p style="font-size:max(15px, calc(22 * var(--u)));line-height:1.4;color:var(--muted)">Убирает тесты, которые закрепляют баг как норму.</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600">UI-тест проверяет то, что видит пользователь</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Удалили — строки нет в списке. Сохранили — значение на месте после перезагрузки. Статус ответа проверяется только в дополнение. Исключения (у действия нет следа в UI, API-тест) помечаются в тесте с причиной.</p>
+<p style="font-size:max(15px, calc(22 * var(--u)));line-height:1.4;color:var(--muted)">Убирает зелёный тест при ответе 200 и неизменившемся экране.</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600">«Покрыто» — это три ссылки</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Тест по файлу и строке, проверка именно этого условия, слой тестов запускается в CI. «Не покрыто» тоже доказывается: прикладывается поиск и число совпадений.</p>
+<p style="font-size:max(15px, calc(22 * var(--u)));line-height:1.4;color:var(--muted)">Убирает «всё покрыто» на слово.</p>
+</div>
+</div>
+</section>
+
+<section class="slide stage-indigo" id="ru-conduct" data-index="3" aria-label="3 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">ПРАВИЛА · РАБОТА В ПРОЕКТЕ</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">Как плагин работает в репозитории</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:calc(48 * var(--u))">
+<div style="border-left:4px solid var(--yellow);padding-left:calc(24 * var(--u));display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">Требования проверяются до кода</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Если test вызван до разработки: тестируемость AC, согласованность с кодом и соседними спеками, неописанные состояния сущностей.</p>
+</div>
+<div style="border-left:4px solid var(--yellow);padding-left:calc(24 * var(--u));display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">Спрашивает, а не угадывает</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Недостающее — одним списком вопросов. Без ответа — в раздел «Open gaps», зависимая работа помечается заблокированной.</p>
+</div>
+<div style="border-left:4px solid var(--yellow);padding-left:calc(24 * var(--u));display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">Правила проекта главнее правил плагина</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">CLAUDE.md, AGENTS.md и конфиги репозитория перекрывают плагин. Конфликт отмечается в отчёте.</p>
+</div>
+<div style="border-left:4px solid var(--yellow);padding-left:calc(24 * var(--u));display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">Границы автонаписания тестов</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Без отдельного согласования — до 5 тестов и 1 e2e на задачу. Продуктовый код не меняется. Тест на баг остаётся красным. Удалить или ослабить тест решает владелец.</p>
+</div>
+<div style="border-left:4px solid var(--yellow);padding-left:calc(24 * var(--u));display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">Ревью перед сдачей</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Ревьюеры по узким аспектам: ложно-зелёные тесты, флаки, простота, конвенции. До 3 раундов, каждая находка сверяется с кодом.</p>
+</div>
+<div style="border-left:4px solid var(--yellow);padding-left:calc(24 * var(--u));display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">Безопасность</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Браузер запускается только на окружениях, отмеченных безопасными в профиле. Значения секретов не читаются.</p>
+</div>
+</div>
+</section>
+
+<section class="slide stage-indigo" id="ru-what" data-index="4" aria-label="4 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(56 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">ЧТО ЭТО</p>
+<h2 class="wide" style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1;width:calc(1500 * var(--u))">Плагин для Claude Code: набор QA-скиллов и база правил тестирования</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:calc(56 * var(--u))">
+<div class="keep-row" style="display:flex;gap:calc(24 * var(--u));align-items:start">
+<div style="flex:none;width:calc(56 * var(--u));height:calc(56 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--yellow);width:calc(56 * var(--u));height:calc(56 * var(--u))"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+<p style="font-size:max(15px, calc(30 * var(--u)));line-height:1.4"><b>Установка.</b> Две команды в Claude Code. Менять что-либо в репозитории не нужно.</p>
+</div>
+<div class="keep-row" style="display:flex;gap:calc(24 * var(--u));align-items:start">
+<div style="flex:none;width:calc(56 * var(--u));height:calc(56 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--yellow);width:calc(56 * var(--u));height:calc(56 * var(--u))"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></div>
+<p style="font-size:max(15px, calc(30 * var(--u)));line-height:1.4"><b>Контекст проекта.</b> Стек, тестовые слои, команды и CI записываются в профиль один раз.</p>
+</div>
+<div class="keep-row" style="display:flex;gap:calc(24 * var(--u));align-items:start">
+<div style="flex:none;width:calc(56 * var(--u));height:calc(56 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--yellow);width:calc(56 * var(--u));height:calc(56 * var(--u))"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+<p style="font-size:max(15px, calc(30 * var(--u)));line-height:1.4"><b>Результаты.</b> Планы, отчёты и тесты сохраняются файлами в репозитории. Прогресс пишется по ходу работы, прерванную сессию можно продолжить.</p>
+</div>
+<div class="keep-row" style="display:flex;gap:calc(24 * var(--u));align-items:start">
+<div style="flex:none;width:calc(56 * var(--u));height:calc(56 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--yellow);width:calc(56 * var(--u));height:calc(56 * var(--u))"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+<p style="font-size:max(15px, calc(30 * var(--u)));line-height:1.4"><b>Состав.</b> Три команды для пользователя, восемь внутренних скиллов, база из 1137 правил книги и 176 собственных, Python-скрипты проверок.</p>
+</div>
+</div>
+</section>
+
+<section class="slide stage-monsoon" id="ru-commands" data-index="5" aria-label="5 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(40 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">КАК УСТРОЕНО</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">Три команды</h2>
+</div>
+<div class="tw"><table style="font-size:max(15px, calc(26 * var(--u)));color:var(--fg);background:rgba(20,16,44,0.30)">
+<tr style="background:var(--panel-deep)"><th style="width:26%;color:var(--fg)">Команда</th><th style="width:44%;color:var(--fg)">Что делает</th><th style="width:30%;color:var(--fg)">Когда вызывать</th></tr>
+<tr><td style="font-family:'JetBrains Mono', 'Courier New', monospace">/qa-pilot:onboard</td><td>Создаёт профиль проекта: стек, тестовые слои, команды, CI, критичные флоу, окружения</td><td>Один раз при подключении. Повторно — после смены фреймворка или структуры тестов</td></tr>
+<tr style="background:rgba(244,242,255,0.07)"><td style="font-family:'JetBrains Mono', 'Courier New', monospace">/qa-pilot:test [контекст]</td><td>QA одной задачи: план до кода, проверка после кода, проверка в браузере, тесты по готовому плану</td><td>На каждую задачу: до начала разработки и после реализации</td></tr>
+<tr><td style="font-family:'JetBrains Mono', 'Courier New', monospace">/qa-pilot:audit [контекст]</td><td>Аудит всего проекта, требований одной фичи или кода тестов. Результат — список работ по приоритету</td><td>При входе в проект, после большой фичи, перед релизом, при нестабильных тестах</td></tr>
+</table></div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4;color:var(--body)">Контекст — номер тикета, название фичи, URL или «в браузере». Без контекста режим определяется по ветке и диффу.</p>
+</section>
+
+<section class="slide stage-monsoon" id="ru-rhythm" data-index="6" aria-label="6 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">ОБЩАЯ СХЕМА</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">Когда какую команду вызывать</h2>
+</div>
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--muted);font-weight:600">ВХОД В ПРОЕКТ · ОДИН РАЗ</p>
+<div style="display:flex;align-items:center;gap:calc(20 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));background:rgba(244,242,255,0.07);border:2px dashed rgba(244,242,255,0.55);border-radius:calc(12 * var(--u));padding:calc(20 * var(--u)) calc(28 * var(--u))">Пришли на проект</p>
+<svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(56 * var(--u));height:calc(28 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--lav)"/></svg>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(30 * var(--u)));font-weight:600;background:rgba(20,16,44,0.30);border:2px solid rgba(244,242,255,0.55);border-radius:calc(12 * var(--u));padding:calc(20 * var(--u)) calc(28 * var(--u))">onboard</p>
+<svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(56 * var(--u));height:calc(28 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--lav)"/></svg>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(30 * var(--u)));font-weight:600;background:rgba(201,200,255,0.16);border:2px solid var(--lav);border-radius:calc(12 * var(--u));padding:calc(20 * var(--u)) calc(28 * var(--u))">audit</p>
+<p class="wide" style="font-size:max(15px, calc(28 * var(--u)));color:var(--body);width:calc(520 * var(--u))">→ карта рисков и план: что чинить, что покрыть первым</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);font-weight:600">КАЖДАЯ ЗАДАЧА</p>
+<div style="display:flex;align-items:center;gap:calc(20 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));background:rgba(244,242,255,0.07);border:2px dashed rgba(244,242,255,0.55);border-radius:calc(12 * var(--u));padding:calc(20 * var(--u)) calc(28 * var(--u))">Тикет</p>
+<svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(56 * var(--u));height:calc(28 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--yellow)"/></svg>
+<div style="background:rgba(247,211,92,0.14);border:2px solid var(--yellow);border-radius:calc(12 * var(--u));padding:calc(16 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(4 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(30 * var(--u)));font-weight:600">test</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--body)">QA-план</p>
+</div>
+<svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(56 * var(--u));height:calc(28 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--yellow)"/></svg>
+<p style="font-size:max(15px, calc(28 * var(--u)));background:rgba(244,242,255,0.07);border:2px dashed rgba(244,242,255,0.55);border-radius:calc(12 * var(--u));padding:calc(20 * var(--u)) calc(28 * var(--u))">Пишете код</p>
+<svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(56 * var(--u));height:calc(28 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--yellow)"/></svg>
+<div style="background:rgba(247,211,92,0.14);border:2px solid var(--yellow);border-radius:calc(12 * var(--u));padding:calc(16 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(4 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(30 * var(--u)));font-weight:600">test</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--body)">проверка + тесты</p>
+</div>
+<svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(56 * var(--u));height:calc(28 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--yellow)"/></svg>
+<p style="font-size:max(15px, calc(28 * var(--u)));background:rgba(244,242,255,0.07);border:2px dashed rgba(244,242,255,0.55);border-radius:calc(12 * var(--u));padding:calc(20 * var(--u)) calc(28 * var(--u))">Мерж</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--lav);font-weight:600">ВРЕМЯ ОТ ВРЕМЕНИ</p>
+<div style="display:flex;gap:calc(24 * var(--u))">
+<p style="flex:1;font-size:max(15px, calc(28 * var(--u)));line-height:1.4;background:rgba(20,16,44,0.30);border-radius:calc(12 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u))"><b>audit</b> — после большой фичи или серии мелких изменений, перед релизом</p>
+<p style="flex:1;font-size:max(15px, calc(28 * var(--u)));line-height:1.4;background:rgba(20,16,44,0.30);border-radius:calc(12 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u))"><b>test «в браузере»</b> — пройти флоу руками, воспроизвести баг, проверить фикс</p>
+</div>
+</div>
+</section>
+
+<section class="slide stage-monsoon" id="ru-onboard" data-index="7" aria-label="7 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(28 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">ШАГ 1 · КАК УСТРОЕН</p>
+<h2 style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(25px, calc(60 * var(--u)));font-weight:600;line-height:1.1">/qa-pilot:onboard</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:calc(24 * var(--u))">
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(28 * var(--u)) calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600"><span style="color:var(--yellow)">1</span> · Сканирование, без вопросов</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Читает манифесты, конфиги, CI-воркфлоу, CLAUDE.md и AGENTS.md, выборку тестов. Записывает команды тестов, линта и тайпчека; какие слои тестов запускает CI; как ошибки API доходят до UI; зрелость тестового фреймворка по 9 областям. Значения секретов не читаются.</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(28 * var(--u)) calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600"><span style="color:var(--yellow)">2</span> · Вопросы, одним сообщением</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Только то, чего нет в коде: безопасные и запрещённые окружения, источник тестовых учёток, трекер, 3–7 критичных флоу (плагин предлагает, человек подтверждает), черты продукта, противоречия из шага 1. Без ответа — в раздел «Open gaps».</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(28 * var(--u)) calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600"><span style="color:var(--yellow)">3</span> · Профиль и где он используется</h3>
+<ul style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">
+<li>команды и CI-слои → запуск тестов, проверка «покрыто»</li>
+<li>критичные флоу → P2 на них становится Must</li>
+<li>черты продукта → отбор правил из базы</li>
+<li>окружения → где разрешена проверка в браузере</li>
+</ul>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(28 * var(--u)) calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600"><span style="color:var(--yellow)">4</span> · Проверки</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Запуск самой дешёвой команды из профиля. Скрипт сверки профиля с репозиторием должен пройти без расхождений. Та же сверка выполняется перед каждым test и audit; при расхождении — список отличий и обновление только этих строк.</p>
+</div>
+</div>
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--body)">Результат: docs/qa/project-profile.md. Остальные команды читают его вместо сканирования репозитория.</p>
+</section>
+
+<section class="slide stage-monsoon" id="ru-test" data-index="8" aria-label="8 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(32 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">ШАГ 2 · ВЫБОР РЕЖИМА И ПЛАН ДО КОДА</p>
+<h2 style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(25px, calc(60 * var(--u)));font-weight:600;line-height:1.1">/qa-pilot:test</h2>
+</div>
+<div style="display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-size:max(15px, calc(24 * var(--u)));font-weight:600;color:var(--muted)">РЕЖИМ ПО СИГНАЛАМ: СЛОВА ПОСЛЕ КОМАНДЫ, ТИКЕТ, ДИФФ НА ВЕТКЕ, ФАЙЛ ПЛАНА</p>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:calc(12 * var(--u))">
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.35;background:rgba(247,211,92,0.14);border-radius:calc(10 * var(--u));padding:calc(14 * var(--u)) calc(18 * var(--u))"><b>тикет, кода нет</b> → план</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.35;background:rgba(247,211,92,0.14);border-radius:calc(10 * var(--u));padding:calc(14 * var(--u)) calc(18 * var(--u))"><b>есть дифф</b> → проверка</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.35;background:rgba(20,16,44,0.30);border-radius:calc(10 * var(--u));padding:calc(14 * var(--u)) calc(18 * var(--u))"><b>«в браузере», URL</b> → ручное исследование</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.35;background:rgba(20,16,44,0.30);border-radius:calc(10 * var(--u));padding:calc(14 * var(--u)) calc(18 * var(--u))"><b>путь к плану</b> → написание тестов</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.35;background:rgba(20,16,44,0.30);border-radius:calc(10 * var(--u));padding:calc(14 * var(--u)) calc(18 * var(--u))"><b>«покрой»</b> → тесты на готовый код</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-size:max(15px, calc(24 * var(--u)));font-weight:600;color:var(--yellow)">РЕЖИМ «ПЛАН» — ДО НАЧАЛА РАЗРАБОТКИ</p>
+<div style="display:flex;gap:calc(16 * var(--u))">
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">1 · Область</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Изменение в терминах пользователя, затронутые модули и сущности, задет ли критичный флоу.</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">2 · Проверка AC</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Каждый критерий: проверяем ли, согласован ли с кодом, полон ли по обязательным веб-паттернам. Пробел → правка AC или вопрос.</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">3 · Карта влияния</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Кто использует затронутый код: импорты, запросы, вызовы сервисов. Для каждой связи — файл, строка и ожидаемый эффект.</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">4 · Тест-дельта</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Какие тесты поменять, новые тесты по корзинам Must / Should (до 5) / Highlight, регрессионный набор.</p>
+</div>
+</div>
+</div>
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--body)">Результат: docs/qa/tasks/&lt;тикет&gt;.md. Бюджет — около 80 тыс. токенов. Перед запуском режим и причина выводятся одной строкой.</p>
+</section>
+
+<section class="slide stage-monsoon" id="ru-test-verify" data-index="9" aria-label="9 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(32 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">ШАГ 2 · ПРОВЕРКА ПОСЛЕ КОДА</p>
+<h2 style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(25px, calc(60 * var(--u)));font-weight:600;line-height:1.1">/qa-pilot:test</h2>
+</div>
+<div style="display:flex;gap:calc(16 * var(--u))">
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">1 · Сверка с планом</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Каждый фрагмент диффа: запланирован, объяснимый рефакторинг или меняет поведение без плана. Невыполненные пункты плана — списком.</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">2 · Пересчёт влияния</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Карта влияния строится заново по реальному диффу. Изменение там, где ждали «без изменений», → вопрос «это намеренно?» с доказательством.</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">3 · Покрытие</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Для каждого Must и Should: тест, проверка именно этого условия, слой в CI. Прогон регрессии и новых тестов командами из профиля.</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">4 · Недостающие тесты</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Пишутся в стиле проекта и проходят ревью. Тест на найденный баг остаётся красным и уходит владельцу вместе с багом.</p>
+</div>
+</div>
+<div style="background:var(--panel-deep);border-radius:calc(16 * var(--u));padding:calc(28 * var(--u)) calc(36 * var(--u));display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-size:max(15px, calc(24 * var(--u)));font-weight:600;color:var(--lav)">ОГРАНИЧЕНИЯ ДЛЯ АВТОМАТИЧЕСКИХ ТЕСТОВ</p>
+<div style="display:flex;gap:calc(40 * var(--u))">
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--muted)">Ожидаемый результат берётся из AC, спеки или решения — не из изменённого кода</p>
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--muted)">Не больше 5 новых тестов и 1 e2e за задачу, остальное — списком владельцу</p>
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--muted)">Продуктовый код не меняется</p>
+</div>
+</div>
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--body)">Результат: раздел «Verify log» в файле задачи и готовый блок для описания PR. Бюджет — около 100 тыс. токенов. Если план не делали, сначала строится его сжатая версия.</p>
+</section>
+
+<section class="slide stage-monsoon" id="ru-audit" data-index="10" aria-label="10 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(28 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--lav);letter-spacing:calc(2 * var(--u))">ШАГ 3 · КАК УСТРОЕН АУДИТ ПРОЕКТА</p>
+<h2 style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(25px, calc(60 * var(--u)));font-weight:600;line-height:1.1">/qa-pilot:audit</h2>
+</div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4;color:var(--body)">Без контекста — весь проект, шаги 1–5. С фичей, спекой или тикетом — аудит требований этой фичи (шаг 3 на полной глубине). Со словом «тесты» — аудит кода тестов (шаг 4 по всему набору).</p>
+<div style="display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<div style="background:rgba(20,16,44,0.30);border-radius:calc(12 * var(--u));padding:calc(16 * var(--u)) calc(28 * var(--u));display:flex;gap:calc(28 * var(--u));align-items:center">
+<p class="wide" style="width:calc(340 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600"><span style="color:var(--lav)">1</span> · Фундамент</p>
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4">Зрелость тестового фреймворка по 9 областям профиля. Блокеры (слой считается покрытием, но CI его не запускает; ложно-зелёные тесты) — первыми в Must.</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border-radius:calc(12 * var(--u));padding:calc(16 * var(--u)) calc(28 * var(--u));display:flex;gap:calc(28 * var(--u));align-items:center">
+<p class="wide" style="width:calc(340 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600"><span style="color:var(--lav)">2</span> · Критичные флоу</p>
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4">3–7 флоу из профиля. Пользователь подтверждает список и видит стоимость до запуска: около 150–250 тыс. токенов на флоу.</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border-radius:calc(12 * var(--u));padding:calc(16 * var(--u)) calc(28 * var(--u));display:flex;gap:calc(28 * var(--u));align-items:center">
+<p class="wide" style="width:calc(340 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600"><span style="color:var(--lav)">3</span> · Аудит флоу</p>
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4">Скрипт отбирает правила под черты продукта. Для каждой сущности — карточка «сущность × обязательный паттерн»: у каждой ячейки вердикт с доказательством, пустая ячейка блокирует отчёт.</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border-radius:calc(12 * var(--u));padding:calc(16 * var(--u)) calc(28 * var(--u));display:flex;gap:calc(28 * var(--u));align-items:center">
+<p class="wide" style="width:calc(340 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600"><span style="color:var(--lav)">4</span> · Код тестов</p>
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4">Тесты вокруг критичных флоу: ложная зелень, флаки, неверный уровень теста.</p>
+</div>
+<div style="background:var(--panel-deep);border-radius:calc(12 * var(--u));padding:calc(16 * var(--u)) calc(28 * var(--u));display:flex;gap:calc(28 * var(--u));align-items:center">
+<p class="wide" style="width:calc(340 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600;color:var(--fg)"><span style="color:var(--lav)">5</span> · Дорожная карта</p>
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--muted)">Отчёт и список задач в JSON для агента-исполнителя. JSON проходит валидатор: ошибок должно быть 0.</p>
+</div>
+</div>
+</section>
+
+<section class="slide stage-backwater" id="ru-priority" data-index="11" aria-label="11 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">НА ЧЁМ ОСНОВАНО · 1</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1;color:var(--fg)">Приоритет — по риску, а не по проценту покрытия</h2>
+</div>
+<div style="display:flex;gap:calc(48 * var(--u))">
+<div class="wide" style="width:calc(560 * var(--u));display:flex;flex-direction:column;gap:calc(20 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.45;color:var(--muted)">Приоритет находки определяется <b style="color:var(--fg)">последствиями для продукта</b>, а не формулировкой правила.</p>
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.45;color:var(--muted)"><b style="color:var(--lav)">P1</b> — потеря данных, сломанная защита, нет проверки перед продом. Ставится, только если показано место в коде.</p>
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.45;color:var(--muted)"><b style="color:var(--fg)">P2</b> — серьёзная дыра. <b style="color:var(--fg)">P3</b> — косметика.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<div style="background:var(--yellow);border-radius:calc(12 * var(--u));padding:calc(24 * var(--u)) calc(32 * var(--u));display:flex;gap:calc(24 * var(--u));align-items:center">
+<p style="width:calc(200 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(17px, calc(40 * var(--u)));font-weight:600;color:var(--ink)">Must</p>
+<p style="flex:1;font-size:max(15px, calc(26 * var(--u)));line-height:1.4;color:var(--ink)">P1, любой подтверждённый баг и P2 на критичном флоу. Делается всегда</p>
+</div>
+<div style="background:rgba(244,242,255,0.10);border-radius:calc(12 * var(--u));padding:calc(24 * var(--u)) calc(32 * var(--u));display:flex;gap:calc(24 * var(--u));align-items:center">
+<p style="width:calc(200 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(17px, calc(40 * var(--u)));font-weight:600;color:var(--fg)">Should</p>
+<p style="flex:1;font-size:max(15px, calc(26 * var(--u)));line-height:1.4;color:var(--muted)">Остальные P2 — <b style="color:var(--fg)">не больше 8</b>, чтобы список можно было реально сделать</p>
+</div>
+<div style="background:rgba(244,242,255,0.10);border-radius:calc(12 * var(--u));padding:calc(24 * var(--u)) calc(32 * var(--u));display:flex;gap:calc(24 * var(--u));align-items:center">
+<p style="width:calc(200 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(17px, calc(40 * var(--u)));font-weight:600;color:var(--fg)">Highlight</p>
+<p style="flex:1;font-size:max(15px, calc(26 * var(--u)));line-height:1.4;color:var(--muted)">Одна строка о риске, без теста — пока вы сами не решите его поднять</p>
+</div>
+</div>
+</div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4;color:var(--muted)">Риски, исключённые фильтрами проекта, перечисляются в отдельном разделе отчёта.</p>
+</section>
+
+<section class="slide stage-backwater" id="ru-knowledge" data-index="12" aria-label="12 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(48 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">НА ЧЁМ ОСНОВАНО · 2</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">База правил тестирования</h2>
+</div>
+<div style="display:flex;gap:calc(40 * var(--u))">
+<div class="wide" style="width:calc(620 * var(--u));background:var(--panel-deep);border-radius:calc(16 * var(--u));padding:calc(44 * var(--u));display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(50px, calc(120 * var(--u)));font-weight:600;line-height:1;color:var(--lav)">1137</p>
+<p style="font-size:max(15px, calc(30 * var(--u)));line-height:1.4;color:var(--fg)">правил из книги Романа Суркова «Качество решает всё»</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.5;color:var(--muted)">Тест-дизайн, требования, API, формы, доступность (WCAG 2.2), локализация, производительность, мобильные гайдлайны, UX</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:calc(28 * var(--u))">
+<div style="display:flex;flex-direction:column;gap:calc(8 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(32 * var(--u)));font-weight:600">Каждое правило сверено с источником</h3>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">И со стандартами: RFC, W3C, ISTQB, OWASP, NIST. У правила есть уровень авторитета — стандарт, практика индустрии, гайд вендора или мнение автора. Правило уровня «мнение автора» не может быть обязательным.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:calc(8 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(32 * var(--u)));font-weight:600">Плюс собственные домены qa-pilot</h3>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">Веб-паттерны поломок, безопасность (OWASP ASVS), HTTP API, аутентификация (NIST), стратегия (ISTQB), тестирование AI-фич, качество тест-кода — и правила, выученные на реальных аудитах.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="slide stage-backwater" id="ru-determinism" data-index="13" aria-label="13 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">КОНТРОЛЬ · 1</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">Что проверяют скрипты</h2>
+</div>
+<div style="display:flex;align-items:stretch;gap:calc(16 * var(--u))">
+<div style="flex:1;background:rgba(20,16,44,0.30);border-radius:calc(16 * var(--u));padding:calc(36 * var(--u));display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<div class="keep-row" style="display:flex;gap:calc(16 * var(--u));align-items:center">
+<div style="flex:none;width:calc(48 * var(--u));height:calc(48 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--yellow);width:calc(48 * var(--u));height:calc(48 * var(--u))"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/></svg></div>
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(34 * var(--u)));font-weight:600">Модель</h3>
+</div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">Суждение: что здесь может сломаться, какие сценарии важны, как сформулировать находку.</p>
+</div>
+<div style="display:flex;align-items:center"><svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(48 * var(--u));height:calc(24 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--yellow)"/></svg></div>
+<div style="flex:1.6;background:var(--panel-deep);border-radius:calc(16 * var(--u));padding:calc(36 * var(--u));display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<div class="keep-row" style="display:flex;gap:calc(16 * var(--u));align-items:center">
+<div style="flex:none;width:calc(48 * var(--u));height:calc(48 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--lav);width:calc(48 * var(--u));height:calc(48 * var(--u))"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(34 * var(--u)));font-weight:600;color:var(--fg)">Скрипты без LLM</h3>
+</div>
+<ul style="font-size:max(15px, calc(26 * var(--u)));line-height:1.5;color:var(--muted)">
+<li>отбирают правила под черты продукта</li>
+<li>ищут в требованиях «TBD», «быстро», «удобно»</li>
+<li>валидируют отчёт аудита: поля, источник, вердикты</li>
+<li>ломают код под тестом и откатывают файл</li>
+<li>сверяют профиль с репозиторием</li>
+<li>проверяют сам плагин: скиллы и ссылки</li>
+</ul>
+</div>
+<div style="display:flex;align-items:center"><svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(48 * var(--u));height:calc(24 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--yellow)"/></svg></div>
+<div style="flex:1;background:rgba(201,200,255,0.16);border-radius:calc(16 * var(--u));padding:calc(36 * var(--u));display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<div class="keep-row" style="display:flex;gap:calc(16 * var(--u));align-items:center">
+<div style="flex:none;width:calc(48 * var(--u));height:calc(48 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--lav);width:calc(48 * var(--u));height:calc(48 * var(--u))"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(34 * var(--u)));font-weight:600">Вы</h3>
+</div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">Решения о продукте: что считать критичным, какую глубину выбрать, что делать с багом.</p>
+</div>
+</div>
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.4">Скрипты проверяют данные и форму результата, а не суждение модели. Отчёт с ошибкой валидации не считается готовым.</p>
+</section>
+
+<section class="slide stage-backwater" id="ru-evidence" data-index="14" aria-label="14 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(40 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">КОНТРОЛЬ · 2</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">Требования к доказательствам</h2>
+</div>
+<p style="font-size:max(15px, calc(26 * var(--u)));font-weight:600;color:var(--yellow)">«ПОКРЫТО» — ТОЛЬКО ПРИ ТРЁХ ДОКАЗАТЕЛЬСТВАХ</p>
+<div style="display:flex;gap:calc(24 * var(--u))">
+<div style="flex:1;background:rgba(20,16,44,0.30);border:2px solid var(--yellow);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(18px, calc(44 * var(--u)));font-weight:600;color:var(--yellow)">1</p>
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.4"><b>Есть тест</b> — с точным файлом и строкой</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:2px solid var(--yellow);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(18px, calc(44 * var(--u)));font-weight:600;color:var(--yellow)">2</p>
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.4"><b>Он ловит именно этот случай</b>, а не соседний</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:2px solid var(--yellow);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(18px, calc(44 * var(--u)));font-weight:600;color:var(--yellow)">3</p>
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.4"><b>Этот слой реально запускается в CI</b></p>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:calc(32 * var(--u))">
+<div class="keep-row" style="display:flex;gap:calc(20 * var(--u));align-items:start">
+<div style="flex:none;width:calc(44 * var(--u));height:calc(44 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--fg);width:calc(44 * var(--u));height:calc(44 * var(--u))"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.6-4.6"/></svg></div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4"><b>«Теста нет»</b> — только с приложенным поиском: команда и число совпадений</p>
+</div>
+<div class="keep-row" style="display:flex;gap:calc(20 * var(--u));align-items:start">
+<div style="flex:none;width:calc(44 * var(--u));height:calc(44 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--fg);width:calc(44 * var(--u));height:calc(44 * var(--u))"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4"><b>Умеет падать:</b> новый тест проверяется на сломанном коде, существующие — пробой скрипта на выборке</p>
+</div>
+<div class="keep-row" style="display:flex;gap:calc(20 * var(--u));align-items:start">
+<div style="flex:none;width:calc(44 * var(--u));height:calc(44 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--fg);width:calc(44 * var(--u));height:calc(44 * var(--u))"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4"><b>Код тестов</b> проходит ревью отдельными агентами, до 3 раундов; каждая находка сверяется с кодом</p>
+</div>
+<div class="keep-row" style="display:flex;gap:calc(20 * var(--u));align-items:start">
+<div style="flex:none;width:calc(44 * var(--u));height:calc(44 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--fg);width:calc(44 * var(--u));height:calc(44 * var(--u))"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4"><b>Баги в продукте</b> не исправляются автоматически: передаются владельцу с шагами и ожидаемым поведением</p>
+</div>
+</div>
+</section>
+
+<section class="slide stage-backwater" id="ru-limits" data-index="15" aria-label="15 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">КОНТРОЛЬ · 3</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">Ограничения</h2>
+</div>
+<div class="tw"><table style="font-size:max(15px, calc(28 * var(--u)));color:var(--fg);background:rgba(20,16,44,0.30);border-radius:calc(16 * var(--u))">
+<tr style="background:var(--panel-deep)"><th style="width:38%;color:var(--fg)">Ограничение</th><th style="width:62%;color:var(--fg)">Что это значит на практике</th></tr>
+<tr><td>Сильнее всего на фронтенде и e2e</td><td>На чистом бэкенде работает, но опирается на конвенции проекта, а не на готовую библиотеку паттернов</td></tr>
+<tr style="background:rgba(244,242,255,0.07)"><td>Аудиты стоят токенов</td><td>Порядка 150–250 тыс. на один флоу. Цену плагин называет заранее, флоу выбираете вы</td></tr>
+<tr><td>Один репозиторий — один профиль</td><td>Связи между репозиториями плагин не анализирует</td></tr>
+<tr style="background:rgba(244,242,255,0.07)"><td>Требует ответов на вопросы</td><td>В первую неделю нужно время на ответы: от них зависит точность профиля</td></tr>
+<tr><td>Продуктовые решения — за командой</td><td>Продуктовый код не меняется, приоритеты бизнеса не определяются</td></tr>
+</table></div>
+</section>
+
+<section class="slide stage-hibiscus" id="ru-usecases" data-index="16" aria-label="16 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">КОГДА ПОЛЕЗНО</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">Типовые сценарии и команды</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:calc(24 * var(--u))">
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.35;font-weight:600">Новый проект с существующими тестами</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow)">onboard → audit</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Оценка тестового фреймворка, риски критичных флоу, порядок работ</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.35;font-weight:600">Задача до начала разработки</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow)">test TICKET-123</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Проверка AC, карта влияния, список тестов к добавлению</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.35;font-weight:600">Задача после реализации</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow)">test</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Сверка диффа с планом, недостающие тесты</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.35;font-weight:600">Проверка спецификации</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--lav)">audit &lt;фича&gt;</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Противоречия, неописанные состояния, вопросы к продукту</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.35;font-weight:600">Нестабильные тесты</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--lav)">audit тесты</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Ложно-зелёные и флаки-тесты, дубли, план рефакторинга</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.35;font-weight:600">Ручная проверка в браузере</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow)">test в браузере</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Прохождение флоу, баги с шагами воспроизведения, перепроверка фикса</p>
+</div>
+</div>
+</section>
+
+<section class="slide stage-hibiscus" id="ru-start" data-index="17" aria-label="17 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(48 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">КАК НАЧАТЬ</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(30px, calc(72 * var(--u)));font-weight:600;line-height:1.1;color:var(--fg)">Установка</h2>
+</div>
+<div style="background:var(--code);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(44 * var(--u)) calc(52 * var(--u));display:flex;flex-direction:column;gap:calc(20 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(34 * var(--u)));color:var(--muted)"><span style="color:var(--faint)">1 </span> /plugin marketplace add grooownow/qa-pilot</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(34 * var(--u)));color:var(--muted)"><span style="color:var(--faint)">2 </span> /plugin install qa-pilot@qa-pilot</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(34 * var(--u)));color:var(--lav)"><span style="color:var(--faint)">3 </span> /qa-pilot:onboard</p>
+</div>
+<div style="display:flex;gap:calc(48 * var(--u))">
+<p style="flex:1;font-size:max(15px, calc(28 * var(--u)));line-height:1.45;color:var(--muted)"><b style="color:var(--fg)">Нужно:</b> Claude Code и Node.js. Работает на подписке Claude Pro.</p>
+<p style="flex:1;font-size:max(15px, calc(28 * var(--u)));line-height:1.45;color:var(--muted)"><b style="color:var(--fg)">Дальше:</b> <span style="color:var(--lav)">audit</span> для общей картины, потом <span style="color:var(--yellow)">test</span> на каждую задачу.</p>
+<p style="flex:1;font-size:max(15px, calc(28 * var(--u)));line-height:1.45;color:var(--muted)"><b style="color:var(--fg)">Подробнее:</b> <a target="_blank" rel="noopener" href="https://github.com/grooownow/qa-pilot" style="color:var(--yellow)">github.com/grooownow/qa-pilot</a></p>
+</div>
+<a class="repo-cta" href="https://github.com/grooownow/qa-pilot" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true" class="gh"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span>Открыть репозиторий на GitHub</span><span aria-hidden="true">↗</span></a></section>
+
+</main>
+<main class="deck" data-lang="en" lang="en" hidden>
+<section class="slide stage-indigo" id="en-cover" data-index="1" aria-label="1 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;justify-content:space-between"><div class="cover-tools"><div class="lang-switch" role="group" aria-label="Language"><button type="button" class="lang-btn" data-set-lang="ru" aria-pressed="false">RU</button><button type="button" class="lang-btn" data-set-lang="en" aria-pressed="true">EN</button></div><a class="repo-link" href="https://github.com/grooownow/qa-pilot" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true" class="gh"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span>Repository on GitHub</span></a></div>
+
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(28 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">A CLAUDE CODE PLUGIN · ONBOARDING</p>
+<div style="display:flex;flex-direction:column;gap:calc(40 * var(--u))">
+<h1 style="font-family:'Rubik', Arial, sans-serif;font-size:max(84px, calc(200 * var(--u)));font-weight:600;line-height:1;color:var(--fg)">qa-pilot</h1>
+<p class="wide" style="font-size:max(18px, calc(44 * var(--u)));line-height:1.3;color:var(--muted);width:calc(1300 * var(--u))">Skills for Claude Code: a QA plan per task, coverage analysis, requirement and test audits, test writing.</p>
+</div>
+<div style="display:flex;gap:calc(24 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));color:var(--ink);background:var(--yellow);padding:calc(12 * var(--u)) calc(28 * var(--u));border-radius:calc(999 * var(--u));font-weight:600">3 commands</p>
+<p style="font-size:max(15px, calc(28 * var(--u)));color:var(--fg);border:2px solid rgba(244,242,255,0.30);padding:calc(10 * var(--u)) calc(28 * var(--u));border-radius:calc(999 * var(--u))">1100+ QA rules</p>
+<p style="font-size:max(15px, calc(28 * var(--u)));color:var(--fg);border:2px solid rgba(244,242,255,0.30);padding:calc(10 * var(--u)) calc(28 * var(--u));border-radius:calc(999 * var(--u))">script checks</p></div>
+</section>
+
+<section class="slide stage-indigo" id="en-pain" data-index="2" aria-label="2 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(36 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">RULES · TESTS</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">Four rules for tests</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:calc(20 * var(--u))">
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600">A test must prove it can fail</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">New test: the agent breaks the code under test or the assertion, sees it fail, reverts; the main session spot-checks. Existing tests: the test audit breaks the code under a sample of tests with a script that restores the file itself.</p>
+<p style="font-size:max(15px, calc(22 * var(--u)));line-height:1.4;color:var(--muted)">Removes tests that pass whatever the code does.</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600">Every expected result has a source</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">A source is a spec or AC line, a project decision, an invariant from the rule base, or a convention elsewhere in the code. The code under test is never a source. No source means a question for the owner, not a test.</p>
+<p style="font-size:max(15px, calc(22 * var(--u)));line-height:1.4;color:var(--muted)">Removes tests that lock in a bug as expected behaviour.</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600">A UI test checks what the user sees</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Deleted: the row is gone from the list. Saved: the value is there after a reload. A response status is checked only in addition. Exceptions (no trace in the UI, an API test) are marked in the test with the reason.</p>
+<p style="font-size:max(15px, calc(22 * var(--u)));line-height:1.4;color:var(--muted)">Removes the green test over a 200 response and an unchanged screen.</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600">“Covered” means three references</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">A test by file and line, an assertion on this exact condition, a test layer that CI runs. “Not covered” is proven too: the search and its match count are attached.</p>
+<p style="font-size:max(15px, calc(22 * var(--u)));line-height:1.4;color:var(--muted)">Removes “it’s all covered” on trust.</p>
+</div>
+</div>
+</section>
+
+<section class="slide stage-indigo" id="en-conduct" data-index="3" aria-label="3 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">RULES · WORKING IN A PROJECT</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">How the plugin works in your repo</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:calc(48 * var(--u))">
+<div style="border-left:4px solid var(--yellow);padding-left:calc(24 * var(--u));display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">Requirements are checked before code</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">When test runs before development: AC testability, consistency with the code and sibling specs, undefined entity states.</p>
+</div>
+<div style="border-left:4px solid var(--yellow);padding-left:calc(24 * var(--u));display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">Asks instead of guessing</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">What is missing comes as one list of questions. Unanswered items go to “Open gaps”, and dependent work is marked blocked.</p>
+</div>
+<div style="border-left:4px solid var(--yellow);padding-left:calc(24 * var(--u));display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">Project rules win over plugin rules</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">The repo’s CLAUDE.md, AGENTS.md and configs override the plugin. A conflict is noted in the report.</p>
+</div>
+<div style="border-left:4px solid var(--yellow);padding-left:calc(24 * var(--u));display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">Limits on writing tests automatically</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Without separate approval: up to 5 tests and 1 e2e per task. Product code is not changed. A bug test stays red. Deleting or weakening a test is the owner’s call.</p>
+</div>
+<div style="border-left:4px solid var(--yellow);padding-left:calc(24 * var(--u));display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">Review before hand-off</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Reviewers with narrow lenses: false greens, flakiness, simplicity, conventions. Up to 3 rounds; every finding is checked against the code.</p>
+</div>
+<div style="border-left:4px solid var(--yellow);padding-left:calc(24 * var(--u));display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">Safety</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">The browser runs only on environments marked safe in the profile. Secret values are never read.</p>
+</div>
+</div>
+</section>
+
+<section class="slide stage-indigo" id="en-what" data-index="4" aria-label="4 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(56 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">WHAT IT IS</p>
+<h2 class="wide" style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1;width:calc(1500 * var(--u))">A Claude Code plugin: a set of QA skills and a base of testing rules</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:calc(56 * var(--u))">
+<div class="keep-row" style="display:flex;gap:calc(24 * var(--u));align-items:start">
+<div style="flex:none;width:calc(56 * var(--u));height:calc(56 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--yellow);width:calc(56 * var(--u));height:calc(56 * var(--u))"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+<p style="font-size:max(15px, calc(30 * var(--u)));line-height:1.4"><b>Install.</b> Two commands in Claude Code. Nothing in the repo needs to change.</p>
+</div>
+<div class="keep-row" style="display:flex;gap:calc(24 * var(--u));align-items:start">
+<div style="flex:none;width:calc(56 * var(--u));height:calc(56 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--yellow);width:calc(56 * var(--u));height:calc(56 * var(--u))"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></div>
+<p style="font-size:max(15px, calc(30 * var(--u)));line-height:1.4"><b>Project context.</b> The stack, test layers, commands and CI are written to a profile once.</p>
+</div>
+<div class="keep-row" style="display:flex;gap:calc(24 * var(--u));align-items:start">
+<div style="flex:none;width:calc(56 * var(--u));height:calc(56 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--yellow);width:calc(56 * var(--u));height:calc(56 * var(--u))"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+<p style="font-size:max(15px, calc(30 * var(--u)));line-height:1.4"><b>Results.</b> Plans, reports and tests are saved as files in the repo. Progress is written as work goes on, so an interrupted session can resume.</p>
+</div>
+<div class="keep-row" style="display:flex;gap:calc(24 * var(--u));align-items:start">
+<div style="flex:none;width:calc(56 * var(--u));height:calc(56 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--yellow);width:calc(56 * var(--u));height:calc(56 * var(--u))"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+<p style="font-size:max(15px, calc(30 * var(--u)));line-height:1.4"><b>Contents.</b> Three user commands, eight internal skills, a base of 1137 rules from the book plus 176 of its own, Python check scripts.</p>
+</div>
+</div>
+</section>
+
+<section class="slide stage-monsoon" id="en-commands" data-index="5" aria-label="5 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(40 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">HOW IT WORKS</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">Three commands</h2>
+</div>
+<div class="tw"><table style="font-size:max(15px, calc(26 * var(--u)));color:var(--fg);background:rgba(20,16,44,0.30)">
+<tr style="background:var(--panel-deep)"><th style="width:26%;color:var(--fg)">Command</th><th style="width:44%;color:var(--fg)">What it does</th><th style="width:30%;color:var(--fg)">When to run it</th></tr>
+<tr><td style="font-family:'JetBrains Mono', 'Courier New', monospace">/qa-pilot:onboard</td><td>Creates the project profile: stack, test layers, commands, CI, critical flows, environments</td><td>Once, when you start. Again after a change of framework or test structure</td></tr>
+<tr style="background:rgba(244,242,255,0.07)"><td style="font-family:'JetBrains Mono', 'Courier New', monospace">/qa-pilot:test [context]</td><td>QA for one task: a plan before code, verification after code, browser testing, tests from a ready plan</td><td>Every task: before development starts and after it is done</td></tr>
+<tr><td style="font-family:'JetBrains Mono', 'Courier New', monospace">/qa-pilot:audit [context]</td><td>Audits the whole project, one feature’s requirements, or the test code. The result is a prioritised work list</td><td>When joining a project, after a big feature, before a release, when tests are flaky</td></tr>
+</table></div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4;color:var(--body)">Context is a ticket number, a feature name, a URL or “in the browser”. Without context, the mode is chosen from the branch and the diff.</p>
+</section>
+
+<section class="slide stage-monsoon" id="en-rhythm" data-index="6" aria-label="6 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">THE OVERALL LOOP</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">Which command to run when</h2>
+</div>
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--muted);font-weight:600">JOINING A PROJECT · ONCE</p>
+<div style="display:flex;align-items:center;gap:calc(20 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));background:rgba(244,242,255,0.07);border:2px dashed rgba(244,242,255,0.55);border-radius:calc(12 * var(--u));padding:calc(20 * var(--u)) calc(28 * var(--u))">You join a project</p>
+<svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(56 * var(--u));height:calc(28 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--lav)"/></svg>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(30 * var(--u)));font-weight:600;background:rgba(20,16,44,0.30);border:2px solid rgba(244,242,255,0.55);border-radius:calc(12 * var(--u));padding:calc(20 * var(--u)) calc(28 * var(--u))">onboard</p>
+<svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(56 * var(--u));height:calc(28 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--lav)"/></svg>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(30 * var(--u)));font-weight:600;background:rgba(201,200,255,0.16);border:2px solid var(--lav);border-radius:calc(12 * var(--u));padding:calc(20 * var(--u)) calc(28 * var(--u))">audit</p>
+<p class="wide" style="font-size:max(15px, calc(28 * var(--u)));color:var(--body);width:calc(520 * var(--u))">→ a risk map and a plan: what to fix, what to cover first</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);font-weight:600">EVERY TASK</p>
+<div style="display:flex;align-items:center;gap:calc(20 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));background:rgba(244,242,255,0.07);border:2px dashed rgba(244,242,255,0.55);border-radius:calc(12 * var(--u));padding:calc(20 * var(--u)) calc(28 * var(--u))">Ticket</p>
+<svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(56 * var(--u));height:calc(28 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--yellow)"/></svg>
+<div style="background:rgba(247,211,92,0.14);border:2px solid var(--yellow);border-radius:calc(12 * var(--u));padding:calc(16 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(4 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(30 * var(--u)));font-weight:600">test</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--body)">QA plan</p>
+</div>
+<svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(56 * var(--u));height:calc(28 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--yellow)"/></svg>
+<p style="font-size:max(15px, calc(28 * var(--u)));background:rgba(244,242,255,0.07);border:2px dashed rgba(244,242,255,0.55);border-radius:calc(12 * var(--u));padding:calc(20 * var(--u)) calc(28 * var(--u))">You write code</p>
+<svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(56 * var(--u));height:calc(28 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--yellow)"/></svg>
+<div style="background:rgba(247,211,92,0.14);border:2px solid var(--yellow);border-radius:calc(12 * var(--u));padding:calc(16 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(4 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(30 * var(--u)));font-weight:600">test</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--body)">verification + tests</p>
+</div>
+<svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(56 * var(--u));height:calc(28 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--yellow)"/></svg>
+<p style="font-size:max(15px, calc(28 * var(--u)));background:rgba(244,242,255,0.07);border:2px dashed rgba(244,242,255,0.55);border-radius:calc(12 * var(--u));padding:calc(20 * var(--u)) calc(28 * var(--u))">Merge</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--lav);font-weight:600">FROM TIME TO TIME</p>
+<div style="display:flex;gap:calc(24 * var(--u))">
+<p style="flex:1;font-size:max(15px, calc(28 * var(--u)));line-height:1.4;background:rgba(20,16,44,0.30);border-radius:calc(12 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u))"><b>audit</b> — after a big feature or a series of small changes, before a release</p>
+<p style="flex:1;font-size:max(15px, calc(28 * var(--u)));line-height:1.4;background:rgba(20,16,44,0.30);border-radius:calc(12 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u))"><b>test “in the browser”</b> — walk a flow by hand, reproduce a bug, check a fix</p>
+</div>
+</div>
+</section>
+
+<section class="slide stage-monsoon" id="en-onboard" data-index="7" aria-label="7 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(28 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">STEP 1 · HOW IT WORKS</p>
+<h2 style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(25px, calc(60 * var(--u)));font-weight:600;line-height:1.1">/qa-pilot:onboard</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:calc(24 * var(--u))">
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(28 * var(--u)) calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600"><span style="color:var(--yellow)">1</span> · Scan, no questions</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Reads manifests, configs, CI workflows, CLAUDE.md and AGENTS.md, a sample of tests. Records the test, lint and typecheck commands; which test layers CI runs; how API errors reach the UI; test framework maturity in 9 areas. Secret values are not read.</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(28 * var(--u)) calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600"><span style="color:var(--yellow)">2</span> · Questions, in one message</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Only what the code can’t tell: safe and forbidden environments, where test accounts come from, the tracker, 3–7 critical flows (the plugin proposes, you confirm), product traits, contradictions from step 1. Unanswered items go to “Open gaps”.</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(28 * var(--u)) calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600"><span style="color:var(--yellow)">3</span> · The profile and where it is used</h3>
+<ul style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">
+<li>commands and CI layers → running tests, the “covered” check</li>
+<li>critical flows → a P2 on them becomes Must</li>
+<li>product traits → which rules are picked from the base</li>
+<li>environments → where browser testing is allowed</li>
+</ul>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(28 * var(--u)) calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(30 * var(--u)));font-weight:600"><span style="color:var(--yellow)">4</span> · Checks</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Runs the cheapest command from the profile. The profile-vs-repo check script must pass with no drift. The same check runs before every test and audit; on drift you get the list and an update of just those lines.</p>
+</div>
+</div>
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--body)">Output: docs/qa/project-profile.md. The other commands read it instead of scanning the repo.</p>
+</section>
+
+<section class="slide stage-monsoon" id="en-test" data-index="8" aria-label="8 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(32 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">STEP 2 · CHOOSING THE MODE AND THE PLAN BEFORE CODE</p>
+<h2 style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(25px, calc(60 * var(--u)));font-weight:600;line-height:1.1">/qa-pilot:test</h2>
+</div>
+<div style="display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-size:max(15px, calc(24 * var(--u)));font-weight:600;color:var(--muted)">MODE FROM SIGNALS: WORDS AFTER THE COMMAND, TICKET, BRANCH DIFF, PLAN FILE</p>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:calc(12 * var(--u))">
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.35;background:rgba(247,211,92,0.14);border-radius:calc(10 * var(--u));padding:calc(14 * var(--u)) calc(18 * var(--u))"><b>ticket, no code</b> → plan</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.35;background:rgba(247,211,92,0.14);border-radius:calc(10 * var(--u));padding:calc(14 * var(--u)) calc(18 * var(--u))"><b>a diff exists</b> → verify</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.35;background:rgba(20,16,44,0.30);border-radius:calc(10 * var(--u));padding:calc(14 * var(--u)) calc(18 * var(--u))"><b>“in the browser”, URL</b> → exploratory testing</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.35;background:rgba(20,16,44,0.30);border-radius:calc(10 * var(--u));padding:calc(14 * var(--u)) calc(18 * var(--u))"><b>path to a plan</b> → write tests</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.35;background:rgba(20,16,44,0.30);border-radius:calc(10 * var(--u));padding:calc(14 * var(--u)) calc(18 * var(--u))"><b>“cover”</b> → tests for existing code</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-size:max(15px, calc(24 * var(--u)));font-weight:600;color:var(--yellow)">“PLAN” MODE — BEFORE DEVELOPMENT</p>
+<div style="display:flex;gap:calc(16 * var(--u))">
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">1 · Scope</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">The change in user terms, the touched modules and entities, whether a critical flow is involved.</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">2 · AC check</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Each criterion: testable? consistent with the code? complete against the must-check web patterns? A gap → an AC edit or a question.</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">3 · Impact map</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Who uses the touched code: imports, queries, service calls. For each edge — file, line and expected effect.</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">4 · Test delta</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Which tests to change, new tests by bucket Must / Should (up to 5) / Highlight, the regression set.</p>
+</div>
+</div>
+</div>
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--body)">Output: docs/qa/tasks/&lt;ticket&gt;.md. Budget: about 80k tokens. Before it starts, the mode and the reason are shown in one line.</p>
+</section>
+
+<section class="slide stage-monsoon" id="en-test-verify" data-index="9" aria-label="9 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(32 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">STEP 2 · VERIFICATION AFTER CODE</p>
+<h2 style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(25px, calc(60 * var(--u)));font-weight:600;line-height:1.1">/qa-pilot:test</h2>
+</div>
+<div style="display:flex;gap:calc(16 * var(--u))">
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">1 · Reconcile with the plan</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Each diff hunk: planned, an explained refactor, or an unplanned behaviour change. Plan items not done are listed.</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">2 · Recompute impact</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">The impact map is rebuilt from the real diff. A change where “unchanged” was expected → an “intended?” question with evidence.</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">3 · Coverage</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">For each Must and Should: a test, an assertion on this exact condition, a layer in CI. Regression and new tests run with the profile’s commands.</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(24 * var(--u)) calc(28 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600">4 · Missing tests</h3>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Written in the project’s style and reviewed. A test for a found bug stays red and goes to the owner with the bug.</p>
+</div>
+</div>
+<div style="background:var(--panel-deep);border-radius:calc(16 * var(--u));padding:calc(28 * var(--u)) calc(36 * var(--u));display:flex;flex-direction:column;gap:calc(12 * var(--u))">
+<p style="font-size:max(15px, calc(24 * var(--u)));font-weight:600;color:var(--lav)">LIMITS FOR AUTOMATIC TESTS</p>
+<div style="display:flex;gap:calc(40 * var(--u))">
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--muted)">The expected result comes from the AC, the spec or a decision — not from the changed code</p>
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--muted)">At most 5 new tests and 1 e2e per task; the rest goes to the owner as a list</p>
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--muted)">Product code is not changed</p>
+</div>
+</div>
+<p style="font-size:max(15px, calc(24 * var(--u)));color:var(--body)">Output: a “Verify log” section in the task file and a ready block for the PR description. Budget: about 100k tokens. If there was no plan, a compact one is built first.</p>
+</section>
+
+<section class="slide stage-monsoon" id="en-audit" data-index="10" aria-label="10 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(28 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--lav);letter-spacing:calc(2 * var(--u))">STEP 3 · HOW THE PROJECT AUDIT WORKS</p>
+<h2 style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(25px, calc(60 * var(--u)));font-weight:600;line-height:1.1">/qa-pilot:audit</h2>
+</div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4;color:var(--body)">No context: the whole project, steps 1–5. With a feature, spec or ticket: an audit of that feature’s requirements (step 3 at full depth). With the word “tests”: a test-code audit (step 4 over the whole suite).</p>
+<div style="display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<div style="background:rgba(20,16,44,0.30);border-radius:calc(12 * var(--u));padding:calc(16 * var(--u)) calc(28 * var(--u));display:flex;gap:calc(28 * var(--u));align-items:center">
+<p class="wide" style="width:calc(340 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600"><span style="color:var(--lav)">1</span> · Foundation</p>
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4">Test framework maturity in the profile’s 9 areas. Blockers (a layer counted as coverage that CI doesn’t run; false-green tests) go first in Must.</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border-radius:calc(12 * var(--u));padding:calc(16 * var(--u)) calc(28 * var(--u));display:flex;gap:calc(28 * var(--u));align-items:center">
+<p class="wide" style="width:calc(340 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600"><span style="color:var(--lav)">2</span> · Critical flows</p>
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4">3–7 flows from the profile. You confirm the list and see the cost before it runs: about 150–250k tokens per flow.</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border-radius:calc(12 * var(--u));padding:calc(16 * var(--u)) calc(28 * var(--u));display:flex;gap:calc(28 * var(--u));align-items:center">
+<p class="wide" style="width:calc(340 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600"><span style="color:var(--lav)">3</span> · Flow audit</p>
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4">A script picks the rules that fit the product traits. Each entity gets an “entity × must-check pattern” card: every cell has a verdict with evidence, and an empty cell blocks the report.</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border-radius:calc(12 * var(--u));padding:calc(16 * var(--u)) calc(28 * var(--u));display:flex;gap:calc(28 * var(--u));align-items:center">
+<p class="wide" style="width:calc(340 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600"><span style="color:var(--lav)">4</span> · Test code</p>
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4">Tests around the critical flows: false greens, flakiness, wrong test level.</p>
+</div>
+<div style="background:var(--panel-deep);border-radius:calc(12 * var(--u));padding:calc(16 * var(--u)) calc(28 * var(--u));display:flex;gap:calc(28 * var(--u));align-items:center">
+<p class="wide" style="width:calc(340 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(28 * var(--u)));font-weight:600;color:var(--fg)"><span style="color:var(--lav)">5</span> · Roadmap</p>
+<p style="flex:1;font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--muted)">A report and a JSON task list for an executing agent. The JSON goes through a validator: errors must be 0.</p>
+</div>
+</div>
+</section>
+
+<section class="slide stage-backwater" id="en-priority" data-index="11" aria-label="11 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">WHAT IT RELIES ON · 1</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1;color:var(--fg)">Priority by risk, not by coverage percentage</h2>
+</div>
+<div style="display:flex;gap:calc(48 * var(--u))">
+<div class="wide" style="width:calc(560 * var(--u));display:flex;flex-direction:column;gap:calc(20 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.45;color:var(--muted)">A finding’s priority is set by <b style="color:var(--fg)">its consequences for the product</b>, not by the wording of a rule.</p>
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.45;color:var(--muted)"><b style="color:var(--lav)">P1</b> — data loss, broken security, no check before prod. Assigned only with the place in the code shown.</p>
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.45;color:var(--muted)"><b style="color:var(--fg)">P2</b> — a serious gap. <b style="color:var(--fg)">P3</b> — cosmetic.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<div style="background:var(--yellow);border-radius:calc(12 * var(--u));padding:calc(24 * var(--u)) calc(32 * var(--u));display:flex;gap:calc(24 * var(--u));align-items:center">
+<p style="width:calc(200 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(17px, calc(40 * var(--u)));font-weight:600;color:var(--ink)">Must</p>
+<p style="flex:1;font-size:max(15px, calc(26 * var(--u)));line-height:1.4;color:var(--ink)">P1, any confirmed bug, and P2 on a critical flow. Always done</p>
+</div>
+<div style="background:rgba(244,242,255,0.10);border-radius:calc(12 * var(--u));padding:calc(24 * var(--u)) calc(32 * var(--u));display:flex;gap:calc(24 * var(--u));align-items:center">
+<p style="width:calc(200 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(17px, calc(40 * var(--u)));font-weight:600;color:var(--fg)">Should</p>
+<p style="flex:1;font-size:max(15px, calc(26 * var(--u)));line-height:1.4;color:var(--muted)">Other P2s — <b style="color:var(--fg)">at most 8</b>, so the list can actually be done</p>
+</div>
+<div style="background:rgba(244,242,255,0.10);border-radius:calc(12 * var(--u));padding:calc(24 * var(--u)) calc(32 * var(--u));display:flex;gap:calc(24 * var(--u));align-items:center">
+<p style="width:calc(200 * var(--u));font-family:'Rubik', Arial, sans-serif;font-size:max(17px, calc(40 * var(--u)));font-weight:600;color:var(--fg)">Highlight</p>
+<p style="flex:1;font-size:max(15px, calc(26 * var(--u)));line-height:1.4;color:var(--muted)">One line about the risk, no test — until you decide to raise it</p>
+</div>
+</div>
+</div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4;color:var(--muted)">Risks excluded by project filters are listed in a separate section of the report.</p>
+</section>
+
+<section class="slide stage-backwater" id="en-knowledge" data-index="12" aria-label="12 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(48 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">WHAT IT RELIES ON · 2</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">The testing rule base</h2>
+</div>
+<div style="display:flex;gap:calc(40 * var(--u))">
+<div class="wide" style="width:calc(620 * var(--u));background:var(--panel-deep);border-radius:calc(16 * var(--u));padding:calc(44 * var(--u));display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(50px, calc(120 * var(--u)));font-weight:600;line-height:1;color:var(--lav)">1137</p>
+<p style="font-size:max(15px, calc(30 * var(--u)));line-height:1.4;color:var(--fg)">rules from Roman Surkov’s book “Quality Decides Everything”</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.5;color:var(--muted)">Test design, requirements, API, forms, accessibility (WCAG 2.2), localisation, performance, mobile guidelines, UX</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:calc(28 * var(--u))">
+<div style="display:flex;flex-direction:column;gap:calc(8 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(32 * var(--u)));font-weight:600">Every rule is checked against its source</h3>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">And against standards: RFC, W3C, ISTQB, OWASP, NIST. Each rule has an authority level — standard, industry practice, vendor guideline or author’s opinion. An author’s-opinion rule cannot be mandatory.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:calc(8 * var(--u))">
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(32 * var(--u)));font-weight:600">Plus qa-pilot’s own domains</h3>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">Web failure patterns, security (OWASP ASVS), HTTP APIs, authentication (NIST), strategy (ISTQB), testing AI features, test-code quality — and rules learned on real audits.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="slide stage-backwater" id="en-determinism" data-index="13" aria-label="13 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">CONTROL · 1</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">What scripts check</h2>
+</div>
+<div style="display:flex;align-items:stretch;gap:calc(16 * var(--u))">
+<div style="flex:1;background:rgba(20,16,44,0.30);border-radius:calc(16 * var(--u));padding:calc(36 * var(--u));display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<div class="keep-row" style="display:flex;gap:calc(16 * var(--u));align-items:center">
+<div style="flex:none;width:calc(48 * var(--u));height:calc(48 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--yellow);width:calc(48 * var(--u));height:calc(48 * var(--u))"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/></svg></div>
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(34 * var(--u)));font-weight:600">The model</h3>
+</div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">Judgment: what can break here, which scenarios matter, how to word a finding.</p>
+</div>
+<div style="display:flex;align-items:center"><svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(48 * var(--u));height:calc(24 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--yellow)"/></svg></div>
+<div style="flex:1.6;background:var(--panel-deep);border-radius:calc(16 * var(--u));padding:calc(36 * var(--u));display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<div class="keep-row" style="display:flex;gap:calc(16 * var(--u));align-items:center">
+<div style="flex:none;width:calc(48 * var(--u));height:calc(48 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--lav);width:calc(48 * var(--u));height:calc(48 * var(--u))"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(34 * var(--u)));font-weight:600;color:var(--fg)">Scripts, no LLM</h3>
+</div>
+<ul style="font-size:max(15px, calc(26 * var(--u)));line-height:1.5;color:var(--muted)">
+<li>pick rules by product traits</li>
+<li>find “TBD”, “fast”, “easy” in requirements</li>
+<li>validate the audit report: fields, source, verdicts</li>
+<li>break the code under a test and restore the file</li>
+<li>compare the profile with the repo</li>
+<li>check the plugin itself: skills and links</li>
+</ul>
+</div>
+<div style="display:flex;align-items:center"><svg class="arrow" viewBox="0 0 56 28" aria-hidden="true" style="width:calc(48 * var(--u));height:calc(24 * var(--u))"><path d="M0 9h34V0l22 14-22 14v-9H0z" fill="var(--yellow)"/></svg></div>
+<div style="flex:1;background:rgba(201,200,255,0.16);border-radius:calc(16 * var(--u));padding:calc(36 * var(--u));display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<div class="keep-row" style="display:flex;gap:calc(16 * var(--u));align-items:center">
+<div style="flex:none;width:calc(48 * var(--u));height:calc(48 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--lav);width:calc(48 * var(--u));height:calc(48 * var(--u))"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+<h3 style="font-family:'Rubik', Arial, sans-serif;font-size:max(15px, calc(34 * var(--u)));font-weight:600">You</h3>
+</div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.45;color:var(--body)">Product decisions: what is critical, which depth to choose, what to do with a bug.</p>
+</div>
+</div>
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.4">Scripts check data and the shape of the result, not the model’s judgment. A report with a validation error is not done.</p>
+</section>
+
+<section class="slide stage-backwater" id="en-evidence" data-index="14" aria-label="14 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(40 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">CONTROL · 2</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">Evidence requirements</h2>
+</div>
+<p style="font-size:max(15px, calc(26 * var(--u)));font-weight:600;color:var(--yellow)">“COVERED” ONLY WITH THREE PROOFS</p>
+<div style="display:flex;gap:calc(24 * var(--u))">
+<div style="flex:1;background:rgba(20,16,44,0.30);border:2px solid var(--yellow);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(18px, calc(44 * var(--u)));font-weight:600;color:var(--yellow)">1</p>
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.4"><b>A test exists</b> — with the exact file and line</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:2px solid var(--yellow);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(18px, calc(44 * var(--u)));font-weight:600;color:var(--yellow)">2</p>
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.4"><b>It catches this exact case</b>, not a neighbouring one</p>
+</div>
+<div style="flex:1;background:rgba(20,16,44,0.30);border:2px solid var(--yellow);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(10 * var(--u))">
+<p style="font-family:'Rubik', Arial, sans-serif;font-size:max(18px, calc(44 * var(--u)));font-weight:600;color:var(--yellow)">3</p>
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.4"><b>This layer actually runs in CI</b></p>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:calc(32 * var(--u))">
+<div class="keep-row" style="display:flex;gap:calc(20 * var(--u));align-items:start">
+<div style="flex:none;width:calc(44 * var(--u));height:calc(44 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--fg);width:calc(44 * var(--u));height:calc(44 * var(--u))"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.6-4.6"/></svg></div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4"><b>“No test”</b> — only with the search attached: command and match count</p>
+</div>
+<div class="keep-row" style="display:flex;gap:calc(20 * var(--u));align-items:start">
+<div style="flex:none;width:calc(44 * var(--u));height:calc(44 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--fg);width:calc(44 * var(--u));height:calc(44 * var(--u))"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4"><b>Can fail:</b> a new test is checked against broken code; existing ones by a script probe on a sample</p>
+</div>
+<div class="keep-row" style="display:flex;gap:calc(20 * var(--u));align-items:start">
+<div style="flex:none;width:calc(44 * var(--u));height:calc(44 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--fg);width:calc(44 * var(--u));height:calc(44 * var(--u))"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4"><b>Test code</b> is reviewed by separate agents, up to 3 rounds; every finding is checked against the code</p>
+</div>
+<div class="keep-row" style="display:flex;gap:calc(20 * var(--u));align-items:start">
+<div style="flex:none;width:calc(44 * var(--u));height:calc(44 * var(--u))"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--fg);width:calc(44 * var(--u));height:calc(44 * var(--u))"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+<p style="font-size:max(15px, calc(26 * var(--u)));line-height:1.4"><b>Product bugs</b> are not fixed automatically: they go to the owner with steps and the expected behaviour</p>
+</div>
+</div>
+</section>
+
+<section class="slide stage-backwater" id="en-limits" data-index="15" aria-label="15 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">CONTROL · 3</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">Limits</h2>
+</div>
+<div class="tw"><table style="font-size:max(15px, calc(28 * var(--u)));color:var(--fg);background:rgba(20,16,44,0.30);border-radius:calc(16 * var(--u))">
+<tr style="background:var(--panel-deep)"><th style="width:38%;color:var(--fg)">Limit</th><th style="width:62%;color:var(--fg)">What it means in practice</th></tr>
+<tr><td>Strongest on frontend and e2e</td><td>Works on a pure backend, but relies on the project’s conventions rather than a ready pattern library</td></tr>
+<tr style="background:rgba(244,242,255,0.07)"><td>Audits cost tokens</td><td>About 150–250k per flow. The plugin names the cost up front; you pick the flows</td></tr>
+<tr><td>One repo, one profile</td><td>The plugin does not analyse links between repos</td></tr>
+<tr style="background:rgba(244,242,255,0.07)"><td>Needs answers to questions</td><td>In the first week, answering takes time: the profile’s accuracy depends on it</td></tr>
+<tr><td>Product decisions stay with the team</td><td>Product code is not changed, business priorities are not set</td></tr>
+</table></div>
+</section>
+
+<section class="slide stage-hibiscus" id="en-usecases" data-index="16" aria-label="16 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(44 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">WHEN IT HELPS</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(27px, calc(64 * var(--u)));font-weight:600;line-height:1.1">Typical situations and commands</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:calc(24 * var(--u))">
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.35;font-weight:600">A new project with existing tests</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow)">onboard → audit</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Test framework assessment, critical-flow risks, order of work</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.35;font-weight:600">A task before development</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow)">test TICKET-123</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">AC check, impact map, list of tests to add</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.35;font-weight:600">A task after implementation</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow)">test</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Diff reconciled with the plan, missing tests</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.35;font-weight:600">Checking a spec</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--lav)">audit &lt;feature&gt;</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Contradictions, undefined states, product questions</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.35;font-weight:600">Flaky tests</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--lav)">audit tests</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">False-green and flaky tests, duplicates, a refactoring plan</p>
+</div>
+<div style="background:rgba(20,16,44,0.30);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(32 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))">
+<p style="font-size:max(15px, calc(28 * var(--u)));line-height:1.35;font-weight:600">Manual check in the browser</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow)">test in the browser</p>
+<p style="font-size:max(15px, calc(24 * var(--u)));line-height:1.4;color:var(--body)">Walking a flow, bugs with repro steps, re-checking a fix</p>
+</div>
+</div>
+</section>
+
+<section class="slide stage-hibiscus" id="en-start" data-index="17" aria-label="17 / 17" style="color:var(--fg);font-family:'IBM Plex Sans', Arial, sans-serif;display:flex;flex-direction:column;gap:calc(48 * var(--u))">
+
+<div style="display:flex;flex-direction:column;gap:calc(16 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(24 * var(--u)));color:var(--yellow);letter-spacing:calc(2 * var(--u))">HOW TO START</p>
+<h2 style="font-family:'Rubik', Arial, sans-serif;font-size:max(30px, calc(72 * var(--u)));font-weight:600;line-height:1.1;color:var(--fg)">Install</h2>
+</div>
+<div style="background:var(--code);border:1px solid rgba(244,242,255,0.22);border-radius:calc(16 * var(--u));padding:calc(44 * var(--u)) calc(52 * var(--u));display:flex;flex-direction:column;gap:calc(20 * var(--u))">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(34 * var(--u)));color:var(--muted)"><span style="color:var(--faint)">1 </span> /plugin marketplace add grooownow/qa-pilot</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(34 * var(--u)));color:var(--muted)"><span style="color:var(--faint)">2 </span> /plugin install qa-pilot@qa-pilot</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:max(15px, calc(34 * var(--u)));color:var(--lav)"><span style="color:var(--faint)">3 </span> /qa-pilot:onboard</p>
+</div>
+<div style="display:flex;gap:calc(48 * var(--u))">
+<p style="flex:1;font-size:max(15px, calc(28 * var(--u)));line-height:1.45;color:var(--muted)"><b style="color:var(--fg)">Needs:</b> Claude Code and Node.js. Works on a Claude Pro subscription.</p>
+<p style="flex:1;font-size:max(15px, calc(28 * var(--u)));line-height:1.45;color:var(--muted)"><b style="color:var(--fg)">Next:</b> <span style="color:var(--lav)">audit</span> for the big picture, then <span style="color:var(--yellow)">test</span> for every task.</p>
+<p style="flex:1;font-size:max(15px, calc(28 * var(--u)));line-height:1.45;color:var(--muted)"><b style="color:var(--fg)">More:</b> <a target="_blank" rel="noopener" href="https://github.com/grooownow/qa-pilot" style="color:var(--yellow)">github.com/grooownow/qa-pilot</a></p>
+</div>
+<a class="repo-cta" href="https://github.com/grooownow/qa-pilot" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true" class="gh"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span>Open the repository on GitHub</span><span aria-hidden="true">↗</span></a></section>
+
+</main>
+<nav class="nav" aria-label="" data-labels="{&quot;ru&quot;: {&quot;prev&quot;: &quot;Предыдущий экран&quot;, &quot;next&quot;: &quot;Следующий экран&quot;, &quot;hint&quot;: &quot;Стрелки ↑ ↓ — по экранам&quot;}, &quot;en&quot;: {&quot;prev&quot;: &quot;Previous screen&quot;, &quot;next&quot;: &quot;Next screen&quot;, &quot;hint&quot;: &quot;Arrow keys ↑ ↓ move between screens&quot;}}">
+<button type="button" aria-label=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
+<span class="count" aria-live="polite">1 / 17</span>
+<button type="button" aria-label=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+</nav>
+<script>
+(() => {
+  const decks = [...document.querySelectorAll('.deck')];
+  const nav = document.querySelector('.nav');
+  const count = nav.querySelector('.count');
+  const [prevBtn, nextBtn] = nav.querySelectorAll('button');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+                  set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+  let lang = store.get('qa-pilot-lang') || 'ru';
+  let anim = null;
+
+  const slides = () => [...document.querySelector(`.deck[data-lang="${lang}"]`).querySelectorAll('.slide')];
+  const top = el => el.getBoundingClientRect().top + window.scrollY;
+  function current() {
+    const y = window.scrollY + window.innerHeight * 0.35, list = slides();
+    let i = 0;
+    list.forEach((s, k) => { if (top(s) <= y) i = k; });
+    return i;
+  }
+  function render() {
+    const list = slides(), i = current();
+    count.textContent = `${i + 1} / ${list.length}`;
+    prevBtn.disabled = window.scrollY <= 1;
+    nextBtn.disabled = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 1;
+  }
+  function scrollToY(y) {
+    y = Math.max(0, Math.min(y, document.documentElement.scrollHeight - window.innerHeight));
+    if (anim) cancelAnimationFrame(anim.id);
+    if (reduce.matches) { window.scrollTo(0, y); return; }
+    const from = window.scrollY, dist = y - from, dur = Math.min(520, 260 + Math.abs(dist) * 0.08), t0 = performance.now();
+    const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    const step = now => {
+      const t = Math.min(1, (now - t0) / dur);
+      window.scrollTo(0, from + dist * ease(t));
+      anim = t < 1 ? { id: requestAnimationFrame(step) } : null;
+    };
+    anim = { id: requestAnimationFrame(step) };
+  }
+  function go(dir) {
+    const list = slides(), i = current(), s = list[i];
+    const viewTop = window.scrollY, viewBottom = viewTop + window.innerHeight;
+    if (dir > 0) {
+      const bottom = top(s) + s.offsetHeight;
+      if (bottom > viewBottom + 4) { scrollToY(Math.min(viewTop + window.innerHeight * 0.85, bottom - window.innerHeight)); return; }
+      if (list[i + 1]) scrollToY(top(list[i + 1]));
+    } else {
+      if (top(s) < viewTop - 4) { scrollToY(Math.max(top(s), viewTop - window.innerHeight * 0.85)); return; }
+      if (list[i - 1]) { const p = list[i - 1]; scrollToY(Math.max(top(p), top(p) + p.offsetHeight - window.innerHeight)); }
+    }
+  }
+  function setLang(next) {
+    const i = current();
+    lang = next; store.set('qa-pilot-lang', lang);
+    document.documentElement.lang = lang;
+    decks.forEach(d => { d.hidden = d.dataset.lang !== lang; });
+    document.querySelectorAll('.lang-btn').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.setLang === lang)));
+    const labels = JSON.parse(nav.dataset.labels)[lang];
+    prevBtn.setAttribute('aria-label', labels.prev); nextBtn.setAttribute('aria-label', labels.next);
+    nav.setAttribute('aria-label', labels.hint);
+    window.scrollTo(0, top(slides()[i]));
+    render();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.metaKey || e.ctrlKey || e.altKey || e.target.closest('input, textarea, select, [contenteditable]')) return;
+    const next = ['ArrowDown', 'ArrowRight', 'PageDown'].includes(e.key) || (e.key === ' ' && !e.shiftKey);
+    const prev = ['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.key) || (e.key === ' ' && e.shiftKey);
+    if (next || prev) { e.preventDefault(); go(next ? 1 : -1); }
+    else if (e.key === 'Home') { e.preventDefault(); scrollToY(0); }
+    else if (e.key === 'End') { e.preventDefault(); scrollToY(document.documentElement.scrollHeight); }
+  });
+  ['wheel', 'touchstart'].forEach(t => window.addEventListener(t, () => { if (anim) { cancelAnimationFrame(anim.id); anim = null; } }, { passive: true }));
+  prevBtn.addEventListener('click', () => go(-1));
+  nextBtn.addEventListener('click', () => go(1));
+  document.addEventListener('click', e => { const b = e.target.closest('[data-set-lang]'); if (b) setLang(b.dataset.setLang); });
+  window.addEventListener('scroll', render, { passive: true });
+  window.addEventListener('resize', render);
+  setLang(lang);
+  window.scrollTo(0, 0); render();
+})();
+</script>
+</body>
+</html>

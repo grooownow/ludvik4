@@ -6,6 +6,13 @@ writing detail here.
 
 ## Now
 
+**[SHIPPED 2026-10-20] qa-pilot landing is embedded on both domains.**
+`ludvik4.ru/qa-pilot/` (RU deck + RU/EN switch) and `ludvik4.dev/qa-pilot`
+(English only) serve the landing built in a separate artifact session; both
+case covers now show the landing, and "open project" leads to it. Source,
+regeneration steps and evidence: `docs/specs/qa-pilot-landing.md`. After
+deploy, run the smoke loops in both production playbooks.
+
 **[SHIPPED 2026-10-12] smallFriendFiles portfolio case is live in both markets.**
 Localized homepage cards, index entries and detailed cases describe the pet
 medical-file workflow with actual product screenshots. PR #12, all five CI

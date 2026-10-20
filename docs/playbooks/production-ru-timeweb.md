@@ -36,6 +36,12 @@ only — the EN build never ships it. To update it, rebuild there and
 re-copy; the folder is excluded from prettier. Live since 2026-08-07
 (commit `15a717a`).
 
+`/qa-pilot/` is the qa-pilot product landing (RU deck plus an RU/EN
+switch, defaulting to RU). Same model as Gridfin: prebuilt HTML committed in
+`resources/ru-public/qa-pilot/` and copied into `out/qa-pilot` by
+`scripts/build-ru-static.ts`. Source and regeneration steps:
+`docs/specs/qa-pilot-landing.md`.
+
 Timeweb deployment settings may still contain `NEXT_PUBLIC_POSTHOG_KEY`, but
 the RU build hard-disables PostHog in code. The library is not initialized and
 `contact.telegram_clicked` is not captured. Remove the variable from Timeweb

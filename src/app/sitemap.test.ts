@@ -44,6 +44,8 @@ describe("buildSitemap", () => {
     expect(urls).toContain(
       `${baseURL}/gridfin/guides/why-ai-needs-engineering-rules/`,
     );
+    // qa-pilot landing (static file from resources/ru-public/qa-pilot/).
+    expect(urls).toContain(`${baseURL}/qa-pilot/`);
     // No hreflang / cross-market URL — the EN storefront lives on its own domain.
     expect(urls).not.toContain(`${baseURL}/en`);
     for (const a of getPublishedArticles()) {
@@ -52,7 +54,7 @@ describe("buildSitemap", () => {
     for (const d of getAllArticles().filter((a) => a.draft)) {
       expect(urls).not.toContain(`${baseURL}/blog/${d.slug}/`);
     }
-    expect(urls).toHaveLength(13 + getPublishedArticles().length);
+    expect(urls).toHaveLength(14 + getPublishedArticles().length);
   });
 
   it("EN: landing, service pages, proof, source pages and EN articles", () => {
@@ -74,6 +76,7 @@ describe("buildSitemap", () => {
       `${baseURL}/gridfin/en`,
       `${baseURL}/gridfin/en/docs/application-skeleton`,
       `${baseURL}/gridfin/en/guides/why-ai-needs-engineering-rules`,
+      `${baseURL}/qa-pilot`,
       `${baseURL}/blog`,
       `${baseURL}/blog/ai-website-diy-or-developer`,
       `${baseURL}/blog/what-development-quote-pays-for`,
@@ -201,5 +204,60 @@ describe("public Gridfin international bundle", () => {
         `hreflang advertises /gridfin/${locale} but the locale is not deployed`,
       ).toBe(true);
     }
+  });
+});
+
+describe("public qa-pilot landing", () => {
+  const ru = () =>
+    readFileSync(
+      path.join(process.cwd(), "resources/ru-public/qa-pilot/index.html"),
+      "utf8",
+    );
+  const en = () =>
+    readFileSync(
+      path.join(process.cwd(), "public/qa-pilot/index.html"),
+      "utf8",
+    );
+
+  it("RU page is canonical on ludvik4.ru, keeps the language switch and defaults to Russian", () => {
+    const html = ru();
+    expect(html).toContain('<html lang="ru">');
+    expect(html).toContain(
+      '<link rel="canonical" href="https://ludvik4.ru/qa-pilot/">',
+    );
+    expect(html).toContain(
+      '<link rel="alternate" hreflang="en" href="https://ludvik4.dev/qa-pilot">',
+    );
+    expect(html).toContain('class="lang-switch"');
+    expect(html).toContain('data-lang="en"');
+    // Crawlers must render the RU deck regardless of their browser language.
+    expect(html).not.toContain("navigator.language");
+    expect(html).not.toContain("claude:");
+  });
+
+  it("EN page on ludvik4.dev is English-only, with no language switch", () => {
+    const html = en();
+    expect(html).toContain('<html lang="en">');
+    expect(html).toContain(
+      '<link rel="canonical" href="https://ludvik4.dev/qa-pilot">',
+    );
+    expect(html).not.toContain('class="lang-switch"');
+    expect(html).not.toContain('data-lang="ru"');
+    expect(html).not.toMatch(/[А-Яа-яЁё]/);
+    expect(html).not.toContain("claude:");
+  });
+
+  it("ships the share images both pages advertise", () => {
+    expect(
+      existsSync(
+        path.join(
+          process.cwd(),
+          "resources/ru-public/qa-pilot/assets/og-ru.png",
+        ),
+      ),
+    ).toBe(true);
+    expect(
+      existsSync(path.join(process.cwd(), "public/qa-pilot/assets/og-en.png")),
+    ).toBe(true);
   });
 });

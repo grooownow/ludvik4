@@ -20,4 +20,7 @@ tests/fixtures/planted-defects/
 # Prebuilt Gridfin HTML is copied only into the RU static export.
 resources/ru-public/gridfin/
 public/gridfin/
+# Prebuilt qa-pilot landing (RU on the static host, EN on Vercel).
+resources/ru-public/qa-pilot/
+public/qa-pilot/
 public/terms/

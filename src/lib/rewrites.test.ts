@@ -16,10 +16,17 @@ describe("gridfin bundle serving (EN)", () => {
     });
   });
 
-  it("EN rewrites stay inside /gridfin — the studio app is not touched", () => {
+  it("EN maps /qa-pilot to the single-page qa-pilot landing", () => {
+    expect(buildRewrites("en")).toContainEqual({
+      source: "/qa-pilot",
+      destination: "/qa-pilot/index.html",
+    });
+  });
+
+  it("EN rewrites stay inside the static bundles — the studio app is not touched", () => {
     for (const rule of buildRewrites("en")) {
-      expect(rule.source).toMatch(/^\/gridfin(\/|$)/);
-      expect(rule.destination).toMatch(/^\/gridfin\//);
+      expect(rule.source).toMatch(/^\/(gridfin|qa-pilot)(\/|$)/);
+      expect(rule.destination).toMatch(/^\/(gridfin|qa-pilot)\//);
     }
   });
 
@@ -33,7 +40,7 @@ describe("gridfin bundle serving (EN)", () => {
 });
 
 describe("market isolation", () => {
-  it("RU build gets no gridfin rewrites — its bundle ships via the static export", () => {
+  it("RU build gets no bundle rewrites — its bundle ships via the static export", () => {
     expect(buildRewrites("ru")).toEqual([]);
   });
 });

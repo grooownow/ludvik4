@@ -1,9 +1,9 @@
 /**
- * Build-level rewrites, per market — the serving layer for the Gridfin
- * landing bundle on the EN domain. Kept out of next.config.ts for the same
- * reason as config/redirects.ts: both markets' rule sets get asserted in one
- * unit test (src/lib/rewrites.test.ts), which the one-market-at-a-time e2e
- * suite can never do.
+ * Build-level rewrites, per market — the serving layer for the static
+ * landing bundles (Gridfin, qa-pilot) on the EN domain. Kept out of
+ * next.config.ts for the same reason as config/redirects.ts: both markets'
+ * rule sets get asserted in one unit test (src/lib/rewrites.test.ts), which
+ * the one-market-at-a-time e2e suite can never do.
  *
  * The bundle is plain static HTML committed under public/gridfin/ (built in
  * grooownow/gridfin from marketing/landing — ludvik4 holds output only,
@@ -45,5 +45,8 @@ export function buildRewrites(market: Market): Rewrite[] {
   return [
     { source: "/gridfin", destination: "/gridfin/index.html" },
     { source: "/gridfin/:path*", destination: "/gridfin/:path*/index.html" },
+    // Single-page qa-pilot landing (public/qa-pilot/index.html) — same
+    // static-bundle pattern, same slashless URL style.
+    { source: "/qa-pilot", destination: "/qa-pilot/index.html" },
   ];
 }

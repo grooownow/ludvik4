@@ -144,6 +144,21 @@ Then resubmit the root `/sitemap.xml` in GSC; it is the sitemap declared by
 the EN robots file and includes all three Gridfin URLs. The smaller
 `/gridfin/sitemap.xml` remains a product-level discovery and diagnostics file.
 
+## /qa-pilot — the English qa-pilot landing
+
+Single prebuilt page at `public/qa-pilot/index.html` (+ `assets/og-en.png`),
+English-only, no language switch. Served by the EN-only `afterFiles`
+rewrite `/qa-pilot → /qa-pilot/index.html` in `config/rewrites.ts`; URL style
+is slashless like `/gridfin/en` (`/qa-pilot/` 308s to `/qa-pilot`). The RU
+static export stashes `public/qa-pilot`. Source and regeneration steps:
+`docs/specs/qa-pilot-landing.md`. Smoke after deploy:
+
+```bash
+for p in /qa-pilot /qa-pilot/assets/og-en.png /work/qa-pilot; do
+  printf "%-28s %s\n" "$p" "$(curl -sS -o /dev/null -w '%{http_code}' https://ludvik4.dev$p)"
+done
+```
+
 ## Diagnosing: DNS vs application
 
 - `dig +short ludvik4.dev` — empty/wrong → DNS, not Vercel.

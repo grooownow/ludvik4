@@ -136,6 +136,7 @@ export function buildSitemap(
       "/gridfin",
       "/gridfin/docs/application-skeleton",
       "/gridfin/guides/why-ai-needs-engineering-rules",
+      "/qa-pilot",
     ]) {
       entries.push({
         url: publicUrl(market, baseUrl, path),
@@ -202,6 +203,7 @@ export function buildSitemap(
       "/gridfin/en",
       "/gridfin/en/docs/application-skeleton",
       "/gridfin/en/guides/why-ai-needs-engineering-rules",
+      "/qa-pilot",
     ]) {
       entries.push({
         url: publicUrl(market, baseUrl, path),

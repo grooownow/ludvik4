@@ -26,6 +26,9 @@ const serverOnlyPaths = [
   // and the RU-bundle cp below would merge over it. Stash it like the
   // server-only routes so only the RU bundle is copied to ludvik4.ru.
   "public/gridfin",
+  // EN-only qa-pilot landing; ludvik4.ru gets its RU page (with language
+  // switch) from resources/ru-public/qa-pilot instead.
+  "public/qa-pilot",
 ];
 
 // Paths that may legitimately be absent. Both gridfin surfaces land only
@@ -90,9 +93,13 @@ async function main() {
 
     process.exitCode = await runBuild();
     if (process.exitCode === 0) {
-      await cp(join(ruOnlyPublicRoot, "gridfin"), join(root, "out/gridfin"), {
-        recursive: true,
-      });
+      await Promise.all(
+        ["gridfin", "qa-pilot"].map((bundle) =>
+          cp(join(ruOnlyPublicRoot, bundle), join(root, `out/${bundle}`), {
+            recursive: true,
+          }),
+        ),
+      );
     }
   } finally {
     await Promise.all(

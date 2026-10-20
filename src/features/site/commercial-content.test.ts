@@ -35,4 +35,11 @@ describe("commercial content", () => {
     );
     expect(getCaseStudy("gridfin")?.image).toBe("/cases/gridfin.webp");
   });
+
+  it("links the qa-pilot case to its landing on ludvik4.ru", () => {
+    expect(getCaseStudy("qa-pilot")?.website).toBe(
+      "https://ludvik4.ru/qa-pilot/",
+    );
+    expect(getCaseStudy("qa-pilot")?.image).toBe("/cases/qa-pilot-ru.webp");
+  });
 });
