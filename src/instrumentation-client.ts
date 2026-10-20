@@ -12,6 +12,8 @@
 // than through `src/lib/env.ts` for the same reason documented in
 // `analytics-provider.tsx` — this file is unset (disabled) by default.
 // Note: NEXT_PUBLIC_SENTRY_DSN is also registered and validated in @/lib/env for consistency.
+import { dropOffDomainTurnstile } from "@/lib/sentry-filter";
+
 const dsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
 
 if (dsn) {
@@ -21,6 +23,11 @@ if (dsn) {
   // `instrumentation-client.ts`), but with no DSN nothing beyond this
   // `if` check ever executes.
   import("@sentry/nextjs").then((Sentry) => {
-    Sentry.init({ dsn, enabled: true });
+    Sentry.init({
+      dsn,
+      enabled: true,
+      beforeSend: (event) =>
+        dropOffDomainTurnstile(event, process.env.NEXT_PUBLIC_APP_URL),
+    });
   });
 }
