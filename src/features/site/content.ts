@@ -51,6 +51,8 @@ export type MarketContent = {
   hero: {
     eyebrow: string;
     title: string;
+    /** Desktop line breaks of `title` (joined with spaces they equal it). */
+    titleLines?: readonly string[];
     lead: string;
     cta: string;
     illustration: boolean;
@@ -154,6 +156,11 @@ const ru: MarketContent = {
   hero: {
     eyebrow: "Ludvik4",
     title: "Сайты, автоматизация и веб-приложения — от задачи до запуска",
+    titleLines: [
+      "Сайты, автоматизация",
+      "и веб-приложения",
+      "— от задачи до запуска",
+    ],
     lead: "Проектирование и запуск цифровых продуктов для малого бизнеса и основателей: понятный первый релиз, фиксированный состав работ и одна точка ответственности",
     cta: "Обсудить задачу",
     illustration: true,
@@ -363,6 +370,11 @@ const en: MarketContent = {
   hero: {
     eyebrow: "Founder-led product studio · Europe · Worldwide",
     title: "Websites, workflow automation, and web apps — built for launch",
+    titleLines: [
+      "Websites, workflow",
+      "automation, and web apps",
+      "— built for launch",
+    ],
     lead: "I turn a business problem or product idea into a focused digital product: clear scope, direct communication, production-ready delivery, and one point of accountability.",
     cta: "Discuss your project",
     illustration: true,

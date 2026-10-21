@@ -6,6 +6,7 @@ import { AnchorLink } from "./anchor-link";
 import { type MarketContent, TELEGRAM_URL } from "./content";
 import { buildHomeJsonLd } from "./seo";
 import { CasesPreview } from "./commercial-pages";
+import { HeroTitle } from "./hero-title";
 import { IntroHero } from "./intro-hero";
 import { ScrollRevealHeader } from "./scroll-reveal-header";
 import { ServiceScopes } from "./service-scopes";
@@ -46,36 +47,42 @@ export function HomeRu({
       <IntroHero content={content} />
 
       {/* Hero */}
-      <div className="mx-auto max-w-5xl px-6 py-16">
-        <div className="grid items-center gap-10 lg:grid-cols-2">
-          <div>
-            <Eyebrow>{content.hero.eyebrow}</Eyebrow>
-            <h1 className="text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
-              {content.hero.title}
-            </h1>
-            <p className="text-muted-foreground mt-5 max-w-xl text-lg">
-              {content.hero.lead}
-            </p>
-            <div className="mt-7">
-              <Button asChild size="lg">
-                <AnchorLink href="#contact">{content.hero.cta}</AnchorLink>
-              </Button>
-            </div>
-          </div>
-          {content.hero.illustration ? (
-            <picture className="hidden w-full max-w-xl lg:block lg:justify-self-end">
-              <source media="(min-width: 1024px)" srcSet="/hero-robot.webp" />
-              {/* The fallback is one transparent pixel, so mobile browsers do
-                  not download a desktop-only hero asset. */}
-              <img
-                src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                alt={content.hero.illustrationAlt}
-                width="960"
-                height="789"
-                className="aspect-[960/789] h-auto w-full object-contain"
+      {/* overflow-x-clip: the illustration is nudged right past the
+          container and must not open a horizontal scroll. */}
+      <div className="overflow-x-clip">
+        <div className="mx-auto max-w-5xl px-6 py-16">
+          {/* No column gap on desktop: the robot art carries its own air. */}
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-0">
+            <div>
+              <Eyebrow>{content.hero.eyebrow}</Eyebrow>
+              <HeroTitle
+                title={content.hero.title}
+                lines={content.hero.titleLines}
               />
-            </picture>
-          ) : null}
+              <p className="text-muted-foreground mt-5 max-w-xl text-lg">
+                {content.hero.lead}
+              </p>
+              <div className="mt-7">
+                <Button asChild size="lg">
+                  <AnchorLink href="#contact">{content.hero.cta}</AnchorLink>
+                </Button>
+              </div>
+            </div>
+            {content.hero.illustration ? (
+              <picture className="hidden w-full max-w-xl lg:block lg:translate-x-6 lg:justify-self-end xl:translate-x-16">
+                <source media="(min-width: 1024px)" srcSet="/hero-robot.webp" />
+                {/* The fallback is one transparent pixel, so mobile browsers do
+                  not download a desktop-only hero asset. */}
+                <img
+                  src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                  alt={content.hero.illustrationAlt}
+                  width="960"
+                  height="789"
+                  className="aspect-[960/789] h-auto w-full object-contain"
+                />
+              </picture>
+            ) : null}
+          </div>
         </div>
       </div>
 

@@ -12,6 +12,7 @@ import { ServiceScopes } from "./service-scopes";
 import { buildHomeJsonLd } from "./seo";
 import { internationalFaq } from "./international-content";
 import { InternationalWorkGrid } from "./international-work-grid";
+import { HeroTitle } from "./hero-title";
 import { IntroHero } from "./intro-hero";
 import { ScrollRevealHeader } from "./scroll-reveal-header";
 import {
@@ -54,36 +55,42 @@ export function HomeEn({
 
       {/* Hero — same two-column composition as the RU market: copy left,
           illustration right, hidden below lg. */}
-      <div className="mx-auto max-w-5xl px-6 py-16">
-        <div className="grid items-center gap-10 lg:grid-cols-2">
-          <div>
-            <Eyebrow>{content.hero.eyebrow}</Eyebrow>
-            <h1 className="text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
-              {content.hero.title}
-            </h1>
-            <p className="text-muted-foreground mt-5 max-w-xl text-lg">
-              {content.hero.lead}
-            </p>
-            <div className="mt-7">
-              <Button asChild size="lg">
-                <CtaLink href="#contact" placement="hero">
-                  {content.hero.cta}
-                </CtaLink>
-              </Button>
-            </div>
-          </div>
-          {content.hero.illustration ? (
-            <div className="hidden lg:block lg:justify-self-end">
-              <Image
-                src="/hero-robot.webp"
-                alt={content.hero.illustrationAlt}
-                width={960}
-                height={789}
-                sizes="(min-width: 1024px) 480px, 100vw"
-                className="h-auto w-full max-w-xl"
+      {/* overflow-x-clip: the illustration is nudged right past the
+          container and must not open a horizontal scroll. */}
+      <div className="overflow-x-clip">
+        <div className="mx-auto max-w-5xl px-6 py-16">
+          {/* No column gap on desktop: the robot art carries its own air. */}
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-0">
+            <div>
+              <Eyebrow>{content.hero.eyebrow}</Eyebrow>
+              <HeroTitle
+                title={content.hero.title}
+                lines={content.hero.titleLines}
               />
+              <p className="text-muted-foreground mt-5 max-w-xl text-lg">
+                {content.hero.lead}
+              </p>
+              <div className="mt-7">
+                <Button asChild size="lg">
+                  <CtaLink href="#contact" placement="hero">
+                    {content.hero.cta}
+                  </CtaLink>
+                </Button>
+              </div>
             </div>
-          ) : null}
+            {content.hero.illustration ? (
+              <div className="hidden lg:block lg:translate-x-6 lg:justify-self-end xl:translate-x-16">
+                <Image
+                  src="/hero-robot.webp"
+                  alt={content.hero.illustrationAlt}
+                  width={960}
+                  height={789}
+                  sizes="(min-width: 1024px) 480px, 100vw"
+                  className="h-auto w-full max-w-xl"
+                />
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
 
