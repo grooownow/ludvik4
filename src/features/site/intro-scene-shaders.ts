@@ -24,11 +24,22 @@ uniform vec2 u_texSize;
 uniform sampler2D u_silk;
 uniform sampler2D u_wordmark;
 
-// The wordmark art is laid out on the design artboard and shown with
-// object-fit: cover, like the static <img> under the canvas.
-vec2 cover(vec2 uv) {
+// The wordmark art is laid out on the design artboard. On wide screens it is
+// shown like the static <img> (object-fit: cover). On boxier screens cover
+// would crop the "L" and the "4", so the art is fitted to the width instead
+// (artboard 1.15x the canvas width) and kept at the wordmark's height.
+const float FIT_BELOW = 0.8;
+const float FIT_ART_WIDTH = 1.15;
+const float WORDMARK_Y = 0.56; // wordmark centre, from the bottom of the art
+
+vec2 artUv(vec2 uv) {
   float canvasAspect = u_resolution.x / u_resolution.y;
   float texAspect = u_texSize.x / u_texSize.y;
+  if (canvasAspect < texAspect * FIT_BELOW) {
+    float sx = 1.0 / FIT_ART_WIDTH;
+    float sy = texAspect / (FIT_ART_WIDTH * canvasAspect);
+    return vec2((uv.x - 0.5) * sx + 0.5, (uv.y - WORDMARK_Y) * sy + WORDMARK_Y);
+  }
   vec2 scale = canvasAspect > texAspect
     ? vec2(1.0, texAspect / canvasAspect)
     : vec2(canvasAspect / texAspect, 1.0);
@@ -38,7 +49,7 @@ vec2 cover(vec2 uv) {
 void main() {
   vec2 uv = gl_FragCoord.xy / u_resolution;
   vec3 silk = texture2D(u_silk, uv).rgb;
-  vec4 mark = texture2D(u_wordmark, clamp(cover(uv), 0.0, 1.0));
+  vec4 mark = texture2D(u_wordmark, clamp(artUv(uv), 0.0, 1.0));
   gl_FragColor = vec4(mix(silk, mark.rgb, mark.a), 1.0);
 }
 `;
