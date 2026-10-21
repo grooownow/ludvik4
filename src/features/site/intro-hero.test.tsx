@@ -36,7 +36,7 @@ describe("IntroHero", () => {
 
     render(<IntroHero content={ru} />);
     expect(
-      screen.getByText("Продуктовая студия · Лично от основателя · Под ключ"),
+      screen.getByText("Продуктовая студия · Веб-разработка под ключ"),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("group", { name: "Стиль заставки" }),
@@ -94,6 +94,6 @@ describe("IntroHero", () => {
     // jsdom has no WebGL and no matchMedia: exactly the fallback path.
     render(<IntroHero content={en} />);
     expect(artwork()).toBeVisible();
-    expect(screen.queryByTestId("cursor-drop")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("intro-scene")).not.toBeInTheDocument();
   });
 });

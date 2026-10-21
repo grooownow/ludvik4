@@ -18,7 +18,7 @@ describe("HomeRu", () => {
     ).toBeInTheDocument();
     // Intro above the hero speaks Russian; the robot replaces the old diagram.
     expect(
-      screen.getByText("Продуктовая студия · Лично от основателя · Под ключ"),
+      screen.getByText("Продуктовая студия · Веб-разработка под ключ"),
     ).toBeInTheDocument();
     expect(
       screen.getByText(

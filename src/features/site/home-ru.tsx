@@ -7,6 +7,7 @@ import { type MarketContent, TELEGRAM_URL } from "./content";
 import { buildHomeJsonLd } from "./seo";
 import { CasesPreview } from "./commercial-pages";
 import { IntroHero } from "./intro-hero";
+import { ScrollRevealHeader } from "./scroll-reveal-header";
 import { ServiceScopes } from "./service-scopes";
 import {
   Eyebrow,
@@ -36,7 +37,11 @@ export function HomeRu({
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
 
-      <SiteHeader content={content} />
+      {/* Over the full-screen intro the header stays out of the way and
+          fades in with the scroll. */}
+      <ScrollRevealHeader>
+        <SiteHeader content={content} />
+      </ScrollRevealHeader>
 
       <IntroHero content={content} />
 

@@ -13,6 +13,7 @@ import { buildHomeJsonLd } from "./seo";
 import { internationalFaq } from "./international-content";
 import { InternationalWorkGrid } from "./international-work-grid";
 import { IntroHero } from "./intro-hero";
+import { ScrollRevealHeader } from "./scroll-reveal-header";
 import {
   Eyebrow,
   Section,
@@ -43,7 +44,11 @@ export function HomeEn({
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
 
-      <SiteHeader content={content} />
+      {/* Over the full-screen intro the header stays out of the way and
+          fades in with the scroll. */}
+      <ScrollRevealHeader>
+        <SiteHeader content={content} />
+      </ScrollRevealHeader>
 
       <IntroHero content={content} />
 

@@ -1,6 +1,6 @@
 // The two pre-rendered intro artworks (exported from design.pen frames
-// k6P8zl / HGwzH and their mobile crops). The wordmark, silk background and
-// melt are baked into the image; only the glass drop is live (cursor-drop).
+// k6P8zl / HGwzH and their tall portrait versions). They are the first paint
+// and the fallback; on desktop the live scene (intro-scene) paints over them.
 
 export type IntroVariant = "candy" | "fuchsia";
 
@@ -10,17 +10,20 @@ export const DEFAULT_INTRO_VARIANT: IntroVariant = "candy";
 
 export const INTRO_VARIANT_STORAGE_KEY = "ludvik4:intro-variant";
 
-/** Width/height of the desktop and mobile art, in CSS pixels at 1x. */
+/** Width/height of the desktop and tall (portrait) art, in CSS px at 1x. */
 export const INTRO_ART = {
   desktop: { width: 1304, height: 680 },
-  mobile: { width: 390, height: 600 },
+  tall: { width: 390, height: 844 },
 } as const;
+
+/** Portrait screens and phones get the tall art so the wordmark never crops. */
+export const TALL_ART_MEDIA = "(max-width: 767px), (orientation: portrait)";
 
 export function introSources(variant: IntroVariant) {
   const dir = `/intro/intro-${variant}`;
   return {
-    mobileAvif: `${dir}-mobile-780.avif`,
-    mobileWebp: `${dir}-mobile-780.webp`,
+    tallAvif: `${dir}-tall-780.avif 780w, ${dir}-tall-1560.avif 1560w`,
+    tallWebp: `${dir}-tall-780.webp 780w, ${dir}-tall-1560.webp 1560w`,
     desktopAvif: `${dir}-desktop-1304.avif 1304w, ${dir}-desktop-2608.avif 2608w`,
     desktopWebp: `${dir}-desktop-1304.webp 1304w, ${dir}-desktop-2608.webp 2608w`,
     fallback: `${dir}-desktop-1304.webp`,

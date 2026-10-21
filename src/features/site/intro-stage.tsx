@@ -1,14 +1,14 @@
 "use client";
 
 import { type ReactNode, useEffect, useRef, useState } from "react";
-import { CursorDrop } from "./cursor-drop";
+import { IntroScene } from "./intro-scene";
 import {
   DEFAULT_INTRO_VARIANT,
-  DROP_TINT,
   INTRO_ART,
   INTRO_VARIANTS,
   INTRO_VARIANT_STORAGE_KEY,
   type IntroVariant,
+  TALL_ART_MEDIA,
   introSources,
   parseIntroVariant,
 } from "./intro-variants";
@@ -47,8 +47,9 @@ function storeVariant(variant: IntroVariant) {
 
 export function IntroStage({ alt, switcher, children }: Props) {
   const [variant, setVariant] = useState<IntroVariant>(DEFAULT_INTRO_VARIANT);
+  const [live, setLive] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
+  const copyRef = useRef<HTMLDivElement>(null);
 
   // Read after hydration so server and first client render agree.
   useEffect(() => {
@@ -64,26 +65,30 @@ export function IntroStage({ alt, switcher, children }: Props) {
   const src = introSources(variant);
 
   return (
+    // Fills the viewport (svh: stable under mobile browser toolbars), with a
+    // floor so short landscape phones still fit the wordmark and copy.
     <div
       ref={stageRef}
       data-variant={variant}
-      className="relative aspect-[390/600] w-full overflow-hidden md:aspect-[1304/680] 2xl:aspect-auto 2xl:h-[760px]"
+      data-live={live}
+      className="group relative h-svh min-h-[560px] w-full overflow-hidden"
     >
       <picture key={variant}>
         <source
-          media="(max-width: 767px)"
+          media={TALL_ART_MEDIA}
           type="image/avif"
-          srcSet={src.mobileAvif}
+          srcSet={src.tallAvif}
+          sizes="100vw"
         />
         <source
-          media="(max-width: 767px)"
+          media={TALL_ART_MEDIA}
           type="image/webp"
-          srcSet={src.mobileWebp}
+          srcSet={src.tallWebp}
+          sizes="100vw"
         />
         <source type="image/avif" srcSet={src.desktopAvif} sizes="100vw" />
         <source type="image/webp" srcSet={src.desktopWebp} sizes="100vw" />
         <img
-          ref={imageRef}
           src={src.fallback}
           alt={alt}
           width={INTRO_ART.desktop.width}
@@ -94,14 +99,23 @@ export function IntroStage({ alt, switcher, children }: Props) {
         />
       </picture>
 
-      <CursorDrop
-        imageRef={imageRef}
-        stageRef={stageRef}
-        tint={DROP_TINT[variant]}
-        imageKey={variant}
-      />
+      <div className="absolute inset-0 opacity-0 transition-opacity duration-700 group-data-[live=true]:opacity-100">
+        <IntroScene
+          stageRef={stageRef}
+          copyRef={copyRef}
+          variant={variant}
+          onLiveChange={setLive}
+        />
+      </div>
 
-      {children}
+      {/* While the live scene paints, it draws this copy itself (so the drop
+          can refract it); the HTML stays for screen readers and search. */}
+      <div
+        ref={copyRef}
+        className="pointer-events-none absolute inset-0 transition-opacity duration-700 group-data-[live=true]:opacity-0"
+      >
+        {children}
+      </div>
 
       <fieldset className="bg-intro/40 absolute right-4 bottom-4 flex gap-2 rounded-full border-0 p-1.5 backdrop-blur-sm md:right-6 md:bottom-6">
         <legend className="sr-only">{switcher.label}</legend>
