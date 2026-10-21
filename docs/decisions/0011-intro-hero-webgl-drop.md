@@ -48,4 +48,5 @@ the artwork rather than the theme.
 
 ## Status
 
-`accepted`
+`superseded by 0012` for the background (now live on desktop), the
+variant switcher (removed) and phones (no intro).
