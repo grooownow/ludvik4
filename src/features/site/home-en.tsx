@@ -12,6 +12,7 @@ import { ServiceScopes } from "./service-scopes";
 import { buildHomeJsonLd } from "./seo";
 import { internationalFaq } from "./international-content";
 import { InternationalWorkGrid } from "./international-work-grid";
+import { IntroHero } from "./intro-hero";
 import {
   Eyebrow,
   Section,
@@ -44,6 +45,8 @@ export function HomeEn({
 
       <SiteHeader content={content} />
 
+      <IntroHero content={content} />
+
       {/* Hero — same two-column composition as the RU market: copy left,
           illustration right, hidden below lg. */}
       <div className="mx-auto max-w-5xl px-6 py-16">
@@ -67,15 +70,10 @@ export function HomeEn({
           {content.hero.illustration ? (
             <div className="hidden lg:block lg:justify-self-end">
               <Image
-                src="/hero-product-diagram.png"
-                alt="How a digital product is built: from idea and mockup through code to launch and analytics"
-                width={1021}
-                height={622}
-                // q=95, not the default 75: this flat-colour vector export
-                // bands visibly on its thin pink strokes when compressed
-                // harder. Next 16 serves only the levels declared in
-                // `images.qualities` and silently falls back to 75 otherwise.
-                quality={95}
+                src="/hero-robot.webp"
+                alt={content.hero.illustrationAlt}
+                width={960}
+                height={789}
                 sizes="(min-width: 1024px) 480px, 100vw"
                 className="h-auto w-full max-w-xl"
               />

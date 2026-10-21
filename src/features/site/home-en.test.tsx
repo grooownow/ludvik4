@@ -23,8 +23,11 @@ describe("HomeEn", () => {
     // Both markets show the same hero illustration; only its alt text is
     // localized. It used to be RU-only ("text hero" in the ТЗ 1 brief).
     expect(
-      screen.getByRole("img", { name: /How a digital product is built/i }),
-    ).toBeInTheDocument();
+      screen.getByRole("img", { name: content.hero.illustrationAlt }),
+    ).toHaveAttribute("src", expect.stringContaining("hero-robot.webp"));
+    // The brand intro sits above the hero, with the wordmark art's alt.
+    expect(screen.getByRole("img", { name: "Ludvik4" })).toBeInTheDocument();
+    expect(screen.getByText(content.intro.services)).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { level: 2, name: "What's included" }),
     ).toBeInTheDocument();
