@@ -3,6 +3,7 @@
 import { type ReactNode, useRef, useState } from "react";
 import { INTRO_ART, INTRO_SOURCES, TALL_ART_MEDIA } from "./intro-art";
 import { IntroScene } from "./intro-scene";
+import { useIntroScrollHandoff } from "./intro-scroll-handoff";
 
 type Props = {
   alt: string;
@@ -14,6 +15,7 @@ export function IntroStage({ alt, children }: Props) {
   const [live, setLive] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
   const copyRef = useRef<HTMLDivElement>(null);
+  useIntroScrollHandoff(stageRef);
 
   return (
     // Fills the viewport (svh: stable under mobile browser toolbars), with a
