@@ -6,6 +6,13 @@ writing detail here.
 
 ## Now
 
+**[READY FOR REVIEW 2026-10-21] Live intro on desktop, none on phones.**
+Branch `feat/intro-motion`: design.pen's silk and smoosh shaders run live on
+desktop, the glass drop refracts the copy and trails the cursor on a spring,
+the intro fills the viewport, the header fades in with the scroll, and the
+first scroll glides between intro and content. Fuchsia and its switcher are
+gone; phones get no intro. Decision: `docs/decisions/0012-live-intro-scene.md`.
+
 **[SHIPPED 2026-10-21] Brand intro above the home hero, both markets.**
 PR #13: full-bleed "Ludvik4" intro (candy / fuchsia
 artwork from design.pen with a visitor switcher, live WebGL glass drop on

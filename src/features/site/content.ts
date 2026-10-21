@@ -47,11 +47,12 @@ export type MarketContent = {
     services: string;
     /** The wordmark lives in the image, so its alt carries the brand name. */
     imageAlt: string;
-    switcher: { label: string; candy: string; fuchsia: string };
   };
   hero: {
     eyebrow: string;
     title: string;
+    /** Desktop line breaks of `title` (joined with spaces they equal it). */
+    titleLines?: readonly string[];
     lead: string;
     cta: string;
     illustration: boolean;
@@ -148,14 +149,18 @@ const ru: MarketContent = {
     ],
   },
   intro: {
-    tagline: "Продуктовая студия · Лично от основателя · Под ключ",
+    tagline: "Продуктовая студия · Веб-разработка под ключ",
     services: "Сайты · Автоматизация процессов · Веб-приложения",
     imageAlt: "Ludvik4",
-    switcher: { label: "Стиль заставки", candy: "Карамель", fuchsia: "Фуксия" },
   },
   hero: {
     eyebrow: "Ludvik4",
     title: "Сайты, автоматизация и веб-приложения — от задачи до запуска",
+    titleLines: [
+      "Сайты, автоматизация",
+      "и веб-приложения",
+      "— от задачи до запуска",
+    ],
     lead: "Проектирование и запуск цифровых продуктов для малого бизнеса и основателей: понятный первый релиз, фиксированный состав работ и одна точка ответственности",
     cta: "Обсудить задачу",
     illustration: true,
@@ -361,11 +366,15 @@ const en: MarketContent = {
     tagline: "Founder-led product studio · Europe · Worldwide",
     services: "Websites · Workflow automation · Web apps",
     imageAlt: "Ludvik4",
-    switcher: { label: "Intro style", candy: "Candy", fuchsia: "Fuchsia" },
   },
   hero: {
     eyebrow: "Founder-led product studio · Europe · Worldwide",
     title: "Websites, workflow automation, and web apps — built for launch",
+    titleLines: [
+      "Websites, workflow",
+      "automation, and web apps",
+      "— built for launch",
+    ],
     lead: "I turn a business problem or product idea into a focused digital product: clear scope, direct communication, production-ready delivery, and one point of accountability.",
     cta: "Discuss your project",
     illustration: true,
