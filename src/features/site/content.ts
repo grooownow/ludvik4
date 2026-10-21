@@ -47,7 +47,6 @@ export type MarketContent = {
     services: string;
     /** The wordmark lives in the image, so its alt carries the brand name. */
     imageAlt: string;
-    switcher: { label: string; candy: string; fuchsia: string };
   };
   hero: {
     eyebrow: string;
@@ -151,7 +150,6 @@ const ru: MarketContent = {
     tagline: "Продуктовая студия · Веб-разработка под ключ",
     services: "Сайты · Автоматизация процессов · Веб-приложения",
     imageAlt: "Ludvik4",
-    switcher: { label: "Стиль заставки", candy: "Карамель", fuchsia: "Фуксия" },
   },
   hero: {
     eyebrow: "Ludvik4",
@@ -361,7 +359,6 @@ const en: MarketContent = {
     tagline: "Founder-led product studio · Europe · Worldwide",
     services: "Websites · Workflow automation · Web apps",
     imageAlt: "Ludvik4",
-    switcher: { label: "Intro style", candy: "Candy", fuchsia: "Fuchsia" },
   },
   hero: {
     eyebrow: "Founder-led product studio · Europe · Worldwide",

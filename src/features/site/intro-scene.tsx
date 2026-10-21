@@ -15,7 +15,7 @@ import {
   stepSpring,
 } from "./intro-scene-config";
 import { SILK_SOURCE, SMOOSH_SOURCE } from "./intro-shaders";
-import { DROP_TINT, type IntroVariant } from "./intro-variants";
+import { DROP_TINT } from "./intro-art";
 import {
   type PenUniform,
   type UniformValue,
@@ -28,7 +28,6 @@ type Props = {
   stageRef: RefObject<HTMLElement | null>;
   /** Container of the HTML copy; its text is redrawn into the scene. */
   copyRef: RefObject<HTMLElement | null>;
-  variant: IntroVariant;
   /** Reports when the canvas is painting (so the HTML copy can step aside). */
   onLiveChange: (live: boolean) => void;
 };
@@ -182,16 +181,9 @@ function drawCopy(
  * the cursor. Renders nothing unless `shouldRunLiveIntro` allows it, so the
  * server HTML and every fallback is the static artwork plus HTML copy.
  */
-export function IntroScene({
-  stageRef,
-  copyRef,
-  variant,
-  onLiveChange,
-}: Props) {
+export function IntroScene({ stageRef, copyRef, onLiveChange }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [enabled, setEnabled] = useState(false);
-  const variantRef = useRef(variant);
-  variantRef.current = variant;
   const onLiveRef = useRef(onLiveChange);
   onLiveRef.current = onLiveChange;
 
@@ -246,29 +238,23 @@ export function IntroScene({
     const textTexture = createTexture(gl);
     let wordmarkSize = { w: DESIGN_SIZE.width * 2, h: DESIGN_SIZE.height * 2 };
     let wordmarkReady = false;
-    let loadedVariant: IntroVariant | null = null;
-    const loadWordmark = (v: IntroVariant) => {
-      loadedVariant = v;
-      wordmarkReady = false;
-      const image = new Image();
-      image.decoding = "async";
-      image.onload = () => {
-        if (loadedVariant !== v) return;
-        gl.bindTexture(gl.TEXTURE_2D, wordmarkTexture);
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-        gl.texImage2D(
-          gl.TEXTURE_2D,
-          0,
-          gl.RGBA,
-          gl.RGBA,
-          gl.UNSIGNED_BYTE,
-          image,
-        );
-        wordmarkSize = { w: image.naturalWidth, h: image.naturalHeight };
-        wordmarkReady = true;
-      };
-      image.src = INTRO_SCENE[v].wordmark;
+    const image = new Image();
+    image.decoding = "async";
+    image.onload = () => {
+      gl.bindTexture(gl.TEXTURE_2D, wordmarkTexture);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+      gl.texImage2D(
+        gl.TEXTURE_2D,
+        0,
+        gl.RGBA,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        image,
+      );
+      wordmarkSize = { w: image.naturalWidth, h: image.naturalHeight };
+      wordmarkReady = true;
     };
+    image.src = INTRO_SCENE.wordmark;
 
     let width = 0;
     let height = 0;
@@ -381,8 +367,6 @@ export function IntroScene({
       last = now;
       if (!visible || document.hidden || !a || !b) return;
 
-      const v = variantRef.current;
-      if (loadedVariant !== v) loadWordmark(v);
       if (!wordmarkReady) return;
       if (textDirty) {
         drawCopy(textCtx, stage, copy, scale);
@@ -400,7 +384,7 @@ export function IntroScene({
       }
 
       const t = (now - start) / 1000;
-      const scene = INTRO_SCENE[v];
+      const scene = INTRO_SCENE;
       const pixelScale = Math.max(
         width / DESIGN_SIZE.width,
         height / DESIGN_SIZE.height,
@@ -439,7 +423,7 @@ export function IntroScene({
         setUniform(gl, final, "u_time", t);
         setUniform(gl, final, "u_radius", dropRadius(cssW) * scale);
         setUniform(gl, final, "u_wobble", 0.5 + Math.min(speed / 900, 1) * 0.7);
-        setUniform(gl, final, "u_tint", DROP_TINT[v]);
+        setUniform(gl, final, "u_tint", DROP_TINT);
         bindTexture(final, "u_scene", 0, sA.texture);
         bindTexture(final, "u_text", 1, textTexture);
       });

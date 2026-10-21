@@ -13,7 +13,7 @@ export function IntroHero({ content }: { content: MarketContent }) {
       aria-label={intro.imageAlt}
       className="bg-intro text-intro-foreground"
     >
-      <IntroStage alt={intro.imageAlt} switcher={intro.switcher}>
+      <IntroStage alt={intro.imageAlt}>
         <p className="absolute inset-x-0 top-[13%] px-6 text-center font-mono text-[11px] tracking-[0.2em] uppercase opacity-90 md:top-[17%] md:text-xs">
           {intro.tagline}
         </p>

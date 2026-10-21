@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { INTRO_SCENE, stepSpring } from "./intro-scene-config";
 import { dropRadius, shouldRunLiveIntro } from "./intro-scene-shaders";
-import { introSources, parseIntroVariant } from "./intro-variants";
+import { INTRO_SOURCES } from "./intro-art";
 
 const publicFile = (url: string) =>
   existsSync(new URL(`../../../public${url}`, import.meta.url));
@@ -61,26 +61,16 @@ describe("drop spring", () => {
   });
 });
 
-describe("intro variants", () => {
-  it("accepts only the two known variants", () => {
-    expect(parseIntroVariant("candy")).toBe("candy");
-    expect(parseIntroVariant("fuchsia")).toBe("fuchsia");
-    expect(parseIntroVariant("neon")).toBeNull();
-    expect(parseIntroVariant(null)).toBeNull();
-  });
-
+describe("intro artwork", () => {
   it("points every artwork source at a file that exists in public/", () => {
-    for (const variant of ["candy", "fuchsia"] as const) {
-      const src = introSources(variant);
-      const urls = [
-        src.fallback,
-        ...srcsetUrls(src.tallAvif),
-        ...srcsetUrls(src.tallWebp),
-        ...srcsetUrls(src.desktopAvif),
-        ...srcsetUrls(src.desktopWebp),
-        INTRO_SCENE[variant].wordmark,
-      ];
-      for (const url of urls) expect(publicFile(url), url).toBe(true);
-    }
+    const urls = [
+      INTRO_SOURCES.fallback,
+      ...srcsetUrls(INTRO_SOURCES.tallAvif),
+      ...srcsetUrls(INTRO_SOURCES.tallWebp),
+      ...srcsetUrls(INTRO_SOURCES.desktopAvif),
+      ...srcsetUrls(INTRO_SOURCES.desktopWebp),
+      INTRO_SCENE.wordmark,
+    ];
+    for (const url of urls) expect(publicFile(url), url).toBe(true);
   });
 });
