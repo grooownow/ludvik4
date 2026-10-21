@@ -26,7 +26,11 @@ describe("IntroHero", () => {
       screen.getByText("Founder-led product studio · Europe · Worldwide"),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Websites · Workflow automation · Web apps"),
+      screen.getByText(
+        (_, el) =>
+          el?.tagName === "P" &&
+          el.textContent === "Websites · Workflow automation · Web apps",
+      ),
     ).toBeInTheDocument();
     unmount();
 

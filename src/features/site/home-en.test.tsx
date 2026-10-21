@@ -27,7 +27,12 @@ describe("HomeEn", () => {
     ).toHaveAttribute("src", expect.stringContaining("hero-robot.webp"));
     // The brand intro sits above the hero, with the wordmark art's alt.
     expect(screen.getByRole("img", { name: "Ludvik4" })).toBeInTheDocument();
-    expect(screen.getByText(content.intro.services)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        (_, el) =>
+          el?.tagName === "P" && el.textContent === content.intro.services,
+      ),
+    ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { level: 2, name: "What's included" }),
     ).toBeInTheDocument();

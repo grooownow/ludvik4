@@ -21,7 +21,11 @@ describe("HomeRu", () => {
       screen.getByText("Продуктовая студия · Лично от основателя · Под ключ"),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Сайты · Автоматизация процессов · Веб-приложения"),
+      screen.getByText(
+        (_, el) =>
+          el?.tagName === "P" &&
+          el.textContent === "Сайты · Автоматизация процессов · Веб-приложения",
+      ),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("img", { name: content.hero.illustrationAlt }),
