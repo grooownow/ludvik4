@@ -9,6 +9,8 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --color-pink-soft: var(--pink-soft);
+  --color-intro: var(--intro);
+  --color-intro-foreground: var(--intro-foreground);
   --color-surface-warm: var(--surface-warm);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -72,6 +74,10 @@
   --ring: #ff4fb6;
   --pink-soft: #ffd7eb;
   --surface-warm: #fff8f5;
+  /* Brand intro sits on its own dark-plum art in both themes, so this pair is
+     deliberately not overridden in .dark. */
+  --intro: #14040c;
+  --intro-foreground: #ffffff;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);

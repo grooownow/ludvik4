@@ -41,12 +41,21 @@ export type MarketContent = {
   description: string;
   keywords: string[];
   nav: { cta: string; links?: NavLink[] };
+  /** Full-bleed brand intro above the hero (pre-rendered wordmark art). */
+  intro: {
+    tagline: string;
+    services: string;
+    /** The wordmark lives in the image, so its alt carries the brand name. */
+    imageAlt: string;
+    switcher: { label: string; candy: string; fuchsia: string };
+  };
   hero: {
     eyebrow: string;
     title: string;
     lead: string;
     cta: string;
     illustration: boolean;
+    illustrationAlt: string;
   };
   services: { eyebrow: string; title?: string; items: ServiceCard[] };
   /** Open accordion of per-service scope (no public hour estimates). */
@@ -138,12 +147,20 @@ const ru: MarketContent = {
       { href: "/blog", label: "Блог" },
     ],
   },
+  intro: {
+    tagline: "Продуктовая студия · Лично от основателя · Под ключ",
+    services: "Сайты · Автоматизация процессов · Веб-приложения",
+    imageAlt: "Ludvik4",
+    switcher: { label: "Стиль заставки", candy: "Карамель", fuchsia: "Фуксия" },
+  },
   hero: {
     eyebrow: "Ludvik4",
     title: "Сайты, автоматизация и веб-приложения — от задачи до запуска",
     lead: "Проектирование и запуск цифровых продуктов для малого бизнеса и основателей: понятный первый релиз, фиксированный состав работ и одна точка ответственности",
     cta: "Обсудить задачу",
     illustration: true,
+    illustrationAlt:
+      "Желейный робот из соединённых блоков, как цепочка автоматизации",
   },
   services: {
     eyebrow: "Что делаем",
@@ -340,12 +357,19 @@ const en: MarketContent = {
       { href: "/about", label: "About" },
     ],
   },
+  intro: {
+    tagline: "Founder-led product studio · Europe · Worldwide",
+    services: "Websites · Workflow automation · Web apps",
+    imageAlt: "Ludvik4",
+    switcher: { label: "Intro style", candy: "Candy", fuchsia: "Fuchsia" },
+  },
   hero: {
     eyebrow: "Founder-led product studio · Europe · Worldwide",
     title: "Websites, workflow automation, and web apps — built for launch",
     lead: "I turn a business problem or product idea into a focused digital product: clear scope, direct communication, production-ready delivery, and one point of accountability.",
     cta: "Discuss your project",
     illustration: true,
+    illustrationAlt: "Jelly robot made of connected workflow blocks",
   },
   services: {
     eyebrow: "What I do",

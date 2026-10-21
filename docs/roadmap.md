@@ -6,6 +6,13 @@ writing detail here.
 
 ## Now
 
+**[READY FOR REVIEW 2026-10-21] Brand intro above the home hero, both markets.**
+Branch `feat/intro-hero`: full-bleed "Ludvik4" intro (candy / fuchsia
+artwork from design.pen with a visitor switcher, live WebGL glass drop on
+mouse devices) and the jelly robot replacing the hero diagram. Decision and
+re-export steps: `docs/decisions/0011-intro-hero-webgl-drop.md`. Awaiting the
+owner's OK to merge; Lighthouse runs in CI on the PR.
+
 **[SHIPPED 2026-10-20] qa-pilot landing is embedded on both domains.**
 `ludvik4.ru/qa-pilot/` (RU deck + RU/EN switch) and `ludvik4.dev/qa-pilot`
 (English only) serve the landing built in a separate artifact session; both

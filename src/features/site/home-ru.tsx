@@ -6,6 +6,7 @@ import { AnchorLink } from "./anchor-link";
 import { type MarketContent, TELEGRAM_URL } from "./content";
 import { buildHomeJsonLd } from "./seo";
 import { CasesPreview } from "./commercial-pages";
+import { IntroHero } from "./intro-hero";
 import { ServiceScopes } from "./service-scopes";
 import {
   Eyebrow,
@@ -37,6 +38,8 @@ export function HomeRu({
 
       <SiteHeader content={content} />
 
+      <IntroHero content={content} />
+
       {/* Hero */}
       <div className="mx-auto max-w-5xl px-6 py-16">
         <div className="grid items-center gap-10 lg:grid-cols-2">
@@ -56,18 +59,15 @@ export function HomeRu({
           </div>
           {content.hero.illustration ? (
             <picture className="hidden w-full max-w-xl lg:block lg:justify-self-end">
-              <source
-                media="(min-width: 1024px)"
-                srcSet="/hero-product-illustration.webp"
-              />
+              <source media="(min-width: 1024px)" srcSet="/hero-robot.webp" />
               {/* The fallback is one transparent pixel, so mobile browsers do
                   not download a desktop-only hero asset. */}
               <img
                 src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                alt="Схема создания цифрового продукта: от идеи и макета через код к запуску и аналитике"
+                alt={content.hero.illustrationAlt}
                 width="960"
-                height="640"
-                className="aspect-[3/2] h-auto w-full object-contain"
+                height="789"
+                className="aspect-[960/789] h-auto w-full object-contain"
               />
             </picture>
           ) : null}

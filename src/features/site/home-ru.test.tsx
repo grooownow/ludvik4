@@ -16,6 +16,20 @@ describe("HomeRu", () => {
         name: /Сайты, автоматизация и веб-приложения/,
       }),
     ).toBeInTheDocument();
+    // Intro above the hero speaks Russian; the robot replaces the old diagram.
+    expect(
+      screen.getByText("Продуктовая студия · Лично от основателя · Под ключ"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        (_, el) =>
+          el?.tagName === "P" &&
+          el.textContent === "Сайты · Автоматизация процессов · Веб-приложения",
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("img", { name: content.hero.illustrationAlt }),
+    ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", {
         level: 2,
