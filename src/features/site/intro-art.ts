@@ -8,8 +8,15 @@ export const INTRO_ART = {
   tall: { width: 390, height: 844 },
 } as const;
 
-/** Portrait screens and phones get the tall art so the wordmark never crops. */
-export const TALL_ART_MEDIA = "(max-width: 767px), (orientation: portrait)";
+/** Phones do not show the intro (see intro-hero); give them no image at all. */
+export const PHONE_MEDIA = "(max-width: 767px)";
+
+/** Portrait tablets get the tall art so the wordmark never crops. */
+export const TALL_ART_MEDIA = "(orientation: portrait)";
+
+/** One transparent pixel: a phone's <picture> resolves here and loads nothing. */
+export const BLANK_PIXEL =
+  "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
 
 const DIR = "/intro/intro-candy";
 

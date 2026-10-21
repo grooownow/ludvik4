@@ -85,6 +85,8 @@ export function useIntroScrollHandoff(stageRef: RefObject<HTMLElement | null>) {
     /** Returns true when the gesture was taken over (caller cancels it). */
     const take = (direction: "down" | "up"): boolean => {
       if (gliding) return true;
+      // The intro is hidden on phones: nothing to hand off from.
+      if (!stage.offsetHeight) return false;
       const to = handoffTarget(window.scrollY, introBottom(), direction);
       if (to === null) return false;
       glide(to);

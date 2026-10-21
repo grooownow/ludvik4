@@ -138,10 +138,21 @@ export function shouldRunLiveIntro(env: {
   reducedMotion: boolean;
   wideLandscape: boolean;
   webgl: boolean;
+  /** WebGL emulated on the CPU (no GPU): the shaders would freeze the page. */
+  softwareRenderer: boolean;
 }): boolean {
   return (
-    env.finePointer && !env.reducedMotion && env.wideLandscape && env.webgl
+    env.finePointer &&
+    !env.reducedMotion &&
+    env.wideLandscape &&
+    env.webgl &&
+    !env.softwareRenderer
   );
+}
+
+/** Renderer names of CPU-emulated WebGL (Chrome's SwiftShader, Mesa, Windows). */
+export function isSoftwareRenderer(renderer: string): boolean {
+  return /swiftshader|llvmpipe|softpipe|software|basic render/i.test(renderer);
 }
 
 /** Drop radius in CSS pixels: ~9% of the stage width, clamped. */

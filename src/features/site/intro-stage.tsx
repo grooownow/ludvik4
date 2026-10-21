@@ -1,7 +1,13 @@
 "use client";
 
 import { type ReactNode, useRef, useState } from "react";
-import { INTRO_ART, INTRO_SOURCES, TALL_ART_MEDIA } from "./intro-art";
+import {
+  BLANK_PIXEL,
+  INTRO_ART,
+  INTRO_SOURCES,
+  PHONE_MEDIA,
+  TALL_ART_MEDIA,
+} from "./intro-art";
 import { IntroScene } from "./intro-scene";
 import { useIntroScrollHandoff } from "./intro-scroll-handoff";
 
@@ -26,6 +32,7 @@ export function IntroStage({ alt, children }: Props) {
       className="group relative h-svh min-h-[560px] w-full overflow-hidden"
     >
       <picture>
+        <source media={PHONE_MEDIA} srcSet={BLANK_PIXEL} />
         <source
           media={TALL_ART_MEDIA}
           type="image/avif"

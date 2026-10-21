@@ -5,6 +5,7 @@ import {
   MAX_RENDER_WIDTH,
   VERTEX_SHADER,
   dropRadius,
+  isSoftwareRenderer,
   shouldRunLiveIntro,
 } from "./intro-scene-shaders";
 import {
@@ -194,15 +195,28 @@ export function IntroScene({ stageRef, copyRef, onLiveChange }: Props) {
       "(min-width: 768px) and (orientation: landscape)",
     );
     let webgl = false;
+    let softwareRenderer = false;
     if (finePointer && !reducedMotion && wideLandscape) {
       try {
-        webgl = Boolean(document.createElement("canvas").getContext("webgl"));
+        const probe = document.createElement("canvas").getContext("webgl");
+        webgl = Boolean(probe);
+        const info = probe?.getExtension("WEBGL_debug_renderer_info");
+        const renderer = info
+          ? String(probe?.getParameter(info.UNMASKED_RENDERER_WEBGL) ?? "")
+          : "";
+        softwareRenderer = isSoftwareRenderer(renderer);
       } catch {
         webgl = false;
       }
     }
     setEnabled(
-      shouldRunLiveIntro({ finePointer, reducedMotion, wideLandscape, webgl }),
+      shouldRunLiveIntro({
+        finePointer,
+        reducedMotion,
+        wideLandscape,
+        webgl,
+        softwareRenderer,
+      }),
     );
   }, []);
 

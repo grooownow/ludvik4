@@ -35,7 +35,17 @@ export function ScrollRevealHeader({ children }: { children: ReactNode }) {
     let frame = 0;
     let last = performance.now();
 
+    const phone = () =>
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(max-width: 767px)").matches;
+
     const paint = () => {
+      // Phones have no intro (see intro-hero): the header is just the header.
+      if (phone()) {
+        el.style.opacity = "";
+        el.style.visibility = "";
+        return;
+      }
       const value = focused ? 1 : shown;
       el.style.opacity = value.toFixed(3);
       el.style.visibility = value < 0.01 ? "hidden" : "visible";
@@ -86,10 +96,10 @@ export function ScrollRevealHeader({ children }: { children: ReactNode }) {
     <div
       ref={ref}
       data-testid="scroll-reveal-header"
-      className="fixed inset-x-0 top-0 z-30"
-      // Server HTML starts hidden so the header does not flash over the intro
-      // before hydration; the effect sets the real value on mount.
-      style={{ opacity: 0, visibility: "hidden" }}
+      // From md up the server HTML starts hidden, so the header does not flash
+      // over the intro before hydration; the effect then drives it inline.
+      // Phones keep the ordinary sticky header.
+      className="sticky top-0 z-30 md:invisible md:fixed md:inset-x-0 md:opacity-0"
     >
       {children}
     </div>

@@ -4,10 +4,21 @@ test.describe("golden path smoke", () => {
   test("home renders the brand and hero headline", async ({ page }) => {
     await page.goto("/");
 
-    // Wordmark in the sticky header (first "Ludvik4" on the page).
-    await expect(
-      page.getByText("Ludvik4", { exact: true }).first(),
-    ).toBeVisible();
+    // The brand at the very top: on desktop the full-screen intro artwork
+    // (its header stays hidden until you scroll); phones have no intro and
+    // show the ordinary sticky header with the wordmark.
+    const isPhone = (page.viewportSize()?.width ?? 1280) < 768;
+    if (isPhone) {
+      await expect(
+        page.getByText("Ludvik4", { exact: true }).first(),
+      ).toBeVisible();
+      await expect(page.getByRole("img", { name: "Ludvik4" })).toBeHidden();
+    } else {
+      await expect(page.getByRole("img", { name: "Ludvik4" })).toBeVisible();
+      await expect(
+        page.getByRole("link", { name: /Ludvik4/ }).first(),
+      ).toBeHidden();
+    }
     // Hero headline.
     await expect(
       page.getByRole("heading", {

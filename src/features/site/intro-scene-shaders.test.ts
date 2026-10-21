@@ -1,7 +1,11 @@
 import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { INTRO_SCENE, stepSpring } from "./intro-scene-config";
-import { dropRadius, shouldRunLiveIntro } from "./intro-scene-shaders";
+import {
+  dropRadius,
+  isSoftwareRenderer,
+  shouldRunLiveIntro,
+} from "./intro-scene-shaders";
 import { INTRO_SOURCES } from "./intro-art";
 
 const publicFile = (url: string) =>
@@ -16,6 +20,7 @@ describe("shouldRunLiveIntro", () => {
     reducedMotion: false,
     wideLandscape: true,
     webgl: true,
+    softwareRenderer: false,
   };
 
   it("runs only with a mouse, motion allowed, a wide landscape screen and WebGL", () => {
@@ -24,6 +29,24 @@ describe("shouldRunLiveIntro", () => {
     expect(shouldRunLiveIntro({ ...ok, reducedMotion: true })).toBe(false);
     expect(shouldRunLiveIntro({ ...ok, wideLandscape: false })).toBe(false);
     expect(shouldRunLiveIntro({ ...ok, webgl: false })).toBe(false);
+    expect(shouldRunLiveIntro({ ...ok, softwareRenderer: true })).toBe(false);
+  });
+});
+
+describe("isSoftwareRenderer", () => {
+  it("spots CPU-emulated WebGL and passes real GPUs", () => {
+    expect(
+      isSoftwareRenderer(
+        "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero)), SwiftShader driver)",
+      ),
+    ).toBe(true);
+    expect(isSoftwareRenderer("llvmpipe (LLVM 15.0.7, 256 bits)")).toBe(true);
+    expect(
+      isSoftwareRenderer(
+        "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+      ),
+    ).toBe(false);
+    expect(isSoftwareRenderer("")).toBe(false);
   });
 });
 
