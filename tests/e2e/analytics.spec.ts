@@ -26,7 +26,7 @@ test.describe("analytics stays off the Russian storefront", () => {
     });
 
     await page.goto("/");
-    await page.getByRole("link", { name: "Обсудить задачу" }).first().click();
+    await page.getByRole("link", { name: "Обсудить проект" }).click();
 
     expect(analyticsRequests).toEqual([]);
   });

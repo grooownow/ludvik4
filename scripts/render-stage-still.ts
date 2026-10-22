@@ -71,6 +71,8 @@ async function main() {
       color: MASCOT_COLOR,
       camera: STAGE_CAMERA,
     };
+    // One shared canvas: the renders must run one after another.
+    // oxlint-disable-next-line no-await-in-loop
     const dataUrl: string = await page.evaluate(
       `(${DRAW_IN_PAGE})(${JSON.stringify(args)})`,
     );

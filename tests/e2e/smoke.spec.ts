@@ -1,35 +1,26 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("golden path smoke", () => {
-  test("home renders the brand and hero headline", async ({ page }) => {
+  test("home opens on the exhibit stage with the page H1 and a way to /contact", async ({
+    page,
+  }) => {
     await page.goto("/");
 
-    // The brand at the very top: on desktop the full-screen intro artwork
-    // (its header stays hidden until you scroll); phones have no intro and
-    // show the ordinary sticky header with the wordmark.
-    const isPhone = (page.viewportSize()?.width ?? 1280) < 768;
-    if (isPhone) {
-      await expect(
-        page.getByText("Ludvik4", { exact: true }).first(),
-      ).toBeVisible();
-      await expect(page.getByRole("img", { name: "Ludvik4" })).toBeHidden();
-    } else {
-      await expect(page.getByRole("img", { name: "Ludvik4" })).toBeVisible();
-      await expect(
-        page.getByRole("link", { name: /Ludvik4/ }).first(),
-      ).toBeHidden();
-    }
-    // Hero headline.
+    // The exhibition home (docs/specs/immersive-home.md): the stage fills the
+    // first screen; the H1 is visually hidden but present for search and
+    // screen readers. CI has no GPU, so the pre-rendered still is shown.
+    await expect(page.getByRole("region", { name: "Ludvik" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      /Сайты, автоматизация и веб-приложения/,
+    );
+    await expect(page.getByTestId("exhibit-label")).toContainText("Экспонат");
     await expect(
-      page.getByRole("heading", {
-        level: 1,
-        name: /Сайты, автоматизация и веб-приложения/,
-      }),
+      page.getByRole("link", { name: /Ludvik4/ }).first(),
     ).toBeVisible();
-    // Primary CTA to the contact section.
+    // The closing call to action leads to the contact page.
     await expect(
-      page.getByRole("link", { name: "Обсудить задачу" }).first(),
-    ).toBeVisible();
+      page.getByRole("link", { name: "Обсудить проект" }),
+    ).toHaveAttribute("href", "/contact");
   });
 
   test("unauthenticated /dashboard redirects to /signin", async ({ page }) => {
@@ -52,8 +43,7 @@ test.describe("golden path smoke", () => {
   test("SPA-navigation gate (spec §5.6-1): Link navigation stays client-side", async ({
     page,
   }) => {
-    // The landing is a single page with anchor CTAs, so exercise the gate on
-    // the not-found page's cross-route "Go home" <Link>.
+    // Exercise the gate on the not-found page's cross-route "Go home" <Link>.
     await page.goto("/nonexistent");
 
     // A full page reload wipes in-memory window state; client-side (SPA)

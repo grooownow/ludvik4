@@ -27,11 +27,12 @@ export function HomeStage({
 
       <SiteHeader content={content} variant="stage" />
 
-      {/* Placed right of the head at rest (stage-lab.html), clamped so it
-          never leaves the viewport on narrow screens. */}
+      {/* Landscape: right of the head at rest (stage-lab.html), clamped so it
+          never leaves the viewport. Portrait (phones, until the mobile intro
+          is designed): centred below the mascot, above the strip. */}
       <div
         data-testid="exhibit-label"
-        className="text-stage-muted absolute top-[calc(50%-20vmin)] left-[min(calc(50%+28vmin),calc(100%-17rem))] rounded-lg bg-white/55 px-4 py-3.5 text-xs leading-relaxed whitespace-nowrap backdrop-blur-md"
+        className="text-stage-muted absolute top-[calc(50%-25vmin)] left-[min(calc(50%+30vmin),calc(100%-17rem))] rounded-lg bg-white/55 px-4 py-3.5 text-xs leading-relaxed whitespace-nowrap backdrop-blur-md portrait:top-auto portrait:bottom-[13vh] portrait:left-1/2 portrait:-translate-x-1/2"
       >
         <span className="font-mono tracking-[0.12em] uppercase">
           {exhibit.eyebrow} {exhibitNumber(workCount, content.lang)}

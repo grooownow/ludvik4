@@ -16,34 +16,29 @@ test.describe("SEO surfaces", () => {
     ).toBeVisible();
   });
 
-  test("landing shows the FAQ and an item expands on click", async ({
+  test("landing shows the collection and no FAQ or prices", async ({
     page,
   }) => {
     await page.goto("/");
 
+    await expect(
+      page.getByRole("heading", { name: /Если это живёт в браузере/ }),
+    ).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Частые вопросы" }),
-    ).toBeVisible();
-
-    const firstQuestion = page.getByRole("button", {
-      name: /Сколько стоит разработка/,
-    });
-    await firstQuestion.click();
-    // Distinct substring of the first FAQ (pricing) answer.
-    await expect(
-      page.getByText(/после разбора и оценки задачи/).first(),
-    ).toBeVisible();
+    ).toHaveCount(0);
+    await expect(page.getByText(/₽/)).toHaveCount(0);
   });
 
-  test("header link navigates to the blog list client-side", async ({
+  test("the Work link navigates to the case studies client-side", async ({
     page,
   }) => {
     await page.goto("/");
 
-    await page.getByRole("link", { name: "Блог" }).first().click();
-    await expect(page).toHaveURL(/\/blog$/);
+    await page.getByRole("link", { name: "Работы" }).first().click();
+    await expect(page).toHaveURL(/\/cases\/?$/);
     await expect(
-      page.getByRole("heading", { name: /Заметки о разработке/ }),
+      page.getByRole("heading", { level: 1, name: "Кейсы Ludvik4" }),
     ).toBeVisible();
   });
 
