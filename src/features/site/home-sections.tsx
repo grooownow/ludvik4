@@ -241,7 +241,7 @@ export function HomeAbout({ copy }: { copy: HomeContent["about"] }) {
 export function HomeClosing({ copy }: { copy: HomeContent["closing"] }) {
   return (
     <section className="bg-intro text-intro-foreground">
-      <div className="mx-auto max-w-6xl px-6 py-40 text-center sm:py-44">
+      <div className="mx-auto max-w-6xl px-6 py-48 text-center sm:py-64">
         <p className="font-mono text-xs tracking-[0.14em] text-white/50 uppercase">
           {copy.eyebrow}
         </p>
