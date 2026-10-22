@@ -229,6 +229,50 @@ and keyboard access to the mascot (at minimum: it must not trap focus).
 - **Prices.** Shown nowhere for now. The owner is being told prices should be
   shown, possibly on RU at least — parked as an open decision.
 
+## Handoff — where the work stopped (2026-10-23)
+
+Branch `feat/immersive-home`, pushed; Vercel previews build on every push
+(`vercel ls` → newest Preview). Not merged into `main`, production untouched.
+The old home and intro code stay in the repo, unrendered, by owner decision.
+
+Done since the plan (`immersive-home.plan.md`), all on the branch:
+
+- Stills match the live framing (wide 3.2:1 / tall 1:2.4), split into two
+  layers (stage + mascot) by `scripts/render-stage-still.ts`.
+- Silhouette antialiasing in the shader; render scale 0.85, cap 2048.
+- Quality ladder by measured frame time (`exhibit-quality.ts`): full →
+  0.6 scale → 0.45 + lite shader → rocking CSS still. `?quality=full|medium|
+lite|still` pins a tier. The rocking still (with a tap-to-push button) is
+  also what phones, touch and no-GPU machines get; reduced motion keeps it
+  still.
+- Menu: Work → `/#work`, Services → `/#collection` (smooth scroll via
+  AnchorLink); the `/services` and `/uslugi` index pages were removed; the
+  current item is marked (ink + thin underline). RU menu: Работы · Услуги ·
+  Обо мне · Контакты.
+- Dark footer site-wide, no repeated menu links, pinned to the bottom on
+  short pages; iOS overscroll shows pink above the stage and plum below.
+- All section headings on one line; closing band has ~1.5× vertical padding.
+- Work previews open the live site in a new window from a white corner
+  arrow; the exhibit name links to the description page.
+- Strip status: "Taking projects · Q4 2026" / «Беру проекты · IV кв. 2026».
+
+Waiting on the owner:
+
+1. Check the preview on a real iPhone (overscroll) and an older laptop
+   (quality ladder).
+2. Approve the RU copy: `content.ts` → `ru.home`, and `about-ru.tsx`.
+3. Email and LinkedIn for `/contact` (`CONTACT_LINKS` in `contact-page.tsx`).
+4. Later, designed separately: hall-card content, contact page design,
+   mobile intro, the mood switch, prices, the "Worldwide" wording.
+5. Then: merge into `main`, mark ADR 0012 superseded, set this spec to
+   `shipped`, deploy both markets.
+
+Deferred review minors (final review 2026-10-23): stale spin velocity when a
+drag pauses before release; WebGL contexts not released on unmount; no
+listener for a DPR change without a resize; no unit test for
+`webglcontextlost`; the label can touch the mascot on 768–810 px landscape
+windows.
+
 ## Status
 
 `in progress` — branch `feat/immersive-home` (approved 2026-10-22)
