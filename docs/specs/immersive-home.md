@@ -250,7 +250,10 @@ lite|still` pins a tier. The rocking still (with a tap-to-push button) is
   current item is marked (ink + thin underline). RU menu: Работы · Услуги ·
   Обо мне · Контакты.
 - Dark footer site-wide, no repeated menu links, pinned to the bottom on
-  short pages; iOS overscroll shows pink above the stage and plum below.
+  short pages. Rubber-band overscroll: a fixed layer behind pages with the
+  site footer shows the page's top colour above (the stage's #ffe0fa on the
+  home, white elsewhere) and the footer plum below; the home's theme-color is
+  #ffe0fa.
 - All section headings on one line; closing band has ~1.5× vertical padding.
 - Work previews open the live site in a new window from a white corner
   arrow; the exhibit name links to the description page.

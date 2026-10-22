@@ -143,11 +143,26 @@
   }
 }
 
-/* iOS rubber-band overscroll shows the root background. On the exhibition
-   home the top is the pink stage, so pull-down reveals pink, not white. The
-   bottom is covered by the footer's plum shadow (SiteFooter). */
-html:has([data-stage]) {
-  background-color: #ffd9ec;
+/* Rubber-band overscroll (macOS/iOS Safari) reveals what is behind the page.
+   A fixed layer behind all content shows the page's top colour in the upper
+   half of the viewport and the footer plum in the lower half, so pulling past
+   either end continues the page instead of flashing white or pink. Only on
+   pages with the site footer: their content always has its own background.
+   The exhibition home's top is the stage, #ffe0fa (sampled from the still). */
+body:has(footer[data-site-footer])::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    var(--overscroll-top, var(--background)) 50%,
+    var(--intro) 50%
+  );
+}
+body:has([data-stage]) {
+  --overscroll-top: #ffe0fa;
 }
 
 /* Exhibit stage fallback (exhibit-stage.tsx): where the live scene does not

@@ -120,3 +120,23 @@ test("the still mascot rocks where the live scene does not run", async ({
   const later = await mascot.evaluate((el) => getComputedStyle(el).transform);
   expect(later).not.toBe(first);
 });
+
+// Rubber-band overscroll (macOS/iOS) reveals what is behind the page: the
+// stage's top colour above and the footer plum below — never a white strip.
+for (const [path, top] of [
+  ["/", "rgb(255, 224, 250)"],
+  ["/contact", "rgb(255, 255, 255)"],
+] as const) {
+  test(`overscroll behind ${path} continues the page at both ends`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    const layer = await page.evaluate(() => {
+      const style = getComputedStyle(document.body, "::before");
+      return { position: style.position, image: style.backgroundImage };
+    });
+    expect(layer.position).toBe("fixed");
+    expect(layer.image).toContain(top);
+    expect(layer.image).toContain("rgb(20, 4, 12)");
+  });
+}

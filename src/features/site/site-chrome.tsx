@@ -135,12 +135,14 @@ export function SiteHeader({
   );
 }
 
-// One dark footer site-wide, continuing the home's closing band. The shadow
-// paints the same plum far below the page (a shadow adds no scroll height),
-// so iOS rubber-band overscroll at the bottom shows plum instead of white.
+// One dark footer site-wide, continuing the home's closing band. Its
+// data-site-footer marker turns on the overscroll layer in globals.css.
 export function SiteFooter({ content }: { content: MarketContent }) {
   return (
-    <footer className="bg-intro border-t border-white/10 pb-[env(safe-area-inset-bottom)] text-white/45 shadow-[0_100vh_0_100vh_var(--intro)]">
+    <footer
+      data-site-footer
+      className="bg-intro border-t border-white/10 pb-[env(safe-area-inset-bottom)] text-white/45"
+    >
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-6 font-mono text-sm">
         <span>{content.home.footerTagline}</span>
         <span className="flex flex-wrap items-center gap-5">
