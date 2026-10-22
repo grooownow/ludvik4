@@ -45,9 +45,10 @@ describe("HomeEn", () => {
     expect(
       screen.getByRole("link", { name: /Explore website development/ }),
     ).toHaveAttribute("href", "/services/websites");
-    expect(screen.getAllByRole("link", { name: "Work" })[0]).toHaveAttribute(
+    // The footer follows the exhibition-home menu (Guides · About · Contact).
+    expect(screen.getAllByRole("link", { name: "Guides" })[0]).toHaveAttribute(
       "href",
-      "/work",
+      "/guides",
     );
   });
 

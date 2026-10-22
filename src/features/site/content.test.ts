@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getMarketContent } from "./content";
+import { exhibitNumber, getMarketContent } from "./content";
 import { buildHomeJsonLd, buildSiteMetadata } from "./seo";
 
 const RU_BASE = "https://ludvik4.ru";
@@ -18,11 +18,13 @@ describe("market content", () => {
       "Автоматизация бизнес-процессов",
       "Веб-приложение или компактный SaaS",
     ]);
+    // Exhibition home (docs/specs/immersive-home.md): same menu as EN, translated.
     expect(ru.nav.links).toEqual([
-      { href: "/#services", label: "Услуги" },
-      { href: "/cases", label: "Кейсы" },
-      { href: "/blog", label: "Блог" },
+      { href: "/cases", label: "Работы" },
+      { href: "/uslugi", label: "Услуги" },
+      { href: "/about", label: "Обо мне" },
     ]);
+    expect(ru.nav.cta).toBe("Контакты");
     expect(ru.description).toContain("Сайты, автоматизации и веб-приложения");
     expect(ru.hero.lead).not.toMatch(/проектируем|предлагаем|поможем/i);
     expect(ru.about?.body).not.toMatch(TEAM_CLAIM);
@@ -40,7 +42,65 @@ describe("market content", () => {
     // EN keeps the lead form; RU does not.
     expect(en.contact.form).toBeDefined();
     expect(getMarketContent("ru").contact.form).toBeUndefined();
-    expect(en.nav.links).toContainEqual({ href: "/blog", label: "Articles" });
+    expect(en.nav.links).toEqual([
+      { href: "/work", label: "Work" },
+      { href: "/services", label: "Services" },
+      { href: "/guides", label: "Guides" },
+      { href: "/about", label: "About" },
+    ]);
+    expect(en.nav.cta).toBe("Contact");
+  });
+});
+
+describe("exhibition home content", () => {
+  it.each(["ru", "en"] as const)(
+    "%s has six halls, three steps and a hidden H1",
+    (market) => {
+      const { home, h1, hero } = getMarketContent(market);
+      expect(home.collection.halls).toHaveLength(6);
+      expect(home.steps.items).toHaveLength(3);
+      expect(h1).toBe(hero.title);
+      expect(home.collection.title).toHaveLength(2);
+    },
+  );
+
+  it("EN uses the approved exhibit and section copy verbatim", () => {
+    const { home } = getMarketContent("en");
+    expect(home.exhibit).toEqual({
+      eyebrow: "Exhibit",
+      name: "Ludvik",
+      lines: ["Pure code, WebGL, zero polygons.", "Handle with curiosity."],
+    });
+    expect(home.collection.title).toEqual([
+      "If it lives in a browser,",
+      "I can build it.",
+    ]);
+    expect(home.steps.title).toEqual(["Three steps,", "no fog."]);
+    expect(home.work.title).toEqual(["Work you can", "inspect."]);
+    expect(home.about.title).toEqual(["One person,", "end to end."]);
+    expect(home.closing).toEqual({
+      eyebrow: "Your exhibit next?",
+      title: "Have something in mind?",
+      cta: "Discuss a project",
+    });
+    expect(home.strip).toEqual({
+      status: "Taking projects · Q1 2027",
+      established: "Est. 2024 · Europe",
+    });
+  });
+
+  it("numbers the mascot after the last work exhibit", () => {
+    expect(exhibitNumber(3, "en")).toBe("Nº 04");
+    expect(exhibitNumber(4, "ru")).toBe("№ 05");
+    expect(exhibitNumber(12, "en")).toBe("Nº 13");
+  });
+
+  it("never mentions prices on the exhibition home", () => {
+    for (const market of ["ru", "en"] as const) {
+      expect(JSON.stringify(getMarketContent(market).home)).not.toMatch(
+        /₽|\$|€/,
+      );
+    }
   });
 });
 

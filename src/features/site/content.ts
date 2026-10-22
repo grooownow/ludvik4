@@ -29,6 +29,31 @@ export type PriceRow = { title: string; price: string; note?: string };
 export type FooterLink = { href: string; label: string; external?: boolean };
 export type NavLink = { href: string; label: string };
 
+/** Copy of the exhibition home (docs/specs/immersive-home.md). Two-part titles
+ *  are `[plain, accent]`: the accent half renders in the brand pink. */
+export type HomeContent = {
+  /** Museum label next to the mascot; its number comes from exhibitNumber(). */
+  exhibit: { eyebrow: string; name: string; lines: [string, string] };
+  /** Bottom strip of the stage. */
+  strip: { status: string; established: string };
+  collection: {
+    eyebrow: string;
+    title: [string, string];
+    halls: { index: string; name: string; line: string }[];
+  };
+  steps: { eyebrow: string; title: [string, string]; items: Step[] };
+  work: { eyebrow: string; title: [string, string] };
+  about: {
+    eyebrow: string;
+    title: [string, string];
+    body: string;
+    plate: string;
+    linkLabel: string;
+  };
+  closing: { eyebrow: string; title: string; cta: string };
+  footerTagline: string;
+};
+
 export type MarketContent = {
   market: Market;
   /** `<html lang>` and JSON-LD inLanguage. */
@@ -107,6 +132,9 @@ export type MarketContent = {
     };
   };
   footer: { links: FooterLink[] };
+  /** Visually hidden page H1 on the exhibition home (the stage has no headline). */
+  h1: string;
+  home: HomeContent;
 };
 
 const EN_LEAD_LABELS: LeadFormLabels = {
@@ -141,11 +169,11 @@ const ru: MarketContent = {
     "Ludvik4",
   ],
   nav: {
-    cta: "Обсудить задачу",
+    cta: "Контакты",
     links: [
-      { href: "/#services", label: "Услуги" },
-      { href: "/cases", label: "Кейсы" },
-      { href: "/blog", label: "Блог" },
+      { href: "/cases", label: "Работы" },
+      { href: "/uslugi", label: "Услуги" },
+      { href: "/about", label: "Обо мне" },
     ],
   },
   intro: {
@@ -320,6 +348,92 @@ const ru: MarketContent = {
     eyebrow: "Кто стоит за Ludvik4",
     body: "Ludvik4 — независимый проект по разработке цифровых продуктов. Я веду каждый проект от постановки задачи до запуска и остаюсь единой точкой ответственности на всех этапах. Когда задаче нужны дополнительные компетенции, подключаю проверенных профильных специалистов.",
   },
+  h1: "Сайты, автоматизация и веб-приложения — от задачи до запуска",
+  // Draft Russian adaptation of the approved EN copy — awaits the owner's OK.
+  home: {
+    exhibit: {
+      eyebrow: "Экспонат",
+      name: "Ludvik",
+      lines: [
+        "Чистый код, WebGL, ноль полигонов.",
+        "Обращаться с любопытством.",
+      ],
+    },
+    strip: {
+      status: "Беру проекты · I кв. 2027",
+      established: "С 2024 · Европа",
+    },
+    collection: {
+      eyebrow: "Коллекция · Что я делаю",
+      title: ["Если это живёт в браузере,", "я это сделаю."],
+      halls: [
+        {
+          index: "Зал 01",
+          name: "Сайты",
+          line: "для продуктов, студий, событий",
+        },
+        {
+          index: "Зал 02",
+          name: "Лендинги",
+          line: "одно предложение, одно действие",
+        },
+        {
+          index: "Зал 03",
+          name: "Веб-приложения и SaaS",
+          line: "аккаунты, данные, оплаты, AI",
+        },
+        { index: "Зал 04", name: "Автоматизации", line: "рутина на автомате" },
+        {
+          index: "Зал 05",
+          name: "Виджеты и инструменты",
+          line: "маленькие, точные, встраиваемые",
+        },
+        {
+          index: "Зал 06",
+          name: "Что-то ещё?",
+          line: "спросите — скорее всего, это возможно",
+        },
+      ],
+    },
+    steps: {
+      eyebrow: "Как это работает",
+      title: ["Три шага,", "без тумана."],
+      items: [
+        {
+          n: "01",
+          title: "Обсуждаем",
+          body: "Формулируем задачу, договариваемся об объёме и цене.",
+        },
+        {
+          n: "02",
+          title: "Делаем",
+          body: "Первая полезная версия, которую видно по ходу работы.",
+        },
+        {
+          n: "03",
+          title: "Запускаем",
+          body: "Запуск и передача кода — дальше развиваем.",
+        },
+      ],
+    },
+    work: {
+      eyebrow: "Избранные работы · Открытые экспонаты",
+      title: ["Работы, которые", "можно потрогать."],
+    },
+    about: {
+      eyebrow: "Обо мне",
+      title: ["Один человек,", "от начала до конца."],
+      body: "Независимая студия в Европе. Веду проект от смутной идеи до работающего запуска — и всё это время остаюсь вашим единственным контактом.",
+      plate: "Куратор",
+      linkLabel: "Подробнее обо мне",
+    },
+    closing: {
+      eyebrow: "Ваш экспонат — следующий?",
+      title: "Есть идея?",
+      cta: "Обсудить проект",
+    },
+    footerTagline: "Ludvik4 · с 2024",
+  },
   contact: {
     eyebrow: "Контакт",
     title: "Расскажите о задаче",
@@ -328,7 +442,9 @@ const ru: MarketContent = {
   },
   footer: {
     links: [
-      { href: "/blog", label: "Блог" },
+      { href: "/cases", label: "Работы" },
+      { href: "/about", label: "Обо мне" },
+      { href: "/contact", label: "Контакты" },
       { href: TELEGRAM_URL, label: "Telegram", external: true },
     ],
   },
@@ -353,11 +469,10 @@ const en: MarketContent = {
     "Ludvik4",
   ],
   nav: {
-    cta: "Discuss a project",
+    cta: "Contact",
     links: [
-      { href: "/#services", label: "Services" },
       { href: "/work", label: "Work" },
-      { href: "/blog", label: "Articles" },
+      { href: "/services", label: "Services" },
       { href: "/guides", label: "Guides" },
       { href: "/about", label: "About" },
     ],
@@ -526,6 +641,92 @@ const en: MarketContent = {
     eyebrow: "Founder-led",
     body: "Ludvik4 is an independent web product studio based in Europe and working with clients worldwide. I lead each engagement from problem definition through launch, remain the single point of accountability, and involve trusted specialists only when the agreed scope needs them.",
   },
+  h1: "Websites, workflow automation, and web apps — built for launch",
+  home: {
+    exhibit: {
+      eyebrow: "Exhibit",
+      name: "Ludvik",
+      lines: ["Pure code, WebGL, zero polygons.", "Handle with curiosity."],
+    },
+    strip: {
+      status: "Taking projects · Q1 2027",
+      established: "Est. 2024 · Europe",
+    },
+    collection: {
+      eyebrow: "The collection · What I build",
+      title: ["If it lives in a browser,", "I can build it."],
+      halls: [
+        {
+          index: "Hall 01",
+          name: "Websites",
+          line: "for products, studios, events",
+        },
+        {
+          index: "Hall 02",
+          name: "Landing pages",
+          line: "one offer, one action",
+        },
+        {
+          index: "Hall 03",
+          name: "Web apps & SaaS",
+          line: "accounts, data, payments, AI",
+        },
+        {
+          index: "Hall 04",
+          name: "Automations",
+          line: "the boring parts, handled",
+        },
+        {
+          index: "Hall 05",
+          name: "Widgets & tools",
+          line: "small, sharp, embeddable",
+        },
+        {
+          index: "Hall 06",
+          name: "Something else?",
+          line: "ask — it’s probably possible",
+        },
+      ],
+    },
+    steps: {
+      eyebrow: "How it works",
+      title: ["Three steps,", "no fog."],
+      items: [
+        {
+          n: "01",
+          title: "Talk",
+          body: "We shape the problem and agree on scope and price.",
+        },
+        {
+          n: "02",
+          title: "Build",
+          body: "The first useful version, shown as it grows.",
+        },
+        {
+          n: "03",
+          title: "Launch",
+          body: "Live, handed over with the code — then it evolves.",
+        },
+      ],
+    },
+    work: {
+      eyebrow: "Selected work · Public exhibits",
+      title: ["Work you can", "inspect."],
+    },
+    about: {
+      eyebrow: "About",
+      title: ["One person,", "end to end."],
+      body: "A founder-led studio in Europe. I take a project from a fuzzy idea to a working launch — and stay the one you talk to.",
+      plate: "Curator",
+      linkLabel: "More about me",
+    },
+    closing: {
+      eyebrow: "Your exhibit next?",
+      title: "Have something in mind?",
+      cta: "Discuss a project",
+    },
+    footerTagline: "Ludvik4 · Est. 2024",
+  },
   contact: {
     eyebrow: "Contact",
     title: "Tell me what needs to work better",
@@ -542,11 +743,9 @@ const en: MarketContent = {
   },
   footer: {
     links: [
-      { href: "/services/websites", label: "Services", external: false },
-      { href: "/work", label: "Work", external: false },
-      { href: "/blog", label: "Articles", external: false },
       { href: "/guides", label: "Guides", external: false },
       { href: "/about", label: "About", external: false },
+      { href: "/contact", label: "Contact", external: false },
       { href: "/privacy", label: "Privacy", external: false },
       { href: TELEGRAM_URL, label: "Telegram", external: true },
     ],
@@ -558,4 +757,10 @@ const CONTENT: Record<Market, MarketContent> = { ru, en };
 /** Pure market-content accessor — the unit-test entry point for both markets. */
 export function getMarketContent(market: Market): MarketContent {
   return CONTENT[market];
+}
+
+/** The mascot's exhibit number: it is the next exhibit after the work shown. */
+export function exhibitNumber(workCount: number, lang: "ru" | "en"): string {
+  const n = String(workCount + 1).padStart(2, "0");
+  return lang === "ru" ? `№ ${n}` : `Nº ${n}`;
 }
