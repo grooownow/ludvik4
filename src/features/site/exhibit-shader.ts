@@ -116,14 +116,27 @@ void main(){
   float tFloor=rd.y<0.0?-ro.y/rd.y:1e5;
   float tMax=min(tFloor,20.0);
   float t=3.0,d=1.0;
+  // Track the ray's closest approach: a ray that grazes the mascot without
+  // hitting it still covers part of its pixel. Without this the silhouette is
+  // all-or-nothing and renders as a staircase.
+  float minD=1e9,tMin=t;
   for(int i=0;i<180;i++){
     d=map(ro+rd*t);
+    if(d<minD){minD=d;tMin=t;}
     if(d<0.0008*t||t>tMax)break;
     t+=d;
   }
+  float hit;
+  if(t<=tMax&&d<0.0008*t){
+    hit=1.0;
+  }else{
+    // Width of one pixel at the closest approach (uv is in units of side,
+    // the focal length is 1.75).
+    float pixel=tMin/(side*1.75);
+    hit=1.0-smoothstep(0.0,pixel*1.5,minD);
+    t=tMin;
+  }
   vec3 p1=ro+rd*t;
-  float eps=0.0012*t;
-  float hit=(1.0-smoothstep(eps,eps*2.5,map(p1)))*step(t,tMax);
 
   vec3 col=rd.y<0.0?floorCol(ro+rd*tFloor,rd):wallCol(rd);
 

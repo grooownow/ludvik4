@@ -42,12 +42,12 @@ describe("isSoftwareRenderer", () => {
 });
 
 describe("renderSize", () => {
-  it("renders at 0.7x the device pixels, capped at 1600 px wide", () => {
-    expect(renderSize(1440, 900, 2)).toEqual({ width: 1600, height: 1000 });
-    expect(renderSize(1000, 800, 1)).toEqual({ width: 700, height: 560 });
+  it("renders at 0.85x the device pixels, capped at 2048 px wide", () => {
+    expect(renderSize(1440, 900, 2)).toEqual({ width: 2048, height: 1280 });
+    expect(renderSize(1000, 800, 1)).toEqual({ width: 850, height: 680 });
   });
 
   it("treats device pixel ratios above 2 as 2", () => {
-    expect(renderSize(1000, 800, 3)).toEqual({ width: 1400, height: 1120 });
+    expect(renderSize(1000, 800, 3)).toEqual({ width: 1700, height: 1360 });
   });
 });

@@ -24,8 +24,8 @@ export function isSoftwareRenderer(renderer: string): boolean {
 }
 
 /** The scene renders below device resolution; raymarching cost grows with pixels. */
-export const RENDER_SCALE = 0.7;
-export const MAX_RENDER_WIDTH = 1600;
+export const RENDER_SCALE = 0.85;
+export const MAX_RENDER_WIDTH = 2048;
 
 /** Drawing-buffer size for a stage of `cssW` × `cssH` CSS pixels. */
 export function renderSize(

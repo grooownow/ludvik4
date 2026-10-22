@@ -17,4 +17,11 @@ describe("EXHIBIT_FRAGMENT", () => {
       /uSmile|uSurprise|mouthCoords|float mouth\(|float lip\(/,
     );
   });
+
+  it("antialiases the silhouette from the ray's closest approach", () => {
+    // A ray that grazes the mascot without hitting it must still get partial
+    // coverage, or the outline renders as a staircase.
+    expect(EXHIBIT_FRAGMENT).toMatch(/minD/);
+    expect(EXHIBIT_FRAGMENT).toMatch(/smoothstep\(0\.0,\s*pixel/);
+  });
 });
