@@ -124,7 +124,7 @@ split across two event names:
 
 - `cta.clicked` covers five — the nav CTA on desktop, the nav CTA in the mobile
   menu, the hero CTA, the service-page CTA, and the lead-form submit button.
-  `placement` is one of `nav`, `nav_mobile`, `hero`, `service`, `form_submit`;
+  `placement` is one of `nav`, `nav_mobile`, `hero` (old home), `closing` (exhibition home's final band), `service`, `form_submit`;
   `target` is `contact` for the four anchor CTAs and `lead_form` for the submit.
 - `contact.telegram_clicked` covers the remaining three — the Telegram links in
   the header, the home contact block, and the footer. It already ships in

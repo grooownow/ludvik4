@@ -9,7 +9,10 @@ import { AnchorLink } from "./anchor-link";
  * Where on the site the call to action was pressed. Kept as a closed union so
  * a new CTA has to name itself rather than land in the data as a typo.
  */
-export type CtaPlacement = "nav" | "nav_mobile" | "hero" | "service";
+// "hero" belongs to the old home (kept, unrendered); "closing" is the
+// exhibition home's final band. Both stay so analytics history keeps its key.
+export type CtaPlacement =
+  "nav" | "nav_mobile" | "hero" | "closing" | "service";
 
 type CtaLinkProps = Omit<ComponentPropsWithoutRef<"a">, "href"> & {
   href: string;
