@@ -133,6 +133,9 @@ export function HomeGallery({
   exhibits: HomeExhibit[];
 }) {
   const sign = lang === "ru" ? "№" : "Nº";
+  const openLabel = lang === "ru" ? "Открыть" : "Open";
+  const newWindowLabel =
+    lang === "ru" ? "(откроется в новом окне)" : "(opens in a new window)";
   // Odd count: the first exhibit spans two rows (big left, others stacked);
   // even count: an equal grid.
   const featureFirst = exhibits.length % 2 === 1;
@@ -149,12 +152,14 @@ export function HomeGallery({
               data-exhibit={exhibit.slug}
               className={cn(featured && "sm:row-span-2")}
             >
-              <Link
-                href={exhibit.href as Route}
-                {...(exhibit.newTab
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-                className="ring-pink-soft block rounded-md bg-white p-4 shadow-[0_14px_30px_rgba(214,40,130,0.10)] ring-1 transition-shadow hover:shadow-[0_18px_40px_rgba(214,40,130,0.18)]"
+              {/* The preview opens the live work itself in a new window; the
+                  arrow in its corner says so (awwwards-style). */}
+              <a
+                href={exhibit.site}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${openLabel} ${exhibit.name} ${newWindowLabel}`}
+                className="group/exhibit ring-pink-soft relative block rounded-md bg-white p-4 shadow-[0_14px_30px_rgba(214,40,130,0.10)] ring-1 transition-shadow hover:shadow-[0_18px_40px_rgba(214,40,130,0.18)]"
               >
                 <Image
                   src={exhibit.image}
@@ -167,17 +172,39 @@ export function HomeGallery({
                     featured ? "aspect-[4/3.6]" : "aspect-video",
                   )}
                 />
-                {exhibit.newTab ? (
-                  <span className="sr-only"> (opens in a new tab)</span>
-                ) : null}
-              </Link>
+                {/* A soft plum scrim in the corner (no hard shape) keeps the
+                    white arrow legible on light and dark previews alike. */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-4 bottom-4 size-40 rounded-br-sm bg-[radial-gradient(circle_at_100%_100%,rgba(20,4,12,0.55),transparent_70%)]"
+                />
+                <svg
+                  data-arrow
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="absolute right-8 bottom-8 size-8 text-white drop-shadow-[0_1px_4px_rgba(20,4,12,0.5)] transition-transform duration-300 group-hover/exhibit:translate-x-1 group-hover/exhibit:-translate-y-1"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M5 19 19 5M8 5h11v11" />
+                </svg>
+              </a>
               <div className="text-stage-muted mt-4 text-sm leading-relaxed">
                 <span className="font-mono text-xs tracking-[0.12em] uppercase">
                   {exhibitEyebrow} {sign} {String(i + 1).padStart(2, "0")}
                 </span>
-                <b className="text-foreground mt-1 block text-lg font-semibold">
+                <Link
+                  href={exhibit.href as Route}
+                  {...(exhibit.newTab
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                  className="text-foreground hover:text-primary mt-1 block w-fit text-lg font-semibold transition-colors"
+                >
                   {exhibit.name}
-                </b>
+                </Link>
                 {exhibit.kind} · {exhibit.line}
               </div>
             </div>

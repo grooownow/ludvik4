@@ -71,6 +71,22 @@ describe("Home (EN)", () => {
     );
   });
 
+  it("opens the live work from the preview's arrow, in a new window", () => {
+    const { container } = renderHome("en");
+    const work = container.querySelector("#work") as HTMLElement;
+    const live = within(work).getByRole("link", {
+      name: "Open smallFriendFiles (opens in a new window)",
+    });
+    expect(live).toHaveAttribute("href", "https://smallfriendfiles.fyi/en");
+    expect(live).toHaveAttribute("target", "_blank");
+    expect(live).toHaveAttribute("rel", "noopener noreferrer");
+    expect(live.querySelector("svg[data-arrow]")).not.toBeNull();
+    // The exhibit's name still leads to its description page.
+    expect(
+      within(work).getByRole("link", { name: "smallFriendFiles" }),
+    ).toHaveAttribute("href", "/work/smallfriendfiles");
+  });
+
   it("sends the closing call to action to /contact", () => {
     renderHome("en");
     expect(
@@ -122,6 +138,11 @@ describe("homeExhibits", () => {
       "qa-pilot",
     ]);
     expect(exhibits[0]!.href).toBe("/work/smallfriendfiles");
+    expect(exhibits.map((e) => e.site)).toEqual([
+      "https://smallfriendfiles.fyi/en",
+      "https://ludvik4.dev/gridfin/en",
+      "https://ludvik4.dev/qa-pilot",
+    ]);
     expect(exhibits[1]).toMatchObject({ href: "/gridfin/en", newTab: true });
   });
 

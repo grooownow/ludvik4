@@ -10,8 +10,11 @@ export type HomeExhibit = {
   line: string;
   image: string;
   imageAlt: string;
+  /** Our description page. */
   href: string;
   newTab?: boolean;
+  /** The live work itself, opened from the preview's arrow. */
+  site: string;
 };
 
 // EN shows the international work layer (3), RU its case studies (4), each in
@@ -26,6 +29,7 @@ export function homeExhibits(market: Market): HomeExhibit[] {
       image: item.image,
       imageAlt: item.imageAlt,
       href: item.cardLink?.href ?? `/work/${item.slug}`,
+      site: item.website,
       ...(item.cardLink?.newTab ? { newTab: true } : {}),
     }));
   }
@@ -37,5 +41,6 @@ export function homeExhibits(market: Market): HomeExhibit[] {
     image: item.image,
     imageAlt: item.imageAlt,
     href: `/cases/${item.slug}`,
+    site: item.website,
   }));
 }
