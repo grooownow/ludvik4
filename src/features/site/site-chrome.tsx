@@ -144,11 +144,27 @@ export function SiteHeader({
   );
 }
 
-export function SiteFooter({ content }: { content: MarketContent }) {
+export function SiteFooter({
+  content,
+  tone = "warm",
+  tagline = "© 2026 Ludvik4",
+}: {
+  content: MarketContent;
+  /** "dark": continues the exhibition home's closing band. */
+  tone?: "warm" | "dark";
+  tagline?: string;
+}) {
+  const dark = tone === "dark";
   return (
-    <footer className="bg-surface-warm">
-      <div className="text-muted-foreground mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-6 font-mono text-sm">
-        <span>© 2026 Ludvik4</span>
+    <footer
+      className={cn(
+        dark
+          ? "bg-intro border-t border-white/10 text-white/45"
+          : "bg-surface-warm text-muted-foreground",
+      )}
+    >
+      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-6 font-mono text-sm">
+        <span>{tagline}</span>
         <span className="flex flex-wrap items-center gap-5">
           {content.footer.links.map((link) =>
             link.href === TELEGRAM_URL ? (
@@ -156,7 +172,7 @@ export function SiteFooter({ content }: { content: MarketContent }) {
                 key={link.href}
                 href={link.href}
                 placement="footer"
-                className="hover:text-foreground"
+                className={dark ? "hover:text-white" : "hover:text-foreground"}
               >
                 {link.label}
               </TelegramLink>
