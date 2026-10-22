@@ -71,3 +71,35 @@ test("on a phone the label sits below the mascot", async ({
   expect(label.x).toBeGreaterThanOrEqual(0);
   expect(label.x + label.width).toBeLessThanOrEqual(stage.x + stage.width);
 });
+
+// The still and the live shader must frame the mascot identically: the
+// shader sizes it by the shorter side, so object-cover must scale the still
+// by that same side (height on landscape, width on portrait) — otherwise the
+// crossfade shows two mascots of different sizes.
+for (const viewport of [
+  { width: 2560, height: 1080, side: "height" },
+  { width: 1920, height: 960, side: "height" },
+  { width: 1024, height: 768, side: "height" },
+  { width: 390, height: 844, side: "width" },
+] as const) {
+  test(`still scales by the ${viewport.side} at ${viewport.width}×${viewport.height}`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+    const img = page.getByRole("region", { name: "Ludvik" }).locator("img");
+    await expect(img).toHaveJSProperty("complete", true);
+    const { scale, byWidth, byHeight } = await img.evaluate(
+      (el: HTMLImageElement) => {
+        const box = el.getBoundingClientRect();
+        const w = box.width / el.naturalWidth;
+        const h = box.height / el.naturalHeight;
+        return { scale: Math.max(w, h), byWidth: w, byHeight: h };
+      },
+    );
+    expect(scale).toBeCloseTo(
+      viewport.side === "height" ? byHeight : byWidth,
+      5,
+    );
+  });
+}

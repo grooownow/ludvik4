@@ -13,11 +13,14 @@ import {
 } from "../src/features/site/exhibit-shader";
 
 const OUT = path.resolve(__dirname, "../public/stage");
+// Extreme aspects on purpose: object-cover then scales the wide still by the
+// screen height on every landscape screen and the tall one by the width on
+// every phone — the same side the shader sizes the mascot by (exhibit-art.ts).
 const TARGETS = [
-  { name: "stage-1440", width: 1440, height: 900 },
-  { name: "stage-2880", width: 2880, height: 1800 },
-  { name: "stage-tall-780", width: 780, height: 1560 },
-  { name: "stage-tall-1560", width: 1560, height: 3120 },
+  { name: "stage-wide-2880", width: 2880, height: 900 },
+  { name: "stage-wide-5760", width: 5760, height: 1800 },
+  { name: "stage-tall-780", width: 780, height: 1872 },
+  { name: "stage-tall-1560", width: 1560, height: 3744 },
 ];
 
 // Runs inside the page. Kept as source text: tsx (esbuild) would otherwise

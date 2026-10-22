@@ -1,7 +1,12 @@
 "use client";
 
 import { type ReactNode, useRef, useState } from "react";
-import { STAGE_ART, STAGE_SOURCES, TALL_MEDIA } from "./exhibit-art";
+import {
+  STAGE_ART,
+  STAGE_SIZES,
+  STAGE_SOURCES,
+  TALL_MEDIA,
+} from "./exhibit-art";
 import { ExhibitCanvas } from "./exhibit-canvas";
 
 // The exhibit stage shell: the pre-rendered still paints first; where the
@@ -27,11 +32,15 @@ export function ExhibitStage({
       className="group bg-pink-soft relative h-svh min-h-[560px] w-full overflow-hidden select-none"
     >
       <picture>
-        <source media={TALL_MEDIA} srcSet={STAGE_SOURCES.tall} sizes="100vw" />
+        <source
+          media={TALL_MEDIA}
+          srcSet={STAGE_SOURCES.tall}
+          sizes={STAGE_SIZES.tall}
+        />
         <img
           src={STAGE_SOURCES.fallback}
           srcSet={STAGE_SOURCES.desktop}
-          sizes="100vw"
+          sizes={STAGE_SIZES.desktop}
           alt=""
           width={STAGE_ART.desktop.width}
           height={STAGE_ART.desktop.height}
