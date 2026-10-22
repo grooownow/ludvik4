@@ -47,6 +47,10 @@ describe("renderSize", () => {
     expect(renderSize(1000, 800, 1)).toEqual({ width: 850, height: 680 });
   });
 
+  it("renders lower tiers at their own scale", () => {
+    expect(renderSize(1000, 800, 1, 0.45)).toEqual({ width: 450, height: 360 });
+  });
+
   it("treats device pixel ratios above 2 as 2", () => {
     expect(renderSize(1000, 800, 3)).toEqual({ width: 1700, height: 1360 });
   });

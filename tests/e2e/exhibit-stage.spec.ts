@@ -87,7 +87,11 @@ for (const viewport of [
   }) => {
     await page.setViewportSize(viewport);
     await page.goto("/");
-    const img = page.getByRole("region", { name: "Ludvik" }).locator("img");
+    // Both still layers share the framing; check the stage layer.
+    const img = page
+      .getByRole("region", { name: "Ludvik" })
+      .locator("img")
+      .first();
     await expect(img).toHaveJSProperty("complete", true);
     const { scale, byWidth, byHeight } = await img.evaluate(
       (el: HTMLImageElement) => {
@@ -103,3 +107,16 @@ for (const viewport of [
     );
   });
 }
+
+test("the still mascot rocks where the live scene does not run", async ({
+  page,
+}) => {
+  // CI has no GPU, so the live scene never starts: the fallback is on show.
+  await page.goto("/");
+  const mascot = page.locator("img.exhibit-mascot");
+  await expect(mascot).toHaveAttribute("data-rocking", "true");
+  const first = await mascot.evaluate((el) => getComputedStyle(el).transform);
+  await page.waitForTimeout(700);
+  const later = await mascot.evaluate((el) => getComputedStyle(el).transform);
+  expect(later).not.toBe(first);
+});

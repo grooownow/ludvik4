@@ -14,6 +14,10 @@ uniform vec2 uTilt;
 uniform vec2 uLag;
 uniform vec2 uCam;
 uniform float uSpin;
+// Quality ladder (exhibit-quality.ts): 1 = lighter shadow, scattering, no haze.
+uniform float uLite;
+// 1 = draw the stage without the mascot but keep its floor shadow (stills).
+uniform float uHide;
 
 const vec3 CENTER = vec3(0.0,1.4,0.0);
 // Studio beam from front-upper-left, between the mascot and the viewer, so the belly reads as volume.
@@ -72,10 +76,12 @@ vec3 floorShadow(vec3 fp){
   if(length(fp.xz)>6.0)return vec3(1.0);
   vec3 absorb=absorbCoef();
   float through=0.0,s=0.0;
+  float ds=uLite>0.5?0.18:0.09;
   for(int i=0;i<40;i++){
-    s+=0.09;
+    if(uLite>0.5&&i>=20)break;
+    s+=ds;
     float pen=max(0.04,0.6*s);
-    through+=clamp(0.5-map(fp+lightDir*s)/pen,0.0,1.0)*0.09;
+    through+=clamp(0.5-map(fp+lightDir*s)/pen,0.0,1.0)*ds;
   }
   vec3 sh=exp(-absorb*through*0.9)*(1.0-0.3*clamp(through/0.9,0.0,1.0));
   float ao=0.55+0.45*smoothstep(0.0,0.6,map(fp));
@@ -136,6 +142,7 @@ void main(){
     hit=1.0-smoothstep(0.0,pixel*1.5,minD);
     t=tMin;
   }
+  if(uHide>0.5)hit=0.0;
   vec3 p1=ro+rd*t;
 
   vec3 col=rd.y<0.0?floorCol(ro+rd*tFloor,rd):wallCol(rd);
@@ -175,15 +182,18 @@ void main(){
 
     float reach=0.6;
     vec3 scat=vec3(0.0);
+    float steps=uLite>0.5?2.0:5.0;
     for(int k=0;k<5;k++){
-      float s=chord*(float(k)+0.5)/5.0;
+      if(float(k)>=steps)break;
+      float s=chord*(float(k)+0.5)/steps;
       vec3 m=p1+d1*s;
       float thick=0.0;
       for(int j=1;j<=5;j++){
-        float dm=map(m+lightDir*reach*0.2*float(j));
-        thick+=clamp(0.5-dm/(reach*0.2),0.0,1.0)*reach*0.2;
+        if(float(j)>steps)break;
+        float dm=map(m+lightDir*reach/steps*float(j));
+        thick+=clamp(0.5-dm/(reach/steps),0.0,1.0)*reach/steps;
       }
-      scat+=exp(-thick*2.5/reach)*exp(-absorb*s)/5.0;
+      scat+=exp(-thick*2.5/reach)*exp(-absorb*s)/steps;
     }
     scat*=1.0-exp(-chord/reach);
     float wrap=dot(n1,lightDir)*0.5+0.5;
@@ -195,12 +205,14 @@ void main(){
     col=mix(col,clamp(obj,0.0,1.0),hit);
   }
 
-  // Barely visible haze of the beam in the air.
-  float tEnd=hit>0.5?t:min(tFloor,16.0);
-  float dt=(tEnd-3.0)/28.0;
-  float haze=0.0;
-  for(int i=0;i<28;i++)haze+=lightField(ro+rd*(3.0+dt*(float(i)+0.5)))*dt;
-  col+=LIGHT_COL*haze*0.035;
+  // Barely visible haze of the beam in the air (skipped in lite mode).
+  if(uLite<0.5){
+    float tEnd=hit>0.5?t:min(tFloor,16.0);
+    float dt=(tEnd-3.0)/28.0;
+    float haze=0.0;
+    for(int i=0;i<28;i++)haze+=lightField(ro+rd*(3.0+dt*(float(i)+0.5)))*dt;
+    col+=LIGHT_COL*haze*0.035;
+  }
   gl_FragColor=vec4(col,1.0);
 }
 `;

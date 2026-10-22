@@ -32,8 +32,9 @@ export function renderSize(
   cssW: number,
   cssH: number,
   dpr: number,
+  renderScale: number = RENDER_SCALE,
 ): { width: number; height: number } {
-  let scale = Math.min(dpr || 1, 2) * RENDER_SCALE;
+  let scale = Math.min(dpr || 1, 2) * renderScale;
   if (cssW * scale > MAX_RENDER_WIDTH) scale = MAX_RENDER_WIDTH / cssW;
   return { width: Math.round(cssW * scale), height: Math.round(cssH * scale) };
 }

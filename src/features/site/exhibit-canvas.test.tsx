@@ -36,12 +36,15 @@ function fakeGl({ linkOk = true } = {}) {
 }
 
 let frames: FrameRequestCallback[] = [];
-const tick = (n = 1) =>
+let clock = 0;
+/** Runs `n` animation frames, each `frameMs` after the previous one. */
+const tick = (n = 1, frameMs = 16) =>
   act(() => {
     for (let i = 0; i < n; i++) {
+      clock += frameMs;
       const queued = frames;
       frames = [];
-      for (const cb of queued) cb(performance.now() + i * 16);
+      for (const cb of queued) cb(clock);
     }
   });
 
@@ -62,6 +65,8 @@ function capableDevice(gl: ReturnType<typeof fakeGl> | null) {
 
 beforeEach(() => {
   frames = [];
+  clock = performance.now();
+  window.history.replaceState(null, "", "/");
   vi.stubGlobal("requestAnimationFrame", (cb: FrameRequestCallback) => {
     frames.push(cb);
     return frames.length;
@@ -149,5 +154,46 @@ describe("ExhibitCanvas", () => {
     });
     expect(canvas.width).toBe(renderSize(1000, 800, 2).width);
     expect(canvas.height).toBe(renderSize(1000, 800, 2).height);
+  });
+
+  it("steps down to the still on a machine that cannot keep up", () => {
+    const gl = fakeGl();
+    capableDevice(gl);
+    const { onLiveChange } = mount();
+    tick(2);
+    expect(onLiveChange).toHaveBeenLastCalledWith(true);
+    // Three slow windows (warm-up + measured frames each) exhaust the tiers.
+    tick(400, 45);
+    expect(onLiveChange).toHaveBeenLastCalledWith(false);
+    const drawn = gl.drawArrays.mock.calls.length;
+    tick(20, 16);
+    expect(gl.drawArrays.mock.calls.length).toBe(drawn);
+  });
+
+  it("stays at full quality on a fast machine", () => {
+    const gl = fakeGl();
+    capableDevice(gl);
+    const { onLiveChange } = mount();
+    tick(400, 16);
+    expect(onLiveChange).not.toHaveBeenCalledWith(false);
+  });
+
+  it("?quality=still never starts the live scene", () => {
+    window.history.replaceState(null, "", "/?quality=still");
+    capableDevice(fakeGl());
+    const { onLiveChange } = mount();
+    tick(5);
+    expect(onLiveChange).not.toHaveBeenCalledWith(true);
+  });
+
+  it("?quality=lite starts in the lite shader at the lowest scale", () => {
+    window.history.replaceState(null, "", "/?quality=lite");
+    const gl = fakeGl();
+    capableDevice(gl);
+    const { canvas } = mount();
+    tick(3);
+    expect(canvas.width).toBe(
+      renderSize(1000, 800, window.devicePixelRatio, 0.45).width,
+    );
   });
 });

@@ -7,7 +7,16 @@ describe("EXHIBIT_FRAGMENT", () => {
       (m) => m[1],
     );
     expect(uniforms.sort()).toEqual(
-      ["uCam", "uColor", "uLag", "uRes", "uSpin", "uTilt"].sort(),
+      [
+        "uCam",
+        "uColor",
+        "uHide",
+        "uLag",
+        "uLite",
+        "uRes",
+        "uSpin",
+        "uTilt",
+      ].sort(),
     );
   });
 
@@ -23,5 +32,12 @@ describe("EXHIBIT_FRAGMENT", () => {
     // coverage, or the outline renders as a staircase.
     expect(EXHIBIT_FRAGMENT).toMatch(/minD/);
     expect(EXHIBIT_FRAGMENT).toMatch(/smoothstep\(0\.0,\s*pixel/);
+  });
+
+  it("has a lite mode and can hide the mascot but keep its shadow", () => {
+    // Lite: the haze is skipped (the most expensive extra per pixel).
+    expect(EXHIBIT_FRAGMENT).toMatch(/if\(uLite<0\.5\)\{[^}]*haze/);
+    // Hidden mascot: no object shading, the floor shadow still uses map().
+    expect(EXHIBIT_FRAGMENT).toMatch(/if\(uHide>0\.5\)hit=0\.0;/);
   });
 });

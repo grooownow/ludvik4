@@ -5,6 +5,12 @@ import {
   shouldRunLiveStage,
 } from "./exhibit-gate";
 import {
+  createFrameMonitor,
+  qualityOverride,
+  STILL_TIER,
+  TIERS,
+} from "./exhibit-quality";
+import {
   createMascotState,
   type MascotInput,
   stepMascot,
@@ -84,6 +90,8 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
         webgl = false;
       }
     }
+    // `?quality=still` pins the fallback, for checking it on any machine.
+    if (qualityOverride(new URL(document.URL).search) === STILL_TIER) return;
     setEnabled(
       shouldRunLiveStage({
         finePointer,
@@ -119,6 +127,8 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
     gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
     const u = (name: string) => gl.getUniformLocation(program, name);
     const uniforms = {
+      lite: u("uLite"),
+      hide: u("uHide"),
       res: u("uRes"),
       color: u("uColor"),
       tilt: u("uTilt"),
@@ -127,11 +137,18 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
       spin: u("uSpin"),
     };
 
+    // Quality ladder: start at the pinned tier or full, then let the frame
+    // monitor step down on a machine that cannot keep up (exhibit-quality.ts).
+    const pinned = qualityOverride(new URL(document.URL).search);
+    let tier = pinned ?? 0;
+    const monitor = pinned === null ? createFrameMonitor(tier) : null;
+
     const resize = () => {
       const size = renderSize(
         stage.clientWidth,
         stage.clientHeight,
         window.devicePixelRatio,
+        TIERS[tier]!.scale,
       );
       canvas.width = size.width;
       canvas.height = size.height;
@@ -216,11 +233,25 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
     let last = performance.now();
     let time = 0;
     let live = false;
+    let gaveUp = false;
     const frame = (now: number) => {
+      if (gaveUp) return;
       raf = requestAnimationFrame(frame);
       const dt = (now - last) / 1000;
       last = now;
       if (!visible || document.hidden) return;
+      const next = monitor?.sample(dt * 1000) ?? null;
+      if (next !== null) {
+        if (next >= STILL_TIER) {
+          // Too slow even for the lite shader: hand over to the rocking still.
+          gaveUp = true;
+          cancelAnimationFrame(raf);
+          onLiveRef.current(false);
+          return;
+        }
+        tier = next;
+        resize();
+      }
       time += Math.min(Math.max(dt, 0), 1 / 30);
       const pose = stepMascot(state, input, dt, time, STAGE_CAMERA.yaw);
       input.spinDelta = 0;
@@ -228,6 +259,8 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
       input.push = null;
 
       gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform1f(uniforms.lite, TIERS[tier]!.lite ? 1 : 0);
+      gl.uniform1f(uniforms.hide, 0);
       gl.uniform2f(uniforms.res, canvas.width, canvas.height);
       gl.uniform3fv(uniforms.color, MASCOT_COLOR);
       gl.uniform2f(uniforms.tilt, pose.tiltA, pose.tiltB);
@@ -258,7 +291,7 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
       canvas.removeEventListener("pointerup", onUp);
       canvas.removeEventListener("pointercancel", onUp);
       canvas.removeEventListener("webglcontextlost", onLost);
-      onLiveRef.current(false);
+      if (!gaveUp) onLiveRef.current(false);
     };
   }, [enabled, stageRef]);
 

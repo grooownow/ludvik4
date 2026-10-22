@@ -149,3 +149,19 @@
 html:has([data-stage]) {
   background-color: #ffd9ec;
 }
+
+/* Exhibit stage fallback (exhibit-stage.tsx): where the live scene does not
+   run, the mascot layer rocks about its belly centre and rolls with it, like
+   a roly-poly. --exhibit-roll is one body radius, set inline. */
+@keyframes exhibit-rock {
+  from {
+    transform: translateX(calc(var(--exhibit-roll) * -0.07)) rotate(-4deg);
+  }
+  to {
+    transform: translateX(calc(var(--exhibit-roll) * 0.07)) rotate(4deg);
+  }
+}
+.exhibit-mascot[data-rocking="true"] {
+  animation: exhibit-rock 2.6s ease-in-out infinite alternate;
+  cursor: pointer;
+}

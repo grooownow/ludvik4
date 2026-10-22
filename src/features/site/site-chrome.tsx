@@ -176,7 +176,7 @@ export function SiteFooter({ content }: { content: MarketContent }) {
           )}
           {/* Renders nothing on RU and on any build without a PostHog key —
               the footer is shared, so the control suppresses itself. */}
-          <ConsentSettingsButton className="h-auto p-0 font-mono text-sm font-normal text-white/45 hover:text-white" />
+          <ConsentSettingsButton className="h-auto p-0 font-mono text-sm font-normal text-white/45 hover:bg-transparent hover:text-white" />
         </span>
       </div>
     </footer>

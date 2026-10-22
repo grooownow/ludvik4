@@ -22,7 +22,12 @@ export function HomeStage({
       : "Scroll to the collection";
 
   return (
-    <ExhibitStage label={exhibit.name}>
+    <ExhibitStage
+      label={exhibit.name}
+      pushLabel={
+        content.lang === "ru" ? "Толкнуть неваляшку" : "Push the roly-poly"
+      }
+    >
       <h1 className="sr-only">{content.h1}</h1>
 
       <SiteHeader content={content} variant="stage" />
