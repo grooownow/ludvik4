@@ -19,11 +19,26 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
-/** Two-part heading: the second half is the brand-pink accent. */
-function Title({ parts }: { parts: [string, string] }) {
+/** Two-part heading: the second half is the brand-pink accent. The
+ *  collection's poster heading breaks before it; the others run on one line. */
+function Title({
+  parts,
+  oneLine = false,
+  narrow = false,
+}: {
+  parts: [string, string];
+  oneLine?: boolean;
+  /** In a half-width column: a step smaller so one line still fits. */
+  narrow?: boolean;
+}) {
   return (
-    <h2 className="mt-3 text-4xl leading-[1.02] font-semibold tracking-tight text-balance sm:text-6xl">
-      {parts[0]} <br />
+    <h2
+      className={cn(
+        "mt-3 text-4xl leading-[1.02] font-semibold tracking-tight text-balance",
+        narrow ? "sm:text-5xl lg:whitespace-nowrap" : "sm:text-6xl",
+      )}
+    >
+      {parts[0]} {oneLine ? null : <br />}
       <span className="text-primary">{parts[1]}</span>
     </h2>
   );
@@ -84,7 +99,7 @@ export function HomeSteps({ copy }: { copy: HomeContent["steps"] }) {
   return (
     <Band id="how-it-works">
       <Eyebrow>{copy.eyebrow}</Eyebrow>
-      <Title parts={copy.title} />
+      <Title parts={copy.title} oneLine />
       <ol className="relative mt-14 grid gap-10 sm:grid-cols-3">
         <span
           aria-hidden="true"
@@ -124,7 +139,7 @@ export function HomeGallery({
   return (
     <Band id="work" className="bg-[#fff8fb]">
       <Eyebrow>{copy.eyebrow}</Eyebrow>
-      <Title parts={copy.title} />
+      <Title parts={copy.title} oneLine />
       <div className="mt-14 grid gap-10 sm:grid-cols-2">
         {exhibits.map((exhibit, i) => {
           const featured = featureFirst && i === 0;
@@ -184,7 +199,7 @@ export function HomeAbout({ copy }: { copy: HomeContent["about"] }) {
         </div>
         <div>
           <Eyebrow>{copy.eyebrow}</Eyebrow>
-          <Title parts={copy.title} />
+          <Title parts={copy.title} oneLine narrow />
           <p className="text-stage-muted mt-6 max-w-xl text-lg leading-relaxed">
             {copy.body}
           </p>

@@ -26,6 +26,21 @@ describe("Home (EN)", () => {
     heading("Have something in mind?");
   });
 
+  it("sets the steps, work and about headings on one line", () => {
+    renderHome("en");
+    for (const name of [
+      "Three steps, no fog.",
+      "Work you can inspect.",
+      "One person, end to end.",
+    ]) {
+      expect(heading(name).querySelector("br")).toBeNull();
+    }
+    // The collection keeps its two-line poster heading.
+    expect(
+      heading("If it lives in a browser, I can build it.").querySelector("br"),
+    ).not.toBeNull();
+  });
+
   it("shows six halls as plain cards, not links", () => {
     const { container } = renderHome("en");
     const collection = container.querySelector("#collection")!;
