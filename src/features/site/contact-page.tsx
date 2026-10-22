@@ -5,10 +5,8 @@ import { TelegramLink } from "@/components/telegram-link";
 import { type MarketContent, TELEGRAM_URL } from "./content";
 import { SiteFooter, SiteHeader } from "./site-chrome";
 
-/** Direct ways to reach Ludvik4. Email/LinkedIn join here once provided. */
-export const CONTACT_LINKS = [
-  { label: "Telegram", href: TELEGRAM_URL },
-] as const;
+/** Direct email for enquiries (owner, 2026-10-23). No LinkedIn for now. */
+export const CONTACT_EMAIL = "ludvik4good.me@gmail.com";
 
 // /contact (docs/specs/immersive-home.md): the lead form moved here from the
 // home, plus direct links. Visual design comes later; for now it reuses the
@@ -35,17 +33,23 @@ export function ContactPageView({
           </h1>
           <p className="text-muted-foreground mt-3 max-w-sm">{contact.body}</p>
           <ul className="mt-6 space-y-2 font-mono text-sm">
-            {CONTACT_LINKS.map((link) => (
-              <li key={link.href}>
-                <TelegramLink
-                  href={link.href}
-                  placement="contact_page"
-                  className="text-foreground underline underline-offset-4"
-                >
-                  {contact.telegramText}
-                </TelegramLink>
-              </li>
-            ))}
+            <li>
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="text-foreground underline underline-offset-4"
+              >
+                {CONTACT_EMAIL}
+              </a>
+            </li>
+            <li>
+              <TelegramLink
+                href={TELEGRAM_URL}
+                placement="contact_page"
+                className="text-foreground underline underline-offset-4"
+              >
+                {contact.telegramText}
+              </TelegramLink>
+            </li>
           </ul>
         </div>
         {form ? (

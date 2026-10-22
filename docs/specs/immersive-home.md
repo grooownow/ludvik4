@@ -255,16 +255,17 @@ lite|still` pins a tier. The rocking still (with a tap-to-push button) is
 - Work previews open the live site in a new window from a white corner
   arrow; the exhibit name links to the description page.
 - Strip status: "Taking projects · Q4 2026" / «Беру проекты · IV кв. 2026».
+- `/contact` shows the email ludvik4good.me@gmail.com and Telegram on both
+  markets (no LinkedIn for now, owner 2026-10-23).
 
 Waiting on the owner:
 
 1. Check the preview on a real iPhone (overscroll) and an older laptop
    (quality ladder).
 2. Approve the RU copy: `content.ts` → `ru.home`, and `about-ru.tsx`.
-3. Email and LinkedIn for `/contact` (`CONTACT_LINKS` in `contact-page.tsx`).
-4. Later, designed separately: hall-card content, contact page design,
+3. Later, designed separately: hall-card content, contact page design,
    mobile intro, the mood switch, prices, the "Worldwide" wording.
-5. Then: merge into `main`, mark ADR 0012 superseded, set this spec to
+4. Then: merge into `main`, mark ADR 0012 superseded, set this spec to
    `shipped`, deploy both markets.
 
 Deferred review minors (final review 2026-10-23): stale spin velocity when a

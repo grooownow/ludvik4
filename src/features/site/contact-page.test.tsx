@@ -51,4 +51,11 @@ describe("ContactPageView", () => {
     // The same tagline as the home, not a separate copyright line.
     expect(footer).toHaveTextContent("Ludvik4 · с 2024");
   });
+
+  it.each(["ru", "en"] as const)("%s shows the contact email", (market) => {
+    render(<ContactPageView content={getMarketContent(market)} />);
+    expect(
+      screen.getByRole("link", { name: "ludvik4good.me@gmail.com" }),
+    ).toHaveAttribute("href", "mailto:ludvik4good.me@gmail.com");
+  });
 });
