@@ -107,6 +107,11 @@ export function buildSitemap(
       changeFrequency: "weekly",
       priority: 1,
     },
+    {
+      url: publicUrl(market, baseUrl, "/contact"),
+      changeFrequency: "yearly",
+      priority: 0.6,
+    },
   ];
 
   if (market === "ru") {

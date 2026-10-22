@@ -5,6 +5,7 @@ import { buildSiteMetadata } from "./seo";
 // Public API of the site (marketing home) slice. `app/` reads only from here.
 
 export { MarketHome } from "./market-home";
+export { MarketContact } from "./market-contact";
 export { PrivacyPage } from "./privacy-page";
 export { SiteHeader } from "./site-chrome";
 export { Breadcrumbs, type BreadcrumbItem } from "./breadcrumbs";

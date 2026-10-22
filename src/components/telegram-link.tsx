@@ -9,7 +9,7 @@ type TelegramLinkProps = Omit<
   "href" | "target" | "rel"
 > & {
   href: string;
-  placement: "home_contact" | "service_contact" | "footer";
+  placement: "home_contact" | "service_contact" | "contact_page" | "footer";
 };
 
 export function TelegramLink({
