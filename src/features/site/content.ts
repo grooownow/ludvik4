@@ -171,8 +171,8 @@ const ru: MarketContent = {
   nav: {
     cta: "Контакты",
     links: [
-      { href: "/cases", label: "Работы" },
-      { href: "/uslugi", label: "Услуги" },
+      { href: "/#work", label: "Работы" },
+      { href: "/#collection", label: "Услуги" },
       { href: "/about", label: "Обо мне" },
     ],
   },
@@ -360,7 +360,7 @@ const ru: MarketContent = {
       ],
     },
     strip: {
-      status: "Беру проекты · I кв. 2027",
+      status: "Беру проекты · IV кв. 2026",
       established: "С 2024 · Европа",
     },
     collection: {
@@ -442,9 +442,7 @@ const ru: MarketContent = {
   },
   footer: {
     links: [
-      { href: "/cases", label: "Работы" },
-      { href: "/about", label: "Обо мне" },
-      { href: "/contact", label: "Контакты" },
+      // The menu lives in the header; the footer keeps only what it lacks.
       { href: TELEGRAM_URL, label: "Telegram", external: true },
     ],
   },
@@ -471,8 +469,8 @@ const en: MarketContent = {
   nav: {
     cta: "Contact",
     links: [
-      { href: "/work", label: "Work" },
-      { href: "/services", label: "Services" },
+      { href: "/#work", label: "Work" },
+      { href: "/#collection", label: "Services" },
       { href: "/guides", label: "Guides" },
       { href: "/about", label: "About" },
     ],
@@ -649,7 +647,7 @@ const en: MarketContent = {
       lines: ["Pure code, WebGL, zero polygons.", "Handle with curiosity."],
     },
     strip: {
-      status: "Taking projects · Q1 2027",
+      status: "Taking projects · Q4 2026",
       established: "Est. 2024 · Europe",
     },
     collection: {
@@ -743,9 +741,7 @@ const en: MarketContent = {
   },
   footer: {
     links: [
-      { href: "/guides", label: "Guides", external: false },
-      { href: "/about", label: "About", external: false },
-      { href: "/contact", label: "Contact", external: false },
+      // The menu lives in the header; the footer keeps only what it lacks.
       { href: "/privacy", label: "Privacy", external: false },
       { href: TELEGRAM_URL, label: "Telegram", external: true },
     ],

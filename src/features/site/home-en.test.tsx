@@ -45,10 +45,10 @@ describe("HomeEn", () => {
     expect(
       screen.getByRole("link", { name: /Explore website development/ }),
     ).toHaveAttribute("href", "/services/websites");
-    // The footer follows the exhibition-home menu (Guides · About · Contact).
-    expect(screen.getAllByRole("link", { name: "Guides" })[0]).toHaveAttribute(
+    // The footer keeps only what the header menu lacks.
+    expect(screen.getAllByRole("link", { name: "Privacy" })[0]).toHaveAttribute(
       "href",
-      "/guides",
+      "/privacy",
     );
   });
 

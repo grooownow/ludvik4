@@ -142,3 +142,10 @@
     @apply font-sans;
   }
 }
+
+/* iOS rubber-band overscroll shows the root background. On the exhibition
+   home the top is the pink stage, so pull-down reveals pink, not white. The
+   bottom is covered by the footer's plum shadow (SiteFooter). */
+html:has([data-stage]) {
+  background-color: #ffd9ec;
+}

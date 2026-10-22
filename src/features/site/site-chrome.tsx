@@ -5,7 +5,7 @@ import { ConsentSettingsButton } from "@/components/consent-settings-button";
 import { TelegramLink } from "@/components/telegram-link";
 import { cn } from "@/lib/utils";
 import { HomeLink } from "./anchor-link";
-import { CtaLink } from "./cta-link";
+import { NavLinks } from "./nav-links";
 import { TELEGRAM_URL, type MarketContent, type ServiceCard } from "./content";
 
 // Shared presentational chrome for both markets. Purely visual — every string
@@ -90,22 +90,17 @@ export function SiteHeader({
             stage ? "gap-8 text-[15px]" : "gap-5 font-mono text-sm",
           )}
         >
-          {content.nav.links?.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href as Route}
-              className="hover:text-foreground transition-colors"
-            >
-              {link.label}
-            </Link>
-          ))}
-          <CtaLink
-            href={contactHref}
-            placement="nav"
-            className="text-primary hover:text-primary/80 transition-colors"
-          >
-            {content.nav.cta}
-          </CtaLink>
+          <NavLinks
+            links={content.nav.links ?? []}
+            cta={{
+              href: contactHref,
+              label: content.nav.cta,
+              placement: "nav",
+              className: "text-primary hover:text-primary/80 transition-colors",
+            }}
+            className="contents"
+            itemClassName="hover:text-foreground transition-colors"
+          />
         </nav>
 
         <details className="group relative sm:hidden">
@@ -121,22 +116,18 @@ export function SiteHeader({
             aria-label={navigationLabel}
             className="border-pink-soft bg-background absolute top-11 right-0 flex min-w-52 flex-col border p-2 shadow-lg"
           >
-            {content.nav.links?.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href as Route}
-                className="hover:bg-muted rounded-md px-3 py-2 font-mono text-sm"
-              >
-                {link.label}
-              </Link>
-            ))}
-            <CtaLink
-              href={contactHref}
-              placement="nav_mobile"
-              className="text-primary hover:bg-muted rounded-md px-3 py-2 font-mono text-sm"
-            >
-              {content.nav.cta}
-            </CtaLink>
+            <NavLinks
+              links={content.nav.links ?? []}
+              cta={{
+                href: contactHref,
+                label: content.nav.cta,
+                placement: "nav_mobile",
+                className:
+                  "text-primary hover:bg-muted rounded-md px-3 py-2 font-mono text-sm",
+              }}
+              className="contents"
+              itemClassName="hover:bg-muted rounded-md px-3 py-2 font-mono text-sm"
+            />
           </nav>
         </details>
       </div>
@@ -144,27 +135,14 @@ export function SiteHeader({
   );
 }
 
-export function SiteFooter({
-  content,
-  tone = "warm",
-  tagline = "© 2026 Ludvik4",
-}: {
-  content: MarketContent;
-  /** "dark": continues the exhibition home's closing band. */
-  tone?: "warm" | "dark";
-  tagline?: string;
-}) {
-  const dark = tone === "dark";
+// One dark footer site-wide, continuing the home's closing band. The shadow
+// paints the same plum far below the page (a shadow adds no scroll height),
+// so iOS rubber-band overscroll at the bottom shows plum instead of white.
+export function SiteFooter({ content }: { content: MarketContent }) {
   return (
-    <footer
-      className={cn(
-        dark
-          ? "bg-intro border-t border-white/10 text-white/45"
-          : "bg-surface-warm text-muted-foreground",
-      )}
-    >
+    <footer className="bg-intro border-t border-white/10 pb-[env(safe-area-inset-bottom)] text-white/45 shadow-[0_100vh_0_100vh_var(--intro)]">
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-6 font-mono text-sm">
-        <span>{tagline}</span>
+        <span>{content.home.footerTagline}</span>
         <span className="flex flex-wrap items-center gap-5">
           {content.footer.links.map((link) =>
             link.href === TELEGRAM_URL ? (
@@ -172,7 +150,7 @@ export function SiteFooter({
                 key={link.href}
                 href={link.href}
                 placement="footer"
-                className={dark ? "hover:text-white" : "hover:text-foreground"}
+                className="hover:text-white"
               >
                 {link.label}
               </TelegramLink>
@@ -182,7 +160,7 @@ export function SiteFooter({
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-foreground"
+                className="hover:text-white"
               >
                 {link.label}
               </a>
@@ -190,7 +168,7 @@ export function SiteFooter({
               <Link
                 key={link.href}
                 href={link.href as Route}
-                className="hover:text-foreground"
+                className="hover:text-white"
               >
                 {link.label}
               </Link>
@@ -198,7 +176,7 @@ export function SiteFooter({
           )}
           {/* Renders nothing on RU and on any build without a PostHog key —
               the footer is shared, so the control suppresses itself. */}
-          <ConsentSettingsButton className="text-muted-foreground hover:text-foreground h-auto p-0 font-mono text-sm font-normal" />
+          <ConsentSettingsButton className="h-auto p-0 font-mono text-sm font-normal text-white/45 hover:text-white" />
         </span>
       </div>
     </footer>

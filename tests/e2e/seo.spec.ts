@@ -30,16 +30,16 @@ test.describe("SEO surfaces", () => {
     await expect(page.getByText(/₽/)).toHaveCount(0);
   });
 
-  test("the Work link navigates to the case studies client-side", async ({
+  test("the Work menu item scrolls to the work section", async ({
     page,
+    isMobile,
   }) => {
+    test.skip(isMobile, "the phone menu sits in a collapsed <details>");
     await page.goto("/");
 
     await page.getByRole("link", { name: "Работы" }).first().click();
-    await expect(page).toHaveURL(/\/cases\/?$/);
-    await expect(
-      page.getByRole("heading", { level: 1, name: "Кейсы Ludvik4" }),
-    ).toBeVisible();
+    await expect(page).toHaveURL(/#work$/);
+    await expect(page.locator("#work")).toBeInViewport();
   });
 
   test("blog footer reaches the bottom of the viewport on short content", async ({

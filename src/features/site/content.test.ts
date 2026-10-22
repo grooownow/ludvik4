@@ -20,8 +20,8 @@ describe("market content", () => {
     ]);
     // Exhibition home (docs/specs/immersive-home.md): same menu as EN, translated.
     expect(ru.nav.links).toEqual([
-      { href: "/cases", label: "Работы" },
-      { href: "/uslugi", label: "Услуги" },
+      { href: "/#work", label: "Работы" },
+      { href: "/#collection", label: "Услуги" },
       { href: "/about", label: "Обо мне" },
     ]);
     expect(ru.nav.cta).toBe("Контакты");
@@ -43,8 +43,8 @@ describe("market content", () => {
     expect(en.contact.form).toBeDefined();
     expect(getMarketContent("ru").contact.form).toBeUndefined();
     expect(en.nav.links).toEqual([
-      { href: "/work", label: "Work" },
-      { href: "/services", label: "Services" },
+      { href: "/#work", label: "Work" },
+      { href: "/#collection", label: "Services" },
       { href: "/guides", label: "Guides" },
       { href: "/about", label: "About" },
     ]);
@@ -84,7 +84,7 @@ describe("exhibition home content", () => {
       cta: "Discuss a project",
     });
     expect(home.strip).toEqual({
-      status: "Taking projects · Q1 2027",
+      status: "Taking projects · Q4 2026",
       established: "Est. 2024 · Europe",
     });
   });
@@ -180,4 +180,20 @@ describe("buildHomeJsonLd", () => {
     expect(service.makesOffer).toBeUndefined();
     expect(service.description).toContain("founder-led web product studio");
   });
+});
+
+describe("footer", () => {
+  it.each(["ru", "en"] as const)(
+    "%s does not repeat the header menu",
+    (market) => {
+      const { nav, footer } = getMarketContent(market);
+      const navHrefs = new Set([
+        ...(nav.links ?? []).map((l) => l.href),
+        "/contact",
+      ]);
+      for (const link of footer.links) {
+        expect(navHrefs.has(link.href), link.href).toBe(false);
+      }
+    },
+  );
 });

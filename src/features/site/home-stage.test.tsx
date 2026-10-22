@@ -30,7 +30,7 @@ describe("HomeStage", () => {
 
   it("shows the bottom strip and a scroll cue to the collection", () => {
     render(<HomeStage content={getMarketContent("en")} workCount={3} />);
-    expect(screen.getByText("Taking projects · Q1 2027")).toBeInTheDocument();
+    expect(screen.getByText("Taking projects · Q4 2026")).toBeInTheDocument();
     expect(screen.getByText("Est. 2024 · Europe")).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /scroll to the collection/i }),

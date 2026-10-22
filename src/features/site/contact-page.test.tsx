@@ -38,4 +38,17 @@ describe("ContactPageView", () => {
       screen.getAllByRole("link", { name: /Telegram/ })[0],
     ).toHaveAttribute("href", TELEGRAM_URL);
   });
+
+  it("pins the dark site footer to the bottom of a short page", () => {
+    const { container } = render(
+      <ContactPageView content={getMarketContent("ru")} />,
+    );
+    const root = container.firstElementChild!;
+    expect(root).toHaveClass("flex", "min-h-screen", "flex-col");
+    expect(container.querySelector("main")).toHaveClass("flex-1");
+    const footer = container.querySelector("footer")!;
+    expect(footer).toHaveClass("bg-intro");
+    // The same tagline as the home, not a separate copyright line.
+    expect(footer).toHaveTextContent("Ludvik4 · с 2024");
+  });
 });

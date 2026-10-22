@@ -47,7 +47,7 @@ export function Home({
       />
       <HomeAbout copy={home.about} />
       <HomeClosing copy={home.closing} />
-      <SiteFooter content={content} tone="dark" tagline={home.footerTagline} />
+      <SiteFooter content={content} />
     </div>
   );
 }

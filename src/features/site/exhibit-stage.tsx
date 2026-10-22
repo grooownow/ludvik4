@@ -29,6 +29,7 @@ export function ExhibitStage({
       ref={stageRef}
       aria-label={label}
       data-live={live}
+      data-stage
       className="group bg-pink-soft relative h-svh min-h-[560px] w-full overflow-hidden select-none"
     >
       <picture>

@@ -23,9 +23,9 @@ export function ContactPageView({
 }) {
   const { contact } = content;
   return (
-    <div className="bg-background text-foreground min-h-screen">
+    <div className="bg-background text-foreground flex min-h-screen flex-col">
       <SiteHeader content={content} />
-      <main className="mx-auto grid max-w-5xl gap-10 px-6 py-16 sm:grid-cols-[1fr_1.4fr]">
+      <main className="mx-auto grid w-full max-w-5xl flex-1 content-start gap-10 px-6 py-16 sm:grid-cols-[1fr_1.4fr]">
         <div>
           <p className="text-stage-muted font-mono text-xs tracking-[0.14em] uppercase">
             {contact.eyebrow}
