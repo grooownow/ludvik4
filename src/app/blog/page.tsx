@@ -116,7 +116,7 @@ export default function BlogPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
-      <SiteHeader content={marketContent} contactHref="/#contact" />
+      <SiteHeader content={marketContent} />
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-14">
         <Breadcrumbs
