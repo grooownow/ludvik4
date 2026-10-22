@@ -29,6 +29,8 @@ describe("buildSitemap", () => {
     expect(urls).toContain(`${baseURL}/`);
     expect(urls).toContain(`${baseURL}/blog/`);
     expect(urls).toContain(`${baseURL}/contact/`);
+    expect(urls).toContain(`${baseURL}/uslugi/`);
+    expect(urls).toContain(`${baseURL}/about/`);
     expect(urls).toContain(`${baseURL}/uslugi/razrabotka-lendinga/`);
     expect(urls).toContain(
       `${baseURL}/uslugi/avtomatizatsiya-biznes-processov/`,
@@ -55,7 +57,7 @@ describe("buildSitemap", () => {
     for (const d of getAllArticles().filter((a) => a.draft)) {
       expect(urls).not.toContain(`${baseURL}/blog/${d.slug}/`);
     }
-    expect(urls).toHaveLength(15 + getPublishedArticles().length);
+    expect(urls).toHaveLength(17 + getPublishedArticles().length);
   });
 
   it("EN: landing, service pages, proof, source pages and EN articles", () => {
@@ -63,6 +65,7 @@ describe("buildSitemap", () => {
     expect(urls).toEqual([
       `${baseURL}/`,
       `${baseURL}/contact`,
+      `${baseURL}/services`,
       `${baseURL}/services/websites`,
       `${baseURL}/services/workflow-automation`,
       `${baseURL}/services/mvp-development`,

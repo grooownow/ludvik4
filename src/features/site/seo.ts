@@ -115,6 +115,13 @@ export function buildSitemap(
   ];
 
   if (market === "ru") {
+    for (const path of ["/uslugi", "/about"]) {
+      entries.push({
+        url: publicUrl(market, baseUrl, path),
+        changeFrequency: "monthly",
+        priority: 0.8,
+      });
+    }
     for (const service of servicePages) {
       entries.push({
         url: publicUrl(market, baseUrl, `/uslugi/${service.slug}`),
@@ -163,6 +170,11 @@ export function buildSitemap(
       });
     }
   } else {
+    entries.push({
+      url: publicUrl(market, baseUrl, "/services"),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    });
     for (const service of internationalServicePages) {
       entries.push({
         url: publicUrl(market, baseUrl, `/services/${service.slug}`),
