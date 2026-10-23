@@ -44,11 +44,21 @@ describe("isSoftwareRenderer", () => {
 describe("renderSize", () => {
   it("renders at 0.85x the device pixels, capped at 2048 px wide", () => {
     expect(renderSize(1440, 900, 2)).toEqual({ width: 2048, height: 1280 });
-    expect(renderSize(1000, 800, 1)).toEqual({ width: 850, height: 680 });
+    expect(renderSize(1000, 800, 1.5)).toEqual({ width: 1275, height: 1020 });
+  });
+
+  it("never renders the full tier below one pixel per CSS pixel", () => {
+    // 0.85x on a 1x monitor is upscaled by the browser and the silhouette
+    // turns into a staircase.
+    expect(renderSize(1000, 800, 1)).toEqual({ width: 1000, height: 800 });
+    expect(renderSize(2560, 1200, 1)).toEqual({ width: 2560, height: 1200 });
   });
 
   it("renders lower tiers at their own scale", () => {
-    expect(renderSize(1000, 800, 1, 0.45)).toEqual({ width: 450, height: 360 });
+    expect(renderSize(1000, 800, 1, 0.45, 0)).toEqual({
+      width: 450,
+      height: 360,
+    });
   });
 
   it("treats device pixel ratios above 2 as 2", () => {

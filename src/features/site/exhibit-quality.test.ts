@@ -21,7 +21,7 @@ const feed = (
 
 describe("quality tiers", () => {
   it("go from full to a lighter shader, each cheaper than the last", () => {
-    expect(TIERS[0]).toEqual({ scale: 0.85, lite: false });
+    expect(TIERS[0]).toEqual({ scale: 0.85, lite: false, minDensity: 1 });
     for (let i = 1; i < TIERS.length; i++) {
       expect(TIERS[i]!.scale).toBeLessThan(TIERS[i - 1]!.scale);
     }

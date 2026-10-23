@@ -4,12 +4,14 @@
 // rocks with CSS. Measuring beats guessing from the user agent, which says
 // nothing about the GPU.
 
-export type QualityTier = { scale: number; lite: boolean };
+// `minDensity`: the fewest render pixels per CSS pixel. Only the full tier
+// guarantees a crisp silhouette; the lower ones trade it for frame rate.
+export type QualityTier = { scale: number; lite: boolean; minDensity: number };
 
 export const TIERS: readonly QualityTier[] = [
-  { scale: 0.85, lite: false },
-  { scale: 0.6, lite: false },
-  { scale: 0.45, lite: true },
+  { scale: 0.85, lite: false, minDensity: 1 },
+  { scale: 0.6, lite: false, minDensity: 0 },
+  { scale: 0.45, lite: true, minDensity: 0 },
 ];
 
 /** Past the last live tier: the CSS-rocking still. */

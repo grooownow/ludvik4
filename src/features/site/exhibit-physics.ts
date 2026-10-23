@@ -8,7 +8,7 @@ export type MascotInput = {
   dragging: boolean;
   /** Tilt held by the hand while dragging (+ = toward the viewer), already clamped. */
   holdTilt: number;
-  /** Spin to add this frame while dragging, in radians. */
+  /** Spin to add this frame (drag or horizontal swipe), in radians. */
   spinDelta: number;
   /** Sets the free-spin velocity (rad/s), e.g. on release; null keeps it. */
   spinVelocity: number | null;
@@ -80,9 +80,8 @@ export function stepMascot(
   const { push, lag } = state;
 
   if (input.spinVelocity !== null) state.spinVel = input.spinVelocity;
-  if (input.dragging) {
-    state.spin += input.spinDelta;
-  } else {
+  state.spin += input.spinDelta;
+  if (!input.dragging) {
     state.spin += state.spinVel * dt;
     state.spinVel *= Math.exp(-SPIN_DECAY * dt);
   }

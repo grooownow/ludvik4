@@ -31,7 +31,9 @@ type Props = {
 
 // Pointer → mascot. A short press is a push away from the tapped side;
 // horizontal drag spins the mascot about its axis, vertical drag tilts it
-// toward (down) or away from (up) the viewer while held.
+// toward (down) or away from (up) the viewer while held. A horizontal swipe
+// on a Magic Mouse or trackpad arrives as a wheel event and spins it too; the
+// device sends its own momentum, so the free spin is stopped meanwhile.
 const TAP_SLOP = 4;
 const SPIN_PER_PX = 0.01;
 const TILT_PER_PX = 0.004;
@@ -149,6 +151,7 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
         stage.clientHeight,
         window.devicePixelRatio,
         TIERS[tier]!.scale,
+        TIERS[tier]!.minDensity,
       );
       canvas.width = size.width;
       canvas.height = size.height;
@@ -223,6 +226,15 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
       input.dragging = false;
       input.holdTilt = 0;
     };
+    const onWheel = (event: WheelEvent) => {
+      // Mostly vertical: page scroll, not ours.
+      if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+      // Also keeps the browser's swipe-to-go-back from firing.
+      event.preventDefault();
+      input.spinDelta += event.deltaX * SPIN_PER_PX;
+      input.spinVelocity = 0;
+    };
+    canvas.addEventListener("wheel", onWheel, { passive: false });
     canvas.addEventListener("pointerdown", onDown);
     canvas.addEventListener("pointermove", onMove);
     canvas.addEventListener("pointerup", onUp);
@@ -286,6 +298,7 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       intersection.disconnect();
+      canvas.removeEventListener("wheel", onWheel);
       canvas.removeEventListener("pointerdown", onDown);
       canvas.removeEventListener("pointermove", onMove);
       canvas.removeEventListener("pointerup", onUp);

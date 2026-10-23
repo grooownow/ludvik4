@@ -145,6 +145,23 @@ describe("ExhibitCanvas", () => {
     expect(gl.drawArrays.mock.calls.length).toBe(before);
   });
 
+  it("takes a horizontal swipe (Magic Mouse, trackpad) and leaves vertical scroll to the page", () => {
+    capableDevice(fakeGl());
+    const { canvas } = mount();
+    tick(3);
+    const swipe = (deltaX: number, deltaY: number) => {
+      const event = new WheelEvent("wheel", {
+        deltaX,
+        deltaY,
+        cancelable: true,
+      });
+      canvas.dispatchEvent(event);
+      return event.defaultPrevented;
+    };
+    expect(swipe(40, 4)).toBe(true);
+    expect(swipe(2, 40)).toBe(false);
+  });
+
   it("resizes the drawing buffer on resize", () => {
     capableDevice(fakeGl());
     const { canvas } = mount();
@@ -193,7 +210,7 @@ describe("ExhibitCanvas", () => {
     const { canvas } = mount();
     tick(3);
     expect(canvas.width).toBe(
-      renderSize(1000, 800, window.devicePixelRatio, 0.45).width,
+      renderSize(1000, 800, window.devicePixelRatio, 0.45, 0).width,
     );
   });
 });

@@ -45,6 +45,11 @@ describe("stepMascot", () => {
     expect(Math.abs(pose.tiltB - 0.3 * Math.cos(YAW))).toBeLessThan(0.03);
   });
 
+  it("spins by the given delta without a drag (a horizontal mouse swipe)", () => {
+    const { pose } = run(1, { ...free, spinDelta: 0.5, spinVelocity: 0 });
+    expect(pose.spin).toBeCloseTo(0.5, 5);
+  });
+
   it("springs back past upright when released", () => {
     const held = run(120, { ...free, dragging: true, holdTilt: 0.3 });
     const { poses } = run(90, free, held.state, held.t);

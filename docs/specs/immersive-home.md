@@ -239,7 +239,11 @@ Done since the plan (`immersive-home.plan.md`), all on the branch:
 
 - Stills match the live framing (wide 3.2:1 / tall 1:2.4), split into two
   layers (stage + mascot) by `scripts/render-stage-still.ts`.
-- Silhouette antialiasing in the shader; render scale 0.85, cap 2048.
+- Silhouette antialiasing in the shader; render scale 0.85, cap 2048. The
+  full tier never renders below 1 px per CSS px (`minDensity`), so a 1x
+  monitor gets 1:1 instead of an upscaled staircase (owner, 2026-10-23).
+- A horizontal swipe on a Magic Mouse or trackpad (wheel `deltaX`) spins the
+  mascot like a drag; vertical wheel still scrolls the page.
 - Quality ladder by measured frame time (`exhibit-quality.ts`): full →
   0.6 scale → 0.45 + lite shader → rocking CSS still. `?quality=full|medium|
 lite|still` pins a tier. The rocking still (with a tap-to-push button) is

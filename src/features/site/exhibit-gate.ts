@@ -27,14 +27,21 @@ export function isSoftwareRenderer(renderer: string): boolean {
 export const RENDER_SCALE = 0.85;
 export const MAX_RENDER_WIDTH = 2048;
 
-/** Drawing-buffer size for a stage of `cssW` × `cssH` CSS pixels. */
+/**
+ * Drawing-buffer size for a stage of `cssW` × `cssH` CSS pixels. `minDensity`
+ * floors render pixels per CSS pixel: below 1 the browser upscales the canvas
+ * and the silhouette turns into a staircase, so the full tier never goes
+ * there — the width cap only trims oversampling on high-DPR screens.
+ */
 export function renderSize(
   cssW: number,
   cssH: number,
   dpr: number,
   renderScale: number = RENDER_SCALE,
+  minDensity: number = 1,
 ): { width: number; height: number } {
   let scale = Math.min(dpr || 1, 2) * renderScale;
   if (cssW * scale > MAX_RENDER_WIDTH) scale = MAX_RENDER_WIDTH / cssW;
+  scale = Math.max(scale, minDensity);
   return { width: Math.round(cssW * scale), height: Math.round(cssH * scale) };
 }
