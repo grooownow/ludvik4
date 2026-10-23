@@ -9,7 +9,7 @@ const PRIVACY_EMAIL = "ludvik4good.me@gmail.com";
 export function PrivacyPage({ content }: { content: MarketContent }) {
   return (
     <div className="bg-background text-foreground min-h-screen">
-      <SiteHeader content={content} contactHref="/#contact" />
+      <SiteHeader content={content} />
       <main className="mx-auto max-w-3xl px-6 py-14 sm:py-16">
         <Breadcrumbs items={[{ label: "Privacy Notice" }]} homeLabel="Home" />
         <p className="text-primary mt-10 mb-3 font-mono text-xs font-semibold tracking-widest uppercase">

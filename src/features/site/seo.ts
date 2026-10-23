@@ -107,9 +107,19 @@ export function buildSitemap(
       changeFrequency: "weekly",
       priority: 1,
     },
+    {
+      url: publicUrl(market, baseUrl, "/contact"),
+      changeFrequency: "yearly",
+      priority: 0.6,
+    },
   ];
 
   if (market === "ru") {
+    entries.push({
+      url: publicUrl(market, baseUrl, "/about"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    });
     for (const service of servicePages) {
       entries.push({
         url: publicUrl(market, baseUrl, `/uslugi/${service.slug}`),
@@ -262,7 +272,13 @@ function priceRangeOf(content: MarketContent): string | undefined {
  * engines and LLM crawlers), WebSite, and the ProfessionalService offer
  * catalogue — cross-linked by @id. No team-size or country marketing claim.
  */
-export function buildHomeJsonLd(content: MarketContent, baseUrl: string) {
+export function buildHomeJsonLd(
+  content: MarketContent,
+  baseUrl: string,
+  // The exhibition home has no FAQ and shows no prices, so it publishes
+  // neither a FAQPage nor priced offers.
+  { faq = true, prices = true }: { faq?: boolean; prices?: boolean } = {},
+) {
   const service: Record<string, unknown> = {
     "@type": "ProfessionalService",
     "@id": `${baseUrl}/#service`,
@@ -274,7 +290,7 @@ export function buildHomeJsonLd(content: MarketContent, baseUrl: string) {
   };
 
   const priceRange = priceRangeOf(content);
-  if (content.pricing && priceRange) {
+  if (prices && content.pricing && priceRange) {
     service.priceRange = priceRange;
     service.makesOffer = content.pricing.rows.map((row) => ({
       "@type": "Offer",
@@ -321,7 +337,7 @@ export function buildHomeJsonLd(content: MarketContent, baseUrl: string) {
     service,
   ];
 
-  if (content.market === "en") {
+  if (faq && content.market === "en") {
     graph.push({
       "@type": "FAQPage",
       "@id": `${baseUrl}/#faq`,

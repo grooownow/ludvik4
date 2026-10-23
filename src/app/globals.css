@@ -12,6 +12,7 @@
   --color-intro: var(--intro);
   --color-intro-foreground: var(--intro-foreground);
   --color-surface-warm: var(--surface-warm);
+  --color-stage-muted: var(--stage-muted);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -74,6 +75,8 @@
   --ring: #ff4fb6;
   --pink-soft: #ffd7eb;
   --surface-warm: #fff8f5;
+  /* Exhibition home: the one muted text colour on the stage and in the menu. */
+  --stage-muted: rgba(42, 20, 32, 0.7);
   /* Brand intro sits on its own dark-plum art in both themes, so this pair is
      deliberately not overridden in .dark. */
   --intro: #14040c;
@@ -137,5 +140,243 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* Rubber-band overscroll (macOS/iOS Safari) reveals what is behind the page.
+   A fixed layer behind all content shows the page's top colour in the upper
+   half of the viewport and the footer plum in the lower half, so pulling past
+   either end continues the page instead of flashing white or pink. Only on
+   pages with the site footer: their content always has its own background.
+   The exhibition home's top is the stage, #ffe0fa (sampled from the still). */
+body:has(footer[data-site-footer])::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    var(--overscroll-top, var(--background)) 50%,
+    var(--intro) 50%
+  );
+}
+body:has([data-stage]) {
+  --overscroll-top: #ffe0fa;
+}
+
+/* Exhibit stage fallback (exhibit-stage.tsx): where the live scene does not
+   run, the mascot layer rocks about its belly centre and rolls with it, like
+   a roly-poly. --exhibit-roll is one body radius, set inline. */
+@keyframes exhibit-rock {
+  from {
+    transform: translateX(calc(var(--exhibit-roll) * -0.07)) rotate(-4deg);
+  }
+  to {
+    transform: translateX(calc(var(--exhibit-roll) * 0.07)) rotate(4deg);
+  }
+}
+.exhibit-mascot[data-rocking="true"] {
+  animation: exhibit-rock 2.6s ease-in-out infinite alternate;
+  cursor: pointer;
+}
+
+/* Collection halls (hall-card.tsx, hall-plans.tsx). Fine-line plans on a
+   faint pink grid; each card draws its lines in once ([data-drawn]), then
+   the notes fade in. Hover darkens the plan and turns its accent pink. A
+   soft pool of light eases after the cursor over the section
+   (--spot-x/y, set inline); the cards are frosted glass over it. */
+.halls-stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #fff8fb;
+}
+.halls-stage::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  width: 760px;
+  height: 760px;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(
+    calc(var(--spot-x, 70%) - 50%),
+    calc(var(--spot-y, 60%) - 50%)
+  );
+  filter: blur(30px);
+  background: radial-gradient(
+    closest-side,
+    rgb(255 110 190 / 0.42),
+    rgb(236 196 255 / 0.22) 60%,
+    transparent
+  );
+}
+
+.halls-grid {
+  container-type: inline-size;
+}
+@media (width >= 40rem) {
+  .halls-grid > .hall-plan {
+    min-height: calc((100cqw - 1rem) / 2 * 0.75);
+  }
+}
+@media (width >= 64rem) {
+  .halls-grid > .hall-plan {
+    min-height: calc((100cqw - 2rem) / 3 * 0.75);
+  }
+}
+.hall-plan {
+  position: relative;
+  display: flex;
+  /* 4:3 of the card's own width, worked out from the grid's width (a size
+     container) rather than aspect-ratio, so a card can still outgrow it (the
+     contact hall) and its row-mates stretch along */
+  min-height: calc(100cqw * 0.75);
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border-radius: 1rem;
+  padding: 1.75rem;
+  transition:
+    border-color 0.6s ease,
+    background-color 0.6s ease;
+}
+.hall-plan {
+  border: 1px solid rgb(255 255 255 / 0.85);
+  background: rgb(255 255 255 / 0.72);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+.hall-plan:hover {
+  border-color: rgb(255 79 182 / 0.45);
+  background: rgb(255 255 255 / 0.86);
+}
+/* the grid paper, fading out under the text */
+.hall-plan::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.4s ease 0.5s;
+  background-image:
+    linear-gradient(rgb(255 79 182 / 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 79 182 / 0.14) 1px, transparent 1px),
+    linear-gradient(rgb(255 79 182 / 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 79 182 / 0.07) 1px, transparent 1px);
+  background-size:
+    36px 36px,
+    36px 36px,
+    9px 9px,
+    9px 9px;
+  background-position: -1px -1px;
+  mask-image: linear-gradient(to bottom, #000 45%, transparent 80%);
+}
+.hall-plan[data-drawn="true"]::before {
+  opacity: 1;
+}
+.hall-plan-art {
+  position: absolute;
+  top: 1.875rem;
+  right: 1.375rem;
+  z-index: 1;
+  width: 50%;
+  max-width: 250px;
+  pointer-events: none;
+}
+/* The contact hall carries a button, so its text runs taller: its plan
+   joins the flow (and the label floats), letting the card grow rather than
+   the text run into the drawing on narrow screens. */
+.hall-plan[data-cta] .hall-plan-art {
+  position: relative;
+  top: auto;
+  right: auto;
+  flex-shrink: 0;
+  align-self: flex-end;
+  margin: 0.125rem -0.125rem 1rem 0;
+}
+.hall-plan[data-cta] > .font-mono {
+  position: absolute;
+  top: 1.75rem;
+  left: 1.75rem;
+}
+.hall-plan-art svg {
+  transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.hall-plan:hover .hall-plan-art svg {
+  transform: translateY(-4px);
+}
+.hall-plan :is(.ln, .ac, .an) {
+  fill: none;
+  stroke-width: 1.1;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.hall-plan :is(.ln, .ac) {
+  stroke: rgb(42 20 32 / 0.42);
+  transition: stroke 0.6s ease;
+}
+.hall-plan .an {
+  stroke: rgb(255 79 182 / 0.7);
+  stroke-width: 1;
+}
+.hall-plan .fl {
+  fill: rgb(42 20 32 / 0.07);
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.hall-plan .acf {
+  fill: transparent;
+  transition: fill 0.6s ease;
+}
+.hall-plan text {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  fill: rgb(42 20 32 / 0.55);
+  opacity: 0;
+  transition: opacity 0.8s ease 1.6s;
+}
+.hall-plan[data-drawn="true"] :is(.ln, .ac) {
+  animation: hall-draw 1.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+.hall-plan[data-drawn="true"] .an {
+  animation: hall-draw 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.8s forwards;
+}
+.hall-plan[data-drawn="true"] .fl {
+  opacity: 1;
+  transition-delay: 1.2s;
+}
+.hall-plan[data-drawn="true"] text {
+  opacity: 1;
+}
+.hall-plan:hover .ln {
+  stroke: rgb(42 20 32 / 0.72);
+}
+.hall-plan:hover .ac {
+  stroke: var(--color-primary);
+}
+.hall-plan:hover .acf {
+  fill: var(--color-primary);
+}
+@keyframes hall-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hall-plan[data-drawn="true"] :is(.ln, .ac, .an) {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .hall-plan::before,
+  .hall-plan .fl,
+  .hall-plan text {
+    transition: none;
   }
 }

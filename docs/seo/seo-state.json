@@ -4,7 +4,7 @@
   "project_url": "https://ludvik4.dev",
   "mode": "autopilot",
   "created_at": "2026-08-10T17:43:23+00:00",
-  "updated_at": "2026-08-28T18:05:00+02:00",
+  "updated_at": "2026-10-19T17:23:06+00:00",
   "current_stage": "search-index-monitoring",
   "completed_stages": [
     "inventory",
@@ -21,35 +21,44 @@
     "technical-blog-wave-1",
     "technical-blog-wave-2",
     "weekly-search-monitoring-2026-08-24",
-    "cross-market-search-and-audience-monitoring-2026-08-28"
+    "cross-market-search-and-audience-monitoring-2026-08-28",
+    "weekly-search-monitoring-2026-08-31",
+    "weekly-search-monitoring-2026-09-07",
+    "weekly-search-monitoring-2026-09-14",
+    "weekly-search-monitoring-2026-09-21",
+    "weekly-search-monitoring-2026-10-05",
+    "weekly-search-monitoring-2026-10-12",
+    "weekly-search-monitoring-2026-10-19"
   ],
   "next_stage": "search-index-monitoring",
   "freshness": {
     "status": "fresh",
-    "latest_relevant_change": "2026-08-28T18:05:00+02:00",
-    "latest_relevant_file": "docs/seo/seo-handoff.md",
-    "scanned_relevant_files": 719
+    "latest_relevant_change": "2026-10-14T19:24:25.067294+00:00",
+    "latest_relevant_file": "src/app/blog/page.tsx",
+    "scanned_relevant_files": 655
   },
   "artifacts": [
     "docs/marketing/en/llm-visibility-matrix.md",
     "docs/marketing/en/market-strategy.md",
     "docs/marketing/en/product-canon.md",
     "docs/marketing/en/search-and-content-strategy.md",
+    "docs/seo/client-article-publication-2026-10-12.json",
     "docs/seo/en-audit-2026-08-10.md",
     "docs/seo/ludvik4-seo-audit-2026-08-10.md",
     "docs/seo/seo-handoff.md",
     "docs/seo/seo-state.json",
+    "docs/seo/smallfriendfiles-publication-2026-10-12.json",
     "docs/specs/en-commercial-seo.plan.md"
   ],
   "blockers": [
-    "The canonical P1 URL /services/workflow-automation remains discovered but not indexed and has no recorded crawl",
-    "The PostHog market switch is only in the working tree until the next production deployment",
-    "Historical PostHog data is RU-only; DEV audience data cannot be reconstructed retroactively"
+    "The Playwright browser session is not authenticated to Google Search Console, so two consecutive weekly runs lack current performance and index-state evidence",
+    "The canonical P1 URL /services/workflow-automation was unknown to Google in the last fresh URL Inspection despite passing every current technical preflight",
+    "The last verified page-indexing aggregate was refreshed on 2026-09-21 and does not cover the root sitemap growth from 19 to 24 URLs"
   ],
   "next_actions": [
-    "Deploy and verify the PostHog EN-only cookieless configuration",
-    "Request indexing for /services/workflow-automation once",
-    "Compare weekly queries and landing pages while separating legacy .dev/blog 404 traffic",
-    "Monitor the RU agent/AI article cluster and the crawled-not-indexed AI automation article"
+    "Restore an authenticated Google Search Console session in the Playwright browser or provide Performance, Pages and Sitemaps exports.",
+    "Rerun the missing seven-day comparison and inspect all eight canonical P1 URLs, especially /services/workflow-automation.",
+    "Check discovery and search visibility for the two new English articles and /work/smallfriendfiles.",
+    "Keep genuine legacy /blog/* 404 rows separate from live English articles, cases and commercial pages."
   ]
 }

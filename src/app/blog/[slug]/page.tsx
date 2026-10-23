@@ -128,10 +128,12 @@ const mdxComponents: MDXComponents = {
   li: (props) => <li className="leading-relaxed" {...props} />,
   // Internal links must stay SPA (hard invariant #1): article markdown like
   // [text](/#contact) renders as <Link>, external URLs as a plain anchor.
+  // The contact form moved from the home to /contact, so the articles' many
+  // "/#contact" links are pointed there.
   a: ({ children, href = "", ...props }) =>
     href.startsWith("/") ? (
       <Link
-        href={href as Route}
+        href={(href === "/#contact" ? "/contact" : href) as Route}
         className="text-primary underline underline-offset-4"
       >
         {children}
@@ -576,7 +578,7 @@ export default async function ArticlePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
-      <SiteHeader content={marketContent} contactHref="/#contact" />
+      <SiteHeader content={marketContent} />
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-14">
         <Breadcrumbs
@@ -640,7 +642,7 @@ export default async function ArticlePage({
           </p>
           <div className="mt-4">
             <Button asChild size="sm">
-              <Link href="/#contact">{articleCopy.ctaLabel}</Link>
+              <Link href="/contact">{articleCopy.ctaLabel}</Link>
             </Button>
           </div>
         </div>

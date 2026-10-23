@@ -13,7 +13,7 @@ const serverOnlyPaths = [
   "src/app/dashboard",
   "src/app/signin",
   "src/app/opengraph-image.tsx",
-  "src/app/about",
+  // src/app/about is no longer stashed: RU renders its own About (AboutRuView).
   "src/app/guides",
   "src/app/services",
   "src/app/work",

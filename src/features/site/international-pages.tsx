@@ -58,7 +58,7 @@ function EnquiryCta() {
           suggest a sensible first step.
         </p>
         <Button asChild size="lg" className="mt-6">
-          <CtaLink href="/#contact" placement="service">
+          <CtaLink href="/contact" placement="service">
             Send a project enquiry
           </CtaLink>
         </Button>
@@ -91,7 +91,7 @@ export function InternationalServiceView({
         areaServed: "Worldwide",
         availableChannel: {
           "@type": "ServiceChannel",
-          serviceUrl: `${baseUrl}/#contact`,
+          serviceUrl: `${baseUrl}/contact`,
         },
       },
       {

@@ -6,6 +6,8 @@ src/db/migrations/
 .superpowers/
 docs/marketing/
 docs/superpowers/
+# Local design prototypes (standalone HTML/WebGL studies), not site source.
+experiments/
 public/zen_*.html
 
 # Ephemeral browser-automation scratch (Playwright MCP snapshots, screenshot/

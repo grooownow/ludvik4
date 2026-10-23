@@ -18,7 +18,7 @@ const ruContent = getMarketContent("ru");
 
 function PageShell({
   children,
-  contactHref = "/#contact",
+  contactHref = "/contact",
 }: {
   children: React.ReactNode;
   contactHref?: string;

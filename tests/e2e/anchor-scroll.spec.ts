@@ -43,31 +43,31 @@ async function scrollToTop(page: Page) {
 }
 
 test.describe("in-page anchors", () => {
-  test("the contact CTA scrolls to the form on every click, not just the first", async ({
+  test("the scroll cue scrolls to the collection on every click, not just the first", async ({
     page,
   }) => {
     await page.goto("/");
-    const cta = page.locator('a[href$="#contact"]:visible').first();
-    const contact = page.locator("#contact");
+    const cue = page.locator('a[href="#collection"]');
+    const collection = page.locator("#collection");
 
-    await cta.click();
-    await expect(contact).toBeInViewport();
-    await expect(page).toHaveURL(/#contact$/);
+    await cue.click();
+    await expect(collection).toBeInViewport();
+    await expect(page).toHaveURL(/#collection$/);
 
-    // The reader scrolls back up to re-read something, then clicks the CTA
-    // again. The hash is already "#contact", so the click navigates nowhere.
+    // The reader scrolls back up, then clicks the cue again. The hash is
+    // already "#collection", so the click navigates nowhere.
     await scrollToTop(page);
-    await expect(contact).not.toBeInViewport();
+    await expect(collection).not.toBeInViewport();
 
-    await cta.click();
-    await expect(contact).toBeInViewport();
+    await cue.click();
+    await expect(collection).toBeInViewport();
   });
 
   test("the wordmark drops the anchor from the URL and returns to the top", async ({
     page,
   }) => {
-    await page.goto("/#contact");
-    await expect(page.locator("#contact")).toBeInViewport();
+    await page.goto("/#collection");
+    await expect(page.locator("#collection")).toBeInViewport();
 
     await page
       .getByRole("link", { name: /Ludvik4/ })
