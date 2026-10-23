@@ -32,7 +32,7 @@ export type NavLink = { href: string; label: string };
 /** Copy of the exhibition home (docs/specs/immersive-home.md). Two-part titles
  *  are `[plain, accent]`: the accent half renders in the brand pink. */
 export type HomeContent = {
-  /** Museum label next to the mascot; its number comes from exhibitNumber(). */
+  /** Museum label next to the mascot; its number comes from mascotExhibitNumber(). */
   exhibit: { eyebrow: string; name: string; lines: [string, string] };
   /** Bottom strip of the stage. */
   strip: { status: string; established: string };
@@ -756,7 +756,21 @@ export function getMarketContent(market: Market): MarketContent {
 }
 
 /** The mascot's exhibit number: it is the next exhibit after the work shown. */
-export function exhibitNumber(workCount: number, lang: "ru" | "en"): string {
-  const n = String(workCount + 1).padStart(2, "0");
-  return lang === "ru" ? `№ ${n}` : `Nº ${n}`;
+// Ludvik4 the mascot is always exhibit Nº 04 (owner, 2026-10-23); the work
+// exhibits are numbered around it — 01, 02, 03, 05… — so no two share one.
+const MASCOT_EXHIBIT = 4;
+
+function exhibitNumber(n: number, lang: "ru" | "en"): string {
+  const padded = String(n).padStart(2, "0");
+  return lang === "ru" ? `№ ${padded}` : `Nº ${padded}`;
+}
+
+export function mascotExhibitNumber(lang: "ru" | "en"): string {
+  return exhibitNumber(MASCOT_EXHIBIT, lang);
+}
+
+/** Number of the work exhibit at gallery position `index` (0-based). */
+export function workExhibitNumber(index: number, lang: "ru" | "en"): string {
+  const n = index + 1;
+  return exhibitNumber(n < MASCOT_EXHIBIT ? n : n + 1, lang);
 }

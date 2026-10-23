@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { HomeContent, Market } from "./content";
+import { type HomeContent, type Market, workExhibitNumber } from "./content";
 import { CtaLink } from "./cta-link";
 import type { HomeExhibit } from "./home-exhibits";
 
@@ -128,7 +128,6 @@ export function HomeGallery({
   lang: Market;
   exhibits: HomeExhibit[];
 }) {
-  const sign = lang === "ru" ? "№" : "Nº";
   const openLabel = lang === "ru" ? "Открыть" : "Open";
   const newWindowLabel =
     lang === "ru" ? "(откроется в новом окне)" : "(opens in a new window)";
@@ -190,7 +189,7 @@ export function HomeGallery({
               </a>
               <div className="text-stage-muted mt-4 text-sm leading-relaxed">
                 <span className="font-mono text-xs tracking-[0.12em] uppercase">
-                  {exhibitEyebrow} {sign} {String(i + 1).padStart(2, "0")}
+                  {exhibitEyebrow} {workExhibitNumber(i, lang)}
                 </span>
                 <Link
                   href={exhibit.href as Route}

@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { exhibitNumber, getMarketContent } from "./content";
+import {
+  getMarketContent,
+  mascotExhibitNumber,
+  workExhibitNumber,
+} from "./content";
 import { buildHomeJsonLd, buildSiteMetadata } from "./seo";
 
 const RU_BASE = "https://ludvik4.ru";
@@ -89,10 +93,16 @@ describe("exhibition home content", () => {
     });
   });
 
-  it("numbers the mascot after the last work exhibit", () => {
-    expect(exhibitNumber(3, "en")).toBe("Nº 04");
-    expect(exhibitNumber(4, "ru")).toBe("№ 05");
-    expect(exhibitNumber(12, "en")).toBe("Nº 13");
+  it("keeps Nº 04 for Ludvik4 the mascot; works number around it", () => {
+    expect(mascotExhibitNumber("en")).toBe("Nº 04");
+    expect(mascotExhibitNumber("ru")).toBe("№ 04");
+    expect([0, 1, 2, 3, 4].map((i) => workExhibitNumber(i, "ru"))).toEqual([
+      "№ 01",
+      "№ 02",
+      "№ 03",
+      "№ 05",
+      "№ 06",
+    ]);
   });
 
   it("never mentions prices on the exhibition home", () => {

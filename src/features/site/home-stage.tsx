@@ -1,5 +1,5 @@
 import { AnchorLink } from "./anchor-link";
-import { exhibitNumber, type MarketContent } from "./content";
+import { type MarketContent, mascotExhibitNumber } from "./content";
 import { ExhibitStage } from "./exhibit-stage";
 import { SiteHeader } from "./site-chrome";
 
@@ -7,14 +7,7 @@ import { SiteHeader } from "./site-chrome";
 // pink studio stage, a museum label beside it, the text-only menu above and a
 // quiet strip below. No visible headline — the H1 is for search and screen
 // readers (docs/specs/immersive-home.md).
-export function HomeStage({
-  content,
-  workCount,
-}: {
-  content: MarketContent;
-  /** Work exhibits shown below; the mascot is numbered after them. */
-  workCount: number;
-}) {
+export function HomeStage({ content }: { content: MarketContent }) {
   const { exhibit, strip } = content.home;
   const scrollLabel =
     content.lang === "ru"
@@ -41,7 +34,7 @@ export function HomeStage({
         className="text-stage-muted absolute top-[calc(50%-25vmin)] left-[min(calc(50%+30vmin),calc(100%-17rem))] rounded-lg bg-white/55 px-4 py-3.5 text-xs leading-relaxed whitespace-nowrap backdrop-blur-md max-sm:top-auto max-sm:bottom-[13vh] max-sm:left-1/2 max-sm:-translate-x-1/2 sm:[@media(max-aspect-ratio:5/4)]:top-[calc(50%-31vmin)]"
       >
         <span className="font-mono tracking-[0.12em] uppercase">
-          {exhibit.eyebrow} {exhibitNumber(workCount, content.lang)}
+          {exhibit.eyebrow} {mascotExhibitNumber(content.lang)}
         </span>
         <b className="mt-1 mb-1.5 block text-[15px] font-semibold">
           {exhibit.name}

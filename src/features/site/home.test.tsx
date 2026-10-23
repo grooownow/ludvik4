@@ -105,17 +105,17 @@ describe("Home (EN)", () => {
 });
 
 describe("Home (RU)", () => {
-  it("shows four exhibits in an even grid and numbers the mascot fifth", () => {
+  it("shows four exhibits in an even grid, numbered around the mascot's Nº 04", () => {
     const { container } = renderHome("ru");
     const work = container.querySelector("#work") as HTMLElement;
-    for (const n of ["01", "02", "03", "04"]) {
+    for (const n of ["01", "02", "03", "05"]) {
       expect(within(work).getByText(`Экспонат № ${n}`)).toBeInTheDocument();
     }
     expect(work.querySelectorAll("[data-exhibit]")[0]).not.toHaveClass(
       "sm:row-span-2",
     );
     expect(screen.getByTestId("exhibit-label")).toHaveTextContent(
-      "Экспонат № 05",
+      "Экспонат № 04",
     );
   });
 

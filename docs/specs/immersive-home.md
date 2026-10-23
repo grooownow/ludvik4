@@ -108,6 +108,8 @@ Reference prototype: `experiments/nevalyashka/stage-lab.html`.
 - Gallery: first exhibit large on the left, two stacked on the right. Each
   preview sits in a white "frame" (padding, soft pink shadow) with a museum
   label underneath (`EXHIBIT Nº 0X`, name, kind + one-line description).
+  Ludvik4 the mascot is always `Nº 04` on both markets; work exhibits are
+  numbered around it — 01, 02, 03, 05… (owner, 2026-10-23).
   Today: smallFriendFiles, Gridfin, qa-pilot. More will be added — the layout
   must take 4–6 exhibits gracefully.
 

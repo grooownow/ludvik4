@@ -6,14 +6,14 @@ import { HomeStage } from "./home-stage";
 describe("HomeStage", () => {
   it("carries the page H1 for search and screen readers", () => {
     const content = getMarketContent("en");
-    render(<HomeStage content={content} workCount={3} />);
+    render(<HomeStage content={content} />);
     const h1 = screen.getByRole("heading", { level: 1 });
     expect(h1).toHaveTextContent(content.h1);
     expect(h1).toHaveClass("sr-only");
   });
 
-  it("shows the exhibit label numbered after the work exhibits", () => {
-    render(<HomeStage content={getMarketContent("en")} workCount={3} />);
+  it("shows the exhibit label as Nº 04", () => {
+    render(<HomeStage content={getMarketContent("en")} />);
     const label = screen.getByTestId("exhibit-label");
     expect(label).toHaveTextContent("Exhibit Nº 04");
     expect(label).toHaveTextContent("Ludvik");
@@ -21,15 +21,15 @@ describe("HomeStage", () => {
     expect(label).toHaveTextContent("Handle with curiosity.");
   });
 
-  it("numbers the RU mascot after four exhibits", () => {
-    render(<HomeStage content={getMarketContent("ru")} workCount={4} />);
+  it("numbers the RU mascot № 04 too", () => {
+    render(<HomeStage content={getMarketContent("ru")} />);
     expect(screen.getByTestId("exhibit-label")).toHaveTextContent(
-      "Экспонат № 05",
+      "Экспонат № 04",
     );
   });
 
   it("shows the bottom strip and a scroll cue to the collection", () => {
-    render(<HomeStage content={getMarketContent("en")} workCount={3} />);
+    render(<HomeStage content={getMarketContent("en")} />);
     expect(screen.getByText("Taking projects · Q4 2026")).toBeInTheDocument();
     expect(screen.getByText("Est. 2024 · Europe")).toBeInTheDocument();
     expect(
@@ -38,7 +38,7 @@ describe("HomeStage", () => {
   });
 
   it("has a text-only menu with Contact linking to /contact", () => {
-    render(<HomeStage content={getMarketContent("en")} workCount={3} />);
+    render(<HomeStage content={getMarketContent("en")} />);
     const nav = screen.getAllByRole("navigation", {
       name: "Main navigation",
     })[0]!;
@@ -51,7 +51,7 @@ describe("HomeStage", () => {
 
   it("menu links stay clickable over the stage", () => {
     const { container } = render(
-      <HomeStage content={getMarketContent("en")} workCount={3} />,
+      <HomeStage content={getMarketContent("en")} />,
     );
     const canvas = container.querySelector("canvas")!;
     const header = container.querySelector("header")!;

@@ -36,7 +36,7 @@ export function Home({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
-      <HomeStage content={content} workCount={exhibits.length} />
+      <HomeStage content={content} />
       <HomeCollection copy={home.collection} />
       <HomeSteps copy={home.steps} />
       <HomeGallery
