@@ -346,9 +346,7 @@ Waiting on the owner:
    `public/_mockups/` (mobile first-screen variants, 2026-10-23).
 5. Mobile first screen: built on the branch (2026-10-23, `cb3c666`,
    `f7246de`) per "Mobile first screen" above. ADR 0014 accepted
-   (`docs/decisions/0014-live-stage-on-phones.md`). Waiting on the owner:
-   check the preview on a real iPhone (tap strength, framing, scrolling past the stage).
-   The sections below the first screen on phones are still to be designed.
+   (`docs/decisions/0014-live-stage-on-phones.md`). Owner checked it on a real iPhone (2026-10-23): all good. The sections below the first screen on phones are still to be designed.
 
 Deferred review minors (final review 2026-10-23): stale spin velocity when a
 drag pauses before release; WebGL contexts not released on unmount; no unit test for
