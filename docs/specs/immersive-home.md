@@ -266,13 +266,20 @@ lite|still` pins a tier. The rocking still (with a tap-to-push button) is
 - Strip status: "Taking projects · Q4 2026" / «Беру проекты · IV кв. 2026».
 - `/contact` shows the email ludvik4good.me@gmail.com and Telegram on both
   markets (no LinkedIn for now, owner 2026-10-23).
+- Hall cards (owner chose variant B, 2026-10-23; prototype
+  `experiments/nevalyashka/ideas/halls.html`): each hall gets a small jelly
+  exhibit top-right; on hover the card squashes and springs back like jelly,
+  a gloss follows the cursor, the exhibit rocks away from the entry side and
+  "what's inside" chips slide up. Touch: chips always shown, exhibits rock
+  idly; reduced motion: no animation. Not built yet; chip copy and the
+  final exhibit art (shader-rendered vs SVG) still to settle.
 
 Waiting on the owner:
 
 1. Check the preview on a real iPhone (overscroll) and an older laptop
    (quality ladder).
 2. Approve the RU copy: `content.ts` → `ru.home`, and `about-ru.tsx`.
-3. Later, designed separately: hall-card content, contact page design,
+3. Later, designed separately: contact page design,
    mobile intro, the mood switch, prices, the "Worldwide" wording.
 4. Then: merge into `main`, mark ADR 0012 superseded, set this spec to
    `shipped`, deploy both markets.
