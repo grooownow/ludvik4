@@ -29,6 +29,13 @@ auditConfig:
     # src/ has no braces/micromatch entry point or request-supplied patterns.
     # Remove when braces publishes a patched release or parents replace it.
     - GHSA-vfj7-8cjw-p6xm
+    # GHSA-mrhx-c7xc-m3w5: zod memory exhaustion on oversized constrained
+    # collections, fixed in 4.6.6. The app's own zod is pinned to ^4.6.7 in
+    # package.json; this exception covers only the zod 3.25.x copy that
+    # chromium-bidi pulls in under the dev-only Lighthouse CI stack (@lhci/cli
+    # > lighthouse > puppeteer-core), which validates no visitor input and has
+    # no patched 3.x release. Remove when chromium-bidi moves to zod 4.
+    - GHSA-mrhx-c7xc-m3w5
 overrides:
   # GHSA-8r5x-fm3f-whwj + GHSA-p8wg-vrv2-v86f: AST injection. The latest
   # eslint-plugin-boundaries 7.2.0 pins 4.7.9; 4.7.10 preserves the 4.x API.
@@ -71,3 +78,8 @@ overrides:
   # The direct dependency is already on 0.41.3; this pulls up the copy that
   # @auth/drizzle-adapter still pins.
   "@auth/core@<0.41.3": ^0.41.3
+  # GHSA-27r3-jxmh-p828: body-parser DoS via trailing bytes after a compressed
+  # body. Both copies are dev-only: 1.x under @lhci/cli > express and 2.x under
+  # @modelcontextprotocol/sdk. Drop once those parents ship the patched range.
+  body-parser@<1.20.9: ^1.20.9
+  "body-parser@>=2.0.0 <2.4.0": ^2.4.0
