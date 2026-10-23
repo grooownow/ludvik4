@@ -2,9 +2,11 @@ import type { ReactNode } from "react";
 import type { HallExhibit } from "./content";
 
 // The small jelly exhibits of the collection halls (prototype:
-// experiments/nevalyashka/ideas/halls.html). Flat SVG with the mascot's
-// pinks: a radial "jelly" body, a lighter one for inner parts, a blurred
-// white shine and a soft floor shadow. 200×200 box, floor at y≈178.
+// experiments/nevalyashka/ideas/halls.html). Flat SVG in soft brand
+// fuchsia-pinks, kept lighter than --primary so the accent words of the
+// heading stay the strongest pink on screen: a radial "jelly" body, a
+// lighter one for inner parts, a blurred white
+// shine and a soft floor shadow. 200×200 box, floor at y≈178.
 // Parts that move on hover carry data-part (hall-card.tsx).
 
 function gear(cx: number, cy: number, r: number, teeth: number) {
@@ -152,7 +154,7 @@ function art(
           cy="145"
           r="14"
           fill="#fff"
-          stroke="#f0388f"
+          stroke="#f765b9"
           strokeWidth="5"
         />
       </>
@@ -186,18 +188,18 @@ export function HallExhibitArt({ kind }: { kind: HallExhibit }) {
     >
       <defs>
         <radialGradient id={id("jelly")} cx="35%" cy="28%" r="85%">
-          <stop offset="0" stopColor="#ff9ed6" />
-          <stop offset=".45" stopColor="#f0388f" />
-          <stop offset="1" stopColor="#a8004f" />
+          <stop offset="0" stopColor="#ffd2ec" />
+          <stop offset=".45" stopColor="#ff8fce" />
+          <stop offset="1" stopColor="#f560b6" />
         </radialGradient>
         <radialGradient id={id("light")} cx="35%" cy="28%" r="85%">
-          <stop offset="0" stopColor="#ffd3ec" />
-          <stop offset=".5" stopColor="#ff86c6" />
-          <stop offset="1" stopColor="#e0207f" />
+          <stop offset="0" stopColor="#fff2f9" />
+          <stop offset=".5" stopColor="#ffd0ea" />
+          <stop offset="1" stopColor="#ffa6d9" />
         </radialGradient>
         <radialGradient id={id("shadow")} cx="50%" cy="50%" r="50%">
-          <stop offset="0" stopColor="#a8004f" stopOpacity=".35" />
-          <stop offset="1" stopColor="#a8004f" stopOpacity="0" />
+          <stop offset="0" stopColor="#f560b6" stopOpacity=".28" />
+          <stop offset="1" stopColor="#f560b6" stopOpacity="0" />
         </radialGradient>
         <filter id={id("soft")} x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="2.2" />
