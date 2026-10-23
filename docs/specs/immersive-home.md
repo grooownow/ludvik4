@@ -246,6 +246,10 @@ Done since the plan (`immersive-home.plan.md`), all on the branch:
   mascot like a drag; vertical wheel still scrolls the page.
 - Moving the window to a screen with another pixel ratio re-sizes the canvas
   (a `resolution` media query), so Retina → 1x monitor stays crisp.
+- The silhouette ramp is centred on the true outline (rays march a body inset
+  by 0.75 px), softening the steps on 1x screens.
+- The label moves below the mascot only on narrow screens (< 640 px), not in
+  any window taller than wide; near-square windows raise it to clear the head.
 - Quality ladder by measured frame time (`exhibit-quality.ts`): full →
   0.6 scale → 0.45 + lite shader → rocking CSS still. `?quality=full|medium|
 lite|still` pins a tier. The rocking still (with a tap-to-push button) is

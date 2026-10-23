@@ -125,9 +125,14 @@ void main(){
   // Track the ray's closest approach: a ray that grazes the mascot without
   // hitting it still covers part of its pixel. Without this the silhouette is
   // all-or-nothing and renders as a staircase.
+  // Width of one pixel per unit of t (uv is in units of side, the focal
+  // length is 1.75). Rays march a body inset by 0.75 px, so the 1.5 px ramp
+  // below straddles the true outline instead of starting at it — otherwise
+  // hit pixels stay hard and show as steps on 1x screens.
+  float pxPerT=1.0/(side*1.75);
   float minD=1e9,tMin=t;
   for(int i=0;i<180;i++){
-    d=map(ro+rd*t);
+    d=map(ro+rd*t)+0.75*t*pxPerT;
     if(d<minD){minD=d;tMin=t;}
     if(d<0.0008*t||t>tMax)break;
     t+=d;
@@ -136,9 +141,7 @@ void main(){
   if(t<=tMax&&d<0.0008*t){
     hit=1.0;
   }else{
-    // Width of one pixel at the closest approach (uv is in units of side,
-    // the focal length is 1.75).
-    float pixel=tMin/(side*1.75);
+    float pixel=tMin*pxPerT;
     hit=1.0-smoothstep(0.0,pixel*1.5,minD);
     t=tMin;
   }

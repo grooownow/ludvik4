@@ -10,6 +10,9 @@ for (const viewport of [
   { width: 1280, height: 600 },
   { width: 2560, height: 1080 },
   { width: 1440, height: 900 },
+  // A desktop window a touch taller than wide is "portrait" to CSS, but it
+  // still has room beside the head: the label stays there (owner, 2026-10-23).
+  { width: 740, height: 780 },
 ]) {
   test(`label clears the mascot at ${viewport.width}×${viewport.height}`, async ({
     page,
@@ -24,24 +27,25 @@ for (const viewport of [
       .boundingBox())!;
     const label = (await page.getByTestId("exhibit-label").boundingBox())!;
 
-    // The mascot is sized by the shorter side (the stage height here) and
-    // centred: body + head within ±19% of that height around the centre,
-    // 18–80% down; the right arm ring spans 17–31% right of centre, 46–59% down.
+    // The mascot is sized by the shorter side h and centred. Its outline, in
+    // units of h from the centre (measured from the still's alpha): antenna
+    // and upper head reach 0.115 right up to 0.30 above the centre, the head
+    // 0.15 down to the centre, the belly 0.18 down to 0.27 below it; the right
+    // arm ring spans 0.17–0.31 right, from 0.01 above to 0.09 below.
     const cx = stage.x + stage.width / 2;
-    const h = stage.height;
+    const cy = stage.y + stage.height / 2;
+    const h = Math.min(stage.width, stage.height);
+    const band = (right: number, from: number, to: number, left = -right) => ({
+      left: cx + left * h,
+      right: cx + right * h,
+      top: cy - from * h,
+      bottom: cy - to * h,
+    });
     const boxes = [
-      {
-        left: cx - 0.19 * h,
-        right: cx + 0.19 * h,
-        top: stage.y + 0.18 * h,
-        bottom: stage.y + 0.8 * h,
-      },
-      {
-        left: cx + 0.17 * h,
-        right: cx + 0.31 * h,
-        top: stage.y + 0.46 * h,
-        bottom: stage.y + 0.59 * h,
-      },
+      band(0.115, 0.3, 0.12),
+      band(0.15, 0.12, 0),
+      band(0.18, 0, -0.27),
+      band(0.31, 0.01, -0.09, 0.17),
     ];
     for (const box of boxes) {
       const overlaps =
