@@ -1,7 +1,7 @@
 # ADR 0014: Live exhibit stage on phones, a tap is the only gesture
 
-Status: proposed — awaiting the owner's approval (2026-10-23). Amends ADR 0013,
-which kept phones on the still "until the mobile intro is designed".
+Status: accepted by the owner (2026-10-23). Amends ADR 0013, which kept
+phones on the still "until the mobile intro is designed".
 
 ## Context
 
