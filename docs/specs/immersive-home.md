@@ -244,6 +244,8 @@ Done since the plan (`immersive-home.plan.md`), all on the branch:
   monitor gets 1:1 instead of an upscaled staircase (owner, 2026-10-23).
 - A horizontal swipe on a Magic Mouse or trackpad (wheel `deltaX`) spins the
   mascot like a drag; vertical wheel still scrolls the page.
+- Moving the window to a screen with another pixel ratio re-sizes the canvas
+  (a `resolution` media query), so Retina → 1x monitor stays crisp.
 - Quality ladder by measured frame time (`exhibit-quality.ts`): full →
   0.6 scale → 0.45 + lite shader → rocking CSS still. `?quality=full|medium|
 lite|still` pins a tier. The rocking still (with a tap-to-push button) is
@@ -276,8 +278,7 @@ Waiting on the owner:
    `shipped`, deploy both markets.
 
 Deferred review minors (final review 2026-10-23): stale spin velocity when a
-drag pauses before release; WebGL contexts not released on unmount; no
-listener for a DPR change without a resize; no unit test for
+drag pauses before release; WebGL contexts not released on unmount; no unit test for
 `webglcontextlost`; the label can touch the mascot on 768–810 px landscape
 windows.
 

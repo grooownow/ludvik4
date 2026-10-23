@@ -173,6 +173,30 @@ describe("ExhibitCanvas", () => {
     expect(canvas.height).toBe(renderSize(1000, 800, 2).height);
   });
 
+  it("re-sizes when the window moves to a screen with another pixel ratio", () => {
+    // Dragging a window from a Retina laptop to a 1x monitor changes the
+    // pixel ratio without a resize event; only a resolution query notices.
+    const changes: (() => void)[] = [];
+    capableDevice(fakeGl());
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn((query: string) => ({
+        matches: !query.includes("reduce"),
+        media: query,
+        addEventListener: (_: string, cb: () => void) => {
+          if (query.includes("resolution")) changes.push(cb);
+        },
+        removeEventListener: () => {},
+      })),
+    );
+    vi.stubGlobal("devicePixelRatio", 2);
+    const { canvas } = mount();
+    expect(canvas.width).toBe(renderSize(1000, 800, 2).width);
+    vi.stubGlobal("devicePixelRatio", 1);
+    act(() => changes.at(-1)?.());
+    expect(canvas.width).toBe(renderSize(1000, 800, 1).width);
+  });
+
   it("steps down to the still on a machine that cannot keep up", () => {
     const gl = fakeGl();
     capableDevice(gl);

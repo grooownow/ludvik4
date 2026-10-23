@@ -158,6 +158,22 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
     };
     resize();
     window.addEventListener("resize", resize);
+    // Moving the window to a screen with another pixel ratio fires no resize;
+    // a query for the current ratio flips when it changes. Re-armed each time.
+    let ratioQuery: MediaQueryList | null = null;
+    const onRatio = () => {
+      resize();
+      watchRatio();
+    };
+    const watchRatio = () => {
+      ratioQuery?.removeEventListener?.("change", onRatio);
+      ratioQuery =
+        typeof window.matchMedia === "function"
+          ? window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`)
+          : null;
+      ratioQuery?.addEventListener?.("change", onRatio);
+    };
+    watchRatio();
 
     let visible = true;
     const intersection = new IntersectionObserver(([entry]) => {
@@ -297,6 +313,7 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
+      ratioQuery?.removeEventListener?.("change", onRatio);
       intersection.disconnect();
       canvas.removeEventListener("wheel", onWheel);
       canvas.removeEventListener("pointerdown", onDown);
