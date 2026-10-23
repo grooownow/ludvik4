@@ -10,6 +10,8 @@ export default defineConfig(
       ".next/**",
       "node_modules/**",
       "next-env.d.ts",
+      // Local design prototypes (standalone HTML/WebGL studies), not site source.
+      "experiments/**",
       // Deliberately broken by design: every file under here carries one planted
       // rule violation, and the review skill's detection eval is scored on
       // finding them (scripts/skill-detection-eval.ts). Linting them would turn
