@@ -369,7 +369,7 @@ const ru: MarketContent = {
     },
     strip: {
       status: "Беру проекты · IV кв. 2026",
-      established: "С 2024 · Европа",
+      established: "С 2024 · По всему миру",
     },
     collection: {
       eyebrow: "Коллекция · Что я делаю",
@@ -667,7 +667,7 @@ const en: MarketContent = {
     },
     strip: {
       status: "Taking projects · Q4 2026",
-      established: "Est. 2024 · Europe",
+      established: "Est. 2024 · Worldwide",
     },
     collection: {
       eyebrow: "The collection · What I build",

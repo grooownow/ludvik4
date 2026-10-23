@@ -33,7 +33,7 @@ describe("HomeStage", () => {
   it("shows the bottom strip and a scroll cue to the collection", () => {
     render(<HomeStage content={getMarketContent("en")} />);
     expect(screen.getByText("Taking projects · Q4 2026")).toBeInTheDocument();
-    expect(screen.getByText("Est. 2024 · Europe")).toBeInTheDocument();
+    expect(screen.getByText("Est. 2024 · Worldwide")).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /scroll to the collection/i }),
     ).toHaveAttribute("href", "#collection");

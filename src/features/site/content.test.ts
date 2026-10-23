@@ -90,7 +90,7 @@ describe("exhibition home content", () => {
     });
     expect(home.strip).toEqual({
       status: "Taking projects · Q4 2026",
-      established: "Est. 2024 · Europe",
+      established: "Est. 2024 · Worldwide",
     });
   });
 

@@ -73,7 +73,7 @@ test("on a phone the strip is one line without the founding year", async ({
   );
   const box = (await status.boundingBox())!;
   expect(box.height).toBeLessThan(lineHeight * 1.5);
-  await expect(stage.getByText("С 2024 · Европа")).toBeHidden();
+  await expect(stage.getByText("С 2024 · По всему миру")).toBeHidden();
 });
 
 // The still and the live shader must frame the mascot the same way on a phone
