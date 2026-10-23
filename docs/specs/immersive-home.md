@@ -300,6 +300,11 @@ Waiting on the owner:
 4. Then: merge into `main`, mark ADR 0012 superseded, set this spec to
    `shipped`, deploy both markets. Before the merge, delete the throwaway
    `public/_mockups/` (mobile first-screen variants, 2026-10-23).
+5. Mobile home, being designed (2026-10-23): variant A of the mockups is the one
+   being refined; on phones the only gesture is a tap = a hit (no long-press drag).
+   The tap should rock calmer than the desktop click — ~1.2 s per swing,
+   three or four visible swings (free spring w ≈ 2.6, zeta ≈ 0.25). Desktop
+   keeps its current spring (w 3.4, zeta 0.08) — owner, do not change it.
 
 Deferred review minors (final review 2026-10-23): stale spin velocity when a
 drag pauses before release; WebGL contexts not released on unmount; no unit test for
