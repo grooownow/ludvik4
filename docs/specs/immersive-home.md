@@ -233,6 +233,50 @@ and keyboard access to the mascot (at minimum: it must not trap focus).
 - **Prices.** Shown nowhere for now. The owner is being told prices should be
   shown, possibly on RU at least — parked as an open decision.
 
+## Mobile first screen (approved by the owner in chat, 2026-10-23)
+
+Same goal as the desktop: a visitor on a phone smiles, is surprised, wants to
+touch the exhibit and wants a site like it. The phone is not a reduced
+version. Reference mockup (variant A): `public/_mockups/mobile-first-screen.html`.
+
+- **Live scene on phones.** The raymarched mascot runs on phones and tablets
+  with GPU WebGL, not only with a mouse on a wide screen. Reduced motion,
+  no WebGL and CPU-emulated WebGL keep the rocking still; the quality ladder
+  still steps a slow phone down to it.
+- **Framing (narrow screens, < 640 px):** the mascot is 1.38× its default
+  size and its centre sits at 53% across, 43% down — both arms in frame on a
+  375 px phone. The still layers get the identical framing, so the crossfade
+  from still to live shows one mascot.
+- **The one gesture is a tap = a hit.** Touch has no drag-to-tilt or spin; any
+  swipe scrolls the page. The hit lands on release and its strength follows
+  the press: ≤ 80 ms gives 40% of the kick, ≥ 350 ms the full kick, linear in
+  between. A finger that travels > 12 px (or that the browser takes for a
+  scroll) is not a hit. Side: a hit left of the mascot tips it right.
+- **Calmer rocking on touch devices** (`pointer: coarse`): free spring
+  w 2.6, zeta 0.25 (~1.2 s swings, three or four visible). Desktop keeps
+  w 3.4, zeta 0.08 — owner: do not change it.
+- **Label** below the mascot (as now on narrow screens), one description line
+  in RU. **Strip:** one line — status and the scroll arrow; `Est. 2024 ·
+Europe` is hidden on narrow screens. Header: wordmark and the burger, as now.
+- **Out of scope here:** the sections below the first screen (another
+  session works on them), and the rocking still's push, which keeps its
+  current animation.
+
+Test scenarios:
+
+1. Unit (gate): a phone (coarse pointer, portrait) with GPU WebGL runs the
+   live stage; reduced motion, no WebGL or a software renderer do not.
+2. Unit (physics): the phone spring makes ≤ 4 visible swings, the first over
+   1.1 s; the desktop spring is unchanged. `tapKick(ms)` gives 40% at ≤ 80 ms,
+   100% at ≥ 350 ms, linear in between.
+3. Component (canvas): a quick touch tap swings less than a 400 ms press; a
+   touch that moves > 12 px or is cancelled does not hit; touch never tilts or
+   spins; a narrow stage sends the phone framing to the shader, a wide one the
+   default.
+4. Unit (shader): declares `uZoom` and `uCenter`.
+5. E2E (phone project): the strip is one line and hides `С 2024 · Европа`;
+   the still keeps scaling by the width.
+
 ## Handoff — where the work stopped (2026-10-23)
 
 Branch `feat/immersive-home`, pushed; Vercel previews build on every push
