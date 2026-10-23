@@ -46,6 +46,13 @@ function lastUniform(spy: ReturnType<typeof vi.fn>, name: string) {
 }
 
 /** A pointer gesture on the canvas: press, move by (dx, dy) in steps, hold. */
+/** A finger on the canvas: a pointer event of type touch. */
+function touch(canvas: HTMLCanvasElement, type: string, x: number, y: number) {
+  const event = new MouseEvent(type, { clientX: x, clientY: y, bubbles: true });
+  Object.defineProperty(event, "pointerType", { value: "touch" });
+  canvas.dispatchEvent(event);
+}
+
 function pointer(
   canvas: HTMLCanvasElement,
   type: string,
@@ -72,11 +79,19 @@ const tick = (n = 1, frameMs = 16) =>
 
 let observed: (entries: { isIntersecting: boolean }[]) => void = () => {};
 
-function capableDevice(gl: ReturnType<typeof fakeGl> | null) {
+/**
+ * A GPU device. Every media query matches except reduced motion and those
+ * named in `unless` (e.g. "max-width" for a wide screen, "coarse" for a mouse).
+ */
+function capableDevice(
+  gl: ReturnType<typeof fakeGl> | null,
+  unless: string[] = [],
+) {
   vi.stubGlobal(
     "matchMedia",
     vi.fn((query: string) => ({
-      matches: !query.includes("reduce"),
+      matches:
+        !query.includes("reduce") && !unless.some((q) => query.includes(q)),
       media: query,
     })),
   );
@@ -225,6 +240,118 @@ describe("ExhibitCanvas", () => {
     }
     // Idle rocking stays under ~0.2 rad.
     expect(peak).toBeGreaterThan(0.25);
+  });
+
+  // Phones (mobile first screen in the spec): a tap is the only gesture.
+  describe("on a touch screen", () => {
+    let now = 0;
+    beforeEach(() => {
+      now = 0;
+      vi.spyOn(performance, "now").mockImplementation(() => now);
+    });
+
+    /** A finger rests `heldMs` on the left of the mascot, then lifts. */
+    function tap(canvas: HTMLCanvasElement, heldMs: number, moveBy = 0) {
+      touch(canvas, "pointerdown", 300, 400);
+      now += heldMs;
+      if (moveBy) touch(canvas, "pointermove", 300, 400 + moveBy);
+      touch(canvas, "pointerup", 300, 400 + moveBy);
+    }
+
+    function mountTouch() {
+      const gl = fakeGl();
+      capableDevice(gl);
+      const { canvas, view } = mount();
+      tick(3);
+      return { gl, canvas, view };
+    }
+
+    it("hits softer on a flick than on a short press", () => {
+      // Idle rocking is identical frame by frame across runs, so subtracting
+      // a run without a tap leaves the hit alone.
+      const tilts = (heldMs: number | null) => {
+        const run = mountTouch();
+        if (heldMs !== null) tap(run.canvas, heldMs);
+        const series: number[] = [];
+        for (let i = 0; i < 120; i++) {
+          tick(1);
+          series.push(lastUniform(run.gl.uniform2f, "uTilt")[0]!);
+        }
+        run.view.unmount();
+        return series;
+      };
+      const idle = tilts(null);
+      const hit = (series: number[]) =>
+        Math.max(...series.map((v, i) => Math.abs(v - idle[i]!)));
+      const soft = hit(tilts(40));
+      const hard = hit(tilts(400));
+      expect(soft).toBeGreaterThan(0.15);
+      // The full hit runs into the 0.5 rad tilt cap, so not quite 2.5×.
+      expect(hard).toBeGreaterThan(soft + 0.1);
+    });
+
+    it("does not hit when the finger travels (a scroll) or is cancelled", () => {
+      const tilts = (gesture: (canvas: HTMLCanvasElement) => void) => {
+        const run = mountTouch();
+        gesture(run.canvas);
+        const series: number[] = [];
+        for (let i = 0; i < 120; i++) {
+          tick(1);
+          series.push(lastUniform(run.gl.uniform2f, "uTilt")[0]!);
+        }
+        run.view.unmount();
+        return series;
+      };
+      const idle = tilts(() => {});
+      const scrolled = tilts((canvas) => tap(canvas, 200, 40));
+      const cancelled = tilts((canvas) => {
+        touch(canvas, "pointerdown", 300, 400);
+        touch(canvas, "pointercancel", 300, 400);
+        touch(canvas, "pointerup", 300, 400);
+      });
+      const drift = (series: number[]) =>
+        Math.max(...series.map((v, i) => Math.abs(v - idle[i]!)));
+      expect(drift(scrolled)).toBeLessThan(1e-6);
+      expect(drift(cancelled)).toBeLessThan(1e-6);
+    });
+
+    it("never tilts or spins on a drag", () => {
+      const { gl, canvas } = mountTouch();
+      const [spin] = lastUniform(gl.uniform1f, "uSpin");
+      touch(canvas, "pointerdown", 500, 400);
+      for (let i = 1; i <= 15; i++)
+        touch(canvas, "pointermove", 500 + i * 10, 400 + i * 10);
+      tick(60);
+      expect(lastUniform(gl.uniform1f, "uSpin")[0]).toBe(spin);
+      touch(canvas, "pointercancel", 650, 550);
+    });
+
+    it("lets the page scroll under the finger", () => {
+      const { canvas } = mountTouch();
+      expect(canvas).toHaveClass("touch-manipulation");
+      expect(canvas).not.toHaveClass("touch-none");
+    });
+  });
+
+  it("frames the mascot for a phone on a narrow stage", () => {
+    const gl = fakeGl();
+    capableDevice(gl);
+    mount();
+    tick(2);
+    expect(lastUniform(gl.uniform1f, "uZoom")).toEqual([1.38]);
+    const [x, y] = lastUniform(gl.uniform2f, "uCenter");
+    expect(x).toBeCloseTo(0.53, 5);
+    // The shader counts from the bottom; the framing from the top.
+    expect(y).toBeCloseTo(0.57, 5);
+  });
+
+  it("keeps the default framing on a wide stage", () => {
+    const gl = fakeGl();
+    capableDevice(gl, ["max-width"]);
+    mount();
+    tick(2);
+    expect(lastUniform(gl.uniform1f, "uZoom")).toEqual([1]);
+    expect(lastUniform(gl.uniform2f, "uCenter")).toEqual([0.5, 0.5]);
   });
 
   it("takes a horizontal swipe (Magic Mouse, trackpad) and leaves vertical scroll to the page", () => {

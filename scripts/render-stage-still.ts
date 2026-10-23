@@ -67,6 +67,9 @@ const DRAW_IN_PAGE = `({ target, vertex, fragment, color, camera }) => {
     gl.uniform1f(u("uSpin"), 0);
     gl.uniform1f(u("uLite"), 0);
     gl.uniform1f(u("uHide"), hide);
+    // Default framing: the phone framing is applied to the stills in CSS.
+    gl.uniform1f(u("uZoom"), 1);
+    gl.uniform2f(u("uCenter"), 0.5, 0.5);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     ctx.clearRect(0, 0, target.width, target.height);
     ctx.drawImage(canvas, 0, 0);

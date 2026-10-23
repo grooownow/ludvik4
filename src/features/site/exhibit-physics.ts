@@ -31,6 +31,8 @@ type Spring = { a: number; b: number; va: number; vb: number };
 type Lag = { x: number; z: number; vx: number; vz: number };
 
 export type MascotState = {
+  /** The spring the mascot rocks on after a push. */
+  free: { w: number; zeta: number };
   push: Spring;
   lag: Lag;
   prevA: number;
@@ -41,6 +43,11 @@ export type MascotState = {
 };
 
 const FREE = { w: 3.4, zeta: 0.08 };
+/**
+ * Touch devices rock calmer after a tap: ~1.2 s swings, three or four visible
+ * before it settles. The desktop keeps FREE (owner, 2026-10-23).
+ */
+export const PHONE_SPRING = { w: 2.6, zeta: 0.25 };
 const HELD = { w: 9, zeta: 0.9 };
 const LAG = { w: 11, zeta: 0.22, gain: 0.05, max: 0.14 };
 const MAX_TILT = 0.5;
@@ -49,8 +56,11 @@ const HOLD_RATE = 6;
 
 const clamp = (v: number, m: number) => Math.max(-m, Math.min(m, v));
 
-export function createMascotState(): MascotState {
+export function createMascotState({
+  free = FREE,
+}: { free?: { w: number; zeta: number } } = {}): MascotState {
   return {
+    free,
     push: { a: 0, b: 0, va: 0, vb: 0 },
     lag: { x: 0, z: 0, vx: 0, vz: 0 },
     prevA: 0,
@@ -97,7 +107,7 @@ export function stepMascot(
   const target = holding
     ? { a: -input.holdTilt * Math.sin(yaw), b: input.holdTilt * Math.cos(yaw) }
     : { a: 0, b: 0 };
-  const k = holding ? HELD : FREE;
+  const k = holding ? HELD : state.free;
   push.va +=
     (-k.w * k.w * (push.a - target.a) - 2 * k.zeta * k.w * push.va) * dt;
   push.vb +=
@@ -124,4 +134,18 @@ export function stepMascot(
   lag.z = clamp(lag.z + lag.vz * dt, LAG.max);
 
   return { tiltA, tiltB, lagX: lag.x, lagZ: lag.z, spin: state.spin };
+}
+
+// A touch hit lands on release; a flick nudges, a short press swings fully.
+const FLICK_MS = 80;
+const PRESS_MS = 350;
+const FLICK_SHARE = 0.4;
+
+/** Share of the full kick for a touch that rested `heldMs` before release. */
+export function tapKick(heldMs: number): number {
+  const k = Math.min(
+    Math.max((heldMs - FLICK_MS) / (PRESS_MS - FLICK_MS), 0),
+    1,
+  );
+  return FLICK_SHARE + (1 - FLICK_SHARE) * k;
 }

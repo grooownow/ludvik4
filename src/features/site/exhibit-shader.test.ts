@@ -9,6 +9,7 @@ describe("EXHIBIT_FRAGMENT", () => {
     expect(uniforms.sort()).toEqual(
       [
         "uCam",
+        "uCenter",
         "uColor",
         "uHide",
         "uLag",
@@ -16,6 +17,7 @@ describe("EXHIBIT_FRAGMENT", () => {
         "uRes",
         "uSpin",
         "uTilt",
+        "uZoom",
       ].sort(),
     );
   });

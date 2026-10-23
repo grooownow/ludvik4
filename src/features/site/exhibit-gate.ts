@@ -1,22 +1,35 @@
-// When the live exhibit stage may run, and at what resolution. Same gate as
-// the old intro (ADR 0012): the raymarched scene is real GPU work per frame,
-// so phones, touch, reduced motion and CPU-emulated WebGL get the still.
+// When the live exhibit stage may run, and at what resolution. Any device
+// whose GPU renders WebGL gets the live scene — phones included (owner,
+// 2026-10-23); reduced motion and CPU-emulated WebGL get the still, and the
+// quality ladder (exhibit-quality.ts) steps a slow device down to it.
 
 export function shouldRunLiveStage(env: {
-  finePointer: boolean;
   reducedMotion: boolean;
-  wideLandscape: boolean;
   webgl: boolean;
   /** WebGL emulated on the CPU (no GPU): the shader would freeze the page. */
   softwareRenderer: boolean;
 }): boolean {
-  return (
-    env.finePointer &&
-    !env.reducedMotion &&
-    env.wideLandscape &&
-    env.webgl &&
-    !env.softwareRenderer
-  );
+  return !env.reducedMotion && env.webgl && !env.softwareRenderer;
+}
+
+/** Screens narrower than this get the phone framing (Tailwind's `sm`). */
+export const NARROW_MEDIA = "(max-width: 639px)";
+
+/**
+ * How the stage frames the mascot: `zoom` over its default size (set by the
+ * shorter side) and where its centre sits, as fractions of the stage from the
+ * left and the top. On a phone it is larger and a touch right of centre, so
+ * both arms stay in frame (docs/specs/immersive-home.md, mobile first screen).
+ * The still layers apply the same framing in CSS (exhibit-stage.tsx).
+ */
+export function stageFraming(narrow: boolean): {
+  zoom: number;
+  x: number;
+  y: number;
+} {
+  return narrow
+    ? { zoom: 1.38, x: 0.53, y: 0.43 }
+    : { zoom: 1, x: 0.5, y: 0.5 };
 }
 
 export function isSoftwareRenderer(renderer: string): boolean {

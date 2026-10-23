@@ -3,7 +3,9 @@ import {
   createMascotState,
   idleRock,
   type MascotInput,
+  PHONE_SPRING,
   stepMascot,
+  tapKick,
 } from "./exhibit-physics";
 
 const YAW = -0.25;
@@ -37,6 +39,40 @@ describe("stepMascot", () => {
     stepMascot(state, { ...free, push: { a: 3.5, b: 0 } }, DT, 0, YAW);
     const { pose, t } = run(20 * 60, free, state, DT);
     expect(Math.abs(pose.tiltA - idleRock(t - DT).a)).toBeLessThan(0.02);
+  });
+
+  // Visible swings (beyond ~3°) of the push spring alone, and the time from
+  // its first zero crossing to the second.
+  function swings(state = createMascotState()) {
+    stepMascot(state, { ...free, push: { a: 2.6, b: 0 } }, DT, 0, YAW);
+    let count = 0;
+    let sign = Math.sign(state.push.a);
+    let peak = 0;
+    const crossings: number[] = [];
+    for (let i = 1; i < 12 * 60; i++) {
+      stepMascot(state, free, DT, i * DT, YAW);
+      peak = Math.max(peak, Math.abs(state.push.a));
+      const s = Math.sign(state.push.a);
+      if (s !== 0 && s !== sign) {
+        crossings.push(i * DT);
+        if (peak > 0.05) count++;
+        peak = 0;
+        sign = s;
+      }
+    }
+    return { count, swing: crossings[1]! - crossings[0]! };
+  }
+
+  it("rocks unhurriedly after a tap on a phone: few swings, each over a second", () => {
+    const { count, swing } = swings(createMascotState({ free: PHONE_SPRING }));
+    expect(count).toBeLessThanOrEqual(4);
+    expect(swing).toBeGreaterThan(1.1);
+  });
+
+  it("keeps the desktop rocking as it was", () => {
+    const { count, swing } = swings();
+    expect(count).toBeGreaterThanOrEqual(8);
+    expect(swing).toBeLessThan(1);
   });
 
   it("holds the tilt while dragging toward the viewer", () => {
@@ -81,5 +117,15 @@ describe("stepMascot", () => {
     stepMascot(state, { ...free, dragging: true, spinDelta: 0.4 }, DT, 0, YAW);
     const after = stepMascot(state, { ...free, dragging: true }, DT, DT, YAW);
     expect(after.spin).toBeCloseTo(0.4, 5);
+  });
+});
+
+describe("tapKick", () => {
+  it("scales the hit by how long the finger rested", () => {
+    expect(tapKick(30)).toBeCloseTo(0.4, 5);
+    expect(tapKick(80)).toBeCloseTo(0.4, 5);
+    expect(tapKick(215)).toBeCloseTo(0.7, 5);
+    expect(tapKick(350)).toBeCloseTo(1, 5);
+    expect(tapKick(2000)).toBeCloseTo(1, 5);
   });
 });

@@ -16,6 +16,8 @@ uniform vec2 uCam;
 uniform float uSpin;
 // Quality ladder (exhibit-quality.ts): 1 = lighter shadow, scattering, no haze.
 uniform float uLite;
+uniform float uZoom;
+uniform vec2 uCenter;
 // 1 = draw the stage without the mascot but keep its floor shadow (stills).
 uniform float uHide;
 
@@ -110,7 +112,9 @@ void main(){
   lightDir=normalize(LIGHT);
 
   float side=min(uRes.x,uRes.y);
-  vec2 uv=(gl_FragCoord.xy-uRes*0.5)/side;
+  // uZoom enlarges the mascot over its default size; uCenter is where its
+  // centre sits, as a fraction of the stage from the bottom-left.
+  vec2 uv=(gl_FragCoord.xy-uRes*uCenter)/(side*uZoom);
   vec3 target=vec3(0.0,1.55,0.0);
   float yaw=uCam.x,pitch=uCam.y;
   vec3 ro=target+10.0*vec3(sin(yaw)*cos(pitch),sin(pitch),cos(yaw)*cos(pitch));
@@ -129,7 +133,7 @@ void main(){
   // length is 1.75). Rays march a body inset by 0.75 px, so the 1.5 px ramp
   // below straddles the true outline instead of starting at it — otherwise
   // hit pixels stay hard and show as steps on 1x screens.
-  float pxPerT=1.0/(side*1.75);
+  float pxPerT=1.0/(side*uZoom*1.75);
   float minD=1e9,tMin=t;
   for(int i=0;i<180;i++){
     d=map(ro+rd*t)+0.75*t*pxPerT;

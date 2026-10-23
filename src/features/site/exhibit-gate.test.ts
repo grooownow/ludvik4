@@ -3,24 +3,24 @@ import {
   isSoftwareRenderer,
   renderSize,
   shouldRunLiveStage,
+  stageFraming,
 } from "./exhibit-gate";
 
 describe("shouldRunLiveStage", () => {
-  const ok = {
-    finePointer: true,
-    reducedMotion: false,
-    wideLandscape: true,
-    webgl: true,
-    softwareRenderer: false,
-  };
+  const ok = { reducedMotion: false, webgl: true, softwareRenderer: false };
 
-  it("runs only with a mouse, motion allowed, a wide landscape screen and GPU WebGL", () => {
+  it("runs wherever a GPU renders WebGL and motion is allowed — phones too", () => {
     expect(shouldRunLiveStage(ok)).toBe(true);
-    expect(shouldRunLiveStage({ ...ok, finePointer: false })).toBe(false);
     expect(shouldRunLiveStage({ ...ok, reducedMotion: true })).toBe(false);
-    expect(shouldRunLiveStage({ ...ok, wideLandscape: false })).toBe(false);
     expect(shouldRunLiveStage({ ...ok, webgl: false })).toBe(false);
     expect(shouldRunLiveStage({ ...ok, softwareRenderer: true })).toBe(false);
+  });
+});
+
+describe("stageFraming", () => {
+  it("frames the mascot larger and off-centre on a narrow screen", () => {
+    expect(stageFraming(true)).toEqual({ zoom: 1.38, x: 0.53, y: 0.43 });
+    expect(stageFraming(false)).toEqual({ zoom: 1, x: 0.5, y: 0.5 });
   });
 });
 

@@ -1,8 +1,10 @@
 import { type RefObject, useEffect, useRef, useState } from "react";
 import {
   isSoftwareRenderer,
+  NARROW_MEDIA,
   renderSize,
   shouldRunLiveStage,
+  stageFraming,
 } from "./exhibit-gate";
 import {
   createFrameMonitor,
@@ -14,7 +16,9 @@ import {
 import {
   createMascotState,
   type MascotInput,
+  PHONE_SPRING,
   stepMascot,
+  tapKick,
 } from "./exhibit-physics";
 import {
   EXHIBIT_FRAGMENT,
@@ -35,7 +39,10 @@ type Props = {
 // toward (down) or away from (up) the viewer while held. A horizontal swipe
 // on a Magic Mouse or trackpad arrives as a wheel event and spins it too; the
 // device sends its own momentum, so the free spin is stopped meanwhile.
+// A finger only hits: on release, as hard as the press was long (tapKick);
+// one that travels is scrolling the page.
 const TAP_SLOP = 4;
+const TOUCH_SLOP = 12;
 const SPIN_PER_PX = 0.01;
 const TILT_PER_PX = 0.004;
 const MAX_HOLD_TILT = 0.45;
@@ -73,14 +80,10 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
   onLiveRef.current = onLiveChange;
 
   useEffect(() => {
-    const finePointer = matches("(hover: hover) and (pointer: fine)");
     const reducedMotion = matches("(prefers-reduced-motion: reduce)");
-    const wideLandscape = matches(
-      "(min-width: 768px) and (orientation: landscape)",
-    );
     let webgl = false;
     let softwareRenderer = false;
-    if (finePointer && !reducedMotion && wideLandscape) {
+    if (!reducedMotion) {
       try {
         const probe = document.createElement("canvas").getContext("webgl");
         webgl = Boolean(probe);
@@ -95,15 +98,7 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
     }
     // `?quality=still` pins the fallback, for checking it on any machine.
     if (qualityOverride(new URL(document.URL).search) === STILL_TIER) return;
-    setEnabled(
-      shouldRunLiveStage({
-        finePointer,
-        reducedMotion,
-        wideLandscape,
-        webgl,
-        softwareRenderer,
-      }),
-    );
+    setEnabled(shouldRunLiveStage({ reducedMotion, webgl, softwareRenderer }));
   }, []);
 
   useEffect(() => {
@@ -138,6 +133,8 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
       lag: u("uLag"),
       cam: u("uCam"),
       spin: u("uSpin"),
+      zoom: u("uZoom"),
+      center: u("uCenter"),
     };
 
     // Quality ladder: start at the pinned tier or full, then let the frame
@@ -153,7 +150,10 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
           })
         : null;
 
+    // Phone framing on a narrow stage (exhibit-gate.ts), re-read on resize.
+    let framing = stageFraming(matches(NARROW_MEDIA));
     const resize = () => {
+      framing = stageFraming(matches(NARROW_MEDIA));
       const size = renderSize(
         stage.clientWidth,
         stage.clientHeight,
@@ -198,7 +198,24 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
       push: null,
     };
     const drag = { x: 0, y: 0, moved: 0, t: 0, velocity: 0 };
+    // A push away from the side at `clientX`, `strength` of the full one.
+    const pushFrom = (clientX: number, strength: number) => {
+      const rect = canvas.getBoundingClientRect();
+      const side = -Math.sign(clientX - rect.left - rect.width / 2 || 1);
+      const s = side * PUSH.side * strength;
+      const f = (Math.random() - 0.5) * PUSH.wobble * strength;
+      const { yaw } = STAGE_CAMERA;
+      input.push = {
+        a: -(s * Math.cos(yaw) + f * Math.sin(yaw)),
+        b: -s * Math.sin(yaw) + f * Math.cos(yaw),
+      };
+    };
+    let press: { x: number; y: number; t: number } | null = null;
     const onDown = (event: PointerEvent) => {
+      if (event.pointerType === "touch") {
+        press = { x: event.clientX, y: event.clientY, t: performance.now() };
+        return;
+      }
       input.dragging = true;
       input.holdTilt = 0;
       input.spinVelocity = 0;
@@ -216,6 +233,15 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
       }
     };
     const onMove = (event: PointerEvent) => {
+      if (event.pointerType === "touch") {
+        if (
+          press &&
+          Math.hypot(event.clientX - press.x, event.clientY - press.y) >
+            TOUCH_SLOP
+        )
+          press = null;
+        return;
+      }
       if (!input.dragging) return;
       const dx = event.clientX - drag.x;
       const dy = event.clientY - drag.y;
@@ -231,19 +257,14 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
       Object.assign(drag, { x: event.clientX, y: event.clientY, t: now });
     };
     const onUp = (event: PointerEvent) => {
+      if (event.pointerType === "touch") {
+        if (press) pushFrom(press.x, tapKick(performance.now() - press.t));
+        press = null;
+        return;
+      }
       if (!input.dragging) return;
       if (drag.moved < TAP_SLOP) {
-        const rect = canvas.getBoundingClientRect();
-        const side = -Math.sign(
-          event.clientX - rect.left - rect.width / 2 || 1,
-        );
-        const s = side * PUSH.side;
-        const f = (Math.random() - 0.5) * PUSH.wobble;
-        const { yaw } = STAGE_CAMERA;
-        input.push = {
-          a: -(s * Math.cos(yaw) + f * Math.sin(yaw)),
-          b: -s * Math.sin(yaw) + f * Math.cos(yaw),
-        };
+        pushFrom(event.clientX, 1);
       } else {
         input.spinVelocity = drag.velocity;
       }
@@ -262,9 +283,17 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
     canvas.addEventListener("pointerdown", onDown);
     canvas.addEventListener("pointermove", onMove);
     canvas.addEventListener("pointerup", onUp);
-    canvas.addEventListener("pointercancel", onUp);
+    // The browser took the finger for a scroll: no hit.
+    const onCancel = (event: PointerEvent) => {
+      if (event.pointerType === "touch") press = null;
+      else onUp(event);
+    };
+    canvas.addEventListener("pointercancel", onCancel);
 
-    const state = createMascotState();
+    // Touch devices rock calmer after a hit; the desktop keeps its spring.
+    const state = createMascotState(
+      matches("(pointer: coarse)") ? { free: PHONE_SPRING } : {},
+    );
     let raf = 0;
     let last = performance.now();
     let time = 0;
@@ -303,6 +332,9 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
       gl.uniform2f(uniforms.lag, pose.lagX, pose.lagZ);
       gl.uniform2f(uniforms.cam, STAGE_CAMERA.yaw, STAGE_CAMERA.pitch);
       gl.uniform1f(uniforms.spin, pose.spin);
+      gl.uniform1f(uniforms.zoom, framing.zoom);
+      // The shader counts from the bottom-left; the framing from the top.
+      gl.uniform2f(uniforms.center, framing.x, 1 - framing.y);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       if (!live) {
         live = true;
@@ -327,7 +359,7 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
       canvas.removeEventListener("pointerdown", onDown);
       canvas.removeEventListener("pointermove", onMove);
       canvas.removeEventListener("pointerup", onUp);
-      canvas.removeEventListener("pointercancel", onUp);
+      canvas.removeEventListener("pointercancel", onCancel);
       canvas.removeEventListener("webglcontextlost", onLost);
       if (!gaveUp) onLiveRef.current(false);
     };
@@ -337,7 +369,7 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="absolute inset-0 h-full w-full cursor-grab touch-none active:cursor-grabbing"
+      className="absolute inset-0 h-full w-full cursor-grab touch-manipulation active:cursor-grabbing"
     />
   );
 }
