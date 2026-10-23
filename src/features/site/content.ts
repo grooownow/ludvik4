@@ -36,7 +36,7 @@ export type HallExhibit =
 
 export type HomeContent = {
   /** Museum label next to the mascot; its number comes from mascotExhibitNumber(). */
-  exhibit: { eyebrow: string; name: string; lines: [string, string] };
+  exhibit: { eyebrow: string; name: string; lines: readonly string[] };
   /** Bottom strip of the stage. */
   strip: { status: string; established: string };
   collection: {
@@ -365,10 +365,7 @@ const ru: MarketContent = {
     exhibit: {
       eyebrow: "Экспонат",
       name: "Ludvik",
-      lines: [
-        "Чистый код, WebGL, ноль полигонов.",
-        "Обращаться с любопытством.",
-      ],
+      lines: ["Чистый код, WebGL, ноль полигонов."],
     },
     strip: {
       status: "Беру проекты · IV кв. 2026",

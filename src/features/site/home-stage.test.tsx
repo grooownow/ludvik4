@@ -21,11 +21,13 @@ describe("HomeStage", () => {
     expect(label).toHaveTextContent("Handle with curiosity.");
   });
 
-  it("numbers the RU mascot № 04 too", () => {
+  it("numbers the RU mascot № 04 too, with a one-line description", () => {
     render(<HomeStage content={getMarketContent("ru")} />);
-    expect(screen.getByTestId("exhibit-label")).toHaveTextContent(
-      "Экспонат № 04",
-    );
+    const label = screen.getByTestId("exhibit-label");
+    expect(label).toHaveTextContent("Экспонат № 04");
+    expect(label).toHaveTextContent("Чистый код, WebGL, ноль полигонов.");
+    // Dropped by the owner, RU only (2026-10-23); EN keeps its second line.
+    expect(label).not.toHaveTextContent("Обращаться с любопытством");
   });
 
   it("shows the bottom strip and a scroll cue to the collection", () => {

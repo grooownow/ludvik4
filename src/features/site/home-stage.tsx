@@ -39,9 +39,11 @@ export function HomeStage({ content }: { content: MarketContent }) {
         <b className="mt-1 mb-1.5 block text-[15px] font-semibold">
           {exhibit.name}
         </b>
-        {exhibit.lines[0]}
-        <br />
-        {exhibit.lines[1]}
+        {exhibit.lines.map((line) => (
+          <span key={line} className="block">
+            {line}
+          </span>
+        ))}
       </div>
 
       <div className="text-stage-muted absolute inset-x-[3.2vw] bottom-[3.4vh] flex items-center justify-between font-mono text-[11px] tracking-[0.12em] uppercase">

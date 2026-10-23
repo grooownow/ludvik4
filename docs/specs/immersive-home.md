@@ -65,6 +65,8 @@ Reference prototype: `experiments/nevalyashka/stage-lab.html`.
   Pure code, WebGL, zero polygons.
   Handle with curiosity.
   ```
+  RU keeps only the first line, «Чистый код, WebGL, ноль полигонов.»
+  (owner, 2026-10-23).
 - **Header:** left the wordmark `Ludvik4` (bright, near-black); right a
   text-only menu (no buttons, no burger on desktop):
   `Work · Services · Guides · About · Contact`. "Articles" is removed.
