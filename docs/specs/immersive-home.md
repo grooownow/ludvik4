@@ -296,7 +296,8 @@ Waiting on the owner:
 3. Later, designed separately: contact page design,
    mobile intro, the mood switch, prices, the "Worldwide" wording.
 4. Then: merge into `main`, mark ADR 0012 superseded, set this spec to
-   `shipped`, deploy both markets.
+   `shipped`, deploy both markets. Before the merge, delete the throwaway
+   `public/_mockups/` (mobile first-screen variants, 2026-10-23).
 
 Deferred review minors (final review 2026-10-23): stale spin velocity when a
 drag pauses before release; WebGL contexts not released on unmount; no unit test for
