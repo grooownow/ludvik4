@@ -183,57 +183,25 @@ body:has([data-stage]) {
 
 /* Collection halls (hall-card.tsx, hall-plans.tsx). Fine-line plans on a
    faint pink grid; each card draws its lines in once ([data-drawn]), then
-   the notes fade in. Hover darkens the plan and turns its accent pink.
-   The section has two looks under review ([data-halls]): a dark hall and a
-   spotlight that eases after the cursor (--spot-x/y, set inline). */
+   the notes fade in. Hover darkens the plan and turns its accent pink. A
+   soft pool of light eases after the cursor over the section
+   (--spot-x/y, set inline); the cards are frosted glass over it. */
 .halls-stage {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  --plan-line: rgb(42 20 32 / 0.42);
-  --plan-line-hover: rgb(42 20 32 / 0.72);
-  --plan-fill: rgb(42 20 32 / 0.07);
-  --plan-note: rgb(42 20 32 / 0.55);
+  background: #fff8fb;
 }
 .halls-stage::before {
   content: "";
   position: absolute;
   z-index: -1;
-  pointer-events: none;
-  border-radius: 50%;
-}
-.halls-stage[data-halls="dark"] {
-  background: var(--intro);
-  color: var(--intro-foreground);
-  --plan-line: rgb(255 255 255 / 0.5);
-  --plan-line-hover: rgb(255 255 255 / 0.85);
-  --plan-fill: rgb(255 255 255 / 0.07);
-  --plan-note: rgb(255 255 255 / 0.55);
-}
-.halls-stage[data-halls="dark"] .text-stage-muted {
-  color: rgb(255 255 255 / 0.55);
-}
-.halls-stage[data-halls="dark"]::before {
-  left: 50%;
-  top: 100%;
-  width: 900px;
-  height: 420px;
-  transform: translate(-50%, -50%);
-  filter: blur(70px);
-  background: radial-gradient(
-    closest-side,
-    rgb(255 79 182 / 0.35),
-    transparent
-  );
-}
-.halls-stage[data-halls="spot"] {
-  background: #fff8fb;
-}
-.halls-stage[data-halls="spot"]::before {
   left: 0;
   top: 0;
   width: 760px;
   height: 760px;
+  border-radius: 50%;
+  pointer-events: none;
   transform: translate(
     calc(var(--spot-x, 70%) - 50%),
     calc(var(--spot-y, 60%) - 50%)
@@ -247,10 +215,26 @@ body:has([data-stage]) {
   );
 }
 
+.halls-grid {
+  container-type: inline-size;
+}
+@media (width >= 40rem) {
+  .halls-grid > .hall-plan {
+    min-height: calc((100cqw - 1rem) / 2 * 0.75);
+  }
+}
+@media (width >= 64rem) {
+  .halls-grid > .hall-plan {
+    min-height: calc((100cqw - 2rem) / 3 * 0.75);
+  }
+}
 .hall-plan {
   position: relative;
   display: flex;
-  aspect-ratio: 4 / 3;
+  /* 4:3 of the card's own width, worked out from the grid's width (a size
+     container) rather than aspect-ratio, so a card can still outgrow it (the
+     contact hall) and its row-mates stretch along */
+  min-height: calc(100cqw * 0.75);
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
@@ -260,21 +244,13 @@ body:has([data-stage]) {
     border-color 0.6s ease,
     background-color 0.6s ease;
 }
-[data-halls="dark"] .hall-plan {
-  border: 1px solid rgb(255 255 255 / 0.1);
-  background: rgb(255 255 255 / 0.035);
-}
-[data-halls="dark"] .hall-plan:hover {
-  border-color: rgb(255 79 182 / 0.5);
-  background: rgb(255 255 255 / 0.06);
-}
-[data-halls="spot"] .hall-plan {
+.hall-plan {
   border: 1px solid rgb(255 255 255 / 0.85);
   background: rgb(255 255 255 / 0.72);
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
 }
-[data-halls="spot"] .hall-plan:hover {
+.hall-plan:hover {
   border-color: rgb(255 79 182 / 0.45);
   background: rgb(255 255 255 / 0.86);
 }
@@ -283,6 +259,7 @@ body:has([data-stage]) {
   content: "";
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   pointer-events: none;
   opacity: 0;
   transition: opacity 1.4s ease 0.5s;
@@ -302,9 +279,6 @@ body:has([data-stage]) {
 .hall-plan[data-drawn="true"]::before {
   opacity: 1;
 }
-[data-halls="dark"] .hall-plan[data-drawn="true"]::before {
-  opacity: 0.5;
-}
 .hall-plan-art {
   position: absolute;
   top: 1.875rem;
@@ -313,6 +287,22 @@ body:has([data-stage]) {
   width: 50%;
   max-width: 250px;
   pointer-events: none;
+}
+/* The contact hall carries a button, so its text runs taller: its plan
+   joins the flow (and the label floats), letting the card grow rather than
+   the text run into the drawing on narrow screens. */
+.hall-plan[data-cta] .hall-plan-art {
+  position: relative;
+  top: auto;
+  right: auto;
+  flex-shrink: 0;
+  align-self: flex-end;
+  margin: 0.125rem -0.125rem 1rem 0;
+}
+.hall-plan[data-cta] > .font-mono {
+  position: absolute;
+  top: 1.75rem;
+  left: 1.75rem;
 }
 .hall-plan-art svg {
   transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -328,7 +318,7 @@ body:has([data-stage]) {
   stroke-dashoffset: 1;
 }
 .hall-plan :is(.ln, .ac) {
-  stroke: var(--plan-line);
+  stroke: rgb(42 20 32 / 0.42);
   transition: stroke 0.6s ease;
 }
 .hall-plan .an {
@@ -336,7 +326,7 @@ body:has([data-stage]) {
   stroke-width: 1;
 }
 .hall-plan .fl {
-  fill: var(--plan-fill);
+  fill: rgb(42 20 32 / 0.07);
   opacity: 0;
   transition: opacity 0.8s ease;
 }
@@ -348,7 +338,7 @@ body:has([data-stage]) {
   font-family: var(--font-mono);
   font-size: 8.5px;
   letter-spacing: 0.06em;
-  fill: var(--plan-note);
+  fill: rgb(42 20 32 / 0.55);
   opacity: 0;
   transition: opacity 0.8s ease 1.6s;
 }
@@ -366,7 +356,7 @@ body:has([data-stage]) {
   opacity: 1;
 }
 .hall-plan:hover .ln {
-  stroke: var(--plan-line-hover);
+  stroke: rgb(42 20 32 / 0.72);
 }
 .hall-plan:hover .ac {
   stroke: var(--color-primary);

@@ -328,9 +328,10 @@ medium|lite|still` pins a tier. The rocking still (with a tap-to-push button) is
   a faint pink grid (`hall-plans.tsx`, notes per market). Each card draws
   itself once when it scrolls into view, a beat per column; hover darkens
   the plan and turns its accent pink. Halls do not open and have no chips.
-  Two section looks are under owner review on the same build: the dark hall
-  (default) and a spotlight that follows the cursor (`/?halls=spot`); drop
-  the loser and `hallsMode` once chosen.
+  Around them a soft pool of pink light eases after the cursor over a light
+  section, the cards frosted glass over it (owner chose this "spotlight"
+  over a dark hall, 2026-10-23); on touch or with reduced motion the light
+  rests in place.
 
 Waiting on the owner:
 

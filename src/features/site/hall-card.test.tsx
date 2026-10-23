@@ -1,11 +1,6 @@
-import { act, render } from "@testing-library/react";
+import { act, fireEvent, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-
-const search = vi.hoisted(() => ({ value: "" }));
-vi.mock("next/navigation", () => ({
-  useSearchParams: () => new URLSearchParams(search.value),
-}));
-import { drawDelay, HallCard, HallsStage, hallsMode } from "./hall-card";
+import { drawDelay, HallCard, HallsStage } from "./hall-card";
 
 const HALL = {
   index: "Hall 04",
@@ -46,15 +41,6 @@ const mount = (index = 0, lang: "en" | "ru" = "en") =>
 afterEach(() => {
   vi.unstubAllGlobals();
   vi.useRealTimers();
-  search.value = "";
-});
-
-describe("hallsMode", () => {
-  it("shows the spotlight only for ?halls=spot, the dark hall otherwise", () => {
-    expect(hallsMode("?halls=spot")).toBe("spot");
-    expect(hallsMode("")).toBe("dark");
-    expect(hallsMode("?halls=neon")).toBe("dark");
-  });
 });
 
 describe("drawDelay", () => {
@@ -90,21 +76,61 @@ describe("HallCard", () => {
   });
 });
 
-describe("HallsStage", () => {
-  it("is the dark hall by default", () => {
-    const { container } = render(<HallsStage>x</HallsStage>);
-    expect(container.querySelector("#collection")).toHaveAttribute(
-      "data-halls",
-      "dark",
-    );
+function motion(reduced: boolean) {
+  vi.stubGlobal(
+    "matchMedia",
+    vi.fn((query: string) => ({
+      matches: query.includes("reduce") && reduced,
+    })),
+  );
+}
+
+describe("HallsStage spotlight", () => {
+  const mountStage = () => {
+    // run animation frames at once, so the light lands where it eases to
+    vi.stubGlobal("requestAnimationFrame", (cb: FrameRequestCallback) => {
+      cb(0);
+      return 0;
+    });
+    const stage = render(<HallsStage>x</HallsStage>).container.querySelector(
+      "#collection",
+    ) as HTMLElement;
+    stage.getBoundingClientRect = () =>
+      ({ left: 100, top: 50, width: 1000, height: 800 }) as DOMRect;
+    return stage;
+  };
+
+  it("eases the light after a mouse", () => {
+    motion(false);
+    const stage = mountStage();
+    fireEvent.pointerMove(stage, {
+      pointerType: "mouse",
+      clientX: 400,
+      clientY: 350,
+    });
+    expect(stage.style.getPropertyValue("--spot-x")).toBe("300px");
+    expect(stage.style.getPropertyValue("--spot-y")).toBe("300px");
   });
 
-  it("switches to the spotlight for ?halls=spot", () => {
-    search.value = "halls=spot";
-    const { container } = render(<HallsStage>x</HallsStage>);
-    expect(container.querySelector("#collection")).toHaveAttribute(
-      "data-halls",
-      "spot",
-    );
+  it("leaves the light at rest for touch", () => {
+    motion(false);
+    const stage = mountStage();
+    fireEvent.pointerMove(stage, {
+      pointerType: "touch",
+      clientX: 400,
+      clientY: 350,
+    });
+    expect(stage.style.getPropertyValue("--spot-x")).toBe("");
+  });
+
+  it("leaves the light at rest for reduced motion", () => {
+    motion(true);
+    const stage = mountStage();
+    fireEvent.pointerMove(stage, {
+      pointerType: "mouse",
+      clientX: 400,
+      clientY: 350,
+    });
+    expect(stage.style.getPropertyValue("--spot-x")).toBe("");
   });
 });

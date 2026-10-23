@@ -38,7 +38,7 @@ describe("Home (EN)", () => {
     }
   });
 
-  it("shows six halls as plain cards that do not open", () => {
+  it("shows six halls that do not open; the last one has a contact button", () => {
     const { container } = renderHome("en");
     const collection = container.querySelector("#collection") as HTMLElement;
     for (const name of [
@@ -51,7 +51,12 @@ describe("Home (EN)", () => {
     ]) {
       expect(within(collection).getByText(name)).toBeInTheDocument();
     }
-    expect(within(collection).queryAllByRole("link")).toHaveLength(0);
+    // only the last hall has a way out: the contact button
+    const links = within(collection).getAllByRole("link");
+    expect(links).toHaveLength(1);
+    expect(links[0]).toHaveTextContent("Tell me the idea");
+    expect(links[0]).toHaveAttribute("href", "/contact");
+    expect(links[0]!.closest("li")).toHaveTextContent("Something else?");
   });
 
   it("draws every hall as a decorative plan with notes in the page's language", () => {

@@ -1,33 +1,25 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import {
   type PointerEvent,
   type ReactNode,
-  Suspense,
   useEffect,
   useRef,
   useState,
 } from "react";
 import type { HomeContent, Market } from "./content";
+import { CtaLink } from "./cta-link";
 import { HallPlan } from "./hall-plans";
 
 // The collection halls as fine-line plans (owner's pick from
 // experiments/nevalyashka/ideas/halls-v2.html: "Чертежи" → "Подробный").
 // Each card draws its plan once, when it scrolls into view; cards of one row
 // start a beat apart. On hover the plan darkens and its one accent turns
-// pink. The section around them has two looks under review: a dark hall
-// (default) and a spotlight that follows the cursor (`?halls=spot`).
+// pink. Around them a soft pool of pink light follows the cursor over the
+// section (the owner's pick over a dark hall, 2026-10-23).
 // Styles: "Collection halls" in globals.css.
 
 type Hall = HomeContent["collection"]["halls"][number];
-
-export type HallsMode = "dark" | "spot";
-
-/** `?halls=spot` shows the spotlight look; anything else the dark hall. */
-export function hallsMode(search: string): HallsMode {
-  return new URLSearchParams(search).get("halls") === "spot" ? "spot" : "dark";
-}
 
 /** Delay before a card draws: a beat per column, so a row reads left to right. */
 export function drawDelay(index: number) {
@@ -71,7 +63,12 @@ export function HallCard({
   }, [index]);
 
   return (
-    <li ref={ref} data-drawn={drawn} className="hall-plan">
+    <li
+      ref={ref}
+      data-drawn={drawn}
+      data-cta={hall.cta ? true : undefined}
+      className="hall-plan"
+    >
       <div aria-hidden="true" className="hall-plan-art">
         <HallPlan kind={hall.exhibit} lang={lang} />
       </div>
@@ -83,25 +80,34 @@ export function HallCard({
           {hall.name}
         </span>
         <span className="text-stage-muted mt-1 block text-sm">{hall.line}</span>
+        {hall.cta ? (
+          <CtaLink
+            href="/contact"
+            placement="hall"
+            className="bg-foreground text-background hover:bg-primary focus-visible:ring-primary mt-4 inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+          >
+            {hall.cta}
+            <span aria-hidden="true">→</span>
+          </CtaLink>
+        ) : null}
       </span>
     </li>
   );
 }
 
-/** Reports the look asked for in the URL. Kept apart, under Suspense, so
- *  reading the query never stops the section itself from prerendering. */
-function ModeFromUrl({ onMode }: { onMode: (mode: HallsMode) => void }) {
-  const search = useSearchParams()?.toString() ?? "";
-  useEffect(() => onMode(hallsMode(search)), [search, onMode]);
-  return null;
+/**
+ * The collection section. A pool of light eases after the cursor
+ * (--spot-x/y); on touch, or with reduced motion, it rests where the CSS
+ * puts it.
+ */
+function prefersReducedMotion() {
+  return (
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
 }
 
-/**
- * The collection section: the dark hall unless the URL asks for the
- * spotlight, which eases a pool of light after the cursor (--spot-x/y).
- */
 export function HallsStage({ children }: { children: ReactNode }) {
-  const [mode, setMode] = useState<HallsMode>("dark");
   const ref = useRef<HTMLElement>(null);
   const target = useRef({ x: 0, y: 0 });
   const current = useRef<{ x: number; y: number } | null>(null);
@@ -124,7 +130,7 @@ export function HallsStage({ children }: { children: ReactNode }) {
   };
 
   const move = (event: PointerEvent<HTMLElement>) => {
-    if (mode !== "spot" || event.pointerType !== "mouse") return;
+    if (event.pointerType !== "mouse" || prefersReducedMotion()) return;
     const rect = event.currentTarget.getBoundingClientRect();
     target.current = {
       x: event.clientX - rect.left,
@@ -138,13 +144,9 @@ export function HallsStage({ children }: { children: ReactNode }) {
     <section
       ref={ref}
       id="collection"
-      data-halls={mode}
       onPointerMove={move}
       className="halls-stage"
     >
-      <Suspense fallback={null}>
-        <ModeFromUrl onMode={setMode} />
-      </Suspense>
       <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-28">
         {children}
       </div>

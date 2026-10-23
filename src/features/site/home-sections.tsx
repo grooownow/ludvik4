@@ -68,7 +68,7 @@ export function HomeCollection({
     <HallsStage>
       <Eyebrow>{copy.eyebrow}</Eyebrow>
       <Title parts={copy.title} />
-      <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="halls-grid mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {copy.halls.map((hall, i) => (
           <HallCard key={hall.index} hall={hall} index={i} lang={lang} />
         ))}

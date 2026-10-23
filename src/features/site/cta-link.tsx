@@ -10,9 +10,10 @@ import { AnchorLink } from "./anchor-link";
  * a new CTA has to name itself rather than land in the data as a typo.
  */
 // "hero" belongs to the old home (kept, unrendered); "closing" is the
-// exhibition home's final band. Both stay so analytics history keeps its key.
+// exhibition home's final band and "hall" its last collection hall. All stay
+// so analytics history keeps its key.
 export type CtaPlacement =
-  "nav" | "nav_mobile" | "hero" | "closing" | "service";
+  "nav" | "nav_mobile" | "hero" | "closing" | "hall" | "service";
 
 type CtaLinkProps = Omit<ComponentPropsWithoutRef<"a">, "href"> & {
   href: string;

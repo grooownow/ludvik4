@@ -48,6 +48,8 @@ export type HomeContent = {
       line: string;
       /** The fine-line plan drawn in the card (hall-plans.tsx). */
       exhibit: HallExhibit;
+      /** A contact button in the card ("Something else?" only). */
+      cta?: string;
     }[];
   };
   steps: { eyebrow: string; title: [string, string]; items: Step[] };
@@ -408,6 +410,7 @@ const ru: MarketContent = {
           name: "Что-то ещё?",
           line: "спросите — скорее всего, это возможно",
           exhibit: "question",
+          cta: "Расскажите идею",
         },
       ],
     },
@@ -705,6 +708,7 @@ const en: MarketContent = {
           name: "Something else?",
           line: "ask — it’s probably possible",
           exhibit: "question",
+          cta: "Tell me the idea",
         },
       ],
     },
