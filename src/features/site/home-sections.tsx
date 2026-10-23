@@ -239,10 +239,10 @@ export function HomeClosing({ copy }: { copy: HomeContent["closing"] }) {
         <p className="font-mono text-xs tracking-[0.14em] text-white/50 uppercase">
           {copy.eyebrow}
         </p>
-        <h2 className="mt-4 text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
+        <h2 className="mt-6 text-4xl font-semibold tracking-tight text-balance sm:mt-8 sm:text-6xl">
           {copy.title}
         </h2>
-        <Button asChild size="lg" className="mt-10 rounded-full px-8">
+        <Button asChild size="lg" className="mt-12 rounded-full px-8 sm:mt-16">
           <CtaLink href="/contact" placement="closing">
             {copy.cta}
           </CtaLink>
