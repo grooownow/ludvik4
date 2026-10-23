@@ -38,19 +38,35 @@ describe("Home (EN)", () => {
     }
   });
 
-  it("shows six halls as plain cards, not links", () => {
+  it("shows six halls that do not open; only the last hall's chip links to contact", () => {
     const { container } = renderHome("en");
-    const collection = container.querySelector("#collection")!;
+    const collection = container.querySelector("#collection") as HTMLElement;
     for (const name of [
       "Websites",
       "Landing pages",
-      "Web apps & SaaS",
+      "Web apps",
       "Automations",
       "Widgets & tools",
       "Something else?",
     ]) {
-      const hall = within(collection as HTMLElement).getByText(name);
-      expect(hall.closest("a")).toBeNull();
+      expect(within(collection).getByText(name).closest("a")).toBeNull();
+    }
+    const links = within(collection).getAllByRole("link");
+    expect(links).toHaveLength(1);
+    expect(links[0]).toHaveTextContent("Tell me the idea →");
+    expect(links[0]).toHaveAttribute("href", "/contact");
+  });
+
+  it("gives every hall a decorative exhibit and its what's-inside chips", () => {
+    const { container } = renderHome("en");
+    const collection = container.querySelector("#collection") as HTMLElement;
+    const exhibits = collection.querySelectorAll("svg[data-exhibit]");
+    expect(exhibits).toHaveLength(6);
+    for (const svg of exhibits) {
+      expect(svg.closest('[aria-hidden="true"]')).not.toBeNull();
+    }
+    for (const chip of ["SEO-ready", "Payments", "Integrations", "Quizzes"]) {
+      expect(within(collection).getByText(chip)).toBeInTheDocument();
     }
   });
 

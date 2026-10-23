@@ -62,6 +62,11 @@ describe("exhibition home content", () => {
     (market) => {
       const { home, h1, hero } = getMarketContent(market);
       expect(home.collection.halls).toHaveLength(6);
+      for (const hall of home.collection.halls) {
+        // the chips must fit one row beside the exhibit
+        expect(hall.more.length).toBeGreaterThan(0);
+        expect(hall.more.length).toBeLessThanOrEqual(3);
+      }
       expect(home.steps.items).toHaveLength(3);
       expect(h1).toBe(hero.title);
       expect(home.collection.title).toHaveLength(2);

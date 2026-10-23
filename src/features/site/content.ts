@@ -31,6 +31,9 @@ export type NavLink = { href: string; label: string };
 
 /** Copy of the exhibition home (docs/specs/immersive-home.md). Two-part titles
  *  are `[plain, accent]`: the accent half renders in the brand pink. */
+export type HallExhibit =
+  "browser" | "landing" | "app" | "gears" | "widget" | "question";
+
 export type HomeContent = {
   /** Museum label next to the mascot; its number comes from mascotExhibitNumber(). */
   exhibit: { eyebrow: string; name: string; lines: [string, string] };
@@ -39,7 +42,15 @@ export type HomeContent = {
   collection: {
     eyebrow: string;
     title: [string, string];
-    halls: { index: string; name: string; line: string }[];
+    halls: {
+      index: string;
+      name: string;
+      line: string;
+      /** The small jelly exhibit drawn in the card (hall-exhibits.tsx). */
+      exhibit: HallExhibit;
+      /** "What's inside" chips that slide in on hover; three at most, one row. */
+      more: string[];
+    }[];
   };
   steps: { eyebrow: string; title: [string, string]; items: Step[] };
   work: { eyebrow: string; title: [string, string] };
@@ -371,27 +382,43 @@ const ru: MarketContent = {
           index: "Зал 01",
           name: "Сайты",
           line: "для продуктов, студий, событий",
+          exhibit: "browser",
+          more: ["Дизайн → запуск", "Правите сами", "SEO"],
         },
         {
           index: "Зал 02",
           name: "Лендинги",
           line: "одно предложение, одно действие",
+          exhibit: "landing",
+          more: ["Одна цель", "Текст + дизайн", "Аналитика"],
         },
         {
           index: "Зал 03",
-          name: "Веб-приложения и SaaS",
+          name: "Веб-приложения",
           line: "аккаунты, данные, оплаты, AI",
+          exhibit: "app",
+          more: ["Вход", "Оплаты", "AI"],
         },
-        { index: "Зал 04", name: "Автоматизации", line: "рутина на автомате" },
+        {
+          index: "Зал 04",
+          name: "Автоматизации",
+          line: "рутина на автомате",
+          exhibit: "gears",
+          more: ["Боты", "Интеграции", "CRM и таблицы"],
+        },
         {
           index: "Зал 05",
-          name: "Виджеты и инструменты",
+          name: "Виджеты",
           line: "маленькие, точные, встраиваемые",
+          exhibit: "widget",
+          more: ["Калькуляторы", "Квизы", "Встройка"],
         },
         {
           index: "Зал 06",
           name: "Что-то ещё?",
           line: "спросите — скорее всего, это возможно",
+          exhibit: "question",
+          more: ["Расскажите идею →"],
         },
       ],
     },
@@ -658,31 +685,43 @@ const en: MarketContent = {
           index: "Hall 01",
           name: "Websites",
           line: "for products, studios, events",
+          exhibit: "browser",
+          more: ["Design → launch", "Editable", "SEO-ready"],
         },
         {
           index: "Hall 02",
           name: "Landing pages",
           line: "one offer, one action",
+          exhibit: "landing",
+          more: ["One goal", "Copy + design", "Analytics"],
         },
         {
           index: "Hall 03",
-          name: "Web apps & SaaS",
+          name: "Web apps",
           line: "accounts, data, payments, AI",
+          exhibit: "app",
+          more: ["Sign-in", "Payments", "AI features"],
         },
         {
           index: "Hall 04",
           name: "Automations",
           line: "the boring parts, handled",
+          exhibit: "gears",
+          more: ["Bots", "Integrations", "CRMs"],
         },
         {
           index: "Hall 05",
           name: "Widgets & tools",
           line: "small, sharp, embeddable",
+          exhibit: "widget",
+          more: ["Calculators", "Quizzes", "Embeds"],
         },
         {
           index: "Hall 06",
           name: "Something else?",
           line: "ask — it’s probably possible",
+          exhibit: "question",
+          more: ["Tell me the idea →"],
         },
       ],
     },

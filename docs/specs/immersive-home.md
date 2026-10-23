@@ -277,12 +277,16 @@ medium|lite|still` pins a tier. The rocking still (with a tap-to-push button) is
 - `/contact` shows the email ludvik4good.me@gmail.com and Telegram on both
   markets (no LinkedIn for now, owner 2026-10-23).
 - Hall cards (owner chose variant B, 2026-10-23; prototype
-  `experiments/nevalyashka/ideas/halls.html`): each hall gets a small jelly
-  exhibit top-right; on hover the card squashes and springs back like jelly,
-  a gloss follows the cursor, the exhibit rocks away from the entry side and
-  "what's inside" chips slide up. Touch: chips always shown, exhibits rock
-  idly; reduced motion: no animation. Not built yet; chip copy and the
-  final exhibit art (shader-rendered vs SVG) still to settle.
+  `experiments/nevalyashka/ideas/halls.html`; `hall-card.tsx`,
+  `hall-exhibits.tsx`): each hall has a flat SVG jelly exhibit top-right at a
+  fixed size (owner: do not shrink it on hover). On hover the card squashes
+  and springs back, a gloss follows the cursor, the exhibit rocks away from
+  the entry side (gears turn, the toggle flips) and up to three "what's
+  inside" chips slide in under the subtitle. Halls do not open and show no
+  pointer; only hall 06's chip is a link to `/contact`. Touch: chips shown,
+  exhibits rock idly; reduced motion: still. Hall names shortened so text
+  clears the exhibit: "Web apps" / «Веб-приложения», «Виджеты». RU chip copy
+  is a draft awaiting owner approval with the rest of `ru.home`.
 
 Waiting on the owner:
 

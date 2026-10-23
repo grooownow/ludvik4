@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { type HomeContent, type Market, workExhibitNumber } from "./content";
 import { CtaLink } from "./cta-link";
+import { HallCard } from "./hall-card";
 import type { HomeExhibit } from "./home-exhibits";
 
 // Sections of the exhibition home below the stage (docs/specs/immersive-home.md,
@@ -56,36 +57,30 @@ function Band({
   );
 }
 
-export function HomeCollection({ copy }: { copy: HomeContent["collection"] }) {
+export function HomeCollection({
+  copy,
+  contactHref = "/contact",
+}: {
+  copy: HomeContent["collection"];
+  /** Where the last hall ("Something else?") leads. */
+  contactHref?: string;
+}) {
   return (
     <Band id="collection">
       <Eyebrow>{copy.eyebrow}</Eyebrow>
       <Title parts={copy.title} />
-      {/* Plain cards for now: their real content is designed separately. */}
       <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {copy.halls.map((hall, i) => (
-          <li
-            key={hall.index}
-            className={cn(
-              "flex aspect-[4/3] flex-col justify-between rounded-2xl p-7",
-              i === 0 || i === copy.halls.length - 1
-                ? "bg-pink-soft"
-                : "bg-accent",
-            )}
-          >
-            <span className="text-stage-muted font-mono text-xs tracking-[0.14em] uppercase">
-              {hall.index}
-            </span>
-            <span>
-              <span className="block text-2xl font-semibold tracking-tight">
-                {hall.name}
-              </span>
-              <span className="text-stage-muted mt-1 block text-sm">
-                {hall.line}
-              </span>
-            </span>
-          </li>
-        ))}
+        {copy.halls.map((hall, i) => {
+          const last = i === copy.halls.length - 1;
+          return (
+            <HallCard
+              key={hall.index}
+              hall={hall}
+              soft={i === 0 || last}
+              contactHref={last ? contactHref : undefined}
+            />
+          );
+        })}
       </ul>
     </Band>
   );
