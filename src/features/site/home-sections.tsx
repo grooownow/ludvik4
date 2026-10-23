@@ -126,6 +126,7 @@ export function HomeGallery({
   const openLabel = lang === "ru" ? "Открыть" : "Open";
   const newWindowLabel =
     lang === "ru" ? "(откроется в новом окне)" : "(opens in a new window)";
+  const aboutLabel = lang === "ru" ? "о проекте" : "about the project";
   // Odd count: the first exhibit spans two rows (big left, others stacked);
   // even count: an equal grid.
   const featureFirst = exhibits.length % 2 === 1;
@@ -142,46 +143,61 @@ export function HomeGallery({
               data-exhibit={exhibit.slug}
               className={cn(featured && "sm:row-span-2")}
             >
-              {/* The preview opens the live work itself in a new window; the
-                  arrow in its corner says so (awwwards-style). */}
-              <a
-                href={exhibit.site}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${openLabel} ${exhibit.name} ${newWindowLabel}`}
-                className="group/exhibit ring-pink-soft relative block rounded-md bg-white p-4 shadow-[0_14px_30px_rgba(214,40,130,0.10)] ring-1 transition-shadow hover:shadow-[0_18px_40px_rgba(214,40,130,0.18)]"
-              >
-                <Image
-                  src={exhibit.image}
-                  alt={exhibit.imageAlt}
-                  width={1200}
-                  height={675}
-                  sizes="(min-width: 640px) 560px, 100vw"
-                  className={cn(
-                    "w-full rounded-sm object-cover object-top",
-                    featured ? "aspect-[4/3.6]" : "aspect-video",
-                  )}
-                />
-                {/* A soft plum scrim in the corner (no hard shape) keeps the
-                    white arrow legible on light and dark previews alike. */}
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute right-4 bottom-4 size-40 rounded-br-sm bg-[radial-gradient(circle_at_100%_100%,rgba(20,4,12,0.55),transparent_70%)]"
-                />
-                <svg
-                  data-arrow
-                  aria-hidden="true"
-                  viewBox="0 0 24 24"
-                  className="absolute right-8 bottom-8 size-8 text-white drop-shadow-[0_1px_4px_rgba(20,4,12,0.5)] transition-transform duration-300 group-hover/exhibit:translate-x-1 group-hover/exhibit:-translate-y-1"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.75"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+              {/* Two targets: the preview leads to the work's own page (the
+                  image eases in on hover); the arrow in its corner, a slightly
+                  larger hit area of its own, opens the live work in a new
+                  window and is the only part that moves when aimed at. */}
+              <div className="relative">
+                <Link
+                  href={exhibit.href as Route}
+                  {...(exhibit.newTab
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                  aria-label={`${exhibit.name}: ${aboutLabel}`}
+                  className="group/preview ring-pink-soft relative block rounded-md bg-white p-4 shadow-[0_14px_30px_rgba(214,40,130,0.10)] ring-1 transition-shadow duration-500 hover:shadow-[0_22px_48px_rgba(214,40,130,0.2)]"
                 >
-                  <path d="M5 19 19 5M8 5h11v11" />
-                </svg>
-              </a>
+                  <span className="block overflow-hidden rounded-sm">
+                    <Image
+                      src={exhibit.image}
+                      alt={exhibit.imageAlt}
+                      width={1200}
+                      height={675}
+                      sizes="(min-width: 640px) 560px, 100vw"
+                      className={cn(
+                        "w-full object-cover object-top transition-transform duration-700 ease-out group-hover/preview:scale-[1.035] motion-reduce:transition-none",
+                        featured ? "aspect-[4/3.6]" : "aspect-video",
+                      )}
+                    />
+                  </span>
+                  {/* A soft plum scrim in the corner (no hard shape) keeps the
+                      white arrow legible on light and dark previews alike. */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute right-4 bottom-4 size-40 rounded-br-sm bg-[radial-gradient(circle_at_100%_100%,rgba(20,4,12,0.55),transparent_70%)]"
+                  />
+                </Link>
+                <a
+                  href={exhibit.site}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${openLabel} ${exhibit.name} ${newWindowLabel}`}
+                  className="group/arrow focus-visible:ring-primary absolute right-4 bottom-4 grid size-16 place-items-center rounded-br-sm focus-visible:ring-2 focus-visible:outline-none"
+                >
+                  <svg
+                    data-arrow
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    className="size-8 text-white drop-shadow-[0_1px_4px_rgba(20,4,12,0.5)] transition-transform duration-300 group-hover/arrow:translate-x-1 group-hover/arrow:-translate-y-1 group-hover/arrow:scale-110"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M5 19 19 5M8 5h11v11" />
+                  </svg>
+                </a>
+              </div>
               <div className="text-stage-muted mt-4 text-sm leading-relaxed">
                 <span className="font-mono text-xs tracking-[0.12em] uppercase">
                   {exhibitEyebrow} {workExhibitNumber(i, lang)}

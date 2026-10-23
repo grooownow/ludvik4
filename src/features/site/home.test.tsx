@@ -84,7 +84,7 @@ describe("Home (EN)", () => {
     );
   });
 
-  it("opens the live work from the preview's arrow, in a new window", () => {
+  it("opens the live work only from the arrow, in a new window", () => {
     const { container } = renderHome("en");
     const work = container.querySelector("#work") as HTMLElement;
     const live = within(work).getByRole("link", {
@@ -94,7 +94,21 @@ describe("Home (EN)", () => {
     expect(live).toHaveAttribute("target", "_blank");
     expect(live).toHaveAttribute("rel", "noopener noreferrer");
     expect(live.querySelector("svg[data-arrow]")).not.toBeNull();
-    // The exhibit's name still leads to its description page.
+    // The arrow is its own small target, not the whole preview.
+    expect(live.querySelector("img")).toBeNull();
+  });
+
+  it("opens the work's own page from the preview and from its name", () => {
+    const { container } = renderHome("en");
+    const work = container.querySelector("#work") as HTMLElement;
+    const preview = within(work).getByRole("link", {
+      name: "smallFriendFiles: about the project",
+    });
+    expect(preview).toHaveAttribute("href", "/work/smallfriendfiles");
+    expect(preview).not.toHaveAttribute("target");
+    expect(preview.querySelector("img")).not.toBeNull();
+    // the arrow is not nested inside the preview link
+    expect(preview.querySelector("svg[data-arrow]")).toBeNull();
     expect(
       within(work).getByRole("link", { name: "smallFriendFiles" }),
     ).toHaveAttribute("href", "/work/smallfriendfiles");
