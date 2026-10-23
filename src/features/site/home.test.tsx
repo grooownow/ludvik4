@@ -59,6 +59,13 @@ describe("Home (EN)", () => {
     expect(links[0]!.closest("li")).toHaveTextContent("Something else?");
   });
 
+  it("keeps the English section titles at full size", () => {
+    const { container } = renderHome("en");
+    for (const id of ["collection", "how-it-works", "work"]) {
+      expect(container.querySelector(`#${id} h2`)).toHaveClass("sm:text-6xl");
+    }
+  });
+
   it("draws every hall as a decorative plan with notes in the page's language", () => {
     const { container } = renderHome("en");
     const collection = container.querySelector("#collection") as HTMLElement;
@@ -137,6 +144,15 @@ describe("Home (EN)", () => {
 });
 
 describe("Home (RU)", () => {
+  it("sets the longer Russian section titles a step smaller on desktop, on one line", () => {
+    const { container } = renderHome("ru");
+    for (const id of ["collection", "how-it-works", "work"]) {
+      const title = container.querySelector(`#${id} h2`);
+      expect(title).toHaveClass("lg:whitespace-nowrap", "xl:text-[3.375rem]");
+      expect(title).not.toHaveClass("sm:text-6xl");
+    }
+  });
+
   it("shows four exhibits in an even grid, numbered around the mascot's Nº 04", () => {
     const { container } = renderHome("ru");
     const work = container.querySelector("#work") as HTMLElement;
