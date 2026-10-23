@@ -14,7 +14,7 @@ function fakeGl({ linkOk = true } = {}) {
     getProgramParameter: () => linkOk,
     getExtension: () => ({ UNMASKED_RENDERER_WEBGL: 1 }),
     getParameter: () => "ANGLE (Apple, ANGLE Metal Renderer: Apple M2)",
-    getUniformLocation: () => ({}),
+    getUniformLocation: (_: unknown, name: string) => ({ name }),
     getAttribLocation: () => 0,
   };
   return new Proxy(
@@ -32,7 +32,29 @@ function fakeGl({ linkOk = true } = {}) {
     },
   ) as unknown as WebGLRenderingContext & {
     drawArrays: ReturnType<typeof vi.fn>;
+    uniform1f: ReturnType<typeof vi.fn>;
+    uniform2f: ReturnType<typeof vi.fn>;
   };
+}
+
+/** Last value the scene sent to a uniform, by its shader name. */
+function lastUniform(spy: ReturnType<typeof vi.fn>, name: string) {
+  const calls = spy.mock.calls.filter(
+    ([loc]) => (loc as { name: string }).name === name,
+  );
+  return calls.at(-1)!.slice(1) as number[];
+}
+
+/** A pointer gesture on the canvas: press, move by (dx, dy) in steps, hold. */
+function pointer(
+  canvas: HTMLCanvasElement,
+  type: string,
+  x: number,
+  y: number,
+) {
+  canvas.dispatchEvent(
+    new MouseEvent(type, { clientX: x, clientY: y, bubbles: true }),
+  );
 }
 
 let frames: FrameRequestCallback[] = [];
@@ -143,6 +165,66 @@ describe("ExhibitCanvas", () => {
     vi.spyOn(document, "hidden", "get").mockReturnValue(true);
     tick(5);
     expect(gl.drawArrays.mock.calls.length).toBe(before);
+  });
+
+  // Every gesture the spec lists, end to end from the pointer to the shader
+  // (the physics alone is covered in exhibit-physics.test.ts).
+  it("tilts the mascot toward the viewer while dragged down and held", () => {
+    const gl = fakeGl();
+    capableDevice(gl);
+    const { canvas } = mount();
+    tick(3);
+    pointer(canvas, "pointerdown", 500, 400);
+    for (let i = 1; i <= 15; i++)
+      pointer(canvas, "pointermove", 500, 400 + i * 10);
+    tick(90);
+    const [, held] = lastUniform(gl.uniform2f, "uTilt");
+    expect(held).toBeGreaterThan(0.3);
+    pointer(canvas, "pointerup", 500, 550);
+  });
+
+  it("tilts it away while dragged up", () => {
+    const gl = fakeGl();
+    capableDevice(gl);
+    const { canvas } = mount();
+    tick(3);
+    pointer(canvas, "pointerdown", 500, 400);
+    for (let i = 1; i <= 15; i++)
+      pointer(canvas, "pointermove", 500, 400 - i * 10);
+    tick(90);
+    const [, held] = lastUniform(gl.uniform2f, "uTilt");
+    expect(held).toBeLessThan(-0.3);
+  });
+
+  it("spins it about its axis while dragged sideways", () => {
+    const gl = fakeGl();
+    capableDevice(gl);
+    const { canvas } = mount();
+    tick(3);
+    const [before] = lastUniform(gl.uniform1f, "uSpin");
+    pointer(canvas, "pointerdown", 500, 400);
+    for (let i = 1; i <= 10; i++)
+      pointer(canvas, "pointermove", 500 + i * 10, 400);
+    tick(2);
+    const [after] = lastUniform(gl.uniform1f, "uSpin");
+    expect(after! - before!).toBeCloseTo(1, 1);
+  });
+
+  it("pushes it on a click, harder than its idle rocking", () => {
+    const gl = fakeGl();
+    capableDevice(gl);
+    const { canvas } = mount();
+    tick(3);
+    pointer(canvas, "pointerdown", 100, 400);
+    pointer(canvas, "pointerup", 100, 400);
+    let peak = 0;
+    for (let i = 0; i < 60; i++) {
+      tick(1);
+      const [a, b] = lastUniform(gl.uniform2f, "uTilt");
+      peak = Math.max(peak, Math.hypot(a!, b!));
+    }
+    // Idle rocking stays under ~0.2 rad.
+    expect(peak).toBeGreaterThan(0.25);
   });
 
   it("takes a horizontal swipe (Magic Mouse, trackpad) and leaves vertical scroll to the page", () => {
