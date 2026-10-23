@@ -24,16 +24,26 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 function Title({
   parts,
   narrow = false,
+  long = false,
 }: {
   parts: [string, string];
   /** In a half-width column: a step smaller so one line still fits. */
   narrow?: boolean;
+  /** Russian full-width titles run longer than one line at the usual size
+   *  (the collection's is ~1185px at 60px): a step smaller on desktop, held
+   *  on one line (they still wrap on phones). All RU section titles take it
+   *  so they stay the same size. */
+  long?: boolean;
 }) {
   return (
     <h2
       className={cn(
         "mt-3 text-4xl leading-[1.02] font-semibold tracking-tight text-balance",
-        narrow ? "sm:text-5xl lg:whitespace-nowrap" : "sm:text-6xl",
+        narrow
+          ? "sm:text-5xl lg:whitespace-nowrap"
+          : long
+            ? "sm:text-5xl lg:whitespace-nowrap xl:text-[3.375rem]"
+            : "sm:text-6xl",
       )}
     >
       {parts[0]} <span className="text-primary">{parts[1]}</span>
@@ -67,7 +77,7 @@ export function HomeCollection({
   return (
     <HallsStage>
       <Eyebrow>{copy.eyebrow}</Eyebrow>
-      <Title parts={copy.title} />
+      <Title parts={copy.title} long={lang === "ru"} />
       <ul className="halls-grid mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {copy.halls.map((hall, i) => (
           <HallCard key={hall.index} hall={hall} index={i} lang={lang} />
@@ -77,11 +87,17 @@ export function HomeCollection({
   );
 }
 
-export function HomeSteps({ copy }: { copy: HomeContent["steps"] }) {
+export function HomeSteps({
+  copy,
+  lang,
+}: {
+  copy: HomeContent["steps"];
+  lang: Market;
+}) {
   return (
     <Band id="how-it-works">
       <Eyebrow>{copy.eyebrow}</Eyebrow>
-      <Title parts={copy.title} />
+      <Title parts={copy.title} long={lang === "ru"} />
       <ol className="relative mt-14 grid gap-10 sm:grid-cols-3">
         <span
           aria-hidden="true"
@@ -124,7 +140,7 @@ export function HomeGallery({
   return (
     <Band id="work" className="bg-[#fff8fb]">
       <Eyebrow>{copy.eyebrow}</Eyebrow>
-      <Title parts={copy.title} />
+      <Title parts={copy.title} long={lang === "ru"} />
       <div className="mt-14 grid gap-10 sm:grid-cols-2">
         {exhibits.map((exhibit, i) => {
           const featured = featureFirst && i === 0;

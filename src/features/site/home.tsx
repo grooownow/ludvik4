@@ -38,7 +38,7 @@ export function Home({
       />
       <HomeStage content={content} />
       <HomeCollection copy={home.collection} lang={content.lang} />
-      <HomeSteps copy={home.steps} />
+      <HomeSteps copy={home.steps} lang={content.lang} />
       <HomeGallery
         copy={home.work}
         exhibitEyebrow={home.exhibit.eyebrow}
