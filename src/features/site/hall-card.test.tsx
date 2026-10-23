@@ -33,6 +33,8 @@ function mount() {
 }
 
 afterEach(() => {
+  // jsdom has no getAnimations; a test may stub it
+  delete (Element.prototype as { getAnimations?: unknown }).getAnimations;
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
@@ -51,10 +53,22 @@ describe("HallCard hover", () => {
     card.getBoundingClientRect = () =>
       ({ left: 0, top: 0, width: 300, height: 225 }) as DOMRect;
     fireEvent.pointerEnter(card, { pointerType: "mouse", clientX: 5 });
-    // card + exhibit + two gears
+    // card body + exhibit + two gears
     expect(animate).toHaveBeenCalledTimes(4);
+    // the squash runs on the inner body, never on the hover target itself
+    expect(animate.mock.contexts[0]).not.toBe(card);
+    expect(card.contains(animate.mock.contexts[0] as Node)).toBe(true);
     const wobble = animate.mock.calls[1]![0] as { transform: string }[];
     expect(wobble[1]!.transform).toBe("rotate(12deg)");
+  });
+
+  it("lets a running wobble finish when the cursor re-enters at the edge", () => {
+    motion(false);
+    const { animate, card } = mount();
+    Element.prototype.getAnimations = () =>
+      [{ playState: "running" }] as unknown as Animation[];
+    fireEvent.pointerEnter(card, { pointerType: "mouse", clientX: 5 });
+    expect(animate).not.toHaveBeenCalled();
   });
 
   it("stays still for reduced motion", () => {

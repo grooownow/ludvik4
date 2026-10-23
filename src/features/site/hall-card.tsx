@@ -44,17 +44,25 @@ export function HallCard({
   contactHref?: string;
 }) {
   const cardRef = useRef<HTMLLIElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
   const artRef = useRef<HTMLDivElement>(null);
 
   const enter = (event: PointerEvent<HTMLLIElement>) => {
     const card = cardRef.current;
+    const body = bodyRef.current;
     const art = artRef.current;
-    if (!card || !art || typeof card.animate !== "function") return;
+    if (!card || !body || !art || typeof body.animate !== "function") return;
     if (event.pointerType !== "mouse" || prefersReducedMotion()) return;
+    // A cursor resting on the edge can leave and re-enter many times a
+    // second; let a running wobble finish instead of restarting it.
+    if (body.getAnimations?.().some((a) => a.playState === "running")) return;
     const rect = card.getBoundingClientRect();
     const dir = entryDirection(event.clientX, rect.left, rect.width);
 
-    card.animate(
+    // Only the inner body squashes: the list item is the hover target and
+    // keeps its size, so the squash never pulls the edge from under the
+    // cursor (which used to loop the animation).
+    body.animate(
       [
         { transform: "scale(1, 1)" },
         { transform: "scale(1.045, 0.955)", offset: 0.18 },
@@ -106,45 +114,52 @@ export function HallCard({
       ref={cardRef}
       onPointerEnter={enter}
       onPointerMove={move}
-      className={cn(
-        "hall-card group relative isolate flex aspect-[4/3] flex-col justify-between overflow-hidden rounded-2xl p-7",
-        soft ? "bg-pink-soft" : "bg-accent",
-      )}
+      className="hall-card group"
     >
-      <span className="text-stage-muted relative z-10 font-mono text-xs tracking-[0.14em] uppercase">
-        {hall.index}
-      </span>
-      <div aria-hidden="true" className="hall-exhibit">
-        <div ref={artRef} className="hall-exhibit-art size-full">
-          <HallExhibitArt kind={hall.exhibit} />
+      <div
+        ref={bodyRef}
+        className={cn(
+          "hall-body relative isolate flex aspect-[4/3] flex-col justify-between overflow-hidden rounded-2xl p-7",
+          soft ? "bg-pink-soft" : "bg-accent",
+        )}
+      >
+        <span className="text-stage-muted relative z-10 font-mono text-xs tracking-[0.14em] uppercase">
+          {hall.index}
+        </span>
+        <div aria-hidden="true" className="hall-exhibit">
+          <div ref={artRef} className="hall-exhibit-art size-full">
+            <HallExhibitArt kind={hall.exhibit} />
+          </div>
         </div>
+        <span className="relative z-10">
+          <span className="block text-2xl font-semibold tracking-tight">
+            {hall.name}
+          </span>
+          <span className="text-stage-muted mt-1 block text-sm">
+            {hall.line}
+          </span>
+          <span className="hall-more flex gap-1.5">
+            {hall.more.map((chip) =>
+              contactHref ? (
+                <Link
+                  key={chip}
+                  href={contactHref as Route}
+                  className="bg-foreground text-background focus-visible:ring-primary rounded-full px-2.5 py-1 text-[0.8rem] whitespace-nowrap focus-visible:ring-2 focus-visible:outline-none"
+                >
+                  {chip}
+                </Link>
+              ) : (
+                <span
+                  key={chip}
+                  className="rounded-full bg-white/70 px-2.5 py-1 text-[0.8rem] whitespace-nowrap"
+                >
+                  {chip}
+                </span>
+              ),
+            )}
+          </span>
+        </span>
       </div>
-      <span className="relative z-10">
-        <span className="block text-2xl font-semibold tracking-tight">
-          {hall.name}
-        </span>
-        <span className="text-stage-muted mt-1 block text-sm">{hall.line}</span>
-        <span className="hall-more flex gap-1.5">
-          {hall.more.map((chip) =>
-            contactHref ? (
-              <Link
-                key={chip}
-                href={contactHref as Route}
-                className="bg-foreground text-background focus-visible:ring-primary rounded-full px-2.5 py-1 text-[0.8rem] whitespace-nowrap focus-visible:ring-2 focus-visible:outline-none"
-              >
-                {chip}
-              </Link>
-            ) : (
-              <span
-                key={chip}
-                className="rounded-full bg-white/70 px-2.5 py-1 text-[0.8rem] whitespace-nowrap"
-              >
-                {chip}
-              </span>
-            ),
-          )}
-        </span>
-      </span>
     </li>
   );
 }
