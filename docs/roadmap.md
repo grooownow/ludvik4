@@ -6,6 +6,21 @@ writing detail here.
 
 ## Now
 
+**[IN REVIEW 2026-10-23] Exhibition home, both markets.** Branch
+`feat/immersive-home` (pushed, Vercel preview, not on `main`). Where it
+stopped and what waits on the owner: `docs/specs/immersive-home.md` →
+"Handoff". Old home code kept.
+
+**[DESIGN EXPLORATION 2026-10-22] Roly-poly jelly mascot.** Two static
+3D-style PNG concepts based on `design.pen` node `O7O2hV` were generated
+outside Pencil; files, reference and prompts are in
+`experiments/nevalyashka/README.md`. User preferred B and requested a wider,
+rounder body; `variant-b-rounder-v2.png` is the latest image revision.
+`experiments/nevalyashka/rocking-3d.html` is now a standalone volumetric WebGL
+motion study with roll/pitch, damped impulses, a moving shadow, camera orbit,
+pause and PNG export. Browser behavior and 375/768/1280 layouts verified;
+details in the README. Local prototype for visual review, not deployed.
+
 **[SHIPPED 2026-10-21] Live intro on desktop, none on phones.**
 PR #14: design.pen's silk and smoosh shaders run live on
 desktop, the glass drop refracts the copy and trails the cursor on a spring,
@@ -32,6 +47,16 @@ case covers now show the landing, and "open project" leads to it. Source,
 regeneration steps and evidence: `docs/specs/qa-pilot-landing.md`. After
 deploy, run the smoke loops in both production playbooks.
 
+**[MONITOR 2026-10-19] Discovery grew, but GSC remains blocked for a second
+week.** The root sitemap expanded from 21 to 24 URLs with the smallFriendFiles
+case and two client-facing English articles. All eight canonical P1 preflights
+and all service files pass; four genuinely old `/blog/*` slugs remain `404`.
+The monitor's browser still opens Google sign-in, so current performance,
+submitted/detected counts, exclusions and URL Inspection states are explicitly
+unverified. Public exact-title checks were empty but are not treated as GSC
+evidence. Restore the authenticated session or provide exports, then rerun the
+comparison. Full evidence and actions: `docs/seo/seo-handoff.md`.
+
 **[SHIPPED 2026-10-12] smallFriendFiles portfolio case is live in both markets.**
 Localized homepage cards, index entries and detailed cases describe the pet
 medical-file workflow with actual product screenshots. PR #12, all five CI
@@ -54,6 +79,62 @@ canonicals, covers, mobile layouts and discovery feeds were verified. Evidence:
 `docs/specs/client-editorial-pair-2026-10.md` and
 `docs/seo/client-article-publication-2026-10-12.json`. The user explicitly
 instructed autonomous publication through completion.
+
+**[MONITOR 2026-10-12] Production remains technically indexable, but the GSC
+comparison is blocked by browser authentication.** All eight canonical P1
+preflights pass and the root sitemap still contains 21 URLs. Four genuinely old
+`/blog/*` slugs return `404`; the English spec-driven-vs-vibe-coding article is
+live and is not legacy. The automated Playwright browser was redirected to
+Google sign-in, so current clicks, impressions, queries, page rows, index totals
+and URL Inspection states are explicitly unverified rather than inferred from
+empty public search checks. Restore the authenticated console session or supply
+exports, then rerun the missing comparison. Full evidence and actions:
+`docs/seo/seo-handoff.md`.
+
+**[MONITOR 2026-10-05] DEV visibility recovered through new English content,
+and commercial discovery began.** GSC reports 35 impressions / 1 click for
+26 Sep–2 Oct versus 5 / 0. The new spec-first article earned the click and 15
+page-level impressions; the new Cursor-rules article earned 10. Homepage,
+guides, websites, and MVP each appeared once. P1 remains 7/8 indexed; workflow
+still passes every technical check but fresh inspection again says `URL unknown
+to Google`. Root-sitemap discovery grew from 19 to 21 URLs. Full evidence and
+actions: `docs/seo/seo-handoff.md`.
+
+**[MONITOR 2026-09-21] DEV visibility collapsed, but current-page indexing is
+stable.** GSC reports 4 impressions / 0 clicks for 12–18 Sep versus 53 / 0;
+all four impressions belong to genuine legacy 404s, while current EN content,
+Gridfin, and commercial P1 recorded zero. Submitted indexing remains 19/5 and
+P1 remains 7/8. The all-processed change from 24/6 to 23/7 is Google correctly
+classifying `/blog/agents-ready-project` as a 404, not a current-route loss.
+No manual action, security issue, or technical crawl fault was found. Full
+evidence and next actions: `docs/seo/seo-handoff.md`.
+
+**[MONITOR 2026-09-14] DEV visibility lost volume but improved in average
+position.** GSC reports 53 impressions / 0 clicks for 5–11 Sep versus 78 / 1;
+average position improved from 30.1 to 24.1. Live EN content fell from 48 to 24
+impressions, genuine legacy 404s from 29 to 25, while canonical commercial P1
+recorded one homepage impression. P1 remains 7/8 indexed; the workflow service
+is again consistently classified as discovered/not indexed and still has no
+crawl date despite a clean technical preflight. Full evidence and actions:
+`docs/seo/seo-handoff.md`.
+
+**[MONITOR 2026-09-07] DEV impressions are flat, but legacy 404 exposure has
+grown sharply.** GSC reports 94 impressions / 1 click versus 96 / 1; average
+position improved from 41.5 to 30.7. Current EN articles fell from 85 to 61
+impressions, while genuine old 404s rose from 9 to 33 and still own the only
+click. Canonical P1 remains 7/8 indexed. The workflow service passes every
+technical check, but fresh URL Inspection now says `URL unknown to Google`
+while the aggregate still calls it discovered. Full evidence and actions:
+`docs/seo/seo-handoff.md`.
+
+**[MONITOR 2026-08-31] DEV search visibility is growing through live English
+content, not commercial pages.** The corrected weekly split is 109 impressions
+on current EN content/docs versus 10 impressions and both clicks on genuine
+legacy 404s; the previous report had mistakenly classified two now-live EN
+articles as legacy. Overall: 119 impressions / 2 clicks versus 81 / 4.
+Canonical P1 remains 7/8 indexed; `/services/workflow-automation` is still
+discovered and never crawled despite a clean technical preflight. Full evidence
+and actions: `docs/seo/seo-handoff.md`.
 
 **[SHIPPED 2026-08-31] Turnstile captcha is live on ludvik4.dev — second
 attempt, after a key mix-up.** The first attempt (2026-08-30) went in with the
