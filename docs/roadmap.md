@@ -6,10 +6,14 @@ writing detail here.
 
 ## Now
 
-**[IN REVIEW 2026-10-23] Exhibition home, both markets.** Branch
-`feat/immersive-home` (pushed, Vercel preview, not on `main`). Where it
-stopped and what waits on the owner: `docs/specs/immersive-home.md` →
-"Handoff". Old home code kept.
+**[SHIPPED 2026-10-23] Exhibition home, both markets.** The jelly
+roly-poly on a pink stage (live WebGL with a quality ladder and rocking
+stills), collection halls as drawn plans under a cursor spotlight, three
+steps, framed work, about and a closing call to action; contact and RU About
+pages. Merged from `feat/immersive-home`; ludvik4.dev and ludvik4.ru both
+serve it. Decisions: ADR 0013 (replaces 0012), ADR 0014. Open after release
+(photo in About, older-laptop check, phone layouts below the first screen):
+`docs/specs/immersive-home.md` → "Handoff". Old home code kept.
 
 **[DESIGN EXPLORATION 2026-10-22] Roly-poly jelly mascot.** Two static
 3D-style PNG concepts based on `design.pen` node `O7O2hV` were generated

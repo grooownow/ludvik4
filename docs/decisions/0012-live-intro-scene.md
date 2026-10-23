@@ -60,4 +60,5 @@ Option 2 on desktop, and no intro on phones (narrower than 768 px).
 
 ## Status
 
-`accepted` — supersedes the "bake the background" and switcher parts of ADR 0011.
+`superseded` by ADR 0013 (the exhibition home), shipped 2026-10-23. It had
+superseded the "bake the background" and switcher parts of ADR 0011.

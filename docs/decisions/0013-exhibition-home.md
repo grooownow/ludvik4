@@ -47,3 +47,7 @@ Option 3, on both markets (separate builds, no language switcher).
   re-running `pnpm tsx scripts/render-stage-still.ts` so the stills match.
 - Phones see a still until the mobile intro is designed (spec Out-of-scope).
 - ADR 0012 is superseded once this ships to production.
+
+## Status
+
+`accepted` — shipped to both markets on 2026-10-23; ADR 0012 is superseded.

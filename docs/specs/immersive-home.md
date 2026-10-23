@@ -237,7 +237,8 @@ and keyboard access to the mascot (at minimum: it must not trap focus).
 
 Same goal as the desktop: a visitor on a phone smiles, is surprised, wants to
 touch the exhibit and wants a site like it. The phone is not a reduced
-version. Reference mockup (variant A): `public/_mockups/mobile-first-screen.html`.
+version. Reference mockup (variant A): `public/_mockups/mobile-first-screen.html`, removed
+before release (in git at `6dda335`).
 
 - **Live scene on phones.** The raymarched mascot runs on phones and tablets
   with GPU WebGL, not only with a mouse on a wide screen. Reduced motion,
@@ -333,19 +334,17 @@ medium|lite|still` pins a tier. The rocking still (with a tap-to-push button) is
   over a dark hall, 2026-10-23); on touch or with reduced motion the light
   rests in place.
 
-Waiting on the owner:
+Released 2026-10-23: the owner approved the RU copy (`content.ts` →
+`ru.home`, `about-ru.tsx`) and asked to ship both markets; the throwaway
+`public/_mockups/` was removed, ADR 0012 marked superseded. The mobile first
+screen was checked on a real iPhone.
 
-1. Check the preview on a real iPhone (overscroll) and an older laptop
-   (quality ladder).
-2. Approve the RU copy: `content.ts` → `ru.home`, and `about-ru.tsx`.
-3. Later, designed separately: contact page design,
-   mobile intro, the mood switch, prices, the "Worldwide" wording.
-4. Then: merge into `main`, mark ADR 0012 superseded, set this spec to
-   `shipped`, deploy both markets. Before the merge, delete the throwaway
-   `public/_mockups/` (mobile first-screen variants, 2026-10-23).
-5. Mobile first screen: built on the branch (2026-10-23, `cb3c666`,
-   `f7246de`) per "Mobile first screen" above. ADR 0014 accepted
-   (`docs/decisions/0014-live-stage-on-phones.md`). Owner checked it on a real iPhone (2026-10-23): all good. The sections below the first screen on phones are still to be designed.
+Still open after release:
+
+1. The photo in the About block.
+2. An older laptop has not been checked against the quality ladder.
+3. Phone layouts of the sections below the first screen are not designed
+   yet; the contact page design, the mood switch and prices come later.
 
 Deferred review minors (final review 2026-10-23): stale spin velocity when a
 drag pauses before release; WebGL contexts not released on unmount; no unit test for
@@ -354,4 +353,5 @@ windows.
 
 ## Status
 
-`in progress` — branch `feat/immersive-home` (approved 2026-10-22)
+`shipped` — merged into `main` and released to ludvik4.dev and ludvik4.ru on
+2026-10-23 (approved 2026-10-22).

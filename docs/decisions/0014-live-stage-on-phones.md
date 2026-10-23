@@ -10,7 +10,8 @@ screen; phones, touch and narrow windows got pre-rendered stills. The owner's
 goal for the phone is the desktop's: the visitor smiles, wants to touch the
 exhibit and wants a site like it — a still that rocks on a tap fell short. The
 mobile first screen was designed with the owner on a mockup
-(`public/_mockups/mobile-first-screen.html`, variant A).
+(`public/_mockups/mobile-first-screen.html`, variant A; removed before release,
+see commit `6dda335`).
 
 ## Options considered
 
