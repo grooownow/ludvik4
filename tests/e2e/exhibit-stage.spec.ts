@@ -60,6 +60,50 @@ for (const viewport of [
   });
 }
 
+test("on a phone the strip is one line without the founding year", async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(!isMobile, "phone layout only");
+  await page.goto("/");
+  const stage = page.getByRole("region", { name: "Ludvik" });
+  const status = stage.getByText("Беру проекты · IV кв. 2026");
+  const lineHeight = await status.evaluate((el) =>
+    parseFloat(getComputedStyle(el).lineHeight),
+  );
+  const box = (await status.boundingBox())!;
+  expect(box.height).toBeLessThan(lineHeight * 1.5);
+  await expect(stage.getByText("С 2024 · Европа")).toBeHidden();
+});
+
+// The still and the live shader must frame the mascot the same way on a phone
+// too: both stills carry the phone framing (exhibit-gate.ts → stageFraming).
+test("on a phone the still is framed like the live scene", async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(!isMobile, "phone layout only");
+  await page.goto("/");
+  const stage = (await page
+    .getByRole("region", { name: "Ludvik" })
+    .boundingBox())!;
+  // The stage layer: it shares the mascot layer's framing but does not rock,
+  // so its box is the framing exactly.
+  const img = page
+    .getByRole("region", { name: "Ludvik" })
+    .locator("img")
+    .first();
+  await expect(img).toHaveJSProperty("complete", true);
+  const box = (await img.boundingBox())!;
+  // The still's frame centre is the mascot's centre.
+  expect((box.x + box.width / 2 - stage.x) / stage.width).toBeCloseTo(0.53, 2);
+  expect((box.y + box.height / 2 - stage.y) / stage.height).toBeCloseTo(
+    0.43,
+    2,
+  );
+  expect(box.width / stage.width).toBeCloseTo(1.38, 2);
+});
+
 test("on a phone the label sits below the mascot", async ({
   page,
   isMobile,

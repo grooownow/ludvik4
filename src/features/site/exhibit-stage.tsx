@@ -123,17 +123,22 @@ export function ExhibitStage({
       style={{ containerType: "size" }}
       className="group bg-pink-soft relative h-svh min-h-[560px] w-full overflow-hidden select-none"
     >
-      <Still
-        layer="bg"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      <Still
-        layer="mascot"
-        imgRef={mascotRef}
-        rocking={rocking}
-        style={PIVOT_STYLE}
-        className="exhibit-mascot absolute inset-0 h-full w-full object-cover"
-      />
+      {/* Phone framing, as the shader does it (exhibit-gate.ts →
+          stageFraming): 1.38× about the mascot, its centre moved to 53% / 43%.
+          Translate applies before scale, so the offsets stay in stage units. */}
+      <div className="absolute inset-0 max-sm:translate-x-[3%] max-sm:-translate-y-[7%] max-sm:scale-[1.38]">
+        <Still
+          layer="bg"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <Still
+          layer="mascot"
+          imgRef={mascotRef}
+          rocking={rocking}
+          style={PIVOT_STYLE}
+          className="exhibit-mascot absolute inset-0 h-full w-full object-cover"
+        />
+      </div>
 
       <div className="absolute inset-0 opacity-0 transition-opacity duration-700 group-data-[live=true]:opacity-100">
         <ExhibitCanvas stageRef={stageRef} onLiveChange={setLive} />

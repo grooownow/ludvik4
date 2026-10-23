@@ -61,7 +61,8 @@ export function HomeStage({ content }: { content: MarketContent }) {
         >
           ↓
         </AnchorLink>
-        <span>{strip.established}</span>
+        {/* Phones: one line — status and the arrow (mobile first screen). */}
+        <span className="max-sm:hidden">{strip.established}</span>
       </div>
     </ExhibitStage>
   );
