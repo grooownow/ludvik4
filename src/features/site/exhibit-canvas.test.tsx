@@ -211,12 +211,23 @@ describe("ExhibitCanvas", () => {
     expect(gl.drawArrays.mock.calls.length).toBe(drawn);
   });
 
-  it("stays at full quality on a fast machine", () => {
+  it("stays at full quality on a fast machine with a Retina screen", () => {
     const gl = fakeGl();
     capableDevice(gl);
-    const { onLiveChange } = mount();
+    vi.stubGlobal("devicePixelRatio", 2);
+    const { onLiveChange, canvas } = mount();
     tick(400, 16);
     expect(onLiveChange).not.toHaveBeenCalledWith(false);
+    expect(canvas.width).toBe(renderSize(1000, 800, 2).width);
+  });
+
+  it("supersamples on a fast machine with a 1x screen", () => {
+    capableDevice(fakeGl());
+    vi.stubGlobal("devicePixelRatio", 1);
+    const { canvas } = mount();
+    expect(canvas.width).toBe(renderSize(1000, 800, 1).width);
+    tick(400, 16);
+    expect(canvas.width).toBe(renderSize(1000, 800, 1, 1, 2).width);
   });
 
   it("?quality=still never starts the live scene", () => {

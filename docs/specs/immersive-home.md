@@ -250,11 +250,15 @@ Done since the plan (`immersive-home.plan.md`), all on the branch:
   (a `resolution` media query), so Retina → 1x monitor stays crisp.
 - The silhouette ramp is centred on the true outline (rays march a body inset
   by 0.75 px), softening the steps on 1x screens.
+- Supersampling on 1x screens: after the full tier proves fast, the stage
+  tries rendering at 2x (up to 4096 px wide) and keeps it only if the median
+  frame time stays within 10% (+1 ms) of the full-tier one; otherwise it
+  returns to full and never retries. `?quality=super` pins it.
 - The label moves below the mascot only on narrow screens (< 640 px), not in
   any window taller than wide; near-square windows raise it to clear the head.
 - Quality ladder by measured frame time (`exhibit-quality.ts`): full →
-  0.6 scale → 0.45 + lite shader → rocking CSS still. `?quality=full|medium|
-lite|still` pins a tier. The rocking still (with a tap-to-push button) is
+  0.6 scale → 0.45 + lite shader → rocking CSS still. `?quality=super|full|
+medium|lite|still` pins a tier. The rocking still (with a tap-to-push button) is
   also what phones, touch and no-GPU machines get; reduced motion keeps it
   still.
 - Menu: Work → `/#work`, Services → `/#collection` (smooth scroll via

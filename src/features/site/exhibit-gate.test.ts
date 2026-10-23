@@ -54,6 +54,17 @@ describe("renderSize", () => {
     expect(renderSize(2560, 1200, 1)).toEqual({ width: 2560, height: 1200 });
   });
 
+  it("supersamples at 2x on a 1x screen, up to 4096 px wide", () => {
+    expect(renderSize(1000, 800, 1, 1, 2)).toEqual({
+      width: 2000,
+      height: 1600,
+    });
+    expect(renderSize(2560, 1440, 1, 1, 2)).toEqual({
+      width: 4096,
+      height: 2304,
+    });
+  });
+
   it("renders lower tiers at their own scale", () => {
     expect(renderSize(1000, 800, 1, 0.45, 0)).toEqual({
       width: 450,

@@ -26,12 +26,15 @@ export function isSoftwareRenderer(renderer: string): boolean {
 /** The scene renders below device resolution; raymarching cost grows with pixels. */
 export const RENDER_SCALE = 0.85;
 export const MAX_RENDER_WIDTH = 2048;
+/** Hard limit for supersampling, which the width cap does not trim. */
+export const MAX_SUPERSAMPLE_WIDTH = 4096;
 
 /**
  * Drawing-buffer size for a stage of `cssW` × `cssH` CSS pixels. `minDensity`
  * floors render pixels per CSS pixel: below 1 the browser upscales the canvas
  * and the silhouette turns into a staircase, so the full tier never goes
- * there — the width cap only trims oversampling on high-DPR screens.
+ * there — the width cap only trims oversampling on high-DPR screens. A
+ * floor above 1 is supersampling, limited by MAX_SUPERSAMPLE_WIDTH instead.
  */
 export function renderSize(
   cssW: number,
@@ -42,6 +45,6 @@ export function renderSize(
 ): { width: number; height: number } {
   let scale = Math.min(dpr || 1, 2) * renderScale;
   if (cssW * scale > MAX_RENDER_WIDTH) scale = MAX_RENDER_WIDTH / cssW;
-  scale = Math.max(scale, minDensity);
+  scale = Math.max(scale, Math.min(minDensity, MAX_SUPERSAMPLE_WIDTH / cssW));
   return { width: Math.round(cssW * scale), height: Math.round(cssH * scale) };
 }

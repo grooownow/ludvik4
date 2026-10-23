@@ -6,6 +6,7 @@ import {
 } from "./exhibit-gate";
 import {
   createFrameMonitor,
+  FULL_TIER,
   qualityOverride,
   STILL_TIER,
   TIERS,
@@ -142,8 +143,15 @@ export function ExhibitCanvas({ stageRef, onLiveChange }: Props) {
     // Quality ladder: start at the pinned tier or full, then let the frame
     // monitor step down on a machine that cannot keep up (exhibit-quality.ts).
     const pinned = qualityOverride(new URL(document.URL).search);
-    let tier = pinned ?? 0;
-    const monitor = pinned === null ? createFrameMonitor(tier) : null;
+    // Below Retina density, a machine with headroom may also step up to
+    // supersampling.
+    let tier = pinned ?? FULL_TIER;
+    const monitor =
+      pinned === null
+        ? createFrameMonitor(tier, {
+            supersample: window.devicePixelRatio < 1.5,
+          })
+        : null;
 
     const resize = () => {
       const size = renderSize(
