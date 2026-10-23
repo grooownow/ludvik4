@@ -14,6 +14,10 @@ pages. Merged from `feat/immersive-home`; ludvik4.dev and ludvik4.ru both
 serve it. Decisions: ADR 0013 (replaces 0012), ADR 0014. Open after release
 (photo in About, older-laptop check, phone layouts below the first screen):
 `docs/specs/immersive-home.md` → "Handoff". Old home code kept.
+Follow-up 2026-10-24 (PR #18): RU section titles a step smaller on desktop so
+they stay on one line (e2e `home-headings.spec.ts`), and the new zod and
+body-parser advisories patched (zod ^4.6.7; the dev-only Lighthouse zod 3.x
+copy is ignored in `pnpm-workspace.yaml` until chromium-bidi moves to zod 4).
 
 **[DESIGN EXPLORATION 2026-10-22] Roly-poly jelly mascot.** Two static
 3D-style PNG concepts based on `design.pen` node `O7O2hV` were generated
