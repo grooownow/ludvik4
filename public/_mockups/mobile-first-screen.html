@@ -1,0 +1,335 @@
+<!doctype html>
+<!--
+  Throwaway brainstorming mockup: first screen of the home on a phone.
+  Not linked from the site; remove before merging into main
+  (docs/specs/immersive-home.md → Handoff).
+-->
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Мобильный первый экран — варианты</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600&family=Geist+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --stage: #ffe0fa;
+        --pink-soft: #ffd7eb;
+        --primary: #ff4fb6;
+        --ink: #1a1a1a;
+        --muted: rgba(42, 20, 32, 0.7);
+        --plum: #14040c;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      body {
+        background: var(--plum);
+        font-family: "Geist", system-ui, sans-serif;
+        color: var(--ink);
+      }
+      .mono {
+        font-family: "Geist Mono", ui-monospace, monospace;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 32px;
+      }
+      @media (min-width: 700px) {
+        .row {
+          padding: 32px 16px 48px;
+        }
+      }
+      .variant {
+        width: min(100vw, 390px);
+      }
+      .caption {
+        color: #fff;
+        padding: 20px 16px 12px;
+      }
+      .caption b {
+        font-size: 17px;
+      }
+      .caption p {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 14px;
+        line-height: 1.45;
+        margin-top: 6px;
+      }
+      /* One phone screen. On a phone it is the real screen height. */
+      .screen {
+        position: relative;
+        width: 100%;
+        height: min(100svh, 844px);
+        overflow: hidden;
+        background: radial-gradient(
+          120% 70% at 50% 42%,
+          #fff3fd 0%,
+          var(--stage) 55%,
+          #f9c9ea 100%
+        );
+      }
+      @media (min-width: 700px) {
+        .screen {
+          height: 812px;
+          border-radius: 36px;
+        }
+      }
+      .header {
+        position: absolute;
+        inset: 0 0 auto 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 20px;
+        font-weight: 600;
+        font-size: 16px;
+        z-index: 3;
+      }
+      .burger {
+        width: 22px;
+        height: 14px;
+        border-top: 1.5px solid var(--ink);
+        border-bottom: 1.5px solid var(--ink);
+        position: relative;
+      }
+      .burger::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        border-top: 1.5px solid var(--ink);
+        transform: translateY(-50%);
+      }
+      /* The mascot layer is a full 1:2.4 frame with the mascot at its centre;
+         --k scales it by the screen width, --y places its centre. */
+      .mascot {
+        position: absolute;
+        left: 50%;
+        top: var(--y);
+        width: calc(var(--k) * 100%);
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        pointer-events: none;
+      }
+      .mascot img {
+        width: 100%;
+        display: block;
+        transform-origin: 50% 62%;
+        animation: rock 3.2s ease-in-out infinite;
+      }
+      .shadow {
+        position: absolute;
+        left: 50%;
+        top: calc(var(--y) + var(--k) * 26vw);
+        width: calc(var(--k) * 46%);
+        height: calc(var(--k) * 5%);
+        transform: translate(-46%, -50%);
+        background: radial-gradient(
+          closest-side,
+          rgba(214, 40, 130, 0.35),
+          transparent
+        );
+        filter: blur(6px);
+        z-index: 0;
+      }
+      @media (min-width: 700px) {
+        .shadow {
+          top: calc(var(--y) + var(--k) * 101px);
+        }
+      }
+      @keyframes rock {
+        0%,
+        100% {
+          transform: rotate(-4deg);
+        }
+        50% {
+          transform: rotate(4deg);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .mascot img {
+          animation: none;
+        }
+      }
+      .label {
+        position: absolute;
+        z-index: 2;
+        background: rgba(255, 255, 255, 0.55);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 10px;
+        padding: 13px 16px;
+        font-size: 12px;
+        line-height: 1.55;
+        color: var(--muted);
+      }
+      .label .eyebrow {
+        font-size: 11px;
+      }
+      .label b {
+        display: block;
+        color: var(--ink);
+        opacity: 0.85;
+        font-size: 15px;
+        font-weight: 600;
+        margin: 3px 0 5px;
+      }
+      .strip {
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        bottom: max(22px, env(safe-area-inset-bottom));
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 10.5px;
+        color: var(--muted);
+        z-index: 2;
+      }
+      .dot {
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #1db954;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+      .arrow {
+        font-size: 20px;
+        opacity: 0.35;
+        letter-spacing: 0;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.55);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 999px;
+        padding: 7px 12px;
+        font-size: 10.5px;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row">
+      <!-- A -->
+      <section class="variant">
+        <div class="caption">
+          <b>A · Экспонат на постаменте</b>
+          <p>
+            Неваляшка вдвое крупнее, чем сейчас, по центру экрана. Табличка под
+            ней. Нижняя строка сжата в одну линию, «С 2024 · Европа» ушла в
+            табличку.
+          </p>
+        </div>
+        <div class="screen" style="--k: 1.55; --y: 43%">
+          <div class="header">
+            <span>Ludvik4</span><span class="burger"></span>
+          </div>
+          <div class="shadow"></div>
+          <div class="mascot">
+            <img src="/stage/stage-mascot-tall-1560.webp" alt="" />
+          </div>
+          <div
+            class="label"
+            style="
+              left: 50%;
+              bottom: 72px;
+              transform: translateX(-50%);
+              width: 270px;
+            "
+          >
+            <span class="mono eyebrow">Экспонат № 04 · с 2024</span>
+            <b>Ludvik</b>
+            Чистый код, WebGL, ноль полигонов.<br />Обращаться с любопытством.
+          </div>
+          <div class="strip mono">
+            <span><i class="dot"></i>Беру проекты · IV кв. 2026</span>
+            <span class="arrow">↓</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- B -->
+      <section class="variant">
+        <div class="caption">
+          <b>B · Табличка первой</b>
+          <p>
+            Как в музее: сначала читаешь табличку, потом смотришь на экспонат.
+            Табличка сразу под меню, неваляшка ещё крупнее и стоит ниже, ближе к
+            пальцу.
+          </p>
+        </div>
+        <div class="screen" style="--k: 1.85; --y: 58%">
+          <div class="header">
+            <span>Ludvik4</span><span class="burger"></span>
+          </div>
+          <div class="label" style="left: 20px; top: 66px; width: 250px">
+            <span class="mono eyebrow">Экспонат № 04</span>
+            <b>Ludvik</b>
+            Чистый код, WebGL, ноль полигонов.<br />Обращаться с любопытством.
+          </div>
+          <div class="shadow"></div>
+          <div class="mascot">
+            <img src="/stage/stage-mascot-tall-1560.webp" alt="" />
+          </div>
+          <div class="strip mono">
+            <span><i class="dot"></i>Беру проекты · IV кв. 2026</span>
+            <span class="arrow">↓</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- C -->
+      <section class="variant">
+        <div class="caption">
+          <b>C · Крупный план</b>
+          <p>
+            Неваляшка во весь экран, низ уходит за край — тянет листать дальше.
+            Табличка маленькая, справа сверху; статус — плашкой под меню.
+          </p>
+        </div>
+        <div class="screen" style="--k: 2.6; --y: 72%">
+          <div class="header">
+            <span>Ludvik4</span><span class="burger"></span>
+          </div>
+          <div style="position: absolute; left: 20px; top: 62px; z-index: 2">
+            <span class="pill mono"
+              ><i class="dot"></i>Беру проекты · IV кв.</span
+            >
+          </div>
+          <div
+            class="label"
+            style="right: 16px; top: 112px; width: 168px; padding: 10px 12px"
+          >
+            <span class="mono eyebrow">№ 04</span>
+            <b>Ludvik</b>
+            Чистый код, WebGL,<br />ноль полигонов.
+          </div>
+          <div class="shadow"></div>
+          <div class="mascot">
+            <img src="/stage/stage-mascot-tall-1560.webp" alt="" />
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
