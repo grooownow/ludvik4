@@ -54,6 +54,7 @@
         -webkit-tap-highlight-color: transparent;
         user-select: none;
         -webkit-user-select: none;
+        -webkit-touch-callout: none;
         background: radial-gradient(
           120% 70% at 50% 42%,
           #fff3fd 0%,
@@ -235,7 +236,13 @@
       // the screen edges.
       const W = 2.6;
       const ZETA = 0.25;
-      const KICK = 2.6; // rad/s per tap, as on the desktop
+      const KICK = 2.6; // rad/s for a full hit, as on the desktop
+      // The hit lands on release; its strength grows with how long the finger
+      // rested: a flick gives a nudge, a short press a full swing.
+      const FLICK_MS = 80;
+      const PRESS_MS = 350;
+      const FLICK_SHARE = 0.4;
+      const SLOP_PX = 12; // a finger that travels further is scrolling, not hitting
       const MAX = 0.5; // rad, as on the desktop
       const ROLL = 0.175; // belly radius, in units of the mascot frame width
 
@@ -262,16 +269,44 @@
         requestAnimationFrame(frame);
       }
 
+      let press = null;
+
       screen.addEventListener("pointerdown", (event) => {
         if (event.target.closest(".label, .header, .strip")) return;
         const box = mascot.getBoundingClientRect();
-        // Hit on the left tips it to the right (clockwise), and back.
-        speed += event.clientX < box.left + box.width / 2 ? KICK : -KICK;
+        press = {
+          t: performance.now(),
+          x: event.clientX,
+          y: event.clientY,
+          // Hit on the left tips it to the right (clockwise), and back.
+          side: event.clientX < box.left + box.width / 2 ? 1 : -1,
+        };
+      });
+
+      screen.addEventListener("pointerup", (event) => {
+        if (!press) return;
+        const moved = Math.hypot(
+          event.clientX - press.x,
+          event.clientY - press.y,
+        );
+        const held = performance.now() - press.t;
+        const side = press.side;
+        press = null;
+        if (moved > SLOP_PX) return;
+        const k = Math.min(
+          Math.max((held - FLICK_MS) / (PRESS_MS - FLICK_MS), 0),
+          1,
+        );
+        speed += side * KICK * (FLICK_SHARE + (1 - FLICK_SHARE) * k);
         if (!running) {
           running = true;
           last = performance.now();
           requestAnimationFrame(frame);
         }
+      });
+
+      screen.addEventListener("pointercancel", () => {
+        press = null;
       });
     </script>
   </body>

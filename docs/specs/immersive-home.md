@@ -305,6 +305,10 @@ Waiting on the owner:
    The tap should rock calmer than the desktop click — ~1.2 s per swing,
    three or four visible swings (free spring w ≈ 2.6, zeta ≈ 0.25). Desktop
    keeps its current spring (w 3.4, zeta 0.08) — owner, do not change it.
+   The hit lands on release and its strength follows the press: a flick
+   (≤ 80 ms) gives 40% of the kick (~16° swing), a press of ~350 ms the full
+   kick (the 0.5 rad cap, ~29°); a finger that travels > 12 px is a scroll,
+   not a hit. Reference: the mockup's script.
 
 Deferred review minors (final review 2026-10-23): stale spin velocity when a
 drag pauses before release; WebGL contexts not released on unmount; no unit test for
