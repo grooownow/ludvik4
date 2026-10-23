@@ -40,7 +40,9 @@ export type MascotState = {
   hold: number;
 };
 
-const FREE = { w: 3.4, zeta: 0.08 };
+// Free rocking after a push: ~1.2 s per swing, three or four visible swings
+// before it settles (owner, 2026-10-23 — a lighter damping felt fussy).
+const FREE = { w: 2.6, zeta: 0.25 };
 const HELD = { w: 9, zeta: 0.9 };
 const LAG = { w: 11, zeta: 0.22, gain: 0.05, max: 0.14 };
 const MAX_TILT = 0.5;

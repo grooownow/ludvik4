@@ -342,12 +342,12 @@
           if (event.target.closest(".label, .header, .pill")) return;
           const box = mascot.getBoundingClientRect();
           const side = event.clientX < box.left + box.width / 2 ? 1 : -1;
-          const swing = [0, 20, -13, 8, -5, 2.5, -1, 0];
+          const swing = [0, 16, -7, 3, -1, 0];
           mascot.animate(
             swing.map((deg) => ({
               transform: `translate(-50%, -50%) rotate(${side * deg}deg)`,
             })),
-            { duration: 1600, easing: "ease-out" },
+            { duration: 3600, easing: "ease-in-out" },
           );
         });
       }

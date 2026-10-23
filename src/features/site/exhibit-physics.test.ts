@@ -39,6 +39,31 @@ describe("stepMascot", () => {
     expect(Math.abs(pose.tiltA - idleRock(t - DT).a)).toBeLessThan(0.02);
   });
 
+  it("rocks unhurriedly after a push: few swings, each over a second", () => {
+    // The push spring alone (idle rocking left out): count the visible swings
+    // (beyond ~3°) and time the first one. Owner, 2026-10-23: the old spring
+    // swung a dozen times, about 0.9 s each, and felt fussy.
+    const state = createMascotState();
+    stepMascot(state, { ...free, push: { a: 2.6, b: 0 } }, DT, 0, YAW);
+    let swings = 0;
+    let sign = Math.sign(state.push.a);
+    const crossings: number[] = [];
+    let peak = 0;
+    for (let i = 1; i < 12 * 60; i++) {
+      stepMascot(state, free, DT, i * DT, YAW);
+      peak = Math.max(peak, Math.abs(state.push.a));
+      const s = Math.sign(state.push.a);
+      if (s !== 0 && s !== sign) {
+        crossings.push(i * DT);
+        if (peak > 0.05) swings++;
+        peak = 0;
+        sign = s;
+      }
+    }
+    expect(swings).toBeLessThanOrEqual(4);
+    expect(crossings[1]! - crossings[0]!).toBeGreaterThan(1.1);
+  });
+
   it("holds the tilt while dragging toward the viewer", () => {
     const { pose } = run(120, { ...free, dragging: true, holdTilt: 0.3 });
     expect(pose.tiltB).toBeCloseTo(0.3 * Math.cos(YAW), 1);
