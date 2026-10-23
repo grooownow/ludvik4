@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { type HomeContent, type Market, workExhibitNumber } from "./content";
 import { CtaLink } from "./cta-link";
-import { HallCard } from "./hall-card";
+import { HallCard, HallsStage } from "./hall-card";
 import type { HomeExhibit } from "./home-exhibits";
 
 // Sections of the exhibition home below the stage (docs/specs/immersive-home.md,
@@ -59,30 +59,21 @@ function Band({
 
 export function HomeCollection({
   copy,
-  contactHref = "/contact",
+  lang,
 }: {
   copy: HomeContent["collection"];
-  /** Where the last hall ("Something else?") leads. */
-  contactHref?: string;
+  lang: Market;
 }) {
   return (
-    <Band id="collection">
+    <HallsStage>
       <Eyebrow>{copy.eyebrow}</Eyebrow>
       <Title parts={copy.title} />
       <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {copy.halls.map((hall, i) => {
-          const last = i === copy.halls.length - 1;
-          return (
-            <HallCard
-              key={hall.index}
-              hall={hall}
-              soft={i === 0 || last}
-              contactHref={last ? contactHref : undefined}
-            />
-          );
-        })}
+        {copy.halls.map((hall, i) => (
+          <HallCard key={hall.index} hall={hall} index={i} lang={lang} />
+        ))}
       </ul>
-    </Band>
+    </HallsStage>
   );
 }
 

@@ -38,7 +38,7 @@ describe("Home (EN)", () => {
     }
   });
 
-  it("shows six halls that do not open; only the last hall's chip links to contact", () => {
+  it("shows six halls as plain cards that do not open", () => {
     const { container } = renderHome("en");
     const collection = container.querySelector("#collection") as HTMLElement;
     for (const name of [
@@ -49,25 +49,22 @@ describe("Home (EN)", () => {
       "Widgets & tools",
       "Something else?",
     ]) {
-      expect(within(collection).getByText(name).closest("a")).toBeNull();
+      expect(within(collection).getByText(name)).toBeInTheDocument();
     }
-    const links = within(collection).getAllByRole("link");
-    expect(links).toHaveLength(1);
-    expect(links[0]).toHaveTextContent("Tell me the idea →");
-    expect(links[0]).toHaveAttribute("href", "/contact");
+    expect(within(collection).queryAllByRole("link")).toHaveLength(0);
   });
 
-  it("gives every hall a decorative exhibit and its what's-inside chips", () => {
+  it("draws every hall as a decorative plan with notes in the page's language", () => {
     const { container } = renderHome("en");
     const collection = container.querySelector("#collection") as HTMLElement;
-    const exhibits = collection.querySelectorAll("svg[data-exhibit]");
-    expect(exhibits).toHaveLength(6);
-    for (const svg of exhibits) {
+    const plans = collection.querySelectorAll("svg[data-plan]");
+    expect(plans).toHaveLength(6);
+    for (const svg of plans) {
       expect(svg.closest('[aria-hidden="true"]')).not.toBeNull();
     }
-    for (const chip of ["SEO-ready", "Payments", "Integrations", "Quizzes"]) {
-      expect(within(collection).getByText(chip)).toBeInTheDocument();
-    }
+    expect(
+      collection.querySelector('[data-plan="question"]'),
+    ).toHaveTextContent("your idea");
   });
 
   it("frames three numbered work exhibits, the first one large", () => {

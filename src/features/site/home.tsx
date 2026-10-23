@@ -37,7 +37,7 @@ export function Home({
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
       <HomeStage content={content} />
-      <HomeCollection copy={home.collection} />
+      <HomeCollection copy={home.collection} lang={content.lang} />
       <HomeSteps copy={home.steps} />
       <HomeGallery
         copy={home.work}

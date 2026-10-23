@@ -1,93 +1,110 @@
-import { fireEvent, render } from "@testing-library/react";
+import { act, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { entryDirection, HallCard } from "./hall-card";
+
+const search = vi.hoisted(() => ({ value: "" }));
+vi.mock("next/navigation", () => ({
+  useSearchParams: () => new URLSearchParams(search.value),
+}));
+import { drawDelay, HallCard, HallsStage, hallsMode } from "./hall-card";
 
 const HALL = {
   index: "Hall 04",
   name: "Automations",
   line: "the boring parts, handled",
   exhibit: "gears" as const,
-  more: ["Bots", "Integrations", "CRMs"],
 };
 
-function motion(reduced: boolean) {
+/** A controllable IntersectionObserver: `enter()` reports the card in view. */
+function stubObserver() {
+  let callback: IntersectionObserverCallback = () => {};
   vi.stubGlobal(
-    "matchMedia",
-    vi.fn((query: string) => ({
-      matches: query.includes("reduce") ? reduced : false,
-      media: query,
-    })),
+    "IntersectionObserver",
+    class {
+      constructor(cb: IntersectionObserverCallback) {
+        callback = cb;
+      }
+      observe() {}
+      disconnect() {}
+    },
   );
+  return {
+    enter: () =>
+      callback(
+        [{ isIntersecting: true } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      ),
+  };
 }
 
-function mount() {
-  const animate = vi.fn();
-  // jsdom has no Web Animations API; every element shares this stub.
-  Element.prototype.animate = animate as unknown as Element["animate"];
-  const view = render(
+const mount = (index = 0, lang: "en" | "ru" = "en") =>
+  render(
     <ul>
-      <HallCard hall={HALL} soft={false} />
+      <HallCard hall={HALL} index={index} lang={lang} />
     </ul>,
-  );
-  return { ...view, animate, card: view.container.querySelector("li")! };
-}
+  ).container.querySelector("li")!;
 
 afterEach(() => {
-  // jsdom has no getAnimations; a test may stub it
-  delete (Element.prototype as { getAnimations?: unknown }).getAnimations;
   vi.unstubAllGlobals();
-  vi.restoreAllMocks();
+  vi.useRealTimers();
+  search.value = "";
 });
 
-describe("entryDirection", () => {
-  it("tips the exhibit away from the side the cursor came in", () => {
-    expect(entryDirection(10, 0, 300)).toBe(1);
-    expect(entryDirection(290, 0, 300)).toBe(-1);
+describe("hallsMode", () => {
+  it("shows the spotlight only for ?halls=spot, the dark hall otherwise", () => {
+    expect(hallsMode("?halls=spot")).toBe("spot");
+    expect(hallsMode("")).toBe("dark");
+    expect(hallsMode("?halls=neon")).toBe("dark");
   });
 });
 
-describe("HallCard hover", () => {
-  it("squashes the card, rocks the exhibit and turns the gears for a mouse", () => {
-    motion(false);
-    const { animate, card } = mount();
-    card.getBoundingClientRect = () =>
-      ({ left: 0, top: 0, width: 300, height: 225 }) as DOMRect;
-    fireEvent.pointerEnter(card, { pointerType: "mouse", clientX: 5 });
-    // card body + exhibit + two gears
-    expect(animate).toHaveBeenCalledTimes(4);
-    // the squash runs on the inner body, never on the hover target itself
-    expect(animate.mock.contexts[0]).not.toBe(card);
-    expect(card.contains(animate.mock.contexts[0] as Node)).toBe(true);
-    const wobble = animate.mock.calls[1]![0] as { transform: string }[];
-    expect(wobble[1]!.transform).toBe("rotate(12deg)");
+describe("drawDelay", () => {
+  it("staggers the cards of a row left to right", () => {
+    expect([0, 1, 2, 3].map(drawDelay)).toEqual([0, 220, 440, 0]);
+  });
+});
+
+describe("HallCard", () => {
+  it("draws its plan only once it scrolls into view, after its column's beat", () => {
+    vi.useFakeTimers();
+    const io = stubObserver();
+    const card = mount(1);
+    expect(card).toHaveAttribute("data-drawn", "false");
+    act(() => io.enter());
+    act(() => vi.advanceTimersByTime(219));
+    expect(card).toHaveAttribute("data-drawn", "false");
+    act(() => vi.advanceTimersByTime(1));
+    expect(card).toHaveAttribute("data-drawn", "true");
   });
 
-  it("lets a running wobble finish when the cursor re-enters at the edge", () => {
-    motion(false);
-    const { animate, card } = mount();
-    Element.prototype.getAnimations = () =>
-      [{ playState: "running" }] as unknown as Animation[];
-    fireEvent.pointerEnter(card, { pointerType: "mouse", clientX: 5 });
-    expect(animate).not.toHaveBeenCalled();
+  it("shows the finished plan where there is no IntersectionObserver", () => {
+    vi.stubGlobal("IntersectionObserver", undefined);
+    expect(mount()).toHaveAttribute("data-drawn", "true");
   });
 
-  it("stays still for reduced motion", () => {
-    motion(true);
-    const { animate, card } = mount();
-    fireEvent.pointerEnter(card, { pointerType: "mouse", clientX: 5 });
-    expect(animate).not.toHaveBeenCalled();
+  it("keeps the plan decorative and its notes in the page's language", () => {
+    vi.stubGlobal("IntersectionObserver", undefined);
+    const card = mount(0, "ru");
+    const plan = card.querySelector('svg[data-plan="gears"]')!;
+    expect(plan.closest('[aria-hidden="true"]')).not.toBeNull();
+    expect(plan).toHaveTextContent("бот");
+  });
+});
+
+describe("HallsStage", () => {
+  it("is the dark hall by default", () => {
+    const { container } = render(<HallsStage>x</HallsStage>);
+    expect(container.querySelector("#collection")).toHaveAttribute(
+      "data-halls",
+      "dark",
+    );
   });
 
-  it("does not animate on touch, where the exhibits rock on their own", () => {
-    motion(false);
-    const { animate, card } = mount();
-    fireEvent.pointerEnter(card, { pointerType: "touch", clientX: 5 });
-    expect(animate).not.toHaveBeenCalled();
-  });
-
-  it("has no link unless it is the contact hall", () => {
-    motion(false);
-    const { container } = mount();
-    expect(container.querySelector("a")).toBeNull();
+  it("switches to the spotlight for ?halls=spot", () => {
+    search.value = "halls=spot";
+    const { container } = render(<HallsStage>x</HallsStage>);
+    expect(container.querySelector("#collection")).toHaveAttribute(
+      "data-halls",
+      "spot",
+    );
   });
 });

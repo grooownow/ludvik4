@@ -181,89 +181,212 @@ body:has([data-stage]) {
   cursor: pointer;
 }
 
-/* Collection halls (hall-card.tsx). The exhibit sits top-right at a fixed
-   size; on hover the chips join under the subtitle and push the text up, and
-   a gloss follows the cursor (--hall-x/y, set inline). Touch has no
-   hover: chips show from the start and the exhibits rock on their own. */
-.hall-exhibit {
+/* Collection halls (hall-card.tsx, hall-plans.tsx). Fine-line plans on a
+   faint pink grid; each card draws its lines in once ([data-drawn]), then
+   the notes fade in. Hover darkens the plan and turns its accent pink.
+   The section has two looks under review ([data-halls]): a dark hall and a
+   spotlight that eases after the cursor (--spot-x/y, set inline). */
+.halls-stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  --plan-line: rgb(42 20 32 / 0.42);
+  --plan-line-hover: rgb(42 20 32 / 0.72);
+  --plan-fill: rgb(42 20 32 / 0.07);
+  --plan-note: rgb(42 20 32 / 0.55);
+}
+.halls-stage::before {
+  content: "";
   position: absolute;
-  top: 1.125rem;
-  right: 1.375rem;
-  z-index: 1;
-  width: 46%;
-  max-width: 190px;
-  aspect-ratio: 1;
+  z-index: -1;
   pointer-events: none;
+  border-radius: 50%;
 }
-.hall-exhibit-art {
-  transform-origin: 50% 88%;
+.halls-stage[data-halls="dark"] {
+  background: var(--intro);
+  color: var(--intro-foreground);
+  --plan-line: rgb(255 255 255 / 0.5);
+  --plan-line-hover: rgb(255 255 255 / 0.85);
+  --plan-fill: rgb(255 255 255 / 0.07);
+  --plan-note: rgb(255 255 255 / 0.55);
 }
-.hall-body::after {
+.halls-stage[data-halls="dark"] .text-stage-muted {
+  color: rgb(255 255 255 / 0.55);
+}
+.halls-stage[data-halls="dark"]::before {
+  left: 50%;
+  top: 100%;
+  width: 900px;
+  height: 420px;
+  transform: translate(-50%, -50%);
+  filter: blur(70px);
+  background: radial-gradient(
+    closest-side,
+    rgb(255 79 182 / 0.35),
+    transparent
+  );
+}
+.halls-stage[data-halls="spot"] {
+  background: #fff8fb;
+}
+.halls-stage[data-halls="spot"]::before {
+  left: 0;
+  top: 0;
+  width: 760px;
+  height: 760px;
+  transform: translate(
+    calc(var(--spot-x, 70%) - 50%),
+    calc(var(--spot-y, 60%) - 50%)
+  );
+  filter: blur(30px);
+  background: radial-gradient(
+    closest-side,
+    rgb(255 110 190 / 0.42),
+    rgb(236 196 255 / 0.22) 60%,
+    transparent
+  );
+}
+
+.hall-plan {
+  position: relative;
+  display: flex;
+  aspect-ratio: 4 / 3;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border-radius: 1rem;
+  padding: 1.75rem;
+  transition:
+    border-color 0.6s ease,
+    background-color 0.6s ease;
+}
+[data-halls="dark"] .hall-plan {
+  border: 1px solid rgb(255 255 255 / 0.1);
+  background: rgb(255 255 255 / 0.035);
+}
+[data-halls="dark"] .hall-plan:hover {
+  border-color: rgb(255 79 182 / 0.5);
+  background: rgb(255 255 255 / 0.06);
+}
+[data-halls="spot"] .hall-plan {
+  border: 1px solid rgb(255 255 255 / 0.85);
+  background: rgb(255 255 255 / 0.72);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+[data-halls="spot"] .hall-plan:hover {
+  border-color: rgb(255 79 182 / 0.45);
+  background: rgb(255 255 255 / 0.86);
+}
+/* the grid paper, fading out under the text */
+.hall-plan::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    260px circle at var(--hall-x, 50%) var(--hall-y, 50%),
-    rgb(255 255 255 / 0.75),
-    transparent 60%
-  );
+  pointer-events: none;
   opacity: 0;
-  transition: opacity 0.35s;
+  transition: opacity 1.4s ease 0.5s;
+  background-image:
+    linear-gradient(rgb(255 79 182 / 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 79 182 / 0.14) 1px, transparent 1px),
+    linear-gradient(rgb(255 79 182 / 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 79 182 / 0.07) 1px, transparent 1px);
+  background-size:
+    36px 36px,
+    36px 36px,
+    9px 9px,
+    9px 9px;
+  background-position: -1px -1px;
+  mask-image: linear-gradient(to bottom, #000 45%, transparent 80%);
+}
+.hall-plan[data-drawn="true"]::before {
+  opacity: 1;
+}
+[data-halls="dark"] .hall-plan[data-drawn="true"]::before {
+  opacity: 0.5;
+}
+.hall-plan-art {
+  position: absolute;
+  top: 1.875rem;
+  right: 1.375rem;
+  z-index: 1;
+  width: 50%;
+  max-width: 250px;
   pointer-events: none;
 }
-.hall-more {
-  max-height: 0;
-  margin-top: 0;
+.hall-plan-art svg {
+  transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.hall-plan:hover .hall-plan-art svg {
+  transform: translateY(-4px);
+}
+.hall-plan :is(.ln, .ac, .an) {
+  fill: none;
+  stroke-width: 1.1;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.hall-plan :is(.ln, .ac) {
+  stroke: var(--plan-line);
+  transition: stroke 0.6s ease;
+}
+.hall-plan .an {
+  stroke: rgb(255 79 182 / 0.7);
+  stroke-width: 1;
+}
+.hall-plan .fl {
+  fill: var(--plan-fill);
   opacity: 0;
-  transform: translateY(10px);
-  transition:
-    max-height 0.45s ease,
-    margin-top 0.45s ease,
-    opacity 0.3s ease,
-    transform 0.45s cubic-bezier(0.2, 0.9, 0.25, 1.2);
+  transition: opacity 0.8s ease;
 }
-.hall-card:hover .hall-body::after {
+.hall-plan .acf {
+  fill: transparent;
+  transition: fill 0.6s ease;
+}
+.hall-plan text {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  fill: var(--plan-note);
+  opacity: 0;
+  transition: opacity 0.8s ease 1.6s;
+}
+.hall-plan[data-drawn="true"] :is(.ln, .ac) {
+  animation: hall-draw 1.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+.hall-plan[data-drawn="true"] .an {
+  animation: hall-draw 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.8s forwards;
+}
+.hall-plan[data-drawn="true"] .fl {
+  opacity: 1;
+  transition-delay: 1.2s;
+}
+.hall-plan[data-drawn="true"] text {
   opacity: 1;
 }
-.hall-card:is(:hover, :focus-within) .hall-more {
-  max-height: 2.5rem;
-  margin-top: 0.625rem;
-  opacity: 1;
-  transform: none;
+.hall-plan:hover .ln {
+  stroke: var(--plan-line-hover);
 }
-@keyframes hall-idle {
-  0%,
-  100% {
-    transform: rotate(-3deg);
-  }
-  50% {
-    transform: rotate(3deg);
-  }
+.hall-plan:hover .ac {
+  stroke: var(--color-primary);
 }
-@media (hover: none) {
-  .hall-card .hall-more {
-    max-height: 2.5rem;
-    margin-top: 0.625rem;
-    opacity: 1;
-    transform: none;
-  }
-  .hall-exhibit-art {
-    animation: hall-idle 3.6s ease-in-out infinite;
-  }
-  .hall-card:nth-child(2n) .hall-exhibit-art {
-    animation-delay: -1.2s;
-  }
-  .hall-card:nth-child(3n) .hall-exhibit-art {
-    animation-delay: -2.1s;
+.hall-plan:hover .acf {
+  fill: var(--color-primary);
+}
+@keyframes hall-draw {
+  to {
+    stroke-dashoffset: 0;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hall-more {
-    transition: none;
-  }
-  .hall-exhibit-art {
+  .hall-plan[data-drawn="true"] :is(.ln, .ac, .an) {
     animation: none;
+    stroke-dashoffset: 0;
+  }
+  .hall-plan::before,
+  .hall-plan .fl,
+  .hall-plan text {
+    transition: none;
   }
 }

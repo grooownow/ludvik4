@@ -322,17 +322,15 @@ medium|lite|still` pins a tier. The rocking still (with a tap-to-push button) is
 - Strip status: "Taking projects · Q4 2026" / «Беру проекты · IV кв. 2026».
 - `/contact` shows the email ludvik4good.me@gmail.com and Telegram on both
   markets (no LinkedIn for now, owner 2026-10-23).
-- Hall cards (owner chose variant B, 2026-10-23; prototype
-  `experiments/nevalyashka/ideas/halls.html`; `hall-card.tsx`,
-  `hall-exhibits.tsx`): each hall has a flat SVG jelly exhibit top-right at a
-  fixed size (owner: do not shrink it on hover). On hover the card squashes
-  and springs back, a gloss follows the cursor, the exhibit rocks away from
-  the entry side (gears turn, the toggle flips) and up to three "what's
-  inside" chips slide in under the subtitle. Halls do not open and show no
-  pointer; only hall 06's chip is a link to `/contact`. Touch: chips shown,
-  exhibits rock idly; reduced motion: still. Hall names shortened so text
-  clears the exhibit: "Web apps" / «Веб-приложения», «Виджеты». RU chip copy
-  is a draft awaiting owner approval with the rest of `ru.home`.
+- Hall cards (2026-10-23, replaces the jelly exhibits; prototype
+  `experiments/nevalyashka/ideas/halls-v2.html`, "Чертежи" → "Подробный"):
+  each hall is a fine-line plan with pink dimension lines and mono notes on
+  a faint pink grid (`hall-plans.tsx`, notes per market). Each card draws
+  itself once when it scrolls into view, a beat per column; hover darkens
+  the plan and turns its accent pink. Halls do not open and have no chips.
+  Two section looks are under owner review on the same build: the dark hall
+  (default) and a spotlight that follows the cursor (`/?halls=spot`); drop
+  the loser and `hallsMode` once chosen.
 
 Waiting on the owner:
 
