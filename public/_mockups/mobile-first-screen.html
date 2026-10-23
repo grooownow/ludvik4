@@ -72,6 +72,8 @@
       /* One phone screen. On a phone it is the real screen height. */
       .screen {
         position: relative;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
         width: 100%;
         height: min(100svh, 844px);
         overflow: hidden;
@@ -119,12 +121,13 @@
          --k scales it by the screen width, --y places its centre. */
       .mascot {
         position: absolute;
-        left: 50%;
+        left: var(--x, 50%);
         top: var(--y);
         width: calc(var(--k) * 100%);
         transform: translate(-50%, -50%);
         z-index: 1;
         pointer-events: none;
+        transform-origin: 50% 58%;
       }
       .mascot img {
         width: 100%;
@@ -134,7 +137,7 @@
       }
       .shadow {
         position: absolute;
-        left: 50%;
+        left: var(--x, 50%);
         top: calc(var(--y) + var(--k) * 26vw);
         width: calc(var(--k) * 46%);
         height: calc(var(--k) * 5%);
@@ -235,12 +238,12 @@
         <div class="caption">
           <b>A · Экспонат на постаменте</b>
           <p>
-            Неваляшка вдвое крупнее, чем сейчас, по центру экрана. Табличка под
-            ней. Нижняя строка сжата в одну линию, «С 2024 · Европа» ушла в
+            Неваляшка заметно крупнее, чем сейчас, обе руки в кадре. Табличка
+            под ней. Нижняя строка сжата в одну линию, «С 2024 · Европа» ушла в
             табличку.
           </p>
         </div>
-        <div class="screen" style="--k: 1.55; --y: 43%">
+        <div class="screen" style="--k: 1.38; --y: 43%; --x: 53%">
           <div class="header">
             <span>Ludvik4</span><span class="burger"></span>
           </div>
@@ -331,5 +334,24 @@
         </div>
       </section>
     </div>
+    <script>
+      // Tap the mascot = a hit: it swings away from the finger, harder than
+      // its idle rocking, and settles (throwaway mockup, not the site's physics).
+      for (const screen of document.querySelectorAll(".screen")) {
+        const mascot = screen.querySelector(".mascot");
+        screen.addEventListener("pointerdown", (event) => {
+          if (event.target.closest(".label, .header, .pill")) return;
+          const box = mascot.getBoundingClientRect();
+          const side = event.clientX < box.left + box.width / 2 ? 1 : -1;
+          const swing = [0, 20, -13, 8, -5, 2.5, -1, 0];
+          mascot.animate(
+            swing.map((deg) => ({
+              transform: `translate(-50%, -50%) rotate(${side * deg}deg)`,
+            })),
+            { duration: 1600, easing: "ease-out" },
+          );
+        });
+      }
+    </script>
   </body>
 </html>
