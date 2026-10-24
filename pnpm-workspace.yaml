@@ -83,3 +83,6 @@ overrides:
   # @modelcontextprotocol/sdk. Drop once those parents ship the patched range.
   body-parser@<1.20.9: ^1.20.9
   "body-parser@>=2.0.0 <2.4.0": ^2.4.0
+  # GHSA-xjj6-f33q-929c: undici, fixed in 7.30.1. Both copies are dev-only
+  # (the direct devDependency and shadcn's). Drop once both are on >=7.30.1.
+  "undici@>=7.18.0 <7.30.1": ^7.30.1

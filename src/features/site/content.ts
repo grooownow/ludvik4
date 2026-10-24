@@ -57,8 +57,11 @@ export type HomeContent = {
   about: {
     eyebrow: string;
     title: [string, string];
-    body: string;
+    /** Paragraphs, in order. */
+    body: string[];
     plate: string;
+    /** Alt text of the curator portrait (public/about/curator-portrait.webp). */
+    photoAlt: string;
     linkLabel: string;
   };
   closing: { eyebrow: string; title: string; cta: string };
@@ -442,8 +445,13 @@ const ru: MarketContent = {
     about: {
       eyebrow: "Обо мне",
       title: ["Один человек,", "от начала до конца."],
-      body: "Независимая студия в Европе. Веду проект от смутной идеи до работающего запуска — и всё это время остаюсь вашим единственным контактом.",
+      body: [
+        "Я Екатерина Пустовая — основательница студии Ludvik4, full‑stack developer с опытом в UX/UI. Больше 8 лет разрабатываю веб-приложения разного масштаба и знаю, как сделать продукт качественным, масштабируемым и по-настоящему решающим задачи бизнеса.",
+        "Студия базируется в Испании и работает с клиентами по всему миру. Берём проект под ключ: от идеи до работающего запуска — дизайн, разработка и всё, что нужно продукту. Вы работаете напрямую со мной, а я собираю под задачу всю нужную экспертизу.",
+      ],
       plate: "Куратор",
+      photoAlt:
+        "Портрет автора Ludvik4: тёмное худи, улыбка и взгляд вверх на розовом фоне",
       linkLabel: "Подробнее обо мне",
     },
     closing: {
@@ -740,8 +748,13 @@ const en: MarketContent = {
     about: {
       eyebrow: "About",
       title: ["One person,", "end to end."],
-      body: "A founder-led studio in Europe. I take a project from a fuzzy idea to a working launch — and stay the one you talk to.",
+      body: [
+        "I'm Kate Pustovaya — founder of Ludvik4 and a full‑stack developer with a background in UX/UI. For 8+ years I've been building web applications of every size, and I know what it takes to make a product solid, scalable and genuinely useful to the business behind it.",
+        "The studio is based in Spain and works with clients worldwide. We take a project end to end: from an idea to a working launch — design, development and whatever else the product needs. You work with me directly, and I bring together the expertise the job calls for.",
+      ],
       plate: "Curator",
+      photoAlt:
+        "Portrait of the Ludvik4 founder in a dark hoodie, smiling and looking up against pink",
       linkLabel: "More about me",
     },
     closing: {
