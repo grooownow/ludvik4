@@ -359,6 +359,21 @@ export function InternationalAboutView() {
               applied in practice.
             </p>
           </section>
+          {/* The blog stays live and indexed, but off the home: this is its
+              entry point beside the menu's Guides (owner, 2026-10-24). */}
+          <section>
+            <h2 className="text-2xl font-semibold tracking-tight">Articles</h2>
+            <p className="text-muted-foreground mt-4 leading-relaxed">
+              I write about AI-assisted development, specifications, tests and
+              shipping products.
+            </p>
+            <Link
+              href={"/blog" as Route}
+              className="mt-4 inline-block border-b border-current text-sm"
+            >
+              Read the articles →
+            </Link>
+          </section>
         </div>
       </Section>
       <EnquiryCta />

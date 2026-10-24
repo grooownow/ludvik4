@@ -1,3 +1,5 @@
+import type { Route } from "next";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { getMarketContent } from "./content";
 import { CtaLink } from "./cta-link";
@@ -54,6 +56,20 @@ export function AboutRuView() {
                 </p>
               </section>
             ))}
+            {/* The blog stays live and indexed, but off the home and menu:
+                this is its one entry point on the site (owner, 2026-10-24). */}
+            <section>
+              <h2 className="text-2xl font-semibold tracking-tight">Блог</h2>
+              <p className="text-muted-foreground mt-4 leading-relaxed">
+                Пишу о разработке с AI, автоматизации и запуске продуктов.
+              </p>
+              <Link
+                href={"/blog" as Route}
+                className="mt-4 inline-block border-b border-current text-sm"
+              >
+                Читать блог →
+              </Link>
+            </section>
           </div>
         </div>
         <section className="bg-surface-warm">
