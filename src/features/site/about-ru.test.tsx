@@ -16,6 +16,15 @@ describe("AboutRuView", () => {
     expect(main.textContent).not.toMatch(/команда разработчиков|ML-инженер/);
   });
 
+  it("links to the blog, its one entry point on the site", () => {
+    render(<AboutRuView />);
+    expect(screen.getByRole("heading", { name: "Блог" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Читать блог →" })).toHaveAttribute(
+      "href",
+      "/blog",
+    );
+  });
+
   it("ends with the way to /contact", () => {
     render(<AboutRuView />);
     expect(
