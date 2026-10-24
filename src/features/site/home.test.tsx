@@ -59,6 +59,17 @@ describe("Home (EN)", () => {
     expect(links[0]!.closest("li")).toHaveTextContent("Something else?");
   });
 
+  it("sets the EN collection title in two lines on phones, accent whole", () => {
+    const { container } = renderHome("en");
+    const title = container.querySelector("#collection h2")!;
+    expect(title).toHaveClass("max-sm:text-[min(2.25rem,8.4vw)]");
+    expect(title.querySelector(".text-primary")).toHaveClass("max-sm:block");
+    // other titles keep their phone layout
+    expect(container.querySelector("#work h2")).not.toHaveClass(
+      "max-sm:text-[min(2.25rem,8.4vw)]",
+    );
+  });
+
   it("keeps the English section titles at full size", () => {
     const { container } = renderHome("en");
     for (const id of ["collection", "how-it-works", "work"]) {
