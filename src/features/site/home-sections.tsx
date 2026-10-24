@@ -12,9 +12,20 @@ import type { HomeExhibit } from "./home-exhibits";
 // mockup experiments/nevalyashka/ideas/page-flow.html). Minimal copy: the
 // metaphor — halls, exhibits, a curator — carries the story.
 
-function Eyebrow({ children }: { children: React.ReactNode }) {
+function Eyebrow({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <p className="text-stage-muted font-mono text-xs tracking-[0.14em] uppercase">
+    <p
+      className={cn(
+        "text-stage-muted font-mono text-xs tracking-[0.14em] uppercase",
+        className,
+      )}
+    >
       {children}
     </p>
   );
@@ -27,7 +38,8 @@ function Title({
   long = false,
 }: {
   parts: [string, string];
-  /** In a half-width column: a step smaller so one line still fits. */
+  /** In a half-width column: a step smaller. It may wrap there (the RU
+   *  About title would otherwise squeeze the portrait beside it). */
   narrow?: boolean;
   /** Russian full-width titles run longer than one line at the usual size
    *  (the collection's is ~1185px at 60px): a step smaller on desktop, held
@@ -40,13 +52,18 @@ function Title({
       className={cn(
         "mt-3 text-4xl leading-[1.02] font-semibold tracking-tight text-balance",
         narrow
-          ? "sm:text-5xl lg:whitespace-nowrap"
+          ? "sm:text-5xl"
           : long
             ? "sm:text-5xl lg:whitespace-nowrap xl:text-[3.375rem]"
             : "sm:text-6xl",
       )}
     >
-      {parts[0]} <span className="text-primary">{parts[1]}</span>
+      {parts[0]}{" "}
+      {/* In a narrow column the accent wraps as one piece ("от начала до
+          конца." moves to its own line rather than leaving "от" behind). */}
+      <span className={cn("text-primary", narrow && "block sm:inline-block")}>
+        {parts[1]}
+      </span>
     </h2>
   );
 }
@@ -231,18 +248,39 @@ export function HomeGallery({
 export function HomeAbout({ copy }: { copy: HomeContent["about"] }) {
   return (
     <Band id="about">
-      <div className="grid items-center gap-12 sm:grid-cols-[1fr_1.4fr]">
-        <div className="from-pink-soft flex aspect-[4/5] items-end rounded-2xl bg-gradient-to-br to-[#ffeaf4] p-5">
-          <span className="text-stage-muted font-mono text-xs tracking-[0.14em] uppercase">
+      {/* Below lg the text runs taller than the photo: the eyebrow sits above
+          both columns at the left edge, and the photo starts at the title's
+          cap line. From lg up the eyebrow stays in the text column. */}
+      <Eyebrow className="mb-4 sm:mb-0 lg:hidden">{copy.eyebrow}</Eyebrow>
+      <div className="grid items-start gap-12 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:items-center">
+        {/* The owner's own edit of the photo, used as is (4:5, like the plate). */}
+        <div className="bg-pink-soft relative aspect-[4/5] overflow-hidden rounded-2xl sm:mt-5 lg:mt-0">
+          <Image
+            src="/about/curator-portrait.webp"
+            alt={copy.photoAlt}
+            width={1093}
+            height={1368}
+            sizes="(min-width: 640px) 460px, 100vw"
+            className="size-full object-cover"
+          />
+          <span className="absolute bottom-5 left-5 rounded-md bg-black/40 px-2 py-1 font-mono text-xs tracking-[0.14em] text-white uppercase backdrop-blur-sm">
             {copy.plate}
           </span>
         </div>
         <div>
-          <Eyebrow>{copy.eyebrow}</Eyebrow>
+          <Eyebrow className="hidden lg:block">{copy.eyebrow}</Eyebrow>
           <Title parts={copy.title} narrow />
-          <p className="text-stage-muted mt-6 max-w-xl text-lg leading-relaxed">
-            {copy.body}
-          </p>
+          {copy.body.map((paragraph, i) => (
+            <p
+              key={paragraph}
+              className={cn(
+                "text-stage-muted max-w-xl text-sm leading-relaxed",
+                i === 0 ? "mt-6" : "mt-4",
+              )}
+            >
+              {paragraph}
+            </p>
+          ))}
           <Link
             href={"/about" as Route}
             className="mt-6 inline-block border-b border-current text-sm"

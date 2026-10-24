@@ -339,11 +339,18 @@ Released 2026-10-23: the owner approved the RU copy (`content.ts` →
 `public/_mockups/` was removed, ADR 0012 marked superseded. The mobile first
 screen was checked on a real iPhone.
 
+About block, 2026-10-24: the owner's own portrait edit
+(`public/about/curator-portrait.webp`, used as is, 4:5) fills the curator
+plate, and the copy is two short first-person paragraphs (who: founder,
+full-stack developer with UX/UI, 8+ years; the studio: Spain, worldwide, end to
+end, "I bring together the expertise the job calls for"). Text is the work
+card description size. Below lg the eyebrow sits above both columns and the
+photo starts at the title's cap line.
+
 Still open after release:
 
-1. The photo in the About block.
-2. An older laptop has not been checked against the quality ladder.
-3. Phone layouts of the sections below the first screen are not designed
+1. An older laptop has not been checked against the quality ladder.
+2. Phone layouts of the sections below the first screen are not designed
    yet; the contact page design, the mood switch and prices come later.
 
 Deferred review minors (final review 2026-10-23): stale spin velocity when a
