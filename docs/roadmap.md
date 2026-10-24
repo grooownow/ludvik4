@@ -21,6 +21,13 @@ copy is ignored in `pnpm-workspace.yaml` until chromium-bidi moves to zod 4).
 Follow-up 2026-10-24: the About block got the owner's portrait and a
 first-person intro on both markets; the dev-only undici advisory is
 overridden to 7.30.1.
+Follow-up 2026-10-24: phones get a small bottom-right exhibit label (first
+line only); the stage strip drops the quarter (desktop: "Est. 2024 ·
+Worldwide" left, "Taking projects" right; phones: "Taking projects ·
+Worldwide"); the closing band is tighter on desktop; the site footer reads
+"Ludvik4 · <year> · Worldwide"; RU section titles reworded ("Всё, что работает
+в браузере, — сделаю.", "Три шага, всё прозрачно.", "Работы, которые можно
+посмотреть вживую.") and set at 44/50px so they stay on one line.
 
 **[DESIGN EXPLORATION 2026-10-22] Roly-poly jelly mascot.** Two static
 3D-style PNG concepts based on `design.pen` node `O7O2hV` were generated

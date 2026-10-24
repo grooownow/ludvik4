@@ -144,7 +144,10 @@ export function SiteFooter({ content }: { content: MarketContent }) {
       className="bg-intro border-t border-white/10 pb-[env(safe-area-inset-bottom)] text-white/45"
     >
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-6 font-mono text-sm">
-        <span>{content.home.footerTagline}</span>
+        {/* The year is the build's: every deploy rebuilds the static page. */}
+        <span>
+          Ludvik4 · {new Date().getFullYear()} · {content.home.footerReach}
+        </span>
         <span className="flex flex-wrap items-center gap-5">
           {content.footer.links.map((link) =>
             link.href === TELEGRAM_URL ? (

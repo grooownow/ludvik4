@@ -42,7 +42,7 @@ function Title({
    *  About title would otherwise squeeze the portrait beside it). */
   narrow?: boolean;
   /** Russian full-width titles run longer than one line at the usual size
-   *  (the collection's is ~1185px at 60px): a step smaller on desktop, held
+   *  (the work title runs ~21.5em): a step smaller on desktop, held
    *  on one line (they still wrap on phones). All RU section titles take it
    *  so they stay the same size. */
   long?: boolean;
@@ -54,7 +54,7 @@ function Title({
         narrow
           ? "sm:text-5xl"
           : long
-            ? "sm:text-5xl lg:whitespace-nowrap xl:text-[3.375rem]"
+            ? "sm:text-5xl lg:text-[2.75rem] lg:whitespace-nowrap xl:text-[3.125rem]"
             : "sm:text-6xl",
       )}
     >
@@ -294,7 +294,7 @@ export function HomeAbout({ copy }: { copy: HomeContent["about"] }) {
 export function HomeClosing({ copy }: { copy: HomeContent["closing"] }) {
   return (
     <section className="bg-intro text-intro-foreground">
-      <div className="mx-auto max-w-6xl px-6 py-48 text-center sm:py-64">
+      <div className="mx-auto max-w-6xl px-6 py-48 text-center sm:py-16">
         <p className="font-mono text-xs tracking-[0.14em] text-white/50 uppercase">
           {copy.eyebrow}
         </p>

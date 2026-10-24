@@ -48,8 +48,11 @@ describe("ContactPageView", () => {
     expect(container.querySelector("main")).toHaveClass("flex-1");
     const footer = container.querySelector("footer")!;
     expect(footer).toHaveClass("bg-intro");
-    // The same tagline as the home, not a separate copyright line.
-    expect(footer).toHaveTextContent("Ludvik4 · с 2024");
+    // Brand, the current year and reach on the left; Telegram on the right.
+    expect(footer).toHaveTextContent(
+      `Ludvik4 · ${new Date().getFullYear()} · По всему миру`,
+    );
+    expect(footer).toHaveTextContent("Telegram");
   });
 
   it.each(["ru", "en"] as const)("%s shows the contact email", (market) => {

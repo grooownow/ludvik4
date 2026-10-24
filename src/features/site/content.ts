@@ -38,7 +38,8 @@ export type HomeContent = {
   /** Museum label next to the mascot; its number comes from mascotExhibitNumber(). */
   exhibit: { eyebrow: string; name: string; lines: readonly string[] };
   /** Bottom strip of the stage. */
-  strip: { status: string; established: string };
+  /** Desktop: established left, status right. Phones: status · worldwide. */
+  strip: { status: string; established: string; worldwide: string };
   collection: {
     eyebrow: string;
     title: [string, string];
@@ -64,7 +65,8 @@ export type HomeContent = {
     linkLabel: string;
   };
   closing: { eyebrow: string; title: string; cta: string };
-  footerTagline: string;
+  /** Footer, left: "Ludvik4 · <current year> · <reach>". */
+  footerReach: string;
 };
 
 export type MarketContent = {
@@ -370,12 +372,13 @@ const ru: MarketContent = {
       lines: ["Чистый код, WebGL, ноль полигонов."],
     },
     strip: {
-      status: "Беру проекты · IV кв. 2026",
+      status: "Беру проекты",
       established: "С 2024 · По всему миру",
+      worldwide: "По всему миру",
     },
     collection: {
       eyebrow: "Коллекция · Что я делаю",
-      title: ["Если это живёт в браузере,", "я это сделаю."],
+      title: ["Всё, что работает в браузере, —", "сделаю."],
       halls: [
         {
           index: "Зал 01",
@@ -418,7 +421,7 @@ const ru: MarketContent = {
     },
     steps: {
       eyebrow: "Как это работает",
-      title: ["Три шага,", "без тумана."],
+      title: ["Три шага,", "всё прозрачно."],
       items: [
         {
           n: "01",
@@ -439,7 +442,7 @@ const ru: MarketContent = {
     },
     work: {
       eyebrow: "Избранные работы · Открытые экспонаты",
-      title: ["Работы, которые", "можно потрогать."],
+      title: ["Работы, которые", "можно посмотреть вживую."],
     },
     about: {
       eyebrow: "Обо мне",
@@ -457,7 +460,7 @@ const ru: MarketContent = {
       title: "Есть идея?",
       cta: "Обсудить проект",
     },
-    footerTagline: "Ludvik4 · с 2024",
+    footerReach: "По всему миру",
   },
   contact: {
     eyebrow: "Контакт",
@@ -672,8 +675,9 @@ const en: MarketContent = {
       lines: ["Pure code, WebGL, zero polygons.", "Handle with curiosity."],
     },
     strip: {
-      status: "Taking projects · Q4 2026",
+      status: "Taking projects",
       established: "Est. 2024 · Worldwide",
+      worldwide: "Worldwide",
     },
     collection: {
       eyebrow: "The collection · What I build",
@@ -759,7 +763,7 @@ const en: MarketContent = {
       title: "Have something in mind?",
       cta: "Discuss a project",
     },
-    footerTagline: "Ludvik4 · Est. 2024",
+    footerReach: "Worldwide",
   },
   contact: {
     eyebrow: "Contact",

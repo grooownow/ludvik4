@@ -22,7 +22,7 @@ test.describe("SEO surfaces", () => {
     await page.goto("/");
 
     await expect(
-      page.getByRole("heading", { name: /Если это живёт в браузере/ }),
+      page.getByRole("heading", { name: /Всё, что работает в браузере/ }),
     ).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Частые вопросы" }),
