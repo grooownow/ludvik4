@@ -36,6 +36,7 @@ function Title({
   parts,
   narrow = false,
   long = false,
+  twoLines = false,
 }: {
   parts: [string, string];
   /** In a half-width column: a step smaller. It may wrap there (the RU
@@ -46,6 +47,9 @@ function Title({
    *  on one line (they still wrap on phones). All RU section titles take it
    *  so they stay the same size. */
   long?: boolean;
+  /** Phones: exactly two lines — the first part sized to the width, the
+   *  accent whole on the second (the EN collection title). */
+  twoLines?: boolean;
 }) {
   return (
     <h2
@@ -56,12 +60,19 @@ function Title({
           : long
             ? "sm:text-5xl lg:text-[2.75rem] lg:whitespace-nowrap xl:text-[3.125rem]"
             : "sm:text-6xl",
+        twoLines && "max-sm:text-[min(2.25rem,8.4vw)]",
       )}
     >
       {parts[0]}{" "}
       {/* In a narrow column the accent wraps as one piece ("от начала до
           конца." moves to its own line rather than leaving "от" behind). */}
-      <span className={cn("text-primary", narrow && "block sm:inline-block")}>
+      <span
+        className={cn(
+          "text-primary",
+          narrow && "block sm:inline-block",
+          twoLines && "max-sm:block",
+        )}
+      >
         {parts[1]}
       </span>
     </h2>
@@ -94,7 +105,7 @@ export function HomeCollection({
   return (
     <HallsStage>
       <Eyebrow>{copy.eyebrow}</Eyebrow>
-      <Title parts={copy.title} long={lang === "ru"} />
+      <Title parts={copy.title} long={lang === "ru"} twoLines={lang === "en"} />
       <ul className="halls-grid mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {copy.halls.map((hall, i) => (
           <HallCard key={hall.index} hall={hall} index={i} lang={lang} />
