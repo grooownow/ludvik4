@@ -38,8 +38,8 @@ export type HomeContent = {
   /** Museum label next to the mascot; its number comes from mascotExhibitNumber(). */
   exhibit: { eyebrow: string; name: string; lines: readonly string[] };
   /** Bottom strip of the stage. */
-  /** Desktop: established left, status right. Phones: status · worldwide. */
-  strip: { status: string; established: string; worldwide: string };
+  /** Desktop: status left, "<year> · worldwide" right. Phones: status · worldwide. */
+  strip: { status: string; worldwide: string };
   collection: {
     eyebrow: string;
     title: [string, string];
@@ -373,7 +373,6 @@ const ru: MarketContent = {
     },
     strip: {
       status: "Беру проекты",
-      established: "С 2024 · По всему миру",
       worldwide: "По всему миру",
     },
     collection: {
@@ -676,7 +675,6 @@ const en: MarketContent = {
     },
     strip: {
       status: "Taking projects",
-      established: "Est. 2024 · Worldwide",
       worldwide: "Worldwide",
     },
     collection: {

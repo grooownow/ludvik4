@@ -39,15 +39,19 @@ describe("HomeStage", () => {
 
   it("shows the bottom strip and a scroll cue to the collection", () => {
     render(<HomeStage content={getMarketContent("en")} />);
-    // Desktop: founding year and reach left, availability right; no quarter.
-    expect(screen.getByText("Est. 2024 · Worldwide")).toHaveClass(
-      "max-sm:hidden",
+    // Availability first (left), then the arrow; desktop adds the current
+    // year and reach on the right, phones append the reach to the left.
+    const strip = screen.getByRole("link", {
+      name: /scroll to the collection/i,
+    }).parentElement!;
+    const [left, , right] = Array.from(strip.children);
+    expect(left).toHaveTextContent(/^Taking projects · Worldwide$/);
+    expect(left!.querySelector(".sm\\:hidden")).toHaveTextContent(
+      "· Worldwide",
     );
-    expect(screen.getByText("Taking projects")).toHaveClass("max-sm:hidden");
-    // Phones: one line, availability and reach.
-    expect(screen.getByText("Taking projects · Worldwide")).toHaveClass(
-      "sm:hidden",
-    );
+    expect(right).toHaveTextContent(`${new Date().getFullYear()} · Worldwide`);
+    expect(right).toHaveClass("max-sm:hidden");
+    expect(screen.queryByText(/2024/)).toBeNull();
     expect(screen.queryByText(/Q4/)).toBeNull();
     expect(
       screen.getByRole("link", { name: /scroll to the collection/i }),

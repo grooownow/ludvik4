@@ -73,7 +73,9 @@ test("on a phone the strip is one line: availability and reach", async ({
   );
   const box = (await status.boundingBox())!;
   expect(box.height).toBeLessThan(lineHeight * 1.5);
-  await expect(stage.getByText("С 2024 · По всему миру")).toBeHidden();
+  await expect(
+    stage.getByText(`${new Date().getFullYear()} · По всему миру`),
+  ).toBeHidden();
 });
 
 // The still and the live shader must frame the mascot the same way on a phone
@@ -104,7 +106,7 @@ test("on a phone the still is framed like the live scene", async ({
   expect(box.width / stage.width).toBeCloseTo(1.38, 2);
 });
 
-test("on a phone the label is small and sits below the mascot, at the right", async ({
+test("on a phone the label is small and sits top right, beside the head", async ({
   page,
   isMobile,
 }) => {
@@ -114,11 +116,12 @@ test("on a phone the label is small and sits below the mascot, at the right", as
     .getByRole("region", { name: "Ludvik" })
     .boundingBox())!;
   const label = (await page.getByTestId("exhibit-label").boundingBox())!;
-  // The portrait still puts the mascot's base at ~63% of the stage height.
-  expect(label.y).toBeGreaterThan(stage.y + stage.height * 0.66);
+  // Beside the head (owner, 2026-10-24): in the upper third, under the menu.
+  expect(label.y).toBeGreaterThan(stage.y + stage.height * 0.12);
+  expect(label.y + label.height).toBeLessThan(stage.y + stage.height * 0.4);
   expect(label.x).toBeGreaterThanOrEqual(0);
   expect(label.x + label.width).toBeLessThanOrEqual(stage.x + stage.width);
-  // A dense museum label in the bottom-right corner, not a wide card.
+  // A dense museum label at the right edge, not a wide card.
   expect(label.x).toBeGreaterThan(stage.x + stage.width * 0.4);
   expect(label.width).toBeLessThan(stage.width * 0.5);
 });
