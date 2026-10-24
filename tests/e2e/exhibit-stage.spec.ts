@@ -60,14 +60,14 @@ for (const viewport of [
   });
 }
 
-test("on a phone the strip is one line without the founding year", async ({
+test("on a phone the strip is one line: availability and reach", async ({
   page,
   isMobile,
 }) => {
   test.skip(!isMobile, "phone layout only");
   await page.goto("/");
   const stage = page.getByRole("region", { name: "Ludvik" });
-  const status = stage.getByText("Беру проекты · IV кв. 2026");
+  const status = stage.getByText("Беру проекты · По всему миру");
   const lineHeight = await status.evaluate((el) =>
     parseFloat(getComputedStyle(el).lineHeight),
   );
@@ -104,7 +104,7 @@ test("on a phone the still is framed like the live scene", async ({
   expect(box.width / stage.width).toBeCloseTo(1.38, 2);
 });
 
-test("on a phone the label sits below the mascot", async ({
+test("on a phone the label is small and sits below the mascot, at the right", async ({
   page,
   isMobile,
 }) => {
@@ -118,6 +118,9 @@ test("on a phone the label sits below the mascot", async ({
   expect(label.y).toBeGreaterThan(stage.y + stage.height * 0.66);
   expect(label.x).toBeGreaterThanOrEqual(0);
   expect(label.x + label.width).toBeLessThanOrEqual(stage.x + stage.width);
+  // A dense museum label in the bottom-right corner, not a wide card.
+  expect(label.x).toBeGreaterThan(stage.x + stage.width * 0.4);
+  expect(label.width).toBeLessThan(stage.width * 0.5);
 });
 
 // The still and the live shader must frame the mascot identically: the

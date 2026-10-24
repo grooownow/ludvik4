@@ -161,7 +161,7 @@ describe("Home (RU)", () => {
     const { container } = renderHome("ru");
     for (const id of ["collection", "how-it-works", "work"]) {
       const title = container.querySelector(`#${id} h2`);
-      expect(title).toHaveClass("lg:whitespace-nowrap", "xl:text-[3.375rem]");
+      expect(title).toHaveClass("lg:whitespace-nowrap", "xl:text-[3.125rem]");
       expect(title).not.toHaveClass("sm:text-6xl");
     }
   });

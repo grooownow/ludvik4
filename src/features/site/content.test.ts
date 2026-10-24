@@ -89,8 +89,9 @@ describe("exhibition home content", () => {
       cta: "Discuss a project",
     });
     expect(home.strip).toEqual({
-      status: "Taking projects · Q4 2026",
+      status: "Taking projects",
       established: "Est. 2024 · Worldwide",
+      worldwide: "Worldwide",
     });
   });
 

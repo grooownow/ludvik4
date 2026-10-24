@@ -19,6 +19,13 @@ describe("HomeStage", () => {
     expect(label).toHaveTextContent("Ludvik");
     expect(label).toHaveTextContent("Pure code, WebGL, zero polygons.");
     expect(label).toHaveTextContent("Handle with curiosity.");
+    // Phones keep only the first line: the label there is small and dense.
+    expect(screen.getByText("Handle with curiosity.")).toHaveClass(
+      "max-sm:hidden",
+    );
+    expect(
+      screen.getByText("Pure code, WebGL, zero polygons."),
+    ).not.toHaveClass("max-sm:hidden");
   });
 
   it("numbers the RU mascot № 04 too, with a one-line description", () => {
@@ -32,8 +39,16 @@ describe("HomeStage", () => {
 
   it("shows the bottom strip and a scroll cue to the collection", () => {
     render(<HomeStage content={getMarketContent("en")} />);
-    expect(screen.getByText("Taking projects · Q4 2026")).toBeInTheDocument();
-    expect(screen.getByText("Est. 2024 · Worldwide")).toBeInTheDocument();
+    // Desktop: founding year and reach left, availability right; no quarter.
+    expect(screen.getByText("Est. 2024 · Worldwide")).toHaveClass(
+      "max-sm:hidden",
+    );
+    expect(screen.getByText("Taking projects")).toHaveClass("max-sm:hidden");
+    // Phones: one line, availability and reach.
+    expect(screen.getByText("Taking projects · Worldwide")).toHaveClass(
+      "sm:hidden",
+    );
+    expect(screen.queryByText(/Q4/)).toBeNull();
     expect(
       screen.getByRole("link", { name: /scroll to the collection/i }),
     ).toHaveAttribute("href", "#collection");
