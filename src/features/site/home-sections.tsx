@@ -253,7 +253,8 @@ export function HomeAbout({ copy }: { copy: HomeContent["about"] }) {
           cap line. From lg up the eyebrow stays in the text column. */}
       <Eyebrow className="mb-4 sm:mb-0 lg:hidden">{copy.eyebrow}</Eyebrow>
       <div className="grid items-start gap-12 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:items-center">
-        {/* The owner's own edit of the photo, used as is (4:5, like the plate). */}
+        {/* The owner's own edit of the photo, used as is (4:5); no label on
+            it, the title beside it already says who this is. */}
         <div className="bg-pink-soft relative aspect-[4/5] overflow-hidden rounded-2xl sm:mt-5 lg:mt-0">
           <Image
             src="/about/curator-portrait.webp"
@@ -263,9 +264,6 @@ export function HomeAbout({ copy }: { copy: HomeContent["about"] }) {
             sizes="(min-width: 640px) 460px, 100vw"
             className="size-full object-cover"
           />
-          <span className="absolute bottom-5 left-5 rounded-md bg-black/40 px-2 py-1 font-mono text-xs tracking-[0.14em] text-white uppercase backdrop-blur-sm">
-            {copy.plate}
-          </span>
         </div>
         <div>
           <Eyebrow className="hidden lg:block">{copy.eyebrow}</Eyebrow>

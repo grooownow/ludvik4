@@ -123,14 +123,14 @@ describe("Home (EN)", () => {
     ).toHaveAttribute("href", "/work/smallfriendfiles");
   });
 
-  it("shows the curator's portrait in the About plate", () => {
+  it("shows the founder's portrait in About, with no label on it", () => {
     const { container } = renderHome("en");
     const about = container.querySelector("#about") as HTMLElement;
     const photo = within(about).getByRole("img", {
       name: /Portrait of the Ludvik4 founder/,
     });
     expect(photo.getAttribute("src")).toContain("curator-portrait.webp");
-    expect(within(about).getByText("Curator")).toBeInTheDocument();
+    expect(within(about).queryByText("Curator")).toBeNull();
     // the founder intro and the studio paragraph, each its own paragraph
     expect(within(about).getByText(/I'm Kate Pustovaya/).tagName).toBe("P");
     expect(within(about).getByText(/based in Spain/).tagName).toBe("P");
