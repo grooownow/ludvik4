@@ -8,7 +8,7 @@ type OrderCtaProps = Omit<ComponentPropsWithoutRef<"button">, "onClick"> & {
   /** The package being ordered; omit for "Обсудить проект". */
   target?: OrderTarget;
   placement: CtaPlacement;
-  /** Called when the press opens the dialog (not on the /contact fallback). */
+  /** Called on the press: when it opens the dialog or follows the /contact fallback. */
   onOpen?: () => void;
 };
 
@@ -31,6 +31,7 @@ export function OrderCta({
         href="/contact"
         placement={placement}
         {...(rest as Omit<ComponentPropsWithoutRef<"a">, "href">)}
+        onClick={() => onOpen?.()}
       >
         {children}
       </CtaLink>
