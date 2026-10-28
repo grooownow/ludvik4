@@ -55,6 +55,29 @@ The token is public by design and is committed with the static storefront.
 The previous app `ludvik4-ru` (`228059`) is not part of the production path.
 Confirm that no domains or deploy automation target it before deleting it.
 
+## Security headers
+
+Set in Timeweb, not in the repo: app `ludvik4-ru-v2` → Settings → «Настройки
+веб-сервера» → «Заголовки» (2026-10-29). Saving there redeploys the app.
+
+| Header                      | Value                                      |
+| --------------------------- | ------------------------------------------ |
+| `Strict-Transport-Security` | `max-age=31536000`                         |
+| `X-Frame-Options`           | `DENY`                                     |
+| `X-Content-Type-Options`    | `nosniff`                                  |
+| `Referrer-Policy`           | `strict-origin-when-cross-origin`          |
+| `Permissions-Policy`        | `camera=(), microphone=(), geolocation=()` |
+| `Content-Security-Policy`   | `frame-ancestors 'none'`                   |
+
+The site embeds no iframes of its own, so `DENY` breaks nothing; the
+SmartCaptcha iframe is Yandex's page. `includeSubDomains` is left out of HSTS
+on purpose. A full CSP is still open. The same screen also offers redirects
+(possibly the deferred `www` → apex, see ADR 0003) and compression (off).
+«Лимит входящих запросов» is a monthly cap for the whole site, not flood
+protection — do not enable it.
+
+Check: `curl -sI https://ludvik4.ru/ | grep -iE 'strict|frame|nosniff|referrer'`.
+
 ## Autodeploy flow
 
 The `.github/workflows/deploy-ru.yml` workflow runs after every push to GitHub

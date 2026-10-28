@@ -7,15 +7,16 @@
 
 - Облако `cloud-ludvik4go`, каталог `default` (`b1g1bdgfn4uj49ufqe01`). Это
   аккаунт с черепашкой на аватарке; биллинг подключён.
-- SmartCaptcha `ludvik4-order-form` (`bpn0ul3j276ogu93bo3j`), хосты
-  `ludvik4.ru` и `localhost`. Ключ клиента (публичный):
+- SmartCaptcha `ludvik4-order-form` (`bpn0ul3j276ogu93bo3j`), хост
+  `ludvik4.ru` (localhost убран 2026-10-29; для локальной проверки вернуть его
+  и `http://localhost:3344` в `ALLOWED_ORIGINS`, потом убрать снова). Ключ клиента (публичный):
   `ysc1_e3IAWjW1QFgktYxs5dbbRVpU2wWYiDKSdMBLfGxXe125326c`.
   Согласие на обучение ML-моделей Яндекса не дано.
 - Функция `ludvik4-order` (`d4e50mjlh5me455rdigc`): Node.js 22, точка входа
   `index.handler`, таймаут 10 с, публичная.
   Адрес: `https://functions.yandexcloud.net/d4e50mjlh5me455rdigc`.
   Переменные окружения: `SMTP_USER=ludvik4go@yandex.com`,
-  `ALLOWED_ORIGINS=https://ludvik4.ru,http://localhost:3344`.
+  `ALLOWED_ORIGINS=https://ludvik4.ru` (localhost убран 2026-10-29).
 - Посредник для Telegram `tg.ludvik4.dev` (см. ниже).
 - Рядом с ней функция `gridfin-lead` для лендинга Gridfin. Её не трогать.
 
@@ -27,11 +28,11 @@
 
 ### Уже введены (ничего делать не нужно)
 
-| Ключ                 | Значение                                   |
-| -------------------- | ------------------------------------------ |
-| `SMTP_USER`          | `ludvik4go@yandex.com`                     |
-| `ALLOWED_ORIGINS`    | `https://ludvik4.ru,http://localhost:3344` |
-| `TELEGRAM_RELAY_URL` | `https://tg.ludvik4.dev/api/telegram`      |
+| Ключ                 | Значение                              |
+| -------------------- | ------------------------------------- |
+| `SMTP_USER`          | `ludvik4go@yandex.com`                |
+| `ALLOWED_ORIGINS`    | `https://ludvik4.ru`                  |
+| `TELEGRAM_RELAY_URL` | `https://tg.ludvik4.dev/api/telegram` |
 
 ### Секреты (введены владелицей, 2026-10-28)
 
@@ -90,18 +91,21 @@
 доступности» = 2, «Одновременные вызовы» = 4. Настроить вместе при запуске.
 Почему не API Gateway: `docs/specs/order-form-ru.md` → «Защита».
 
-## Что осталось владелице (на 2026-10-28)
+## Сделано 2026-10-29
 
-1. Загрузить пересобранный архив `cloud/order-function/dist/order-function.zip`
-   (`pnpm order:build`) в «Редактор» → «ZIP-архив». В нём исправления
-   безопасности от 2026-10-28; до загрузки на функции работает старый код,
-   где `trace` включается поддельным `Origin: http://localhost…`.
-2. Убрать `http://localhost:3344` из `ALLOWED_ORIGINS` (это же закрывает п. 1
-   до загрузки архива) и `localhost` из хостов капчи, если локальная проверка
-   больше не нужна.
-3. Ограничить масштабирование (раздел выше).
-4. Юрист проверяет `/politika-konfidentsialnosti` и `/soglasie`; уведомление в
-   Роскомнадзор (pd.rkn.gov.ru) — если юрист подтвердит, что оно нужно.
+- Загружена версия функции с исправлениями безопасности от 2026-10-28
+  (`d4ehr8ni5nb0ugm7hq89`); `ORDER_DEBUG_TRACE` не задан.
+- `localhost` убран из `ALLOWED_ORIGINS` и из хостов капчи.
+- Масштабирование: `zone_instances_limit=2`, `zone_requests_limit=4` для
+  `$latest`. В консоли этих полей нет, задаётся из Cloud Shell:
+  `yc serverless function set-scaling-policy --id d4e50mjlh5me455rdigc --tag '$latest' --zone-instances-limit 2 --zone-requests-limit 4`.
+- Предзапрос `OPTIONS` с чужого Origin получает от платформы
+  `Access-Control-Allow-Origin: *` — это добавляет Yandex Cloud, не наш код;
+  сам `POST` с чужого Origin функция отклоняет (403).
+
+Осталось: юрист проверяет `/politika-konfidentsialnosti` и `/soglasie`;
+уведомление в Роскомнадзор (pd.rkn.gov.ru) — если юрист подтвердит, что оно
+нужно.
 
 Переменные сборки в Timeweb не нужны: адрес функции и ключ клиента капчи
 зашиты в `config/ru-static-env.ts`.

@@ -15,14 +15,12 @@ reset. EN: `/api/gridfin-lead` is same-origin only, its page link must point
 at the site, plus a cap across all IPs (30/h per instance); Turnstile fails
 closed in production without a secret; `.env*` ignored except the two
 templates; `fast-uri` patched (`pnpm audit --prod` clean). Mascot bubble
-remembers its dismissal in localStorage. **Owner actions:** upload the
-rebuilt `cloud/order-function/dist/order-function.zip` to `ludvik4-order`
-(until then the old trace gate is live), remove `http://localhost:3344` from
-its `ALLOWED_ORIGINS`, set the function's scaling limits (instances and
-concurrency — the DDoS cost cap); ask Timeweb to add HSTS,
-`X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff` and
-`Referrer-Policy` on ludvik4.ru (the static host sends none, the repo cannot
-set them). Later: Turnstile on the Gridfin landing (its own repo), a shared
+remembers its dismissal in localStorage. Follow-up 2026-10-29 (done by the agent in the consoles): the rebuilt
+function is live, `localhost` is gone from `ALLOWED_ORIGINS` and the captcha
+hosts, scaling is capped (2 instances, 4 concurrent requests), and ludvik4.ru
+sends HSTS, `X-Frame-Options: DENY`, nosniff, `Referrer-Policy`,
+`Permissions-Policy` and `frame-ancestors 'none'` (Timeweb web-server
+settings, see `docs/playbooks/production-ru-timeweb.md`). Later: Turnstile on the Gridfin landing (its own repo), a shared
 rate-limit store (Upstash) or Vercel Firewall rules, remove the leftover
 template auth routes on EN, a CSP.
 
@@ -34,7 +32,7 @@ cards link to them, «Кейсы» → «Работы», blog price articles ali
 form live on every RU CTA (Yandex Cloud function + SmartCaptcha, mail +
 Telegram via the `tg.ludvik4.dev` relay); public endpoint and captcha key are
 baked into `config/ru-static-env.ts`, no Timeweb vars needed. Privacy policy
-and consent pages shipped. Still open: function scaling limits, lawyer review
+and consent pages shipped. Still open: lawyer review
 of the policy/consent and «152-ФЗ» wording, RKN notice (deferred), Web apps
 examples and prices (handoff list). Details:
 `docs/specs/ru-clarity-and-pricing-handoff.md`,
