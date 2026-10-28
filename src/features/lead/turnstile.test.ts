@@ -30,13 +30,12 @@ describe("verifyTurnstile", () => {
   });
 
   // The captcha is the only layer a bot that POSTs the action directly cannot
-  // skip, so a production deploy running without it must say so on every
-  // submission — silently waving traffic through is how the gap went
-  // unnoticed for a month.
-  it("skips loudly in production when no secret is configured", async () => {
+  // skip, so a production deploy that lost its secret must refuse, loudly —
+  // silently waving traffic through is how the gap went unnoticed for a month.
+  it("fails closed in production when no secret is configured", async () => {
     env.NODE_ENV = "production";
-    await expect(verifyTurnstile("", "1.2.3.4")).resolves.toBe(true);
-    expect(logger.warn).toHaveBeenCalledTimes(1);
+    await expect(verifyTurnstile("", "1.2.3.4")).resolves.toBe(false);
+    expect(logger.error).toHaveBeenCalledTimes(1);
   });
 
   it("rejects a missing token once a secret is configured", async () => {
