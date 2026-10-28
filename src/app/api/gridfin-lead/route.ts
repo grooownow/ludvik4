@@ -14,14 +14,32 @@ const gridfinLeadSchema = z
   })
   .strict();
 
+// The Gridfin landing (public/gridfin/*) posts here from the same origin and
+// renders no captcha, so every request costs a Resend email. Guards, cheapest
+// first: same-origin only (stops other sites' pages and lazy scripts), the
+// page link must point back at this site (no foreign links in the mail), a
+// per-IP limit, and a cap across all IPs so a botnet cannot drain the Resend
+// quota the /contact form depends on. Limits are per instance (src/lib/rate-limit.ts).
+const PER_IP = { limit: 5, windowMs: 60_000 };
+const ALL_IPS = { limit: 30, windowMs: 60 * 60_000 };
+
+function invalid() {
+  return Response.json(
+    { ok: false, error: "Invalid request." },
+    { status: 400 },
+  );
+}
+
 export async function POST(request: Request): Promise<Response> {
+  const self = new URL(request.url).origin;
+  if (request.headers.get("origin") !== self) {
+    return Response.json({ ok: false, error: "Forbidden." }, { status: 403 });
+  }
+
   const raw: unknown = await request.json().catch(() => null);
   const parsed = gridfinLeadSchema.safeParse(raw);
-  if (!parsed.success) {
-    return Response.json(
-      { ok: false, error: "Invalid request." },
-      { status: 400 },
-    );
+  if (!parsed.success || new URL(parsed.data.page).origin !== self) {
+    return invalid();
   }
 
   if (parsed.data.website.trim() !== "") {
@@ -33,11 +51,10 @@ export async function POST(request: Request): Promise<Response> {
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     request.headers.get("x-real-ip") ||
     "unknown";
-  const limit = rateLimit(`gridfin-lead:${ip}`, {
-    limit: 5,
-    windowMs: 60_000,
-  });
-  if (!limit.allowed) {
+  if (
+    !rateLimit(`gridfin-lead:${ip}`, PER_IP).allowed ||
+    !rateLimit("gridfin-lead:all", ALL_IPS).allowed
+  ) {
     return Response.json(
       { ok: false, error: "Too many requests." },
       { status: 429 },

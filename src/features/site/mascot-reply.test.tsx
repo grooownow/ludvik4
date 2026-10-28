@@ -1,7 +1,13 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+} from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { OrderProvider } from "@/features/order";
-import { MascotReply } from "./mascot-reply";
+import { MASCOT_REPLY_DISMISSED_KEY, MascotReply } from "./mascot-reply";
 
 // The bubble listens on the stage, so it renders inside one with a canvas,
 // as on the home page.
@@ -19,7 +25,10 @@ function renderOnStage() {
   return screen.getByTestId("mascot-reply");
 }
 
-beforeEach(() => vi.useFakeTimers());
+beforeEach(() => {
+  localStorage.clear();
+  vi.useFakeTimers();
+});
 afterEach(() => vi.useRealTimers());
 
 describe("MascotReply", () => {
@@ -89,5 +98,40 @@ describe("MascotReply", () => {
       screen.getByRole("button", { name: "Хочу такую анимацию →" }),
     );
     expect(bubble).toHaveAttribute("inert");
+  });
+
+  it("remembers its × across visits and stays gone", () => {
+    renderOnStage();
+    fireEvent.pointerUp(screen.getByTestId("canvas"));
+    fireEvent.click(screen.getByRole("button", { name: "Скрыть подсказку" }));
+    expect(localStorage.getItem(MASCOT_REPLY_DISMISSED_KEY)).toBe("1");
+    cleanup();
+
+    // The next visit: neither a touch nor the idle timer brings it back.
+    const bubble = renderOnStage();
+    fireEvent.pointerUp(screen.getByTestId("canvas"));
+    act(() => vi.advanceTimersByTime(8000));
+    expect(bubble).toHaveAttribute("inert");
+  });
+
+  it("remembers a press of its /contact link as a dismissal", () => {
+    renderOnStage();
+    fireEvent.pointerUp(screen.getByTestId("canvas"));
+    fireEvent.click(
+      screen.getByRole("link", { name: "Хочу такую анимацию →" }),
+    );
+    expect(localStorage.getItem(MASCOT_REPLY_DISMISSED_KEY)).toBe("1");
+  });
+
+  it("still shows while storage is blocked", () => {
+    const get = vi
+      .spyOn(Storage.prototype, "getItem")
+      .mockImplementation(() => {
+        throw new Error("SecurityError");
+      });
+    const bubble = renderOnStage();
+    act(() => vi.advanceTimersByTime(8000));
+    expect(bubble).not.toHaveAttribute("inert");
+    get.mockRestore();
   });
 });

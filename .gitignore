@@ -2,8 +2,10 @@ node_modules/
 .next/
 /out/
 .static-export-*/
-.env
-.env.local
+# Every env file but the two committed templates (no real values in either).
+.env*
+!.env.example
+!.env.development
 .pglite/
 coverage/
 *.tsbuildinfo

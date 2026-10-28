@@ -36,6 +36,11 @@ export type OrderDeps = {
   notify: (text: string) => Promise<void>;
   /** True when this IP sent too many orders lately. */
   isRateLimited: (ip: string) => boolean;
+  /**
+   * Put the delivery details (SMTP reply, signal result) into the response.
+   * Only for a local check: ORDER_DEBUG_TRACE=1 on the function, never left on.
+   */
+  debugTrace?: boolean;
   log: (message: string, extra?: unknown) => void;
 };
 
@@ -45,12 +50,10 @@ function reply(
   origin: string | undefined,
   trace?: string[],
 ): FunctionResult {
-  // The console's logs are not always available, so a local test run gets
-  // the delivery details in the response. Never for the production origin.
-  const withTrace =
-    body && trace && origin?.startsWith("http://localhost")
-      ? { ...body, trace }
-      : body;
+  // The console's logs are not always available, so a local check gets the
+  // delivery details in the response — gated by the function's own setting,
+  // never by a request header, which any client can forge.
+  const withTrace = body && trace ? { ...body, trace } : body;
   return {
     statusCode: status,
     headers: {
@@ -160,7 +163,12 @@ export async function handleOrder(
   } catch (error) {
     deps.log("order mail failed", String(error));
     trace.push(`mail failed: ${String(error)}`);
-    return reply(502, { ok: false, reason: "server" }, origin, trace);
+    return reply(
+      502,
+      { ok: false, reason: "server" },
+      origin,
+      deps.debugTrace ? trace : undefined,
+    );
   }
 
   try {
@@ -173,7 +181,7 @@ export async function handleOrder(
     trace.push(`signal failed: ${String(error)}`);
   }
 
-  return reply(200, { ok: true }, origin, trace);
+  return reply(200, { ok: true }, origin, deps.debugTrace ? trace : undefined);
 }
 
 /** An in-memory sliding window: at most `limit` orders per IP per window. */
@@ -183,7 +191,13 @@ export function createRateLimiter(limit: number, windowMs: number) {
     const recent = (hits.get(ip) ?? []).filter((t) => now - t < windowMs);
     recent.push(now);
     hits.set(ip, recent);
-    if (hits.size > 5000) hits.clear();
+    // Bound the memory without a full reset, which a bot rotating through
+    // addresses could trigger to wipe everyone's count: drop idle IPs only.
+    if (hits.size > 5000) {
+      for (const [key, times] of hits) {
+        if (now - times[times.length - 1]! >= windowMs) hits.delete(key);
+      }
+    }
     return recent.length > limit;
   };
 }

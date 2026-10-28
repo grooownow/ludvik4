@@ -19,12 +19,13 @@ const valid = {
   website: "",
 };
 
-function request(body: unknown): Request {
+function request(body: unknown, origin = "https://ludvik4.dev"): Request {
   return new Request("https://ludvik4.dev/api/gridfin-lead", {
     method: "POST",
     headers: {
       "content-type": "application/json",
       "x-forwarded-for": "203.0.113.10",
+      origin,
     },
     body: JSON.stringify(body),
   });
@@ -40,6 +41,35 @@ describe("POST /api/gridfin-lead", () => {
     const response = await POST(request({ email: "not-an-email" }));
 
     expect(response.status).toBe(400);
+    expect(deliverLead).not.toHaveBeenCalled();
+  });
+
+  it("refuses a request from another origin before reading it", async () => {
+    const response = await POST(request(valid, "https://spam.example"));
+
+    expect(response.status).toBe(403);
+    expect(rateLimit).not.toHaveBeenCalled();
+    expect(deliverLead).not.toHaveBeenCalled();
+  });
+
+  it("refuses a page link that points off the site", async () => {
+    const response = await POST(
+      request({ ...valid, page: "https://phish.example/gridfin" }),
+    );
+
+    expect(response.status).toBe(400);
+    expect(deliverLead).not.toHaveBeenCalled();
+  });
+
+  it("caps deliveries across all IPs, not only per IP", async () => {
+    rateLimit.mockImplementation((key: string) => ({
+      allowed: key !== "gridfin-lead:all",
+      remaining: 0,
+    }));
+
+    const response = await POST(request(valid));
+
+    expect(response.status).toBe(429);
     expect(deliverLead).not.toHaveBeenCalled();
   });
 

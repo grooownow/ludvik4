@@ -9,8 +9,31 @@ import { OrderCta } from "./order-cta";
 // visitor to touch the mascot — a press, a drag or a trackpad swipe on the
 // stage — and comes on its own after a quiet while, inviting them to try.
 // A comic bubble left of the head, its tail pointing at it. RU only.
+// Once dismissed — its × or its order button — it stays gone on later visits
+// (owner, 2026-10-28), until the visitor clears the site's storage.
 
 const IDLE_MS = 8000;
+
+/** localStorage key: "1" once the visitor dismissed the bubble. */
+export const MASCOT_REPLY_DISMISSED_KEY = "ludvik4:mascot-reply-dismissed";
+
+// Storage can be blocked (private mode, disabled site data): the bubble then
+// simply behaves as before, per visit.
+function wasDismissed() {
+  try {
+    return localStorage.getItem(MASCOT_REPLY_DISMISSED_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function rememberDismissed() {
+  try {
+    localStorage.setItem(MASCOT_REPLY_DISMISSED_KEY, "1");
+  } catch {
+    // Not remembered; it closes for this visit only.
+  }
+}
 
 /** The bubble's order: the animation service, no package picked yet. */
 const ANIMATION_ORDER = { service: "Анимации и 3D", plan: "", price: "" };
@@ -42,10 +65,21 @@ export function MascotReply() {
   const [idle, setIdle] = useState(false);
   const [closed, setClosed] = useState(false);
 
+  // Read after mount, not during render: the static HTML has no storage, and
+  // the bubble is hidden until a touch or the idle timer anyway.
   useEffect(() => {
+    if (wasDismissed()) {
+      setClosed(true);
+      return;
+    }
     const t = setTimeout(() => setIdle(true), IDLE_MS);
     return () => clearTimeout(t);
   }, []);
+
+  const dismiss = () => {
+    setClosed(true);
+    rememberDismissed();
+  };
 
   const shown = !closed && (touched || idle);
 
@@ -64,7 +98,7 @@ export function MascotReply() {
       >
         <button
           type="button"
-          onClick={() => setClosed(true)}
+          onClick={dismiss}
           aria-label="Скрыть подсказку"
           className="text-stage-muted hover:text-foreground pointer-events-auto absolute top-0.5 right-0.5 grid size-8 cursor-pointer place-items-center rounded-full text-sm leading-none"
         >
@@ -75,12 +109,13 @@ export function MascotReply() {
           Такого героя — или ещё круче — сделаем и для вашего сайта.
         </p>
         {/* A roomy hit area: padding around the line, pulled back with a
-            negative margin so the text stays where it was. Opening the order
-            dialog also dismisses the bubble. */}
+            negative margin so the text stays where it was. Pressing it (the order
+            dialog, or the /contact link without one) also dismisses the
+            bubble for good. */}
         <OrderCta
           target={ANIMATION_ORDER}
           placement="mascot"
-          onOpen={() => setClosed(true)}
+          onOpen={dismiss}
           className="text-primary hover:text-primary/80 hover:bg-primary/5 pointer-events-auto -mx-2.5 mt-1 -mb-1.5 inline-flex cursor-pointer items-center rounded-xl px-2.5 py-2 font-medium whitespace-nowrap transition-colors"
         >
           Хочу такую анимацию →

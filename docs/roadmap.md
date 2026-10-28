@@ -6,6 +6,26 @@ writing detail here.
 
 ## Now
 
+**[SHIPPED 2026-10-28] Security pass, both markets.** Order function: the
+delivery trace is now gated by the function's own `ORDER_DEBUG_TRACE=1`, not
+by a forgeable `Origin: http://localhost`; service/plan/price accept one line
+of plain words (no links — they reach the Telegram signal and mail subject),
+`page` only a site path; the rate limiter evicts idle IPs instead of a full
+reset. EN: `/api/gridfin-lead` is same-origin only, its page link must point
+at the site, plus a cap across all IPs (30/h per instance); Turnstile fails
+closed in production without a secret; `.env*` ignored except the two
+templates; `fast-uri` patched (`pnpm audit --prod` clean). Mascot bubble
+remembers its dismissal in localStorage. **Owner actions:** upload the
+rebuilt `cloud/order-function/dist/order-function.zip` to `ludvik4-order`
+(until then the old trace gate is live), remove `http://localhost:3344` from
+its `ALLOWED_ORIGINS`, set the function's scaling limits (instances and
+concurrency — the DDoS cost cap); ask Timeweb to add HSTS,
+`X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff` and
+`Referrer-Policy` on ludvik4.ru (the static host sends none, the repo cannot
+set them). Later: Turnstile on the Gridfin landing (its own repo), a shared
+rate-limit store (Upstash) or Vercel Firewall rules, remove the leftover
+template auth routes on EN, a CSP.
+
 **[SHIPPED 2026-10-28 · RU only] Clear first screen, studio voice, services
 and prices, order form.** Header tagline, glass burger, mascot bubble, «мы»
 voice on the home and «О студии», halls reordered with «Анимации», one page
