@@ -5,6 +5,7 @@ import {
   getServicePage,
   servicePages,
 } from "./commercial-content";
+import { pricingServices } from "./pricing-draft";
 
 describe("commercial content", () => {
   it("defines three distinct service landing pages", () => {
@@ -14,7 +15,21 @@ describe("commercial content", () => {
       "razrabotka-mvp",
     ]);
     expect(new Set(servicePages.map((page) => page.title)).size).toBe(3);
-    expect(getServicePage("razrabotka-mvp")?.price).toContain("110 000");
+  });
+
+  it("quotes the same starting price as the service's tab on /uslugi", () => {
+    for (const service of pricingServices) {
+      if (!service.detailHref) continue;
+      const slug = service.detailHref.replace("/uslugi/", "");
+      expect(getServicePage(slug)?.price).toBe(service.from);
+    }
+  });
+
+  it("keeps the detailed pages and the tab pages on different URLs", () => {
+    const detailed = new Set(servicePages.map((page) => page.slug));
+    for (const service of pricingServices) {
+      expect(detailed.has(service.slug as never)).toBe(false);
+    }
   });
 
   it("keeps client work and own products clearly labelled", () => {

@@ -28,34 +28,30 @@ describe("HomeStage", () => {
     ).not.toHaveClass("max-sm:hidden");
   });
 
-  it("numbers the RU mascot № 04 too, with a one-line description", () => {
+  it("numbers the RU mascot № 04 too and says what it is in plain words", () => {
     render(<HomeStage content={getMarketContent("ru")} />);
     const label = screen.getByTestId("exhibit-label");
     expect(label).toHaveTextContent("Экспонат № 04");
-    expect(label).toHaveTextContent("Чистый код, WebGL, ноль полигонов.");
-    // Dropped by the owner, RU only (2026-10-23); EN keeps its second line.
-    expect(label).not.toHaveTextContent("Обращаться с любопытством");
+    // Phones show the first line only: what it is; desktop adds how.
+    expect(screen.getByText("Анимированный маскот студии.")).not.toHaveClass(
+      "max-sm:hidden",
+    );
+    expect(
+      screen.getByText(
+        "Откликается на клик, перетаскивание и свайп по тачпаду.",
+      ),
+    ).toHaveClass("max-sm:hidden");
+    // "Zero polygons" meant nothing to clients (owner, 2026-10-26).
+    expect(label).not.toHaveTextContent("полигон");
   });
 
-  it("shows the bottom strip and a scroll cue to the collection", () => {
-    render(<HomeStage content={getMarketContent("en")} />);
-    // Availability first (left), then the arrow; desktop adds the current
-    // year and reach on the right, phones append the reach to the left.
-    const strip = screen.getByRole("link", {
-      name: /scroll to the collection/i,
-    }).parentElement!;
-    const [left, , right] = Array.from(strip.children);
-    expect(left).toHaveTextContent(/^Taking projects · Worldwide$/);
-    expect(left!.querySelector(".sm\\:hidden")).toHaveTextContent(
-      "· Worldwide",
-    );
-    expect(right).toHaveTextContent(`${new Date().getFullYear()} · Worldwide`);
-    expect(right).toHaveClass("max-sm:hidden");
-    expect(screen.queryByText(/2024/)).toBeNull();
-    expect(screen.queryByText(/Q4/)).toBeNull();
-    expect(
-      screen.getByRole("link", { name: /scroll to the collection/i }),
-    ).toHaveAttribute("href", "#collection");
+  it("keeps only the scroll cue under the stage, no strip text", () => {
+    render(<HomeStage content={getMarketContent("ru")} />);
+    const cue = screen.getByRole("link", { name: /прокрутить к коллекции/i });
+    expect(cue).toHaveAttribute("href", "#collection");
+    expect(cue.parentElement!.children).toHaveLength(1);
+    expect(screen.queryByText(/Беру проекты/)).toBeNull();
+    expect(screen.queryByText(/По всему миру/)).toBeNull();
   });
 
   it("has a text-only menu with Contact linking to /contact", () => {

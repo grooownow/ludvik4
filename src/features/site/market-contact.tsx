@@ -1,6 +1,7 @@
 import { env } from "@/lib/env";
 import { ContactPageView } from "./contact-page";
 import { getMarketContent } from "./content";
+import { ContactOrderCard } from "./order-cta";
 
 // /contact for whichever market this build serves.
 //
@@ -26,5 +27,10 @@ export async function MarketContact() {
       />
     );
   }
-  return <ContactPageView content={getMarketContent("ru")} />;
+  return (
+    <ContactPageView
+      content={getMarketContent("ru")}
+      orderForm={<ContactOrderCard />}
+    />
+  );
 }

@@ -12,7 +12,7 @@ describe("Breadcrumbs", () => {
   it("renders linked ancestors and marks the current page", () => {
     render(
       <Breadcrumbs
-        items={[{ label: "Кейсы", href: "/cases" }, { label: "qa-pilot" }]}
+        items={[{ label: "Работы", href: "/cases" }, { label: "qa-pilot" }]}
       />,
     );
 
@@ -23,7 +23,7 @@ describe("Breadcrumbs", () => {
       within(breadcrumbs).getByRole("link", { name: "Главная" }),
     ).toHaveAttribute("href", "/");
     expect(
-      within(breadcrumbs).getByRole("link", { name: "Кейсы" }),
+      within(breadcrumbs).getByRole("link", { name: "Работы" }),
     ).toHaveAttribute("href", "/cases");
     expect(within(breadcrumbs).getByText("qa-pilot")).toHaveAttribute(
       "aria-current",
@@ -44,7 +44,7 @@ describe("Breadcrumbs", () => {
       name: "Хлебные крошки",
     });
     expect(
-      within(breadcrumbs).getByRole("link", { name: "Кейсы" }),
+      within(breadcrumbs).getByRole("link", { name: "Работы" }),
     ).toHaveAttribute("href", "/cases");
     expect(within(breadcrumbs).getByText("qa-pilot")).toHaveAttribute(
       "aria-current",
@@ -59,7 +59,7 @@ describe("Breadcrumbs", () => {
     });
     expect(
       within(breadcrumbs).getByRole("link", { name: "Услуги" }),
-    ).toHaveAttribute("href", "/#services");
+    ).toHaveAttribute("href", "/uslugi");
     expect(
       within(breadcrumbs).getByText("Разработка лендинга под ключ"),
     ).toHaveAttribute("aria-current", "page");
@@ -69,9 +69,9 @@ describe("Breadcrumbs", () => {
       name: "Хлебные крошки",
     });
     expect(
-      within(breadcrumbs).queryByRole("link", { name: "Кейсы" }),
+      within(breadcrumbs).queryByRole("link", { name: "Работы" }),
     ).not.toBeInTheDocument();
-    expect(within(breadcrumbs).getByText("Кейсы")).toHaveAttribute(
+    expect(within(breadcrumbs).getByText("Работы")).toHaveAttribute(
       "aria-current",
       "page",
     );

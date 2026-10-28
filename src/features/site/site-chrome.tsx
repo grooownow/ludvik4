@@ -1,10 +1,10 @@
 import type { Route } from "next";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
 import { ConsentSettingsButton } from "@/components/consent-settings-button";
 import { TelegramLink } from "@/components/telegram-link";
 import { cn } from "@/lib/utils";
 import { HomeLink } from "./anchor-link";
+import { MobileMenu } from "./mobile-menu";
 import { NavLinks } from "./nav-links";
 import { TELEGRAM_URL, type MarketContent, type ServiceCard } from "./content";
 
@@ -52,6 +52,7 @@ export function SiteHeader({
   const navigationLabel =
     content.lang === "ru" ? "Основная навигация" : "Main navigation";
   const menuLabel = content.lang === "ru" ? "Открыть меню" : "Open menu";
+  const closeLabel = content.lang === "ru" ? "Закрыть меню" : "Close menu";
   const stage = variant === "stage";
 
   // Text-only menu (docs/specs/immersive-home.md): the wordmark is the one
@@ -65,16 +66,19 @@ export function SiteHeader({
           : "border-pink-soft bg-background/90 sticky top-0 border-b backdrop-blur",
       )}
     >
+      {/* Three parts: the wordmark and the menu share the spare width
+          equally (flex-1 each), so the tagline between them stays on the
+          true centre whatever their own widths. */}
       <div
         className={cn(
-          "flex items-center justify-between",
+          "flex items-center justify-between gap-3",
           stage ? "px-[3.2vw] pt-[3.4vh]" : "mx-auto max-w-5xl px-6 py-3",
         )}
       >
         <HomeLink
           href="/"
           className={cn(
-            "text-foreground font-semibold tracking-tight",
+            "text-foreground flex-1 font-semibold tracking-tight",
             stage ? "text-[15px]" : "font-mono text-sm",
           )}
           aria-label={
@@ -83,53 +87,57 @@ export function SiteHeader({
         >
           Ludvik4
         </HomeLink>
-        <nav
-          aria-label={navigationLabel}
-          className={cn(
-            "text-stage-muted hidden items-center sm:flex",
-            stage ? "gap-8 text-[15px]" : "gap-5 font-mono text-sm",
-          )}
-        >
-          <NavLinks
-            links={content.nav.links ?? []}
-            cta={{
-              href: contactHref,
-              label: content.nav.cta,
-              placement: "nav",
-              className: "text-primary hover:text-primary/80 transition-colors",
-            }}
-            className="contents"
-            itemClassName="hover:text-foreground transition-colors"
-          />
-        </nav>
-
-        <details className="group relative sm:hidden">
-          <summary
-            className="hover:bg-muted flex size-9 cursor-pointer list-none items-center justify-center rounded-md [&::-webkit-details-marker]:hidden"
-            aria-label={menuLabel}
-            title={menuLabel}
+        {/* Thin, widely tracked capitals in the muted ink: it names the
+            category without competing with the wordmark. The left padding
+            equals the tracking so the trailing letter gap does not push the
+            line off centre. */}
+        {content.nav.tagline ? (
+          <p
+            className={cn(
+              "text-foreground/45 shrink-0 pl-[0.3em] text-center text-[10px] font-light tracking-[0.3em] whitespace-nowrap uppercase",
+              // The stage sets it larger from tablets up; inner pages keep
+              // the compact one inside their narrower container.
+              stage
+                ? "sm:text-[16px] xl:pl-[0.4em] xl:tracking-[0.4em]"
+                : "sm:pl-[0.22em] sm:text-[11px] sm:tracking-[0.22em] lg:text-[12px]",
+            )}
           >
-            <Menu className="size-5 group-open:hidden" aria-hidden="true" />
-            <X className="hidden size-5 group-open:block" aria-hidden="true" />
-          </summary>
+            {content.nav.tagline}
+          </p>
+        ) : null}
+        <div className="flex flex-1 justify-end">
+          {/* Phones and tablets get the burger; the full menu from lg. */}
           <nav
             aria-label={navigationLabel}
-            className="border-pink-soft bg-background absolute top-11 right-0 flex min-w-52 flex-col border p-2 shadow-lg"
+            className={cn(
+              "text-stage-muted hidden items-center lg:flex",
+              stage
+                ? "gap-4 text-[13px] whitespace-nowrap xl:gap-8 xl:text-[15px]"
+                : "gap-5 font-mono text-sm whitespace-nowrap",
+            )}
           >
             <NavLinks
               links={content.nav.links ?? []}
               cta={{
                 href: contactHref,
                 label: content.nav.cta,
-                placement: "nav_mobile",
+                placement: "nav",
                 className:
-                  "text-primary hover:bg-muted rounded-md px-3 py-2 font-mono text-sm",
+                  "text-primary hover:text-primary/80 transition-colors",
               }}
               className="contents"
-              itemClassName="hover:bg-muted rounded-md px-3 py-2 font-mono text-sm"
+              itemClassName="hover:text-foreground transition-colors"
             />
           </nav>
-        </details>
+
+          <MobileMenu
+            links={content.nav.links ?? []}
+            cta={{ href: contactHref, label: content.nav.cta }}
+            navigationLabel={navigationLabel}
+            openLabel={menuLabel}
+            closeLabel={closeLabel}
+          />
+        </div>
       </div>
     </header>
   );
@@ -146,7 +154,7 @@ export function SiteFooter({ content }: { content: MarketContent }) {
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-6 font-mono text-sm">
         {/* The year is the build's: every deploy rebuilds the static page. */}
         <span>
-          Ludvik4 · {new Date().getFullYear()} · {content.home.footerReach}
+          © Ludvik4 · {new Date().getFullYear()} · {content.home.footerReach}
         </span>
         <span className="flex flex-wrap items-center gap-5">
           {content.footer.links.map((link) =>
@@ -173,6 +181,7 @@ export function SiteFooter({ content }: { content: MarketContent }) {
               <Link
                 key={link.href}
                 href={link.href as Route}
+                target={link.newTab ? "_blank" : undefined}
                 className="hover:text-white"
               >
                 {link.label}

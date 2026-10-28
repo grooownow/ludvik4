@@ -168,6 +168,27 @@ describe("Home (EN)", () => {
 });
 
 describe("Home (RU)", () => {
+  it("opens each service hall on its own tab of the services page", () => {
+    const { container } = renderHome("ru");
+    const collection = container.querySelector("#collection") as HTMLElement;
+    for (const [name, href] of [
+      ["Лендинги", "/uslugi/lendingi"],
+      ["Сайты", "/uslugi/razrabotka-sajtov"],
+      ["Веб-приложения", "/uslugi/veb-prilozheniya"],
+      ["Анимации", "/uslugi/animatsiya-dlya-sajta"],
+      ["Автоматизации", "/uslugi/avtomatizatsii"],
+    ] as const) {
+      expect(within(collection).getByRole("link", { name })).toHaveAttribute(
+        "href",
+        href,
+      );
+    }
+    // "Что-то ещё?" keeps its contact button instead
+    expect(
+      within(collection).getByRole("link", { name: /Расскажите идею/ }),
+    ).toHaveAttribute("href", "/contact");
+  });
+
   it("sets the longer Russian section titles a step smaller on desktop, on one line", () => {
     const { container } = renderHome("ru");
     for (const id of ["collection", "how-it-works", "work"]) {

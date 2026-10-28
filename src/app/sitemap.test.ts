@@ -35,6 +35,17 @@ describe("buildSitemap", () => {
       `${baseURL}/uslugi/avtomatizatsiya-biznes-processov/`,
     );
     expect(urls).toContain(`${baseURL}/uslugi/razrabotka-mvp/`);
+    // The services hub and each pricing tab's own page.
+    expect(urls).toContain(`${baseURL}/uslugi/`);
+    for (const slug of [
+      "lendingi",
+      "razrabotka-sajtov",
+      "veb-prilozheniya",
+      "animatsiya-dlya-sajta",
+      "avtomatizatsii",
+    ]) {
+      expect(urls).toContain(`${baseURL}/uslugi/${slug}/`);
+    }
     expect(urls).toContain(`${baseURL}/cases/`);
     expect(urls).toContain(`${baseURL}/cases/smallfriendfiles/`);
     expect(urls).toContain(`${baseURL}/cases/fortnoise/`);
@@ -56,7 +67,7 @@ describe("buildSitemap", () => {
     for (const d of getAllArticles().filter((a) => a.draft)) {
       expect(urls).not.toContain(`${baseURL}/blog/${d.slug}/`);
     }
-    expect(urls).toHaveLength(16 + getPublishedArticles().length);
+    expect(urls).toHaveLength(22 + getPublishedArticles().length);
   });
 
   it("EN: landing, service pages, proof, source pages and EN articles", () => {

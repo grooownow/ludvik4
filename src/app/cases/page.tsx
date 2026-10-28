@@ -4,12 +4,12 @@ import { canonicalPath, CasesIndexView } from "@/features/site";
 import { env } from "@/lib/env";
 
 export const metadata: Metadata = {
-  title: "Кейсы",
+  title: "Работы",
   description:
-    "Кейсы Ludvik4: клиентский сервис FortNoise и open-source QA-копилот qa-pilot.",
+    "Работы студии Ludvik4: медкарта питомца SmallFriendFiles, городская афиша FortNoise, Gridfin и qa-pilot.",
   alternates: { canonical: canonicalPath(env.SITE_MARKET, "/cases") },
   openGraph: {
-    title: "Кейсы Ludvik4",
+    title: "Работы Ludvik4",
     description: "Реальные цифровые продукты с публичным результатом.",
     url: canonicalPath(env.SITE_MARKET, "/cases"),
     images: ["/og-image-ru.png"],

@@ -9,9 +9,9 @@ import { env } from "@/lib/env";
 export const metadata: Metadata =
   env.SITE_MARKET === "ru"
     ? {
-        title: "Обо мне",
+        title: "О студии",
         description:
-          "Ludvik4 — независимый проект веб-разработки: сайты, автоматизация и веб-приложения от задачи до запуска.",
+          "Ludvik4 — студия веб-разработки: сайты, автоматизация и веб-приложения от задачи до запуска.",
         alternates: { canonical: canonicalPath(env.SITE_MARKET, "/about") },
       }
     : {

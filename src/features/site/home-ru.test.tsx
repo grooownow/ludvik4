@@ -68,7 +68,7 @@ describe("HomeRu", () => {
     expect(
       screen.queryByRole("link", { name: /qa-pilot/ }),
     ).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Все кейсы/ })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /Все работы/ })).toHaveAttribute(
       "href",
       "/cases",
     );

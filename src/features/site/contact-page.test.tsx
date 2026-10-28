@@ -50,7 +50,7 @@ describe("ContactPageView", () => {
     expect(footer).toHaveClass("bg-intro");
     // Brand, the current year and reach on the left; Telegram on the right.
     expect(footer).toHaveTextContent(
-      `Ludvik4 · ${new Date().getFullYear()} · По всему миру`,
+      `© Ludvik4 · ${new Date().getFullYear()} · Работаем по всему миру`,
     );
     expect(footer).toHaveTextContent("Telegram");
   });

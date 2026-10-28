@@ -26,20 +26,23 @@ export type ScopeItem = {
   separate: string[];
 };
 export type PriceRow = { title: string; price: string; note?: string };
-export type FooterLink = { href: string; label: string; external?: boolean };
+export type FooterLink = {
+  href: string;
+  label: string;
+  external?: boolean;
+  /** An internal page that opens in a new tab (the legal documents). */
+  newTab?: boolean;
+};
 export type NavLink = { href: string; label: string };
 
 /** Copy of the exhibition home (docs/specs/immersive-home.md). Two-part titles
  *  are `[plain, accent]`: the accent half renders in the brand pink. */
 export type HallExhibit =
-  "browser" | "landing" | "app" | "gears" | "widget" | "question";
+  "browser" | "landing" | "app" | "gears" | "widget" | "motion" | "question";
 
 export type HomeContent = {
   /** Museum label next to the mascot; its number comes from mascotExhibitNumber(). */
   exhibit: { eyebrow: string; name: string; lines: readonly string[] };
-  /** Bottom strip of the stage. */
-  /** Desktop: status left, "<year> · worldwide" right. Phones: status · worldwide. */
-  strip: { status: string; worldwide: string };
   collection: {
     eyebrow: string;
     title: [string, string];
@@ -51,6 +54,8 @@ export type HomeContent = {
       exhibit: HallExhibit;
       /** A contact button in the card ("Something else?" only). */
       cta?: string;
+      /** The whole card opens this page — the service's tab (RU). */
+      href?: string;
     }[];
   };
   steps: { eyebrow: string; title: [string, string]; items: Step[] };
@@ -65,7 +70,7 @@ export type HomeContent = {
     linkLabel: string;
   };
   closing: { eyebrow: string; title: string; cta: string };
-  /** Footer, left: "Ludvik4 · <current year> · <reach>". */
+  /** Footer, left: "© Ludvik4 · <current year> · <reach>". */
   footerReach: string;
 };
 
@@ -80,7 +85,12 @@ export type MarketContent = {
   shareTitle: string;
   description: string;
   keywords: string[];
-  nav: { cta: string; links?: NavLink[] };
+  nav: {
+    cta: string;
+    links?: NavLink[];
+    /** Short category line centred in the header ("what is this site"). */
+    tagline?: string;
+  };
   /** Full-bleed brand intro above the hero (pre-rendered wordmark art). */
   intro: {
     tagline: string;
@@ -184,11 +194,12 @@ const ru: MarketContent = {
     "Ludvik4",
   ],
   nav: {
+    tagline: "Студия веб-разработки",
     cta: "Контакты",
     links: [
       { href: "/#work", label: "Работы" },
-      { href: "/#collection", label: "Услуги" },
-      { href: "/about", label: "Обо мне" },
+      { href: "/uslugi", label: "Услуги" },
+      { href: "/about", label: "О студии" },
     ],
   },
   intro: {
@@ -354,15 +365,17 @@ const ru: MarketContent = {
     intro:
       "Точная стоимость зависит от задачи — вот ориентиры, чтобы понять порядок. Итоговую цену называем после разбора и оценки.",
     rows: [
-      { title: "Сайт или лендинг", price: "от 40 000 ₽" },
-      { title: "Автоматизация бизнес-процессов", price: "от 40 000 ₽" },
-      { title: "Веб-приложение или компактный SaaS", price: "от 110 000 ₽" },
+      { title: "Лендинг", price: "от 20 000 ₽" },
+      { title: "Сайт", price: "от 35 000 ₽" },
+      { title: "Анимация для сайта", price: "от 10 000 ₽" },
+      { title: "Автоматизация бизнес-процессов", price: "от 35 000 ₽" },
+      { title: "Веб-приложение", price: "от 150 000 ₽" },
     ],
   },
   faq: true,
   about: {
     eyebrow: "Кто стоит за Ludvik4",
-    body: "Ludvik4 — независимый проект по разработке цифровых продуктов. Я веду каждый проект от постановки задачи до запуска и остаюсь единой точкой ответственности на всех этапах. Когда задаче нужны дополнительные компетенции, подключаю проверенных профильных специалистов.",
+    body: "Ludvik4 — студия разработки цифровых продуктов. Мы ведём каждый проект от постановки задачи до запуска, и на всех этапах у вас одна точка ответственности. Когда задаче нужны дополнительные компетенции, подключаем проверенных профильных специалистов.",
   },
   h1: "Сайты, автоматизация и веб-приложения — от задачи до запуска",
   // Draft Russian adaptation of the approved EN copy — awaits the owner's OK.
@@ -370,50 +383,55 @@ const ru: MarketContent = {
     exhibit: {
       eyebrow: "Экспонат",
       name: "Ludvik",
-      lines: ["Чистый код, WebGL, ноль полигонов."],
-    },
-    strip: {
-      status: "Беру проекты",
-      worldwide: "По всему миру",
+      lines: [
+        "Анимированный маскот студии.",
+        "Живая WebGL-сцена на чистом коде.",
+        "Откликается на клик, перетаскивание и свайп по тачпаду.",
+      ],
     },
     collection: {
-      eyebrow: "Коллекция · Что я делаю",
-      title: ["Всё, что работает в браузере, —", "сделаю."],
+      eyebrow: "Коллекция · Что мы делаем",
+      title: ["Всё, что работает в браузере, —", "сделаем."],
       halls: [
         {
           index: "Зал 01",
-          name: "Сайты",
-          line: "для продуктов, студий, событий",
-          exhibit: "browser",
-        },
-        {
-          index: "Зал 02",
           name: "Лендинги",
           line: "одно предложение, одно действие",
           exhibit: "landing",
+          href: "/uslugi/lendingi",
+        },
+        {
+          index: "Зал 02",
+          name: "Сайты",
+          line: "для продуктов, студий, событий",
+          exhibit: "browser",
+          href: "/uslugi/razrabotka-sajtov",
         },
         {
           index: "Зал 03",
           name: "Веб-приложения",
           line: "аккаунты, данные, оплаты, AI",
           exhibit: "app",
+          href: "/uslugi/veb-prilozheniya",
         },
         {
           index: "Зал 04",
-          name: "Автоматизации",
-          line: "рутина на автомате",
-          exhibit: "gears",
+          name: "Анимации",
+          line: "живые герои и интерактив — как Людвик",
+          exhibit: "motion",
+          href: "/uslugi/animatsiya-dlya-sajta",
         },
         {
           index: "Зал 05",
-          name: "Виджеты",
-          line: "маленькие, точные, встраиваемые",
-          exhibit: "widget",
+          name: "Автоматизации",
+          line: "рутина на автомате",
+          exhibit: "gears",
+          href: "/uslugi/avtomatizatsii",
         },
         {
           index: "Зал 06",
           name: "Что-то ещё?",
-          line: "спросите — скорее всего, это возможно",
+          line: "виджеты, интеграции — спросите, скорее всего, это возможно",
           exhibit: "question",
           cta: "Расскажите идею",
         },
@@ -426,17 +444,17 @@ const ru: MarketContent = {
         {
           n: "01",
           title: "Обсуждаем",
-          body: "Формулируем задачу, договариваемся об объёме и цене.",
+          body: "Разбираем задачу и ваши материалы, фиксируем объём, сроки и цену.",
         },
         {
           n: "02",
-          title: "Делаем",
-          body: "Первая полезная версия, которую видно по ходу работы.",
+          title: "Делаем и показываем",
+          body: "Сначала показываем прототип или черновик, собираем ваши правки и дорабатываем до готовой версии.",
         },
         {
           n: "03",
           title: "Запускаем",
-          body: "Запуск и передача кода — дальше развиваем.",
+          body: "Публикуем, передаём код и доступы. Дальше — поддержка и развитие, если нужно.",
         },
       ],
     },
@@ -445,32 +463,38 @@ const ru: MarketContent = {
       title: ["Работы, которые", "можно посмотреть вживую."],
     },
     about: {
-      eyebrow: "Обо мне",
-      title: ["Один человек,", "от начала до конца."],
+      eyebrow: "О студии",
+      title: ["Вы ставите задачу —", "мы доводим её до запуска."],
       body: [
         "Я Екатерина Пустовая — основательница студии Ludvik4, full‑stack developer с опытом в UX/UI. Больше 8 лет разрабатываю веб-приложения разного масштаба и знаю, как сделать продукт качественным, масштабируемым и по-настоящему решающим задачи бизнеса.",
-        "Студия базируется в Испании и работает с клиентами по всему миру. Берём проект под ключ: от идеи до работающего запуска — дизайн, разработка и всё, что нужно продукту. Вы работаете напрямую со мной, а я собираю под задачу всю нужную экспертизу.",
+        "Студия работает онлайн из России с клиентами по всему миру. Берём проект под ключ: от идеи до работающего запуска — дизайн, разработка и всё, что нужно продукту. Вы работаете напрямую со мной, а я собираю под задачу всю нужную экспертизу.",
       ],
       photoAlt:
         "Портрет автора Ludvik4: тёмное худи, улыбка и взгляд вверх на розовом фоне",
-      linkLabel: "Подробнее обо мне",
+      linkLabel: "Подробнее о студии",
     },
     closing: {
       eyebrow: "Ваш экспонат — следующий?",
       title: "Есть идея?",
       cta: "Обсудить проект",
     },
-    footerReach: "По всему миру",
+    footerReach: "Работаем по всему миру",
   },
   contact: {
     eyebrow: "Контакт",
     title: "Расскажите о задаче",
-    body: "Опишите задачу в Telegram — там можно обсудить контекст и определить следующий шаг",
+    body: "Оставьте контакт и пару слов о задаче — ответим в течение рабочего дня. Удобнее написать самим? Почта и Telegram ниже.",
     telegramText: "Напишите в Telegram → t.me/ludvik4work",
   },
   footer: {
     links: [
       // The menu lives in the header; the footer keeps only what it lacks.
+      {
+        href: "/politika-konfidentsialnosti",
+        label: "Политика конфиденциальности",
+        external: false,
+        newTab: true,
+      },
       { href: TELEGRAM_URL, label: "Telegram", external: true },
     ],
   },
@@ -674,10 +698,6 @@ const en: MarketContent = {
       name: "Ludvik",
       lines: ["Pure code, WebGL, zero polygons.", "Handle with curiosity."],
     },
-    strip: {
-      status: "Taking projects",
-      worldwide: "Worldwide",
-    },
     collection: {
       eyebrow: "The collection · What I build",
       title: ["If it lives in a browser,", "I can build it."],
@@ -781,7 +801,7 @@ const en: MarketContent = {
   footer: {
     links: [
       // The menu lives in the header; the footer keeps only what it lacks.
-      { href: "/privacy", label: "Privacy", external: false },
+      { href: "/privacy", label: "Privacy", external: false, newTab: true },
       { href: TELEGRAM_URL, label: "Telegram", external: true },
     ],
   },

@@ -1,0 +1,35 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "prod-local",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["exec", "next", "start", "--port", "3311"],
+      "port": 3311
+    },
+    {
+      "name": "dev-en",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["exec", "next", "dev", "--port", "3333"],
+      "env": {
+        "SITE_MARKET": "en"
+      },
+      "port": 3333
+    },
+    {
+      "name": "dev-ru",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["exec", "next", "dev", "--port", "3344"],
+      "env": {
+        "SITE_MARKET": "ru"
+      },
+      "port": 3344
+    },
+    {
+      "name": "static-ru",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4100", "--directory", "out"],
+      "port": 4100
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import {
   internationalGuides,
   internationalServicePages,
   internationalWork,
+  pricingServices,
   publicUrl,
   servicePages,
 } from "@/features/site";
@@ -29,6 +30,12 @@ function ruBody(baseURL: string): string {
         `- [${service.title}](${publicUrl("ru", baseURL, `/uslugi/${service.slug}`)}): ${service.description}`,
     )
     .join("\n");
+  const pricingLines = pricingServices
+    .map(
+      (service) =>
+        `- [${service.seoTitle}](${publicUrl("ru", baseURL, `/uslugi/${service.slug}`)}): ${service.lead}`,
+    )
+    .join("\n");
   const caseLines = caseStudies
     .map(
       (study) =>
@@ -52,11 +59,15 @@ AI-инструменты и spec-driven development используются к
 
 ## Основные страницы
 
-- [Главная](${baseURL}/): услуги, цены, кейсы и контакт
-- [Кейсы](${publicUrl("ru", baseURL, "/cases")}): публичные примеры работ
+- [Главная](${baseURL}/): услуги, цены, работы и контакт
+- [Работы](${publicUrl("ru", baseURL, "/cases")}): публичные примеры работ
 - [Блог](${publicUrl("ru", baseURL, "/blog")}): статьи об AI-агентах в разработке, spec-driven development, автоматизации
 ${serviceLines ? `\n## Услуги\n\n${serviceLines}\n` : ""}
-${caseLines ? `\n## Кейсы\n\n${caseLines}\n` : ""}
+## Цены и пакеты
+
+${pricingLines}
+
+${caseLines ? `\n## Работы\n\n${caseLines}\n` : ""}
 ${articleLines ? `\n## Статьи\n\n${articleLines}\n` : ""}`;
 }
 

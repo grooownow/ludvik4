@@ -13,7 +13,7 @@ const EN_BASE = "https://ludvik4.example";
 const TEAM_CLAIM = /ML-инженер|команда: разработчики|команда разработчиков/;
 
 describe("market content", () => {
-  it("RU is the independent-developer positioning with exactly three services", () => {
+  it("RU speaks as the studio (we) with exactly three services", () => {
     const ru = getMarketContent("ru");
     expect(ru.lang).toBe("ru");
     expect(ru.services.items).toHaveLength(3);
@@ -25,12 +25,32 @@ describe("market content", () => {
     // Exhibition home (docs/specs/immersive-home.md): same menu as EN, translated.
     expect(ru.nav.links).toEqual([
       { href: "/#work", label: "Работы" },
-      { href: "/#collection", label: "Услуги" },
-      { href: "/about", label: "Обо мне" },
+      { href: "/uslugi", label: "Услуги" },
+      { href: "/about", label: "О студии" },
     ]);
     expect(ru.nav.cta).toBe("Контакты");
+    expect(ru.nav.tagline).toBe("Студия веб-разработки");
     expect(ru.description).toContain("Сайты, автоматизации и веб-приложения");
-    expect(ru.hero.lead).not.toMatch(/проектируем|предлагаем|поможем/i);
+    // Studio voice (owner, 2026-10-26): no first-person singular in the
+    // home copy outside the About block, which is rewritten separately.
+    const { about: _about, ...home } = ru.home;
+    expect(JSON.stringify(home)).not.toMatch(
+      /(^|[^а-яё])(я|мне|сделаю|делаю|беру)([^а-яё]|$)/i,
+    );
+    expect(ru.home.collection.title.join(" ")).toContain("сделаем");
+    // Order and animation as an offer of its own (owner, 2026-10-26);
+    // widgets moved into "anything else" so the grid stays 3×2.
+    expect(ru.home.collection.halls.map((h) => h.exhibit)).toEqual([
+      "landing",
+      "browser",
+      "app",
+      "motion",
+      "gears",
+      "question",
+    ]);
+    expect(ru.home.collection.halls[3]!.name).toBe("Анимации");
+    expect(ru.home.collection.halls[5]!.line).toMatch(/^виджеты/);
+    expect(ru.about?.body).toMatch(/^Ludvik4 — студия/);
     expect(ru.about?.body).not.toMatch(TEAM_CLAIM);
   });
 
@@ -87,10 +107,6 @@ describe("exhibition home content", () => {
       eyebrow: "Your exhibit next?",
       title: "Have something in mind?",
       cta: "Discuss a project",
-    });
-    expect(home.strip).toEqual({
-      status: "Taking projects",
-      worldwide: "Worldwide",
     });
   });
 

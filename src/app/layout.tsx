@@ -6,7 +6,9 @@ import { shouldLoadVercelAnalytics } from "@/lib/analytics";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AnalyticsProvider } from "@/components/analytics-provider";
 import { VercelAnalytics } from "@/components/vercel-analytics";
-import { MARKET, siteMetadata } from "@/features/site";
+import { OrderProvider } from "@/features/order";
+import { MARKET, orderConfig, siteMetadata } from "@/features/site";
+import { env } from "@/lib/env";
 
 const geist = Geist({
   subsets: ["latin", "cyrillic"],
@@ -39,7 +41,22 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
-          <AnalyticsProvider>{children}</AnalyticsProvider>
+          <AnalyticsProvider>
+            {/* The order dialog: RU only, once its function URL and captcha
+                key are in the build (docs/specs/order-form-ru.md). */}
+            <OrderProvider
+              config={
+                MARKET === "ru"
+                  ? orderConfig(
+                      env.NEXT_PUBLIC_ORDER_ENDPOINT,
+                      env.NEXT_PUBLIC_SMARTCAPTCHA_SITE_KEY,
+                    )
+                  : undefined
+              }
+            >
+              {children}
+            </OrderProvider>
+          </AnalyticsProvider>
         </ThemeProvider>
         {/*
           Vercel Web Analytics carries the traffic baseline — and the
