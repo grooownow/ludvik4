@@ -71,8 +71,8 @@ Set in Timeweb, not in the repo: app `ludvik4-ru-v2` → Settings → «Наст
 
 The site embeds no iframes of its own, so `DENY` breaks nothing; the
 SmartCaptcha iframe is Yandex's page. `includeSubDomains` is left out of HSTS
-on purpose. A full CSP is still open. The same screen also offers redirects
-(possibly the deferred `www` → apex, see ADR 0003) and compression (off).
+on purpose. A full CSP is still open. The same screen holds the `www` redirect (below) and compression (off; turning
+it on would gzip HTML/CSS/JS — the home HTML is ~82 KB uncompressed).
 «Лимит входящих запросов» is a monthly cap for the whole site, not flood
 protection — do not enable it.
 
@@ -138,15 +138,13 @@ metadata.
 
 ## `www` policy
 
-Both `ludvik4.ru` and `www.ludvik4.ru` currently return `200` with the same RU
-build. Every page declares the apex URL as canonical, so search engines have a
-single preferred host.
+`https://www.ludvik4.ru/*` answers `301` to the same path and query on
+`https://ludvik4.ru` (since 2026-10-29). The redirect is a `host` rule in the
+app's «Настройки веб-сервера» → «Редиректы», next to the security headers.
+This supersedes `docs/decisions/0003-defer-ru-www-redirect.md`. Every page
+still declares the apex URL as canonical.
 
-A strict `www` → apex redirect is deliberately deferred. Timeweb App Platform
-does not support a per-host redirect, REG.RU forwarding cannot cover this
-HTTPS subdomain case, and a dedicated Timeweb backend costs 510 RUB/month.
-Do not create the standalone redirect service unless this decision is
-revisited. See `docs/decisions/0003-defer-ru-www-redirect.md`.
+Check: `curl -sI 'https://www.ludvik4.ru/uslugi/?a=1' | grep -iE '^HTTP|^location'`.
 
 ## Incident history
 

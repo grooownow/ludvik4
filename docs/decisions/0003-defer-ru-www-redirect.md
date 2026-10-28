@@ -37,4 +37,7 @@ redirect without a disproportionate recurring cost.
 
 ## Status
 
-`accepted`
+`superseded` (2026-10-29). Timeweb App Platform now offers host redirects in
+the app's web-server settings («Настройки веб-сервера» → «Редиректы», type
+`host`). `www.ludvik4.ru` → `ludvik4.ru` is a `301` there, keeping path and
+query, at no extra cost. See `docs/playbooks/production-ru-timeweb.md`.

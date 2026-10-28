@@ -37,9 +37,9 @@ mostly Google. Both are free.
 
 ## 2. Canonical domain: apex, not www (one-time, ~5 min)
 
-Canonical/OG point to `https://ludvik4.ru` (apex). Timeweb App Platform serves
-both apex and `www` with a canonical to apex. A strict redirect is deliberately
-deferred in `docs/decisions/0003-defer-ru-www-redirect.md`.
+Canonical/OG point to `https://ludvik4.ru` (apex). Since 2026-10-29 `www`
+answers `301` to the apex (Timeweb host redirect; ADR 0003 superseded, see
+`docs/playbooks/production-ru-timeweb.md`).
 
 ## 3. Publishing an article (recurring)
 
@@ -92,7 +92,7 @@ Add to the 15-minute weekly review from `docs/playbooks/analytics.md`:
 ## Done when
 
 - Both consoles verified, sitemap submitted in each.
-- Apex is canonical; the accepted `www` exception is recorded in ADR 0003.
+- Apex is canonical; `www` 301-redirects to it (since 2026-10-29).
 - Published articles are present in the sitemap, RSS and `llms.txt`.
 - Each approved article has the intended off-site adaptations and an indexing
   request after deployment.

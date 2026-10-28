@@ -20,7 +20,7 @@ function is live, `localhost` is gone from `ALLOWED_ORIGINS` and the captcha
 hosts, scaling is capped (2 instances, 4 concurrent requests), and ludvik4.ru
 sends HSTS, `X-Frame-Options: DENY`, nosniff, `Referrer-Policy`,
 `Permissions-Policy` and `frame-ancestors 'none'` (Timeweb web-server
-settings, see `docs/playbooks/production-ru-timeweb.md`). Later: Turnstile on the Gridfin landing (its own repo), a shared
+settings, see `docs/playbooks/production-ru-timeweb.md`); `www.ludvik4.ru` now 301s to the apex (ADR 0003 superseded). Later: Turnstile on the Gridfin landing (its own repo), a shared
 rate-limit store (Upstash) or Vercel Firewall rules, remove the leftover
 template auth routes on EN, a CSP.
 
