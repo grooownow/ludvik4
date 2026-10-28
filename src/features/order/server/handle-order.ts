@@ -185,17 +185,29 @@ export async function handleOrder(
 }
 
 /** An in-memory sliding window: at most `limit` orders per IP per window. */
-export function createRateLimiter(limit: number, windowMs: number) {
+export function createRateLimiter(
+  limit: number,
+  windowMs: number,
+  maxIps = 5000,
+) {
   const hits = new Map<string, number[]>();
   return (ip: string, now = Date.now()) => {
     const recent = (hits.get(ip) ?? []).filter((t) => now - t < windowMs);
     recent.push(now);
+    // Re-insert so the Map's order is "least recently seen first".
+    hits.delete(ip);
     hits.set(ip, recent);
     // Bound the memory without a full reset, which a bot rotating through
-    // addresses could trigger to wipe everyone's count: drop idle IPs only.
-    if (hits.size > 5000) {
+    // addresses could trigger to wipe everyone's count: drop idle IPs, then,
+    // if a flood within one window still overfills it, the least recently
+    // seen ones — down to 80%, so the sweep does not run on every request.
+    if (hits.size > maxIps) {
       for (const [key, times] of hits) {
         if (now - times[times.length - 1]! >= windowMs) hits.delete(key);
+      }
+      for (const key of hits.keys()) {
+        if (hits.size <= maxIps * 0.8) break;
+        if (key !== ip) hits.delete(key);
       }
     }
     return recent.length > limit;
