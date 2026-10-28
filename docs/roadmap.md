@@ -12,8 +12,8 @@ notes outside the repo — path in `docs/legal/contracts-ru/README.md`): EU sanc
 self-employed and individuals in Russia (sole traders/self-employed still to
 confirm with a lawyer) plus companies outside Russia. Owner registers as
 self-employed (НПД) for rubles; no acquiring at first. Contract templates
-live in `docs/legal/contracts-ru/` (landing, site and web app drafts, 2026-10-27). Next:
-templates for the other services; reword «Работаем по договору» claims to
+live in `docs/legal/contracts-ru/` (landing, site, web app and one-off job drafts,
+2026-10-28). Next: lawyer review; reword «Работаем по договору» claims to
 match.
 
 **[SHIPPED 2026-10-23] Exhibition home, both markets.** The jelly

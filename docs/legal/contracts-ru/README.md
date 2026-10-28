@@ -16,8 +16,7 @@ personal data from there into this folder.
 | Landing page | [landing.md](./landing.md) | Draft v2 (2026-10-27), owner-approved |
 | Website      | [site.md](./site.md)       | Draft v2 (2026-10-27), owner-approved |
 | Web app      | [webapp.md](./webapp.md)   | Draft v1 (2026-10-27), to review      |
-| Animation/3D | —                          | To do                                 |
-| Automation   | —                          | To do                                 |
+| Animation/3D, automation, bots, widgets (one-off jobs) | [single-job.md](./single-job.md) | Draft v1 (2026-10-28), owner-approved |
 
 ## Who we contract with
 
@@ -54,6 +53,10 @@ personal data from there into this folder.
   development stage includes a reserve for small changes agreed in chat
   (days set in the plan, 1 business day by default); anything bigger is a
   change request.
+- One-off jobs (animation, automation, bots, widgets) share one template:
+  50% prepayment → draft → the rest paid on draft approval →
+  final work. Accounts and bots are registered to the client; AI output is
+  checked by the client.
 - Client cancellation (Civil Code Art. 717) is settled by fixed stage shares
   (landing: brief and design 40%, development 50%, publishing 10%).
 - Penalties 0.1% a day, capped at 10%, both ways; executor's liability capped
