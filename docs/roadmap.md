@@ -6,6 +6,16 @@ writing detail here.
 
 ## Now
 
+Legal/payment groundwork for RU clients (2026-10-26, research, owner-only
+notes outside the repo — path in `docs/legal/contracts-ru/README.md`): EU sanctions (Art. 5n, Reg.
+833/2014) rule out companies established in Russia; target sole traders,
+self-employed and individuals in Russia (sole traders/self-employed still to
+confirm with a lawyer) plus companies outside Russia. Owner registers as
+self-employed (НПД) for rubles; no acquiring at first. Contract templates
+live in `docs/legal/contracts-ru/` (landing, site and web app drafts, 2026-10-27). Next:
+templates for the other services; reword «Работаем по договору» claims to
+match.
+
 **[SHIPPED 2026-10-23] Exhibition home, both markets.** The jelly
 roly-poly on a pink stage (live WebGL with a quality ladder and rocking
 stills), collection halls as drawn plans under a cursor spotlight, three
