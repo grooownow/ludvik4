@@ -87,6 +87,8 @@ describe("handleOrder", () => {
   it.each([
     ["service", "Перейдите на https://evil.example"],
     ["service", "Звоните: bit.ly"],
+    ["service", "Пишите на сайт.рф"],
+    ["plan", "Базовый / подробнее"],
     ["plan", "Базовый\nBcc: x@y.ru"],
     ["price", "<b>0 ₽</b>"],
     ["page", "javascript:alert(1)"],
@@ -203,10 +205,21 @@ describe("createRateLimiter", () => {
     expect(limited("ip", 5000)).toBe(false);
   });
 
-  it("keeps a busy IP's count while a flood of new IPs fills the memory", () => {
-    const limited = createRateLimiter(1, 1000);
-    expect(limited("busy", 0)).toBe(false);
-    for (let i = 0; i < 6000; i++) limited(`bot-${i}`, 10);
-    expect(limited("busy", 20)).toBe(true);
+  it("drops idle IPs before recent ones when the memory fills", () => {
+    const limited = createRateLimiter(1, 1000, 10);
+    for (let i = 0; i < 10; i++) limited(`idle-${i}`, 0);
+    expect(limited("busy", 1500)).toBe(false);
+    limited("new", 1600);
+    // The idle ones went; the busy IP kept its count.
+    expect(limited("busy", 1700)).toBe(true);
+  });
+
+  it("stays bounded when a flood of IPs arrives within one window", () => {
+    const limited = createRateLimiter(1, 60_000, 100);
+    for (let i = 0; i < 1000; i++) limited(`bot-${i}`, i);
+    // A recent bot is still counted: its second request is over the limit.
+    expect(limited("bot-999", 1001)).toBe(true);
+    // The oldest were evicted: the first bot starts a fresh count.
+    expect(limited("bot-0", 1002)).toBe(false);
   });
 });

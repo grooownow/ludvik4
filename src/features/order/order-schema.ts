@@ -40,14 +40,16 @@ const LINK_RE = /\bhttps?:\/\/|\bwww\.|\b[\w-]+\.[a-z]{2,}\b/i;
 // Service, package and price come from the page, not from the visitor, but a
 // bot can send anything — and the topic goes into the Telegram signal and the
 // mail subject. So: one line of plain words and prices, no links.
-const LABEL_RE = /^[\p{L}\p{N} \u00a0\u202f.,()+\-–—·₽/]*$/u;
+const LABEL_RE = /^[\p{L}\p{N} \u00a0\u202f.,()+\-–—·₽]*$/u;
+// Any script, not only ASCII: "сайт.рф" is a link too.
+const LABEL_LINK_RE = /[\p{L}\p{N}-]+\.\p{L}{2,}/u;
 const label = (max: number) =>
   z
     .string()
     .trim()
     .max(max)
     .regex(LABEL_RE)
-    .refine((v) => !LINK_RE.test(v))
+    .refine((v) => !LABEL_LINK_RE.test(v))
     .default("");
 
 export const orderSchema = z.object({
