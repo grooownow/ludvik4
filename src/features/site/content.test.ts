@@ -208,3 +208,21 @@ describe("footer", () => {
     },
   );
 });
+
+describe("RU service scopes", () => {
+  // Legal texts are prepared as templates the client reviews (contracts,
+  // 2026-10-28), so they are included work, not "estimated separately".
+  it.each(["Сайт или лендинг", "Веб-приложение или компактный SaaS"])(
+    "%s includes legal text templates",
+    (title) => {
+      const item = getMarketContent("ru").scopes?.items.find(
+        (i) => i.title === title,
+      );
+      expect(item).toBeDefined();
+      expect(item!.boundaries.join(" ")).toMatch(
+        /шаблоны всех юридических текстов.*вы проверяете и дорабатываете/,
+      );
+      expect(item!.separate.join(" ")).not.toMatch(/юридическ/);
+    },
+  );
+});
