@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { type HomeContent, type Market, workExhibitNumber } from "./content";
-import { CtaLink } from "./cta-link";
+import { OrderCta } from "./order-cta";
 import { HallCard, HallsStage } from "./hall-card";
 import type { HomeExhibit } from "./home-exhibits";
 
@@ -313,9 +313,7 @@ export function HomeClosing({ copy }: { copy: HomeContent["closing"] }) {
           {copy.title}
         </h2>
         <Button asChild size="lg" className="mt-12 rounded-full px-8 sm:mt-16">
-          <CtaLink href="/contact" placement="closing">
-            {copy.cta}
-          </CtaLink>
+          <OrderCta placement="closing">{copy.cta}</OrderCta>
         </Button>
       </div>
     </section>

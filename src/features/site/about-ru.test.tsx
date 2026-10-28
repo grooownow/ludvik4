@@ -12,8 +12,11 @@ describe("AboutRuView", () => {
     expect(main.textContent).not.toMatch(
       /founder-led|Direct communication|Engineering evidence/i,
     );
-    // RU positioning: an independent developer, not a permanent team.
-    expect(main.textContent).not.toMatch(/команда разработчиков|ML-инженер/);
+    // RU positioning: the studio speaks as "мы", never as a lone "я".
+    expect(main.textContent).not.toMatch(
+      /(^|[\s.,—])Я\s|одного человека|Один исполнитель|у меня/,
+    );
+    expect(main.textContent).toContain("Ludvik4 — студия веб-разработки");
   });
 
   it("links to the blog, its one entry point on the site", () => {
@@ -25,7 +28,7 @@ describe("AboutRuView", () => {
     );
   });
 
-  it("ends with the way to /contact", () => {
+  it("ends with the way to /contact (the order form when configured)", () => {
     render(<AboutRuView />);
     expect(
       screen.getByRole("link", { name: "Обсудить проект" }),

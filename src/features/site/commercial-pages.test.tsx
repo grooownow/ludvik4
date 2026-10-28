@@ -17,11 +17,11 @@ describe("CasesIndexView", () => {
     }
   });
 
-  it("does NOT show the «Все кейсы» link — that belongs to the homepage only", () => {
+  it("does NOT show the «Все работы» link — that belongs to the homepage only", () => {
     render(<CasesIndexView baseUrl="https://ludvik4.ru" />);
 
     expect(
-      screen.queryByRole("link", { name: /Все кейсы/ }),
+      screen.queryByRole("link", { name: /Все работы/ }),
     ).not.toBeInTheDocument();
   });
 
@@ -30,7 +30,7 @@ describe("CasesIndexView", () => {
       <CasesIndexView baseUrl="https://ludvik4.ru" />,
     );
 
-    expect(container.textContent).toContain("Кейсы Ludvik4");
+    expect(container.textContent).toContain("Работы Ludvik4");
     expect(container.innerHTML).toContain('"@type":"CollectionPage"');
     expect(container.innerHTML).toContain('"@type":"ItemList"');
   });

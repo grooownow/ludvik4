@@ -7,6 +7,7 @@ import {
   internationalCaseStudies,
   internationalServicePages,
 } from "./international-content";
+import { pricingServices } from "./pricing-draft";
 
 // Per-market SEO surfaces, built from the market content object. Pure functions
 // of (content, baseUrl) so both markets are unit-testable without re-parsing env.
@@ -120,9 +121,17 @@ export function buildSitemap(
       changeFrequency: "monthly",
       priority: 0.8,
     });
-    for (const service of servicePages) {
+    entries.push({
+      url: publicUrl(market, baseUrl, "/uslugi"),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    });
+    for (const slug of [
+      ...servicePages.map((s) => s.slug),
+      ...pricingServices.map((s) => s.slug),
+    ]) {
       entries.push({
-        url: publicUrl(market, baseUrl, `/uslugi/${service.slug}`),
+        url: publicUrl(market, baseUrl, `/uslugi/${slug}`),
         changeFrequency: "monthly",
         priority: 0.9,
       });

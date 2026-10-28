@@ -6,6 +6,40 @@ writing detail here.
 
 ## Now
 
+**[SHIPPED 2026-10-28 · RU only] Clear first screen, studio voice, services
+and prices, order form.** Header tagline, glass burger, mascot bubble, «мы»
+voice on the home and «О студии», halls reordered with «Анимации», one page
+per service (`/uslugi/<slug>/`: packages, prices, live motion examples), hall
+cards link to them, «Кейсы» → «Работы», blog price articles aligned. Order
+form live on every RU CTA (Yandex Cloud function + SmartCaptcha, mail +
+Telegram via the `tg.ludvik4.dev` relay); public endpoint and captcha key are
+baked into `config/ru-static-env.ts`, no Timeweb vars needed. Privacy policy
+and consent pages shipped. Still open: function scaling limits, lawyer review
+of the policy/consent and «152-ФЗ» wording, RKN notice (deferred), Web apps
+examples and prices (handoff list). Details:
+`docs/specs/ru-clarity-and-pricing-handoff.md`,
+`docs/playbooks/order-form-yandex-cloud.md`.
+
+Legal/payment groundwork for RU clients (2026-10-26, research, owner-only
+notes outside the repo — path in `docs/legal/contracts-ru/README.md`): EU sanctions (Art. 5n, Reg.
+833/2014) rule out companies established in Russia; target sole traders,
+self-employed and individuals in Russia (sole traders/self-employed still to
+confirm with a lawyer) plus companies outside Russia. Owner registers as
+self-employed (НПД) for rubles; no acquiring at first. Contract templates
+live in `docs/legal/contracts-ru/` (landing, site, web app and one-off job drafts,
+2026-10-28). Next: lawyer review; reword «Работаем по договору» claims to
+match.
+
+**[MONITOR 2026-10-26] Sitemap discovery grew, but the new home weakened
+commercial discovery.** The root sitemap expanded from 24 to 26 URLs with
+`/contact` and `/qa-pilot`; all eight canonical P1 pages and service files pass.
+After the immersive-home release, however, `/` no longer links to the three
+service pages, which now sit at crawl depth 3. Restore direct Next.js `Link`s
+from the relevant collection halls. GSC remains blocked by Google sign-in for a
+third weekly run, so current performance and index totals are unverified rather
+than inferred from empty public search checks. Full evidence and fix plan:
+`docs/seo/seo-handoff.md`.
+
 **[SHIPPED 2026-10-23] Exhibition home, both markets.** The jelly
 roly-poly on a pink stage (live WebGL with a quality ladder and rocking
 stills), collection halls as drawn plans under a cursor spotlight, three
@@ -600,6 +634,8 @@ Scoped and agreed, not yet started:
 
 Ideas worth keeping, not yet scoped:
 
+- **Уведомление в Роскомнадзор** об обработке ПДн (форма заказа RU): владелица
+  отложила 2026-10-28. Таблица полей — `docs/legal/privacy-review-2026-10-28.md` → B.
 - Add the next case only when a public result and approved screenshot exist.
 - Short courses (AI & dev topics for beginners).
 - **Full bilingual site (RU / EN)** — a lightweight EN landing `/en` shipped

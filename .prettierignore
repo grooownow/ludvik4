@@ -26,3 +26,5 @@ public/gridfin/
 resources/ru-public/qa-pilot/
 public/qa-pilot/
 public/terms/
+# Contract templates: blank-field underscores read as emphasis.
+docs/legal/contracts-ru/

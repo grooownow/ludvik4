@@ -15,9 +15,12 @@ export const CONTACT_EMAIL = "ludvik4good.me@gmail.com";
 export function ContactPageView({
   content,
   form,
+  orderForm,
 }: {
   content: MarketContent;
   form?: ReactNode;
+  /** RU: the order form, already in its own card. */
+  orderForm?: ReactNode;
 }) {
   const { contact } = content;
   return (
@@ -62,6 +65,7 @@ export function ContactPageView({
                 {contact.form.privacyNotice.text}{" "}
                 <Link
                   href={contact.form.privacyNotice.href as Route}
+                  target="_blank"
                   className="text-foreground underline underline-offset-4"
                 >
                   {contact.form.privacyNotice.linkLabel}
@@ -69,7 +73,9 @@ export function ContactPageView({
               </p>
             ) : null}
           </div>
-        ) : null}
+        ) : (
+          orderForm
+        )}
       </main>
       <SiteFooter content={content} />
     </div>

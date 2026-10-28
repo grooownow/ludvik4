@@ -26,7 +26,11 @@ test.describe("analytics stays off the Russian storefront", () => {
     });
 
     await page.goto("/");
-    await page.getByRole("link", { name: "Обсудить проект" }).click();
+    // A button opening the order form, or the /contact link without it.
+    await page
+      .getByRole("button", { name: "Обсудить проект" })
+      .or(page.getByRole("link", { name: "Обсудить проект" }))
+      .click();
 
     expect(analyticsRequests).toEqual([]);
   });

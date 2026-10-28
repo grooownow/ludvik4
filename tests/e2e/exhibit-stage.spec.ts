@@ -60,24 +60,6 @@ for (const viewport of [
   });
 }
 
-test("on a phone the strip is one line: availability and reach", async ({
-  page,
-  isMobile,
-}) => {
-  test.skip(!isMobile, "phone layout only");
-  await page.goto("/");
-  const stage = page.getByRole("region", { name: "Ludvik" });
-  const status = stage.getByText("Беру проекты · По всему миру");
-  const lineHeight = await status.evaluate((el) =>
-    parseFloat(getComputedStyle(el).lineHeight),
-  );
-  const box = (await status.boundingBox())!;
-  expect(box.height).toBeLessThan(lineHeight * 1.5);
-  await expect(
-    stage.getByText(`${new Date().getFullYear()} · По всему миру`),
-  ).toBeHidden();
-});
-
 // The still and the live shader must frame the mascot the same way on a phone
 // too: both stills carry the phone framing (exhibit-gate.ts → stageFraming).
 test("on a phone the still is framed like the live scene", async ({

@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   RU_APP_URL,
   RU_BLANKED_PUBLIC_ENV,
+  RU_ORDER_ENDPOINT,
+  RU_SMARTCAPTCHA_SITE_KEY,
   ruStaticEnv,
 } from "../../config/ru-static-env";
 
@@ -65,6 +67,26 @@ describe("RU static build environment", () => {
         NEXT_PUBLIC_APP_URL: "http://localhost:3000",
       }).NEXT_PUBLIC_APP_URL,
     ).toBe("http://localhost:3000");
+  });
+
+  it("switches the order form on without any deploy-settings vars", () => {
+    const env = ruStaticEnv({ NODE_ENV: "production" });
+
+    expect(env.NEXT_PUBLIC_ORDER_ENDPOINT).toBe(RU_ORDER_ENDPOINT);
+    expect(env.NEXT_PUBLIC_SMARTCAPTCHA_SITE_KEY).toBe(
+      RU_SMARTCAPTCHA_SITE_KEY,
+    );
+  });
+
+  it("lets deploy settings override the order form endpoints", () => {
+    const env = ruStaticEnv({
+      NODE_ENV: "production",
+      NEXT_PUBLIC_ORDER_ENDPOINT: "https://example.test/order",
+      NEXT_PUBLIC_SMARTCAPTCHA_SITE_KEY: "ysc1_other",
+    });
+
+    expect(env.NEXT_PUBLIC_ORDER_ENDPOINT).toBe("https://example.test/order");
+    expect(env.NEXT_PUBLIC_SMARTCAPTCHA_SITE_KEY).toBe("ysc1_other");
   });
 
   it("passes the rest of the inherited environment through untouched", () => {

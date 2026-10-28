@@ -149,6 +149,7 @@ export function ExhibitStage({
         <button
           type="button"
           aria-label={pushLabel}
+          data-exhibit-push
           onClick={push}
           className="focus-visible:ring-primary absolute top-1/2 left-1/2 size-[56cqmin] -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full focus-visible:ring-2 focus-visible:outline-none"
         />

@@ -1,5 +1,7 @@
 "use client";
 
+import type { Route } from "next";
+import Link from "next/link";
 import {
   type PointerEvent,
   type ReactNode,
@@ -8,14 +10,15 @@ import {
   useState,
 } from "react";
 import type { HomeContent, Market } from "./content";
-import { CtaLink } from "./cta-link";
+import { OrderCta } from "./order-cta";
 import { HallPlan } from "./hall-plans";
 
 // The collection halls as fine-line plans (owner's pick from
 // experiments/nevalyashka/ideas/halls-v2.html: "Чертежи" → "Подробный").
 // Each card draws its plan once, when it scrolls into view; cards of one row
 // start a beat apart. On hover the plan darkens and its one accent turns
-// pink. Around them a soft pool of pink light follows the cursor over the
+// pink. On RU a card opens its service's tab (the whole card is the link).
+// Around them a soft pool of pink light follows the cursor over the
 // section (the owner's pick over a dark hall, 2026-10-23).
 // Styles: "Collection halls" in globals.css.
 
@@ -69,6 +72,14 @@ export function HallCard({
       data-cta={hall.cta ? true : undefined}
       className="hall-plan"
     >
+      {hall.href ? (
+        // The whole card opens the service: a link laid over the card.
+        <Link
+          href={hall.href as Route}
+          aria-label={hall.name}
+          className="focus-visible:ring-primary absolute inset-0 z-20 rounded-2xl focus-visible:ring-2 focus-visible:outline-none"
+        />
+      ) : null}
       <div aria-hidden="true" className="hall-plan-art">
         <HallPlan kind={hall.exhibit} lang={lang} />
       </div>
@@ -81,14 +92,13 @@ export function HallCard({
         </span>
         <span className="text-stage-muted mt-1 block text-sm">{hall.line}</span>
         {hall.cta ? (
-          <CtaLink
-            href="/contact"
+          <OrderCta
             placement="hall"
             className="bg-foreground text-background hover:bg-primary focus-visible:ring-primary mt-4 inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
           >
             {hall.cta}
             <span aria-hidden="true">→</span>
-          </CtaLink>
+          </OrderCta>
         ) : null}
       </span>
     </li>

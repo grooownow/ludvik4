@@ -28,11 +28,11 @@ export async function generateMetadata({
   const casePath = canonicalPath("ru", `/cases/${study.slug}`);
 
   return {
-    title: `${study.title} — кейс`,
+    title: `${study.title} — работа Ludvik4`,
     description: study.description,
     alternates: { canonical: casePath },
     openGraph: {
-      title: `${study.title} — кейс Ludvik4`,
+      title: `${study.title} — работа Ludvik4`,
       description: study.description,
       url: casePath,
       images: [study.image],

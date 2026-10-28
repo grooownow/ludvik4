@@ -13,7 +13,7 @@ import { AnchorLink } from "./anchor-link";
 // exhibition home's final band and "hall" its last collection hall. All stay
 // so analytics history keeps its key.
 export type CtaPlacement =
-  "nav" | "nav_mobile" | "hero" | "closing" | "hall" | "service";
+  "nav" | "nav_mobile" | "hero" | "closing" | "hall" | "service" | "mascot";
 
 type CtaLinkProps = Omit<ComponentPropsWithoutRef<"a">, "href"> & {
   href: string;

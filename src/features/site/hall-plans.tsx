@@ -18,6 +18,7 @@ const NOTES: Record<Market, Record<string, string>> = {
     sheets: "Sheets",
     q1: "Q1",
     q4: "Q4",
+    fps: "60 fps",
   },
   ru: {
     hero: "экран · карточки",
@@ -28,6 +29,7 @@ const NOTES: Record<Market, Record<string, string>> = {
     sheets: "Таблицы",
     q1: "I кв",
     q4: "IV кв",
+    fps: "60 кадр/с",
   },
 };
 
@@ -225,6 +227,37 @@ function plan(kind: HallExhibit, t: Record<string, string>) {
             </Note>
             <Note x={150} y={58} mid>
               64
+            </Note>
+          </>
+        ),
+      };
+    case "motion":
+      // The roly-poly itself, rocking: its outline, two swing arcs (the
+      // accent) and a soft shadow on the floor.
+      return {
+        art: (
+          <>
+            <Ln d="M120 132 C92 132 82 110 90 92 C96 78 104 72 106 60 C108 44 132 44 134 60 C136 72 144 78 150 92 C158 110 148 132 120 132 Z" />
+            <Ln d="M120 47 V36" />
+            <circle className="acf" cx="120" cy="32" r="4" />
+            <Ln d="M92 98 H78 M148 98 H162" />
+            <Ln d="M66 98 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0 M162 98 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0" />
+            <path
+              className="ac"
+              pathLength={1}
+              d="M60 64 A72 72 0 0 1 86 36 M154 36 A72 72 0 0 1 180 64"
+            />
+            <rect className="fl" x="84" y="138" width="72" height="6" rx="3" />
+          </>
+        ),
+        notes: (
+          <>
+            <An d="M200 30 V132 M196 30 H204 M196 132 H204" />
+            <Note x={208} y={84}>
+              WebGL
+            </Note>
+            <Note x={120} y={158} mid>
+              {t.fps}
             </Note>
           </>
         ),

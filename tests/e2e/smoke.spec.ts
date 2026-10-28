@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("golden path smoke", () => {
-  test("home opens on the exhibit stage with the page H1 and a way to /contact", async ({
+  test("home opens on the exhibit stage with the page H1 and a way to get in touch", async ({
     page,
   }) => {
     await page.goto("/");
@@ -17,10 +17,19 @@ test.describe("golden path smoke", () => {
     await expect(
       page.getByRole("link", { name: /Ludvik4/ }).first(),
     ).toBeVisible();
-    // The closing call to action leads to the contact page.
-    await expect(
-      page.getByRole("link", { name: "Обсудить проект" }),
-    ).toHaveAttribute("href", "/contact");
+    // The closing call to action opens the order form when the build has its
+    // function URL and captcha key, and leads to /contact otherwise.
+    const discuss = page
+      .getByRole("button", { name: "Обсудить проект" })
+      .or(page.getByRole("link", { name: "Обсудить проект" }));
+    if ((await discuss.getAttribute("href")) === null) {
+      await discuss.click();
+      await expect(
+        page.getByRole("dialog", { name: "Обсудить проект" }),
+      ).toBeVisible();
+    } else {
+      await expect(discuss).toHaveAttribute("href", "/contact");
+    }
   });
 
   test("unauthenticated /dashboard redirects to /signin", async ({ page }) => {

@@ -11,6 +11,7 @@ import {
 } from "./commercial-content";
 import { Breadcrumbs } from "./breadcrumbs";
 import { getMarketContent, TELEGRAM_URL } from "./content";
+import { OrderCta } from "./order-cta";
 import { publicUrl } from "./seo";
 import { Eyebrow, Section, SiteFooter, SiteHeader } from "./site-chrome";
 
@@ -294,7 +295,7 @@ export function ServicePageView({
             "@type": "ListItem",
             position: 2,
             name: "Услуги",
-            item: `${baseUrl}/#services`,
+            item: `${baseUrl}/uslugi/`,
           },
           {
             "@type": "ListItem",
@@ -316,7 +317,7 @@ export function ServicePageView({
       <div className="mx-auto max-w-5xl px-6 py-14">
         <Breadcrumbs
           items={[
-            { label: "Услуги", href: "/#services" },
+            { label: "Услуги", href: "/uslugi" },
             { label: service.title },
           ]}
         />
@@ -387,11 +388,16 @@ export function ServicePageView({
           <p className="text-muted-foreground mt-3">
             Коротко опишите задачу, текущую ситуацию и желаемый результат.
           </p>
-          <Button asChild size="lg" className="mt-6">
-            <TelegramLink href={TELEGRAM_URL} placement="service_contact">
-              Написать в Telegram
-            </TelegramLink>
-          </Button>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <Button asChild size="lg">
+              <OrderCta placement="service">Обсудить задачу</OrderCta>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <TelegramLink href={TELEGRAM_URL} placement="service_contact">
+                Написать в Telegram
+              </TelegramLink>
+            </Button>
+          </div>
         </div>
       </section>
     </PageShell>
@@ -455,7 +461,7 @@ export function CasesPreview() {
         href={"/cases" as Route}
         className="text-primary mt-6 inline-block font-mono text-sm font-semibold"
       >
-        Все кейсы →
+        Все работы →
       </Link>
     </Section>
   );
@@ -468,7 +474,7 @@ export function CasesIndexView({ baseUrl }: { baseUrl: string }) {
     "@graph": [
       {
         "@type": "CollectionPage",
-        name: "Кейсы Ludvik4",
+        name: "Работы Ludvik4",
         description:
           "Публичные примеры сайтов, автоматизаций, MVP и AI-assisted development проектов Ludvik4.",
         url,
@@ -495,7 +501,7 @@ export function CasesIndexView({ baseUrl }: { baseUrl: string }) {
           {
             "@type": "ListItem",
             position: 2,
-            name: "Кейсы",
+            name: "Работы",
             item: url,
           },
         ],
@@ -510,11 +516,10 @@ export function CasesIndexView({ baseUrl }: { baseUrl: string }) {
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
       <div className="mx-auto max-w-5xl px-6 py-14">
-        <Breadcrumbs items={[{ label: "Кейсы" }]} />
+        <Breadcrumbs items={[{ label: "Работы" }]} />
         <div className="mt-10">
-          <Eyebrow>Работы</Eyebrow>
           <h1 className="text-4xl font-extrabold tracking-tight">
-            Кейсы Ludvik4
+            Проекты студии Ludvik4
           </h1>
           <p className="text-muted-foreground mt-4 max-w-2xl text-lg">
             Продукты, которые можно открыть, проверить и изучить подробнее.
@@ -557,7 +562,7 @@ export function CaseStudyPageView({
           {
             "@type": "ListItem",
             position: 2,
-            name: "Кейсы",
+            name: "Работы",
             item: publicUrl("ru", baseUrl, "/cases"),
           },
           {
@@ -579,7 +584,7 @@ export function CaseStudyPageView({
       />
       <div className="mx-auto max-w-5xl px-6 py-14">
         <Breadcrumbs
-          items={[{ label: "Кейсы", href: "/cases" }, { label: study.title }]}
+          items={[{ label: "Работы", href: "/cases" }, { label: study.title }]}
         />
         <div className="mt-10 grid items-start gap-10 lg:grid-cols-[1fr_1.1fr]">
           <div>
