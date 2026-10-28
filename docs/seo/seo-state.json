@@ -4,7 +4,7 @@
   "project_url": "https://ludvik4.dev",
   "mode": "autopilot",
   "created_at": "2026-08-10T17:43:23+00:00",
-  "updated_at": "2026-10-19T17:23:06+00:00",
+  "updated_at": "2026-10-26T09:42:06+00:00",
   "current_stage": "search-index-monitoring",
   "completed_stages": [
     "inventory",
@@ -28,14 +28,15 @@
     "weekly-search-monitoring-2026-09-21",
     "weekly-search-monitoring-2026-10-05",
     "weekly-search-monitoring-2026-10-12",
-    "weekly-search-monitoring-2026-10-19"
+    "weekly-search-monitoring-2026-10-19",
+    "weekly-search-monitoring-2026-10-26"
   ],
   "next_stage": "search-index-monitoring",
   "freshness": {
     "status": "fresh",
-    "latest_relevant_change": "2026-10-14T19:24:25.067294+00:00",
-    "latest_relevant_file": "src/app/blog/page.tsx",
-    "scanned_relevant_files": 655
+    "latest_relevant_change": "2026-10-24T15:19:44.509876+00:00",
+    "latest_relevant_file": "out/gridfin/sitemap.xml",
+    "scanned_relevant_files": 752
   },
   "artifacts": [
     "docs/marketing/en/llm-visibility-matrix.md",
@@ -51,14 +52,16 @@
     "docs/specs/en-commercial-seo.plan.md"
   ],
   "blockers": [
-    "The Playwright browser session is not authenticated to Google Search Console, so two consecutive weekly runs lack current performance and index-state evidence",
+    "The Playwright browser session is not authenticated to Google Search Console, so three consecutive weekly runs lack current performance and index-state evidence",
     "The canonical P1 URL /services/workflow-automation was unknown to Google in the last fresh URL Inspection despite passing every current technical preflight",
-    "The last verified page-indexing aggregate was refreshed on 2026-09-21 and does not cover the root sitemap growth from 19 to 24 URLs"
+    "The last verified page-indexing aggregate was refreshed on 2026-09-21 and does not cover the root sitemap growth from 19 to 26 URLs",
+    "The immersive home no longer links directly to the three canonical commercial service pages; their crawl depth from the homepage is now 3"
   ],
   "next_actions": [
     "Restore an authenticated Google Search Console session in the Playwright browser or provide Performance, Pages and Sitemaps exports.",
+    "Restore direct Next.js Link navigation from relevant English collection halls to /services/websites, /services/workflow-automation and /services/mvp-development.",
     "Rerun the missing seven-day comparison and inspect all eight canonical P1 URLs, especially /services/workflow-automation.",
-    "Check discovery and search visibility for the two new English articles and /work/smallfriendfiles.",
+    "Check discovery and search visibility for /contact, /qa-pilot, the two new English articles and /work/smallfriendfiles.",
     "Keep genuine legacy /blog/* 404 rows separate from live English articles, cases and commercial pages."
   ]
 }

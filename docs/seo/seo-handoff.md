@@ -1,35 +1,38 @@
 # SEO handoff — Ludvik4 International
 
 - Property: `https://ludvik4.dev/`
-- Monitoring run: 2026-10-19 19:22 Europe/Madrid
+- Monitoring run: 2026-10-26 09:06 Europe/Madrid
 - Requested comparison window: latest complete seven days versus the preceding seven days
-- Console status: blocked by an unauthenticated Playwright browser session for the second consecutive run
+- Console status: blocked by an unauthenticated Playwright browser session for the third consecutive run
 - Last verified GSC performance window: 2026-09-26–2026-10-02
 
 ## Verdict
 
-Production remains technically indexable and the discovery surface has grown.
-The root sitemap increased from 21 to 24 URLs after publication of two English
-articles and the smallFriendFiles case. The service-file audit and all eight
+Production remains indexable and the root sitemap grew from 24 to 26 URLs with
+the new `/contact` and `/qa-pilot` pages. All service files and all eight
 canonical P1 preflights pass. Four genuinely obsolete `/blog/*` URLs still
-return `404`; the English `/blog/spec-driven-development-vs-vibe-coding` page
-returns `200` and remains current content.
+return `404`; current English articles remain separate from that legacy group.
 
-Google week-over-week performance and index state are unverified again. The
-available Playwright browser was redirected to Google sign-in and did not
-inherit an authenticated session. Public `site:` and exact-title checks returned
-no results for the commercial pages or the newly published content, but this is
-only a supporting signal and cannot replace GSC. No current clicks,
-impressions, queries or index totals are inferred from it.
+The immersive-home release introduced one material SEO regression: the home
+page no longer links directly to any of the three commercial service pages.
+Their crawl depth from `/` is now 3 instead of 1. This does not block indexing,
+because the pages remain in the sitemap and reachable through the guides
+network, but it weakens discovery priority and internal authority for the pages
+that are supposed to convert commercial intent.
+
+Google performance and index state remain unverified for a third run. The
+available Playwright browser was redirected to Google sign-in. Public `site:`
+and exact-title checks again returned no results, but these checks are only a
+supporting signal and are not used as a substitute for GSC.
 
 ## Search performance
 
 ### Current run
 
-Clicks, impressions, CTR, average position, query changes and landing-page
-changes are **unverified for 2026-10-19**. The missing console access also blocks
-manual-action and security-issue confirmation. No prior values are relabelled as
-current.
+Clicks, impressions, CTR, average position, new or rising queries and landing-
+page changes are **unverified for 2026-10-26**. Current manual-action, security,
+sitemap-processing, Pages and URL Inspection evidence is also unavailable. No
+previous value is relabelled as current.
 
 ### Last verified baseline
 
@@ -55,45 +58,50 @@ because GSC can suppress low-volume rows.
 
 | Signal                         | Current public/technical result | Last verified GSC result |
 | ------------------------------ | ------------------------------: | -----------------------: |
-| Root sitemap URLs              |                              24 |                       21 |
+| Root sitemap URLs              |                              26 |                       21 |
 | Gridfin submitted sitemap URLs |                      unverified |                        8 |
 | All processed indexed          |                      unverified |                       23 |
 | All processed excluded         |                      unverified |                        7 |
 | Submitted indexed              |                      unverified |                       19 |
 | Submitted excluded             |                      unverified |                        5 |
 
-The three new root-sitemap URLs are:
+The two URLs added since the previous run are:
 
-- `/work/smallfriendfiles`
-- `/blog/ai-website-diy-or-developer`
-- `/blog/what-development-quote-pays-for`
+- `/contact`
+- `/qa-pilot`
 
-The last verified page-indexing aggregate was dated 2026-09-21, so it predated
-both the earlier growth to 21 URLs and the current growth to 24. Last verified
-exclusion reasons were five discovered/not-indexed URLs, one redirect, and one 404. Submitted/detected counts and a fresh exclusion breakdown remain blocked
-with the rest of the console data.
+Both return `200`, are self-canonical, permit indexing and appear in the root
+sitemap. `/contact` has normal internal navigation. `/qa-pilot` has inbound
+links from `/` and `/work/qa-pilot`, but the standalone presentation itself has
+no outbound link back into the Ludvik4 site; this is a low-priority retrieval
+gap rather than an indexability blocker.
+
+The last verified page-indexing aggregate was dated 2026-09-21. It predates the
+root sitemap's growth from 19 to 26 URLs. Last verified exclusion reasons were
+five discovered/not-indexed URLs, one redirect, and one 404. Current
+submitted/detected counts and exclusion reasons are unverified.
 
 ### Canonical P1 set
 
-The automation prompt's short aliases `/services/automations` and
-`/services/mvp` are not canonical routes. Their monitored canonical targets are
-`/services/workflow-automation` and `/services/mvp-development`.
+The prompt's short aliases `/services/automations` and `/services/mvp` are not
+canonical routes. Their monitored targets are `/services/workflow-automation`
+and `/services/mvp-development`.
 
-| URL                                     | Production preflight | Last verified Google state |
-| --------------------------------------- | -------------------- | -------------------------- |
-| `/`                                     | pass                 | indexed                    |
-| `/services/websites`                    | pass                 | indexed                    |
-| `/services/workflow-automation`         | pass                 | unknown to Google          |
-| `/services/mvp-development`             | pass                 | indexed                    |
-| `/guides`                               | pass                 | indexed                    |
-| `/guides/website-project-brief`         | pass                 | indexed                    |
-| `/guides/automation-priority-scorecard` | pass                 | indexed                    |
-| `/guides/mvp-scope-one-user-journey`    | pass                 | indexed                    |
+| URL                                     | Production preflight | Crawl depth from `/` | Last verified Google state |
+| --------------------------------------- | -------------------- | -------------------: | -------------------------- |
+| `/`                                     | pass                 |                    0 | indexed                    |
+| `/services/websites`                    | pass                 |                    3 | indexed                    |
+| `/services/workflow-automation`         | pass                 |                    3 | unknown to Google          |
+| `/services/mvp-development`             | pass                 |                    3 | indexed                    |
+| `/guides`                               | pass                 |                    1 | indexed                    |
+| `/guides/website-project-brief`         | pass                 |                    2 | indexed                    |
+| `/guides/automation-priority-scorecard` | pass                 |                    2 | indexed                    |
+| `/guides/mvp-scope-one-user-journey`    | pass                 |                    2 | indexed                    |
 
 Every canonical P1 URL returns `200`, permits indexing, is self-canonical, and
-appears in the root sitemap. The last verified ratio remains **7/8 indexed**;
-the current Google ratio is unverified. `/services/workflow-automation` still
-has no repository-side defect that explains its previous discovery problem.
+appears in the sitemap. The last verified ratio remains **7/8 indexed**; the
+current Google ratio is unverified. The technical regression is internal-link
+depth, not crawl blocking or canonical configuration.
 
 ## Legacy 404 separation
 
@@ -105,58 +113,84 @@ current-site KPIs:
 - `/blog/spec-driven-development`
 - `/blog/cursor-rules`
 
-`/blog/spec-driven-development-vs-vibe-coding` returns `200` and is a current
-English article. `/blog/cursor-rules-best-practices` and the two new client-
-facing articles are also current content. Similar old slugs must not cause live
-pages to be grouped as legacy traffic.
+`/blog/spec-driven-development-vs-vibe-coding` returns `200` and is current
+English content. `/blog/cursor-rules-best-practices`, the two client-facing
+articles and all commercial pages are also current and must not be grouped with
+the legacy slugs.
 
 ## Technical checks
 
 - `robots.txt`: `200`, no global block, one sitemap declaration.
-- `sitemap.xml`: `200`, parseable, 24 URLs.
+- `sitemap.xml`: `200`, parseable, 26 URLs.
 - `llms.txt`, `humans.txt`, `security.txt`, `ads.txt`, and `app-ads.txt`: valid
   non-HTML responses.
 - All eight canonical P1 pages: `200`, indexable, self-canonical and present in
   the sitemap.
-- Public exact-title checks for three services, guides, the new articles,
-  smallFriendFiles, and the spec-first article returned no result. This is not
-  proof of deindexing.
-- No safe repository-side fix is indicated. This run updates documentation only
-  and does not commit or push.
+- Homepage crawl graph: guides depth 1, guide details depth 2, commercial
+  services depth 3.
+- `/qa-pilot`: indexable and linked inbound, but no outbound internal links in
+  its static HTML.
+- Public exact-title checks for commercial pages, guides, qa-pilot, contact,
+  smallFriendFiles and the new articles returned no result. This is not proof of
+  deindexing.
+- No code was changed, committed or pushed in this monitoring run.
+
+## Concrete repository fix
+
+Restore direct home-to-service links without changing the visual composition:
+
+1. Add an optional service `href` to the relevant EN collection-hall records in
+   `src/features/site/content.ts`:
+   - Websites and Landing pages → `/services/websites`
+   - Web apps and Widgets & tools → `/services/mvp-development`
+   - Automations → `/services/workflow-automation`
+2. Render linked hall names with Next.js `Link` in
+   `src/features/site/hall-card.tsx`; keep the existing card drawing and contact
+   CTA intact.
+3. Add a failing-first assertion to `src/features/site/home.test.tsx` that each
+   canonical service URL is linked from the English home.
+
+This would restore commercial pages to crawl depth 1 and comply with the
+project invariant that internal navigation uses `Link`. The change should be
+implemented as a reviewed feature, not silently during monitoring.
 
 ## Blockers
 
 1. The Playwright session is not authenticated to the Google account with the
-   `https://ludvik4.dev/` property. Two consecutive runs therefore lack current
-   performance, sitemap, Pages, manual-actions, security and URL Inspection
-   evidence.
+   `https://ludvik4.dev/` property. Three consecutive runs therefore lack
+   current performance, sitemap, Pages, manual-actions, security and URL
+   Inspection evidence.
 2. `/services/workflow-automation` was unknown to Google in the last fresh URL
-   Inspection despite a clean technical preflight.
-3. The last available aggregate index report is too old to cover six URLs added
-   to the root sitemap since it was refreshed.
+   Inspection despite passing every technical preflight.
+3. The last available aggregate index report is too old to cover seven URLs
+   added to the root sitemap since it was refreshed.
+4. The new home places all three commercial P1 service pages at crawl depth 3.
 
 ## Actions
 
 ### P0
 
 1. Sign in to Google in the Playwright browser opened by the monitor, or provide
-   GSC exports for Performance, Pages and Sitemaps. Re-run the missed comparison
-   immediately; do not infer current metrics from public search results.
+   GSC exports for Performance, Pages and Sitemaps. Re-run all three missed
+   comparisons; do not infer current metrics from public search results.
 
 ### P1
 
-1. Reinspect all eight canonical P1 URLs after console access is restored,
+1. Restore direct internal links from the English home collection to the three
+   canonical commercial service pages using the repository fix above.
+2. Reinspect all eight canonical P1 URLs after GSC access is restored,
    especially `/services/workflow-automation`.
-2. Capture current submitted/detected sitemap counts, all/submitted indexed and
+3. Capture current submitted/detected sitemap counts, all/submitted indexed and
    excluded totals, every exclusion reason and each report date.
-3. Check whether the three URLs added this week have been discovered and whether
-   either new article has begun earning queries or impressions.
-4. Keep genuine legacy 404 rows separate from live English articles, cases and
-   commercial pages.
+4. Check discovery and query/page performance for `/contact`, `/qa-pilot`, the
+   two client-facing articles and `/work/smallfriendfiles`.
 
 ### P2
 
-1. Continue weekly comparisons once the automation has a stable authenticated
+1. Consider a small, design-compatible link from the qa-pilot presentation back
+   to `/work/qa-pilot`; because the artifact is static HTML, preserve the
+   project's internal-navigation invariant when choosing the implementation.
+2. Keep genuine legacy 404 rows separate from live English articles, cases and
+   commercial pages.
+3. Continue weekly comparisons once the automation has a stable authenticated
    console session.
-2. Treat empty public exact-title checks as an alerting hint only, never as an
-   index-state verdict.
