@@ -37,13 +37,31 @@ export function isValidContact(value: string): boolean {
 
 const LINK_RE = /\bhttps?:\/\/|\bwww\.|\b[\w-]+\.[a-z]{2,}\b/i;
 
+// Service, package and price come from the page, not from the visitor, but a
+// bot can send anything — and the topic goes into the Telegram signal and the
+// mail subject. So: one line of plain words and prices, no links.
+const LABEL_RE = /^[\p{L}\p{N} \u00a0\u202f.,()+\-–—·₽/]*$/u;
+const label = (max: number) =>
+  z
+    .string()
+    .trim()
+    .max(max)
+    .regex(LABEL_RE)
+    .refine((v) => !LINK_RE.test(v))
+    .default("");
+
 export const orderSchema = z.object({
   /** Empty when the visitor pressed "Обсудить проект" rather than a package. */
-  service: z.string().trim().max(80).default(""),
-  plan: z.string().trim().max(40).default(""),
-  price: z.string().trim().max(40).default(""),
-  /** The page the form was sent from. */
-  page: z.string().trim().max(200).default(""),
+  service: label(80),
+  plan: label(40),
+  price: label(40),
+  /** The page the form was sent from: a path on the site. */
+  page: z
+    .string()
+    .trim()
+    .max(200)
+    .regex(/^(\/[\w\-./%]*)?$/)
+    .default(""),
   contact: z
     .string()
     .trim()
@@ -80,6 +98,6 @@ export type OrderResponse = (
   | { ok: true }
   | { ok: false; reason: "invalid" | "captcha" | "rate" | "server" }
 ) & {
-  /** Delivery details, only for requests from localhost (no logs in the console). */
+  /** Delivery details, only while the function runs with ORDER_DEBUG_TRACE=1. */
   trace?: string[];
 };

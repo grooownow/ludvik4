@@ -17,6 +17,8 @@ import {
 //   TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID — the signal bot (optional)
 //   TELEGRAM_RELAY_URL         — the relay on Vercel (Telegram is blocked here)
 //   ALLOWED_ORIGINS            — comma-separated, e.g. https://ludvik4.ru
+//   ORDER_DEBUG_TRACE          — "1" adds delivery details to the response;
+//                                for a local check only, never left on
 
 const env = process.env;
 
@@ -37,6 +39,7 @@ export async function handler(event: FunctionEvent) {
       .map((o) => o.trim())
       .filter(Boolean),
     isRateLimited: rateLimited,
+    debugTrace: env.ORDER_DEBUG_TRACE === "1",
     async verifyCaptcha(token, ip) {
       // https://yandex.cloud/ru/docs/smartcaptcha/concepts/validation
       const response = await fetch(

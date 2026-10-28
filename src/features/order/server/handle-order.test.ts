@@ -59,24 +59,43 @@ describe("handleOrder", () => {
     expect(signal).toBe("Новая заявка: Обсудить проект. Подробности на почте.");
   });
 
-  it("adds the delivery trace for localhost only", async () => {
+  it("adds the delivery trace only when the function enables it", async () => {
     const local = "http://localhost:3344";
-    const failing = deps({
-      allowedOrigins: [ORIGIN, local],
-      sendMail: vi.fn(async () => "250 queued"),
-      notify: vi.fn(async () => {
-        throw new Error("timeout");
-      }),
-    });
-    const fromLocal = JSON.parse(
-      (await handleOrder(post(order, local), failing)).body,
+    const failing = (debugTrace: boolean) =>
+      deps({
+        allowedOrigins: [ORIGIN, local],
+        debugTrace,
+        sendMail: vi.fn(async () => "250 queued"),
+        notify: vi.fn(async () => {
+          throw new Error("timeout");
+        }),
+      });
+    const debug = JSON.parse(
+      (await handleOrder(post(order), failing(true))).body,
     );
-    expect(fromLocal.trace).toEqual([
+    expect(debug.trace).toEqual([
       "mail: 250 queued",
       "signal failed: Error: timeout",
     ]);
-    const fromSite = JSON.parse((await handleOrder(post(order), failing)).body);
-    expect(fromSite).toEqual({ ok: true });
+    // A localhost Origin is a header any client can send: it unlocks nothing.
+    const forged = JSON.parse(
+      (await handleOrder(post(order, local), failing(false))).body,
+    );
+    expect(forged).toEqual({ ok: true });
+  });
+
+  it.each([
+    ["service", "Перейдите на https://evil.example"],
+    ["service", "Звоните: bit.ly"],
+    ["plan", "Базовый\nBcc: x@y.ru"],
+    ["price", "<b>0 ₽</b>"],
+    ["page", "javascript:alert(1)"],
+  ])("refuses a forged %s and sends nothing", async (field, value) => {
+    const d = deps();
+    const result = await handleOrder(post({ ...order, [field]: value }), d);
+    expect(result.statusCode).toBe(400);
+    expect(d.sendMail).not.toHaveBeenCalled();
+    expect(d.notify).not.toHaveBeenCalled();
   });
 
   it("mails every field and signals without personal data", async () => {
@@ -182,5 +201,12 @@ describe("createRateLimiter", () => {
     expect(limited("ip", 20)).toBe(true);
     expect(limited("other", 20)).toBe(false);
     expect(limited("ip", 5000)).toBe(false);
+  });
+
+  it("keeps a busy IP's count while a flood of new IPs fills the memory", () => {
+    const limited = createRateLimiter(1, 1000);
+    expect(limited("busy", 0)).toBe(false);
+    for (let i = 0; i < 6000; i++) limited(`bot-${i}`, 10);
+    expect(limited("busy", 20)).toBe(true);
   });
 });
