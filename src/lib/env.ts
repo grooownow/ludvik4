@@ -75,6 +75,12 @@ const schema = z
     // widget. Both needed to switch the captcha on.
     TURNSTILE_SECRET_KEY: z.string().optional(),
     NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().optional(),
+
+    // RU order form on /uslugi (docs/specs/order-form-ru.md): the Yandex Cloud
+    // function that receives orders and the SmartCaptcha client key. Both
+    // needed to switch the form on; without them "Заказать" leads to /contact.
+    NEXT_PUBLIC_ORDER_ENDPOINT: z.url().optional(),
+    NEXT_PUBLIC_SMARTCAPTCHA_SITE_KEY: z.string().optional(),
   })
   .superRefine((val, ctx) => {
     if (val.LIFTKIT_DB === "remote" && !val.DATABASE_URL) {

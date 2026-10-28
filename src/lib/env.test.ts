@@ -59,6 +59,21 @@ describe("parseEnv", () => {
     expect(env.LOG_LEVEL).toBe("debug");
   });
 
+  it("accepts the RU order form endpoint and captcha key", () => {
+    const env = parseEnv({
+      NEXT_PUBLIC_ORDER_ENDPOINT: "https://functions.yandexcloud.net/d4e123",
+      NEXT_PUBLIC_SMARTCAPTCHA_SITE_KEY: "ysc1_site",
+    });
+    expect(env.NEXT_PUBLIC_ORDER_ENDPOINT).toBe(
+      "https://functions.yandexcloud.net/d4e123",
+    );
+    expect(env.NEXT_PUBLIC_SMARTCAPTCHA_SITE_KEY).toBe("ysc1_site");
+  });
+
+  it("rejects an order endpoint that is not a URL", () => {
+    expect(() => parseEnv({ NEXT_PUBLIC_ORDER_ENDPOINT: "nope" })).toThrow();
+  });
+
   it("rejects an invalid LOG_LEVEL", () => {
     expect(() => parseEnv({ LOG_LEVEL: "verbose" })).toThrow(/LOG_LEVEL/);
   });

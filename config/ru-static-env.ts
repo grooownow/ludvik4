@@ -48,6 +48,17 @@ export const RU_BLANKED_PUBLIC_ENV = [
 export const RU_APP_URL = "https://ludvik4.ru";
 
 /**
+ * The order form's public endpoints (docs/playbooks/order-form-yandex-cloud.md).
+ * Both are public by design — a function URL and a client-side captcha key —
+ * so they live here instead of in Timeweb's deploy settings, where a missing
+ * var would silently turn "Заказать" back into a /contact link.
+ */
+export const RU_ORDER_ENDPOINT =
+  "https://functions.yandexcloud.net/d4e50mjlh5me455rdigc";
+export const RU_SMARTCAPTCHA_SITE_KEY =
+  "ysc1_e3IAWjW1QFgktYxs5dbbRVpU2wWYiDKSdMBLfGxXe125326c";
+
+/**
  * Builds the child environment for the RU `next build`, given the environment
  * the script itself was started with (Timeweb's, or a developer's shell).
  */
@@ -57,6 +68,10 @@ export function ruStaticEnv(base: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
     STATIC_EXPORT: "true",
     SITE_MARKET: "ru",
     NEXT_PUBLIC_APP_URL: base.NEXT_PUBLIC_APP_URL ?? RU_APP_URL,
+    NEXT_PUBLIC_ORDER_ENDPOINT:
+      base.NEXT_PUBLIC_ORDER_ENDPOINT || RU_ORDER_ENDPOINT,
+    NEXT_PUBLIC_SMARTCAPTCHA_SITE_KEY:
+      base.NEXT_PUBLIC_SMARTCAPTCHA_SITE_KEY || RU_SMARTCAPTCHA_SITE_KEY,
   };
 
   for (const key of RU_BLANKED_PUBLIC_ENV) {

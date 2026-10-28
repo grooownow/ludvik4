@@ -32,3 +32,7 @@ tmp-review/
 
 # Vercel CLI project link (projectId/orgId) — written by `vercel link`
 .vercel/
+
+# Order function bundle (pnpm order:build)
+cloud/order-function/dist/
+cloud/telegram-relay/dist/
