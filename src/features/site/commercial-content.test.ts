@@ -39,7 +39,7 @@ describe("commercial content", () => {
       "gridfin",
       "qa-pilot",
     ]);
-    expect(getCaseStudy("fortnoise")?.kind).toBe("Клиентский проект");
+    expect(getCaseStudy("fortnoise")?.kind).toBe("Сайт-афиша");
     expect(getCaseStudy("gridfin")?.kind).toBe("SaaS");
     expect(getCaseStudy("qa-pilot")?.kind).toBe("AI-плагин");
   });

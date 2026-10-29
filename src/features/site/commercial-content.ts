@@ -21,7 +21,7 @@ export type ServicePage = {
 export type CaseStudy = {
   slug: "smallfriendfiles" | "fortnoise" | "gridfin" | "qa-pilot";
   title: string;
-  kind: "Клиентский проект" | "Веб-приложение" | "SaaS" | "AI-плагин";
+  kind: "Сайт-афиша" | "Веб-приложение" | "SaaS" | "AI-плагин";
   description: string;
   lead: string;
   image: string;
@@ -196,7 +196,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "fortnoise",
     title: "FortNoise",
-    kind: "Клиентский проект",
+    kind: "Сайт-афиша",
     description:
       "Городская афиша Калининграда: каталог и карта событий с фильтрами, пользовательские публикации и модерация в едином сервисе, независимом от социальных сетей.",
     lead: "Из идеи сообщества вырос работающий сервис, где можно находить события и добавлять свои.",
