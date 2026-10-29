@@ -71,8 +71,8 @@ Set in Timeweb, not in the repo: app `ludvik4-ru-v2` → Settings → «Наст
 
 The site embeds no iframes of its own, so `DENY` breaks nothing; the
 SmartCaptcha iframe is Yandex's page. `includeSubDomains` is left out of HSTS
-on purpose. A full CSP is still open. The same screen holds the `www` redirect (below) and compression (off; turning
-it on would gzip HTML/CSS/JS — the home HTML is ~82 KB uncompressed).
+on purpose. A full CSP is still open. The same screen holds the `www` redirect (below) and compression: gzip and
+zstd on since 2026-10-29 (home HTML 82 KB → 17 KB gzip / 16 KB zstd).
 «Лимит входящих запросов» is a monthly cap for the whole site, not flood
 protection — do not enable it.
 
