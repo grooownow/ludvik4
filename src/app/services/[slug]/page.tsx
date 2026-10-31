@@ -9,6 +9,7 @@ import {
   InternationalServiceView,
   internationalServicePages,
   PricingPageView,
+  languageAlternates,
 } from "@/features/site";
 import { env } from "@/lib/env";
 
@@ -43,7 +44,7 @@ export async function generateMetadata({
   return {
     title: page.title,
     description: page.description,
-    alternates: { canonical: path },
+    alternates: { canonical: path, ...languageAlternates(path) },
     openGraph: {
       title: page.title,
       description: page.description,

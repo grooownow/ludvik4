@@ -1,4 +1,5 @@
 import type { Metadata, MetadataRoute } from "next";
+import { isTranslatedPath, localizeHref } from "@/lib/i18n";
 import { caseStudies, servicePages } from "./commercial-content";
 import { type Market, type MarketContent, TELEGRAM_URL } from "./content";
 import {
@@ -8,6 +9,7 @@ import {
   internationalServicePages,
 } from "./international-content";
 import { internationalPricingServices } from "./international-pricing";
+import { sitemapLocales } from "./locale-seo";
 import { pricingServices } from "./pricing-draft";
 
 // Per-market SEO surfaces, built from the market content object. Pure functions
@@ -265,6 +267,20 @@ export function buildSitemap(
         changeFrequency: "monthly",
         priority: 0.7,
       });
+    }
+  }
+
+  // ludvik4.dev's Spanish pages (Russian ones are noindex: never listed).
+  if (market === "en") {
+    for (const locale of sitemapLocales()) {
+      for (const entry of [...entries]) {
+        const path = entry.url.slice(baseUrl.replace(/\/$/, "").length) || "/";
+        if (!isTranslatedPath(path)) continue;
+        entries.push({
+          ...entry,
+          url: publicUrl(market, baseUrl, localizeHref(locale, path)),
+        });
+      }
     }
   }
 

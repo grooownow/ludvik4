@@ -1,6 +1,8 @@
-import type { PricingCatalog } from "./pricing-catalog";
+import type { Locale } from "@/lib/i18n";
+import { localizeHrefs } from "./localize";
+import type { PricingCatalog, PricingCopy } from "./pricing-catalog";
 import type { PricingPackage, PricingService } from "./pricing-draft";
-import { withVat } from "./vat";
+import { localizePrice, withVat } from "./vat";
 
 // The international services and prices: the same five services and three
 // packages as /uslugi, adapted for clients in Spain, the EU and beyond. Prices
@@ -784,84 +786,190 @@ export function getInternationalPricingService(slug: string) {
   return internationalPricingServices.find((s) => s.slug === slug);
 }
 
-const packageSlug = (pack: PricingPackage) => pack.name.toLowerCase();
+// Package URLs stay English in every language: /contact?package=plus.
+const PACKAGE_SLUGS = ["basic", "plus", "premium"] as const;
+const packageSlug = (svc: PricingService, pack: PricingPackage) =>
+  PACKAGE_SLUGS[svc.packages.indexOf(pack)] ?? pack.name.toLowerCase();
 
-export const internationalPricingCatalog: PricingCatalog = {
-  services: internationalPricingServices,
-  href: (id) => `/services/${id}`,
-  orderHref: (s, pack) =>
-    `/contact?service=${s.slug}&package=${packageSlug(pack)}`,
-  // Private clients see the total with 21% Spanish VAT under each price
-  // (TRLGDCU art. 20, 60); the base price stays the headline (owner, 2026-10-31).
-  vat: { cardTotal: (price) => withVat(price) },
-  galleryCaptions: [
-    {
-      title: "Light block animation",
-      text: "Blocks appear in turn while a number counts up to 100%.",
-    },
-    {
-      title: "Silk gradient",
-      text: "Colours shift slowly, like silk.",
-    },
-    {
-      title: "Liquid background",
-      text: "The surface flows, and ripples spread from the cursor.",
-    },
-    {
-      title: "Glass lens",
-      text: "A lens follows the cursor and refracts the pattern below it.",
-    },
-    {
-      title: "Jelly",
-      text: "Poke the gummy bear. It wobbles, then settles.",
-    },
-    {
-      title: "Particles",
-      text: "Dots form a word and scatter away from the cursor.",
-    },
-  ],
-  copy: {
-    eyebrow: "Services and prices",
-    hubTitle: ["What we build — ", "and what it costs."],
-    tabTitle: "packages and prices.",
-    lead: "We fix the price and timeline in a written agreement before work starts, so you know what you'll pay and what you'll get. Pick a service to compare packages.",
-    tabsLabel: "Services",
-    examples: "For example",
-    galleryTitle: "Try them yourself",
-    galleryHint: "Hover or tap: these animations respond to you.",
-    benefits: "What you get",
-    needsLabel: "From you",
-    needsTail: "We handle the rest.",
-    tech: "Under the hood",
-    packages: "Packages",
-    popular: "Most popular",
-    order: "Get started",
-    everywhereLabel: "In every package:",
-    detailLink: "More about this service →",
-    closing: {
-      eyebrow: "Don't see what you need?",
-      title: "Tell us the idea. We'll price it.",
-      cta: "Discuss a project",
-    },
+const EN_GALLERY_CAPTIONS: PricingCatalog["galleryCaptions"] = [
+  {
+    title: "Light block animation",
+    text: "Blocks appear in turn while a number counts up to 100%.",
   },
-  jsonLd: {
-    areaServed: "Worldwide",
-    currency: "EUR",
-    homeLabel: "Home",
-    hubLabel: "Services",
-    hubPath: "/services",
-    trailingSlash: false,
+  {
+    title: "Silk gradient",
+    text: "Colours shift slowly, like silk.",
+  },
+  {
+    title: "Liquid background",
+    text: "The surface flows, and ripples spread from the cursor.",
+  },
+  {
+    title: "Glass lens",
+    text: "A lens follows the cursor and refracts the pattern below it.",
+  },
+  {
+    title: "Jelly",
+    text: "Poke the gummy bear. It wobbles, then settles.",
+  },
+  {
+    title: "Particles",
+    text: "Dots form a word and scatter away from the cursor.",
+  },
+];
+
+const EN_PRICING_COPY: PricingCopy = {
+  eyebrow: "Services and prices",
+  hubTitle: ["What we build — ", "and what it costs."],
+  tabTitle: "packages and prices.",
+  lead: "We fix the price and timeline in a written agreement before work starts, so you know what you'll pay and what you'll get. Pick a service to compare packages.",
+  tabsLabel: "Services",
+  examples: "For example",
+  galleryTitle: "Try them yourself",
+  galleryHint: "Hover or tap: these animations respond to you.",
+  benefits: "What you get",
+  needsLabel: "From you",
+  needsTail: "We handle the rest.",
+  tech: "Under the hood",
+  packages: "Packages",
+  popular: "Most popular",
+  order: "Get started",
+  everywhereLabel: "In every package:",
+  detailLink: "More about this service →",
+  closing: {
+    eyebrow: "Don't see what you need?",
+    title: "Tell us the idea. We'll price it.",
+    cta: "Discuss a project",
   },
 };
 
-/** The message a package button fills in on /contact, by service/package. */
-export const internationalOrderPrefills: Record<string, string> =
-  Object.fromEntries([
-    ["web-animation", "I'd like an animation like Ludvik for my site."],
-    ...internationalPricingServices.flatMap((s) =>
+/** Everything a language adds to the services page besides the services. */
+export type PricingLocaleCopy = {
+  copy: PricingCopy;
+  galleryCaptions: NonNullable<PricingCatalog["galleryCaptions"]>;
+  /** "incl. VAT" in this language. */
+  vatLabel: string;
+  jsonLd: { homeLabel: string; hubLabel: string };
+  /** The message a package button fills in on /contact. */
+  prefill: {
+    animation: string;
+    pack: (pack: string, service: string, price: string) => string;
+  };
+};
+
+export const enPricingLocaleCopy: PricingLocaleCopy = {
+  copy: EN_PRICING_COPY,
+  galleryCaptions: EN_GALLERY_CAPTIONS!,
+  vatLabel: "incl. VAT",
+  jsonLd: { homeLabel: "Home", hubLabel: "Services" },
+  prefill: {
+    animation: "I'd like an animation like Ludvik for my site.",
+    pack: (pack, serviceName, price) =>
+      `I'd like the ${pack} package: ${serviceName} (${price}).`,
+  },
+};
+
+/** The services page of one ludvik4.dev language. */
+export function buildInternationalCatalog(
+  locale: Locale,
+  services: PricingService[],
+  text: PricingLocaleCopy,
+): PricingCatalog {
+  const prefix = locale === "en" ? "" : `/${locale}`;
+  return {
+    services,
+    href: (id) => `${prefix}/services/${id}`,
+    orderHref: (s, pack) =>
+      `${prefix}/contact?service=${s.slug}&package=${packageSlug(s, pack)}`,
+    // Private clients see the total with 21% Spanish VAT under each price
+    // (TRLGDCU art. 20, 60); the base price stays the headline (owner, 2026-10-31).
+    vat: {
+      cardTotal: (price) => withVat(price, 0.21, text.vatLabel, locale),
+    },
+    galleryCaptions: text.galleryCaptions,
+    copy: text.copy,
+    jsonLd: {
+      areaServed: "Worldwide",
+      currency: "EUR",
+      homeLabel: text.jsonLd.homeLabel,
+      hubLabel: text.jsonLd.hubLabel,
+      hubPath: `${prefix}/services`,
+      trailingSlash: false,
+    },
+  };
+}
+
+export const internationalPricingCatalog: PricingCatalog =
+  buildInternationalCatalog(
+    "en",
+    internationalPricingServices,
+    enPricingLocaleCopy,
+  );
+
+/** Order prefills (by service or service/package) for one language. */
+export function buildOrderPrefills(
+  services: PricingService[],
+  prefill: PricingLocaleCopy["prefill"],
+): Record<string, string> {
+  return Object.fromEntries([
+    ["web-animation", prefill.animation],
+    ...services.flatMap((s) =>
       s.packages.map((pack) => [
-        `${s.slug}/${packageSlug(pack)}`,
-        `I'd like the ${pack.name} package: ${s.name} (${pack.price}).`,
+        `${s.slug}/${packageSlug(s, pack)}`,
+        prefill.pack(pack.name, s.name, pack.price),
       ]),
     ),
   ]);
+}
+
+/** A package as a translation writes it: the price comes from English. */
+export type PackageText = Omit<PricingPackage, "price" | "oldPrice">;
+/** A service as a translation writes it: slug, prices and "from" come from English. */
+export type ServiceText = Omit<
+  PricingService,
+  "id" | "slug" | "from" | "packages"
+> & { packages: PackageText[] };
+
+/**
+ * A translated services list, merged with the English one by position: slugs,
+ * prices and struck-out prices are always the English ones, written the way
+ * `locale` writes money; links get the locale prefix.
+ */
+export function localizePricingServices(
+  locale: Locale,
+  texts: ServiceText[],
+): PricingService[] {
+  if (texts.length !== internationalPricingServices.length) {
+    throw new Error(
+      `pricing ${locale}: expected ${internationalPricingServices.length} services`,
+    );
+  }
+  return texts.map((text, i) => {
+    const en = internationalPricingServices[i]!;
+    if (text.packages.length !== en.packages.length) {
+      throw new Error(
+        `pricing ${locale}: ${en.slug} needs ${en.packages.length} packages`,
+      );
+    }
+    return localizeHrefs(locale, {
+      ...text,
+      id: en.id,
+      slug: en.slug,
+      from: localizePrice(locale, en.from),
+      packages: text.packages.map((pack, j) => {
+        const enPack = en.packages[j]!;
+        return {
+          ...pack,
+          price: localizePrice(locale, enPack.price),
+          ...(enPack.oldPrice
+            ? { oldPrice: localizePrice(locale, enPack.oldPrice) }
+            : {}),
+        };
+      }),
+    });
+  });
+}
+
+/** The message a package button fills in on /contact, by service/package. */
+export const internationalOrderPrefills: Record<string, string> =
+  buildOrderPrefills(internationalPricingServices, enPricingLocaleCopy.prefill);

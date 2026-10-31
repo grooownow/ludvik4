@@ -3,6 +3,7 @@ import {
   AboutRuView,
   canonicalPath,
   InternationalAboutView,
+  languageAlternates,
 } from "@/features/site";
 import { env } from "@/lib/env";
 
@@ -18,7 +19,7 @@ export const metadata: Metadata =
         title: "About the Studio",
         description:
           "Ludvik4 is a founder-led web product studio based in Spain, working worldwide on websites, workflow automation, MVPs, and custom web applications.",
-        alternates: { canonical: "/about" },
+        alternates: { canonical: "/about", ...languageAlternates("/about") },
         openGraph: {
           title: "About Ludvik4",
           description:

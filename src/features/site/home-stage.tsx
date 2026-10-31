@@ -4,6 +4,7 @@ import { type MarketContent, mascotExhibitNumber } from "./content";
 import { ExhibitStage } from "./exhibit-stage";
 import { MascotReply } from "./mascot-reply";
 import { SiteHeader } from "./site-chrome";
+import { uiFor } from "./ui-for";
 
 // First screen of the exhibition home: one exhibit (the jelly roly-poly) on a
 // pink studio stage, a museum label beside it, the text-only menu above and a
@@ -11,16 +12,19 @@ import { SiteHeader } from "./site-chrome";
 // readers (docs/specs/immersive-home.md).
 export function HomeStage({ content }: { content: MarketContent }) {
   const { exhibit } = content.home;
+  const stage = content.locale ? uiFor(content.locale).stage : undefined;
   const scrollLabel =
-    content.lang === "ru"
+    stage?.scroll ??
+    (content.lang === "ru"
       ? "Прокрутить к коллекции"
-      : "Scroll to the collection";
+      : "Scroll to the collection");
 
   return (
     <ExhibitStage
       label={exhibit.name}
       pushLabel={
-        content.lang === "ru" ? "Толкнуть неваляшку" : "Push the roly-poly"
+        stage?.push ??
+        (content.lang === "ru" ? "Толкнуть неваляшку" : "Push the roly-poly")
       }
     >
       <h1 className="sr-only">{content.h1}</h1>

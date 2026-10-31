@@ -61,6 +61,27 @@ describe("NavLinks", () => {
     work.remove();
   });
 
+  it("marks the section on the Spanish and Russian homes too", () => {
+    pathname.value = "/es";
+    const work = document.createElement("section");
+    work.id = "work";
+    document.body.append(work);
+    render(
+      <NavLinks
+        links={[
+          { href: "/es#work", label: "Proyectos" },
+          { href: "/es/about", label: "Estudio" },
+        ]}
+      />,
+    );
+    act(() => observe([{ target: work, isIntersecting: true }]));
+    expect(screen.getByRole("link", { name: "Proyectos" })).toHaveAttribute(
+      "aria-current",
+      "location",
+    );
+    work.remove();
+  });
+
   it("keeps section links pointing at the home anchors", () => {
     pathname.value = "/about";
     render(<NavLinks links={LINKS} />);

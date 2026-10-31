@@ -1,0 +1,34 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import {
+  getLocaleBundle,
+  InternationalAboutView,
+  localePageMetadata,
+  parseLocaleParam,
+} from "@/features/site";
+
+type Params = { locale: string };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<Params>;
+}): Promise<Metadata> {
+  const locale = parseLocaleParam((await params).locale);
+  if (!locale) return {};
+  return localePageMetadata(
+    locale,
+    "/about",
+    getLocaleBundle(locale).ui.meta.about,
+  );
+}
+
+export default async function LocaleAboutPage({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const locale = parseLocaleParam((await params).locale);
+  if (!locale) notFound();
+  return <InternationalAboutView locale={locale} />;
+}

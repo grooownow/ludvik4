@@ -4,6 +4,7 @@ import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ComponentPropsWithoutRef, MouseEvent, Ref } from "react";
+import { splitLocale } from "@/lib/i18n";
 
 /**
  * Scrolling for in-page anchors, done by us instead of by the router.
@@ -101,7 +102,8 @@ export function HomeLink({ onClick, ...props }: AnchorLinkProps) {
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     onClick?.(event);
     if (event.defaultPrevented || !isPlainLeftClick(event)) return;
-    if (pathname !== "/") return;
+    // The home of any ludvik4.dev language ("/es", "/ru") scrolls too.
+    if (!pathname || splitLocale(pathname).path !== "/") return;
 
     event.preventDefault();
 

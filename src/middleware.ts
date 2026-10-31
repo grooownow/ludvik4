@@ -1,5 +1,12 @@
 import NextAuth from "next-auth";
+import {
+  type NextFetchEvent,
+  type NextMiddleware,
+  type NextRequest,
+  NextResponse,
+} from "next/server";
 import { authConfig } from "@/lib/auth.config";
+import { detectLocaleRedirect, LOCALE_COOKIE } from "@/lib/i18n";
 
 /**
  * ANTI-PATTERN WARNING (spec §5.6-2): do NOT import `@/lib/auth` here, and do
@@ -19,11 +26,57 @@ import { authConfig } from "@/lib/auth.config";
  * database via the full `auth()`, and every protected server
  * component/action must call it directly — never rely on middleware alone
  * for authorization.
+ *
+ * The storefront paths get the language redirect instead: a pure function of
+ * the request's own cookie and headers (src/lib/i18n.ts), nothing remote.
+ * The RU static export stashes this file; ludvik4.ru has no middleware.
  */
 const { auth } = NextAuth(authConfig);
+const authMiddleware = auth as unknown as NextMiddleware;
 
-export default auth;
+export default function middleware(
+  request: NextRequest,
+  event: NextFetchEvent,
+) {
+  const { pathname, search } = request.nextUrl;
+  if (pathname.startsWith("/dashboard")) return authMiddleware(request, event);
+  if (request.method !== "GET" && request.method !== "HEAD") return;
+  // Languages exist on ludvik4.dev only (SITE_MARKET is inlined at build).
+  if (process.env.SITE_MARKET !== "en") return;
+  // Landings only. A router prefetch or client navigation (RSC request) is
+  // never redirected: Next caches a prefetch's redirect under the link, so
+  // a later click on "English" would replay the old /es redirect.
+  if (
+    request.headers.has("rsc") ||
+    request.headers.has("next-router-prefetch")
+  ) {
+    return;
+  }
+
+  const target = detectLocaleRedirect({
+    pathname,
+    search,
+    savedLocale: request.cookies.get(LOCALE_COOKIE)?.value,
+    acceptLanguage: request.headers.get("accept-language"),
+    userAgent: request.headers.get("user-agent"),
+  });
+  if (!target) return;
+  return NextResponse.redirect(new URL(target, request.url), 307);
+}
 
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    // The English storefront pages that exist in every language
+    // (isTranslatedPath in src/lib/i18n.ts).
+    "/",
+    "/services/:path*",
+    "/work/:path*",
+    "/about",
+    "/contact",
+    "/privacy",
+    "/cookies",
+    "/legal-notice",
+    "/terms-of-service",
+  ],
 };

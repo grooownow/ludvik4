@@ -6,30 +6,33 @@ writing detail here.
 
 ## Now
 
-**[NEXT — start here] ludvik4.dev in English, Spanish and Russian.** Owner
-decisions (2026-10-31): three languages, EN / ES / RU; Ukrainian not planned.
-Every language keeps EUR prices, Spain as the base and the EU adaptation of
-the EN site; the RU locale takes its copy from ludvik4.ru but drops everything
-Russia-specific (152-ФЗ, Russian hosting, 1С/Bitrix/VK/Avito, ₽), exactly as EN
-did. ludvik4.ru itself is not touched. Not decided yet, put to the owner in the
-design: URL scheme (proposed: EN at the root, `/es/...`, `/ru/...`), which pages
-are translated (proposed: home, `/services` + five package pages, the three
-detail service pages, About, Contact, the three legal pages, the cookie banner;
-blog, guides, work, Gridfin and qa-pilot stay English), whether `/ru` on .dev is
-indexed next to ludvik4.ru (proposed: `noindex`, to avoid two Russian sites
-competing with different currencies), hreflang between EN and ES, Spanish
-legal pages (Aviso legal is natural in Spanish), the lead form labels and the
-server error messages per language. Prior art: the Gridfin language dropdown
-(`public/gridfin`, commit `274b3ff`); there was never a studio-site switcher.
-Where the copy lives today: `src/features/site/content.ts` (`en` block),
-`international-content.ts`, `international-pricing.ts` (services, packages,
-prices, gallery captions, page labels via `PricingCatalog.copy`),
-`legal-en.tsx`, `privacy-page.tsx`, `consent-banner.tsx`, `mascot-reply.tsx`
-copy prop, `lead-form.tsx` labels. Shared views already take copy as props
-(`PricingPageView` takes a `catalog`). Process: brainstorm → design in
-`docs/superpowers/specs/` → plan → build on a branch → show the owner locally →
-deploy. Keep the RU-build byte-diff gate (`pnpm build:ru-static`, compare `out/`)
-— the RU storefront must not change.
+**[SHIPPED 2026-10-31 · .dev only] ludvik4.dev in English, Spanish and
+Russian.** EN stays at the root; `/es/...` and `/ru/...` mirror home,
+`/services` + five package pages, the three detail service pages, `/work` and
+its case pages, About, Contact (lead form + server messages), the four legal
+pages, cookie banner, 404. Blog, guides, Gridfin, qa-pilot stay English (the
+switch leads to that language's home). Header language switch (EN/ES/RU,
+burger-menu glass panel) saves the choice in the `ludvik4_lang` cookie +
+localStorage; `src/middleware.ts` opens a visitor's saved language, else the
+browser language (`Accept-Language`), EN build only, never for bots.
+Feature flag: `RU_LOCALE_ENABLED` in `src/lib/i18n.ts` (on). `/ru` is
+`noindex` and out of hreflang/sitemap; ES is in both. Prices are never typed
+in translations: ES/RU take the EN price by position (`1500 €`,
+`от 1 500 €`), VAT label per language. Spanish uses «tú» (es-ES); Russian
+reuses approved ludvik4.ru wording minus everything Russia-specific. The lead
+e-mail says which language the enquiry came from. ludvik4.ru unchanged: all
+53 RU pages identical to `main` in markup and text (`pnpm build:ru-static`,
+scripts stripped; only JS bundle hashes differ). Design (with the agent's
+calls): `docs/superpowers/specs/2026-10-31-multilingual-dev-design.md`.
+Translation brief + ES/RU glossary (use it for any copy edit):
+`docs/superpowers/specs/2026-10-31-multilingual-translation-brief.md`. Still open: lawyer
+review of the ES/RU legal pages (translators flagged: no LOPDGDD mention, no
+model withdrawal form / art. 98.2 durable-medium consent, "prices exclude
+VAT" wording for consumers, Cloudflare Turnstile missing from the privacy
+notice's processor list — all inherited from the EN text); optional native
+read of the Spanish copy; resubmit the sitemap in Search Console (now with
+`/es` URLs); the landing-pages tab's "More about this service" links to
+`/services/websites` (pre-existing, all languages).
 
 **[SHIPPED 2026-10-31 · EN only] EN storefront parity.** ludvik4.dev gets the
 RU offer in English: five services with packages and EUR prices set by the owner

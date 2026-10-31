@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { canonicalPath, MarketContact } from "@/features/site";
+import {
+  canonicalPath,
+  MarketContact,
+  languageAlternates,
+} from "@/features/site";
 import { env } from "@/lib/env";
 
 export const metadata: Metadata =
@@ -8,7 +12,10 @@ export const metadata: Metadata =
         title: "Contact",
         description:
           "Tell Ludvik4 about your website, automation or web app project — send a request or message on Telegram.",
-        alternates: { canonical: canonicalPath(env.SITE_MARKET, "/contact") },
+        alternates: {
+          canonical: canonicalPath(env.SITE_MARKET, "/contact"),
+          ...languageAlternates("/contact"),
+        },
         openGraph: { title: "Contact — Ludvik4", url: "/contact" },
       }
     : {

@@ -1,4 +1,5 @@
 import type { LeadFormLabels } from "@/features/lead";
+import type { Locale } from "@/lib/i18n";
 
 // Typed marketing content, one object per market. The shared section components
 // render from these objects; the two home compositions (home-ru / home-en) only
@@ -7,6 +8,9 @@ import type { LeadFormLabels } from "@/features/lead";
 // promises or re-introduce a "permanent team" claim.
 
 export type Market = "ru" | "en";
+
+/** A page's language: the RU market's Russian, or a ludvik4.dev locale. */
+export type Lang = "ru" | "en" | "es";
 
 export const TELEGRAM_URL = "https://t.me/ludvik4work";
 
@@ -81,7 +85,12 @@ export type HomeContent = {
 export type MarketContent = {
   market: Market;
   /** `<html lang>` and JSON-LD inLanguage. */
-  lang: "ru" | "en";
+  lang: Lang;
+  /**
+   * The ludvik4.dev locale this copy belongs to (EN build only). Unset on the
+   * RU market, whose pages have no language switch and no URL prefix.
+   */
+  locale?: Locale;
   ogLocale: string;
   /** SEO <title>. */
   title: string;
@@ -507,6 +516,7 @@ const ru: MarketContent = {
 const en: MarketContent = {
   market: "en",
   lang: "en",
+  locale: "en",
   ogLocale: "en_US",
   title: "Custom Websites, Workflow Automation & Web Apps — Ludvik4",
   shareTitle: "Ludvik4 — founder-led web product studio",
@@ -839,6 +849,9 @@ const en: MarketContent = {
 
 const CONTENT: Record<Market, MarketContent> = { ru, en };
 
+/** The English storefront copy, the shape every ludvik4.dev locale follows. */
+export const enContent = en;
+
 /** Pure market-content accessor — the unit-test entry point for both markets. */
 export function getMarketContent(market: Market): MarketContent {
   return CONTENT[market];
@@ -849,17 +862,17 @@ export function getMarketContent(market: Market): MarketContent {
 // exhibits are numbered around it — 01, 02, 03, 05… — so no two share one.
 const MASCOT_EXHIBIT = 4;
 
-function exhibitNumber(n: number, lang: "ru" | "en"): string {
+function exhibitNumber(n: number, lang: Lang): string {
   const padded = String(n).padStart(2, "0");
   return lang === "ru" ? `№ ${padded}` : `Nº ${padded}`;
 }
 
-export function mascotExhibitNumber(lang: "ru" | "en"): string {
+export function mascotExhibitNumber(lang: Lang): string {
   return exhibitNumber(MASCOT_EXHIBIT, lang);
 }
 
 /** Number of the work exhibit at gallery position `index` (0-based). */
-export function workExhibitNumber(index: number, lang: "ru" | "en"): string {
+export function workExhibitNumber(index: number, lang: Lang): string {
   const n = index + 1;
   return exhibitNumber(n < MASCOT_EXHIBIT ? n : n + 1, lang);
 }

@@ -1,3 +1,4 @@
+import { localizeHref } from "@/lib/i18n";
 import { jsonLdString } from "@/lib/json-ld";
 import type { MarketContent } from "./content";
 import type { HomeExhibit } from "./home-exhibits";
@@ -11,6 +12,7 @@ import {
 import { HomeStage } from "./home-stage";
 import { buildHomeJsonLd } from "./seo";
 import { SiteFooter } from "./site-chrome";
+import { uiFor } from "./ui-for";
 
 // The exhibition home, shared by both markets (docs/specs/immersive-home.md):
 // the stage with the jelly roly-poly, then the collection, three steps, the
@@ -29,7 +31,9 @@ export function Home({
     faq: false,
     prices: false,
   });
-  const { home } = content;
+  const { home, locale } = content;
+  // ludvik4.dev pages link within their language; the RU market has none.
+  const contactHref = locale ? localizeHref(locale, "/contact") : undefined;
   return (
     <div className="bg-background text-foreground min-h-screen">
       <script
@@ -37,16 +41,24 @@ export function Home({
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
       <HomeStage content={content} />
-      <HomeCollection copy={home.collection} lang={content.lang} />
+      <HomeCollection
+        copy={home.collection}
+        lang={content.lang}
+        contactHref={contactHref}
+      />
       <HomeSteps copy={home.steps} lang={content.lang} />
       <HomeGallery
         copy={home.work}
         exhibitEyebrow={home.exhibit.eyebrow}
         lang={content.lang}
         exhibits={exhibits}
+        labels={locale ? uiFor(locale).gallery : undefined}
       />
-      <HomeAbout copy={home.about} />
-      <HomeClosing copy={home.closing} />
+      <HomeAbout
+        copy={home.about}
+        href={locale ? localizeHref(locale, "/about") : undefined}
+      />
+      <HomeClosing copy={home.closing} contactHref={contactHref} />
       <SiteFooter content={content} />
     </div>
   );

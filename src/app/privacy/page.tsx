@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { MARKET, PrivacyPage, siteContent } from "@/features/site";
+import {
+  MARKET,
+  PrivacyPage,
+  siteContent,
+  languageAlternates,
+} from "@/features/site";
 
 export const metadata: Metadata = {
   title: "Privacy Notice",
   description:
     "How Ludvik4 collects, uses, retains, and protects personal data.",
-  alternates: { canonical: "/privacy" },
+  alternates: { canonical: "/privacy", ...languageAlternates("/privacy") },
 };
 
 export default function PrivacyNoticePage() {

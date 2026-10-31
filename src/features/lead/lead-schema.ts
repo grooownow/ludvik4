@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { LEAD_MESSAGES, type LeadMessages } from "./lead-messages";
 
 export const NAME_MAX = 100;
 export const MESSAGE_MIN = 10;
@@ -39,9 +40,6 @@ function withoutLinks(value: string): string {
   return value.replace(LINK_RE, " ").replace(/\s+/g, " ").trim();
 }
 
-const MESSAGE_TOO_SHORT =
-  "Tell me a bit more about the task — at least a couple of sentences.";
-
 /**
  * Field rules. Two of them exist because of link spam, the only kind of bot
  * traffic the form has actually received (a bot that POSTs the server action
@@ -49,28 +47,30 @@ const MESSAGE_TOO_SHORT =
  * limit): a name is never a link, and the message has to say something once
  * its links are taken out — "Hi <link> Owner" is not an enquiry.
  */
-export const leadSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .max(NAME_MAX, "Name is too long.")
-    .refine((v) => !containsLink(v), "A name cannot be a link.")
-    .default(""),
-  message: z
-    .string()
-    .trim()
-    .min(MESSAGE_MIN, MESSAGE_TOO_SHORT)
-    .max(MESSAGE_MAX, "Too long — please shorten it a bit.")
-    .refine((v) => withoutLinks(v).length >= MESSAGE_MIN, MESSAGE_TOO_SHORT),
-  contact: z
-    .string()
-    .trim()
-    .min(1, "Leave a contact so I can reply.")
-    .max(CONTACT_MAX, "Contact is too long.")
-    .refine(
-      isValidContact,
-      "Enter an email, a messenger link, or a phone number.",
-    ),
-});
+export function buildLeadSchema(m: LeadMessages = LEAD_MESSAGES.en) {
+  return z.object({
+    name: z
+      .string()
+      .trim()
+      .max(NAME_MAX, m.nameTooLong)
+      .refine((v) => !containsLink(v), m.nameIsLink)
+      .default(""),
+    message: z
+      .string()
+      .trim()
+      .min(MESSAGE_MIN, m.messageTooShort)
+      .max(MESSAGE_MAX, m.messageTooLong)
+      .refine((v) => withoutLinks(v).length >= MESSAGE_MIN, m.messageTooShort),
+    contact: z
+      .string()
+      .trim()
+      .min(1, m.contactMissing)
+      .max(CONTACT_MAX, m.contactTooLong)
+      .refine(isValidContact, m.contactInvalid),
+  });
+}
+
+/** The English rules; `buildLeadSchema` gives them in another language. */
+export const leadSchema = buildLeadSchema();
 
 export type Lead = z.infer<typeof leadSchema>;

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { HallExhibit, Market } from "./content";
+import type { HallExhibit, Lang } from "./content";
 
 // Fine-line plans of the collection halls (prototype:
 // experiments/nevalyashka/ideas/halls-v2.html, "Чертежи" → "Подробный").
@@ -8,7 +8,7 @@ import type { HallExhibit, Market } from "./content";
 // that turns pink on hover, and .ann holds the dimension lines (.an) and
 // mono notes. Every stroked path has pathLength 1 so it can draw itself in.
 
-const NOTES: Record<Market, Record<string, string>> = {
+const NOTES: Record<Lang, Record<string, string>> = {
   en: {
     hero: "hero · cards",
     action: "one action",
@@ -30,6 +30,17 @@ const NOTES: Record<Market, Record<string, string>> = {
     q1: "I кв",
     q4: "IV кв",
     fps: "60 кадр/с",
+  },
+  es: {
+    hero: "portada · tarjetas",
+    action: "una acción",
+    scroll: "1 pantalla",
+    idea: "tu idea",
+    bot: "bot",
+    sheets: "Sheets",
+    q1: "T1",
+    q4: "T4",
+    fps: "60 fps",
   },
 };
 
@@ -283,7 +294,7 @@ function plan(kind: HallExhibit, t: Record<string, string>) {
   }
 }
 
-export function HallPlan({ kind, lang }: { kind: HallExhibit; lang: Market }) {
+export function HallPlan({ kind, lang }: { kind: HallExhibit; lang: Lang }) {
   const { art, notes } = plan(kind, NOTES[lang]);
   return (
     <svg

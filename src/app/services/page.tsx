@@ -4,6 +4,7 @@ import {
   getMarketContent,
   internationalPricingCatalog,
   PricingPageView,
+  languageAlternates,
 } from "@/features/site";
 import { env } from "@/lib/env";
 
@@ -15,7 +16,7 @@ const description =
 export const metadata: Metadata = {
   title: "Services and Prices",
   description,
-  alternates: { canonical: "/services" },
+  alternates: { canonical: "/services", ...languageAlternates("/services") },
   openGraph: { url: "/services", title: "Services and Prices", description },
 };
 

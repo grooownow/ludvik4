@@ -62,6 +62,22 @@ export {
   InternationalWorkView,
 } from "./international-pages";
 export { buildHumansTxt, buildSecurityTxt } from "./service-files";
+export { getLocaleBundle, type LocaleBundle } from "./locale-content";
+export {
+  LocaleContact,
+  LocaleHome,
+  localeNotFoundCopy,
+  LocalePricing,
+  LocaleServiceSlug,
+} from "./locale-pages";
+export { LocaleNotFoundView } from "./locale-not-found";
+export {
+  languageAlternates,
+  localeLayoutMetadata,
+  localePageMetadata,
+  parseLocaleParam,
+} from "./locale-seo";
+export { HtmlLang } from "./html-lang";
 export {
   buildSiteMetadata,
   buildHomeJsonLd,

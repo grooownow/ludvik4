@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { type HomeContent, type Market, workExhibitNumber } from "./content";
+import { type HomeContent, type Lang, workExhibitNumber } from "./content";
 import { OrderCta } from "./order-cta";
 import { HallCard, HallsStage } from "./hall-card";
 import type { HomeExhibit } from "./home-exhibits";
@@ -98,17 +98,25 @@ function Band({
 export function HomeCollection({
   copy,
   lang,
+  contactHref,
 }: {
   copy: HomeContent["collection"];
-  lang: Market;
+  lang: Lang;
+  contactHref?: string;
 }) {
   return (
     <HallsStage>
       <Eyebrow>{copy.eyebrow}</Eyebrow>
-      <Title parts={copy.title} long={lang === "ru"} twoLines={lang === "en"} />
+      <Title parts={copy.title} long={lang !== "en"} twoLines={lang === "en"} />
       <ul className="halls-grid mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {copy.halls.map((hall, i) => (
-          <HallCard key={hall.index} hall={hall} index={i} lang={lang} />
+          <HallCard
+            key={hall.index}
+            hall={hall}
+            index={i}
+            lang={lang}
+            contactHref={contactHref}
+          />
         ))}
       </ul>
     </HallsStage>
@@ -120,12 +128,12 @@ export function HomeSteps({
   lang,
 }: {
   copy: HomeContent["steps"];
-  lang: Market;
+  lang: Lang;
 }) {
   return (
     <Band id="how-it-works">
       <Eyebrow>{copy.eyebrow}</Eyebrow>
-      <Title parts={copy.title} long={lang === "ru"} />
+      <Title parts={copy.title} long={lang !== "en"} />
       <ol className="relative mt-14 grid gap-10 sm:grid-cols-3">
         <span
           aria-hidden="true"
@@ -152,23 +160,28 @@ export function HomeGallery({
   exhibitEyebrow,
   lang,
   exhibits,
+  labels,
 }: {
   copy: HomeContent["work"];
   exhibitEyebrow: string;
-  lang: Market;
+  lang: Lang;
   exhibits: HomeExhibit[];
+  /** ludvik4.dev's localized labels; the RU market keeps its own. */
+  labels?: { open: string; newWindow: string; about: string };
 }) {
-  const openLabel = lang === "ru" ? "Открыть" : "Open";
+  const openLabel = labels?.open ?? (lang === "ru" ? "Открыть" : "Open");
   const newWindowLabel =
-    lang === "ru" ? "(откроется в новом окне)" : "(opens in a new window)";
-  const aboutLabel = lang === "ru" ? "о проекте" : "about the project";
+    labels?.newWindow ??
+    (lang === "ru" ? "(откроется в новом окне)" : "(opens in a new window)");
+  const aboutLabel =
+    labels?.about ?? (lang === "ru" ? "о проекте" : "about the project");
   // Odd count: the first exhibit spans two rows (big left, others stacked);
   // even count: an equal grid.
   const featureFirst = exhibits.length % 2 === 1;
   return (
     <Band id="work" className="bg-[#fff8fb]">
       <Eyebrow>{copy.eyebrow}</Eyebrow>
-      <Title parts={copy.title} long={lang === "ru"} />
+      <Title parts={copy.title} long={lang !== "en"} />
       <div className="mt-14 grid gap-10 sm:grid-cols-2">
         {exhibits.map((exhibit, i) => {
           const featured = featureFirst && i === 0;
@@ -256,7 +269,13 @@ export function HomeGallery({
   );
 }
 
-export function HomeAbout({ copy }: { copy: HomeContent["about"] }) {
+export function HomeAbout({
+  copy,
+  href = "/about",
+}: {
+  copy: HomeContent["about"];
+  href?: string;
+}) {
   return (
     <Band id="about">
       {/* Below lg the text runs taller than the photo: the eyebrow sits above
@@ -291,7 +310,7 @@ export function HomeAbout({ copy }: { copy: HomeContent["about"] }) {
             </p>
           ))}
           <Link
-            href={"/about" as Route}
+            href={href as Route}
             className="mt-6 inline-block border-b border-current text-sm"
           >
             {copy.linkLabel} →
@@ -302,7 +321,14 @@ export function HomeAbout({ copy }: { copy: HomeContent["about"] }) {
   );
 }
 
-export function HomeClosing({ copy }: { copy: HomeContent["closing"] }) {
+export function HomeClosing({
+  copy,
+  contactHref,
+}: {
+  copy: HomeContent["closing"];
+  /** Where the button leads without an order dialog (ludvik4.dev). */
+  contactHref?: string;
+}) {
   return (
     <section className="bg-intro text-intro-foreground">
       <div className="mx-auto max-w-6xl px-6 py-48 text-center sm:py-16">
@@ -313,7 +339,9 @@ export function HomeClosing({ copy }: { copy: HomeContent["closing"] }) {
           {copy.title}
         </h2>
         <Button asChild size="lg" className="mt-12 rounded-full px-8 sm:mt-16">
-          <OrderCta placement="closing">{copy.cta}</OrderCta>
+          <OrderCta placement="closing" contactHref={contactHref}>
+            {copy.cta}
+          </OrderCta>
         </Button>
       </div>
     </section>

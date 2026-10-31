@@ -2,8 +2,44 @@
 
 import Link from "next/link";
 import type { Route } from "next";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { type Locale, localizeHref, splitLocale } from "@/lib/i18n";
+
+// The banner speaks the page's language (ludvik4.dev: EN, ES, RU).
+const COPY: Record<
+  Locale,
+  {
+    region: string;
+    text: string;
+    policy: string;
+    decline: string;
+    accept: string;
+  }
+> = {
+  en: {
+    region: "Cookie choice",
+    text: "Analytics here runs without cookies by default. Allowing cookies lets us see how visitors actually move through the site — including session replays, with everything you type in the contact form hidden — so we can fix what does not work.",
+    policy: "Cookie Policy",
+    decline: "Decline",
+    accept: "Allow cookies",
+  },
+  es: {
+    region: "Elección de cookies",
+    text: "Por defecto, la analítica de esta web funciona sin cookies. Si las aceptas, veremos cómo se mueven realmente los visitantes por la web —también con grabaciones de sesión, en las que todo lo que escribas en el formulario de contacto queda oculto— y podremos arreglar lo que no funciona.",
+    policy: "Política de cookies",
+    decline: "Rechazar",
+    accept: "Aceptar cookies",
+  },
+  ru: {
+    region: "Выбор cookies",
+    text: "По умолчанию аналитика на сайте работает без cookies. Если вы их разрешите, мы увидим, как посетители на самом деле ходят по сайту, включая записи сессий (всё, что вы вводите в форме заявки, в них скрыто), и сможем исправить то, что не работает.",
+    policy: "Политика cookies",
+    decline: "Отклонить",
+    accept: "Разрешить cookies",
+  },
+};
 
 /**
  * The cookie choice, as a bottom bar.
@@ -26,6 +62,8 @@ export function ConsentBanner({
   onDecline: () => void;
 }) {
   const region = useRef<HTMLElement>(null);
+  const { locale } = splitLocale(usePathname() ?? "/");
+  const copy = COPY[locale];
 
   useEffect(() => {
     // Move focus to the banner so a keyboard or screen-reader visitor meets it
@@ -68,30 +106,27 @@ export function ConsentBanner({
   return (
     <section
       ref={region}
-      aria-label="Cookie choice"
+      aria-label={copy.region}
       tabIndex={-1}
       className="motion-safe:animate-in motion-safe:slide-in-from-bottom-4 motion-safe:fade-in border-pink-soft bg-card fixed inset-x-0 bottom-0 z-50 border-t shadow-[0_-14px_40px_-24px_rgba(26,26,26,0.25)] outline-none motion-safe:duration-300"
     >
       <div className="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-          Analytics here runs without cookies by default. Allowing cookies lets
-          us see how visitors actually move through the site — including session
-          replays, with everything you type in the contact form hidden — so we
-          can fix what does not work.{" "}
+          {copy.text}{" "}
           <Link
-            href={"/cookies" as Route}
+            href={localizeHref(locale, "/cookies") as Route}
             className="text-foreground underline underline-offset-4"
           >
-            Cookie Policy
+            {copy.policy}
           </Link>
         </p>
 
         <div className="flex shrink-0 gap-2">
           <Button variant="outline" size="lg" onClick={onDecline}>
-            Decline
+            {copy.decline}
           </Button>
           <Button size="lg" onClick={onAccept}>
-            Allow cookies
+            {copy.accept}
           </Button>
         </div>
       </div>

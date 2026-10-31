@@ -76,5 +76,9 @@ on 2026-08-10. The 2026-08-11 content wave adds an English planning-guide hub
 and one original decision worksheet for each service cluster. On 2026-10-31 the
 international storefront took over the RU offer: five services with packages
 and EUR prices (`/services`), Spain stated openly, and Spanish/EU legal pages
-(`/legal-notice`, `/cookies`, `/terms-of-service`). Next: EN/ES/RU on
-ludvik4.dev (`docs/roadmap.md` → Now).
+(`/legal-notice`, `/cookies`, `/terms-of-service`). The same day ludvik4.dev
+became trilingual: English at the root, Spanish under `/es`, Russian under
+`/ru` (noindex; flag `RU_LOCALE_ENABLED` in `src/lib/i18n.ts`), with a header
+language switch and browser-language detection
+(`docs/superpowers/specs/2026-10-31-multilingual-dev-design.md`). Blog and
+guides stay English.

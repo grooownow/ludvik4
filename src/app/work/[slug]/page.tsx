@@ -4,6 +4,7 @@ import {
   getInternationalWork,
   internationalCaseStudies,
   InternationalWorkView,
+  languageAlternates,
 } from "@/features/site";
 import { env } from "@/lib/env";
 
@@ -29,7 +30,7 @@ export async function generateMetadata({
   return {
     title: `${item.title} — Case Study`,
     description: item.description,
-    alternates: { canonical: path },
+    alternates: { canonical: path, ...languageAlternates(path) },
     openGraph: {
       title: `${item.title} — Ludvik4 Case Study`,
       description: item.description,

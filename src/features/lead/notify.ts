@@ -1,7 +1,11 @@
 import "server-only";
 import { env } from "@/lib/env";
 import { logger } from "@/lib/logger";
-import type { Lead } from "./lead-schema";
+import { type Locale, LOCALE_LABELS } from "@/lib/i18n";
+import type { Lead as ValidLead } from "./lead-schema";
+
+/** A validated enquiry, with the language of the page it was sent from. */
+type Lead = ValidLead & { language?: Locale };
 
 function formatLines(lead: Lead): string[] {
   return [
@@ -9,6 +13,10 @@ function formatLines(lead: Lead): string[] {
     "",
     lead.name ? `Name: ${lead.name}` : "Name: —",
     `Contact: ${lead.contact}`,
+    // Reply in the client's language: sent from the Spanish or Russian site.
+    ...(lead.language && lead.language !== "en"
+      ? [`Language: ${LOCALE_LABELS[lead.language].name}`]
+      : []),
     "",
     "Project:",
     lead.message,
