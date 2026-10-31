@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
-import type { HomeContent, Market } from "./content";
+import type { HomeContent, Lang } from "./content";
 import { OrderCta } from "./order-cta";
 import { HallPlan } from "./hall-plans";
 
@@ -33,10 +33,13 @@ export function HallCard({
   hall,
   index,
   lang,
+  contactHref,
 }: {
   hall: Hall;
   index: number;
-  lang: Market;
+  lang: Lang;
+  /** Where the card's button leads without an order dialog (ludvik4.dev). */
+  contactHref?: string;
 }) {
   const ref = useRef<HTMLLIElement>(null);
   const [drawn, setDrawn] = useState(false);
@@ -94,6 +97,7 @@ export function HallCard({
         {hall.cta ? (
           <OrderCta
             placement="hall"
+            contactHref={contactHref}
             className="bg-foreground text-background hover:bg-primary focus-visible:ring-primary mt-4 inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
           >
             {hall.cta}

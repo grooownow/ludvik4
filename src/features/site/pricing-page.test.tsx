@@ -97,6 +97,8 @@ describe("PricingPageView with the international catalog", () => {
         baseUrl="https://ludvik4.dev"
       />,
     );
+    // The language switch names Russian in Russian; the page copy does not.
+    container.querySelector("[data-language-switch]")?.remove();
     const text = container.textContent;
     expect(text).not.toMatch(/[А-Яа-яЁё]|₽/);
     expect(text).toContain("€500");

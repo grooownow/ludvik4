@@ -27,7 +27,8 @@ export type InternationalWorkItem = {
   website: string;
   websiteLabel: string;
   cardLink?: {
-    href: "/gridfin/en";
+    /** The Gridfin landing in the reader's language where it has one. */
+    href: `/gridfin/${string}`;
     label: string;
     newTab: true;
   };

@@ -1,7 +1,15 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useAnalyticsConsent } from "@/components/analytics-provider";
 import { Button } from "@/components/ui/button";
+import { type Locale, splitLocale } from "@/lib/i18n";
+
+const LABEL: Record<Locale, string> = {
+  en: "Cookie settings",
+  es: "Configurar cookies",
+  ru: "Настройки cookies",
+};
 
 /**
  * Withdraws the cookie choice, bringing the banner back.
@@ -16,6 +24,7 @@ import { Button } from "@/components/ui/button";
  */
 export function ConsentSettingsButton({ className }: { className?: string }) {
   const { status, withdraw } = useAnalyticsConsent();
+  const { locale } = splitLocale(usePathname() ?? "/");
 
   if (status === null || status === "pending") {
     return null;
@@ -23,7 +32,7 @@ export function ConsentSettingsButton({ className }: { className?: string }) {
 
   return (
     <Button variant="link" size="xs" onClick={withdraw} className={className}>
-      Cookie settings
+      {LABEL[locale]}
     </Button>
   );
 }

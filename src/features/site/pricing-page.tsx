@@ -1,6 +1,7 @@
 import type { Route } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { localizeHref } from "@/lib/i18n";
 import { jsonLdString } from "@/lib/json-ld";
 import { cn } from "@/lib/utils";
 import type { MarketContent } from "./content";
@@ -439,7 +440,14 @@ export function PricingPageView({
           </div>
         </section>
 
-        <HomeClosing copy={copy.closing} />
+        <HomeClosing
+          copy={copy.closing}
+          contactHref={
+            content.locale
+              ? localizeHref(content.locale, "/contact")
+              : undefined
+          }
+        />
       </main>
       <SiteFooter content={content} />
     </div>

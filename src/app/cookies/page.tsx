@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { CookiePolicyView, MARKET } from "@/features/site";
+import { CookiePolicyView, MARKET, languageAlternates } from "@/features/site";
 
 export const metadata: Metadata = {
   title: "Cookie Policy",
   description:
     "Which cookies Ludvik4 uses, why, and how to change your choice.",
-  alternates: { canonical: "/cookies" },
+  alternates: { canonical: "/cookies", ...languageAlternates("/cookies") },
 };
 
 export default function Page() {

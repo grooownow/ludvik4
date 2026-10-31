@@ -3,9 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CtaLink } from "./cta-link";
+import { type Locale, localePrefix, localizeHref } from "@/lib/i18n";
 import { jsonLdString } from "@/lib/json-ld";
 import { Breadcrumbs } from "./breadcrumbs";
-import { getMarketContent } from "./content";
+import { getLocaleBundle } from "./locale-content";
 import type {
   InternationalGuide,
   InternationalServicePage,
@@ -16,15 +17,44 @@ import { InternationalWorkGrid } from "./international-work-grid";
 import { publicUrl } from "./seo";
 import { Eyebrow, Section, SiteFooter, SiteHeader } from "./site-chrome";
 
-const enContent = getMarketContent("en");
-
-function InternationalShell({ children }: { children: React.ReactNode }) {
+function InternationalShell({
+  children,
+  locale = "en",
+}: {
+  children: React.ReactNode;
+  locale?: Locale;
+}) {
+  const { content } = getLocaleBundle(locale);
   return (
     <div className="bg-background text-foreground flex min-h-screen flex-col">
-      <SiteHeader content={enContent} />
+      <SiteHeader content={content} />
       <main className="flex-1">{children}</main>
-      <SiteFooter content={enContent} />
+      <SiteFooter content={content} />
     </div>
+  );
+}
+
+/** Breadcrumbs in the page's language, starting at that language's home. */
+function LocaleBreadcrumbs({
+  locale,
+  items,
+}: {
+  locale: Locale;
+  items: { label: string; href?: string }[];
+}) {
+  const { ui } = getLocaleBundle(locale);
+  return (
+    <Breadcrumbs
+      homeLabel={ui.breadcrumbs.home}
+      homeHref={localizeHref(locale, "/")}
+      ariaLabel={ui.breadcrumbs.aria}
+      items={items.map((item) => ({
+        label: item.label,
+        ...(item.href
+          ? { href: localizeHref(locale, item.href) as Route }
+          : {}),
+      }))}
+    />
   );
 }
 
@@ -46,20 +76,16 @@ function BulletSection({ title, items }: { title: string; items: string[] }) {
   );
 }
 
-function EnquiryCta() {
+function EnquiryCta({ locale = "en" }: { locale?: Locale }) {
+  const { enquiry } = getLocaleBundle(locale).ui;
   return (
     <section className="bg-surface-warm">
       <div className="mx-auto max-w-3xl px-6 py-14 text-center">
-        <h2 className="text-2xl font-bold tracking-tight">
-          Discuss a similar project
-        </h2>
-        <p className="text-muted-foreground mt-3">
-          Describe the problem, current situation, and outcome you need. We will
-          suggest a sensible first step.
-        </p>
+        <h2 className="text-2xl font-bold tracking-tight">{enquiry.title}</h2>
+        <p className="text-muted-foreground mt-3">{enquiry.body}</p>
         <Button asChild size="lg" className="mt-6">
-          <CtaLink href="/contact" placement="service">
-            Send a project enquiry
+          <CtaLink href={localizeHref(locale, "/contact")} placement="service">
+            {enquiry.cta}
           </CtaLink>
         </Button>
       </div>
@@ -70,11 +96,19 @@ function EnquiryCta() {
 export function InternationalServiceView({
   service,
   baseUrl,
+  locale = "en",
 }: {
   service: InternationalServicePage;
   baseUrl: string;
+  locale?: Locale;
 }) {
-  const url = publicUrl("en", baseUrl, `/services/${service.slug}`);
+  const { ui } = getLocaleBundle(locale);
+  const home = `${baseUrl}${localizeHref(locale, "/")}`.replace(/(.)\/$/, "$1");
+  const url = publicUrl(
+    "en",
+    baseUrl,
+    localizeHref(locale, `/services/${service.slug}`),
+  );
   const relatedGuide = internationalGuides.find(
     (guide) => guide.relatedService.href === `/services/${service.slug}`,
   );
@@ -87,11 +121,12 @@ export function InternationalServiceView({
         name: service.title,
         description: service.description,
         url,
+        inLanguage: locale,
         provider: { "@id": `${baseUrl}/#organization` },
         areaServed: "Worldwide",
         availableChannel: {
           "@type": "ServiceChannel",
-          serviceUrl: `${baseUrl}/contact`,
+          serviceUrl: `${baseUrl}${localizeHref(locale, "/contact")}`,
         },
       },
       {
@@ -100,14 +135,14 @@ export function InternationalServiceView({
           {
             "@type": "ListItem",
             position: 1,
-            name: "Home",
-            item: `${baseUrl}/`,
+            name: ui.breadcrumbs.home,
+            item: locale === "en" ? `${baseUrl}/` : home,
           },
           {
             "@type": "ListItem",
             position: 2,
-            name: "Services",
-            item: `${baseUrl}/#services`,
+            name: ui.breadcrumbs.services,
+            item: `${baseUrl}${localizeHref(locale, "/#services")}`,
           },
           {
             "@type": "ListItem",
@@ -121,16 +156,16 @@ export function InternationalServiceView({
   };
 
   return (
-    <InternationalShell>
+    <InternationalShell locale={locale}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
       <div className="mx-auto max-w-5xl px-6 py-14">
-        <Breadcrumbs
-          homeLabel="Home"
+        <LocaleBreadcrumbs
+          locale={locale}
           items={[
-            { label: "Services", href: "/#services" },
+            { label: ui.breadcrumbs.services, href: "/#services" },
             { label: service.title },
           ]}
         />
@@ -145,7 +180,7 @@ export function InternationalServiceView({
         </div>
         <div className="border-pink-soft mt-10 border-y py-6">
           <p className="text-muted-foreground text-xs font-semibold tracking-widest uppercase">
-            Outcome
+            {ui.service.outcome}
           </p>
           <p className="mt-2 max-w-3xl leading-relaxed">{service.outcome}</p>
         </div>
@@ -153,15 +188,15 @@ export function InternationalServiceView({
 
       <Section>
         <div className="grid gap-12">
-          <BulletSection title="When this is a good fit" items={service.fit} />
+          <BulletSection title={ui.service.fit} items={service.fit} />
           <BulletSection
-            title="What the engagement includes"
+            title={ui.service.includes}
             items={service.deliverables}
           />
-          <BulletSection title="Typical projects" items={service.examples} />
+          <BulletSection title={ui.service.examples} items={service.examples} />
           <section>
             <h2 className="text-2xl font-semibold tracking-tight">
-              Delivery process
+              {ui.service.process}
             </h2>
             <ol className="mt-5 grid gap-5 sm:grid-cols-2">
               {service.process.map((step, index) => (
@@ -175,18 +210,16 @@ export function InternationalServiceView({
             </ol>
           </section>
           <BulletSection
-            title="Baseline boundaries"
+            title={ui.service.boundaries}
             items={service.boundaries}
           />
           {relatedGuide ? (
             <section>
               <h2 className="text-2xl font-semibold tracking-tight">
-                Related planning guide
+                {ui.service.guideTitle}
               </h2>
               <p className="text-muted-foreground mt-4 max-w-3xl leading-relaxed">
-                Use the practical worksheet before requesting an estimate. It
-                makes the starting context, open questions, and first useful
-                scope easier to review.
+                {ui.service.guideBody}
               </p>
               <Link
                 href={`/guides/${relatedGuide.slug}` as Route}
@@ -198,30 +231,40 @@ export function InternationalServiceView({
           ) : null}
         </div>
       </Section>
-      <EnquiryCta />
+      <EnquiryCta locale={locale} />
     </InternationalShell>
   );
 }
 
-export function InternationalWorkIndexView() {
+export function InternationalWorkIndexView({
+  locale = "en",
+}: {
+  locale?: Locale;
+}) {
+  const { ui, work } = getLocaleBundle(locale);
   return (
-    <InternationalShell>
+    <InternationalShell locale={locale}>
       <div className="mx-auto max-w-5xl px-6 py-14">
-        <Breadcrumbs homeLabel="Home" items={[{ label: "Work" }]} />
+        <LocaleBreadcrumbs
+          locale={locale}
+          items={[{ label: ui.breadcrumbs.work }]}
+        />
         <div className="mt-10 max-w-3xl">
-          <Eyebrow>Selected work</Eyebrow>
+          <Eyebrow>{ui.workIndex.eyebrow}</Eyebrow>
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
-            Products with public evidence
+            {ui.workIndex.title}
           </h1>
           <p className="text-muted-foreground mt-5 text-lg leading-relaxed">
-            Work appears here when the product, code, or outcome can be checked
-            publicly. Explore a pet records application, an open-source testing
-            tool, and a product for structured AI-assisted development.
+            {ui.workIndex.lead}
           </p>
         </div>
-        <InternationalWorkGrid />
+        <InternationalWorkGrid
+          items={work}
+          newTabLabel={ui.newTab}
+          prefix={localePrefix(locale)}
+        />
       </div>
-      <EnquiryCta />
+      <EnquiryCta locale={locale} />
     </InternationalShell>
   );
 }
@@ -229,32 +272,40 @@ export function InternationalWorkIndexView() {
 export function InternationalWorkView({
   item,
   baseUrl,
+  locale = "en",
 }: {
   item: InternationalWorkItem;
   baseUrl: string;
+  locale?: Locale;
 }) {
-  const url = publicUrl("en", baseUrl, `/work/${item.slug}`);
+  const { ui } = getLocaleBundle(locale);
+  const url = publicUrl(
+    "en",
+    baseUrl,
+    localizeHref(locale, `/work/${item.slug}`),
+  );
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
     name: item.title,
     description: item.description,
+    inLanguage: locale,
     url,
     creator: { "@id": `${baseUrl}/#organization` },
     sameAs: item.website,
   };
 
   return (
-    <InternationalShell>
+    <InternationalShell locale={locale}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
       <div className="mx-auto max-w-5xl px-6 py-14">
-        <Breadcrumbs
-          homeLabel="Home"
+        <LocaleBreadcrumbs
+          locale={locale}
           items={[
-            { label: "Work", href: "/work" as Route },
+            { label: ui.breadcrumbs.work, href: "/work" },
             { label: item.title },
           ]}
         />
@@ -288,95 +339,80 @@ export function InternationalWorkView({
       <Section>
         <div className="grid max-w-3xl gap-12">
           <section>
-            <h2 className="text-2xl font-semibold tracking-tight">Problem</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">
+              {ui.workPage.problem}
+            </h2>
             <p className="text-muted-foreground mt-4 leading-relaxed">
               {item.problem}
             </p>
           </section>
-          <BulletSection title="What I built" items={item.solution} />
+          <BulletSection title={ui.workPage.built} items={item.solution} />
           <section>
-            <h2 className="text-2xl font-semibold tracking-tight">Result</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">
+              {ui.workPage.result}
+            </h2>
             <p className="text-muted-foreground mt-4 leading-relaxed">
               {item.result}
             </p>
           </section>
         </div>
       </Section>
-      <EnquiryCta />
+      <EnquiryCta locale={locale} />
     </InternationalShell>
   );
 }
 
-export function InternationalAboutView() {
+export function InternationalAboutView({ locale = "en" }: { locale?: Locale }) {
+  const { about, breadcrumbs } = getLocaleBundle(locale).ui;
   return (
-    <InternationalShell>
+    <InternationalShell locale={locale}>
       <div className="mx-auto max-w-5xl px-6 py-14">
-        <Breadcrumbs homeLabel="Home" items={[{ label: "About" }]} />
+        <LocaleBreadcrumbs
+          locale={locale}
+          items={[{ label: breadcrumbs.about }]}
+        />
         <div className="mt-10 max-w-3xl">
-          <Eyebrow>About Ludvik4</Eyebrow>
+          <Eyebrow>{about.eyebrow}</Eyebrow>
           <h1 className="text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
-            A founder-led web product studio in Spain
+            {about.title}
           </h1>
           <p className="text-muted-foreground mt-5 text-lg leading-relaxed">
-            From Valencia, we design and build focused websites, workflow
-            automations, and web applications for founders and small teams
-            worldwide. Every project has one accountable lead from the first
-            problem statement through launch and handover.
+            {about.lead}
           </p>
         </div>
       </div>
       <Section>
         <div className="grid max-w-3xl gap-12">
-          <section>
-            <h2 className="text-2xl font-semibold tracking-tight">
-              Direct communication, explicit scope
-            </h2>
-            <p className="text-muted-foreground mt-4 leading-relaxed">
-              You work directly with the person making product and engineering
-              decisions. We turn the initial idea or operational problem into a
-              written scope, surface assumptions early, and keep delivery tied
-              to an observable outcome rather than an expanding feature list.
-            </p>
-          </section>
-          <section>
-            <h2 className="text-2xl font-semibold tracking-tight">
-              Small by design, not limited to one discipline
-            </h2>
-            <p className="text-muted-foreground mt-4 leading-relaxed">
-              The studio stays founder-led. Trusted specialists join only when
-              the agreed work needs a dedicated discipline; accountability and
-              day-to-day communication do not move to an account layer.
-            </p>
-          </section>
-          <section>
-            <h2 className="text-2xl font-semibold tracking-tight">
-              Engineering evidence over AI theatre
-            </h2>
-            <p className="text-muted-foreground mt-4 leading-relaxed">
-              AI is part of the toolchain, alongside specifications, version
-              control, automated tests, review, and deployment checks. Public
-              open-source work such as qa-pilot shows how those controls are
-              applied in practice.
-            </p>
-          </section>
+          {about.sections.map((section) => (
+            <section key={section.title}>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                {section.title}
+              </h2>
+              <p className="text-muted-foreground mt-4 leading-relaxed">
+                {section.body}
+              </p>
+            </section>
+          ))}
           {/* The blog stays live and indexed, but off the home: this is its
-              entry point beside the menu's Guides (owner, 2026-10-24). */}
+              entry point beside the menu's Guides (owner, 2026-10-24). The
+              articles are in English in every language. */}
           <section>
-            <h2 className="text-2xl font-semibold tracking-tight">Articles</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">
+              {about.articlesTitle}
+            </h2>
             <p className="text-muted-foreground mt-4 leading-relaxed">
-              We write about AI-assisted development, specifications, tests and
-              shipping products.
+              {about.articlesBody}
             </p>
             <Link
               href={"/blog" as Route}
               className="mt-4 inline-block border-b border-current text-sm"
             >
-              Read the articles →
+              {about.articlesLink}
             </Link>
           </section>
         </div>
       </Section>
-      <EnquiryCta />
+      <EnquiryCta locale={locale} />
     </InternationalShell>
   );
 }

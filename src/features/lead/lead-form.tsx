@@ -1,5 +1,6 @@
 "use client";
 
+import type { Locale } from "@/lib/i18n";
 import { usePathname } from "next/navigation";
 import { useActionState, useEffect, useRef } from "react";
 import { useFormStatus } from "react-dom";
@@ -75,9 +76,12 @@ export function LeadForm({
   turnstileSiteKey,
   labels = RU_LEAD_LABELS,
   orderPrefills,
+  locale,
 }: {
   turnstileSiteKey?: string;
   labels?: LeadFormLabels;
+  /** The page's language on ludvik4.dev: the server replies in it. */
+  locale?: Locale;
   /** Messages an "Order" link may fill in, by service or service/package. */
   orderPrefills?: Record<string, string>;
 }) {
@@ -186,6 +190,7 @@ export function LeadForm({
 
   return (
     <form action={dispatch} className="flex flex-col gap-4">
+      {locale ? <input type="hidden" name="locale" value={locale} /> : null}
       {/* Honeypot: hidden from users, tempting for bots. Must stay empty. */}
       <div
         aria-hidden="true"

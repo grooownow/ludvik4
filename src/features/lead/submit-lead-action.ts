@@ -1,9 +1,12 @@
 "use server";
 
 import { headers } from "next/headers";
+import { z } from "zod";
+import { LOCALES } from "@/lib/i18n";
 import { rateLimit } from "@/lib/rate-limit";
 import { logger } from "@/lib/logger";
-import { leadSchema } from "./lead-schema";
+import { LEAD_MESSAGES } from "./lead-messages";
+import { buildLeadSchema } from "./lead-schema";
 import { verifyTurnstile } from "./turnstile";
 import { deliverLead } from "./notify";
 
@@ -36,6 +39,10 @@ export async function submitLeadAction(
   _prev: LeadFormState,
   formData: FormData,
 ): Promise<LeadFormState> {
+  // The page's language, for the replies below. Anything unexpected falls
+  // back to English rather than failing the enquiry.
+  const locale = z.enum(LOCALES).catch("en").parse(formData.get("locale"));
+  const m = LEAD_MESSAGES[locale];
   const values = {
     name: String(formData.get("name") ?? ""),
     message: String(formData.get("message") ?? ""),
@@ -58,16 +65,16 @@ export async function submitLeadAction(
   const limit = rateLimit(`lead:${ip}`, { limit: 5, windowMs: 60_000 });
   if (!limit.allowed) {
     return {
-      error: "Too many requests in a row — wait a minute and try again.",
+      error: m.rateLimited,
       reason: "rate_limit",
       values,
     };
   }
 
-  const parsed = leadSchema.safeParse(values);
+  const parsed = buildLeadSchema(m).safeParse(values);
   if (!parsed.success) {
     return {
-      error: parsed.error.issues[0]?.message ?? "Please check the form fields.",
+      error: parsed.error.issues[0]?.message ?? m.checkFields,
       reason: "validation",
       values,
     };
@@ -76,16 +83,15 @@ export async function submitLeadAction(
   const token = String(formData.get("cf-turnstile-response") ?? "");
   if (!(await verifyTurnstile(token, ip))) {
     return {
-      error: "The anti-bot check did not pass. Reload the page and try again.",
+      error: m.captchaFailed,
       reason: "captcha",
       values,
     };
   }
 
-  if (!(await deliverLead(parsed.data))) {
+  if (!(await deliverLead({ ...parsed.data, language: locale }))) {
     return {
-      error:
-        "Could not send the request. Message me directly on Telegram: t.me/ludvik4work",
+      error: m.deliveryFailed,
       reason: "delivery",
       values,
     };

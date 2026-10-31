@@ -2,16 +2,20 @@ import type { Route } from "next";
 import Link from "next/link";
 import { ConsentSettingsButton } from "@/components/consent-settings-button";
 import { TelegramLink } from "@/components/telegram-link";
+import { enabledLocales, localizeHref } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { HomeLink } from "./anchor-link";
+import { LanguageSwitch } from "./language-switch";
 import { MobileMenu } from "./mobile-menu";
 import { NavLinks } from "./nav-links";
 import { TELEGRAM_URL, type MarketContent, type ServiceCard } from "./content";
+import { uiFor } from "./ui-for";
 
 // Shared presentational chrome for both markets. Purely visual — every string
 // comes from the market content object, so the classes (and therefore the
-// design) stay identical across RU and EN. No RU/EN switcher lives here: a
-// build serves one market only.
+// design) stay identical across RU and EN. There is no RU/EN switch: a build
+// serves one market only. ludvik4.dev's own languages (EN/ES/RU) get a switch
+// (LanguageSwitch), shown only where the content carries a locale.
 
 export function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -41,7 +45,7 @@ export function Section({
 
 export function SiteHeader({
   content,
-  contactHref = "/contact",
+  contactHref,
   variant = "default",
 }: {
   content: MarketContent;
@@ -49,10 +53,19 @@ export function SiteHeader({
   /** "stage": transparent, over the exhibit stage, scrolls away with it. */
   variant?: "default" | "stage";
 }) {
+  // ludvik4.dev pages carry their locale; the RU market's do not.
+  const locale = content.locale;
+  const chrome = locale ? uiFor(locale).chrome : undefined;
   const navigationLabel =
-    content.lang === "ru" ? "Основная навигация" : "Main navigation";
-  const menuLabel = content.lang === "ru" ? "Открыть меню" : "Open menu";
-  const closeLabel = content.lang === "ru" ? "Закрыть меню" : "Close menu";
+    chrome?.navigation ??
+    (content.lang === "ru" ? "Основная навигация" : "Main navigation");
+  const menuLabel =
+    chrome?.openMenu ?? (content.lang === "ru" ? "Открыть меню" : "Open menu");
+  const closeLabel =
+    chrome?.closeMenu ??
+    (content.lang === "ru" ? "Закрыть меню" : "Close menu");
+  const homeHref = localizeHref(locale ?? "en", "/");
+  const contact = contactHref ?? localizeHref(locale ?? "en", "/contact");
   const stage = variant === "stage";
 
   // Text-only menu (docs/specs/immersive-home.md): the wordmark is the one
@@ -76,13 +89,14 @@ export function SiteHeader({
         )}
       >
         <HomeLink
-          href="/"
+          href={homeHref}
           className={cn(
             "text-foreground flex-1 font-semibold tracking-tight",
             stage ? "text-[15px]" : "font-mono text-sm",
           )}
           aria-label={
-            content.lang === "ru" ? "Ludvik4 — на главную" : "Ludvik4 — home"
+            chrome?.homeAria ??
+            (content.lang === "ru" ? "Ludvik4 — на главную" : "Ludvik4 — home")
           }
         >
           Ludvik4
@@ -105,7 +119,13 @@ export function SiteHeader({
             {content.nav.tagline}
           </p>
         ) : null}
-        <div className="flex flex-1 justify-end">
+        <div
+          className={cn(
+            "flex flex-1 justify-end",
+            // ludvik4.dev: room for the language switch beside the menu.
+            locale && "items-center gap-1 lg:gap-4",
+          )}
+        >
           {/* Phones and tablets get the burger; the full menu from lg. */}
           <nav
             aria-label={navigationLabel}
@@ -119,7 +139,7 @@ export function SiteHeader({
             <NavLinks
               links={content.nav.links ?? []}
               cta={{
-                href: contactHref,
+                href: contact,
                 label: content.nav.cta,
                 placement: "nav",
                 className:
@@ -130,9 +150,17 @@ export function SiteHeader({
             />
           </nav>
 
+          {locale ? (
+            <LanguageSwitch
+              current={locale}
+              locales={enabledLocales()}
+              label={chrome?.language ?? "Language"}
+              stage={stage}
+            />
+          ) : null}
           <MobileMenu
             links={content.nav.links ?? []}
-            cta={{ href: contactHref, label: content.nav.cta }}
+            cta={{ href: contact, label: content.nav.cta }}
             navigationLabel={navigationLabel}
             openLabel={menuLabel}
             closeLabel={closeLabel}

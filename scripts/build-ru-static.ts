@@ -20,6 +20,8 @@ const serverOnlyPaths = [
   "src/app/legal-notice",
   "src/app/terms-of-service",
   "src/app/work",
+  // ludvik4.dev's Spanish and Russian storefront (/es, /ru): EN build only.
+  "src/app/[locale]",
   "src/middleware.ts",
   // Next 16.3 type-checks tests during build; this integration test imports
   // the auth route stashed above and is irrelevant to the static RU export.

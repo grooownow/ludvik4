@@ -1,8 +1,11 @@
+import type { Route } from "next";
 import Link from "next/link";
 import { ConsentSettingsButton } from "@/components/consent-settings-button";
+import { type Locale, localizeHref } from "@/lib/i18n";
 import { Breadcrumbs } from "./breadcrumbs";
-import { getMarketContent } from "./content";
+import { getMarketContent, type MarketContent } from "./content";
 import { SiteFooter, SiteHeader } from "./site-chrome";
+import { enUi, type UiCopy } from "./ui-copy";
 
 // The international legal pages for a business established in Spain (design:
 // docs/superpowers/specs/2026-10-31-en-storefront-parity-design.md). Written
@@ -10,10 +13,10 @@ import { SiteFooter, SiteHeader } from "./site-chrome";
 // cookie guide (May 2024). Awaiting a lawyer's review.
 
 const en = getMarketContent("en");
-const EMAIL = "ludvik4good.me@gmail.com";
-const UPDATED = "31 October 2026";
+export const LEGAL_EMAIL = "ludvik4good.me@gmail.com";
+const EMAIL = LEGAL_EMAIL;
 
-function Mail() {
+export function Mail() {
   return (
     <a
       className="text-foreground underline underline-offset-4"
@@ -24,39 +27,53 @@ function Mail() {
   );
 }
 
-function LegalLayout({
+/**
+ * The shell of every legal page, in the page's language. Spanish and Russian
+ * pages (./locales/<locale>/legal.tsx) build on it.
+ */
+export function LegalLayout({
   title,
   children,
+  content = en,
+  ui = enUi,
 }: {
   title: string;
   children: React.ReactNode;
+  content?: MarketContent;
+  ui?: UiCopy;
 }) {
+  const home = localizeHref(content.locale ?? "en", "/");
   return (
     <div className="bg-background text-foreground min-h-screen">
-      <SiteHeader content={en} />
+      <SiteHeader content={content} />
       <main className="mx-auto max-w-3xl px-6 py-14 sm:py-16">
-        <Breadcrumbs items={[{ label: title }]} homeLabel="Home" />
+        <Breadcrumbs
+          items={[{ label: title }]}
+          homeLabel={ui.breadcrumbs.home}
+          homeHref={home}
+          ariaLabel={ui.breadcrumbs.aria}
+        />
         <p className="text-primary mt-10 mb-3 font-mono text-xs font-semibold tracking-widest uppercase">
-          Legal
+          {ui.legal.eyebrow}
         </p>
         <h1 className="text-4xl font-extrabold tracking-tight">{title}</h1>
         <p className="text-muted-foreground mt-3 text-sm">
-          Last updated: {UPDATED}
+          {ui.legal.updatedLabel} {ui.legal.updated}
         </p>
         <div className="mt-10 space-y-9 text-[15px] leading-7">{children}</div>
         <Link
-          href="/"
+          href={home as Route}
           className="mt-12 inline-block font-mono text-sm underline underline-offset-4"
         >
-          Back to Ludvik4
+          {ui.legal.back}
         </Link>
       </main>
-      <SiteFooter content={en} />
+      <SiteFooter content={content} />
     </div>
   );
 }
 
-function Part({
+export function Part({
   title,
   children,
 }: {
@@ -68,6 +85,26 @@ function Part({
       <h2 className="text-xl font-bold">{title}</h2>
       <div className="text-muted-foreground mt-3 space-y-3">{children}</div>
     </section>
+  );
+}
+
+/** An internal link from a legal page, kept in the page's language. */
+export function LegalLink({
+  locale,
+  href,
+  children,
+}: {
+  locale: Locale;
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      className="text-foreground underline"
+      href={localizeHref(locale, href) as Route}
+    >
+      {children}
+    </Link>
   );
 }
 
@@ -166,6 +203,15 @@ export function CookiePolicyView() {
           your cookie choice, and small settings kept in your browser, such as a
           dismissed hint. The contact form uses Cloudflare Turnstile to block
           spam.
+        </p>
+        <p>
+          <span className="text-foreground font-medium">
+            When you pick a language:
+          </span>{" "}
+          a first-party cookie, <code>ludvik4_lang</code>, and the same value in
+          browser storage remember it for 12 months, so the site opens in that
+          language next time. It is set only when you use the language switch
+          and holds nothing but the language code.
         </p>
       </Part>
       <Part title="Your choice">

@@ -10,18 +10,26 @@ export type BreadcrumbItem = {
 export function Breadcrumbs({
   items,
   homeLabel = "Главная",
+  homeHref = "/",
+  ariaLabel,
 }: {
   items: BreadcrumbItem[];
   homeLabel?: string;
+  /** The home of the page's language: "/", "/es", "/ru". */
+  homeHref?: string;
+  ariaLabel?: string;
 }) {
   return (
     <nav
-      aria-label={homeLabel === "Главная" ? "Хлебные крошки" : "Breadcrumbs"}
+      aria-label={
+        ariaLabel ??
+        (homeLabel === "Главная" ? "Хлебные крошки" : "Breadcrumbs")
+      }
       className="text-muted-foreground font-mono text-sm"
     >
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
         <li>
-          <Link href="/" className="hover:text-foreground">
+          <Link href={homeHref as Route} className="hover:text-foreground">
             {homeLabel}
           </Link>
         </li>

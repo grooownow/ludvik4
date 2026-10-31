@@ -108,7 +108,29 @@ describe("buildSitemap", () => {
       `${baseURL}/blog/github-spec-kit-vs-application-skeleton`,
       `${baseURL}/blog/spec-driven-development-vs-vibe-coding`,
       `${baseURL}/blog/agents-md-vs-claude-md-vs-cursor-rules`,
+      // The Spanish storefront mirrors every translated page; Russian is
+      // noindex on ludvik4.dev and never listed.
+      `${baseURL}/es`,
+      `${baseURL}/es/contact`,
+      `${baseURL}/es/services/websites`,
+      `${baseURL}/es/services/workflow-automation`,
+      `${baseURL}/es/services/mvp-development`,
+      `${baseURL}/es/work`,
+      `${baseURL}/es/work/smallfriendfiles`,
+      `${baseURL}/es/work/qa-pilot`,
+      `${baseURL}/es/services`,
+      `${baseURL}/es/services/landing-pages`,
+      `${baseURL}/es/services/website-packages`,
+      `${baseURL}/es/services/web-apps`,
+      `${baseURL}/es/services/web-animation`,
+      `${baseURL}/es/services/automation-packages`,
+      `${baseURL}/es/about`,
+      `${baseURL}/es/privacy`,
+      `${baseURL}/es/legal-notice`,
+      `${baseURL}/es/cookies`,
+      `${baseURL}/es/terms-of-service`,
     ]);
+    expect(urls.some((url) => url.includes("/ru"))).toBe(false);
   });
 });
 

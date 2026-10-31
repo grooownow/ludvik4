@@ -1,16 +1,29 @@
 import type { Route } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { internationalWork } from "./international-content";
+import {
+  type InternationalWorkItem,
+  internationalWork,
+} from "./international-content";
 
 /** Two-per-row visual product cards shared by the EN home and /work. */
-export function InternationalWorkGrid() {
+export function InternationalWorkGrid({
+  items = internationalWork,
+  newTabLabel = " (opens in a new tab)",
+  prefix = "",
+}: {
+  /** The language's URL prefix: "", "/es", "/ru". */
+  prefix?: string;
+  /** The work in the page's language, links already localized. */
+  items?: InternationalWorkItem[];
+  newTabLabel?: string;
+}) {
   return (
     <div className="mt-8 grid gap-5 sm:grid-cols-2">
-      {internationalWork.map((item) => (
+      {items.map((item) => (
         <Link
           key={item.slug}
-          href={(item.cardLink?.href ?? `/work/${item.slug}`) as Route}
+          href={(item.cardLink?.href ?? `${prefix}/work/${item.slug}`) as Route}
           {...(item.cardLink?.newTab
             ? { target: "_blank", rel: "noopener noreferrer" }
             : {})}
@@ -31,7 +44,7 @@ export function InternationalWorkGrid() {
               {item.description}
             </p>
             {item.cardLink ? (
-              <span className="sr-only"> (opens in a new tab)</span>
+              <span className="sr-only">{newTabLabel}</span>
             ) : null}
           </div>
         </Link>
