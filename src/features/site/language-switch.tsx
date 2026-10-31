@@ -52,6 +52,10 @@ export function LanguageSwitch({
   const toggle = useRef<HTMLButtonElement>(null);
   const panelId = useId();
   const pathname = usePathname() ?? "/";
+  // The query (e.g. a package prefilled on /contact) follows the visitor to
+  // the same page in another language. Read after mount: pages stay static.
+  const [search, setSearch] = useState("");
+  useEffect(() => setSearch(new URL(document.URL).search), [pathname]);
 
   useEffect(() => setOpen(false), [pathname]);
 
@@ -112,7 +116,7 @@ export function LanguageSwitch({
           {locales.map((locale) => (
             <li key={locale}>
               <Link
-                href={switchHref(pathname, locale) as Route}
+                href={switchHref(`${pathname}${search}`, locale) as Route}
                 hrefLang={locale}
                 // A prefetch made before the click would carry the old
                 // choice through the middleware's language redirect.

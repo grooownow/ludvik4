@@ -76,6 +76,22 @@ describe("middleware language redirect (ludvik4.dev)", () => {
     ).toBeUndefined();
   });
 
+  it("never redirects router prefetches or client navigations", () => {
+    vi.stubEnv("SITE_MARKET", "en");
+    const headers: Record<string, string>[] = [
+      { rsc: "1" },
+      { "next-router-prefetch": "1" },
+    ];
+    for (const header of headers) {
+      expect(
+        middleware(
+          request("/services", { "accept-language": "es", ...header }),
+          event,
+        ),
+      ).toBeUndefined();
+    }
+  });
+
   it("does nothing for languages on the RU market build", () => {
     vi.stubEnv("SITE_MARKET", "ru");
     expect(

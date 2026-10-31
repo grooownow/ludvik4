@@ -151,3 +151,13 @@ has not seen); lawyer review stays an open item in the roadmap.
 - The lead e-mail to the owner says which language the enquiry came from.
 - The privacy notice now names ludvik4.ru where it said "the
   Russian-language website" (analytics is off there, not on `/ru`).
+- Accepted tradeoff (review, 2026-10-31): the server HTML of `/es` and `/ru`
+  says `lang="en"` until the inline script runs; crawlers that do not run
+  JavaScript (Bing, validators, link previews) see English. hreflang,
+  `og:locale` and the content carry the language. Revisit with two root
+  layouts (route groups) if Bing traffic for Spanish matters.
+- The language redirect happens only on a landing (a full page load):
+  router prefetches and client navigations are never redirected, because
+  Next caches a prefetch's redirect under the link it was made for.
+- The switch keeps the query on the same page in another language
+  (`/es/contact?service=…&package=plus` → `/contact?service=…`).

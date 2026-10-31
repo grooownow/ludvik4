@@ -43,6 +43,15 @@ export default function middleware(
   if (request.method !== "GET" && request.method !== "HEAD") return;
   // Languages exist on ludvik4.dev only (SITE_MARKET is inlined at build).
   if (process.env.SITE_MARKET !== "en") return;
+  // Landings only. A router prefetch or client navigation (RSC request) is
+  // never redirected: Next caches a prefetch's redirect under the link, so
+  // a later click on "English" would replay the old /es redirect.
+  if (
+    request.headers.has("rsc") ||
+    request.headers.has("next-router-prefetch")
+  ) {
+    return;
+  }
 
   const target = detectLocaleRedirect({
     pathname,

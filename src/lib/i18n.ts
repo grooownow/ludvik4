@@ -104,8 +104,10 @@ export function isTranslatedPath(path: string): boolean {
 export function switchHref(pathname: string, target: Locale): string {
   const { path } = splitLocale(pathname);
   const clean = path.split(/[?#]/)[0]!;
-  const destination = isTranslatedPath(clean) ? clean : "/";
-  return localizeHref(target, destination) || "/";
+  if (!isTranslatedPath(clean)) return localizeHref(target, "/") || "/";
+  // The same page keeps its query (a package prefilled on /contact).
+  const query = /\?[^#]*/.exec(path)?.[0] ?? "";
+  return `${localizeHref(target, clean) || "/"}${query}`;
 }
 
 /**

@@ -76,6 +76,10 @@ describe("switchHref", () => {
     expect(switchHref("/es/services/sites", "en")).toBe("/services/sites");
     expect(switchHref("/es/about", "ru")).toBe("/ru/about");
     expect(switchHref("/ru", "en")).toBe("/");
+    expect(switchHref("/es/contact?service=web-apps&package=plus", "en")).toBe(
+      "/contact?service=web-apps&package=plus",
+    );
+    expect(switchHref("/?a=1", "ru")).toBe("/ru?a=1");
   });
 
   it("falls back to the target home on an English-only page", () => {

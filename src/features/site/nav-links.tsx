@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { splitLocale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { AnchorLink } from "./anchor-link";
 import type { NavLink } from "./content";
@@ -15,8 +16,10 @@ import { type CtaPlacement, CtaLink } from "./cta-link";
 const ACTIVE =
   "aria-[current]:text-foreground aria-[current]:underline aria-[current]:decoration-1 aria-[current]:underline-offset-[6px]";
 
+// ludvik4.dev's Spanish and Russian homes ("/es#work") count as the home.
 function sectionId(href: string): string | null {
-  return href.startsWith("/#") ? href.slice(2) : null;
+  const path = splitLocale(href).path;
+  return path.startsWith("/#") ? path.slice(2) : null;
 }
 
 /** Id of the home section currently in the middle band of the viewport. */
@@ -66,7 +69,7 @@ export function NavLinks({
 }) {
   // Null outside the App Router (tests, static previews).
   const pathname = usePathname() ?? "";
-  const onHome = pathname === "/";
+  const onHome = pathname !== "" && splitLocale(pathname).path === "/";
   const ids = links.map((l) => sectionId(l.href)).filter(Boolean);
   const section = useSectionOnScreen(ids.join(","), onHome);
 
