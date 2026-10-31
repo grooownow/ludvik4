@@ -67,16 +67,20 @@ The owner works as an autónoma in Spain, pays tax there, and works worldwide.
 
 ## Pricing
 
-Multiplier 1.95 (1.5 × 1.3), rate fixed once at 91 ₽/€ (market mid-rate
-2026-10-23, not an official CBR fixing), rounded to the nearest €50.
+Set by the owner on 2026-10-31 after a review of Spanish studio prices
+(`tmp-review/spain-pricing-2026-10-31.md`), replacing the first RUB-based formula.
+All prices exclude VAT; the owner pays income tax from them.
 
-| Service | Basic | Extended | Maximum |
+| Service | Basic | Plus | Premium |
 | --- | --- | --- | --- |
-| Landing pages | €450 | €850 | €1,950 |
-| Websites | €750 | €1,200 | €2,800 |
-| Web apps | €3,200 | €5,800 | €11,800 |
-| Animations | €200 | €450 | from €1,050 |
-| Automations | €750 | €1,300 | €3,000 |
+| Landing pages | €200 | €350 (was €400) | €500 |
+| Websites | €500 | €850 (was €950) | €1,300 |
+| Web apps | from €1,500 | €3,000 (was €3,400) | from €6,000 |
+| Animations | €150 | €300 | from €700 |
+| Automations | €500 | €900 (was €1,000) | €2,000 |
+
+Web app Basic is the simplest version: 3–4 weeks and 1 month of support; complex
+search, file uploads, AI or integrations are quoted on top.
 
 Package cards show the price only (owner): no VAT wording, no totals. The 30% is
 a margin for the owner's income tax, not VAT. VAT, where it applies, is stated
@@ -163,10 +167,8 @@ legal notice) go into the "in every package" line for landing pages, websites
 and web apps, and leave the per-tier lists. Reason: an EU client's Basic site
 needs them too, and the price table does not change. Client reviews them.
 
-Launch offers follow RU (owner, 2026-10-31, replacing the earlier call to drop
-them): Plus shows a struck-out price and "Price until 31 December". Old prices,
-same formula: landing pages €950, websites €1,400, web apps €6,450, automations
-€1,500. Animations have no offer, as on RU. Remove after 31 December.
+Launch offers follow RU: Plus shows a struck-out price and "Price until 31
+December" (old prices in the table). Animations have none. Remove after 31 December.
 
 ## Legal surface (Spain / EU)
 

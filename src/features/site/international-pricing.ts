@@ -3,8 +3,8 @@ import type { PricingPackage, PricingService } from "./pricing-draft";
 
 // The international services and prices: the same five services and three
 // packages as /uslugi, adapted for clients in Spain, the EU and beyond. Prices
-// are fixed strings (docs/superpowers/specs/2026-10-31-en-storefront-parity-design.md):
-// RUB ÷ 91 × 1.95, rounded to €50. Cards show the price only; VAT is handled
+// are fixed strings set by the owner (2026-10-31), excluding VAT; see
+// docs/superpowers/specs/2026-10-31-en-storefront-parity-design.md. Cards show the price only; VAT is handled
 // in the written agreement (/terms says so).
 
 const NEEDS = [
@@ -62,7 +62,7 @@ const LANDING_BENEFITS = [
 const LANDING_PACKAGES: PricingPackage[] = [
   {
     name: "Basic",
-    price: "€450",
+    price: "€200",
     term: "3–5 working days",
     items: [
       "2 hero section options",
@@ -77,8 +77,8 @@ const LANDING_PACKAGES: PricingPackage[] = [
   {
     name: "Plus",
     // Launch offer, as on RU: remove after 31 Dec.
-    price: "€850",
-    oldPrice: "€950",
+    price: "€350",
+    oldPrice: "€400",
     promo: "Price until 31 December",
     term: "1–2 weeks",
     includes: "Everything in Basic, plus:",
@@ -93,7 +93,7 @@ const LANDING_PACKAGES: PricingPackage[] = [
   },
   {
     name: "Premium",
-    price: "€1,950",
+    price: "€500",
     term: "2–4 weeks",
     includes: "Everything in Plus, plus:",
     items: [
@@ -141,7 +141,7 @@ const SITE_BENEFITS = [
 const SITE_PACKAGES: PricingPackage[] = [
   {
     name: "Basic",
-    price: "€750",
+    price: "€500",
     term: "2–3 weeks",
     items: [
       "Up to 5 pages, for example home, services and contact",
@@ -157,8 +157,8 @@ const SITE_PACKAGES: PricingPackage[] = [
   {
     name: "Plus",
     // Launch offer, as on RU: remove after 31 Dec.
-    price: "€1,200",
-    oldPrice: "€1,400",
+    price: "€850",
+    oldPrice: "€950",
     promo: "Price until 31 December",
     term: "3–4 weeks",
     includes: "Everything in Basic, plus:",
@@ -175,7 +175,7 @@ const SITE_PACKAGES: PricingPackage[] = [
   },
   {
     name: "Premium",
-    price: "€2,800",
+    price: "€1,300",
     term: "5–8 weeks",
     includes: "Everything in Plus, plus:",
     items: [
@@ -221,7 +221,7 @@ const WEBAPP_BENEFITS = [
   AGREEMENT,
   {
     title: "Support and growth",
-    text: "We fix bugs free of charge for 2 to 6 months, depending on the package. After that, a development package covers new features and improvements.",
+    text: "We fix bugs free of charge for 1 to 6 months, depending on the package. After that, a development package covers new features and improvements.",
   },
 ];
 
@@ -255,22 +255,24 @@ const WEBAPP_TECH = [
 const WEBAPP_PACKAGES: PricingPackage[] = [
   {
     name: "Basic",
-    price: "€3,200",
-    term: "6–8 weeks",
+    price: "from €1,500",
+    priceNote:
+      "Complex search and filters, file uploads, AI or integrations are quoted on top",
+    term: "3–4 weeks",
     items: [
       "Preparation: product goal, user journeys and a specification",
       "A prototype of the key screens, to test the idea before development",
       "An app built around one main user journey",
       "User sign-in and an admin panel",
       "Notifications by email or messaging app",
-      "2 months of support",
+      "1 month of support",
     ],
   },
   {
     name: "Plus",
     // Launch offer, as on RU: remove after 31 Dec.
-    price: "€5,800",
-    oldPrice: "€6,450",
+    price: "€3,000",
+    oldPrice: "€3,400",
     promo: "Price until 31 December",
     term: "2–3 months",
     includes: "Everything in Basic, plus:",
@@ -285,7 +287,9 @@ const WEBAPP_PACKAGES: PricingPackage[] = [
   },
   {
     name: "Premium",
-    price: "€11,800",
+    price: "from €6,000",
+    priceNote:
+      "The final price depends on the number and depth of user journeys",
     term: "4–6 months",
     includes: "Everything in Plus, plus:",
     items: [
@@ -365,7 +369,7 @@ const MOTION_BENEFITS = [
 const MOTION_PACKAGES: PricingPackage[] = [
   {
     name: "Basic",
-    price: "€200",
+    price: "€150",
     term: "3–5 working days",
     items: [
       "Light page animation: blocks fade in smoothly on scroll",
@@ -376,7 +380,7 @@ const MOTION_PACKAGES: PricingPackage[] = [
   },
   {
     name: "Plus",
-    price: "€450",
+    price: "€300",
     term: "1–2 weeks",
     items: [
       "Interactive graphics right in the browser (WebGL): a liquid background, silk gradient, particles, glass lens or jelly, as in the gallery above",
@@ -387,7 +391,7 @@ const MOTION_PACKAGES: PricingPackage[] = [
   },
   {
     name: "Premium",
-    price: "from €1,050",
+    price: "from €700",
     priceNote: "The final price depends on how complex the story is",
     term: "from 3 weeks",
     items: [
@@ -480,7 +484,7 @@ const AUTOMATION_BENEFITS = [
 const AUTOMATION_PACKAGES: PricingPackage[] = [
   {
     name: "Basic",
-    price: "€750",
+    price: "€500",
     term: "1–2 weeks",
     items: [
       "One process without AI, for example enquiries in one queue, supplier orders based on stock, or a monthly report",
@@ -492,8 +496,8 @@ const AUTOMATION_PACKAGES: PricingPackage[] = [
   {
     name: "Plus",
     // Launch offer, as on RU: remove after 31 Dec.
-    price: "€1,300",
-    oldPrice: "€1,500",
+    price: "€900",
+    oldPrice: "€1,000",
     promo: "Price until 31 December",
     term: "2–4 weeks",
     items: [
@@ -508,7 +512,7 @@ const AUTOMATION_PACKAGES: PricingPackage[] = [
   },
   {
     name: "Premium",
-    price: "€3,000",
+    price: "€2,000",
     term: "4–6 weeks",
     items: [
       "We study your processes and draw up an automation plan",
@@ -527,7 +531,8 @@ function service(
   return {
     ...entry,
     id: entry.slug,
-    from: entry.from ?? `from ${entry.packages[0]!.price}`,
+    from:
+      entry.from ?? `from ${entry.packages[0]!.price.replace(/^from /, "")}`,
   };
 }
 

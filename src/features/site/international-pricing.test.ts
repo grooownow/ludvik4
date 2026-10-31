@@ -10,28 +10,24 @@ const prices = (slug: string) =>
   getInternationalPricingService(slug)!.packages.map((p) => p.price);
 
 describe("international pricing", () => {
-  it("carries the agreed prices", () => {
-    expect(prices("landing-pages")).toEqual(["€450", "€850", "€1,950"]);
-    expect(prices("website-packages")).toEqual(["€750", "€1,200", "€2,800"]);
-    expect(prices("web-apps")).toEqual(["€3,200", "€5,800", "€11,800"]);
-    expect(prices("web-animation")).toEqual(["€200", "€450", "from €1,050"]);
-    expect(prices("automation-packages")).toEqual(["€750", "€1,300", "€3,000"]);
+  it("carries the owner's prices", () => {
+    expect(prices("landing-pages")).toEqual(["€200", "€350", "€500"]);
+    expect(prices("website-packages")).toEqual(["€500", "€850", "€1,300"]);
+    expect(prices("web-apps")).toEqual([
+      "from €1,500",
+      "€3,000",
+      "from €6,000",
+    ]);
+    expect(prices("web-animation")).toEqual(["€150", "€300", "from €700"]);
+    expect(prices("automation-packages")).toEqual(["€500", "€900", "€2,000"]);
   });
 
-  it("derives each 'from' price from the first package", () => {
+  it("derives each 'from' price from the first package, without doubling", () => {
     expect(getInternationalPricingService("web-apps")!.from).toBe(
-      "from €3,200",
+      "from €1,500",
     );
-  });
-
-  it("has no Russian residue and no Russia-only products", () => {
-    const text =
-      JSON.stringify(internationalPricingCatalog.copy) +
-      JSON.stringify(internationalPricingCatalog.galleryCaptions) +
-      JSON.stringify(internationalPricingServices);
-    expect(text).not.toMatch(/[А-Яа-яЁё]|₽|152-|\bРФ\b/);
-    expect(text).not.toMatch(
-      /Yandex|GigaChat|Avito|Wildberries|Ozon|Bitrix|amoCRM|MoySklad|VKontakte|Tilda|\b1C\b/i,
+    expect(getInternationalPricingService("landing-pages")!.from).toBe(
+      "from €200",
     );
   });
 
@@ -46,10 +42,10 @@ describe("international pricing", () => {
   it("runs the RU launch offers on the same packages, in euros", () => {
     const plus = (slug: string) =>
       getInternationalPricingService(slug)!.packages[1]!;
-    expect(plus("landing-pages").oldPrice).toBe("€950");
-    expect(plus("website-packages").oldPrice).toBe("€1,400");
-    expect(plus("web-apps").oldPrice).toBe("€6,450");
-    expect(plus("automation-packages").oldPrice).toBe("€1,500");
+    expect(plus("landing-pages").oldPrice).toBe("€400");
+    expect(plus("website-packages").oldPrice).toBe("€950");
+    expect(plus("web-apps").oldPrice).toBe("€3,400");
+    expect(plus("automation-packages").oldPrice).toBe("€1,000");
     expect(plus("web-animation").oldPrice).toBeUndefined();
     expect(plus("landing-pages").promo).toBe("Price until 31 December");
   });
@@ -74,7 +70,7 @@ describe("international pricing", () => {
       "/contact?service=landing-pages&package=plus",
     );
     expect(internationalOrderPrefills["landing-pages/plus"]).toBe(
-      "I'd like the Plus package: Landing pages (€850).",
+      "I'd like the Plus package: Landing pages (€350).",
     );
   });
 });

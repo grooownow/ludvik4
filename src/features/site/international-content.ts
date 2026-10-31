@@ -608,7 +608,7 @@ export const internationalFaq = [
   {
     question: "How much does a project cost?",
     answer:
-      "Every service has three packages with published prices in euros: landing pages from €450, websites from €750, animations from €200, automations from €750, and web apps from €3,200. The final price is fixed in a written agreement once the scope is agreed.",
+      "Every service has three packages with published prices in euros: landing pages from €200, websites from €500, animations from €150, automations from €500, and web apps from €1,500. The final price is fixed in a written agreement once the scope is agreed.",
   },
   {
     question: "How does a project start?",

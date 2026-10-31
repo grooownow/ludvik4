@@ -94,7 +94,7 @@ describe("PricingPageView with the international catalog", () => {
     );
     const text = container.textContent;
     expect(text).not.toMatch(/[А-Яа-яЁё]|₽/);
-    expect(text).toContain("€1,950");
+    expect(text).toContain("€500");
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
       "Landing pages — packages and prices.",
     );
@@ -120,9 +120,9 @@ describe("PricingPageView with the international catalog", () => {
     );
     const offers = ld["@graph"][0].offers;
     expect(offers.map((o: { price: string }) => o.price)).toEqual([
-      "200",
-      "450",
-      "1050",
+      "150",
+      "300",
+      "700",
     ]);
     expect(offers[0].priceCurrency).toBe("EUR");
     expect(ld["@graph"][0].url).toBe(
