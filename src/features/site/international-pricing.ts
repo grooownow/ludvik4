@@ -76,7 +76,10 @@ const LANDING_PACKAGES: PricingPackage[] = [
   },
   {
     name: "Plus",
+    // Launch offer, as on RU: remove after 31 Dec.
     price: "€850",
+    oldPrice: "€950",
+    promo: "Price until 31 December",
     term: "1–2 weeks",
     includes: "Everything in Basic, plus:",
     items: [
@@ -153,7 +156,10 @@ const SITE_PACKAGES: PricingPackage[] = [
   },
   {
     name: "Plus",
+    // Launch offer, as on RU: remove after 31 Dec.
     price: "€1,200",
+    oldPrice: "€1,400",
+    promo: "Price until 31 December",
     term: "3–4 weeks",
     includes: "Everything in Basic, plus:",
     items: [
@@ -262,7 +268,10 @@ const WEBAPP_PACKAGES: PricingPackage[] = [
   },
   {
     name: "Plus",
+    // Launch offer, as on RU: remove after 31 Dec.
     price: "€5,800",
+    oldPrice: "€6,450",
+    promo: "Price until 31 December",
     term: "2–3 months",
     includes: "Everything in Basic, plus:",
     items: [
@@ -482,7 +491,10 @@ const AUTOMATION_PACKAGES: PricingPackage[] = [
   },
   {
     name: "Plus",
+    // Launch offer, as on RU: remove after 31 Dec.
     price: "€1,300",
+    oldPrice: "€1,500",
+    promo: "Price until 31 December",
     term: "2–4 weeks",
     items: [
       "One process with AI, for example moving orders from emails and photos into your records, job site reports, marketplace fee checks, product listings or lead finding",

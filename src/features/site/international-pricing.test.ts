@@ -35,14 +35,23 @@ describe("international pricing", () => {
     );
   });
 
-  it("shows no VAT wording on cards and no invented discounts", () => {
+  it("shows no VAT wording on cards", () => {
     for (const s of internationalPricingServices) {
       for (const p of s.packages) {
         expect(JSON.stringify(p)).not.toMatch(/VAT|IVA|tax/i);
-        expect(p.oldPrice).toBeUndefined();
-        expect(p.promo).toBeUndefined();
       }
     }
+  });
+
+  it("runs the RU launch offers on the same packages, in euros", () => {
+    const plus = (slug: string) =>
+      getInternationalPricingService(slug)!.packages[1]!;
+    expect(plus("landing-pages").oldPrice).toBe("€950");
+    expect(plus("website-packages").oldPrice).toBe("€1,400");
+    expect(plus("web-apps").oldPrice).toBe("€6,450");
+    expect(plus("automation-packages").oldPrice).toBe("€1,500");
+    expect(plus("web-animation").oldPrice).toBeUndefined();
+    expect(plus("landing-pages").promo).toBe("Price until 31 December");
   });
 
   it("offers legal templates in every package of sites and apps", () => {

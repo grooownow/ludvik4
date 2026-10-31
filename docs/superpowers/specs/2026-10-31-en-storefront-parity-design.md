@@ -36,7 +36,6 @@ The owner works as an autónoma in Spain, pays tax there, and works worldwide.
 - A shared-code refactor that shifts the RU build's HTML or text.
 - Word-for-word calques ("under the key", "halls" where it confuses).
 - A legal promise the studio cannot keep ("fully GDPR compliant guaranteed").
-- A discount that was never a real previous price.
 
 ## Constraints
 
@@ -164,9 +163,10 @@ legal notice) go into the "in every package" line for landing pages, websites
 and web apps, and leave the per-tier lists. Reason: an EU client's Basic site
 needs them too, and the price table does not change. Client reviews them.
 
-Dated promos and struck-out prices are dropped on EN: the old price never
-existed there, and a reference price that was never charged is the kind of
-claim EU rules on misleading pricing target. Every price is plain.
+Launch offers follow RU (owner, 2026-10-31, replacing the earlier call to drop
+them): Plus shows a struck-out price and "Price until 31 December". Old prices,
+same formula: landing pages €950, websites €1,400, web apps €6,450, automations
+€1,500. Animations have no offer, as on RU. Remove after 31 December.
 
 ## Legal surface (Spain / EU)
 
