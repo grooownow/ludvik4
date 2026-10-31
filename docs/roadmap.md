@@ -6,6 +6,20 @@ writing detail here.
 
 ## Now
 
+**[SHIPPED 2026-10-31 · EN only] EN storefront parity.** ludvik4.dev gets the
+RU offer in English: five services with packages and EUR prices set by the owner
+(`/services`, `international-pricing.ts`; landing €200–500, sites €500–1,300,
+web apps from €1,500 / from €3,000 / from €6,000, animations €150–700,
+automations €500–2,000, Plus offers until 31 Dec except web apps), Spain stated
+openly, hall links, mascot bubble, package buttons prefilling `/contact`,
+`/legal-notice` (NIF), `/cookies`, `/terms-of-service`. RU output unchanged.
+Spanish price research: `tmp-review/spain-pricing-2026-10-31.md` (git-ignored).
+Owner to do: lawyer review of the legal pages, the struck-out prices and
+VAT-exclusive prices shown to private clients (TRLGDCU art. 20, 60); VIES/ROI
+with the gestor; resubmit the sitemap (9 new URLs). Remove the Plus offers after
+31 December on both markets. Articles and EN contracts deferred. Design:
+`docs/superpowers/specs/2026-10-31-en-storefront-parity-design.md`.
+
 **[SHIPPED 2026-10-28] Security pass, both markets.** Order function: the
 delivery trace is now gated by the function's own `ORDER_DEBUG_TRACE=1`, not
 by a forgeable `Origin: http://localhost`; service/plan/price accept one line
@@ -641,6 +655,12 @@ guided by `docs/playbooks/seo-geo.md`:
 
 Scoped and agreed, not yet started:
 
+- **ludvik4.dev in English, Spanish and Russian** (owner, 2026-10-31). All
+  prices in EUR, Spain and EU adaptation kept; RU copy taken from ludvik4.ru
+  and adapted like EN. Needs its own design first: URL scheme (proposed `/es`,
+  `/ru`, EN at root), which pages are translated, whether `/ru` on .dev is
+  indexed next to ludvik4.ru (proposed: noindex), Spanish legal pages. Ukrainian
+  not planned. The Gridfin dropdown is prior art for the switcher.
 - **[DONE 2026-07-25] Resend production secrets** — set in the Vercel
   production env and proven by a live test enquiry through the EN form
   (delivery accepted by Resend).

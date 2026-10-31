@@ -7,6 +7,7 @@ import {
   internationalCaseStudies,
   internationalServicePages,
 } from "./international-content";
+import { internationalPricingServices } from "./international-pricing";
 import { pricingServices } from "./pricing-draft";
 
 // Per-market SEO surfaces, built from the market content object. Pure functions
@@ -197,6 +198,18 @@ export function buildSitemap(
       });
     }
     entries.push({
+      url: publicUrl(market, baseUrl, "/services"),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    });
+    for (const service of internationalPricingServices) {
+      entries.push({
+        url: publicUrl(market, baseUrl, `/services/${service.slug}`),
+        changeFrequency: "monthly",
+        priority: 0.9,
+      });
+    }
+    entries.push({
       url: publicUrl(market, baseUrl, "/about"),
       changeFrequency: "yearly",
       priority: 0.7,
@@ -213,11 +226,18 @@ export function buildSitemap(
         priority: 0.7,
       });
     }
-    entries.push({
-      url: publicUrl(market, baseUrl, "/privacy"),
-      changeFrequency: "yearly",
-      priority: 0.2,
-    });
+    for (const path of [
+      "/privacy",
+      "/legal-notice",
+      "/cookies",
+      "/terms-of-service",
+    ]) {
+      entries.push({
+        url: publicUrl(market, baseUrl, path),
+        changeFrequency: "yearly",
+        priority: 0.2,
+      });
+    }
     for (const path of [
       "/gridfin/en",
       "/gridfin/en/docs/application-skeleton",

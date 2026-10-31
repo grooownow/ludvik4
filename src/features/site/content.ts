@@ -37,6 +37,8 @@ export type NavLink = { href: string; label: string };
 
 /** Copy of the exhibition home (docs/specs/immersive-home.md). Two-part titles
  *  are `[plain, accent]`: the accent half renders in the brand pink. */
+import type { MascotReplyCopy } from "./mascot-reply";
+
 export type HallExhibit =
   "browser" | "landing" | "app" | "gears" | "widget" | "motion" | "question";
 
@@ -72,6 +74,8 @@ export type HomeContent = {
   closing: { eyebrow: string; title: string; cta: string };
   /** Footer, left: "© Ludvik4 · <current year> · <reach>". */
   footerReach: string;
+  /** The mascot's bubble; Russian by default. */
+  mascotReply?: MascotReplyCopy;
 };
 
 export type MarketContent = {
@@ -165,13 +169,13 @@ export type MarketContent = {
 const EN_LEAD_LABELS: LeadFormLabels = {
   nameLabel: "Name",
   nameOptional: "optional",
-  messageLabel: "Your task",
+  messageLabel: "Your project",
   messagePlaceholder: "Describe what you need…",
   contactLabel: "How to reach you",
-  contactPlaceholder: "email or a messenger link / phone",
-  submit: "Send request",
+  contactPlaceholder: "email, phone or messaging app link",
+  submit: "Send enquiry",
   submitting: "Sending…",
-  success: "Request sent — I'll get back to you soon. Thanks!",
+  success: "Enquiry sent. We'll get back to you soon. Thanks!",
 };
 
 const ru: MarketContent = {
@@ -507,7 +511,7 @@ const en: MarketContent = {
   title: "Custom Websites, Workflow Automation & Web Apps — Ludvik4",
   shareTitle: "Ludvik4 — founder-led web product studio",
   description:
-    "A Europe-based, founder-led web product studio designing and building custom websites, business workflow automations, MVPs, and web apps for clients worldwide.",
+    "A founder-led web product studio based in Spain, designing and building custom websites, business workflow automations, MVPs, and web apps for clients worldwide.",
   keywords: [
     "product studio",
     "web development",
@@ -522,18 +526,18 @@ const en: MarketContent = {
     cta: "Contact",
     links: [
       { href: "/#work", label: "Work" },
-      { href: "/#collection", label: "Services" },
+      { href: "/services", label: "Services" },
       { href: "/guides", label: "Guides" },
       { href: "/about", label: "About" },
     ],
   },
   intro: {
-    tagline: "Founder-led product studio · Europe · Worldwide",
+    tagline: "Founder-led product studio · Spain · Worldwide",
     services: "Websites · Workflow automation · Web apps",
     imageAlt: "Ludvik4",
   },
   hero: {
-    eyebrow: "Founder-led product studio · Europe · Worldwide",
+    eyebrow: "Founder-led product studio · Spain · Worldwide",
     title: "Websites, workflow automation, and web apps — built for launch",
     titleLines: [
       "Websites, workflow",
@@ -689,7 +693,7 @@ const en: MarketContent = {
   },
   about: {
     eyebrow: "Founder-led",
-    body: "Ludvik4 is an independent web product studio based in Europe and working with clients worldwide. I lead each engagement from problem definition through launch, remain the single point of accountability, and involve trusted specialists only when the agreed scope needs them.",
+    body: "Ludvik4 is an independent web product studio based in Spain and working with clients worldwide. I lead each engagement from problem definition through launch, remain the single point of accountability, and involve trusted specialists only when the agreed scope needs them.",
   },
   h1: "Websites, workflow automation, and web apps — built for launch",
   home: {
@@ -699,45 +703,50 @@ const en: MarketContent = {
       lines: ["Pure code, WebGL, zero polygons.", "Handle with curiosity."],
     },
     collection: {
-      eyebrow: "The collection · What I build",
-      title: ["If it lives in a browser,", "I can build it."],
+      eyebrow: "The collection · What we build",
+      title: ["If it lives in a browser,", "we can build it."],
       halls: [
         {
           index: "Hall 01",
-          name: "Websites",
-          line: "for products, studios, events",
-          exhibit: "browser",
-        },
-        {
-          index: "Hall 02",
           name: "Landing pages",
           line: "one offer, one action",
           exhibit: "landing",
+          href: "/services/landing-pages",
+        },
+        {
+          index: "Hall 02",
+          name: "Websites",
+          line: "for products, studios, events",
+          exhibit: "browser",
+          href: "/services/website-packages",
         },
         {
           index: "Hall 03",
           name: "Web apps",
           line: "accounts, data, payments, AI",
           exhibit: "app",
+          href: "/services/web-apps",
         },
         {
           index: "Hall 04",
-          name: "Automations",
-          line: "the boring parts, handled",
-          exhibit: "gears",
+          name: "Animations",
+          line: "animated characters and interaction, like Ludvik",
+          exhibit: "motion",
+          href: "/services/web-animation",
         },
         {
           index: "Hall 05",
-          name: "Widgets & tools",
-          line: "small, sharp, embeddable",
-          exhibit: "widget",
+          name: "Automations",
+          line: "the boring parts, handled",
+          exhibit: "gears",
+          href: "/services/automation-packages",
         },
         {
           index: "Hall 06",
           name: "Something else?",
           line: "ask — it’s probably possible",
           exhibit: "question",
-          cta: "Tell me the idea",
+          cta: "Tell us the idea",
         },
       ],
     },
@@ -774,7 +783,7 @@ const en: MarketContent = {
         "The studio is based in Spain and works with clients worldwide. We take a project end to end: from an idea to a working launch — design, development and whatever else the product needs. You work with me directly, and I bring together the expertise the job calls for.",
       ],
       photoAlt:
-        "Portrait of the Ludvik4 founder in a dark hoodie, smiling and looking up against pink",
+        "Portrait of the Ludvik4 founder in a dark hoodie, smiling and looking up against a pink background",
       linkLabel: "More about me",
     },
     closing: {
@@ -782,13 +791,21 @@ const en: MarketContent = {
       title: "Have something in mind?",
       cta: "Discuss a project",
     },
-    footerReach: "Worldwide",
+    footerReach: "Spain · Worldwide",
+    mascotReply: {
+      close: "Hide this hint",
+      idle: "Go on, poke me! ",
+      touched: "Like it? ",
+      line: "We can build a character like this, or better, for your site.",
+      cta: "I want this animation →",
+      contactHref: "/contact?service=web-animation",
+    },
   },
   contact: {
     eyebrow: "Contact",
-    title: "Tell me what needs to work better",
-    body: "Describe the problem, the current situation, and the outcome you need. I will review it and suggest a sensible first step.",
-    telegramText: "Or message me on Telegram → t.me/ludvik4work",
+    title: "Tell us what needs to work better",
+    body: "Describe the problem, where things stand and the result you want. We'll take a look and suggest a sensible first step.",
+    telegramText: "Or message us on Telegram → t.me/ludvik4work",
     form: {
       labels: EN_LEAD_LABELS,
       privacyNotice: {
@@ -802,6 +819,19 @@ const en: MarketContent = {
     links: [
       // The menu lives in the header; the footer keeps only what it lacks.
       { href: "/privacy", label: "Privacy", external: false, newTab: true },
+      { href: "/cookies", label: "Cookies", external: false, newTab: true },
+      {
+        href: "/terms-of-service",
+        label: "Terms",
+        external: false,
+        newTab: true,
+      },
+      {
+        href: "/legal-notice",
+        label: "Legal notice",
+        external: false,
+        newTab: true,
+      },
       { href: TELEGRAM_URL, label: "Telegram", external: true },
     ],
   },

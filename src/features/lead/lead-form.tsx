@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { submitLeadAction, type LeadFormState } from "./submit-lead-action";
 import { TurnstileWidget } from "./turnstile-widget";
+import { orderPrefillMessage } from "./order-prefill";
 
 const initialState: LeadFormState = {};
 
@@ -73,11 +74,26 @@ function SubmitButton({
 export function LeadForm({
   turnstileSiteKey,
   labels = RU_LEAD_LABELS,
+  orderPrefills,
 }: {
   turnstileSiteKey?: string;
   labels?: LeadFormLabels;
+  /** Messages an "Order" link may fill in, by service or service/package. */
+  orderPrefills?: Record<string, string>;
 }) {
   const [state, formAction] = useActionState(submitLeadAction, initialState);
+  const message = useRef<HTMLTextAreaElement>(null);
+
+  // Read from the URL after mount: /contact stays static. Only on arrival, so
+  // it can never replace what the visitor typed.
+  useEffect(() => {
+    if (!orderPrefills || !message.current || message.current.value) return;
+    const text = orderPrefillMessage(
+      new URL(document.URL).search,
+      orderPrefills,
+    );
+    if (text) message.current.value = text;
+  }, [orderPrefills]);
   const pathname = usePathname();
 
   // Analytics bookkeeping in one ref-held object, not in state: none of it may
@@ -202,6 +218,7 @@ export function LeadForm({
       <div className="flex flex-col gap-2">
         <Label htmlFor="lead-message">{labels.messageLabel}</Label>
         <Textarea
+          ref={message}
           id="lead-message"
           name="message"
           rows={8}

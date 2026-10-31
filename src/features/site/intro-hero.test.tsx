@@ -14,7 +14,7 @@ describe("IntroHero", () => {
   it("renders each market's copy over the artwork", () => {
     const { unmount } = render(<IntroHero content={en} />);
     expect(
-      screen.getByText("Founder-led product studio · Europe · Worldwide"),
+      screen.getByText("Founder-led product studio · Spain · Worldwide"),
     ).toBeInTheDocument();
     expect(
       screen.getByText(

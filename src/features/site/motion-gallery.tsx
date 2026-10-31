@@ -439,23 +439,28 @@ function TileFrame({ children }: { children: (active: boolean) => ReactNode }) {
   );
 }
 
-export function MotionGallery() {
+export function MotionGallery({
+  captions,
+}: {
+  /** The market's own title and text per tile; Russian by default. */
+  captions?: { title: string; text: string }[];
+}) {
   // Canvases mount after hydration: the static HTML keeps the captions.
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
   return (
     <ul className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-6">
-      {TILES.map((tile) => (
+      {TILES.map((tile, i) => (
         <li key={tile.title}>
           <TileFrame>
             {(active) => (mounted ? tile.render(active) : null)}
           </TileFrame>
           <p className="mt-2.5 text-sm leading-tight font-semibold tracking-tight">
-            {tile.title}
+            {captions?.[i]?.title ?? tile.title}
           </p>
           <p className="text-muted-foreground mt-1 text-xs leading-snug">
-            {tile.text}
+            {captions?.[i]?.text ?? tile.text}
           </p>
         </li>
       ))}

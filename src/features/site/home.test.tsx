@@ -19,7 +19,7 @@ const heading = (name: string) =>
 describe("Home (EN)", () => {
   it("tells the exhibition story in five sections", () => {
     renderHome("en");
-    heading("If it lives in a browser, I can build it.");
+    heading("If it lives in a browser, we can build it.");
     heading("Three steps, no fog.");
     heading("Work you can inspect.");
     heading("One person, end to end.");
@@ -29,7 +29,7 @@ describe("Home (EN)", () => {
   it("sets every section heading on one line", () => {
     renderHome("en");
     for (const name of [
-      "If it lives in a browser, I can build it.",
+      "If it lives in a browser, we can build it.",
       "Three steps, no fog.",
       "Work you can inspect.",
       "One person, end to end.",
@@ -38,25 +38,20 @@ describe("Home (EN)", () => {
     }
   });
 
-  it("shows six halls that do not open; the last one has a contact button", () => {
+  it("links each service hall to its page; the last one is a contact button", () => {
     const { container } = renderHome("en");
     const collection = container.querySelector("#collection") as HTMLElement;
-    for (const name of [
-      "Websites",
-      "Landing pages",
-      "Web apps",
-      "Automations",
-      "Widgets & tools",
-      "Something else?",
-    ]) {
-      expect(within(collection).getByText(name)).toBeInTheDocument();
-    }
-    // only the last hall has a way out: the contact button
     const links = within(collection).getAllByRole("link");
-    expect(links).toHaveLength(1);
-    expect(links[0]).toHaveTextContent("Tell me the idea");
-    expect(links[0]).toHaveAttribute("href", "/contact");
-    expect(links[0]!.closest("li")).toHaveTextContent("Something else?");
+    expect(links.map((a) => a.getAttribute("href"))).toEqual([
+      "/services/landing-pages",
+      "/services/website-packages",
+      "/services/web-apps",
+      "/services/web-animation",
+      "/services/automation-packages",
+      "/contact",
+    ]);
+    expect(links[5]).toHaveTextContent("Tell us the idea");
+    expect(links[5]!.closest("li")).toHaveTextContent("Something else?");
   });
 
   it("sets the EN collection title in two lines on phones, accent whole", () => {
@@ -156,7 +151,7 @@ describe("Home (EN)", () => {
 
   it("drops the old home's form, FAQ, scope and FAQ structured data", () => {
     const { container } = renderHome("en");
-    expect(screen.queryByRole("button", { name: "Send request" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Send enquiry" })).toBeNull();
     expect(screen.queryByText("What's included")).toBeNull();
     expect(container.querySelector("#faq")).toBeNull();
     const jsonLd = container.querySelector(

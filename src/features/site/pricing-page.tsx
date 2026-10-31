@@ -8,11 +8,8 @@ import { HomeClosing } from "./home-sections";
 import { MotionGallery } from "./motion-gallery";
 import { OrderCta } from "./order-cta";
 import { PricingBenefits } from "./pricing-benefits";
-import {
-  type PricingService,
-  pricingHref,
-  pricingServices,
-} from "./pricing-draft";
+import { type PricingCatalog, ruPricingCatalog } from "./pricing-catalog";
+import type { PricingService } from "./pricing-draft";
 import { LegacyHashRedirect, PricingTabs } from "./pricing-tabs";
 import { SiteFooter, SiteHeader } from "./site-chrome";
 
@@ -32,10 +29,18 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 }
 
 /** One quiet line: little is needed from the client, the rest is on us. */
-function Needs({ items }: { items: string[] }) {
+function Needs({
+  items,
+  label,
+  tail,
+}: {
+  items: string[];
+  label: string;
+  tail: string;
+}) {
   return (
     <div className="border-primary/30 mt-12 flex flex-wrap items-center gap-x-4 gap-y-3 rounded-2xl border border-dashed px-6 py-5">
-      <Eyebrow>От вас</Eyebrow>
+      <Eyebrow>{label}</Eyebrow>
       <ul className="flex flex-wrap gap-2">
         {items.map((item) => (
           <li
@@ -46,7 +51,7 @@ function Needs({ items }: { items: string[] }) {
           </li>
         ))}
       </ul>
-      <p className="text-stage-muted text-sm">Остальное — на нас.</p>
+      <p className="text-stage-muted text-sm">{tail}</p>
     </div>
   );
 }
@@ -54,7 +59,14 @@ function Needs({ items }: { items: string[] }) {
 // Packages: each card lists only what it adds to the one before ("Всё из
 // Базового, плюс:"), so the list grows from left to right. Cards stretch to
 // one height; the order button sits at the bottom of each.
-function Packages({ service }: { service: PricingService }) {
+function Packages({
+  service,
+  catalog,
+}: {
+  service: PricingService;
+  catalog: PricingCatalog;
+}) {
+  const { copy } = catalog;
   return (
     <>
       <ul className="mt-6 grid gap-4 lg:grid-cols-3">
@@ -70,7 +82,7 @@ function Packages({ service }: { service: PricingService }) {
           >
             {pack.featured ? (
               <span className="bg-primary absolute -top-3 right-6 rounded-full px-3 py-1 font-mono text-[10px] tracking-[0.14em] text-white uppercase">
-                Чаще выбирают
+                {copy.popular}
               </span>
             ) : null}
             <Eyebrow>{pack.name}</Eyebrow>
@@ -127,22 +139,32 @@ function Packages({ service }: { service: PricingService }) {
                   price: pack.price,
                 }}
                 placement="service"
+                contactHref={catalog.orderHref?.(service, pack)}
               >
-                Заказать
+                {copy.order}
               </OrderCta>
             </Button>
           </li>
         ))}
       </ul>
       <p className="text-stage-muted mt-5 text-sm leading-relaxed">
-        <span className="text-foreground font-medium">Во всех пакетах:</span>{" "}
+        <span className="text-foreground font-medium">
+          {copy.everywhereLabel}
+        </span>{" "}
         {service.everywhere.join(" · ")}. {service.everywhereNote}
       </p>
     </>
   );
 }
 
-function ServicePanel({ service }: { service: PricingService }) {
+function ServicePanel({
+  service,
+  catalog,
+}: {
+  service: PricingService;
+  catalog: PricingCatalog;
+}) {
+  const { copy } = catalog;
   return (
     <article aria-labelledby={`title-${service.id}`}>
       <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-4">
@@ -178,7 +200,7 @@ function ServicePanel({ service }: { service: PricingService }) {
       {service.examples ? (
         <>
           <h3 className="mt-12 text-xl font-semibold tracking-tight">
-            Например
+            {copy.examples}
           </h3>
           <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {service.examples.map((example) => (
@@ -226,13 +248,13 @@ function ServicePanel({ service }: { service: PricingService }) {
       {service.gallery ? (
         <>
           <h3 className="mt-12 text-xl font-semibold tracking-tight">
-            Потрогайте сами
+            {copy.galleryTitle}
           </h3>
           <p className="text-muted-foreground mt-2 text-sm">
-            Наведите курсор или коснитесь — анимации отвечают на ваши движения.
+            {copy.galleryHint}
           </p>
           <div className="mt-6">
-            <MotionGallery />
+            <MotionGallery captions={catalog.galleryCaptions} />
           </div>
         </>
       ) : null}
@@ -240,17 +262,21 @@ function ServicePanel({ service }: { service: PricingService }) {
       {/* What they get, as plain statements; below it the short list of
           what we need from them. */}
       <h3 className="mt-12 text-xl font-semibold tracking-tight">
-        Что вы получаете
+        {copy.benefits}
       </h3>
       <div className="mt-6">
         <PricingBenefits items={service.benefits} />
-        <Needs items={service.needs} />
+        <Needs
+          items={service.needs}
+          label={copy.needsLabel}
+          tail={copy.needsTail}
+        />
       </div>
 
       {service.tech ? (
         <>
           <h3 className="mt-16 text-xl font-semibold tracking-tight">
-            Под капотом
+            {copy.tech}
           </h3>
           <ul className="mt-6 grid gap-x-10 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
             {service.tech.map((item) => (
@@ -267,15 +293,17 @@ function ServicePanel({ service }: { service: PricingService }) {
         </>
       ) : null}
 
-      <h3 className="mt-16 text-xl font-semibold tracking-tight">Пакеты</h3>
-      <Packages service={service} />
+      <h3 className="mt-16 text-xl font-semibold tracking-tight">
+        {copy.packages}
+      </h3>
+      <Packages service={service} catalog={catalog} />
 
       {service.detailHref ? (
         <Link
           href={service.detailHref as Route}
           className="mt-8 inline-block border-b border-current text-sm"
         >
-          Подробнее об услуге →
+          {copy.detailLink}
         </Link>
       ) : null}
     </article>
@@ -283,8 +311,15 @@ function ServicePanel({ service }: { service: PricingService }) {
 }
 
 /** Service + offers (one per package) + breadcrumbs, for a tab's own page. */
-function serviceJsonLd(service: PricingService, baseUrl: string) {
-  const url = `${baseUrl}${pricingHref(service.id)}/`;
+function serviceJsonLd(
+  service: PricingService,
+  baseUrl: string,
+  catalog: PricingCatalog,
+) {
+  const { areaServed, currency, homeLabel, hubLabel, hubPath, trailingSlash } =
+    catalog.jsonLd;
+  const end = trailingSlash ? "/" : "";
+  const url = `${baseUrl}${catalog.href(service.id)}${end}`;
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -293,12 +328,12 @@ function serviceJsonLd(service: PricingService, baseUrl: string) {
         name: service.name,
         description: service.lead,
         url,
-        areaServed: "RU",
+        areaServed,
         provider: { "@type": "Organization", name: "Ludvik4", url: baseUrl },
         offers: service.packages.map((pack) => ({
           "@type": "Offer",
           name: pack.name,
-          priceCurrency: "RUB",
+          priceCurrency: currency,
           price: pack.price.replace(/[^\d]/g, ""),
           url,
         })),
@@ -309,14 +344,14 @@ function serviceJsonLd(service: PricingService, baseUrl: string) {
           {
             "@type": "ListItem",
             position: 1,
-            name: "Главная",
+            name: homeLabel,
             item: `${baseUrl}/`,
           },
           {
             "@type": "ListItem",
             position: 2,
-            name: "Услуги",
-            item: `${baseUrl}/uslugi/`,
+            name: hubLabel,
+            item: `${baseUrl}${hubPath}${end}`,
           },
           { "@type": "ListItem", position: 3, name: service.name, item: url },
         ],
@@ -333,25 +368,27 @@ export function PricingPageView({
   content,
   activeId,
   baseUrl,
+  catalog = ruPricingCatalog,
 }: {
   content: MarketContent;
   activeId?: string;
   baseUrl?: string;
+  catalog?: PricingCatalog;
 }) {
-  const tabs = pricingServices.map((s) => ({
+  const { copy, services } = catalog;
+  const tabs = services.map((s) => ({
     id: s.id,
     label: s.name,
-    href: pricingHref(s.id),
+    href: catalog.href(s.id),
   }));
-  const active =
-    pricingServices.find((s) => s.id === activeId) ?? pricingServices[0]!;
+  const active = services.find((s) => s.id === activeId) ?? services[0]!;
   return (
     <div className="bg-background text-foreground flex min-h-screen flex-col">
       {activeId && baseUrl ? (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: jsonLdString(serviceJsonLd(active, baseUrl)),
+            __html: jsonLdString(serviceJsonLd(active, baseUrl, catalog)),
           }}
         />
       ) : (
@@ -360,43 +397,39 @@ export function PricingPageView({
       <SiteHeader content={content} />
       <main className="flex-1">
         <section className="mx-auto max-w-6xl px-6 pt-16 pb-12 sm:pt-24">
-          <Eyebrow>Услуги и цены</Eyebrow>
+          <Eyebrow>{copy.eyebrow}</Eyebrow>
           <h1 className="mt-3 text-4xl leading-[1.02] font-semibold tracking-tight text-balance sm:text-6xl">
             {activeId ? (
               <>
                 {active.name} —{" "}
-                <span className="text-primary">пакеты и цены.</span>
+                <span className="text-primary">{copy.tabTitle}</span>
               </>
             ) : (
               <>
-                Что мы делаем —{" "}
-                <span className="text-primary">и сколько это стоит.</span>
+                {copy.hubTitle[0]}
+                <span className="text-primary">{copy.hubTitle[1]}</span>
               </>
             )}
           </h1>
           <p className="text-muted-foreground mt-5 max-w-2xl leading-relaxed">
-            Цену и сроки фиксируем в договоре до начала работы — вы заранее
-            знаете, сколько заплатите и что получите. Выберите услугу, чтобы
-            сравнить пакеты.
+            {copy.lead}
           </p>
         </section>
 
         <section className="border-pink-soft border-t">
           <div className="mx-auto max-w-6xl px-6 py-12 sm:py-16">
-            <PricingTabs tabs={tabs} activeId={active.id} />
+            <PricingTabs
+              tabs={tabs}
+              activeId={active.id}
+              label={copy.tabsLabel}
+            />
             <div className="mt-10">
-              <ServicePanel service={active} />
+              <ServicePanel service={active} catalog={catalog} />
             </div>
           </div>
         </section>
 
-        <HomeClosing
-          copy={{
-            eyebrow: "Не нашли свою задачу?",
-            title: "Расскажите идею — оценим.",
-            cta: "Обсудить проект",
-          }}
-        />
+        <HomeClosing copy={copy.closing} />
       </main>
       <SiteFooter content={content} />
     </div>

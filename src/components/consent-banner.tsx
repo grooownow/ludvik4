@@ -75,14 +75,14 @@ export function ConsentBanner({
       <div className="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
           Analytics here runs without cookies by default. Allowing cookies lets
-          me see how visitors actually move through the site — including session
-          replays, with everything you type in the contact form hidden — so I
+          us see how visitors actually move through the site — including session
+          replays, with everything you type in the contact form hidden — so we
           can fix what does not work.{" "}
           <Link
-            href={"/privacy" as Route}
+            href={"/cookies" as Route}
             className="text-foreground underline underline-offset-4"
           >
-            Privacy Notice
+            Cookie Policy
           </Link>
         </p>
 

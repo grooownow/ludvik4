@@ -10,6 +10,8 @@ type OrderCtaProps = Omit<ComponentPropsWithoutRef<"button">, "onClick"> & {
   placement: CtaPlacement;
   /** Called on the press: when it opens the dialog or follows the /contact fallback. */
   onOpen?: () => void;
+  /** Where the button leads without an order dialog; /contact by default. */
+  contactHref?: string;
 };
 
 /**
@@ -21,6 +23,7 @@ export function OrderCta({
   target,
   placement,
   onOpen,
+  contactHref = "/contact",
   children,
   ...rest
 }: OrderCtaProps) {
@@ -28,7 +31,7 @@ export function OrderCta({
   if (!config) {
     return (
       <CtaLink
-        href="/contact"
+        href={contactHref}
         placement={placement}
         {...(rest as Omit<ComponentPropsWithoutRef<"a">, "href">)}
         onClick={() => onOpen?.()}

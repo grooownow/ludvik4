@@ -50,7 +50,8 @@ suggestions.
 - Neutral voice by default, consistent with the RU storefront: describe the
   work and result without inventing a permanent team. First person singular is
   allowed where authorship matters; avoid team voice («мы»). No personal names
-  or location disclosure (`docs/site-v0.md` → Позиционирование). Every article
+  or location disclosure on RU (`docs/site-v0.md` → Позиционирование); EN states
+  Spain openly. Every article
   ends with a CTA linking `/#contact`.
 
 ## Cover image

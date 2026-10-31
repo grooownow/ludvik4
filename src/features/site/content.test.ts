@@ -68,7 +68,7 @@ describe("market content", () => {
     expect(getMarketContent("ru").contact.form).toBeUndefined();
     expect(en.nav.links).toEqual([
       { href: "/#work", label: "Work" },
-      { href: "/#collection", label: "Services" },
+      { href: "/services", label: "Services" },
       { href: "/guides", label: "Guides" },
       { href: "/about", label: "About" },
     ]);
@@ -98,7 +98,7 @@ describe("exhibition home content", () => {
     });
     expect(home.collection.title).toEqual([
       "If it lives in a browser,",
-      "I can build it.",
+      "we can build it.",
     ]);
     expect(home.steps.title).toEqual(["Three steps,", "no fog."]);
     expect(home.work.title).toEqual(["Work you can", "inspect."]);
@@ -193,7 +193,7 @@ describe("buildHomeJsonLd", () => {
     expect(website.inLanguage).toBe("ru");
   });
 
-  it("EN: English studio graph, no offers, Europe-based and worldwide", () => {
+  it("EN: English studio graph, no offers, based in Spain, worldwide", () => {
     const jsonLd = buildHomeJsonLd(getMarketContent("en"), EN_BASE);
     const raw = JSON.stringify(jsonLd);
     expect(raw).not.toMatch(TEAM_CLAIM);

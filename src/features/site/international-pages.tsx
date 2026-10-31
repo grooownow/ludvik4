@@ -54,7 +54,7 @@ function EnquiryCta() {
           Discuss a similar project
         </h2>
         <p className="text-muted-foreground mt-3">
-          Describe the problem, current situation, and outcome you need. I will
+          Describe the problem, current situation, and outcome you need. We will
           suggest a sensible first step.
         </p>
         <Button asChild size="lg" className="mt-6">
@@ -315,13 +315,13 @@ export function InternationalAboutView() {
         <div className="mt-10 max-w-3xl">
           <Eyebrow>About Ludvik4</Eyebrow>
           <h1 className="text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
-            A founder-led web product studio in Europe
+            A founder-led web product studio in Spain
           </h1>
           <p className="text-muted-foreground mt-5 text-lg leading-relaxed">
-            I design and build focused websites, workflow automations, and web
-            applications for founders and small teams worldwide. Every project
-            has one accountable lead from the first problem statement through
-            launch and handover.
+            From Valencia, we design and build focused websites, workflow
+            automations, and web applications for founders and small teams
+            worldwide. Every project has one accountable lead from the first
+            problem statement through launch and handover.
           </p>
         </div>
       </div>
@@ -333,7 +333,7 @@ export function InternationalAboutView() {
             </h2>
             <p className="text-muted-foreground mt-4 leading-relaxed">
               You work directly with the person making product and engineering
-              decisions. I turn the initial idea or operational problem into a
+              decisions. We turn the initial idea or operational problem into a
               written scope, surface assumptions early, and keep delivery tied
               to an observable outcome rather than an expanding feature list.
             </p>
@@ -364,7 +364,7 @@ export function InternationalAboutView() {
           <section>
             <h2 className="text-2xl font-semibold tracking-tight">Articles</h2>
             <p className="text-muted-foreground mt-4 leading-relaxed">
-              I write about AI-assisted development, specifications, tests and
+              We write about AI-assisted development, specifications, tests and
               shipping products.
             </p>
             <Link

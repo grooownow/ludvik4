@@ -94,7 +94,7 @@ export const internationalServicePages: InternationalServicePage[] = [
     boundaries: [
       "One language and one visual direction in the baseline scope",
       "A landing page or a focused site with a small set of page types",
-      "Legal copy, paid assets, hosting, and complex integrations are quoted separately",
+      "Paid assets, hosting, and complex integrations are quoted separately",
     ],
   },
   {
@@ -606,19 +606,24 @@ export const internationalGuides: InternationalGuide[] = [
 
 export const internationalFaq = [
   {
+    question: "How much does a project cost?",
+    answer:
+      "Every service has three packages with published prices in euros: landing pages from €200, websites from €500, animations from €150, automations from €500, and web apps from €1,500. The final price is fixed in a written agreement once the scope is agreed.",
+  },
+  {
     question: "How does a project start?",
     answer:
-      "Send a short description of the problem, current situation, and desired outcome. I will review it, identify the smallest sensible starting point, and suggest whether the work needs a short discovery or can move directly to a fixed scope and proposal.",
+      "Send a short description of the problem, current situation, and desired outcome. We will review it, identify the smallest sensible starting point, and suggest whether the work needs a short discovery or can move directly to a fixed scope and proposal.",
   },
   {
     question: "What does founder-led mean here?",
     answer:
-      "You work directly with the person responsible for product decisions and delivery from discovery through launch. I remain the single point of accountability and bring in trusted specialists only when the agreed scope needs a specific discipline.",
+      "You work directly with the person responsible for product decisions and delivery from discovery through launch. The founder remains the single point of accountability and bring in trusted specialists only when the agreed scope needs a specific discipline.",
   },
   {
     question: "Do you work with clients outside Europe?",
     answer:
-      "Yes. Ludvik4 is based in Europe and works remotely with founders and small teams worldwide. Project communication, documentation, and delivery for the international site are in English.",
+      "Yes. Ludvik4 is based in Spain and works remotely with founders and small teams worldwide. Project communication, documentation, and delivery for the international site are in English.",
   },
   {
     question: "Can you improve an existing product?",
