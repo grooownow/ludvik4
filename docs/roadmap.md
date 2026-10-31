@@ -15,9 +15,13 @@ pages 28 → 8 MB. Guard: `pnpm build` = `scripts/build.ts` (fails on the
 whole-project warning) + `scripts/check-function-traces.ts` (allowlist, no
 sharp, size budgets); rule in `docs/rules/architecture.md` → Server filesystem
 reads. Vercel cleanup done by the agent: 78 old deployments deleted (each
-project keeps current prod + up to 2 earlier), preview builds off on all six
-projects (Ignored Build Step `[ "$VERCEL_ENV" != "production" ]`), shorter
-retention. Usage is GB-months accrued per billing day, so the 11.93 GB figure
+project keeps current prod + up to 2 earlier); retention on all six projects
+is preview/canceled/errored 1 day, production 1 week. Preview deploys off for
+ludvik4 via `vercel.json` → `git.deploymentEnabled` (`main` only; verified: a
+branch push made no deployment, the merge to main deployed). Do NOT use an
+Ignored Build Step on `$VERCEL_ENV` — it cancelled a production deploy here
+(the variable was not "production" at that step). Still open: the same
+`vercel.json` in the pawfile, fortnoise and secret-santa repos. Usage is GB-months accrued per billing day, so the 11.93 GB figure
 stays until the period resets — expected, not a failure. Optional follow-up:
 load PGlite lazily so signin/dashboard/auth functions drop ~21 MB.
 
