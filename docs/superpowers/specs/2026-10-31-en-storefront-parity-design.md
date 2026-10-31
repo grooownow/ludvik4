@@ -75,7 +75,7 @@ All prices exclude VAT; the owner pays income tax from them.
 | --- | --- | --- | --- |
 | Landing pages | €200 | €350 (was €400) | €500 |
 | Websites | €500 | €850 (was €950) | €1,300 |
-| Web apps | from €1,500 | €3,000 (was €3,400) | from €6,000 |
+| Web apps | from €1,500 | from €3,000 (no offer) | from €6,000 |
 | Animations | €150 | €300 | from €700 |
 | Automations | €500 | €900 (was €1,000) | €2,000 |
 

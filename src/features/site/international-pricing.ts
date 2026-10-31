@@ -270,10 +270,8 @@ const WEBAPP_PACKAGES: PricingPackage[] = [
   },
   {
     name: "Plus",
-    // Launch offer, as on RU: remove after 31 Dec.
-    price: "€3,000",
-    oldPrice: "€3,400",
-    promo: "Price until 31 December",
+    price: "from €3,000",
+    priceNote: "The final price depends on the scope of the second journey",
     term: "2–3 months",
     includes: "Everything in Basic, plus:",
     items: [

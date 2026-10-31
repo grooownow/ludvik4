@@ -15,7 +15,7 @@ describe("international pricing", () => {
     expect(prices("website-packages")).toEqual(["€500", "€850", "€1,300"]);
     expect(prices("web-apps")).toEqual([
       "from €1,500",
-      "€3,000",
+      "from €3,000",
       "from €6,000",
     ]);
     expect(prices("web-animation")).toEqual(["€150", "€300", "from €700"]);
@@ -44,7 +44,8 @@ describe("international pricing", () => {
       getInternationalPricingService(slug)!.packages[1]!;
     expect(plus("landing-pages").oldPrice).toBe("€400");
     expect(plus("website-packages").oldPrice).toBe("€950");
-    expect(plus("web-apps").oldPrice).toBe("€3,400");
+    expect(plus("web-apps").oldPrice).toBeUndefined();
+    expect(plus("web-apps").promo).toBeUndefined();
     expect(plus("automation-packages").oldPrice).toBe("€1,000");
     expect(plus("web-animation").oldPrice).toBeUndefined();
     expect(plus("landing-pages").promo).toBe("Price until 31 December");
