@@ -91,7 +91,8 @@ roll back the _market_ (EN → RU) the env var must change too, then redeploy.
 ## Smoke checks after a production deploy
 
 ```bash
-for p in / /en /blog /privacy /sitemap.xml /robots.txt /llms.txt; do
+for p in / /en /blog /privacy /services /services/landing-pages \
+  /legal-notice /cookies /terms-of-service /terms /sitemap.xml /robots.txt /llms.txt; do
   printf "%-16s %s\n" "$p" "$(curl -sS -o /dev/null -w '%{http_code}' https://ludvik4.dev$p)"
 done
 curl -sS https://ludvik4.dev/ | grep -oE '<html lang="[a-z]+"|<title>[^<]*</title>'
@@ -99,7 +100,9 @@ curl -sS https://ludvik4.dev/ | grep -oE '<html lang="[a-z]+"|<title>[^<]*</titl
 
 Expected on the EN build: `/` 200 · `/en` 308 → `/` · `/blog` and the current
 published EN article return 200 · legacy untranslated blog slugs return 404 ·
-`/privacy` 200 · `lang="en"` · sitemap lists the international pages and only
+`/privacy` 200 · `/services`, its five package pages and the three legal
+pages 200 · `/terms` 200 (the Gridfin file, not ours) · package cards show
+"incl. VAT" totals · `lang="en"` · sitemap lists the international pages and only
 published EN articles · robots allows public routes.
 
 The lead form is only proven by a real submission (the success message means

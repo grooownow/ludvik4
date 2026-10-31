@@ -6,18 +6,52 @@ writing detail here.
 
 ## Now
 
+**[NEXT — start here] ludvik4.dev in English, Spanish and Russian.** Owner
+decisions (2026-10-31): three languages, EN / ES / RU; Ukrainian not planned.
+Every language keeps EUR prices, Spain as the base and the EU adaptation of
+the EN site; the RU locale takes its copy from ludvik4.ru but drops everything
+Russia-specific (152-ФЗ, Russian hosting, 1С/Bitrix/VK/Avito, ₽), exactly as EN
+did. ludvik4.ru itself is not touched. Not decided yet, put to the owner in the
+design: URL scheme (proposed: EN at the root, `/es/...`, `/ru/...`), which pages
+are translated (proposed: home, `/services` + five package pages, the three
+detail service pages, About, Contact, the three legal pages, the cookie banner;
+blog, guides, work, Gridfin and qa-pilot stay English), whether `/ru` on .dev is
+indexed next to ludvik4.ru (proposed: `noindex`, to avoid two Russian sites
+competing with different currencies), hreflang between EN and ES, Spanish
+legal pages (Aviso legal is natural in Spanish), the lead form labels and the
+server error messages per language. Prior art: the Gridfin language dropdown
+(`public/gridfin`, commit `274b3ff`); there was never a studio-site switcher.
+Where the copy lives today: `src/features/site/content.ts` (`en` block),
+`international-content.ts`, `international-pricing.ts` (services, packages,
+prices, gallery captions, page labels via `PricingCatalog.copy`),
+`legal-en.tsx`, `privacy-page.tsx`, `consent-banner.tsx`, `mascot-reply.tsx`
+copy prop, `lead-form.tsx` labels. Shared views already take copy as props
+(`PricingPageView` takes a `catalog`). Process: brainstorm → design in
+`docs/superpowers/specs/` → plan → build on a branch → show the owner locally →
+deploy. Keep the RU-build byte-diff gate (`pnpm build:ru-static`, compare `out/`)
+— the RU storefront must not change.
+
 **[SHIPPED 2026-10-31 · EN only] EN storefront parity.** ludvik4.dev gets the
 RU offer in English: five services with packages and EUR prices set by the owner
-(`/services`, `international-pricing.ts`; landing €200–500, sites €500–1,300,
-web apps from €1,500 / from €3,000 / from €6,000, animations €150–700,
-automations €500–2,000, Plus offers until 31 Dec except web apps), Spain stated
+(`/services`, `international-pricing.ts`; landing €200 / €350 / €500, sites
+€500 / €850 / €1,300, web apps from €1,500 / from €3,000 / from €6,000,
+animations €150 / €300 / from €700, automations €500 / €900 / €2,000; Plus
+offers with a struck-out price until 31 December on landing pages, sites and
+automations). Each card shows the price excluding VAT and, in small type, the
+total with 21% Spanish VAT for private clients (`vat.ts`). Spain stated
 openly, hall links, mascot bubble, package buttons prefilling `/contact`,
-`/legal-notice` (NIF), `/cookies`, `/terms-of-service`. RU output unchanged.
-Spanish price research: `tmp-review/spain-pricing-2026-10-31.md` (git-ignored).
-Owner to do: lawyer review of the legal pages, the struck-out prices and
-VAT-exclusive prices shown to private clients (TRLGDCU art. 20, 60); VIES/ROI
-with the gestor; resubmit the sitemap (9 new URLs). Remove the Plus offers after
-31 December on both markets. Articles and EN contracts deferred. Design:
+`/legal-notice` (NIF), `/cookies`, `/terms-of-service` (`/terms` belongs to
+Gridfin). RU output unchanged (byte-compared). Merged `25a1ab7` + `cdb38a1`.
+Research (git-ignored): `tmp-review/spain-pricing-2026-10-31.md` (Spanish
+market and 18 studio price lists), `tmp-review/legal-research-en-2026-10-31.md`.
+Owner decisions: struck-out prices stay (a real offer); the phone number and
+the VAT treatment go in the written agreement. Still open: EN contract
+templates must carry the phone, the 14-day withdrawal model form and the
+legal-guarantee reminder (TRLGDCU art. 97.1 c, j, n); lawyer review of the
+legal pages; VIES/ROI with the gestor before the first EU business client;
+resubmit the sitemap in Search Console (owner's Google account; the Chrome
+extension was not connected); remove the Plus offers after 31 December on both
+markets. Blog articles were not translated. Design:
 `docs/superpowers/specs/2026-10-31-en-storefront-parity-design.md`.
 
 **[SHIPPED 2026-10-28] Security pass, both markets.** Order function: the
@@ -655,12 +689,7 @@ guided by `docs/playbooks/seo-geo.md`:
 
 Scoped and agreed, not yet started:
 
-- **ludvik4.dev in English, Spanish and Russian** (owner, 2026-10-31). All
-  prices in EUR, Spain and EU adaptation kept; RU copy taken from ludvik4.ru
-  and adapted like EN. Needs its own design first: URL scheme (proposed `/es`,
-  `/ru`, EN at root), which pages are translated, whether `/ru` on .dev is
-  indexed next to ludvik4.ru (proposed: noindex), Spanish legal pages. Ukrainian
-  not planned. The Gridfin dropdown is prior art for the switcher.
+- **ludvik4.dev in English, Spanish and Russian** — moved to Now (top).
 - **[DONE 2026-07-25] Resend production secrets** — set in the Vercel
   production env and proven by a live test enquiry through the EN form
   (delivery accepted by Resend).
