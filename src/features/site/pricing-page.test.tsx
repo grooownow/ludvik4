@@ -13,6 +13,11 @@ const content = getMarketContent("ru");
 const tabs = () => screen.getByRole("navigation", { name: "Услуги" });
 
 describe("PricingPageView", () => {
+  it("shows no VAT totals on RU", () => {
+    const { container } = render(<PricingPageView content={content} />);
+    expect(container.textContent).not.toMatch(/VAT|НДС/);
+  });
+
   it("gives every tab its own page link", () => {
     render(<PricingPageView content={content} />);
     for (const [name, href] of [
@@ -95,6 +100,7 @@ describe("PricingPageView with the international catalog", () => {
     const text = container.textContent;
     expect(text).not.toMatch(/[А-Яа-яЁё]|₽/);
     expect(text).toContain("€500");
+    expect(text).toContain("€242 incl. VAT");
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
       "Landing pages — packages and prices.",
     );

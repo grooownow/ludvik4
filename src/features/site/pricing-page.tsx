@@ -94,6 +94,11 @@ function Packages({
                 <s className="text-stage-muted text-lg">{pack.oldPrice}</s>
               ) : null}
             </p>
+            {catalog.vat?.cardTotal?.(pack.price) ? (
+              <p className="text-stage-muted mt-1 text-xs">
+                {catalog.vat.cardTotal(pack.price)}
+              </p>
+            ) : null}
             {pack.priceNote ? (
               <p className="text-stage-muted mt-1 text-sm">{pack.priceNote}</p>
             ) : null}
@@ -147,6 +152,11 @@ function Packages({
           </li>
         ))}
       </ul>
+      {catalog.vat?.line ? (
+        <p className="text-stage-muted mt-4 text-xs leading-relaxed">
+          {catalog.vat.line}
+        </p>
+      ) : null}
       <p className="text-stage-muted mt-5 text-sm leading-relaxed">
         <span className="text-foreground font-medium">
           {copy.everywhereLabel}

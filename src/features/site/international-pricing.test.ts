@@ -31,7 +31,14 @@ describe("international pricing", () => {
     );
   });
 
-  it("shows no VAT wording on cards", () => {
+  it("shows each card's total with 21% VAT, and no extra VAT line", () => {
+    expect(internationalPricingCatalog.vat?.cardTotal?.("€350")).toBe(
+      "€423.50 incl. VAT",
+    );
+    expect(internationalPricingCatalog.vat?.line).toBeUndefined();
+  });
+
+  it("keeps VAT wording out of the package data itself", () => {
     for (const s of internationalPricingServices) {
       for (const p of s.packages) {
         expect(JSON.stringify(p)).not.toMatch(/VAT|IVA|tax/i);

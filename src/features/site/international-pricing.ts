@@ -1,11 +1,12 @@
 import type { PricingCatalog } from "./pricing-catalog";
 import type { PricingPackage, PricingService } from "./pricing-draft";
+import { withVat } from "./vat";
 
 // The international services and prices: the same five services and three
 // packages as /uslugi, adapted for clients in Spain, the EU and beyond. Prices
 // are fixed strings set by the owner (2026-10-31), excluding VAT; see
-// docs/superpowers/specs/2026-10-31-en-storefront-parity-design.md. Cards show the price only; VAT is handled
-// in the written agreement (/terms says so).
+// docs/superpowers/specs/2026-10-31-en-storefront-parity-design.md. Each card adds the total with
+// 21% Spanish VAT for private clients; VAT details are in the written agreement.
 
 const NEEDS = [
   "Your idea and goal",
@@ -790,6 +791,9 @@ export const internationalPricingCatalog: PricingCatalog = {
   href: (id) => `/services/${id}`,
   orderHref: (s, pack) =>
     `/contact?service=${s.slug}&package=${packageSlug(pack)}`,
+  // Private clients see the total with 21% Spanish VAT under each price
+  // (TRLGDCU art. 20, 60); the base price stays the headline (owner, 2026-10-31).
+  vat: { cardTotal: (price) => withVat(price) },
   galleryCaptions: [
     {
       title: "Light block animation",
