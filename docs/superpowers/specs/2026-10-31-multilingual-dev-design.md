@@ -77,11 +77,13 @@ Open Graph text.
   visitor's own request, so it does not wait for analytics consent; the
   cookie policy lists it in every language.
 - Detection runs in `src/middleware.ts`, locally (no network, no database —
-  hard invariant #2): only on GET requests to an EN storefront path that has
-  a translation, only when there is no `ludvik4_lang` cookie, never for bots
-  (user-agent check). It reads `Accept-Language` (quality-ordered), and if the
-  best supported match is `es` or `ru` it answers `307` to the prefixed URL.
-  A Spanish browser that saved "English" stays on English.
+  hard invariant #2), EN build only: on GET requests to an EN storefront path
+  that has a translation, never for bots (user-agent check). A saved
+  `ludvik4_lang` wins: a visitor who chose Spanish and opens an English link
+  lands on the Spanish page. Without a saved choice it reads
+  `Accept-Language` (quality-ordered, primary subtag), and if the best
+  supported match is `es` or `ru` it answers `307` to the prefixed URL. A
+  Spanish browser that saved "English" stays on English.
 - Visiting a prefixed URL does not change the saved choice; only the switch
   does.
 
@@ -132,3 +134,20 @@ has not seen); lawyer review stays an open item in the roadmap.
 - Test layout, as long as: the switch, detection rules, the RU flag, noindex
   on RU, hreflang on ES, and "no Russia-specific words in the RU locale" each
   have a test that can fail.
+
+## Calls made while building (agent's)
+
+- Spanish speaks to the reader with **tú** (Spain Spanish, es-ES); legal
+  pages too, for one voice across the site. Russian uses «вы», reusing the
+  approved ludvik4.ru wording wherever the meaning matches.
+- Prices are never typed in a translation: Spanish and Russian packages take
+  the English price by position and write it their way (`1500 €`,
+  `от 1 500 €`), so a price cannot drift between languages.
+- Translations are written with English paths; one function adds the
+  `/es` / `/ru` prefix, and only to pages that exist in that language.
+- Package URLs stay English (`/es/contact?service=…&package=plus`).
+- The Gridfin card and its live link open Gridfin's own Spanish landing
+  (`/gridfin/es`) from the Spanish site; Russian keeps the English one.
+- The lead e-mail to the owner says which language the enquiry came from.
+- The privacy notice now names ludvik4.ru where it said "the
+  Russian-language website" (analytics is off there, not on `/ru`).

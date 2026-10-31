@@ -49,3 +49,22 @@ describe("deliverLead", () => {
     });
   });
 });
+
+describe("deliverLead from the Spanish or Russian site", () => {
+  it("tells the owner which language to reply in", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true });
+    vi.stubGlobal("fetch", fetchMock);
+
+    await deliverLead({
+      name: "Ada",
+      contact: "ada@example.com",
+      message: "Necesito una web para mi negocio.",
+      language: "es",
+    });
+
+    const request = fetchMock.mock.calls[0]?.[1] as RequestInit;
+    expect(JSON.parse(String(request.body)).text).toContain(
+      "Language: Español",
+    );
+  });
+});

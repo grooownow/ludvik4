@@ -63,3 +63,37 @@ describe("submitLeadAction", () => {
     expect(state.error).toMatch(/^[\x20-\x7E—’]+$/);
   });
 });
+
+describe("submitLeadAction on the Spanish and Russian pages", () => {
+  it("answers in the page's language", async () => {
+    const es = await submitLeadAction(
+      {},
+      form({ ...valid, message: "corto", locale: "es" }),
+    );
+    expect(es.reason).toBe("validation");
+    expect(es.error).toBe(
+      "Cuéntanos un poco más sobre el proyecto: con un par de frases basta.",
+    );
+
+    verifyTurnstile.mockResolvedValue(false);
+    const ru = await submitLeadAction({}, form({ ...valid, locale: "ru" }));
+    expect(ru.reason).toBe("captcha");
+    expect(ru.error).toMatch(/^Проверка на бота/);
+  });
+
+  it("falls back to English for an unknown language value", async () => {
+    verifyTurnstile.mockResolvedValue(false);
+    const state = await submitLeadAction(
+      {},
+      form({ ...valid, locale: "<script>" }),
+    );
+    expect(state.error).toMatch(/^The anti-bot check/);
+  });
+
+  it("tells the owner which language the enquiry came from", async () => {
+    await submitLeadAction({}, form({ ...valid, locale: "es" }));
+    expect(deliverLead).toHaveBeenCalledWith(
+      expect.objectContaining({ language: "es" }),
+    );
+  });
+});

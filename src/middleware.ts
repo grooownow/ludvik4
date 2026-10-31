@@ -41,6 +41,8 @@ export default function middleware(
   const { pathname, search } = request.nextUrl;
   if (pathname.startsWith("/dashboard")) return authMiddleware(request, event);
   if (request.method !== "GET" && request.method !== "HEAD") return;
+  // Languages exist on ludvik4.dev only (SITE_MARKET is inlined at build).
+  if (process.env.SITE_MARKET !== "en") return;
 
   const target = detectLocaleRedirect({
     pathname,

@@ -217,8 +217,8 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
             <p className="text-muted-foreground mt-3">
               Ludvik4 uses PostHog for limited audience measurement and product
               analytics on the international website. Ludvik4 does not use
-              advertising cookies, and analytics is switched off entirely on the
-              Russian-language website.
+              advertising cookies, and analytics is switched off entirely on
+              ludvik4.ru, the separate website for the Russian market.
             </p>
             <p className="text-muted-foreground mt-3">
               Unless you allow cookies, PostHog runs in cookieless mode and
