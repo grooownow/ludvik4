@@ -37,7 +37,10 @@ change is measured against it.
 - [ ] Edge cases and error paths from the spec are exercised, not just the
       happy path
 - [ ] `pnpm lint && pnpm test && pnpm test:e2e && pnpm build` all green, with
-      quoted output (the `verify` skill produces exactly this evidence)
+      quoted output (the `verify` skill produces exactly this evidence).
+      Green `pnpm build` includes `✓ Function traces OK` — a build that only
+      exits 0 can still ship the whole repo into every function
+      (architecture.md → Server filesystem reads)
 
 ### Quality
 

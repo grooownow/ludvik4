@@ -35,8 +35,17 @@ export type Article = ArticleFrontmatter & {
   content: string;
 };
 
-const CONTENT_DIR = path.join(process.cwd(), "src", "content", "blog");
-const EN_CONTENT_DIR = path.join(CONTENT_DIR, "en");
+// Every dynamic fs path here is /*turbopackIgnore: true*/: without it Turbopack
+// traces the whole repo into each blog function (2026-10-31 Functions Storage
+// incident). The .mdx files come in via outputFileTracingIncludes in
+// next.config.ts. See docs/rules/architecture.md → Server filesystem reads.
+const CONTENT_DIR = path.join(
+  /*turbopackIgnore: true*/ process.cwd(),
+  "src",
+  "content",
+  "blog",
+);
+const EN_CONTENT_DIR = path.join(/*turbopackIgnore: true*/ CONTENT_DIR, "en");
 
 export type ArticleMarket = "ru" | "en";
 
@@ -48,12 +57,15 @@ export function getArticleContentDir(market: ArticleMarket): string {
 /** All articles (drafts included), newest first. */
 export function getAllArticles(dir: string = CONTENT_DIR): Article[] {
   const files = fs
-    .readdirSync(dir)
+    .readdirSync(/*turbopackIgnore: true*/ dir)
     .filter((file) => file.endsWith(".mdx"))
     .sort();
 
   const articles = files.map((file): Article => {
-    const raw = fs.readFileSync(path.join(dir, file), "utf8");
+    const raw = fs.readFileSync(
+      path.join(/*turbopackIgnore: true*/ dir, file),
+      "utf8",
+    );
     const { data, content } = matter(raw);
     const parsed = articleFrontmatterSchema.safeParse(data);
     if (!parsed.success) {

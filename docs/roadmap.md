@@ -6,6 +6,21 @@ writing detail here.
 
 ## Now
 
+**[2026-10-31 · incident] Vercel Functions Storage over the Hobby 10 GB.**
+Cause: `src/features/blog/articles.ts` read articles through a dynamic path,
+so Turbopack traced the whole repo into every blog function (~70 MB each) and
+Vercel kept 63 deployments. Fixed on `fix/function-tracing`: ignore-marked
+paths + `.mdx` includes, sharp excluded; blog function 70 → 10 MB, regular
+pages 28 → 8 MB. Guard: `pnpm build` = `scripts/build.ts` (fails on the
+whole-project warning) + `scripts/check-function-traces.ts` (allowlist, no
+sharp, size budgets); rule in `docs/rules/architecture.md` → Server filesystem
+reads. Vercel cleanup done by the agent: 78 old deployments deleted (each
+project keeps current prod + up to 2 earlier), preview builds off on all six
+projects (Ignored Build Step `[ "$VERCEL_ENV" != "production" ]`), shorter
+retention. Usage is GB-months accrued per billing day, so the 11.93 GB figure
+stays until the period resets — expected, not a failure. Optional follow-up:
+load PGlite lazily so signin/dashboard/auth functions drop ~21 MB.
+
 **[SHIPPED 2026-10-31 · .dev only] ludvik4.dev in English, Spanish and
 Russian.** EN stays at the root; `/es/...` and `/ru/...` mirror home,
 `/services` + five package pages, the three detail service pages, `/work` and

@@ -38,6 +38,21 @@ const nextConfig: NextConfig = {
   // instance of URL`. Loading it via native `require` keeps one realm.
   // Reproduced by tests/e2e/auth.spec.ts: without this, a real credentials
   // sign-in (a Server Action) crashes in the production build.
+  // What ships in each Vercel Function (docs/rules/architecture.md → Server
+  // filesystem reads; enforced by scripts/check-function-traces.ts). The blog
+  // reads articles through ignore-marked dynamic paths, so its .mdx files are
+  // included explicitly — only the .mdx, never the card images beside them.
+  outputFileTracingIncludes: {
+    "/blog/**": ["./src/content/blog/**/*.mdx"],
+    "/llms.txt": ["./src/content/blog/**/*.mdx"],
+    "/sitemap.xml": ["./src/content/blog/**/*.mdx"],
+  },
+  // sharp (~18 MB of libvips) is traced into every function for Next's image
+  // optimizer, which never runs on Vercel (the platform optimizes images) and
+  // nothing in src imports sharp.
+  outputFileTracingExcludes: {
+    "*": ["node_modules/sharp/**", "node_modules/@img/**"],
+  },
   serverExternalPackages: ["@electric-sql/pglite"],
 
   // Security headers baseline. A full Content-Security-Policy is

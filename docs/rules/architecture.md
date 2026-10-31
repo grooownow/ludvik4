@@ -81,6 +81,31 @@ internal file directly throws `boundaries/dependencies` error, not a warning.
   Verify exclusion after changes: `SITE_MARKET=ru pnpm build` then grep
   `.next/server` + `server-reference-manifest.json` for the other market's action.
 
+## Server filesystem reads — what ships in a function
+
+Every file a server route reads with `fs` is copied into that route's Vercel
+Function, in every retained deployment. If the bundler cannot resolve the path
+statically, it traces **the whole repository** into the function, and
+`next build` still exits 0. On 2026-10-31 this blew the Hobby 10 GB Functions
+Storage limit: `getAllArticles(dir)` shipped docs/, public/ and article images
+in every blog function (~70 MB each, × 63 deployments). Rules:
+
+- An `fs` path is either a **literal** under a fixed folder
+  (`path.join(process.cwd(), "public", "x.png")`), or every dynamic piece
+  carries `/*turbopackIgnore: true*/` **and** the files it really needs are
+  listed in `outputFileTracingIncludes` (`next.config.ts`). A path passed as a
+  parameter (for test fixtures, per-market dirs) is the second kind.
+- Mark **every** derived join too: `path.join(CONTENT_DIR, "en")` with an
+  unknown `CONTENT_DIR` traces as "any path ending in `en`" (it shipped
+  `design.pen` and `docs/marketing/en/*`) — with **no** build warning.
+- Images and drafts don't sit in a folder a server route lists, unless the
+  include glob filters them out (`**/*.mdx`).
+- Enforced by `pnpm build` (`scripts/build.ts` → `scripts/check-function-traces.ts`):
+  the build fails on the whole-project warning, on any project file outside
+  the allowlist, on sharp/@img, and on a function over its size budget. A new
+  legitimate read means adding it to that script's allowlist — a deliberate,
+  reviewed change.
+
 ## Evolutionary note
 
 A monorepo split (`packages/*`) is deliberately **not** part of the box — it's
@@ -95,3 +120,5 @@ happens rather than pre-building the scaffolding now.
 - [ ] New route stays thin; logic lives in a feature or `lib/`
 - [ ] Schema change went through generate → review → migrate
 - [ ] New/changed feature has a colocated `index.ts` export surface
+- [ ] New server `fs` read is literal or ignore-marked + included, and
+      `pnpm build` prints `✓ Function traces OK`
