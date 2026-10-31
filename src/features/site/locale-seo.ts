@@ -84,7 +84,9 @@ export function localeLayoutMetadata(locale: Locale): Metadata {
   const { content } = getLocaleBundle(locale);
   const indexed = isIndexedLocale(locale);
   return {
-    title: { default: content.title, template: "%s · Ludvik4" },
+    // Absolute: the home title already ends in "— Ludvik4"; the root
+    // layout's template would add it a second time.
+    title: { absolute: content.title, template: "%s · Ludvik4" },
     description: content.description,
     keywords: content.keywords,
     alternates: {

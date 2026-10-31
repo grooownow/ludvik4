@@ -37,6 +37,7 @@ export function LanguageSwitch({
   locales,
   label,
   stage = false,
+  className,
 }: {
   current: Locale;
   locales: Locale[];
@@ -44,6 +45,7 @@ export function LanguageSwitch({
   label: string;
   /** Over the exhibit stage: the header's larger stage type. */
   stage?: boolean;
+  className?: string;
 }) {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
@@ -72,7 +74,7 @@ export function LanguageSwitch({
   }, [open]);
 
   return (
-    <div ref={root} data-language-switch className="relative">
+    <div ref={root} data-language-switch className={cn("relative", className)}>
       <button
         ref={toggle}
         type="button"

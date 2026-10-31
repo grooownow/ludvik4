@@ -35,6 +35,13 @@ describe("locale SEO", () => {
     expect(localeLayoutMetadata("es").robots).toMatchObject({ index: true });
   });
 
+  it("does not let the root template repeat the brand in the home title", () => {
+    expect(localeLayoutMetadata("es").title).toMatchObject({
+      absolute: expect.stringMatching(/Ludvik4$/),
+      template: "%s · Ludvik4",
+    });
+  });
+
   it("accepts only the enabled language prefixes", () => {
     expect(parseLocaleParam("es")).toBe("es");
     expect(parseLocaleParam("ru")).toBe("ru");

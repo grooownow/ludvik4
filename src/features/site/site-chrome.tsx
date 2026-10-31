@@ -150,14 +150,6 @@ export function SiteHeader({
             />
           </nav>
 
-          {locale ? (
-            <LanguageSwitch
-              current={locale}
-              locales={enabledLocales()}
-              label={chrome?.language ?? "Language"}
-              stage={stage}
-            />
-          ) : null}
           <MobileMenu
             links={content.nav.links ?? []}
             cta={{ href: contact, label: content.nav.cta }}
@@ -165,6 +157,17 @@ export function SiteHeader({
             openLabel={menuLabel}
             closeLabel={closeLabel}
           />
+          {locale ? (
+            <LanguageSwitch
+              current={locale}
+              locales={enabledLocales()}
+              label={chrome?.language ?? "Language"}
+              stage={stage}
+              // After the burger in the tree, so the RU build's menu keeps its
+              // generated ids; first on screen below lg, last from lg up.
+              className="max-lg:order-first"
+            />
+          ) : null}
         </div>
       </div>
     </header>
