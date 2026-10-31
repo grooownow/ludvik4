@@ -16,6 +16,9 @@ const serverOnlyPaths = [
   // src/app/about is no longer stashed: RU renders its own About (AboutRuView).
   "src/app/guides",
   "src/app/services",
+  "src/app/cookies",
+  "src/app/legal-notice",
+  "src/app/terms-of-service",
   "src/app/work",
   "src/middleware.ts",
   // Next 16.3 type-checks tests during build; this integration test imports

@@ -209,3 +209,33 @@ describe("LeadForm analytics", () => {
     });
   });
 });
+
+describe("LeadForm order prefill", () => {
+  const prefills = { "landing-pages/plus": "I'd like Plus." };
+  const message = () =>
+    screen.getByLabelText(RU_LEAD_LABELS.messageLabel) as HTMLTextAreaElement;
+
+  it("fills the message from a known Order link", async () => {
+    window.history.pushState({}, "", "?service=landing-pages&package=plus");
+    render(<LeadForm orderPrefills={prefills} />);
+    await waitFor(() => expect(message().value).toBe("I'd like Plus."));
+    window.history.pushState({}, "", "/");
+  });
+
+  it("leaves the form empty for an unknown link", () => {
+    window.history.pushState({}, "", "?service=__proto__");
+    render(<LeadForm orderPrefills={prefills} />);
+    expect(message().value).toBe("");
+    window.history.pushState({}, "", "/");
+  });
+
+  it("does not replace kept values after a failed submit", () => {
+    window.history.pushState({}, "", "?service=landing-pages&package=plus");
+    const { rerender } = render(<LeadForm orderPrefills={prefills} />);
+    const box = message();
+    box.value = "my own words";
+    rerender(<LeadForm orderPrefills={prefills} />);
+    expect(box.value).toBe("my own words");
+    window.history.pushState({}, "", "/");
+  });
+});

@@ -9,7 +9,7 @@ export function buildHumansTxt(market: Market, baseUrl: string): string {
 Owner: Ludvik4
 Site: ${root}/
 Contact: https://t.me/ludvik4work
-Location: ${isEnglish ? "Europe · Remote · Worldwide" : "Remote"}
+Location: ${isEnglish ? "Valencia, Spain · Remote · Worldwide" : "Remote"}
 
 /* SITE */
 

@@ -2,6 +2,7 @@ import { getPublishedArticlesForMarket } from "@/features/blog";
 import {
   caseStudies,
   internationalGuides,
+  internationalPricingServices,
   internationalServicePages,
   internationalWork,
   pricingServices,
@@ -79,6 +80,12 @@ function enBody(baseURL: string): string {
         `- [${article.title}](${publicUrl("en", baseURL, `/blog/${article.slug}`)}): ${article.description}`,
     )
     .join("\n");
+  const pricingLines = internationalPricingServices
+    .map(
+      (service) =>
+        `- [${service.name}](${publicUrl("en", baseURL, `/services/${service.slug}`)}), ${service.from}: ${service.lead}`,
+    )
+    .join("\n");
   const serviceLines = internationalServicePages
     .map(
       (service) =>
@@ -100,13 +107,11 @@ function enBody(baseURL: string): string {
 
   return `# Ludvik4
 
-> Ludvik4 is a Europe-based, founder-led web product studio working with clients worldwide. It designs and builds focused websites, controlled business workflow automations, MVPs, and custom web applications. One point of accountability leads each project from discovery through launch.
+> Ludvik4 is a founder-led web product studio based in Spain and working with clients worldwide. It designs and builds focused websites, controlled business workflow automations, MVPs, and custom web applications. One point of accountability leads each project from discovery through launch.
 
-Three services:
+Five services, each with three packages and prices in euros:
 
-- Website or landing page: a published, responsive site with one clear call to action.
-- Business workflow automation: repetitive manual processes moved into controlled workflows — scripts, integrations, bots, AI.
-- Web app or compact SaaS: a small app around one core task with a complete user journey.
+${pricingLines}
 
 Delivery model: direct founder communication, written scope, production-ready delivery, source-code handover, and trusted specialists only when the agreed work needs them.
 
@@ -117,11 +122,14 @@ Contact: Telegram https://t.me/ludvik4work.
 ## Main pages
 
 - [Home](${baseURL}/): positioning, services, process, proof, FAQ, and contact
+- [Services and prices](${publicUrl("en", baseURL, "/services")}): five services, what each package includes, timelines and prices
 - [Selected work](${publicUrl("en", baseURL, "/work")}): public evidence and case studies
 - [Articles](${publicUrl("en", baseURL, "/blog")}): comparisons and engineering notes on AI-assisted development
 - [Planning guides](${publicUrl("en", baseURL, "/guides")}): practical decision tools for website, automation, and MVP projects
 - [About](${publicUrl("en", baseURL, "/about")}): founder-led delivery model and engineering approach
 - [Privacy](${publicUrl("en", baseURL, "/privacy")}): enquiry form data handling
+- [Legal notice](${publicUrl("en", baseURL, "/legal-notice")}): website owner details
+- [Terms](${publicUrl("en", baseURL, "/terms-of-service")}): how client work is agreed and paid
 
 ## Services
 

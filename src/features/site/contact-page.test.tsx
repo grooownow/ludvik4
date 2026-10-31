@@ -17,7 +17,7 @@ describe("ContactPageView", () => {
       screen.getByRole("heading", { level: 1, name: content.contact.title }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Send request" }),
+      screen.getByRole("button", { name: "Send enquiry" }),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: "Read the Privacy Notice." }),

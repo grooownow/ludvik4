@@ -8,7 +8,7 @@ status: v1 — 2026-08-10
 ## Source context
 
 - Site: Ludvik4 international storefront.
-- Central entity: a Europe-based, founder-led web product studio.
+- Central entity: a Spain-based, founder-led web product studio.
 - Audience: startup founders, small-business owners, and small operations teams.
 - Business model: scoped custom development engagements.
 - Source advantage: direct delivery experience plus inspectable open-source

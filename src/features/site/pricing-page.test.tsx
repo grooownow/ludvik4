@@ -1,6 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { getMarketContent } from "./content";
+import { internationalPricingCatalog } from "./international-pricing";
 import { PricingPageView } from "./pricing-page";
 
 vi.mock("next/navigation", () => ({
@@ -76,5 +77,56 @@ describe("PricingPageView", () => {
     expect(service["@type"]).toBe("Service");
     expect(service.url).toBe("https://ludvik4.ru/uslugi/razrabotka-sajtov/");
     expect(service.offers).toHaveLength(3);
+  });
+});
+
+describe("PricingPageView with the international catalog", () => {
+  const en = getMarketContent("en");
+
+  it("renders English copy, euro prices and order links", () => {
+    const { container } = render(
+      <PricingPageView
+        content={en}
+        catalog={internationalPricingCatalog}
+        activeId="landing-pages"
+        baseUrl="https://ludvik4.dev"
+      />,
+    );
+    const text = container.textContent;
+    expect(text).not.toMatch(/[А-Яа-яЁё]|₽/);
+    expect(text).toContain("€1,950");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+      "Landing pages — packages and prices.",
+    );
+    const order = screen.getAllByRole("link", { name: "Get started" });
+    expect(order[1]).toHaveAttribute(
+      "href",
+      "/contact?service=landing-pages&package=plus",
+    );
+  });
+
+  it("publishes numeric EUR offers on slashless URLs", () => {
+    const { container } = render(
+      <PricingPageView
+        content={en}
+        catalog={internationalPricingCatalog}
+        activeId="web-animation"
+        baseUrl="https://ludvik4.dev"
+      />,
+    );
+    const ld = JSON.parse(
+      container.querySelector('script[type="application/ld+json"]')!
+        .textContent!,
+    );
+    const offers = ld["@graph"][0].offers;
+    expect(offers.map((o: { price: string }) => o.price)).toEqual([
+      "200",
+      "450",
+      "1050",
+    ]);
+    expect(offers[0].priceCurrency).toBe("EUR");
+    expect(ld["@graph"][0].url).toBe(
+      "https://ludvik4.dev/services/web-animation",
+    );
   });
 });

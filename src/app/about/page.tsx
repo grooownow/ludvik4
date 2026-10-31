@@ -17,12 +17,12 @@ export const metadata: Metadata =
     : {
         title: "About the Studio",
         description:
-          "Ludvik4 is a Europe-based, founder-led web product studio working worldwide on websites, workflow automation, MVPs, and custom web applications.",
+          "Ludvik4 is a founder-led web product studio based in Spain, working worldwide on websites, workflow automation, MVPs, and custom web applications.",
         alternates: { canonical: "/about" },
         openGraph: {
           title: "About Ludvik4",
           description:
-            "A founder-led web product studio in Europe, working worldwide.",
+            "A founder-led web product studio in Spain, working worldwide.",
           url: "/about",
         },
       };

@@ -58,7 +58,7 @@ export function HomeStage({ content }: { content: MarketContent }) {
       </div>
 
       {/* "An animation like this for your site" — the mascot's bubble. */}
-      {content.lang === "ru" ? <MascotReply /> : null}
+      <MascotReply copy={content.home.mascotReply} />
 
       {/* Only the scroll cue, in the tagline's muted ink; a round
           iridescent glow rises behind it on hover (.scroll-cue). */}

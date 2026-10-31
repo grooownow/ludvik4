@@ -14,6 +14,8 @@ import { ContactOrderCard } from "./order-cta";
 export async function MarketContact() {
   if (process.env.SITE_MARKET === "en") {
     const { LeadForm } = await import("@/features/lead");
+    const { internationalOrderPrefills } =
+      await import("./international-pricing");
     const content = getMarketContent("en");
     return (
       <ContactPageView
@@ -22,6 +24,7 @@ export async function MarketContact() {
           <LeadForm
             turnstileSiteKey={env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
             labels={content.contact.form?.labels}
+            orderPrefills={internationalOrderPrefills}
           />
         }
       />

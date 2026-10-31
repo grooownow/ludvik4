@@ -15,7 +15,7 @@ same definitions and boundaries.
 
 Plain-language definition:
 
-> Ludvik4 is a Europe-based, founder-led web product studio that designs and
+> Ludvik4 is a Spain-based, founder-led web product studio that designs and
 > builds focused websites, controlled business workflow automations, MVPs, and
 > custom web applications for clients worldwide.
 
@@ -109,7 +109,7 @@ appear on the international site.
 
 ## Geography and identity
 
-Canonical public geography: `Europe-based · remote · worldwide`.
+Canonical public geography: `Spain-based · remote · worldwide`.
 
 Spain may appear where a real-world legal or organisational location is useful,
 including the privacy notice and Organization structured data. The international

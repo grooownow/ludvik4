@@ -56,9 +56,9 @@ describe("HomeEn", () => {
     render(<HomeEn content={content} baseUrl="https://ludvik4.dev" />);
 
     expect(
-      screen.getByRole("button", { name: "Send request" }),
+      screen.getByRole("button", { name: "Send enquiry" }),
     ).toBeInTheDocument();
-    expect(screen.getByLabelText(/Your task/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Your project/i)).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: "Read the Privacy Notice." }),
     ).toHaveAttribute("href", "/privacy");

@@ -16,14 +16,16 @@ type Tab = { id: string; label: string; href: string };
 export function PricingTabs({
   tabs,
   activeId,
+  label,
 }: {
   tabs: Tab[];
   activeId: string;
+  label: string;
 }) {
   return (
     // Phones: one scrollable row of chips.
     <nav
-      aria-label="Услуги"
+      aria-label={label}
       className="-mx-6 flex [scrollbar-width:none] gap-2 overflow-x-auto px-6 pb-1"
     >
       {tabs.map((tab) => (

@@ -6,6 +6,15 @@ writing detail here.
 
 ## Now
 
+**[LOCAL, AWAITING OWNER 2026-10-31] EN storefront parity.** Branch
+`feat/en-storefront-parity`: five services with packages and EUR prices on
+ludvik4.dev (`/services`, `international-pricing.ts`), Spain open, hall links,
+mascot bubble, Order → prefilled `/contact`, `/legal-notice`, `/cookies`,
+`/terms-of-service`. RU output unchanged. Not deployed until the owner approves. Articles
+and EN contracts deferred. Open: lawyer review, VAT-inclusive prices for
+private clients (TRLGDCU art. 20, 60), VIES/ROI with the gestor. Design:
+`docs/superpowers/specs/2026-10-31-en-storefront-parity-design.md`.
+
 **[SHIPPED 2026-10-28] Security pass, both markets.** Order function: the
 delivery trace is now gated by the function's own `ORDER_DEBUG_TRACE=1`, not
 by a forgeable `Origin: http://localhost`; service/plan/price accept one line

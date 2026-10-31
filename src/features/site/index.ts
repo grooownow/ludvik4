@@ -7,6 +7,12 @@ import { buildSiteMetadata } from "./seo";
 export { MarketHome } from "./market-home";
 export { MarketContact } from "./market-contact";
 export { PricingPageView } from "./pricing-page";
+export {
+  getInternationalPricingService,
+  internationalOrderPrefills,
+  internationalPricingCatalog,
+  internationalPricingServices,
+} from "./international-pricing";
 export { ORDER_EMAIL, orderConfig } from "./order-config";
 export {
   getPricingServiceBySlug,
@@ -15,6 +21,7 @@ export {
 } from "./pricing-draft";
 export { AboutRuView } from "./about-ru";
 export { PrivacyPage } from "./privacy-page";
+export { CookiePolicyView, LegalNoticeView, TermsView } from "./legal-en";
 export { ConsentRuView, PrivacyPolicyRuView } from "./legal-ru";
 export { SiteHeader } from "./site-chrome";
 export { Breadcrumbs, type BreadcrumbItem } from "./breadcrumbs";

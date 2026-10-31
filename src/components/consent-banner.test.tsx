@@ -51,11 +51,12 @@ describe("ConsentBanner", () => {
     expect(document.body.style.paddingBottom).toBe("");
   });
 
-  it("links to the privacy notice", () => {
+  it("links to the cookie policy", () => {
     render(<ConsentBanner onAccept={vi.fn()} onDecline={vi.fn()} />);
 
-    expect(
-      screen.getByRole("link", { name: "Privacy Notice" }),
-    ).toHaveAttribute("href", "/privacy");
+    expect(screen.getByRole("link", { name: "Cookie Policy" })).toHaveAttribute(
+      "href",
+      "/cookies",
+    );
   });
 });

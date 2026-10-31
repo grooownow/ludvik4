@@ -19,7 +19,7 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
           Privacy Notice
         </h1>
         <p className="text-muted-foreground mt-3 text-sm">
-          Last updated: 30 August 2026
+          Last updated: 31 October 2026
         </p>
 
         <div className="mt-10 space-y-9 text-[15px] leading-7">
@@ -239,7 +239,14 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
               given — the control below, also in the footer of every page,
               clears your choice, stops any session replay and lets you decide
               again. Withdrawal does not affect processing carried out before
-              you withdrew.
+              you withdrew. Details are in the{" "}
+              <Link
+                href="/cookies"
+                className="text-foreground underline underline-offset-4"
+              >
+                Cookie Policy
+              </Link>
+              .
             </p>
             <ConsentSettingsButton className="text-foreground mt-3 h-auto p-0 underline underline-offset-4" />
           </section>

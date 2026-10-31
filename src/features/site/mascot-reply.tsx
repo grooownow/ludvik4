@@ -38,6 +38,24 @@ function rememberDismissed() {
 /** The bubble's order: the animation service, no package picked yet. */
 const ANIMATION_ORDER = { service: "Анимации и 3D", plan: "", price: "" };
 
+export type MascotReplyCopy = {
+  close: string;
+  idle: string;
+  touched: string;
+  line: string;
+  cta: string;
+  /** Without an order dialog: where the button leads. */
+  contactHref?: string;
+};
+
+const RU_COPY: MascotReplyCopy = {
+  close: "Скрыть подсказку",
+  idle: "Меня можно потрогать! ",
+  touched: "Понравилось? ",
+  line: "Такого героя — или ещё круче — сделаем и для вашего сайта.",
+  cta: "Хочу такую анимацию →",
+};
+
 /** True once the mascot was touched: the live canvas or the still's push button. */
 function useMascotTouched(root: React.RefObject<HTMLElement | null>) {
   const [touched, setTouched] = useState(false);
@@ -59,7 +77,7 @@ function useMascotTouched(root: React.RefObject<HTMLElement | null>) {
   return touched;
 }
 
-export function MascotReply() {
+export function MascotReply({ copy = RU_COPY }: { copy?: MascotReplyCopy }) {
   const root = useRef<HTMLDivElement>(null);
   const touched = useMascotTouched(root);
   const [idle, setIdle] = useState(false);
@@ -99,14 +117,14 @@ export function MascotReply() {
         <button
           type="button"
           onClick={dismiss}
-          aria-label="Скрыть подсказку"
+          aria-label={copy.close}
           className="text-stage-muted hover:text-foreground pointer-events-auto absolute top-0.5 right-0.5 grid size-8 cursor-pointer place-items-center rounded-full text-sm leading-none"
         >
           ×
         </button>
         <p className="pr-3">
-          {touched ? "Понравилось? " : "Меня можно потрогать! "}
-          Такого героя — или ещё круче — сделаем и для вашего сайта.
+          {touched ? copy.touched : copy.idle}
+          {copy.line}
         </p>
         {/* A roomy hit area: padding around the line, pulled back with a
             negative margin so the text stays where it was. Pressing it (the order
@@ -116,9 +134,10 @@ export function MascotReply() {
           target={ANIMATION_ORDER}
           placement="mascot"
           onOpen={dismiss}
+          contactHref={copy.contactHref}
           className="text-primary hover:text-primary/80 hover:bg-primary/5 pointer-events-auto -mx-2.5 mt-1 -mb-1.5 inline-flex cursor-pointer items-center rounded-xl px-2.5 py-2 font-medium whitespace-nowrap transition-colors"
         >
-          Хочу такую анимацию →
+          {copy.cta}
         </OrderCta>
         {/* The tail: a thin curved tip toward the mascot's head, like a
             chat bubble's. */}
