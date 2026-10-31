@@ -36,6 +36,13 @@ export type PricingCatalog = {
   copy: PricingCopy;
   /** Where "Order" leads when the market has no order dialog. */
   orderHref?: (service: PricingService, pack: PricingPackage) => string;
+  /** How VAT is shown next to the packages; none on RU. */
+  vat?: {
+    /** One small line under the packages. */
+    line?: string;
+    /** A small total under each card's price, e.g. "€242 incl. VAT". */
+    cardTotal?: (price: string) => string | undefined;
+  };
   /** The animation gallery's captions, in tile order. */
   galleryCaptions?: { title: string; text: string }[];
   jsonLd: {

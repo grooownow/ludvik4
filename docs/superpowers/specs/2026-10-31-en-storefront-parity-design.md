@@ -82,9 +82,11 @@ All prices exclude VAT; the owner pays income tax from them.
 Web app Basic is the simplest version: 3–4 weeks and 1 month of support; complex
 search, file uploads, AI or integrations are quoted on top.
 
-Package cards show the price only (owner): no VAT wording, no totals. The 30% is
-a margin for the owner's income tax, not VAT. VAT, where it applies, is stated
-in the written agreement; `/terms` says so.
+Package cards show the price without VAT as the headline and, in small type
+under it, the total with 21% Spanish VAT for private clients (owner,
+2026-10-31, after the legal check in `tmp-review/legal-research-en-2026-10-31.md`).
+The 30% margin covers the owner's income tax. The phone number and the final VAT
+treatment go in the written agreement.
 
 "From" prices equal Basic. Running costs "from 1,000 ₽/month" become "usually
 from €20 a month". EN Extended uses the RU current (discounted) price.
