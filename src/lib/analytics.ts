@@ -38,6 +38,7 @@ export function shouldLoadVercelAnalytics(market: string | undefined): boolean {
 export const ANALYTICS_EVENTS = {
   ctaClicked: "cta.clicked",
   telegramClicked: "contact.telegram_clicked",
+  whatsappClicked: "contact.whatsapp_clicked",
   leadFormStarted: "lead.form_started",
   leadFormSubmitted: "lead.form_submitted",
   leadFormFailed: "lead.form_failed",

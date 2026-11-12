@@ -306,9 +306,10 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
         return;
       }
 
-      // Telegram already reports itself as `contact.telegram_clicked`.
+      // Telegram and WhatsApp already report themselves
+      // (`contact.telegram_clicked`, `contact.whatsapp_clicked`).
       // Counting one click as two events would quietly inflate exits.
-      if (destination.host === "t.me") {
+      if (destination.host === "t.me" || destination.host === "wa.me") {
         return;
       }
 

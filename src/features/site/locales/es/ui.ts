@@ -9,6 +9,12 @@ export const esUi: UiCopy = {
     language: "Idioma",
   },
   stage: { scroll: "Ir a la colección", push: "Empuja al tentetieso" },
+  whatsapp: {
+    label: "Escríbenos por WhatsApp",
+    caption: "¿Una pregunta o una propuesta? Escríbenos por WhatsApp",
+    greeting: "¡Hola! Te escribo desde ludvik4.dev.",
+    hide: "Ocultar el botón de WhatsApp",
+  },
   gallery: {
     open: "Abrir",
     newWindow: "(se abre en una ventana nueva)",

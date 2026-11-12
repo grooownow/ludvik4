@@ -15,6 +15,17 @@ export type UiCopy = {
     language: string;
   };
   stage: { scroll: string; push: string };
+  /** The WhatsApp chat (docs/specs/whatsapp-button.md). */
+  whatsapp: {
+    /** Accessible name of the icon-only links, and the footer link text. */
+    label: string;
+    /** The desktop floating pill's text. */
+    caption: string;
+    /** Prefilled in the chat; the visitor sends or edits it. */
+    greeting: string;
+    /** The phone ×. */
+    hide: string;
+  };
   gallery: { open: string; newWindow: string; about: string };
   /** Screen-reader note on a work card that opens in a new tab. */
   newTab: string;
@@ -79,6 +90,12 @@ export const enUi: UiCopy = {
     language: "Language",
   },
   stage: { scroll: "Scroll to the collection", push: "Push the roly-poly" },
+  whatsapp: {
+    label: "Message us on WhatsApp",
+    caption: "Question or proposal? Message us on WhatsApp",
+    greeting: "Hi! I'm writing from ludvik4.dev.",
+    hide: "Hide the WhatsApp button",
+  },
   gallery: {
     open: "Open",
     newWindow: "(opens in a new window)",

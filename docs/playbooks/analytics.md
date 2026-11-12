@@ -76,18 +76,19 @@ event — old data won't follow; add the new name and retire the old one.
 Wave 1, live on the EN storefront. Full rationale and the deferred wave 2:
 `docs/specs/analytics-events.md`.
 
-| Event                      | What counts                                                                         |
-| -------------------------- | ----------------------------------------------------------------------------------- |
-| `cta.clicked`              | A contact CTA is pressed. `placement`: nav, nav_mobile, hero, service, form_submit. |
-| `contact.telegram_clicked` | A Telegram link is pressed. Shipped before wave 1 — the name is frozen.             |
-| `lead.form_started`        | First focus in any form field. Separates "saw the form" from "tried".               |
-| `lead.form_submitted`      | A real enquiry landed. Not emitted when the honeypot caught the submission.         |
-| `lead.form_failed`         | A rejected attempt, with `reason`: rate_limit, validation, captcha, delivery.       |
-| `lead.form_abandoned`      | Started, then left without success. `fields_touched` is a count, never values.      |
-| `page.engaged`             | 30s of tab-visible time on one page, once. A background tab accumulates nothing.    |
-| `content.scroll_depth`     | 25/50/75/100% seen, once each. Nothing at all on a page that does not scroll.       |
-| `nav.outbound_clicked`     | A click to another host. Telegram is excluded — it reports itself.                  |
-| `faq.item_opened`          | An FAQ question is opened. A close is not a second open.                            |
+| Event                      | What counts                                                                           |
+| -------------------------- | ------------------------------------------------------------------------------------- |
+| `cta.clicked`              | A contact CTA is pressed. `placement`: nav, nav_mobile, hero, service, form_submit.   |
+| `contact.telegram_clicked` | A Telegram link is pressed. Shipped before wave 1 — the name is frozen.               |
+| `contact.whatsapp_clicked` | A WhatsApp link is pressed (ludvik4.dev). `placement`: float, header, footer.         |
+| `lead.form_started`        | First focus in any form field. Separates "saw the form" from "tried".                 |
+| `lead.form_submitted`      | A real enquiry landed. Not emitted when the honeypot caught the submission.           |
+| `lead.form_failed`         | A rejected attempt, with `reason`: rate_limit, validation, captcha, delivery.         |
+| `lead.form_abandoned`      | Started, then left without success. `fields_touched` is a count, never values.        |
+| `page.engaged`             | 30s of tab-visible time on one page, once. A background tab accumulates nothing.      |
+| `content.scroll_depth`     | 25/50/75/100% seen, once each. Nothing at all on a page that does not scroll.         |
+| `nav.outbound_clicked`     | A click to another host. Telegram and WhatsApp are excluded — they report themselves. |
+| `faq.item_opened`          | An FAQ question is opened. A close is not a second open.                              |
 
 Beyond these, posthog-js **autocapture** records every click on every button and
 link, and `$pageview`/`$pageleave` carry `$prev_pageview_duration` and

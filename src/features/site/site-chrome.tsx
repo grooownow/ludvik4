@@ -8,6 +8,7 @@ import { HomeLink } from "./anchor-link";
 import { LanguageSwitch } from "./language-switch";
 import { MobileMenu } from "./mobile-menu";
 import { NavLinks } from "./nav-links";
+import { WhatsAppFloat, WhatsAppLink, WhatsAppMark } from "./whatsapp";
 import { TELEGRAM_URL, type MarketContent, type ServiceCard } from "./content";
 import { uiFor } from "./ui-for";
 
@@ -158,6 +159,18 @@ export function SiteHeader({
             closeLabel={closeLabel}
           />
           {locale ? (
+            // ludvik4.dev: the WhatsApp chat, beside the language switch.
+            <WhatsAppLink
+              copy={uiFor(locale).whatsapp}
+              placement="header"
+              aria-label={uiFor(locale).whatsapp.label}
+              title={uiFor(locale).whatsapp.label}
+              className="text-whatsapp hover:bg-accent focus-visible:ring-ring grid size-10 place-items-center rounded-full transition-colors focus-visible:ring-2 focus-visible:outline-none max-lg:order-first"
+            >
+              <WhatsAppMark className="size-5" />
+            </WhatsAppLink>
+          ) : null}
+          {locale ? (
             <LanguageSwitch
               current={locale}
               locales={enabledLocales()}
@@ -177,6 +190,8 @@ export function SiteHeader({
 // One dark footer site-wide, continuing the home's closing band. Its
 // data-site-footer marker turns on the overscroll layer in globals.css.
 export function SiteFooter({ content }: { content: MarketContent }) {
+  // ludvik4.dev only: the RU market's content has no locale.
+  const whatsapp = content.locale ? uiFor(content.locale).whatsapp : undefined;
   return (
     <footer
       data-site-footer
@@ -219,11 +234,21 @@ export function SiteFooter({ content }: { content: MarketContent }) {
               </Link>
             ),
           )}
+          {whatsapp ? (
+            <WhatsAppLink
+              copy={whatsapp}
+              placement="footer"
+              className="hover:text-white"
+            >
+              WhatsApp
+            </WhatsAppLink>
+          ) : null}
           {/* Renders nothing on RU and on any build without a PostHog key —
               the footer is shared, so the control suppresses itself. */}
           <ConsentSettingsButton className="h-auto p-0 font-mono text-sm font-normal text-white/45 hover:bg-transparent hover:text-white" />
         </span>
       </div>
+      {whatsapp ? <WhatsAppFloat copy={whatsapp} /> : null}
     </footer>
   );
 }

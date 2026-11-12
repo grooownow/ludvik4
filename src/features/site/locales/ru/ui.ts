@@ -12,6 +12,12 @@ export const ruUi: UiCopy = {
     language: "Язык",
   },
   stage: { scroll: "Прокрутить к коллекции", push: "Толкнуть неваляшку" },
+  whatsapp: {
+    label: "Написать нам в WhatsApp",
+    caption: "Вопрос или предложение? Напишите нам в WhatsApp",
+    greeting: "Здравствуйте! Пишу с сайта ludvik4.dev.",
+    hide: "Скрыть кнопку WhatsApp",
+  },
   gallery: {
     open: "Открыть",
     newWindow: "(откроется в новом окне)",

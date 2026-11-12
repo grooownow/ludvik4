@@ -9,6 +9,8 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --color-pink-soft: var(--pink-soft);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-foreground: var(--whatsapp-foreground);
   --color-intro: var(--intro);
   --color-intro-foreground: var(--intro-foreground);
   --color-surface-warm: var(--surface-warm);
@@ -74,6 +76,10 @@
   --input: #e5dce1;
   --ring: #ff4fb6;
   --pink-soft: #ffd7eb;
+  /* WhatsApp brand green: the chat button's mark only (docs/specs/whatsapp-button.md);
+     the same in both themes, as the brand is. */
+  --whatsapp: #25d366;
+  --whatsapp-foreground: #ffffff;
   --surface-warm: #fff8f5;
   /* Exhibition home: the one muted text colour on the stage and in the menu. */
   --stage-muted: rgba(42, 20, 32, 0.7);
