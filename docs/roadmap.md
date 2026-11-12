@@ -6,6 +6,17 @@ writing detail here.
 
 ## Now
 
+**[DONE 2026-11-12 · ludvik4.dev] WhatsApp chat button.** A fixed
+bottom-right button (captioned pill on desktop; smaller round button on
+phones with a × that is remembered), a header icon and a footer link, all
+opening `wa.me/34665575316` with a greeting in the page's language; clicks
+report `contact.whatsapp_clicked`. Spec: `docs/specs/whatsapp-button.md`.
+
+**[DONE 2026-11-12 · all sites] Museum captions removed.** No exhibit/hall
+numbering, no mascot bubble; the mascot's label ends with the "I want this
+animation" button; the RU home shows Тайный Санта instead of qa-pilot
+(`docs/specs/immersive-home.md` → Change, 2026-11-12).
+
 **[DONE 2026-11-12 · RU only] Works section as a screen gallery.** `/cases`
 lists all five works (smallFriendFiles, FortNoise, Gridfin, Тайный Санта,
 qa-pilot) as rows with screen strips; `/cases/<slug>` tells each work point by

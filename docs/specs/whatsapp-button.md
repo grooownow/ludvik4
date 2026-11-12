@@ -73,4 +73,4 @@ WhatsApp Business API, chat widgets, a WhatsApp option on ludvik4.ru.
 
 ## Status
 
-`approved` — owner, in chat, 2026-11-12.
+`shipped` — approved by the owner in chat and merged on 2026-11-12.
