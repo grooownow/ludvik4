@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Halls lab v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --fg: #1a1a1a;
+    --muted: rgba(42, 20, 32, 0.7);
+    --faint: rgba(42, 20, 32, 0.38);
+    --hair: rgba(42, 20, 32, 0.12);
+    --pink: #ff4fb6;
+    --pink-soft: #ffd7eb;
+    --accent: #fff0f6;
+    --plum: #14040c;
+    --ease: cubic-bezier(.22, .61, .36, 1);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Geist, system-ui, sans-serif; color: var(--fg); background: #fff; -webkit-font-smoothing: antialiased; }
+
+  .lab {
+    position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    padding: 14px 24px; background: rgba(20,4,12,.92); color: #fff; backdrop-filter: blur(8px); font-size: 13px;
+  }
+  .lab b { font-weight: 600; margin-right: 8px; }
+  .lab button { font: inherit; color: #fff; cursor: pointer; border: 1px solid rgba(255,255,255,.25); background: transparent; padding: 7px 14px; border-radius: 999px; }
+  .lab button[aria-pressed="true"] { background: var(--pink); border-color: var(--pink); }
+  .lab .note { opacity: .6; margin-left: auto; }
+  .tints { display: none; gap: 6px; margin-left: 14px; padding-left: 14px; border-left: 1px solid rgba(255,255,255,.2); }
+  [data-v="2"] .tints { display: inline-flex; }
+  .lab .tints button[aria-pressed="true"] { background: #fff; color: var(--plum); border-color: #fff; }
+  .tints .sep { width: 1px; background: rgba(255,255,255,.2); margin: 0 6px; }
+
+  .band { max-width: 72rem; margin: 0 auto; padding: 96px 24px 140px; }
+  .eyebrow { font-family: "Geist Mono", monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  h2 { margin: 12px 0 0; font-size: clamp(32px, 5vw, 60px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.04; }
+  h2 em { font-style: normal; color: var(--pink); }
+  .mono { font-family: "Geist Mono", monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+  .v { display: none; margin-top: 48px; }
+  [data-v="0"] .v0, [data-v="1"] .v1, [data-v="2"] .v2, [data-v="3"] .v3, [data-v="4"] .v4 { display: block; }
+  .hint { margin: 18px 0 0; font-size: 14px; color: var(--muted); max-width: 44rem; line-height: 1.55; }
+
+  /* ---------- 0 · plain stubs, as they were ---------- */
+  .grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 1023px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 639px) { .grid { grid-template-columns: 1fr; } }
+  .stub { aspect-ratio: 4/3; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; background: var(--accent); }
+  .stub.soft { background: var(--pink-soft); }
+  .name { display: block; font-size: 24px; font-weight: 600; letter-spacing: -0.02em; }
+  .line { display: block; margin-top: 4px; font-size: 14px; color: var(--muted); }
+
+  /* ---------- 1 · Wall text: typography only ---------- */
+  .wall { position: relative; aspect-ratio: 4/3; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; background: var(--accent); overflow: hidden; }
+  .wall.soft { background: var(--pink-soft); }
+  .wall .num { font-size: 13px; }
+  .wall .desc { display: block; margin-top: 14px; font-size: 14px; line-height: 1.5; color: var(--fg); max-width: 22rem;
+    opacity: 0; transform: translateY(8px); max-height: 0; transition: opacity .6s var(--ease), transform .6s var(--ease), max-height .6s var(--ease); }
+  .wall .line { transition: opacity .4s var(--ease); }
+  .wall::after { content: ""; position: absolute; left: 28px; right: 28px; bottom: 0; height: 2px; background: var(--pink);
+    transform: scaleX(0); transform-origin: left; transition: transform .9s var(--ease); }
+  .wall:hover::after { transform: scaleX(1); }
+  .wall:hover .desc { opacity: 1; transform: none; max-height: 90px; }
+
+  /* ---------- 2 · Drawings: fine-line plans (fixed, as first shown) ----------
+     White cards, hairline border, grey fine lines; the accent turns pink only
+     on hover. Each card draws itself when it scrolls into view. */
+  .plan { position: relative; aspect-ratio: 4/3; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; background: #fff; border: 1px solid var(--hair); overflow: hidden;
+    transition: border-color .6s var(--ease), background .6s var(--ease); }
+  .plan:hover { border-color: rgba(255,79,182,.45); background: #fffafd; }
+  .plan .plate { position: absolute; right: 24px; top: 24px; width: 52%; max-width: 220px; z-index: 1; }
+  .plan .plate svg { display: block; width: 100%; overflow: visible; transition: transform .9s var(--ease); }
+  .plan:hover .plate svg { transform: translateY(-4px); }
+  .plan svg .ln { fill: none; stroke: rgba(42,20,32,.42); stroke-width: 1.1; vector-effect: non-scaling-stroke;
+    stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke .6s var(--ease); }
+  .plan svg .fl { fill: rgba(42,20,32,.07); stroke: none; opacity: 0; transition: opacity .8s var(--ease); }
+  .plan svg .ac { fill: none; stroke: rgba(42,20,32,.42); stroke-width: 1.1; vector-effect: non-scaling-stroke;
+    stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke .6s var(--ease), fill .6s var(--ease); }
+  .plan svg .acf { fill: transparent; transition: fill .6s var(--ease); }
+  .plan.drawn svg .ln, .plan.drawn svg .ac { animation: draw 1.8s var(--ease) forwards; }
+  .plan.drawn svg .fl { opacity: 1; transition-delay: 1.2s; }
+  .plan:hover svg .ln { stroke: rgba(42,20,32,.7); }
+  .plan:hover svg .ac { stroke: var(--pink); }
+  .plan:hover svg .acf { fill: var(--pink); }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .plan .txt, .plan .mono { position: relative; z-index: 1; }
+  .plan .ann { display: none; }
+
+  /* Detailed plan (kept alongside the simple one): a larger drawing with
+     dimensions and notes, on a faint pink grid fading out under the text */
+  [data-draw="detail"] .plan::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0;
+    transition: opacity 1.4s var(--ease) .5s;
+    background-image: linear-gradient(rgba(255,79,182,.14) 1px, transparent 1px), linear-gradient(90deg, rgba(255,79,182,.14) 1px, transparent 1px),
+      linear-gradient(rgba(255,79,182,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,79,182,.07) 1px, transparent 1px);
+    background-size: 36px 36px, 36px 36px, 9px 9px, 9px 9px; background-position: -1px -1px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 80%); mask-image: linear-gradient(to bottom, #000 45%, transparent 80%); }
+  [data-draw="detail"] .plan.drawn::before { opacity: 1; }
+  [data-draw="detail"] .plan .plate { width: 58%; max-width: 250px; right: 22px; top: 34px; }
+  [data-draw="detail"] .plan .ann { display: inline; }
+  .ann .an { fill: none; stroke: rgba(255,79,182,.7); stroke-width: 1; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .ann text { font-family: "Geist Mono", monospace; font-size: 8.5px; letter-spacing: .06em; fill: rgba(42,20,32,.55); opacity: 0; transition: opacity .8s var(--ease) 1.6s; }
+  .plan.drawn .ann .an { animation: draw 1.4s var(--ease) .8s forwards; }
+  .plan.drawn .ann text { opacity: 1; }
+  [data-tint="dark"] .ann text { fill: rgba(255,255,255,.55); }
+  [data-tint="dark"][data-draw="detail"] .plan::before { opacity: .5; }
+
+  /* ---------- Colour around the section, cards untouched ----------
+     .hall-stage is the full-width band behind the whole section. */
+  .hall-stage { position: relative; isolation: isolate; overflow: hidden; transition: background .8s var(--ease); }
+  .hall-stage::before, .hall-stage::after { content: ""; position: absolute; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 1.2s var(--ease); }
+  .hall-stage .grid { position: relative; }
+
+  /* Wall: the section is a gallery wall painted soft pink; white cards hang on it */
+  [data-tint="wall"] .hall-stage { background: linear-gradient(180deg, #fff 0%, #fff2f8 22%, #ffe4f1 100%); }
+  [data-tint="wall"] .plan { border-color: rgba(255,255,255,.9); box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 18px 40px -28px rgba(214,40,130,.35); }
+
+  /* Glow: one large soft light behind the grid; the cards are frosted glass over it */
+  [data-tint="glow"] .hall-stage::before { opacity: 1; left: 50%; top: 58%; width: min(1100px, 90vw); height: 640px;
+    transform: translate(-50%, -50%); border-radius: 50%; filter: blur(60px);
+    background: radial-gradient(closest-side, rgba(255,105,190,.8), rgba(230,180,255,.55) 55%, rgba(255,205,190,.3) 78%, transparent); }
+  [data-tint="glow"] .plan, [data-tint="spot"] .plan { background: rgba(255,255,255,.72); border-color: rgba(255,255,255,.85);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+  [data-tint="glow"] .plan:hover, [data-tint="spot"] .plan:hover { background: rgba(255,255,255,.86); }
+
+  /* Spotlight: a soft pool of pink light follows the cursor over the section */
+  [data-tint="spot"] .hall-stage { background: #fff8fb; }
+  [data-tint="spot"] .hall-stage::before { opacity: 1; left: 0; top: 0; width: 760px; height: 760px; border-radius: 50%;
+    transform: translate(calc(var(--sx, 70vw) - 50%), calc(var(--sy, 60%) - 50%));
+    background: radial-gradient(closest-side, rgba(255,110,190,.42), rgba(236,196,255,.22) 60%, transparent); filter: blur(30px); transition: opacity 1.2s var(--ease); }
+
+  /* Stripe: one wide band of colour runs across the section behind the cards */
+  [data-tint="stripe"] .hall-stage .grid::before { content: ""; position: absolute; z-index: -1; left: -50vw; right: -50vw; top: 18%; bottom: 18%;
+    background: linear-gradient(90deg, #ffe6f2 0%, #ffd3ea 45%, #f3d6ff 100%); }
+  [data-tint="stripe"] .plan { box-shadow: 0 18px 40px -30px rgba(214,40,130,.35); }
+
+  /* Dark hall: the section turns plum like the closing band; the cards are dark glass with light drawings */
+  [data-tint="dark"] .hall-stage { background: var(--plum); color: #fff; }
+  [data-tint="dark"] .hall-stage .eyebrow, [data-tint="dark"] .hall-stage .mono, [data-tint="dark"] .hall-stage .line, [data-tint="dark"] .hall-stage .hint { color: rgba(255,255,255,.55); }
+  [data-tint="dark"] .plan { background: rgba(255,255,255,.035); border-color: rgba(255,255,255,.1); }
+  [data-tint="dark"] .plan:hover { background: rgba(255,255,255,.06); border-color: rgba(255,79,182,.5); }
+  [data-tint="dark"] .plan svg .ln, [data-tint="dark"] .plan svg .ac { stroke: rgba(255,255,255,.5); }
+  [data-tint="dark"] .plan svg .fl { fill: rgba(255,255,255,.07); }
+  [data-tint="dark"] .plan:hover svg .ln { stroke: rgba(255,255,255,.85); }
+  [data-tint="dark"] .plan:hover svg .ac { stroke: var(--pink); }
+  [data-tint="dark"] .hall-stage::before { opacity: 1; left: 50%; top: 100%; width: 900px; height: 420px; transform: translate(-50%, -50%);
+    border-radius: 50%; filter: blur(70px); background: radial-gradient(closest-side, rgba(255,79,182,.35), transparent); }
+
+  /* ---------- 3 · Numerals: big outlined numbers ---------- */
+  .numc { position: relative; aspect-ratio: 4/3; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; justify-content: flex-end; background: var(--accent); overflow: hidden; isolation: isolate; }
+  .numc.soft { background: var(--pink-soft); }
+  .numc .big { position: absolute; right: -10px; top: -46px; z-index: -1; font-size: 230px; font-weight: 600; letter-spacing: -0.06em; line-height: 1;
+    color: transparent; -webkit-text-stroke: 1px rgba(255,79,182,.55);
+    background: linear-gradient(180deg, rgba(255,79,182,.32) 0%, rgba(255,143,206,.12) 100%); -webkit-background-clip: text; background-clip: text;
+    background-size: 100% 0%; background-repeat: no-repeat; background-position: bottom;
+    transition: background-size 1.1s var(--ease), transform 1.1s var(--ease); }
+  .numc:hover .big { background-size: 100% 100%; transform: translateY(6px); }
+  .numc .mono { position: absolute; top: 28px; left: 28px; }
+
+  /* ---------- 4 · Index: a catalogue list ---------- */
+  .index { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hair); position: relative; }
+  .row { position: relative; display: grid; grid-template-columns: 90px 1.2fr 1fr 24px; align-items: baseline; gap: 24px;
+    padding: 30px 8px; border-bottom: 1px solid var(--hair); overflow: hidden; isolation: isolate; }
+  @media (max-width: 760px) { .row { grid-template-columns: 56px 1fr; } .row .line, .row .tick { grid-column: 2; } }
+  .row::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--accent);
+    transform: scaleY(0); transform-origin: bottom; transition: transform .7s var(--ease); }
+  .row:hover::before { transform: scaleY(1); }
+  .row .name { font-size: clamp(24px, 3.2vw, 40px); font-weight: 500; letter-spacing: -0.03em; transition: transform .7s var(--ease), color .5s var(--ease); }
+  .row:hover .name { transform: translateX(10px); }
+  .row .line { margin: 0; font-size: 15px; }
+  .row .tick { width: 10px; height: 10px; border-radius: 50%; border: 1px solid var(--faint); justify-self: end; align-self: center; transition: background .5s var(--ease), border-color .5s var(--ease); }
+  .row:hover .tick { background: var(--pink); border-color: var(--pink); }
+  .peek { position: fixed; left: 0; top: 0; width: 260px; height: 180px; pointer-events: none; z-index: 40;
+    border-radius: 12px; background: #fff; border: 1px solid var(--hair); box-shadow: 0 30px 60px -30px rgba(20,4,12,.35);
+    opacity: 0; transform: translate(-50%, -50%) scale(.92); transition: opacity .35s var(--ease), transform .5s var(--ease); }
+  .peek.on { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  .peek svg { position: absolute; inset: 22px; width: calc(100% - 44px); height: calc(100% - 44px); }
+  .peek svg .ln, .peek svg .ac { fill: none; stroke: rgba(42,20,32,.6); stroke-width: 1.1; vector-effect: non-scaling-stroke; }
+  .peek svg .ac { stroke: var(--pink); }
+  .peek svg .acf { fill: var(--pink); }
+  .peek svg .fl { fill: rgba(42,20,32,.07); }
+
+  @media (hover: none) {
+    .wall .desc { opacity: 1; transform: none; max-height: 90px; }
+    .wall::after { transform: scaleX(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation-duration: 0s !important; }
+  }
+  .closing { background: var(--plum); height: 140px; }
+  .spacer { height: 100vh; display: grid; place-items: center; background: #ffe0fa; color: var(--muted);
+    font-family: "Geist Mono", monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+</style>
+</head>
+<body data-v="2" data-tint="plain" data-draw="simple">
+
+<div class="lab">
+  <b>Залы v2</b>
+  <button data-set="0">0 · Заглушки</button>
+  <button data-set="1">1 · Этикетка</button>
+  <button data-set="2">2 · Чертежи</button>
+  <button data-set="3">3 · Цифры</button>
+  <button data-set="4">4 · Каталог</button>
+  <span class="tints">
+    <button data-drawset="simple">Простой</button>
+    <button data-drawset="detail">Подробный</button>
+    <i class="sep"></i>
+    <button data-tintset="plain">Без цвета</button>
+    <button data-tintset="wall">Стена</button>
+    <button data-tintset="glow">Свечение</button>
+    <button data-tintset="spot">Прожектор</button>
+    <button data-tintset="stripe">Полоса</button>
+    <button data-tintset="dark">Тёмный зал</button>
+  </span>
+  <span class="note">Тексты черновые</span>
+</div>
+
+<div class="spacer">Здесь сцена с неваляшкой · листай вниз ↓</div>
+<div class="hall-stage">
+<section class="band" id="halls">
+  <div class="eyebrow">The collection · what I build</div>
+  <h2>If it lives in a browser, <em>I can build it.</em></h2>
+
+  <div class="v v0"><ul class="grid" id="g0"></ul>
+    <p class="hint">Как было: плашки без наполнения. Точка отсчёта.</p></div>
+  <div class="v v1"><ul class="grid" id="g1"></ul>
+    <p class="hint">Этикетка в музее: только типографика. При наведении медленно проявляется одна фраза-описание, а снизу прочерчивается тонкая розовая линия. Никаких картинок.</p></div>
+  <div class="v v2"><ul class="grid" id="g2"></ul>
+    <p class="hint">Два вида чертежа: простой (как в первом варианте) и подробный (с размерами и пометками на сетке). Простой: белые плашки, серые линии, розовая деталь при наведении; каждая плашка прорисовывается, когда доходит до экрана. Цвет теперь вокруг плашек, на всю секцию: стена (секция — розовая стена галереи), свечение (один мягкий источник света за сеткой, плашки как матовое стекло), прожектор (пятно света идёт за курсором), полоса (широкая цветная полоса через всю секцию за плашками), тёмный зал (секция тёмная, как финальная).</p></div>
+  <div class="v v3"><ul class="grid" id="g3"></ul>
+    <p class="hint">Крупные контурные номера залов, срезанные краем плашки. При наведении цифра медленно заливается розовым снизу вверх.</p></div>
+  <div class="v v4"><ul class="index" id="g4"></ul>
+    <p class="hint">Каталог: вместо сетки список во всю ширину, как оглавление выставки. При наведении строка заливается, название сдвигается, а рядом с курсором появляется маленький чертёж зала.</p></div>
+</section>
+</div>
+<div class="closing"></div>
+<div class="peek" id="peek"></div>
+
+<script>
+const HALLS = [
+  { n: "01", name: "Websites", line: "for products, studios, events", soft: true,
+    desc: "A site that explains you in ten seconds, loads fast and is found in search." },
+  { n: "02", name: "Landing pages", line: "one offer, one action",
+    desc: "One page, one goal: copy, design and code tuned to a single click." },
+  { n: "03", name: "Web apps & SaaS", line: "accounts, data, payments, AI",
+    desc: "Products with sign-in, payments and dashboards, built to grow past the MVP." },
+  { n: "04", name: "Automations", line: "the boring parts, handled",
+    desc: "Bots and integrations that move data between your tools while you sleep." },
+  { n: "05", name: "Widgets & tools", line: "small, sharp, embeddable",
+    desc: "Calculators, configurators and quizzes that drop into any site." },
+  { n: "06", name: "Something else?", line: "ask — it’s probably possible", soft: true,
+    desc: "If it runs in a browser, tell me the idea and I’ll say honestly if it’s doable." },
+];
+
+// Fine-line plans, 240×160. .ln outlines, .fl soft fills, .ac/.acf the one accent.
+const P = (d) => `<path class="ln" pathLength="1" d="${d}"/>`;
+const PLANS = [
+  `<rect class="fl" x="10" y="26" width="220" height="40" rx="3"/>
+   ${P("M6 4 H234 V156 H6 Z")}${P("M6 20 H234")}
+   ${P("M16 12 h0.01 M26 12 h0.01 M36 12 h0.01")}
+   ${P("M20 36 H140 M20 48 H110")}
+   ${P("M20 82 H100 V140 H20 Z M120 82 H220 V140 H120 Z")}
+   <rect class="acf" x="160" y="34" width="56" height="18" rx="9"/>
+   <path class="ac" pathLength="1" d="M169 34 H207 A9 9 0 0 1 207 52 H169 A9 9 0 0 1 169 34 Z"/>`,
+  `${P("M70 2 H170 V158 H70 Z")}
+   ${P("M84 20 H156 M84 32 H140")}
+   ${P("M84 50 H156 M84 58 H150 M84 66 H128")}
+   <rect class="fl" x="84" y="122" width="72" height="24" rx="2"/>
+   ${P("M84 122 H156 M84 134 H140")}
+   <rect class="acf" x="84" y="84" width="72" height="22" rx="11"/>
+   <path class="ac" pathLength="1" d="M95 84 H145 A11 11 0 0 1 145 106 H95 A11 11 0 0 1 95 84 Z"/>`,
+  `${P("M6 4 H234 V156 H6 Z")}${P("M52 4 V156")}
+   ${P("M16 20 H42 M16 34 H38 M16 46 H38 M16 58 H38")}
+   <rect class="fl" x="64" y="16" width="160" height="26" rx="2"/>
+   ${P("M64 140 H224 M64 140 V56")}
+   <path class="ac" pathLength="1" d="M70 128 L104 104 L136 114 L176 76 L218 86"/>
+   <circle class="acf" cx="176" cy="76" r="4"/>`,
+  `${P("M10 80 a22 22 0 1 0 44 0 a22 22 0 1 0 -44 0")}
+   ${P("M98 58 H142 V102 H98 Z")}
+   ${P("M186 80 a22 22 0 1 0 44 0 a22 22 0 1 0 -44 0")}
+   <path class="ac" pathLength="1" d="M54 80 H98 M142 80 H186"/>
+   <circle class="acf" cx="120" cy="80" r="5"/>
+   ${P("M92 120 H148 M104 132 H136")}`,
+  `${P("M10 40 H230")}
+   <path class="ac" pathLength="1" d="M10 40 H150"/>
+   <circle class="acf" cx="150" cy="40" r="7"/>
+   ${P("M143 40 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0")}
+   ${P("M10 84 H90 A14 14 0 0 1 90 112 H10 A14 14 0 0 1 10 84 Z")}
+   ${P("M116 84 H222 V112 H116 Z M150 84 V112 M186 84 V112")}
+   <rect class="fl" x="10" y="132" width="212" height="20" rx="2"/>`,
+  `${P("M70 30 H170 V130 H70 Z")}
+   ${P("M60 20 H72 M60 20 V32 M180 20 H168 M180 20 V32 M60 140 H72 M60 140 V128 M180 140 H168 M180 140 V128")}
+   <path class="ac" pathLength="1" d="M120 58 V102 M98 80 H142"/>`,
+];
+const svg = (i, cls = "") => `<svg viewBox="0 0 240 160" class="${cls}" aria-hidden="true">${PLANS[i]}</svg>`;
+
+const txt = (h) => `<span class="txt"><span class="name">${h.name}</span><span class="line">${h.line}</span></span>`;
+document.getElementById("g0").innerHTML = HALLS.map((h) =>
+  `<li class="stub${h.soft ? " soft" : ""}"><span class="mono">Hall ${h.n}</span>${txt(h)}</li>`).join("");
+document.getElementById("g1").innerHTML = HALLS.map((h) =>
+  `<li class="wall${h.soft ? " soft" : ""}"><span class="mono num">Hall ${h.n}</span>
+    <span class="txt"><span class="name">${h.name}</span><span class="line">${h.line}</span><span class="desc">${h.desc}</span></span></li>`).join("");
+// Notes for the annotated treatment: dimensions in pink, labels in mono.
+const ANN = [
+  `<path class="an" pathLength="1" d="M6 -12 H234 M6 -16 V-8 M234 -16 V-8"/><text x="120" y="-16" text-anchor="middle">1440</text><text x="188" y="64" text-anchor="middle">CTA</text><text x="20" y="152">hero · cards</text>`,
+  `<path class="an" pathLength="1" d="M184 2 V158 M180 2 H188 M180 158 H188 M60 95 H82"/><text x="192" y="82">1 scroll</text><text x="56" y="98" text-anchor="end">one action</text>`,
+  `<path class="an" pathLength="1" d="M64 150 H224 M64 146 V154 M224 146 V154"/><text x="64" y="162">Q1</text><text x="224" y="162" text-anchor="end">Q4</text><text x="186" y="68">+38%</text>`,
+  `<text x="32" y="116" text-anchor="middle">CRM</text><text x="120" y="50" text-anchor="middle">bot</text><text x="208" y="116" text-anchor="middle">Sheets</text><path class="an" pathLength="1" d="M60 70 Q120 30 180 70"/>`,
+  `<text x="10" y="30">0</text><text x="230" y="30" text-anchor="end">100</text><text x="150" y="58" text-anchor="middle">64</text><path class="an" pathLength="1" d="M150 48 V52"/>`,
+  `<path class="an" pathLength="1" d="M60 150 H180 M60 146 V154 M180 146 V154"/><text x="120" y="162" text-anchor="middle">your idea</text>`,
+];
+const planSvg = (i) => `<svg viewBox="0 0 240 160" aria-hidden="true">${PLANS[i]}<g class="ann">${ANN[i]}</g></svg>`;
+document.getElementById("g2").innerHTML = HALLS.map((h, i) =>
+  `<li class="plan" style="--d:${(i % 3) * 220}ms"><div class="plate">${planSvg(i)}</div><span class="mono">Hall ${h.n}</span>${txt(h)}</li>`).join("");
+
+// "One gradient": every card shows its slice of a gradient sized to the grid.
+function layoutSweep() {
+  const grid = document.getElementById("g2").getBoundingClientRect();
+  if (!grid.width) return;
+  document.querySelectorAll("#g2 .plan").forEach((c) => {
+    const r = c.getBoundingClientRect();
+    c.style.setProperty("--gw", grid.width + "px");
+    c.style.setProperty("--gh", grid.height + "px");
+    c.style.setProperty("--gx", -(r.left - grid.left) + "px");
+    c.style.setProperty("--gy", -(r.top - grid.top) + "px");
+  });
+}
+addEventListener("resize", layoutSweep);
+document.getElementById("g3").innerHTML = HALLS.map((h) =>
+  `<li class="numc${h.soft ? " soft" : ""}"><span class="big" aria-hidden="true">${h.n}</span><span class="mono">Hall ${h.n}</span>${txt(h)}</li>`).join("");
+document.getElementById("g4").innerHTML = HALLS.map((h, i) =>
+  `<li class="row" data-i="${i}"><span class="mono">${h.n}</span><span class="name">${h.name}</span><span class="line">${h.line}</span><span class="tick"></span></li>`).join("");
+
+// Each plan draws itself once, when that card comes into view; cards that
+// arrive together (one row) start a beat apart, left to right.
+const drawObserver = new IntersectionObserver((es) => es.forEach((e) => {
+  if (!e.isIntersecting) return;
+  const card = e.target;
+  drawObserver.unobserve(card);
+  setTimeout(() => card.classList.add("drawn"), parseInt(card.style.getPropertyValue("--d")) || 0);
+}), { threshold: .45, rootMargin: "0px 0px -8% 0px" });
+document.querySelectorAll("#g2 .plan").forEach((c) => drawObserver.observe(c));
+
+// Catalogue: a small plan follows the cursor, easing behind it.
+const peek = document.getElementById("peek");
+let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+function loop() { x += (tx - x) * .14; y += (ty - y) * .14; peek.style.left = x + "px"; peek.style.top = y + "px"; raf = requestAnimationFrame(loop); }
+for (const row of document.querySelectorAll(".row")) {
+  row.addEventListener("pointerenter", (e) => {
+    if (e.pointerType !== "mouse") return;
+    peek.innerHTML = svg(+row.dataset.i);
+    tx = e.clientX + 170; ty = e.clientY; if (!peek.classList.contains("on")) { x = tx; y = ty; }
+    peek.classList.add("on"); if (!raf) loop();
+  });
+  row.addEventListener("pointermove", (e) => { tx = e.clientX + 170; ty = e.clientY; });
+  row.addEventListener("pointerleave", () => { peek.classList.remove("on"); });
+}
+
+const buttons = document.querySelectorAll(".lab button[data-set]");
+function set(v) {
+  document.body.dataset.v = v;
+  requestAnimationFrame(layoutSweep);
+  buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.set === v)));
+}
+buttons.forEach((b) => b.addEventListener("click", () => set(b.dataset.set)));
+const tintButtons = document.querySelectorAll("[data-tintset]");
+function setTint(t) {
+  document.body.dataset.tint = t;
+  tintButtons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.tintset === t)));
+  layoutSweep();
+}
+tintButtons.forEach((b) => b.addEventListener("click", () => setTint(b.dataset.tintset)));
+const drawButtons = document.querySelectorAll("[data-drawset]");
+function setDraw(d) {
+  document.body.dataset.draw = d;
+  drawButtons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.drawset === d)));
+}
+drawButtons.forEach((b) => b.addEventListener("click", () => setDraw(b.dataset.drawset)));
+set("2"); setTint("plain"); setDraw("simple");
+
+const stage = document.querySelector(".hall-stage");
+let sx = 0, sy = 0, cx = 0, cy = 0, spotRaf = 0;
+function spotLoop() {
+  cx += (sx - cx) * .08; cy += (sy - cy) * .08;
+  stage.style.setProperty("--sx", cx + "px"); stage.style.setProperty("--sy", cy + "px");
+  spotRaf = Math.abs(sx - cx) + Math.abs(sy - cy) > .5 ? requestAnimationFrame(spotLoop) : 0;
+}
+stage.addEventListener("pointermove", (e) => {
+  const r = stage.getBoundingClientRect();
+  sx = e.clientX - r.left; sy = e.clientY - r.top;
+  if (!cx && !cy) { cx = sx; cy = sy; }
+  if (!spotRaf) spotRaf = requestAnimationFrame(spotLoop);
+});
+</script>
+</body>
+</html>

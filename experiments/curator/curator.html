@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Curator lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap" rel="stylesheet" />
+<style>
+  :root { --fg: #1a1a1a; --muted: rgba(42,20,32,.7); --pink: #ff4fb6; --pink-soft: #ffd7eb; --plum: #14040c; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Geist, system-ui, sans-serif; color: var(--fg); background: #fff; -webkit-font-smoothing: antialiased; }
+  .lab { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px 24px; background: rgba(20,4,12,.92); color: #fff; font-size: 13px; }
+  .lab b { margin-right: 6px; }
+  .lab .sep { width: 1px; height: 22px; background: rgba(255,255,255,.2); margin: 0 6px; }
+  .lab button { font: inherit; color: #fff; cursor: pointer; border: 1px solid rgba(255,255,255,.25); background: transparent; padding: 6px 12px; border-radius: 999px; }
+  .lab button[aria-pressed="true"] { background: var(--pink); border-color: var(--pink); }
+
+  /* the About block, as on the site */
+  .about { max-width: 72rem; margin: 0 auto; padding: 96px 24px; display: grid; gap: 64px; grid-template-columns: minmax(0, 360px) 1fr; align-items: center; }
+  @media (max-width: 760px) { .about { grid-template-columns: 1fr; } }
+  .plate { position: relative; aspect-ratio: 4 / 5; border-radius: 16px; overflow: hidden; background: var(--pink-soft); }
+  .plate img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .plate .tag { position: absolute; left: 20px; bottom: 18px; font-family: "Geist Mono", monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #fff; background: rgba(20,4,12,.45); padding: 4px 8px; border-radius: 6px; backdrop-filter: blur(4px); }
+  .eyebrow { font-family: "Geist Mono", monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  h2 { margin: 12px 0 0; font-size: 48px; font-weight: 600; letter-spacing: -0.035em; line-height: 1.04; }
+  h2 em { font-style: normal; color: var(--pink); }
+  .body { margin-top: 20px; color: var(--muted); font-size: 17px; line-height: 1.6; max-width: 34rem; }
+  .note { max-width: 72rem; margin: -48px auto 0; padding: 0 24px 80px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+  /* contact sheet: every photo × every treatment */
+  .sheet { max-width: 72rem; margin: 0 auto; padding: 0 24px 120px; }
+  .sheet h3 { font-size: 15px; font-weight: 600; margin: 32px 0 12px; }
+  .row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+  .row figure { margin: 0; cursor: pointer; }
+  .row img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 10px; display: block; outline: 2px solid transparent; outline-offset: 2px; }
+  .row figure[aria-current="true"] img { outline-color: var(--pink); }
+  .row figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; }
+</style>
+</head>
+<body>
+<div class="lab">
+  <b>Фото куратора</b>
+  <button data-photo="coat">Пальто, крупно</button>
+  <button data-photo="glasses">Розовые волосы, очки</button>
+  <button data-photo="dog">С собакой</button>
+  <span class="sep"></span>
+  <button data-bg="stage">Фон: сцена</button>
+  <button data-bg="street">Фон: улица</button>
+  <button data-bg="studio">Фон: студия</button>
+  <span class="sep"></span>
+  <button data-tone="color">Цвет</button>
+  <button data-tone="duo">Дуотон</button>
+</div>
+
+<section class="about">
+  <div class="plate"><img id="photo" alt="" /><span class="tag">Curator</span></div>
+  <div>
+    <div class="eyebrow">About</div>
+    <h2>One person, <em>end to end.</em></h2>
+    <p class="body">A founder-led studio. I take a project from a fuzzy idea to a working launch — and stay the one you talk to.</p>
+  </div>
+</section>
+<p class="note">Фон на каждом фото заменён: человек (и собака) вырезаны встроенным в macOS выделением объекта. Сверху выбери фото, фон и цвет или дуотон — карточка слева показывает блок «Обо мне». Ниже вся сетка, клик по любому варианту ставит его в карточку.</p>
+
+<div class="sheet" id="sheet"></div>
+
+<script>
+// New backgrounds: each photo's subject is lifted with macOS Vision
+// (lift.swift) and set on the site's stage, a blurred lake, or a soft studio.
+const PHOTOS = { coat: "Пальто, крупно", glasses: "Розовые волосы, очки", dog: "С собакой" };
+const BGS = { stage: "Сцена", street: "Улица", studio: "Студия" };
+const file = (p, b, t) => `comp/${p}-${b}${t === "duo" ? "-duo.png" : ".jpg"}`;
+let photo = "coat", bg = "street", tone = "duo";
+
+const sheet = document.getElementById("sheet");
+sheet.innerHTML = Object.entries(PHOTOS).map(([p, name]) => `
+  <h3>${name}</h3>
+  <div class="row">${["color", "duo"].flatMap((t) => Object.entries(BGS).map(([b, label]) =>
+    `<figure data-p="${p}" data-b="${b}" data-t="${t}"><img src="${file(p, b, t)}" alt="" loading="lazy" /><figcaption>${label} · ${t === "duo" ? "дуотон" : "цвет"}</figcaption></figure>`)).join("")}</div>`).join("");
+
+function render() {
+  document.getElementById("photo").src = file(photo, bg, tone);
+  document.querySelectorAll("[data-photo]").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.photo === photo)));
+  document.querySelectorAll("[data-bg]").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.bg === bg)));
+  document.querySelectorAll("[data-tone]").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.tone === tone)));
+  document.querySelectorAll("figure").forEach((f) => f.setAttribute("aria-current", String(f.dataset.p === photo && f.dataset.b === bg && f.dataset.t === tone)));
+}
+document.querySelectorAll("[data-photo]").forEach((x) => x.addEventListener("click", () => { photo = x.dataset.photo; render(); }));
+document.querySelectorAll("[data-bg]").forEach((x) => x.addEventListener("click", () => { bg = x.dataset.bg; render(); }));
+document.querySelectorAll("[data-tone]").forEach((x) => x.addEventListener("click", () => { tone = x.dataset.tone; render(); }));
+sheet.addEventListener("click", (e) => { const f = e.target.closest("figure"); if (!f) return; photo = f.dataset.p; bg = f.dataset.b; tone = f.dataset.t; render(); scrollTo({ top: 0, behavior: "smooth" }); });
+render();
+</script>
+</body>
+</html>

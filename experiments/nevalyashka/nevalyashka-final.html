@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Неваляшка — 3D</title>
+<style>
+  :root { --bg:#f6f3f5; --ink:#2a1420; --muted:#8a7682; --accent:#d80e66; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.4 -apple-system,system-ui,sans-serif; display:flex; flex-direction:column; align-items:center; min-height:100vh; }
+  .stage { position:relative; width:min(720px,100vw); aspect-ratio:1/1; }
+  .stage.checker { background:conic-gradient(#e8e4e7 25%,#fff 0 50%,#e8e4e7 0 75%,#fff 0) 0 0/20px 20px; }
+  canvas { width:100%; height:100%; display:block; cursor:grab; touch-action:none; }
+  canvas:active { cursor:grabbing; }
+  .hint { position:absolute; left:0; right:0; bottom:8px; text-align:center; color:var(--muted); font-size:12px; pointer-events:none; }
+  .panel { width:min(720px,100vw); padding:12px 16px 24px; display:grid; gap:12px; }
+  .row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  button { font:inherit; border:1px solid #e0d3da; background:#fff; color:var(--ink); padding:7px 12px; border-radius:999px; cursor:pointer; }
+  button.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+  label { display:flex; gap:8px; align-items:center; color:var(--muted); }
+  input[type=range] { width:140px; accent-color:var(--accent); }
+  input[type=checkbox] { accent-color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <canvas id="c"></canvas>
+  <div class="hint">тяни — повернуть камеру · клик — толкнуть неваляшку</div>
+</div>
+<div class="panel">
+  <div class="row" id="variants"></div>
+  <div class="row">
+    <label>Амплитуда <input type="range" id="amp" min="0" max="0.45" step="0.01" value="0.22"></label>
+    <label>Скорость <input type="range" id="speed" min="0.2" max="2" step="0.05" value="1"></label>
+    <label>Желейность <input type="range" id="jiggle" min="0" max="2" step="0.05" value="1"></label>
+  </div>
+  <div class="row">
+    <label><input type="checkbox" id="auto" checked> Само качается</label>
+    <label><input type="checkbox" id="transparent"> Прозрачный фон</label>
+    <label>Цвет <input type="color" id="color" value="#d80e66"></label>
+    <button id="png">Скачать PNG</button>
+    <button id="mood" title="Сменить эмоцию" style="font-size:22px;padding:2px 10px">😮</button>
+  </div>
+</div>
+
+<script id="fs" type="x-shader/x-fragment">
+precision highp float;
+uniform vec2 uRes;
+uniform vec3 uColor;
+uniform vec3 uShape;
+uniform vec2 uTilt;
+uniform vec2 uLag;
+uniform vec2 uCam;
+uniform float uTransparent;
+uniform float uSurprise;
+uniform float uSmile;
+
+const vec3 BG = vec3(0.965,0.953,0.961);
+mat3 toLocal;
+vec3 bodyPos;
+vec3 lightDir;
+
+mat3 rotX(float a){float c=cos(a),s=sin(a);return mat3(1.0,0.0,0.0,0.0,c,s,0.0,-s,c);}
+mat3 rotZ(float a){float c=cos(a),s=sin(a);return mat3(c,s,0.0,-s,c,0.0,0.0,0.0,1.0);}
+float smin(float a,float b,float k){float h=max(k-abs(a-b),0.0)/k;return min(a,b)-h*h*k*0.25;}
+float smax(float a,float b,float k){return -smin(-a,-b,k);}
+float sdCap(vec3 p,vec3 a,vec3 b,float r){vec3 pa=p-a,ba=b-a;float h=clamp(dot(pa,ba)/dot(ba,ba),0.0,1.0);return length(pa-ba*h)-r;}
+
+// дуга окружности радиуса R с центром (0,c) над ртом; толщина меняется от r0 в центре до r1 к концам
+float lip(vec3 b,float c,float R,float an,float r0,float r1){
+  vec3 p=vec3(abs(b.x),c-b.y,b.z);
+  vec2 sc=vec2(sin(an),cos(an));
+  float k=(sc.y*p.x>sc.x*p.y)?dot(p.xy,sc):length(p.xy);
+  float th=clamp(atan(p.x,p.y)/max(an,0.001),0.0,1.0);
+  return sqrt(max(dot(p,p)+R*R-2.0*R*k,0.0))-mix(r0,r1,th*th);
+}
+
+// рот: круглая трубка, замкнутая по контуру слегка изогнутой «сосиски» (как вытянутый бублик):
+// идёт по нижней губе, скругляется в уголке и возвращается по верхней; внутри контура — пузо
+// (dx, s): расстояние вдоль концов и поперёк осевой линии рта y=f(x)
+vec2 mouthCoords(vec2 b,float X){
+  float xc=clamp(b.x,-X,X);
+  float u=xc/X;
+  float f=-0.13+0.2*u*u;
+  float fp=0.4*u/X;
+  return vec2(b.x-xc,(b.y-f)/sqrt(1.0+fp*fp));
+}
+float mouth(vec3 b,float X,float h,float r){
+  float outline=abs(length(mouthCoords(b.xy,X))-h);
+  return length(vec2(outline,b.z))-r;
+}
+
+float model(vec3 q){
+  float hy=uShape.x,hr=uShape.y,k=uShape.z;
+  vec3 lag=vec3(uLag.x,0.0,uLag.y);
+  vec3 hc=vec3(0.0,hy,0.0)+lag*0.6;
+  float d=smin(length(q-vec3(0.0,1.0,0.0))-1.0,length(q-hc)-hr,k);
+  float es=hr/0.66;
+  float s=uSurprise;
+  vec2 e=vec2(abs(q.x-hc.x),q.y)-vec2(0.25*es,hy+(0.04+0.03*s)*es);
+  d=smax(d,-(length(e)-0.12*es*(1.0+0.4*s)),0.05);
+  if(s>0.02)d=smax(d,-(length(q.xy-vec2(0.0,0.92))-0.21*s),0.06*s);
+  float m=uSmile;
+  if(m>0.02){
+    if(q.z>0.0){
+      vec3 bv=vec3(q.x,q.y-1.05,d-0.07*m);
+      d=smin(d,mouth(bv,0.72*min(m,1.0)+0.001,0.15*m,0.088*m),0.03);
+    }
+    // щель между губами — глубокая, параллельно земле, примерно до середины пуза; спина остаётся цельной
+    float slit=length(mouthCoords(vec2(q.x,q.y-1.05),0.72*min(m,1.0)+0.001))-0.06*m;
+    slit=smax(slit,0.1-q.z,0.06);
+    d=smax(d,-slit,0.01);
+  }
+  vec3 top=vec3(0.0,hy+hr,0.0);
+  vec3 tip=top+vec3(0.0,0.4+0.18*s,0.0)+lag*1.6;
+  float ant=min(sdCap(q,top-vec3(0.0,0.15,0.0)+lag*0.6,tip-vec3(0.0,0.12,0.0),0.065),length(q-tip)-0.15);
+  d=smin(d,ant,0.08);
+  vec3 a=vec3(abs(q.x),q.y,q.z);
+  float arm=sdCap(a,vec3(0.8,1.22,0.0),vec3(1.42,1.22,0.0),0.075);
+  vec3 h=a-vec3(1.6,1.22,0.0);
+  float ring=length(vec2(length(h.xy)-0.15,h.z))-0.07;
+  return smin(d,smin(arm,ring,0.05),0.12);
+}
+float map(vec3 p){return model(toLocal*(p-bodyPos)+vec3(0.0,1.0,0.0));}
+vec3 normalAt(vec3 p){
+  vec2 e=vec2(0.0015,-0.0015);
+  return normalize(e.xyy*map(p+e.xyy)+e.yyx*map(p+e.yyx)+e.yxy*map(p+e.yxy)+e.xxx*map(p+e.xxx));
+}
+vec3 studio(vec3 r,float keyScale){
+  vec3 col=vec3(mix(0.78,1.0,r.y*0.5+0.5));
+  float ang=acos(clamp(dot(r,lightDir),-1.0,1.0));
+  col+=vec3(1.0,0.99,0.97)*keyScale*(4.0*exp(-pow(ang,2.0))+34.0*exp(-pow(ang/0.3,2.0)));
+  vec3 fillDir=normalize(vec3(-lightDir.x,0.35,0.8));
+  col+=vec3(0.5)*exp(-pow(acos(clamp(dot(r,fillDir),-1.0,1.0))/0.5,2.0));
+  return col;
+}
+vec3 absorbCoef(){vec3 tint=clamp(uColor,vec3(0.02),vec3(0.995));return -log(tint)/0.9;}
+vec3 floorShade(vec3 fp){
+  vec3 absorb=absorbCoef();
+  float through=0.0,s=0.0;
+  for(int i=0;i<40;i++){
+    s+=0.09;
+    float pen=max(0.02,0.35*s);
+    through+=clamp(0.5-map(fp+lightDir*s)/pen,0.0,1.0)*0.09;
+  }
+  vec3 sh=exp(-absorb*through*0.9)*(1.0-0.3*clamp(through/0.9,0.0,1.0));
+  float ao=0.55+0.45*smoothstep(0.0,0.6,map(fp));
+  return mix(vec3(1.0),sh*ao,0.7);
+}
+vec3 behindColor(vec3 o,vec3 d){
+  if(d.y<-0.02){
+    vec3 fp=o+d*(-o.y/d.y);
+    return BG*floorShade(fp)*mix(1.0,0.85,smoothstep(3.0,9.0,length(fp.xz)));
+  }
+  return mix(BG,studio(d,0.25),0.6);
+}
+
+void main(){
+  float a=uTilt.x,b=uTilt.y;
+  toLocal=rotX(-b)*rotZ(-a);
+  bodyPos=vec3(-a,1.0,b);
+  float az=radians(10.0),el=radians(62.0);
+  lightDir=normalize(vec3(sin(az)*cos(el),sin(el),cos(az)*cos(el)));
+
+  float side=min(uRes.x,uRes.y);
+  vec2 uv=(gl_FragCoord.xy-uRes*0.5)/side;
+  vec3 target=vec3(0.0,1.55,0.0);
+  float yaw=uCam.x,pitch=uCam.y;
+  vec3 ro=target+7.5*vec3(sin(yaw)*cos(pitch),sin(pitch),cos(yaw)*cos(pitch));
+  vec3 fwd=normalize(target-ro);
+  vec3 right=normalize(cross(fwd,vec3(0.0,1.0,0.0)));
+  vec3 up=cross(right,fwd);
+  vec3 rd=normalize(fwd*1.75+right*uv.x+up*uv.y);
+
+  float tFloor=rd.y<0.0?-ro.y/rd.y:1e5;
+  float tMax=min(tFloor,20.0);
+  float t=3.0,d=1.0;
+  for(int i=0;i<180;i++){
+    d=map(ro+rd*t);
+    if(d<0.0008*t||t>tMax)break;
+    t+=d;
+  }
+  vec3 p1=ro+rd*t;
+  float eps=0.0012*t;
+  float hit=(1.0-smoothstep(eps,eps*2.5,map(p1)))*step(t,tMax);
+
+  vec4 objOut=vec4(0.0);
+  if(hit>0.0){
+    vec3 n1=normalAt(p1);
+    p1-=n1*map(p1);
+    p1-=n1*map(p1);
+    float ior=1.4;
+    vec3 absorb=absorbCoef();
+    vec3 tint=clamp(uColor,vec3(0.02),vec3(0.995));
+    vec3 d1=refract(rd,n1,1.0/ior);
+    vec3 q=p1-n1*0.01;
+    for(int i=0;i<80;i++){
+      float dIn=-map(q);
+      if(dIn<0.002)break;
+      q+=d1*max(dIn*0.9,0.006);
+    }
+    vec3 p2=q;
+    float chord=length(p2-p1);
+    vec3 n2=normalAt(p2);
+    vec3 d2=refract(d1,-n2,ior);
+    if(dot(d2,d2)<0.0001)d2=reflect(d1,n2);
+    d2=normalize(d2);
+    // луч, вышедший из тонкой детали (губы, ручки), часто сразу входит обратно в тело —
+    // без этого прохода сквозь губы просвечивала белая студия
+    vec3 o2=p2+n2*0.01;
+    float t2=0.0;
+    bool reenter=false;
+    for(int i=0;i<40;i++){
+      float h=map(o2+d2*t2);
+      if(h<0.002){reenter=true;break;}
+      t2+=h;
+      if(t2>1.5)break;
+    }
+    if(reenter){
+      vec3 pe=o2+d2*t2;
+      vec3 ne=normalAt(pe);
+      vec3 de=refract(d2,ne,1.0/ior);
+      if(dot(de,de)<0.0001)de=d2;
+      vec3 r=pe-ne*0.01;
+      for(int i=0;i<64;i++){
+        float dIn=-map(r);
+        if(dIn<0.002)break;
+        r+=de*max(dIn*0.9,0.006);
+      }
+      chord+=length(r-pe);
+      p2=r;
+      n2=normalAt(p2);
+      d2=refract(de,-n2,ior);
+      if(dot(d2,d2)<0.0001)d2=reflect(de,n2);
+      d2=normalize(d2);
+    }
+    // совсем тонкие места (кончики ручек) иначе почти не окрашиваются
+    chord=max(chord,0.6);
+    vec3 trans=exp(-absorb*chord);
+    vec3 behind=behindColor(p2,d2);
+
+    float cosv=max(dot(n1,-rd),0.0);
+    float f0=0.028;
+    float edge=pow(1.0-cosv,5.0);
+    // на скользящих углах (низ губ) полный френель + широкий софтбокс засвечивали всё в белое
+    float fresnel=f0+(1.0-f0)*edge*0.7;
+    vec3 refl=studio(reflect(rd,n1),1.0)*fresnel;
+    refl=mix(refl,tint*refl,0.35*edge);
+    // в складках (между губами, под губой) студию заслоняет само тело — там отражается розовое желе
+    vec3 rdir=reflect(rd,n1);
+    float occl=clamp(map(p1+rdir*0.25)/0.25,0.0,1.0)*clamp(map(p1+n1*0.12)/0.12,0.0,1.0);
+    refl*=mix(tint*0.6,vec3(1.0),occl);
+    refl*=mix(1.0,0.4,smoothstep(0.0,-0.6,rdir.y));
+
+    float reach=0.6;
+    vec3 scat=vec3(0.0);
+    for(int k=0;k<5;k++){
+      float s=chord*(float(k)+0.5)/5.0;
+      vec3 m=p1+d1*s;
+      float thick=0.0;
+      for(int j=1;j<=5;j++){
+        float dm=map(m+lightDir*reach*0.2*float(j));
+        thick+=clamp(0.5-dm/(reach*0.2),0.0,1.0)*reach*0.2;
+      }
+      scat+=exp(-thick*2.5/reach)*exp(-absorb*s)/5.0;
+    }
+    scat*=1.0-exp(-chord/reach);
+    float wrap=dot(n1,lightDir)*0.5+0.5;
+    vec3 sss=mix(tint,vec3(1.0),0.1)*scat*0.75*(0.25+0.75*wrap);
+    vec3 core=pow(tint,vec3(0.6))*0.18*(1.0-exp(-chord*2.0));
+
+    vec3 col=trans*behind*(1.0-fresnel)+sss+refl+core;
+    objOut=vec4(clamp(col,0.0,1.0),1.0);
+  }
+
+  vec4 bgOut=vec4(0.0);
+  if(hit<1.0){
+    vec3 shade=vec3(1.0);
+    if(rd.y<0.0){
+      vec3 fp=ro+rd*tFloor;
+      shade=floorShade(fp);
+    }
+    float m=min(shade.r,min(shade.g,shade.b));
+    bgOut=vec4(BG*(shade-m),1.0-m);
+    if(uTransparent<0.5)bgOut=vec4(bgOut.rgb+BG*(1.0-bgOut.a),1.0);
+  }
+  gl_FragColor=mix(bgOut,objOut,hit);
+}
+</script>
+
+<script>
+const canvas = document.getElementById('c');
+const gl = canvas.getContext('webgl', { preserveDrawingBuffer: true, premultipliedAlpha: true, alpha: true });
+
+const vsSrc = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}';
+function compile(type, src) {
+  const s = gl.createShader(type);
+  gl.shaderSource(s, src);
+  gl.compileShader(s);
+  if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
+  return s;
+}
+const prog = gl.createProgram();
+gl.attachShader(prog, compile(gl.VERTEX_SHADER, vsSrc));
+gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, document.getElementById('fs').textContent));
+gl.linkProgram(prog);
+gl.useProgram(prog);
+gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+gl.enableVertexAttribArray(0);
+gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+const U = {};
+for (const n of ['uRes', 'uColor', 'uShape', 'uTilt', 'uLag', 'uCam', 'uTransparent', 'uSurprise', 'uSmile']) U[n] = gl.getUniformLocation(prog, n);
+
+const VARIANTS = [
+  { name: 'Классика', shape: [2.05, 0.66, 0.35] },
+  { name: 'Яйцо', shape: [1.78, 0.78, 0.9] },
+  { name: 'Пузатик', shape: [2.12, 0.56, 0.5] },
+  { name: 'Слитная', shape: [1.95, 0.72, 0.6] },
+];
+let variant = 0;
+const vRow = document.getElementById('variants');
+VARIANTS.forEach((v, i) => {
+  const b = document.createElement('button');
+  b.textContent = v.name;
+  b.onclick = () => { variant = i; [...vRow.children].forEach((c, j) => c.classList.toggle('on', j === i)); };
+  vRow.appendChild(b);
+});
+vRow.children[0].classList.add('on');
+
+const $ = (id) => document.getElementById(id);
+const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
+$('transparent').onchange = (e) => $('stage').classList.toggle('checker', e.target.checked);
+
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+  const r = canvas.getBoundingClientRect();
+  canvas.width = Math.round(r.width * dpr);
+  canvas.height = Math.round(r.height * dpr);
+}
+addEventListener('resize', resize);
+resize();
+
+// камера
+let yaw = -0.32, pitch = 0.2;
+// пружина «толчков» и желейное запаздывание головы
+const push = { a: 0, b: 0, va: 0, vb: 0 };
+const lag = { x: 0, z: 0, vx: 0, vz: 0 };
+let prevA = 0, prevB = 0;
+// эмоции: на кнопке — эмоджи следующего состояния; пружины с перелётом, чтобы дырочка и улыбка «выскакивали»
+const MOODS = [
+  { surprise: 0, smile: 0, label: '😮', next: 1 },
+  { surprise: 1, smile: 0, label: '😐', next: 2 },
+  { surprise: 0, smile: 0, label: '😊', next: 3 },
+  { surprise: 0, smile: 1, label: '😮', next: 1 },
+];
+let mood = 0;
+const surprise = { v: 0, vel: 0 };
+const smile = { v: 0, vel: 0 };
+$('mood').onclick = () => {
+  mood = MOODS[mood].next;
+  $('mood').textContent = MOODS[mood].label;
+  if (MOODS[mood].surprise) {
+    // отшатнуться назад, от камеры
+    push.va += 1.6 * Math.sin(yaw);
+    push.vb -= 1.6 * Math.cos(yaw);
+    lag.vx += 1.5 * Math.sin(yaw);
+    lag.vz -= 1.5 * Math.cos(yaw);
+  }
+};
+function springTo(s, target, dt) {
+  const w = 13, z = target ? 0.3 : 0.7;
+  s.vel += (-w * w * (s.v - target) - 2 * z * w * s.vel) * dt;
+  s.v = Math.max(0, Math.min(1.3, s.v + s.vel * dt));
+}
+
+let drag = null;
+canvas.addEventListener('pointerdown', (e) => {
+  drag = { x: e.clientX, y: e.clientY, moved: 0 };
+  canvas.setPointerCapture(e.pointerId);
+});
+canvas.addEventListener('pointermove', (e) => {
+  if (!drag) return;
+  const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+  drag.moved += Math.abs(dx) + Math.abs(dy);
+  yaw -= dx * 0.006;
+  pitch = Math.max(0.02, Math.min(0.9, pitch + dy * 0.004));
+  drag.x = e.clientX; drag.y = e.clientY;
+});
+canvas.addEventListener('pointerup', (e) => {
+  if (drag && drag.moved < 4) {
+    const r = canvas.getBoundingClientRect();
+    const nx = (e.clientX - r.left) / r.width - 0.5;
+    // верх толкаем от точки клика: экранное «вправо» = (cos yaw, 0, -sin yaw), «к камере» = (sin yaw, 0, cos yaw)
+    const s = -Math.sign(nx || 1) * 2.6, f = (Math.random() - 0.5) * 2.2;
+    const vx = s * Math.cos(yaw) + f * Math.sin(yaw), vz = -s * Math.sin(yaw) + f * Math.cos(yaw);
+    push.va -= vx;
+    push.vb += vz;
+  }
+  drag = null;
+});
+
+let last = performance.now(), time = 0;
+function frame(now) {
+  const dt = Math.min((now - last) / 1000, 1 / 30);
+  last = now;
+  const speed = +$('speed').value, amp = +$('amp').value, jig = +$('jiggle').value;
+  time += dt * speed;
+
+  const w = 3.4 * speed, zeta = 0.08;
+  push.va += (-w * w * push.a - 2 * zeta * w * push.va) * dt;
+  push.vb += (-w * w * push.b - 2 * zeta * w * push.vb) * dt;
+  push.a += push.va * dt;
+  push.b += push.vb * dt;
+
+  let a = push.a, b = push.b;
+  if ($('auto').checked) {
+    a += amp * Math.sin(time * 2.3) * (0.75 + 0.25 * Math.cos(time * 0.41));
+    b += amp * 0.65 * Math.sin(time * 1.63 + 1.3);
+  }
+  a = Math.max(-0.5, Math.min(0.5, a));
+  b = Math.max(-0.5, Math.min(0.5, b));
+
+  const da = (a - prevA) / Math.max(dt, 1e-4), db = (b - prevB) / Math.max(dt, 1e-4);
+  prevA = a; prevB = b;
+  const tx = 0.05 * jig * da, tz = -0.05 * jig * db, lw = 11, lz = 0.22;
+  lag.vx += (-lw * lw * (lag.x - tx) - 2 * lz * lw * lag.vx) * dt;
+  lag.vz += (-lw * lw * (lag.z - tz) - 2 * lz * lw * lag.vz) * dt;
+  lag.x = Math.max(-0.14, Math.min(0.14, lag.x + lag.vx * dt));
+  lag.z = Math.max(-0.14, Math.min(0.14, lag.z + lag.vz * dt));
+
+  springTo(surprise, MOODS[mood].surprise, dt);
+  springTo(smile, MOODS[mood].smile, dt);
+
+  gl.viewport(0, 0, canvas.width, canvas.height);
+  gl.uniform1f(U.uSurprise, surprise.v);
+  gl.uniform1f(U.uSmile, smile.v);
+  gl.uniform2f(U.uRes, canvas.width, canvas.height);
+  gl.uniform3fv(U.uColor, hex($('color').value));
+  gl.uniform3fv(U.uShape, VARIANTS[variant].shape);
+  gl.uniform2f(U.uTilt, a, b);
+  gl.uniform2f(U.uLag, lag.x, lag.z);
+  gl.uniform2f(U.uCam, yaw, pitch);
+  gl.uniform1f(U.uTransparent, $('transparent').checked ? 1 : 0);
+  gl.drawArrays(gl.TRIANGLES, 0, 3);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+$('png').onclick = () => {
+  const link = document.createElement('a');
+  link.download = `nevalyashka-${VARIANTS[variant].name}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+};
+</script>
+</body>
+</html>

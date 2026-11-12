@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Неваляшка — сцена</title>
+<style>
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; overflow:hidden; background:#ffd7eb; font:13px/1.4 -apple-system,system-ui,sans-serif; }
+  canvas { position:fixed; inset:0; width:100%; height:100%; display:block; cursor:grab; touch-action:none; }
+  canvas:active { cursor:grabbing; }
+  .name { position:fixed; top:20px; left:24px; font:11px/1 ui-monospace,'Geist Mono',monospace; letter-spacing:.16em; text-transform:uppercase; opacity:.5; pointer-events:none; }
+  .arrow { position:fixed; bottom:18px; left:50%; transform:translateX(-50%); font-size:20px; opacity:.22; transition:opacity .3s; padding:8px 14px; cursor:pointer; }
+  .arrow:hover { opacity:.9; }
+  /* на холсте три цвета текста: яркий логотип, один приглушённый для всего остального и розовый Contact */
+  :root { --ink:#2a1420; --pink:#ff4fb6; --muted:rgba(42,20,32,.7); }
+  body { color:var(--ink); font-family:Geist,-apple-system,system-ui,sans-serif; }
+  .top { position:fixed; left:3.2vw; right:3.2vw; top:3.4vh; display:flex; justify-content:space-between; align-items:baseline; font-size:15px; pointer-events:none; }
+  .top b { font-weight:600; color:#1a1a1a; }
+  .top nav { color:var(--muted); }
+  .top nav span { margin-left:32px; pointer-events:auto; cursor:pointer; }
+  .top nav span.hi { color:var(--pink); }
+  .mono { font-family:ui-monospace,'Geist Mono',monospace; letter-spacing:.12em; text-transform:uppercase; font-size:11px; }
+  .bot { position:fixed; left:3.2vw; right:3.2vw; bottom:3.4vh; display:flex; justify-content:space-between; align-items:center; color:var(--muted); pointer-events:none; }
+  .dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:#1db954; margin-right:8px; vertical-align:middle; }
+  .label { position:fixed; left:0; top:0; width:auto; white-space:nowrap; padding:14px 16px; background:rgba(255,255,255,.55); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border-radius:8px; font-size:12px; line-height:1.5; pointer-events:none; will-change:transform; color:var(--muted); }
+  .label b { display:block; font-size:15px; font-weight:600; margin:4px 0 6px; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="label" id="label"><span class="mono">Exhibit Nº 04</span><b>Ludvik</b>Pure code, WebGL, zero polygons.<br>Handle with curiosity.</div>
+<div class="top"><b>Ludvik4</b><nav><span>Work</span><span>Services</span><span>Articles</span><span>About</span><span class="hi">Contact</span></nav></div>
+<div class="bot mono"><span><i class="dot"></i>Taking projects · Q1 2027</span><span class="arrow" style="position:static;transform:none;pointer-events:auto">↓</span><span>Est. 2024 · Europe</span></div>
+
+
+<script id="fs" type="x-shader/x-fragment">
+precision highp float;
+uniform vec2 uRes;
+uniform vec3 uColor;
+uniform vec2 uTilt;
+uniform vec2 uLag;
+uniform vec2 uCam;
+uniform float uSpin;
+
+const vec3 CENTER = vec3(0.0,1.4,0.0);
+// студийный луч: спереди-слева-сверху, между неваляшкой и зрителем — подсвечивает объём пуза
+const vec3 LIGHT = vec3(-0.7,0.85,1.25);
+const vec3 LIGHT_COL = vec3(1.0,0.97,0.985);
+mat3 toLocal;
+vec3 bodyPos;
+vec3 lightDir;
+
+mat3 rotX(float a){float c=cos(a),s=sin(a);return mat3(1.0,0.0,0.0,0.0,c,s,0.0,-s,c);}
+mat3 rotY(float a){float c=cos(a),s=sin(a);return mat3(c,0.0,-s,0.0,1.0,0.0,s,0.0,c);}
+mat3 rotZ(float a){float c=cos(a),s=sin(a);return mat3(c,s,0.0,-s,c,0.0,0.0,0.0,1.0);}
+float smin(float a,float b,float k){float h=max(k-abs(a-b),0.0)/k;return min(a,b)-h*h*k*0.25;}
+float smax(float a,float b,float k){return -smin(-a,-b,k);}
+float sdCap(vec3 p,vec3 a,vec3 b,float r){vec3 pa=p-a,ba=b-a;float h=clamp(dot(pa,ba)/dot(ba,ba),0.0,1.0);return length(pa-ba*h)-r;}
+
+// неваляшка «Классика» без рта: тело + голова, глазки насквозь, антенна, ручки с колечками
+float model(vec3 q){
+  const float hy=2.05,hr=0.66;
+  vec3 lag=vec3(uLag.x,0.0,uLag.y);
+  vec3 hc=vec3(0.0,hy,0.0)+lag*0.6;
+  float d=smin(length(q-vec3(0.0,1.0,0.0))-1.0,length(q-hc)-hr,0.35);
+  vec2 e=vec2(abs(q.x-hc.x),q.y)-vec2(0.25,hy+0.04);
+  d=smax(d,-(length(e)-0.12),0.05);
+  vec3 top=vec3(0.0,hy+hr,0.0);
+  vec3 tip=top+vec3(0.0,0.4,0.0)+lag*1.6;
+  float ant=min(sdCap(q,top-vec3(0.0,0.15,0.0)+lag*0.6,tip-vec3(0.0,0.12,0.0),0.065),length(q-tip)-0.15);
+  d=smin(d,ant,0.08);
+  vec3 a=vec3(abs(q.x),q.y,q.z);
+  float arm=sdCap(a,vec3(0.8,1.22,0.0),vec3(1.42,1.22,0.0),0.075);
+  vec3 h=a-vec3(1.6,1.22,0.0);
+  float ring=length(vec2(length(h.xy)-0.15,h.z))-0.07;
+  return smin(d,smin(arm,ring,0.05),0.12);
+}
+float map(vec3 p){return model(toLocal*(p-bodyPos)+vec3(0.0,1.0,0.0));}
+vec3 normalAt(vec3 p){
+  vec2 e=vec2(0.0015,-0.0015);
+  return normalize(e.xyy*map(p+e.xyy)+e.yyx*map(p+e.yyx)+e.yxy*map(p+e.yxy)+e.xxx*map(p+e.xxx));
+}
+
+// широкий мягкий луч через неваляшку: сколько света в точке p (без теней)
+float lightField(vec3 p){
+  vec3 v=p-CENTER;
+  float along=dot(v,lightDir);
+  float perp=length(v-lightDir*along);
+  float w=1.6+0.25*max(along,0.0);
+  return exp(-pow(perp/w,1.6))*smoothstep(11.0,2.0,along)*0.7;
+}
+
+// бесшовная розовая циклорама
+vec3 wallCol(vec3 d){ return mix(vec3(1.0,0.76,0.88),vec3(1.0,0.84,0.92),smoothstep(-0.15,0.5,d.y)); }
+const vec3 FLOOR = vec3(1.0,0.74,0.87);
+
+vec3 absorbCoef(){vec3 tint=clamp(uColor,vec3(0.02),vec3(0.995));return -log(tint)/0.9;}
+vec3 floorShadow(vec3 fp){
+  if(length(fp.xz)>6.0)return vec3(1.0);
+  vec3 absorb=absorbCoef();
+  float through=0.0,s=0.0;
+  for(int i=0;i<40;i++){
+    s+=0.09;
+    float pen=max(0.04,0.6*s);
+    through+=clamp(0.5-map(fp+lightDir*s)/pen,0.0,1.0)*0.09;
+  }
+  vec3 sh=exp(-absorb*through*0.9)*(1.0-0.3*clamp(through/0.9,0.0,1.0));
+  float ao=0.55+0.45*smoothstep(0.0,0.6,map(fp));
+  return mix(vec3(1.0),sh*ao,0.5);
+}
+vec3 floorCol(vec3 fp,vec3 d){
+  vec3 col=(FLOOR+LIGHT_COL*lightField(fp+vec3(0.0,0.02,0.0))*0.18)*floorShadow(fp);
+  // дальний пол растворяется в стене — шва нет
+  return mix(col,wallCol(vec3(d.x,0.0,d.z)),smoothstep(5.0,16.0,length(fp.xz)));
+}
+vec3 envRefl(vec3 r){
+  vec3 base=vec3(mix(0.8,1.0,r.y*0.5+0.5));
+  float ang=acos(clamp(dot(r,lightDir),-1.0,1.0));
+  return base+LIGHT_COL*(3.0*exp(-ang*ang)+30.0*exp(-pow(ang/0.28,2.0)));
+}
+vec3 behindColor(vec3 o,vec3 d){
+  if(d.y<-0.02)return floorCol(o+d*(-o.y/d.y),d);
+  return wallCol(d);
+}
+
+void main(){
+  float a=uTilt.x,b=uTilt.y;
+  // поворот вокруг собственной оси (перетаскивание) поверх качания; камера и свет неподвижны
+  toLocal=rotY(-uSpin)*rotX(-b)*rotZ(-a);
+  bodyPos=vec3(-a,1.0,b);
+  lightDir=normalize(LIGHT);
+
+  float side=min(uRes.x,uRes.y);
+  vec2 uv=(gl_FragCoord.xy-uRes*0.5)/side;
+  vec3 target=vec3(0.0,1.55,0.0);
+  float yaw=uCam.x,pitch=uCam.y;
+  vec3 ro=target+10.0*vec3(sin(yaw)*cos(pitch),sin(pitch),cos(yaw)*cos(pitch));
+  vec3 fwd=normalize(target-ro);
+  vec3 right=normalize(cross(fwd,vec3(0.0,1.0,0.0)));
+  vec3 up=cross(right,fwd);
+  vec3 rd=normalize(fwd*1.75+right*uv.x+up*uv.y);
+
+  float tFloor=rd.y<0.0?-ro.y/rd.y:1e5;
+  float tMax=min(tFloor,20.0);
+  float t=3.0,d=1.0;
+  for(int i=0;i<180;i++){
+    d=map(ro+rd*t);
+    if(d<0.0008*t||t>tMax)break;
+    t+=d;
+  }
+  vec3 p1=ro+rd*t;
+  float eps=0.0012*t;
+  float hit=(1.0-smoothstep(eps,eps*2.5,map(p1)))*step(t,tMax);
+
+  vec3 col=rd.y<0.0?floorCol(ro+rd*tFloor,rd):wallCol(rd);
+
+  if(hit>0.0){
+    vec3 n1=normalAt(p1);
+    p1-=n1*map(p1);
+    p1-=n1*map(p1);
+    float ior=1.4;
+    vec3 absorb=absorbCoef();
+    vec3 tint=clamp(uColor,vec3(0.02),vec3(0.995));
+    vec3 d1=refract(rd,n1,1.0/ior);
+    vec3 q=p1-n1*0.01;
+    for(int i=0;i<80;i++){
+      float dIn=-map(q);
+      if(dIn<0.002)break;
+      q+=d1*max(dIn*0.9,0.006);
+    }
+    vec3 p2=q;
+    float chord=max(length(p2-p1),0.6);
+    vec3 n2=normalAt(p2);
+    vec3 d2=refract(d1,-n2,ior);
+    if(dot(d2,d2)<0.0001)d2=reflect(d1,n2);
+    d2=normalize(d2);
+    vec3 trans=exp(-absorb*chord);
+    vec3 behind=behindColor(p2,d2);
+
+    float cosv=max(dot(n1,-rd),0.0);
+    float edge=pow(1.0-cosv,5.0);
+    float fresnel=0.028+0.972*edge*0.7;
+    vec3 rdir=reflect(rd,n1);
+    vec3 refl=envRefl(rdir)*fresnel;
+    refl=mix(refl,tint*refl,0.35*edge);
+    float occl=clamp(map(p1+rdir*0.25)/0.25,0.0,1.0);
+    refl*=mix(tint*0.6,vec3(1.0),occl);
+    refl*=mix(1.0,0.4,smoothstep(0.0,-0.6,rdir.y));
+
+    float reach=0.6;
+    vec3 scat=vec3(0.0);
+    for(int k=0;k<5;k++){
+      float s=chord*(float(k)+0.5)/5.0;
+      vec3 m=p1+d1*s;
+      float thick=0.0;
+      for(int j=1;j<=5;j++){
+        float dm=map(m+lightDir*reach*0.2*float(j));
+        thick+=clamp(0.5-dm/(reach*0.2),0.0,1.0)*reach*0.2;
+      }
+      scat+=exp(-thick*2.5/reach)*exp(-absorb*s)/5.0;
+    }
+    scat*=1.0-exp(-chord/reach);
+    float wrap=dot(n1,lightDir)*0.5+0.5;
+    vec3 sss=mix(tint,vec3(1.0),0.1)*scat*0.75*(0.25+0.75*wrap);
+    vec3 core=pow(tint,vec3(0.6))*0.18*(1.0-exp(-chord*2.0));
+    // мягкое затенение к краям, отвёрнутым от света, — читается объём пуза
+    float form=0.72+0.38*clamp(wrap,0.0,1.0);
+    vec3 obj=(trans*behind*(1.0-fresnel)+sss+core)*form+refl;
+    col=mix(col,clamp(obj,0.0,1.0),hit);
+  }
+
+  // едва заметная дымка луча в воздухе
+  float tEnd=hit>0.5?t:min(tFloor,16.0);
+  float dt=(tEnd-3.0)/28.0;
+  float haze=0.0;
+  for(int i=0;i<28;i++)haze+=lightField(ro+rd*(3.0+dt*(float(i)+0.5)))*dt;
+  col+=LIGHT_COL*haze*0.035;
+  gl_FragColor=vec4(col,1.0);
+}
+</script>
+
+<script>
+const canvas = document.getElementById('c');
+const gl = canvas.getContext('webgl', { antialias: false });
+const vsSrc = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}';
+function compile(type, src) {
+  const s = gl.createShader(type);
+  gl.shaderSource(s, src);
+  gl.compileShader(s);
+  if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
+  return s;
+}
+const prog = gl.createProgram();
+gl.attachShader(prog, compile(gl.VERTEX_SHADER, vsSrc));
+gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, document.getElementById('fs').textContent));
+gl.linkProgram(prog);
+gl.useProgram(prog);
+gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+gl.enableVertexAttribArray(0);
+gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+const U = {};
+for (const n of ['uRes', 'uColor', 'uTilt', 'uLag', 'uCam', 'uSpin']) U[n] = gl.getUniformLocation(prog, n);
+
+// рендер в пониженном разрешении: сцена во весь экран, рейтрейсинг дорогой
+const RENDER_SCALE = 0.7;
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = Math.round(innerWidth * dpr * RENDER_SCALE);
+  canvas.height = Math.round(innerHeight * dpr * RENDER_SCALE);
+}
+addEventListener('resize', resize);
+resize();
+
+// камера неподвижна
+const yaw = -0.25, pitch = 0.16;
+
+// неваляшка: качание, толчки, желейное запаздывание, вращение и наклон рукой
+const push = { a: 0, b: 0, va: 0, vb: 0 };
+const lag = { x: 0, z: 0, vx: 0, vz: 0 };
+let prevA = 0, prevB = 0, time = 0, last = performance.now();
+let spin = 0, spinVel = 0, hold = 0;
+let drag = null;
+canvas.addEventListener('pointerdown', (e) => {
+  drag = { x: e.clientX, y: e.clientY, moved: 0, t: performance.now(), tilt: 0 };
+  spinVel = 0;
+  canvas.setPointerCapture(e.pointerId);
+});
+canvas.addEventListener('pointermove', (e) => {
+  if (!drag) return;
+  const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+  drag.moved += Math.abs(dx) + Math.abs(dy);
+  // влево-вправо — крутим вокруг оси; вниз = на себя, вверх = от себя — наклоняем, пока держим
+  spin += dx * 0.01;
+  spinVel = dx * 0.01 / Math.max(1 / 120, (performance.now() - drag.t) / 1000);
+  drag.tilt = Math.max(-0.45, Math.min(0.45, drag.tilt + dy * 0.004));
+  drag.t = performance.now();
+  drag.x = e.clientX; drag.y = e.clientY;
+});
+canvas.addEventListener('pointerup', (e) => {
+  if (drag && drag.moved < 4) {
+    const s = -Math.sign(e.clientX - innerWidth / 2 || 1) * 2.6, f = (Math.random() - 0.5) * 2.2;
+    push.va -= s * Math.cos(yaw) + f * Math.sin(yaw);
+    push.vb += -s * Math.sin(yaw) + f * Math.cos(yaw);
+  }
+  drag = null;
+});
+
+// --- табличка экспоната ---
+const vadd = (p, q) => [p[0] + q[0], p[1] + q[1], p[2] + q[2]];
+const vsub = (p, q) => [p[0] - q[0], p[1] - q[1], p[2] - q[2]];
+const vmul = (p, k) => [p[0] * k, p[1] * k, p[2] * k];
+const vdot = (p, q) => p[0] * q[0] + p[1] * q[1] + p[2] * q[2];
+const vnorm = (p) => vmul(p, 1 / Math.hypot(...p));
+const vcross = (p, q) => [p[1] * q[2] - p[2] * q[1], p[2] * q[0] - p[0] * q[2], p[0] * q[1] - p[1] * q[0]];
+function project(P) {
+  const target = [0, 1.55, 0];
+  const ro = vadd(target, vmul([Math.sin(yaw) * Math.cos(pitch), Math.sin(pitch), Math.cos(yaw) * Math.cos(pitch)], 10));
+  const fwd = vnorm(vsub(target, ro)), right = vnorm(vcross(fwd, [0, 1, 0])), up = vcross(right, fwd);
+  const v = vsub(P, ro), z = vdot(v, fwd), side = Math.min(innerWidth, innerHeight);
+  return [innerWidth / 2 + (vdot(v, right) * 1.75 / z) * side, innerHeight / 2 - (vdot(v, up) * 1.75 / z) * side];
+}
+// точка тела в мире с учётом качания (как в шейдере, без вращения вокруг оси — якорь всегда сбоку)
+function bodyPoint(local, a, b) {
+  let [x, y, z] = vsub(local, [0, 1, 0]);
+  [y, z] = [Math.cos(b) * y - Math.sin(b) * z, Math.sin(b) * y + Math.cos(b) * z];
+  [x, y] = [Math.cos(a) * x - Math.sin(a) * y, Math.sin(a) * x + Math.cos(a) * y];
+  return vadd([-a, 1, b], [x, y, z]);
+}
+const labelEl = document.getElementById('label');
+// табличка стоит на месте рядом с головой (место считается от позы покоя, чтобы не наезжала при любой ширине)
+function placeLabel() {
+  const [rx, ry] = project(bodyPoint([0.7, 2.0, 0], 0, 0));
+  const x = Math.min(rx + Math.max(110, innerWidth * 0.1), innerWidth - labelEl.offsetWidth - 16);
+  labelEl.style.transform = `translate(${x}px, ${ry - 90}px)`;
+}
+addEventListener('resize', placeLabel);
+placeLabel();
+
+function frame(now) {
+  const dt = Math.min((now - last) / 1000, 1 / 30);
+  last = now; time += dt;
+  if (!drag) { spin += spinVel * dt; spinVel *= Math.exp(-3 * dt); }
+
+  // пока держим — верхушку тянет к наклону от руки (жёсткая пружина), отпустили — своя пружина, качается обратно
+  const w = 3.4, zeta = 0.08;
+  let ta = 0, tb = 0, k = w, c = zeta;
+  if (drag && drag.tilt) {
+    ta = -drag.tilt * Math.sin(yaw); tb = drag.tilt * Math.cos(yaw);
+    k = 9; c = 0.9;
+  }
+  push.va += (-k * k * (push.a - ta) - 2 * c * k * push.va) * dt;
+  push.vb += (-k * k * (push.b - tb) - 2 * c * k * push.vb) * dt;
+  push.a += push.va * dt; push.b += push.vb * dt;
+  hold += ((drag && drag.tilt ? 1 : 0) - hold) * Math.min(1, dt * 6);
+  let a = push.a + (1 - hold) * 0.16 * Math.sin(time * 2.3) * (0.75 + 0.25 * Math.cos(time * 0.41));
+  let b = push.b + (1 - hold) * 0.1 * Math.sin(time * 1.63 + 1.3);
+  a = Math.max(-0.5, Math.min(0.5, a)); b = Math.max(-0.5, Math.min(0.5, b));
+  const da = (a - prevA) / dt, db = (b - prevB) / dt;
+  prevA = a; prevB = b;
+  const lw = 11, lz = 0.22;
+  lag.vx += (-lw * lw * (lag.x - 0.05 * da) - 2 * lz * lw * lag.vx) * dt;
+  lag.vz += (-lw * lw * (lag.z + 0.05 * db) - 2 * lz * lw * lag.vz) * dt;
+  lag.x = Math.max(-0.14, Math.min(0.14, lag.x + lag.vx * dt));
+  lag.z = Math.max(-0.14, Math.min(0.14, lag.z + lag.vz * dt));
+
+  gl.viewport(0, 0, canvas.width, canvas.height);
+  gl.uniform2f(U.uRes, canvas.width, canvas.height);
+  gl.uniform3f(U.uColor, 0.847, 0.055, 0.4);
+  gl.uniform2f(U.uTilt, a, b);
+  gl.uniform2f(U.uLag, lag.x, lag.z);
+  gl.uniform2f(U.uCam, yaw, pitch);
+  gl.uniform1f(U.uSpin, spin);
+  gl.drawArrays(gl.TRIANGLES, 0, 3);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

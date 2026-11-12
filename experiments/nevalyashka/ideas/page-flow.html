@@ -1,0 +1,117 @@
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  .pg { --ink:#2a1420; --muted:rgba(42,20,32,.62); --pink:#ff4fb6; --soft:#ffd7eb; --accent:#fff0f6; --line:#ecdde5; font-family:Geist,system-ui,sans-serif; color:var(--ink); border-radius:12px; overflow:hidden; border:1px solid var(--line); container-type:inline-size; }
+  .pg .m { font-family:'Geist Mono',monospace; letter-spacing:.14em; text-transform:uppercase; font-size:max(8px,.85cqw); color:var(--muted); }
+  .pg section { padding:6cqw 6cqw; background:#fff; }
+  .pg section + section { border-top:1px solid var(--line); }
+  .pg h2 { font-size:4.2cqw; line-height:1.02; letter-spacing:-.02em; font-weight:600; margin:1.2cqw 0 0; }
+  .pg h2 em { font-style:normal; color:var(--pink); }
+  .pg .intro { aspect-ratio:16/10; background:url(/files/stage-bg.png) center/cover; position:relative; padding:0; }
+  .pg .intro .top { position:absolute; left:3.2%; right:3.2%; top:4%; display:flex; justify-content:space-between; font-size:max(9px,1.1cqw); }
+  .pg .intro .top nav { color:var(--muted); } .pg .intro .top nav span { margin-left:2.4cqw; } .pg .intro .top nav .hi { color:var(--pink); }
+  .pg .intro .lbl { position:absolute; left:69%; top:22%; background:rgba(255,255,255,.55); padding:1cqw 1.2cqw; border-radius:.6cqw; font-size:max(8px,.9cqw); line-height:1.5; color:var(--muted); }
+  .pg .intro .lbl b { display:block; font-size:max(9px,1.1cqw); margin:.3cqw 0; }
+  .pg .intro .bot { position:absolute; left:3.2%; right:3.2%; bottom:4%; display:flex; justify-content:space-between; }
+  .pg .cap { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); background:var(--ink); color:#fff; font:500 max(9px,1cqw)/1.3 'Geist Mono',monospace; padding:.6cqw 1cqw; border-radius:99px; opacity:0; }
+
+  /* коллекция: что делаю */
+  .pg .halls { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2cqw; margin-top:4cqw; }
+  .pg .hall { background:var(--accent); border-radius:1.2cqw; padding:2.2cqw; aspect-ratio:4/3; display:flex; flex-direction:column; justify-content:space-between; }
+  .pg .hall b { font-size:2.3cqw; font-weight:600; letter-spacing:-.01em; }
+  .pg .hall span { font-size:max(9px,1.05cqw); color:var(--muted); }
+  .pg .hall.big { background:var(--soft); }
+
+  /* как работаем */
+  .pg .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:3cqw; margin-top:4cqw; position:relative; }
+  .pg .steps:before { content:''; position:absolute; left:0; right:0; top:3.3cqw; height:1px; background:var(--line); }
+  .pg .step .n { font-size:6.5cqw; font-weight:600; letter-spacing:-.04em; color:var(--pink); background:#fff; padding-right:1cqw; display:inline-block; position:relative; line-height:1; }
+  .pg .step b { display:block; font-size:2cqw; margin:1.4cqw 0 .6cqw; font-weight:600; }
+  .pg .step span { font-size:max(9px,1.1cqw); color:var(--muted); }
+
+  /* работы — экспонаты */
+  .pg .work { background:#fff8fb; }
+  .pg .gallery { display:grid; grid-template-columns:1.25fr 1fr; grid-template-rows:auto auto; gap:3cqw 3cqw; margin-top:4cqw; }
+  .pg .ex:first-child { grid-row:span 2; }
+  .pg .frame { background:#fff; padding:1.6cqw; border-radius:.6cqw; box-shadow:0 1.4cqw 3cqw rgba(214,40,130,.10), 0 0 0 1px var(--line); }
+  .pg .shot { border-radius:.4cqw; aspect-ratio:16/10; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:600; font-size:1.6cqw; }
+  .pg .ex:first-child .shot { aspect-ratio:4/3.6; }
+  .pg .plate { margin-top:1.4cqw; font-size:max(8px,1cqw); line-height:1.55; color:var(--muted); }
+  .pg .plate b { display:block; color:var(--ink); font-size:max(10px,1.5cqw); font-weight:600; margin:.3cqw 0; }
+
+  /* обо мне + контакт */
+  .pg .about { display:grid; grid-template-columns:1fr 1.4fr; gap:5cqw; align-items:center; }
+  .pg .portrait { aspect-ratio:4/5; border-radius:1.2cqw; background:linear-gradient(160deg,var(--soft),#ffeaf4); display:flex; align-items:flex-end; padding:1.4cqw; }
+  .pg .about p { font-size:max(10px,1.5cqw); line-height:1.5; color:var(--muted); margin:2cqw 0; }
+  .pg .link { font-size:max(9px,1.2cqw); border-bottom:1px solid currentColor; }
+  .pg .cta { background:var(--ink); color:#fff; text-align:center; padding:8cqw 6cqw; }
+  .pg .cta h2 { font-size:6cqw; }
+  .pg .cta .m { color:rgba(255,255,255,.5); }
+  .pg .cta .btn { display:inline-block; margin-top:3cqw; background:var(--pink); color:#fff; padding:1.2cqw 2.6cqw; border-radius:99px; font-size:max(10px,1.3cqw); }
+  .pg .foot { display:flex; justify-content:space-between; padding:2cqw 6cqw; background:var(--ink); border-top:1px solid rgba(255,255,255,.1); }
+  .pg .foot .m { color:rgba(255,255,255,.45); }
+  .note { font-size:13px; color:#666; margin:6px 0 18px; }
+</style>
+
+<h2>Вся страница целиком — черновик ритма</h2>
+<p class="subtitle">Сквозная метафора — выставка: первый экран — экспонат на сцене, услуги — «залы» коллекции, работы — экспонаты в рамах с музейными табличками. Текста минимум. Тексты-заглушки на английском, как на сайте.</p>
+
+<div class="pg">
+  <section class="intro">
+    <div class="top"><b>Ludvik4</b><nav><span>Work</span><span>Services</span><span>Guides</span><span>About</span><span class="hi">Contact</span></nav></div>
+    <div class="lbl"><span class="m">Exhibit Nº 04</span><b>Ludvik</b>Pure code, WebGL, zero polygons.<br>Handle with curiosity.</div>
+    <div class="bot m"><span>● Taking projects · Q1 2027</span><span>↓</span><span>Est. 2024 · Europe</span></div>
+  </section>
+
+  <section>
+    <div class="m">The collection · what I build</div>
+    <h2>If it lives in a browser,<br><em>I can build it.</em></h2>
+    <div class="halls">
+      <div class="hall big"><span class="m">Hall 01</span><div><b>Websites</b><br><span>for products, studios, events</span></div></div>
+      <div class="hall"><span class="m">Hall 02</span><div><b>Landing pages</b><br><span>one offer, one action</span></div></div>
+      <div class="hall"><span class="m">Hall 03</span><div><b>Web apps & SaaS</b><br><span>accounts, data, payments, AI</span></div></div>
+      <div class="hall"><span class="m">Hall 04</span><div><b>Automations</b><br><span>the boring parts, handled</span></div></div>
+      <div class="hall"><span class="m">Hall 05</span><div><b>Widgets & tools</b><br><span>small, sharp, embeddable</span></div></div>
+      <div class="hall big"><span class="m">Hall 06</span><div><b>Something else?</b><br><span>ask — it’s probably possible</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="m">How it works</div>
+    <h2>Three steps, <em>no fog.</em></h2>
+    <div class="steps">
+      <div class="step"><span class="n">01</span><b>Talk</b><span>We shape the problem and agree on scope and price.</span></div>
+      <div class="step"><span class="n">02</span><b>Build</b><span>The first useful version, shown as it grows.</span></div>
+      <div class="step"><span class="n">03</span><b>Launch</b><span>Live, handed over with the code — then it evolves.</span></div>
+    </div>
+  </section>
+
+  <section class="work">
+    <div class="m">Selected work · public exhibits</div>
+    <h2>Work you can <em>inspect.</em></h2>
+    <div class="gallery">
+      <div class="ex"><div class="frame"><div class="shot" style="background:linear-gradient(135deg,#5b7cfa,#9fb4ff)">smallFriendFiles</div></div>
+        <div class="plate"><span class="m">Exhibit Nº 01</span><b>smallFriendFiles</b>Web app · document AI, search, sharing<br>2026</div></div>
+      <div class="ex"><div class="frame"><div class="shot" style="background:linear-gradient(135deg,#1a1a1a,#4a4a4a)">Gridfin</div></div>
+        <div class="plate"><span class="m">Exhibit Nº 02</span><b>Gridfin</b>SaaS starter · specs, tests, quality gates</div></div>
+      <div class="ex"><div class="frame"><div class="shot" style="background:linear-gradient(135deg,#ff4fb6,#ffa6d6)">qa-pilot</div></div>
+        <div class="plate"><span class="m">Exhibit Nº 03</span><b>qa-pilot</b>AI plugin · plans, writes and audits tests</div></div>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="portrait"><span class="m">Curator</span></div>
+    <div>
+      <div class="m">About</div>
+      <h2>One person,<br><em>end to end.</em></h2>
+      <p>A founder-led studio in Europe. I take a project from a fuzzy idea to a working launch — and stay the one you talk to.</p>
+      <span class="link">More about me →</span>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="m">Your exhibit next?</div>
+    <h2>Have something in mind?</h2>
+    <span class="btn">Discuss a project</span>
+  </section>
+  <div class="foot"><span class="m">Ludvik4 · Est. 2024</span><span class="m">Guides · About · Contact</span></div>
+</div>

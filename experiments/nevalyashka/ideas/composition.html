@@ -1,0 +1,78 @@
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  .cp { --ink:#2a1420; --pink:#ff4fb6; }
+  .cp .scr { position:relative; aspect-ratio:16/10; overflow:hidden; border-radius:12px; margin-top:12px; background:url(/files/stage-bg.png) center/cover; font-family:Geist,system-ui,sans-serif; color:var(--ink); container-type:inline-size; }
+  .cp .m { font-family:'Geist Mono',monospace; letter-spacing:.12em; text-transform:uppercase; font-size:max(8px,.78cqw); }
+  .cp .top { position:absolute; left:3.2%; right:3.2%; top:4%; display:flex; justify-content:space-between; align-items:baseline; font-size:max(9px,1.05cqw); }
+  .cp .top b { font-weight:600; }
+  .cp .top nav span { margin-left:2.6cqw; }
+  .cp .top nav span.hi { color:var(--pink); }
+  .cp .bot { position:absolute; left:3.2%; right:3.2%; bottom:4%; display:flex; justify-content:space-between; align-items:center; opacity:.75; }
+  .cp .dot { display:inline-block; width:.55cqw; height:.55cqw; border-radius:50%; background:#1db954; margin-right:.6cqw; vertical-align:middle; }
+  .cp .arrow { font-size:max(10px,1.4cqw); opacity:.5; }
+  /* метки студийного кадра */
+  .cp .crop { position:absolute; width:2.2cqw; height:2.2cqw; border-color:rgba(42,20,32,.35); border-style:solid; border-width:0; }
+  .cp .crop.tl { left:2%; top:12%; border-left-width:1px; border-top-width:1px; }
+  .cp .crop.tr { right:2%; top:12%; border-right-width:1px; border-top-width:1px; }
+  .cp .crop.bl { left:2%; bottom:12%; border-left-width:1px; border-bottom-width:1px; }
+  .cp .crop.br { right:2%; bottom:12%; border-right-width:1px; border-bottom-width:1px; }
+  .cp .cross { position:absolute; left:50%; top:50%; width:1.6cqw; height:1.6cqw; transform:translate(-50%,-50%); opacity:.3; }
+  .cp .cross:before, .cp .cross:after { content:''; position:absolute; background:var(--ink); }
+  .cp .cross:before { left:50%; top:0; bottom:0; width:1px; }
+  .cp .cross:after { top:50%; left:0; right:0; height:1px; }
+  /* табличка экспоната */
+  .cp .label { position:absolute; left:72%; top:40%; width:17%; padding:1cqw 1.1cqw; background:rgba(255,255,255,.55); backdrop-filter:blur(6px); border-radius:.5cqw; font-size:max(8px,.85cqw); line-height:1.45; }
+  .cp .label b { display:block; font-size:max(9px,1.05cqw); font-weight:600; margin:.3cqw 0 .4cqw; }
+  .cp .leader { position:absolute; left:63%; top:44%; width:9%; height:1px; background:rgba(42,20,32,.4); }
+  .cp .leader:before { content:''; position:absolute; left:-3px; top:-3px; width:7px; height:7px; border-radius:50%; background:var(--ink); opacity:.6; }
+  /* рамка выделения как в редакторе */
+  .cp .sel { position:absolute; left:28.5%; top:18%; width:40%; height:60%; border:1px solid #3d7bff; }
+  .cp .sel i { position:absolute; width:.7cqw; height:.7cqw; background:#fff; border:1px solid #3d7bff; }
+  .cp .sel i:nth-child(1){left:-.4cqw;top:-.4cqw} .cp .sel i:nth-child(2){right:-.4cqw;top:-.4cqw} .cp .sel i:nth-child(3){left:-.4cqw;bottom:-.4cqw} .cp .sel i:nth-child(4){right:-.4cqw;bottom:-.4cqw}
+  .cp .sel .size { position:absolute; left:50%; bottom:-2.2cqw; transform:translateX(-50%); background:#3d7bff; color:#fff; padding:.2cqw .6cqw; border-radius:.3cqw; font-family:'Geist Mono',monospace; font-size:max(8px,.75cqw); }
+  .cp .sel .tag { position:absolute; left:-1px; top:-1.9cqw; background:#3d7bff; color:#fff; padding:.15cqw .55cqw; font-family:'Geist Mono',monospace; font-size:max(8px,.75cqw); }
+  .cp .cursor { position:absolute; left:66%; top:66%; }
+  .cp .cursor svg { width:1.6cqw; height:1.6cqw; }
+  .cp .cursor span { display:inline-block; margin-left:.3cqw; background:var(--pink); color:#fff; padding:.15cqw .5cqw; border-radius:.3cqw; font-size:max(8px,.75cqw); vertical-align:top; }
+  .cp .hint { position:absolute; left:50%; top:84%; transform:translateX(-50%); opacity:.45; }
+</style>
+
+<h2>Композиция первого экрана</h2>
+<p class="subtitle">Сцена та же. Зоны: верх — меню текстом, низ — тонкая служебная строка, по центру — неваляшка. Отличаются «детали-метафоры» вокруг неё. Всё мелкое, полупрозрачное, чтобы главной оставалась неваляшка.</p>
+
+<div class="options" data-multiselect>
+
+  <div class="option cp" data-choice="set" onclick="toggleSelect(this)" style="display:block">
+    <div class="letter">A</div>
+    <div class="content"><h3>Съёмочная площадка</h3><p>Уголки кадра и крестик центра, как в видоискателе фотостудии: «идёт съёмка». Внизу — статус «свободна для проектов», локальное время и стрелка. Самый строгий.</p></div>
+    <div class="scr">
+      <div class="top"><b>Ludvik4</b><nav><span>Work</span><span>Services</span><span>Articles</span><span>About</span><span class="hi">Contact</span></nav></div>
+      <div class="crop tl"></div><div class="crop tr"></div><div class="crop bl"></div><div class="crop br"></div>
+      <div class="cross"></div>
+      <div class="bot m"><span><i class="dot"></i>Taking projects · Q1 2027</span><span class="arrow">↓</span><span>Europe · 14:32 CET</span></div>
+    </div>
+  </div>
+
+  <div class="option cp" data-choice="exhibit" onclick="toggleSelect(this)" style="display:block">
+    <div class="letter">B</div>
+    <div class="content"><h3>Экспонат</h3><p>Рядом с неваляшкой — музейная табличка на тонкой выноске: имя, «материал», год. Метафора «работа как произведение» и лёгкая ирония. Табличку можно сделать живой: меняет текст, когда неваляшку трогают.</p></div>
+    <div class="scr">
+      <div class="top"><b>Ludvik4</b><nav><span>Work</span><span>Services</span><span>Articles</span><span>About</span><span class="hi">Contact</span></nav></div>
+      <div class="leader"></div>
+      <div class="label"><span class="m">Exhibit Nº 04</span><b>Ludvik</b>Jelly, code, light.<br>Handle with curiosity.</div>
+      <div class="bot m"><span><i class="dot"></i>Taking projects · Q1 2027</span><span class="arrow">↓</span><span>Est. 2024 · Europe</span></div>
+    </div>
+  </div>
+
+  <div class="option cp" data-choice="editor" onclick="toggleSelect(this)" style="display:block">
+    <div class="letter">C</div>
+    <div class="content"><h3>Рабочий стол дизайнера</h3><p>Неваляшка «выделена», как объект в Figma: синяя рамка с ручками, имя слоя и размер. Рядом розовый курсор «Ludvik». Сразу говорит «я проектирую и собираю интерфейсы». Рамка может следить за неваляшкой, когда она качается.</p></div>
+    <div class="scr">
+      <div class="top"><b>Ludvik4</b><nav><span>Work</span><span>Services</span><span>Articles</span><span>About</span><span class="hi">Contact</span></nav></div>
+      <div class="sel"><i></i><i></i><i></i><i></i><span class="tag">mascot.jelly</span><span class="size">580 × 540</span></div>
+      <div class="cursor"><svg viewBox="0 0 16 16"><path d="M1 1l5 14 2-6 6-2z" fill="#ff4fb6" stroke="#fff"/></svg><span>Ludvik</span></div>
+      <div class="bot m"><span><i class="dot"></i>Taking projects · Q1 2027</span><span class="arrow">↓</span><span>drag · tilt · poke</span></div>
+    </div>
+  </div>
+
+</div>

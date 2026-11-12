@@ -1,0 +1,117 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;800;900&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  .dir { --pink:#ff4fb6; --ink:#1a1a1a; --soft:#ffd7eb; --accent:#fff0f6; --warm:#fff8f5; --line:#e5dce1; }
+  .dir .stage { position:relative; height:440px; overflow:hidden; border-radius:12px; font-family:Geist,system-ui,sans-serif; color:var(--ink); }
+  .dir .nav { position:absolute; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; padding:18px 28px; font-size:13px; z-index:2; }
+  .dir .nav b { font-weight:600; }
+  .dir .nav span { margin-left:18px; opacity:.8; }
+  .dir .mono { font-family:'Geist Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; }
+  .dir img.neva { position:absolute; pointer-events:none; }
+
+  /* A — плакат */
+  .a .stage { background:#fff radial-gradient(#e9dfe4 1.2px, transparent 1.3px) 0 0/18px 18px; text-align:center; }
+  .a h1 { font-family:Fredoka,sans-serif; font-weight:700; font-size:76px; line-height:.92; margin:0; position:absolute; left:0; right:0; bottom:70px; letter-spacing:-.01em; }
+  .a h1 em { font-style:normal; color:var(--pink); }
+  .a .neva { width:250px; left:50%; top:22px; transform:translateX(-50%); }
+  .a .pill { display:inline-block; padding:9px 18px; border:2px solid var(--ink); border-radius:999px; font-weight:600; font-size:13px; box-shadow:3px 3px 0 var(--ink); background:var(--pink); color:#fff; }
+  .a .cta { position:absolute; bottom:22px; left:0; right:0; }
+  .a .nav .pill { padding:6px 14px; font-size:12px; }
+
+  /* B — релакс */
+  .b .stage { background:var(--warm); }
+  .b .blob { position:absolute; border-radius:50%; background:var(--soft); filter:blur(.5px); }
+  .b .copy { position:absolute; left:40px; top:110px; width:380px; }
+  .b h1 { font-family:Nunito,sans-serif; font-weight:900; font-size:46px; line-height:1.02; margin:10px 0 14px; }
+  .b h1 em { font-style:normal; color:var(--pink); }
+  .b .copy p { font-size:14px; line-height:1.5; margin:0 0 18px; color:#4b5563; }
+  .b .btn { display:inline-block; padding:10px 20px; border-radius:999px; background:var(--ink); color:#fff; font-weight:500; font-size:13px; }
+  .b .neva { width:290px; right:70px; top:70px; }
+  .b svg.doodle { position:absolute; stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; }
+
+  /* C — золотая середина */
+  .c .stage { background:#fff; }
+  .c .grid { position:absolute; inset:0; display:grid; grid-template-columns:1fr 1fr; }
+  .c .copy { padding:118px 0 0 40px; }
+  .c h1 { font-family:Fredoka,sans-serif; font-weight:600; font-size:54px; line-height:1; margin:14px 0 16px; letter-spacing:-.01em; }
+  .c h1 em { font-style:normal; color:var(--pink); }
+  .c .copy p { font-size:14px; line-height:1.5; color:#4b5563; margin:0 0 20px; max-width:340px; }
+  .c .btn { display:inline-block; padding:10px 20px; border-radius:999px; background:var(--pink); color:#fff; font-weight:500; font-size:13px; }
+  .c .btn2 { margin-left:14px; font-size:13px; text-decoration:underline; text-underline-offset:3px; }
+  .c .right { position:relative; background:var(--accent); border-left:1px solid var(--line); }
+  .c .disc { position:absolute; left:50%; top:50%; width:330px; height:330px; transform:translate(-50%,-46%); border-radius:50%; background:radial-gradient(circle at 50% 40%, #fff 0, var(--soft) 70%); }
+  .c .neva { width:300px; left:50%; top:46px; transform:translateX(-50%); }
+  .c .tag { position:absolute; right:18px; bottom:16px; }
+  .c .hint { position:absolute; left:18px; bottom:16px; }
+  .c svg.doodle { position:absolute; stroke:var(--ink); fill:none; stroke-width:1.6; stroke-linecap:round; }
+</style>
+
+<h2>Какое настроение ближе?</h2>
+<p class="subtitle">Три стилевых направления для первого экрана. Цвета и шрифт текста — из текущего сайта (белый, #ff4fb6, Geist). Заголовки — округлым шрифтом. Кликни на понравившееся, можно несколько.</p>
+
+<div class="options" data-multiselect>
+
+  <div class="option dir a" data-choice="a" onclick="toggleSelect(this)" style="display:block">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Плакат — ближе к NoBS</h3>
+      <p>Неваляшка — главный герой по центру, под ней огромный жирный округлый заголовок. Точечная сетка на фоне, «наклейки»-кнопки с жёсткой тенью. Максимум сочности, розовый — в одном слове.</p>
+    </div>
+    <div class="stage" style="margin-top:12px">
+      <div class="nav"><b>Ludvik4</b><div><span>Services</span><span>Work</span><span>About</span> <span class="pill">Discuss a project</span></div></div>
+      <img class="neva" src="/files/neva-smile.png" alt="">
+      <h1>Websites that<br><em>wobble</em> back.</h1>
+      <div class="cta"><span class="pill">Start a project →</span></div>
+    </div>
+  </div>
+
+  <div class="option dir b" data-choice="b" onclick="toggleSelect(this)" style="display:block">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Релакс — ближе к No Jiggery</h3>
+      <p>Тёплый кремовый фон, мягкие розовые пятна, тонкие линейные дудлы. Текст слева спокойный и дружелюбный, неваляшка справа «живёт» в своём уголке. Самое мягкое и уютное.</p>
+    </div>
+    <div class="stage" style="margin-top:12px">
+      <div class="blob" style="width:380px;height:380px;right:30px;top:40px"></div>
+      <div class="blob" style="width:120px;height:120px;left:330px;top:330px;opacity:.6"></div>
+      <svg class="doodle" style="right:40px;top:70px" width="60" height="60" viewBox="0 0 60 60"><path d="M30 6v14M30 40v14M6 30h14M40 30h14M14 14l8 8M38 38l8 8"/></svg>
+      <svg class="doodle" style="left:300px;top:70px" width="90" height="40" viewBox="0 0 90 40"><path d="M4 30c12-22 22 10 34-8s22 12 34-6 14 0 14 0"/></svg>
+      <div class="nav"><b>Ludvik4</b><div><span>Services</span><span>Work</span><span>About</span></div></div>
+      <div class="copy">
+        <div class="mono">Founder-led product studio</div>
+        <h1>Calm process.<br>Websites with <em>a pulse.</em></h1>
+        <p>Websites, workflow automation and web apps — from a fuzzy idea to a working launch.</p>
+        <span class="btn">Let’s talk</span>
+      </div>
+      <img class="neva" src="/files/neva-calm.png" alt="">
+    </div>
+  </div>
+
+  <div class="option dir c" data-choice="c" onclick="toggleSelect(this)" style="display:block">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Золотая середина — строгость сайта + один сочный объект</h3>
+      <p>Экран делится пополам. Слева — сдержанная типографика и моно-подписи, как сейчас, только заголовок округлым шрифтом. Справа — «витрина»: нежно-розовая панель, неваляшка на подиуме, пара тонких дудлов и подсказка «потрогай меня».</p>
+    </div>
+    <div class="stage" style="margin-top:12px">
+      <div class="grid">
+        <div class="copy">
+          <div class="mono">Founder-led product studio · Europe</div>
+          <h1>Digital products<br>with <em>character.</em></h1>
+          <p>Websites, workflow automation and web apps — clear scope, direct communication, built for launch.</p>
+          <span class="btn">Discuss your project</span><span class="btn2">See work</span>
+        </div>
+        <div class="right">
+          <div class="disc"></div>
+          <svg class="doodle" style="left:40px;top:80px" width="40" height="40" viewBox="0 0 40 40"><path d="M20 4v10M20 26v10M4 20h10M26 20h10"/></svg>
+          <svg class="doodle" style="right:44px;top:110px" width="56" height="24" viewBox="0 0 56 24"><path d="M3 18c8-14 14 6 22-6s14 8 28-4"/></svg>
+          <img class="neva" src="/files/neva-surprised.png" alt="">
+          <div class="mono hint">↻ drag · tap to poke</div>
+          <div class="mono tag">01 / Hello</div>
+        </div>
+      </div>
+      <div class="nav"><b>Ludvik4</b><div><span>Services</span><span>Work</span><span>Articles</span><span>About</span></div></div>
+    </div>
+  </div>
+
+</div>

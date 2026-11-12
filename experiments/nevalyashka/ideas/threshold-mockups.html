@@ -1,0 +1,79 @@
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  .th { --pink:#ff4fb6; --ink:#1a1a1a; --soft:#ffd7eb; --accent:#fff0f6; --warm:#fff8f5; }
+  .th .scr { position:relative; aspect-ratio:16/10; overflow:hidden; border-radius:12px; margin-top:12px; font-family:Geist,system-ui,sans-serif; color:var(--ink); }
+  .th .mono { font-family:'Geist Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; }
+  .th .corner { position:absolute; top:16px; left:20px; font-weight:600; font-size:13px; }
+  .th .corner2 { position:absolute; top:16px; right:20px; }
+  .th .down { position:absolute; bottom:16px; left:0; right:0; text-align:center; }
+  .th img { position:absolute; pointer-events:none; }
+  .th .word { font-family:Fredoka,sans-serif; font-weight:700; line-height:.9; }
+
+  /* 1 — сцена: цветной фон и круг-подиум */
+  .t1 .scr { background:var(--soft); }
+  .t1 .ring { position:absolute; left:50%; top:52%; width:46%; aspect-ratio:1; transform:translate(-50%,-50%); border-radius:50%; background:radial-gradient(circle at 50% 38%, #fff 0, var(--accent) 45%, #ffc2e2 100%); }
+  .t1 img { width:34%; left:50%; top:15%; transform:translateX(-50%); }
+  .t1 .word { position:absolute; left:6%; top:38%; font-size:64px; }
+  .t1 .word2 { position:absolute; right:6%; top:52%; font-size:64px; text-align:right; }
+  .t1 .word2 em { font-style:normal; color:var(--pink); }
+
+  /* 2 — слово-стена позади маскота */
+  .t2 .scr { background:#fff; }
+  .t2 .wall { position:absolute; left:0; right:0; top:22%; text-align:center; font-size:190px; color:var(--pink); letter-spacing:-.02em; }
+  .t2 img { width:38%; left:50%; top:12%; transform:translateX(-50%); }
+  .t2 .sub { position:absolute; left:0; right:0; bottom:48px; text-align:center; font-family:Fredoka,sans-serif; font-weight:500; font-size:20px; }
+
+  /* 3 — дверь: арка-проём, маскот на пороге */
+  .t3 .scr { background:var(--pink); }
+  .t3 .door { position:absolute; left:50%; bottom:0; width:38%; height:82%; transform:translateX(-50%); background:var(--warm); border-radius:999px 999px 0 0; }
+  .t3 img { width:40%; left:50%; bottom:4%; transform:translateX(-50%); }
+  .t3 .word { position:absolute; left:5%; top:40%; font-size:56px; color:#fff; }
+  .t3 .word2 { position:absolute; right:5%; top:40%; font-size:56px; color:#fff; text-align:right; }
+  .t3 .corner, .t3 .mono { color:#fff; }
+  .t3 .knock { position:absolute; left:50%; top:20%; transform:translateX(-50%); }
+</style>
+
+<h2>Первый экран — «дверь»</h2>
+<p class="subtitle">Маскот на весь экран, 2–3 слова, больше ничего. Клик по неваляшке = «постучать»: она пугается 😮, потом улыбается 😊, и экран открывается дальше (скролл ведёт в сам «дом»). Слова — заглушки.</p>
+
+<div class="options" data-multiselect>
+
+  <div class="option th t1" data-choice="stage" onclick="toggleSelect(this)" style="display:block">
+    <div class="letter">1</div>
+    <div class="content"><h3>Сцена</h3><p>Весь фон — нежно-розовый, в центре светлый круг-подиум, неваляшка на нём. Два слова разведены по бокам, как подписи к экспонату.</p></div>
+    <div class="scr">
+      <div class="ring"></div>
+      <img src="/files/neva-calm.png" alt="">
+      <div class="corner">Ludvik4</div>
+      <div class="word">Knock</div>
+      <div class="word word2"><em>knock.</em></div>
+      <div class="mono down">tap him · or scroll</div>
+    </div>
+  </div>
+
+  <div class="option th t2" data-choice="wall" onclick="toggleSelect(this)" style="display:block">
+    <div class="letter">2</div>
+    <div class="content"><h3>Слово-стена</h3><p>Белый фон, одно гигантское розовое слово за спиной маскота, он стоит «перед» ним. Очень плакатно, как NoBS, но минимум элементов.</p></div>
+    <div class="scr">
+      <div class="word wall">hello</div>
+      <img src="/files/neva-smile.png" alt="">
+      <div class="corner">Ludvik4</div>
+      <div class="sub">Come on in.</div>
+      <div class="mono down">↓</div>
+    </div>
+  </div>
+
+  <div class="option th t3" data-choice="door" onclick="toggleSelect(this)" style="display:block">
+    <div class="letter">3</div>
+    <div class="content"><h3>Дверь буквально</h3><p>Ярко-розовый фон, в центре светлая арка-проём, неваляшка стоит на пороге. При «стуке» и скролле арка раскрывается на весь экран, и ты входишь в сайт.</p></div>
+    <div class="scr">
+      <div class="door"></div>
+      <img src="/files/neva-surprised.png" alt="">
+      <div class="corner">Ludvik4</div>
+      <div class="mono knock">knock to enter</div>
+      <div class="word">Come</div>
+      <div class="word word2">in.</div>
+    </div>
+  </div>
+
+</div>

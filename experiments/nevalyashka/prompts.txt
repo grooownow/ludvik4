@@ -1,0 +1,17 @@
+VARIANT A — classic separate head
+Use case: stylized-concept. Asset type: 3D character concept render for a future animated website mascot.
+Input image: reference for character identity, exact hot pink/fuchsia jelly material, loop hands, antenna, eye holes and belly hole.
+Preserve: saturated vivid raspberry/hot pink (#d80e66 base with luminous magenta highlights), shiny translucent gummy resin, short horizontal arms ending in chunky ring-shaped hands, slim antenna with a round ball on top. Two dark THROUGH-HOLES as eyes (no eyeballs or pupils), one round THROUGH-HOLE in the center of the belly with clearly visible interior depth.
+Primary request: redesign the reference's blocky robot into an unmistakable rounded roly-poly / Russian nevalyashka toy, with a broad rounded bottom that can rock on the ground. No legs, no feet, no flat rectangular base.
+Style: premium playful physically rendered 3D collectible, soft jelly gloss, thick rounded surfaces, obvious 3D depth, subtle internal refraction, controlled glossy highlights matching reference.
+Composition: single full body character, centered, three-quarter front view, all antenna and hands visible with generous padding. Pale warm off-white seamless studio floor, a soft pink-tinted contact shadow beneath the round base. No text, no watermark, no props, no additional characters.
+Variant A: classic two-part roly-poly proportions: smaller round slightly flattened spherical head, very small rounded neck, substantially larger broad pear/spherical body. The head is circular rather than a rounded rectangle. The main body is bottom-heavy and a smooth round domed pear; the head sits on it. Eye and belly openings are actual bores in the jelly sculpture. Keep the reference's ring/claw hands.
+
+VARIANT B — integrated silhouette
+Use case: stylized-concept. Asset type: 3D character concept render for a future animated website mascot.
+Input image: reference for character identity, exact hot pink/fuchsia jelly material, loop hands, antenna, eye holes and belly hole.
+Preserve: saturated vivid raspberry/hot pink (#d80e66 base with luminous magenta highlights), shiny translucent gummy resin, short horizontal arms ending in chunky ring-shaped hands, slim antenna with a round ball on top. Two dark THROUGH-HOLES as eyes (no eyeballs or pupils), one round THROUGH-HOLE in the center of the belly with clearly visible interior depth.
+Primary request: redesign the reference's blocky robot into an unmistakable rounded roly-poly / Russian nevalyashka toy, with a broad rounded bottom that can rock on the ground. No legs, no feet, no flat rectangular base.
+Style: premium playful physically rendered 3D collectible, soft jelly gloss, thick rounded surfaces, obvious 3D depth, subtle internal refraction, controlled glossy highlights matching reference.
+Composition: single full body character, centered, three-quarter front view, all antenna and hands visible with generous padding. Pale warm off-white seamless studio floor, a soft pink-tinted contact shadow beneath the round base. No text, no watermark, no props, no additional characters.
+Variant B: a more integrated elegant continuous pear-shaped roly-poly silhouette: bulbous hemispherical bottom, a soft inward pinch below the small circular head, very little visible neck. Slightly taller and sleeker than a classic two-ball toy but clearly bottom-heavy. Place the two eye through-holes near the top and the single larger belly through-hole in the round lower body. Preserve the reference's ring/claw hands and ball-tipped antenna.

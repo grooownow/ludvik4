@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Halls lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --fg: #1a1a1a;
+    --muted: rgba(42, 20, 32, 0.7);
+    --pink: #ff4fb6;
+    --pink-soft: #ffd7eb;
+    --accent: #fff0f6;
+    --intro: #14040c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Geist, system-ui, sans-serif;
+    color: var(--fg);
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- lab switcher ---------- */
+  .lab {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    padding: 14px 24px;
+    background: rgba(20, 4, 12, 0.92); color: #fff;
+    backdrop-filter: blur(8px);
+    font-size: 13px;
+  }
+  .lab b { font-weight: 600; margin-right: 8px; }
+  .lab button {
+    font: inherit; color: #fff; cursor: pointer;
+    border: 1px solid rgba(255,255,255,.25); background: transparent;
+    padding: 7px 14px; border-radius: 999px;
+  }
+  .lab button[aria-pressed="true"] { background: var(--pink); border-color: var(--pink); }
+  .lab .note { opacity: .65; margin-left: auto; }
+
+  /* ---------- section, as on the site ---------- */
+  .band { max-width: 72rem; margin: 0 auto; padding: 96px 24px 140px; }
+  .eyebrow {
+    font-family: "Geist Mono", monospace; font-size: 12px;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+  }
+  h2 {
+    margin: 10px 0 0; font-size: clamp(32px, 5vw, 60px);
+    font-weight: 700; letter-spacing: -0.035em; line-height: 1.05;
+  }
+  h2 em { font-style: normal; color: var(--pink); }
+  .desc { margin: 16px 0 0; color: var(--muted); font-size: 15px; max-width: 46rem; }
+
+  .grid {
+    list-style: none; padding: 0; margin: 48px 0 0;
+    display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 1023px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 639px) { .grid { grid-template-columns: 1fr; } }
+
+  .hall {
+    --mx: 50%; --my: 50%;
+    position: relative; isolation: isolate;
+    aspect-ratio: 4 / 3; border-radius: 16px; padding: 28px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    background: var(--accent); overflow: hidden;
+    cursor: pointer;
+    transition: transform .5s cubic-bezier(.2,.9,.25,1.2), box-shadow .4s, opacity .3s, filter .3s;
+  }
+  .hall.soft { background: var(--pink-soft); }
+  .hall:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; }
+  .idx {
+    font-family: "Geist Mono", monospace; font-size: 12px;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+    position: relative; z-index: 2;
+  }
+  .name { display: block; font-size: 24px; font-weight: 600; letter-spacing: -0.02em; }
+  .line { display: block; margin-top: 4px; font-size: 14px; color: var(--muted); }
+  .txt { position: relative; z-index: 2; }
+
+  /* the exhibit object, top-right of the card */
+  .obj {
+    position: absolute; right: 20px; top: 16px; width: 40%; max-width: 168px;
+    aspect-ratio: 1; z-index: 1; pointer-events: none;
+    transform-origin: 50% 88%;
+  }
+  .obj svg { width: 100%; height: 100%; overflow: visible; display: block; }
+
+  /* details: what is inside the hall */
+  /* chips join below the subtitle and push the text up; the exhibit
+     lifts and shrinks a little to make room */
+  .more {
+    display: flex; flex-wrap: nowrap; gap: 6px;
+    max-height: 0; margin-top: 0; opacity: 0; transform: translateY(10px);
+    transition: max-height .45s ease, margin-top .45s ease, opacity .3s ease,
+      transform .45s cubic-bezier(.2,.9,.25,1.2);
+  }
+  .obj { transition: transform .5s cubic-bezier(.2,.9,.25,1.2); transform-origin: 100% 0; }
+  .obj svg { transform-origin: 50% 88%; }
+  .hall:hover .obj { transform: translateY(-12px) scale(.86); }
+  .chip {
+    font-size: 12.5px; padding: 4px 10px; border-radius: 999px;
+    background: rgba(255,255,255,.75); color: var(--fg); white-space: nowrap;
+  }
+  .soft .chip { background: rgba(255,255,255,.6); }
+  .hall.wild .chip { background: var(--fg); color: #fff; }
+
+  /* cursor gloss, like the light on the mascot */
+  .hall::after {
+    content: ""; position: absolute; inset: 0; z-index: 0; border-radius: inherit;
+    background: radial-gradient(260px circle at var(--mx) var(--my), rgba(255,255,255,.75), transparent 60%);
+    opacity: 0; transition: opacity .35s;
+  }
+
+  /* ============ Variant A: exhibit + label (recommended) ============ */
+  [data-v="a"] .hall:hover,
+  [data-v="a"] .hall:focus-visible { transform: translateY(-6px); box-shadow: 0 24px 40px -24px rgba(216,14,102,.45); }
+  [data-v="a"] .hall:hover::after { opacity: 1; }
+  [data-v="a"] .hall:hover .more,
+  [data-v="a"] .hall:focus-visible .more { max-height: 40px; margin-top: 10px; opacity: 1; transform: none; }
+
+  /* ============ Variant B: the card itself is jelly ============ */
+  [data-v="b"] .hall::after { opacity: 0; }
+  [data-v="b"] .hall:hover::after { opacity: 1; }
+  [data-v="b"] .hall { transition: none; }
+  [data-v="b"] .hall .line { transition: opacity .2s; }
+  [data-v="b"] .hall:hover .more,
+  [data-v="b"] .hall:focus-visible .more { max-height: 40px; margin-top: 10px; opacity: 1; transform: none; }
+
+  /* ============ Variant C: step into the hall ============ */
+  [data-v="c"] .grid:hover .hall:not(:hover) { opacity: .55; filter: saturate(.7); transform: scale(.97); }
+  [data-v="c"] .hall:hover {
+    transform: scale(1.07); z-index: 5;
+    box-shadow: 0 40px 60px -30px rgba(216,14,102,.55);
+  }
+  [data-v="c"] .hall:hover::after { opacity: .7; }
+  [data-v="c"] .hall:hover .obj { transform: scale(1.1) translate(-4%, -6%); transition: transform .6s cubic-bezier(.2,.9,.25,1.2); }
+    [data-v="c"] .hall:hover .more,
+  [data-v="c"] .hall:focus-visible .more { max-height: 40px; margin-top: 10px; opacity: 1; transform: none; }
+
+  /* touch: no hover, so the details show and exhibits rock on their own */
+  @media (hover: none) {
+    .more { max-height: 40px; margin-top: 10px; opacity: 1; transform: none; }
+    .hall .obj { transform: translateY(-12px) scale(.86); }
+    .obj svg { animation: idle 3.6s ease-in-out infinite; }
+    .hall:nth-child(2n) .obj svg { animation-delay: -1.2s; }
+    .hall:nth-child(3n) .obj svg { animation-delay: -2.1s; }
+  }
+  @keyframes idle {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .obj svg { animation: none !important; }
+  }
+
+  .closing { background: var(--intro); height: 160px; }
+</style>
+</head>
+<body data-v="b">
+
+<div class="lab">
+  <b>Залы — варианты наведения</b>
+  <button data-set="a" aria-pressed="false">A · Экспонат + табличка</button>
+  <button data-set="b" aria-pressed="true">B · Плашка из желе</button>
+  <button data-set="c" aria-pressed="false">C · Заглянуть в зал</button>
+  <span class="note">Тексты черновые</span>
+</div>
+
+<section class="band">
+  <div class="eyebrow">The collection · what I build</div>
+  <h2>If it lives in a browser, <em>I can build it.</em></h2>
+
+  <ul class="grid" id="grid"></ul>
+</section>
+<div class="closing"></div>
+
+<!-- shared jelly materials -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="jelly" cx="35%" cy="28%" r="85%">
+      <stop offset="0" stop-color="#ff9ed6" />
+      <stop offset=".45" stop-color="#f0388f" />
+      <stop offset="1" stop-color="#a8004f" />
+    </radialGradient>
+    <radialGradient id="jellyLight" cx="35%" cy="28%" r="85%">
+      <stop offset="0" stop-color="#ffd3ec" />
+      <stop offset=".5" stop-color="#ff86c6" />
+      <stop offset="1" stop-color="#e0207f" />
+    </radialGradient>
+    <radialGradient id="shadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#a8004f" stop-opacity=".35" />
+      <stop offset="1" stop-color="#a8004f" stop-opacity="0" />
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.2" />
+    </filter>
+  </defs>
+</svg>
+
+<script>
+// Exhibits: little jelly objects, one per hall. 200×200 viewBox, floor at y≈178.
+const SHADOW = '<ellipse cx="100" cy="182" rx="62" ry="9" fill="url(#shadow)"/>';
+const shine = (d) => `<path d="${d}" fill="#fff" opacity=".7" filter="url(#soft)"/>`;
+
+const EXHIBITS = {
+  browser: `${SHADOW}
+    <rect x="22" y="48" width="156" height="122" rx="22" fill="url(#jelly)"/>
+    <rect x="34" y="78" width="132" height="80" rx="12" fill="url(#jellyLight)" opacity=".9"/>
+    <circle cx="44" cy="63" r="5" fill="#fff" opacity=".85"/><circle cx="58" cy="63" r="5" fill="#fff" opacity=".6"/><circle cx="72" cy="63" r="5" fill="#fff" opacity=".45"/>
+    <rect x="46" y="92" width="64" height="9" rx="4.5" fill="#fff" opacity=".8"/>
+    <rect x="46" y="108" width="98" height="7" rx="3.5" fill="#fff" opacity=".45"/>
+    <rect x="46" y="121" width="80" height="7" rx="3.5" fill="#fff" opacity=".45"/>
+    ${shine("M36 60 q10 -8 40 -8 q-30 6 -36 22z")}`,
+  landing: `${SHADOW}
+    <rect x="52" y="20" width="96" height="160" rx="18" fill="url(#jellyLight)"/>
+    <rect x="66" y="40" width="68" height="10" rx="5" fill="#fff" opacity=".9"/>
+    <rect x="66" y="56" width="50" height="10" rx="5" fill="#fff" opacity=".9"/>
+    <rect x="66" y="76" width="68" height="6" rx="3" fill="#fff" opacity=".5"/>
+    <rect x="66" y="88" width="58" height="6" rx="3" fill="#fff" opacity=".5"/>
+    <rect x="30" y="112" width="140" height="44" rx="22" fill="url(#jelly)"/>
+    <rect x="72" y="129" width="56" height="10" rx="5" fill="#fff" opacity=".9"/>
+    ${shine("M44 120 q24 -8 60 -6 q-36 4 -56 14z")}
+    <path d="M140 140 l0 40 l10 -10 l8 18 l8 -4 l-8 -17 l15 0z" fill="#1a1a1a" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>`,
+  app: `${SHADOW}
+    <rect x="34" y="28" width="146" height="112" rx="20" fill="url(#jellyLight)" opacity=".6"/>
+    <rect x="20" y="46" width="160" height="128" rx="22" fill="url(#jelly)"/>
+    <rect x="32" y="60" width="34" height="102" rx="12" fill="url(#jellyLight)" opacity=".85"/>
+    <circle cx="49" cy="76" r="8" fill="#fff" opacity=".9"/>
+    <rect x="41" y="96" width="16" height="5" rx="2.5" fill="#fff" opacity=".7"/>
+    <rect x="41" y="108" width="16" height="5" rx="2.5" fill="#fff" opacity=".5"/>
+    <rect x="41" y="120" width="16" height="5" rx="2.5" fill="#fff" opacity=".5"/>
+    <rect x="78" y="62" width="48" height="8" rx="4" fill="#fff" opacity=".8"/>
+    <circle cx="160" cy="66" r="8" fill="#fff" opacity=".7"/>
+    <path d="M80 148 L100 128 L118 138 L146 104 L166 114" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+    <circle cx="146" cy="104" r="7" fill="#fff"/>
+    ${shine("M34 58 q24 -10 60 -8 q-38 4 -54 18z")}`,
+  gears: `${SHADOW}
+    <g class="spin-a" style="transform-origin:82px 118px">
+      ${gear(82, 118, 46, 10, "url(#jelly)")}
+      <circle cx="82" cy="118" r="15" fill="#fff" opacity=".85"/>
+    </g>
+    <g class="spin-b" style="transform-origin:146px 74px">
+      ${gear(146, 74, 30, 8, "url(#jellyLight)")}
+      <circle cx="146" cy="74" r="10" fill="#fff" opacity=".8"/>
+    </g>
+    ${shine("M52 98 q14 -18 40 -20 q-26 8 -36 26z")}`,
+  widget: `${SHADOW}
+    <rect x="30" y="58" width="140" height="64" rx="32" fill="url(#jellyLight)"/>
+    <circle class="knob" cx="138" cy="90" r="26" fill="url(#jelly)"/>
+    ${shine("M126 72 q8 -6 18 -4 q-12 2 -16 10z")}
+    <rect x="30" y="138" width="140" height="14" rx="7" fill="url(#jellyLight)" opacity=".8"/>
+    <rect x="30" y="138" width="88" height="14" rx="7" fill="url(#jelly)"/>
+    <circle cx="118" cy="145" r="14" fill="#fff" stroke="#f0388f" stroke-width="5"/>`,
+  question: `${SHADOW}
+    <path d="M62 78 q0 -46 40 -46 q40 0 40 38 q0 22 -22 34 q-12 7 -12 22 v8" fill="none" stroke="url(#jelly)" stroke-width="30" stroke-linecap="round"/>
+    <circle cx="108" cy="162" r="16" fill="url(#jelly)"/>
+    ${shine("M70 62 q8 -22 32 -24 q-22 10 -26 28z")}`,
+};
+
+function gear(cx, cy, r, teeth, fill) {
+  let d = "";
+  const inner = r * 0.78;
+  for (let i = 0; i < teeth * 2; i++) {
+    const a = (i / (teeth * 2)) * Math.PI * 2;
+    const rr = i % 2 ? inner : r;
+    const a1 = a - Math.PI / (teeth * 2) * 0.55, a2 = a + Math.PI / (teeth * 2) * 0.55;
+    d += `${i ? "L" : "M"}${cx + rr * Math.cos(a1)} ${cy + rr * Math.sin(a1)} L${cx + rr * Math.cos(a2)} ${cy + rr * Math.sin(a2)} `;
+  }
+  return `<path d="${d}Z" fill="${fill}" stroke-linejoin="round"/>`;
+}
+
+const HALLS = [
+  { i: "Hall 01", n: "Websites", l: "for products, studios, events", o: "browser", soft: true,
+    m: ["Design → launch", "Editable", "SEO-ready"] },
+  { i: "Hall 02", n: "Landing pages", l: "one offer, one action", o: "landing",
+    m: ["One goal", "Copy + design", "Analytics"] },
+  { i: "Hall 03", n: "Web apps & SaaS", l: "accounts, data, payments, AI", o: "app",
+    m: ["Sign-in", "Payments", "AI features"] },
+  { i: "Hall 04", n: "Automations", l: "the boring parts, handled", o: "gears",
+    m: ["Bots", "Integrations", "CRMs"] },
+  { i: "Hall 05", n: "Widgets & tools", l: "small, sharp, embeddable", o: "widget",
+    m: ["Calculators", "Quizzes", "Embeds"] },
+  { i: "Hall 06", n: "Something else?", l: "ask — it’s probably possible", o: "question", soft: true, wild: true,
+    m: ["Tell me the idea →"] },
+];
+
+const grid = document.getElementById("grid");
+grid.innerHTML = HALLS.map((h) => `
+  <li class="hall${h.soft ? " soft" : ""}${h.wild ? " wild" : ""}" tabindex="0">
+    <span class="idx">${h.i}</span>
+    <div class="obj" aria-hidden="true"><svg viewBox="0 0 200 200">${EXHIBITS[h.o]}</svg></div>
+    <span class="txt">
+      <span class="name">${h.n}</span>
+      <span class="line">${h.l}</span>
+      <span class="more">${h.m.map((c) => `<span class="chip">${c}</span>`).join("")}</span>
+    </span>
+  </li>`).join("");
+
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Roly-poly wobble: tilt away from the side the cursor came in, decaying.
+const WOBBLE = [0, 12, -8, 4.5, -2, 0];
+function wobble(el, dir) {
+  if (reduced) return;
+  el.animate(WOBBLE.map((d) => ({ transform: `rotate(${d * dir}deg)` })),
+    { duration: 1300, easing: "ease-out" });
+}
+// Jelly card: squash and spring back.
+function squish(el) {
+  if (reduced) return;
+  el.animate([
+    { transform: "scale(1,1)" },
+    { transform: "scale(1.045,.955)", offset: .18 },
+    { transform: "scale(.985,1.025)", offset: .4 },
+    { transform: "scale(1.012,.99)", offset: .62 },
+    { transform: "scale(1,1)" },
+  ], { duration: 750, easing: "ease-out" });
+}
+
+for (const card of grid.children) {
+  const obj = card.querySelector(".obj svg");
+  card.addEventListener("pointerenter", (e) => {
+    const r = card.getBoundingClientRect();
+    const dir = e.clientX < r.left + r.width / 2 ? 1 : -1;
+    const v = document.body.dataset.v;
+    if (v === "a") wobble(obj, dir);
+    if (v === "b") { squish(card); wobble(obj, dir); }
+    // gears and the toggle do their own thing
+    card.querySelectorAll(".spin-a").forEach((g) => !reduced && g.animate(
+      [{ transform: "rotate(0)" }, { transform: "rotate(90deg)" }], { duration: 1200, easing: "cubic-bezier(.2,.9,.25,1.2)" }));
+    card.querySelectorAll(".spin-b").forEach((g) => !reduced && g.animate(
+      [{ transform: "rotate(0)" }, { transform: "rotate(-135deg)" }], { duration: 1200, easing: "cubic-bezier(.2,.9,.25,1.2)" }));
+    card.querySelectorAll(".knob").forEach((k) => !reduced && k.animate(
+      [{ transform: "translateX(0)" }, { transform: "translateX(-76px)" }, { transform: "translateX(-76px)" }, { transform: "translateX(0)" }],
+      { duration: 1600, easing: "cubic-bezier(.3,1.4,.4,1)" }));
+  });
+  card.addEventListener("pointermove", (e) => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    card.style.setProperty("--my", `${e.clientY - r.top}px`);
+  });
+}
+
+document.querySelectorAll(".lab button").forEach((b) => b.addEventListener("click", () => {
+  document.body.dataset.v = b.dataset.set;
+  document.querySelectorAll(".lab button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+}));
+</script>
+</body>
+</html>
