@@ -157,7 +157,7 @@ export const enUi: UiCopy = {
   legal: {
     eyebrow: "Legal",
     updatedLabel: "Last updated:",
-    updated: "31 October 2026",
+    updated: "12 November 2026",
     back: "Back to Ludvik4",
   },
   notFound: {

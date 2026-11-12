@@ -2,6 +2,9 @@ import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { getMarketContent } from "./content";
 import { CookiePolicyView, LegalNoticeView, TermsView } from "./legal-en";
+import { EsCookiePolicy, EsPrivacy } from "./locales/es/legal";
+import { RuCookiePolicy, RuPrivacy } from "./locales/ru/legal";
+import { PrivacyPage } from "./privacy-page";
 
 vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
 
@@ -36,6 +39,49 @@ describe("EN legal pages", () => {
     const { container } = render(<CookiePolicyView />);
     expect(container.textContent).toMatch(/PostHog/);
     expect(container.textContent).toMatch(/up to 12 months/);
+  });
+
+  // ludvik4.dev links a WhatsApp chat (docs/specs/whatsapp-button.md): the
+  // privacy policy names it beside Telegram, in every language.
+  it.each([
+    ["en", () => <PrivacyPage content={getMarketContent("en")} />],
+    ["es", () => <EsPrivacy />],
+    ["ru", () => <RuPrivacy />],
+  ])("%s privacy policy names WhatsApp and links its policy", (_, View) => {
+    const { container } = render(<View />);
+    expect(container.textContent).toMatch(/WhatsApp Ireland Limited/);
+    expect(
+      container.querySelector(
+        'a[href="https://www.whatsapp.com/legal/privacy-policy-eea"]',
+      ),
+    ).not.toBeNull();
+  });
+
+  // The mascot's bubble is gone; the example of a stored setting is now the
+  // WhatsApp button hidden on a phone.
+  it.each([
+    [
+      "en",
+      () => <CookiePolicyView />,
+      /WhatsApp button you hid/,
+      /dismissed hint/,
+    ],
+    [
+      "es",
+      () => <EsCookiePolicy />,
+      /botón de WhatsApp que ocultaste/,
+      /aviso que ya has cerrado/,
+    ],
+    [
+      "ru",
+      () => <RuCookiePolicy />,
+      /скрытая на телефоне кнопка WhatsApp/,
+      /закрытая подсказка/,
+    ],
+  ])("%s cookie policy names the real stored setting", (_, View, now, old) => {
+    const { container } = render(<View />);
+    expect(container.textContent).toMatch(now);
+    expect(container.textContent).not.toMatch(old);
   });
 
   it("every EN footer lists all legal pages, RU none of them", () => {

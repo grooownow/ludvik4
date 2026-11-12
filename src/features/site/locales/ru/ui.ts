@@ -79,7 +79,7 @@ export const ruUi: UiCopy = {
   legal: {
     eyebrow: "Документы",
     updatedLabel: "Обновлено:",
-    updated: "31 октября 2026 г.",
+    updated: "12 ноября 2026 г.",
     back: "Вернуться на Ludvik4",
   },
   notFound: {

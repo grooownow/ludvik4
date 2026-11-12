@@ -111,8 +111,9 @@ export function EsCookiePolicy() {
             Necesarias para el funcionamiento del sitio:
           </span>{" "}
           tu elección sobre las cookies y pequeños ajustes guardados en tu
-          navegador, como un aviso que ya has cerrado. El formulario de contacto
-          utiliza Cloudflare Turnstile para bloquear el spam.
+          navegador, como el botón de WhatsApp que ocultaste en el móvil. El
+          formulario de contacto utiliza Cloudflare Turnstile para bloquear el
+          spam.
         </p>
         <p>
           <span className="text-foreground font-medium">
@@ -339,6 +340,16 @@ export function EsPrivacy() {
           <a
             className={extLink}
             href="https://telegram.org/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            política de privacidad
+          </a>
+          . Lo mismo ocurre con WhatsApp (WhatsApp Ireland Limited, empresa de
+          Meta) si escribes a Ludvik4 por allí, conforme a su{" "}
+          <a
+            className={extLink}
+            href="https://www.whatsapp.com/legal/privacy-policy-eea"
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -107,8 +107,8 @@ export function RuCookiePolicy() {
             Нужны для работы сайта:
           </span>{" "}
           ваш выбор по cookies и небольшие настройки в браузере — например,
-          закрытая подсказка. Контактная форма использует Cloudflare Turnstile
-          для защиты от спама.
+          скрытая на телефоне кнопка WhatsApp. Контактная форма использует
+          Cloudflare Turnstile для защиты от спама.
         </p>
         <p>
           <span className="text-foreground font-medium">
@@ -334,6 +334,16 @@ export function RuPrivacy() {
             rel="noopener noreferrer"
           >
             политикой конфиденциальности
+          </a>
+          . То же касается WhatsApp (WhatsApp Ireland Limited, компания Meta),
+          если вы пишете Ludvik4 туда, — по его{" "}
+          <a
+            className="text-foreground underline underline-offset-4"
+            href="https://www.whatsapp.com/legal/privacy-policy-eea"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            политике конфиденциальности
           </a>
           .
         </p>

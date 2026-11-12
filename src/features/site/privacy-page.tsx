@@ -19,7 +19,7 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
           Privacy Notice
         </h1>
         <p className="text-muted-foreground mt-3 text-sm">
-          Last updated: 31 October 2026
+          Last updated: 12 November 2026
         </p>
 
         <div className="mt-10 space-y-9 text-[15px] leading-7">
@@ -131,6 +131,16 @@ export function PrivacyPage({ content }: { content: MarketContent }) {
               <a
                 className="text-foreground underline underline-offset-4"
                 href="https://telegram.org/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                privacy policy
+              </a>
+              . The same goes for WhatsApp (WhatsApp Ireland Limited, part of
+              Meta) if you message Ludvik4 there, under its{" "}
+              <a
+                className="text-foreground underline underline-offset-4"
+                href="https://www.whatsapp.com/legal/privacy-policy-eea"
                 target="_blank"
                 rel="noopener noreferrer"
               >

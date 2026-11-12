@@ -55,6 +55,9 @@ describe("HomeStage", () => {
     });
     expect(cta).toHaveAttribute("href", "/contact");
     expect(cta).toHaveClass("pointer-events-auto");
+    // A pink text link, as in the old bubble — not a filled button.
+    expect(cta).toHaveClass("text-primary", "font-medium");
+    expect(cta.className.split(" ")).not.toContain("bg-foreground");
     expect(label.lastElementChild).toBe(cta);
     expect(screen.queryByTestId("mascot-reply")).toBeNull();
     expect(screen.queryByText(/Понравилось/)).toBeNull();

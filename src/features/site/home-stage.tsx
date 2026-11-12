@@ -41,7 +41,8 @@ export function HomeStage({ content }: { content: MarketContent }) {
           label at the top right, beside the head (it may overlap it), with
           only the first line (what it is made of). It is as wide as its
           longest piece: the button or the wrapped description. It ends with
-          "an animation like this" (owner, 2026-11-12: replaced the bubble). */}
+          "an animation like this", styled as the bubble's pink link was
+          (owner, 2026-11-12: replaced the bubble). */}
       <div
         data-testid="exhibit-label"
         className="text-stage-muted absolute top-[calc(50%-25vmin)] left-[min(calc(50%+32vmin),calc(100%-17rem))] rounded-lg bg-white/55 px-4 py-3.5 text-xs leading-relaxed backdrop-blur-md max-sm:top-[17vh] max-sm:right-[3.2vw] max-sm:bottom-auto max-sm:left-auto max-sm:w-max max-sm:rounded-md max-sm:px-2.5 max-sm:py-2 max-sm:text-[9.5px] max-sm:leading-snug max-sm:whitespace-normal sm:max-lg:top-[calc(50%-38vmin)]! sm:max-lg:right-[3.2vw] sm:max-lg:left-auto sm:max-lg:w-[14rem] sm:max-lg:px-4 sm:max-lg:py-4 lg:w-[15.5rem] sm:[@media(max-aspect-ratio:5/4)]:top-[calc(50%-31vmin)]"
@@ -65,7 +66,7 @@ export function HomeStage({ content }: { content: MarketContent }) {
           target={ANIMATION_ORDER}
           placement="mascot"
           contactHref={exhibit.cta.contactHref}
-          className="bg-foreground text-background hover:bg-primary focus-visible:ring-primary pointer-events-auto mt-3 inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none max-sm:mt-1.5 max-sm:gap-1 max-sm:px-2 max-sm:py-1 max-sm:text-[9.5px]"
+          className="text-primary hover:text-primary/80 hover:bg-primary/5 focus-visible:ring-primary pointer-events-auto -mx-2.5 mt-1.5 -mb-2 inline-flex cursor-pointer items-center gap-1 rounded-xl px-2.5 py-2 text-[13px] font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:outline-none max-sm:-mx-1.5 max-sm:mt-0.5 max-sm:-mb-1.5 max-sm:px-1.5 max-sm:py-1.5 max-sm:text-[10px]"
         >
           {exhibit.cta.label}
           <span aria-hidden="true">→</span>

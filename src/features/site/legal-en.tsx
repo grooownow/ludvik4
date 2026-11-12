@@ -200,9 +200,9 @@ export function CookiePolicyView() {
           <span className="text-foreground font-medium">
             Needed for the site to work:
           </span>{" "}
-          your cookie choice, and small settings kept in your browser, such as a
-          dismissed hint. The contact form uses Cloudflare Turnstile to block
-          spam.
+          your cookie choice, and small settings kept in your browser, such as
+          the WhatsApp button you hid on a phone. The contact form uses
+          Cloudflare Turnstile to block spam.
         </p>
         <p>
           <span className="text-foreground font-medium">
