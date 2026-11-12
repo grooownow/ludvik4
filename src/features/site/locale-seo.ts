@@ -116,6 +116,23 @@ export function localeLayoutMetadata(locale: Locale): Metadata {
   };
 }
 
+/** Campaign artwork belongs to the Spanish home, not every translated page. */
+export function localeHomeMetadata(locale: Locale): Metadata {
+  if (locale !== "es") return {};
+  const { openGraph, twitter } = localeLayoutMetadata(locale);
+  const image = {
+    url: "/social/ludvik4-facebook-es-v1.png",
+    width: 1200,
+    height: 630,
+    type: "image/png",
+    alt: "Ludvik4: webs y tiendas online, automatización, renovación web y visibilidad en Google e IA.",
+  };
+  return {
+    openGraph: { ...openGraph, images: [image] },
+    twitter: { ...twitter, images: [image] },
+  };
+}
+
 /** Locales listed in the sitemap besides English. */
 export function sitemapLocales(): Locale[] {
   return prefixedLocales(RU_LOCALE_ENABLED).filter(isIndexedLocale);

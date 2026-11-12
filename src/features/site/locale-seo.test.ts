@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   languageAlternates,
+  localeHomeMetadata,
   localeLayoutMetadata,
   localePageMetadata,
   parseLocaleParam,
@@ -9,6 +10,35 @@ import {
 const meta = { title: "T", description: "D" };
 
 describe("locale SEO", () => {
+  it("uses the Spanish campaign artwork in home link previews", () => {
+    const home = localeHomeMetadata("es");
+    const image = {
+      url: "/social/ludvik4-facebook-es-v1.png",
+      width: 1200,
+      height: 630,
+      type: "image/png",
+    };
+    expect(home.openGraph).toMatchObject({
+      url: "/es",
+      locale: "es_ES",
+      siteName: "Ludvik4",
+      images: [image],
+    });
+    expect(home.twitter).toMatchObject({
+      card: "summary_large_image",
+      images: [image],
+    });
+  });
+
+  it("keeps the Spanish campaign out of other homes and subpages", () => {
+    expect(localeHomeMetadata("ru")).toEqual({});
+    expect(localeHomeMetadata("en")).toEqual({});
+    expect(localeLayoutMetadata("es").openGraph).not.toHaveProperty("images");
+    expect(
+      localePageMetadata("es", "/about", meta).openGraph,
+    ).not.toHaveProperty("images");
+  });
+
   it("links English and Spanish with hreflang, x-default to English", () => {
     expect(languageAlternates("/services")).toEqual({
       languages: {

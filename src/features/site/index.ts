@@ -69,6 +69,7 @@ export {
 export { LocaleNotFoundView } from "./locale-not-found";
 export {
   languageAlternates,
+  localeHomeMetadata,
   localeLayoutMetadata,
   localePageMetadata,
   parseLocaleParam,

@@ -1,5 +1,19 @@
 # SEO handoff — Ludvik4 International
 
+## Local social-preview update — 2026-11-12
+
+Prepared, not deployed: `/es` now points Open Graph and Twitter to the approved
+1200 × 630 Spanish campaign artwork at
+`/social/ludvik4-facebook-es-v1.png`. The owner approved commit, push and
+publication on 2026-11-12; deployment is in progress. The local production build returns the expected absolute HTTPS
+image URL inside `<head>` for `facebookexternalhit`; the image endpoint returns
+200 and a valid 1200 × 630 PNG. Other pages do not receive this campaign image.
+See ADR 0015 and the roadmap for validation and release status. After deployment,
+inspect `https://ludvik4.dev/es` in the Facebook Sharing Debugger and refresh its
+cache before posting the link. This does not change indexing or the sitemap.
+
+## Last production monitoring run
+
 - Property: `https://ludvik4.dev/`
 - Monitoring run: 2026-11-09 22:29 Europe/Madrid
 - Requested comparison window: latest complete seven days versus the preceding seven days
