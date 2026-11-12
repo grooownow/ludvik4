@@ -34,6 +34,11 @@ export function Home({
   const { home, locale } = content;
   // ludvik4.dev pages link within their language; the RU market has none.
   const contactHref = locale ? localizeHref(locale, "/contact") : undefined;
+  // The RU market (ludvik4.ru, no locale) shows the work right after the
+  // services and the three steps after it (owner, 2026-11-12); ludvik4.dev
+  // keeps steps → work.
+  const worksFirst = !locale;
+  const steps = <HomeSteps copy={home.steps} lang={content.lang} />;
   return (
     <div className="bg-background text-foreground min-h-screen">
       <script
@@ -46,7 +51,7 @@ export function Home({
         lang={content.lang}
         contactHref={contactHref}
       />
-      <HomeSteps copy={home.steps} lang={content.lang} />
+      {worksFirst ? null : steps}
       <HomeGallery
         copy={home.work}
         exhibitEyebrow={home.exhibit.eyebrow}
@@ -54,6 +59,7 @@ export function Home({
         exhibits={exhibits}
         labels={locale ? uiFor(locale).gallery : undefined}
       />
+      {worksFirst ? steps : null}
       <HomeAbout
         copy={home.about}
         href={locale ? localizeHref(locale, "/about") : undefined}

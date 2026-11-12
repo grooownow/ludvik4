@@ -242,3 +242,25 @@ describe("homeExhibits", () => {
     for (const e of exhibits) expect(e.href).toBe(`/cases/${e.slug}`);
   });
 });
+
+describe("Home section order", () => {
+  const order = (container: HTMLElement) =>
+    ["collection", "how-it-works", "work"].sort((a, b) =>
+      container
+        .querySelector(`#${a}`)!
+        .compareDocumentPosition(container.querySelector(`#${b}`)!) &
+      Node.DOCUMENT_POSITION_FOLLOWING
+        ? -1
+        : 1,
+    );
+
+  it("RU: services, then the work, then the three steps", () => {
+    const { container } = renderHome("ru");
+    expect(order(container)).toEqual(["collection", "work", "how-it-works"]);
+  });
+
+  it("EN keeps the three steps before the work", () => {
+    const { container } = renderHome("en");
+    expect(order(container)).toEqual(["collection", "how-it-works", "work"]);
+  });
+});
