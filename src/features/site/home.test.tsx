@@ -237,7 +237,7 @@ describe("homeExhibits", () => {
       "smallfriendfiles",
       "fortnoise",
       "gridfin",
-      "qa-pilot",
+      "secret-santa",
     ]);
     for (const e of exhibits) expect(e.href).toBe(`/cases/${e.slug}`);
   });

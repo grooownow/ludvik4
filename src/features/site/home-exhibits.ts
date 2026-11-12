@@ -20,12 +20,12 @@ export type HomeExhibit = {
   site: string;
 };
 
-// The RU home keeps its four exhibits; Secret Santa is only on /cases.
+// The RU home keeps four exhibits; qa-pilot is only on /cases.
 const HOME_SLUGS: readonly CaseStudy["slug"][] = [
   "smallfriendfiles",
   "fortnoise",
   "gridfin",
-  "qa-pilot",
+  "secret-santa",
 ];
 
 // EN shows the international work layer (3), RU its case studies (4), each in

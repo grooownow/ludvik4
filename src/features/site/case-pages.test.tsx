@@ -198,12 +198,12 @@ describe("screen gallery", () => {
 });
 
 describe("home exhibits", () => {
-  it("keep their four works — Secret Santa is only on /cases", () => {
+  it("keep their four works — qa-pilot is only on /cases", () => {
     expect(homeExhibits("ru").map((e) => e.slug)).toEqual([
       "smallfriendfiles",
       "fortnoise",
       "gridfin",
-      "qa-pilot",
+      "secret-santa",
     ]);
   });
 });
