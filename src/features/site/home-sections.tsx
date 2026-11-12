@@ -3,14 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { type HomeContent, type Lang, workExhibitNumber } from "./content";
+import type { HomeContent, Lang } from "./content";
 import { OrderCta } from "./order-cta";
 import { HallCard, HallsStage } from "./hall-card";
 import type { HomeExhibit } from "./home-exhibits";
 
 // Sections of the exhibition home below the stage (docs/specs/immersive-home.md,
 // mockup experiments/nevalyashka/ideas/page-flow.html). Minimal copy: the
-// metaphor — halls, exhibits, a curator — carries the story.
+// layout carries the story.
 
 function Eyebrow({
   children,
@@ -111,7 +111,7 @@ export function HomeCollection({
       <ul className="halls-grid mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {copy.halls.map((hall, i) => (
           <HallCard
-            key={hall.index}
+            key={hall.name}
             hall={hall}
             index={i}
             lang={lang}
@@ -157,13 +157,11 @@ export function HomeSteps({
 
 export function HomeGallery({
   copy,
-  exhibitEyebrow,
   lang,
   exhibits,
   labels,
 }: {
   copy: HomeContent["work"];
-  exhibitEyebrow: string;
   lang: Lang;
   exhibits: HomeExhibit[];
   /** ludvik4.dev's localized labels; the RU market keeps its own. */
@@ -250,9 +248,6 @@ export function HomeGallery({
                 </a>
               </div>
               <div className="text-stage-muted mt-4 text-sm leading-relaxed">
-                <span className="font-mono text-xs tracking-[0.12em] uppercase">
-                  {exhibitEyebrow} {workExhibitNumber(i, lang)}
-                </span>
                 <Link
                   href={exhibit.href as Route}
                   {...(exhibit.newTab

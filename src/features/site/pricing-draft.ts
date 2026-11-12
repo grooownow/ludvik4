@@ -26,7 +26,6 @@ export type PricingService = {
   slug: string;
   /** <title> and description of the tab's own page. */
   seoTitle: string;
-  hall: string;
   name: string;
   lead: string;
   /** "From" price: the basic package; shown on the home, not on this page. */
@@ -656,7 +655,6 @@ export function pricingHref(id: string) {
 
 function service(
   id: string,
-  hall: string,
   name: string,
   from: string,
   benefits: PricingService["benefits"],
@@ -679,7 +677,6 @@ function service(
     id,
     slug: PRICING_SLUGS[id] ?? id,
     seoTitle: SEO_TITLES[id] ?? `${name}: цены и пакеты`,
-    hall,
     name,
     lead:
       own?.lead ??
@@ -702,7 +699,6 @@ function service(
 export const pricingServices: PricingService[] = [
   service(
     "lendingi",
-    "Зал 01",
     "Лендинги",
     "от 20 000 ₽",
     LANDING_BENEFITS,
@@ -746,7 +742,7 @@ export const pricingServices: PricingService[] = [
       everywhere: LANDING_EVERYWHERE,
     },
   ),
-  service("saity", "Зал 02", "Сайты", "от 35 000 ₽", SITE_BENEFITS, undefined, {
+  service("saity", "Сайты", "от 35 000 ₽", SITE_BENEFITS, undefined, {
     lead: "Сайт из нескольких страниц, который рассказывает о вас или вашем бизнесе целиком. Каждая страница отвечает на свой вопрос посетителя и помогает находить вас в поиске.",
     examples: [
       {
@@ -801,7 +797,6 @@ export const pricingServices: PricingService[] = [
   }),
   service(
     "veb-prilozheniya",
-    "Зал 03",
     "Веб-приложения",
     "от 150 000 ₽",
     WEBAPP_BENEFITS,
@@ -859,50 +854,41 @@ export const pricingServices: PricingService[] = [
         "Сценарий — путь пользователя к результату, например «нашёл, записался и оплатил». Сложный модуль — например умный поиск и фильтры, загрузка и выгрузка данных, защищённое хранение файлов, обработка с ИИ или интеграция с внешним сервисом; вход, кабинет и уведомления входят всегда. Сервер и сторонние сервисы (ИИ, СМС, API) оплачиваются отдельно.",
     },
   ),
-  service(
-    "animatsii",
-    "Зал 04",
-    "Анимации",
-    "от 10 000 ₽",
-    MOTION_BENEFITS,
-    undefined,
-    {
-      lead: "Анимация делает сайт запоминающимся: от эффектного первого экрана до страницы-истории, которая раскрывается при прокрутке. Делаем отдельной страницей или встраиваем в ваш сайт.",
-      needs: [
-        "Идея или настроение",
-        "Логотип, цвета и примеры, которые нравятся",
-        "Доступ к сайту или макет, куда добавить анимацию",
-        "Иллюстрации, если хотите их анимировать",
-      ],
-      related: [
-        {
-          text: "Нужен целый сайт с анимацией?",
-          label: "Сайты",
-          href: "/uslugi/razrabotka-sajtov",
-        },
-        {
-          text: "Нужна одна продающая страница?",
-          label: "Лендинги",
-          href: "/uslugi/lendingi",
-        },
-      ],
-      examples: MOTION_EXAMPLES,
-      gallery: true,
-      packages: MOTION_PACKAGES,
-      everywhere: [
-        "Подключение к вашему сайту, в том числе на Tilda",
-        "Превью движения до разработки",
-        "Исходный код анимации",
-        "Отчёт о скорости загрузки",
-        "Проверка в разных браузерах",
-      ],
-      everywhereNote:
-        "Отдельную страницу размещаем на вашем домене; домен, хостинг, платные шрифты и музыка оплачиваются отдельно. 3D-модели и конфигураторы товара, где покупатель крутит и перекрашивает товар, — по отдельной оценке.",
-    },
-  ),
+  service("animatsii", "Анимации", "от 10 000 ₽", MOTION_BENEFITS, undefined, {
+    lead: "Анимация делает сайт запоминающимся: от эффектного первого экрана до страницы-истории, которая раскрывается при прокрутке. Делаем отдельной страницей или встраиваем в ваш сайт.",
+    needs: [
+      "Идея или настроение",
+      "Логотип, цвета и примеры, которые нравятся",
+      "Доступ к сайту или макет, куда добавить анимацию",
+      "Иллюстрации, если хотите их анимировать",
+    ],
+    related: [
+      {
+        text: "Нужен целый сайт с анимацией?",
+        label: "Сайты",
+        href: "/uslugi/razrabotka-sajtov",
+      },
+      {
+        text: "Нужна одна продающая страница?",
+        label: "Лендинги",
+        href: "/uslugi/lendingi",
+      },
+    ],
+    examples: MOTION_EXAMPLES,
+    gallery: true,
+    packages: MOTION_PACKAGES,
+    everywhere: [
+      "Подключение к вашему сайту, в том числе на Tilda",
+      "Превью движения до разработки",
+      "Исходный код анимации",
+      "Отчёт о скорости загрузки",
+      "Проверка в разных браузерах",
+    ],
+    everywhereNote:
+      "Отдельную страницу размещаем на вашем домене; домен, хостинг, платные шрифты и музыка оплачиваются отдельно. 3D-модели и конфигураторы товара, где покупатель крутит и перекрашивает товар, — по отдельной оценке.",
+  }),
   service(
     "avtomatizatsii",
-    "Зал 05",
     "Автоматизации",
     "от 35 000 ₽",
     AUTOMATION_BENEFITS,

@@ -85,17 +85,13 @@ describe("Home (EN)", () => {
     ).toHaveTextContent("your idea");
   });
 
-  it("frames three numbered work exhibits, the first one large", () => {
+  it("frames three unnumbered work exhibits, the first one large", () => {
     const { container } = renderHome("en");
     const work = container.querySelector("#work") as HTMLElement;
-    for (const n of ["01", "02", "03"]) {
-      expect(within(work).getByText(`Exhibit Nº ${n}`)).toBeInTheDocument();
-    }
+    expect(work.querySelectorAll("[data-exhibit]")).toHaveLength(3);
+    expect(work).not.toHaveTextContent(/Exhibit|Nº/);
     expect(work.querySelectorAll("[data-exhibit]")[0]).toHaveClass(
       "sm:row-span-2",
-    );
-    expect(screen.getByTestId("exhibit-label")).toHaveTextContent(
-      "Exhibit Nº 04",
     );
   });
 
@@ -193,18 +189,24 @@ describe("Home (RU)", () => {
     }
   });
 
-  it("shows four exhibits in an even grid, numbered around the mascot's Nº 04", () => {
+  it("shows four exhibits in an even grid, unnumbered", () => {
     const { container } = renderHome("ru");
     const work = container.querySelector("#work") as HTMLElement;
-    for (const n of ["01", "02", "03", "05"]) {
-      expect(within(work).getByText(`Экспонат № ${n}`)).toBeInTheDocument();
-    }
+    expect(work.querySelectorAll("[data-exhibit]")).toHaveLength(4);
     expect(work.querySelectorAll("[data-exhibit]")[0]).not.toHaveClass(
       "sm:row-span-2",
     );
-    expect(screen.getByTestId("exhibit-label")).toHaveTextContent(
-      "Экспонат № 04",
+  });
+
+  // Museum captions read as an untraceable story (owner, 2026-11-12).
+  it("has no museum captions — no exhibit, hall or collection labels", () => {
+    const { container } = renderHome("ru");
+    expect(container.textContent).not.toMatch(
+      /Экспонат|экспонат|Зал \d|Коллекция/,
     );
+    const collection = container.querySelector("#collection")!;
+    expect(collection).toHaveTextContent("Что мы делаем");
+    expect(container).toHaveTextContent("Сделаем то, что нужно вам");
   });
 
   it("shows no prices and no lead form", () => {

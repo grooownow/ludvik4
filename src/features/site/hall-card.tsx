@@ -86,10 +86,7 @@ export function HallCard({
       <div aria-hidden="true" className="hall-plan-art">
         <HallPlan kind={hall.exhibit} lang={lang} />
       </div>
-      <span className="text-stage-muted relative z-10 font-mono text-xs tracking-[0.14em] uppercase">
-        {hall.index}
-      </span>
-      <span className="relative z-10">
+      <span className="relative z-10 mt-auto">
         <span className="block text-2xl font-semibold tracking-tight">
           {hall.name}
         </span>

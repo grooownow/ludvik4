@@ -13,7 +13,15 @@ test.describe("golden path smoke", () => {
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(
       /Сайты, автоматизация и веб-приложения/,
     );
-    await expect(page.getByTestId("exhibit-label")).toContainText("Экспонат");
+    const label = page.getByTestId("exhibit-label");
+    await expect(label).toContainText("Ludvik");
+    // Like "Обсудить проект": a dialog button or, unconfigured, a link.
+    const animation = /Хочу такую анимацию/;
+    await expect(
+      label
+        .getByRole("button", { name: animation })
+        .or(label.getByRole("link", { name: animation })),
+    ).toBeVisible();
     await expect(
       page.getByRole("link", { name: /Ludvik4/ }).first(),
     ).toBeVisible();

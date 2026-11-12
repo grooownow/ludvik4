@@ -358,6 +358,23 @@ drag pauses before release; WebGL contexts not released on unmount; no unit test
 `webglcontextlost`; the label can touch the mascot on 768–810 px landscape
 windows.
 
+## Change — museum captions removed (owner, 2026-11-12)
+
+The museum numbering read as a story visitors could not follow, so it is gone
+on every language (ludvik4.ru, ludvik4.dev EN/ES/RU); the sections above keep
+their original wording as history:
+
+- The mascot's label has no `EXHIBIT Nº 04` line: name, description, then an
+  "I want this animation" order button (RU «Хочу такую анимацию»). The speech
+  bubble over the mascot (`mascot-reply.tsx`) is deleted with all its logic.
+- Collection cards lose their `Hall 0X` index; the eyebrow is just
+  `What we build` / «Что мы делаем». Service tabs on `/uslugi` and
+  `/services` lose their `Hall 0X` eyebrow too.
+- Work previews lose their `EXHIBIT Nº 0X` line; the eyebrow is just
+  `Selected work` / «Избранные работы».
+- The closing eyebrow "Your exhibit next?" becomes "We build what you need" /
+  «Сделаем то, что нужно вам».
+
 ## Status
 
 `shipped` — merged into `main` and released to ludvik4.dev and ludvik4.ru on

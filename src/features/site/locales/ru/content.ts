@@ -69,54 +69,51 @@ export const ruContent: MarketContent = {
   h1: "Сайты, автоматизация и веб-приложения — от задачи до запуска",
   home: {
     exhibit: {
-      eyebrow: "Экспонат",
       name: "Ludvik",
       lines: [
         "Чистый код, WebGL, ноль полигонов.",
         "Обращаться с любопытством.",
       ],
+      cta: {
+        label: "Хочу такую анимацию",
+        contactHref: "/contact?service=web-animation",
+      },
     },
     collection: {
-      eyebrow: "Коллекция · Что мы делаем",
+      eyebrow: "Что мы делаем",
       title: ["Всё, что работает в браузере, —", "сделаем."],
       halls: [
         {
-          index: "Зал 01",
           name: "Лендинги",
           line: "одно предложение, одно действие",
           exhibit: "landing",
           href: "/services/landing-pages",
         },
         {
-          index: "Зал 02",
           name: "Сайты",
           line: "для продуктов, студий, событий",
           exhibit: "browser",
           href: "/services/website-packages",
         },
         {
-          index: "Зал 03",
           name: "Веб-приложения",
           line: "аккаунты, данные, оплаты, AI",
           exhibit: "app",
           href: "/services/web-apps",
         },
         {
-          index: "Зал 04",
           name: "Анимации",
           line: "живые герои и интерактив — как Людвик",
           exhibit: "motion",
           href: "/services/web-animation",
         },
         {
-          index: "Зал 05",
           name: "Автоматизации",
           line: "рутина на автомате",
           exhibit: "gears",
           href: "/services/automation-packages",
         },
         {
-          index: "Зал 06",
           name: "Что-то ещё?",
           line: "спросите — скорее всего, это возможно",
           exhibit: "question",
@@ -146,7 +143,7 @@ export const ruContent: MarketContent = {
       ],
     },
     work: {
-      eyebrow: "Избранные работы · Открытые экспонаты",
+      eyebrow: "Избранные работы",
       title: ["Работы, которые", "можно посмотреть вживую."],
     },
     about: {
@@ -161,19 +158,11 @@ export const ruContent: MarketContent = {
       linkLabel: "Подробнее обо мне",
     },
     closing: {
-      eyebrow: "Ваш экспонат — следующий?",
+      eyebrow: "Сделаем то, что нужно вам",
       title: "Есть идея?",
       cta: "Обсудить проект",
     },
     footerReach: "Испания · весь мир",
-    mascotReply: {
-      close: "Скрыть подсказку",
-      idle: "Меня можно потрогать! ",
-      touched: "Понравилось? ",
-      line: "Такого героя — или ещё круче — сделаем и для вашего сайта.",
-      cta: "Хочу такую анимацию →",
-      contactHref: "/contact?service=web-animation",
-    },
   },
   contact: {
     eyebrow: "Контакт",

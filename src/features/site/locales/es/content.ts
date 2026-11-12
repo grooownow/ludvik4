@@ -80,54 +80,51 @@ export const esContent: MarketContent = {
   h1: "Webs, automatización de procesos y aplicaciones web, listas para lanzar",
   home: {
     exhibit: {
-      eyebrow: "Pieza",
       name: "Ludvik",
       lines: [
         "Puro código, WebGL, cero polígonos.",
         "Manipular con curiosidad.",
       ],
+      cta: {
+        label: "Quiero esta animación",
+        contactHref: "/contact?service=web-animation",
+      },
     },
     collection: {
-      eyebrow: "La colección · Qué hacemos",
+      eyebrow: "Qué hacemos",
       title: ["Si vive en un navegador,", "lo construimos."],
       halls: [
         {
-          index: "Sala 01",
           name: "Landing pages",
           line: "una oferta, una acción",
           exhibit: "landing",
           href: "/services/landing-pages",
         },
         {
-          index: "Sala 02",
           name: "Webs",
           line: "para productos, estudios y eventos",
           exhibit: "browser",
           href: "/services/website-packages",
         },
         {
-          index: "Sala 03",
           name: "Aplicaciones web",
           line: "cuentas, datos, pagos, IA",
           exhibit: "app",
           href: "/services/web-apps",
         },
         {
-          index: "Sala 04",
           name: "Animaciones",
           line: "personajes animados e interacción, como Ludvik",
           exhibit: "motion",
           href: "/services/web-animation",
         },
         {
-          index: "Sala 05",
           name: "Automatizaciones",
           line: "lo tedioso, resuelto",
           exhibit: "gears",
           href: "/services/automation-packages",
         },
         {
-          index: "Sala 06",
           name: "¿Otra cosa?",
           line: "pregunta: seguro que se puede",
           exhibit: "question",
@@ -157,7 +154,7 @@ export const esContent: MarketContent = {
       ],
     },
     work: {
-      eyebrow: "Proyectos seleccionados · Piezas públicas",
+      eyebrow: "Proyectos seleccionados",
       title: ["Proyectos", "a la vista."],
     },
     about: {
@@ -172,19 +169,11 @@ export const esContent: MarketContent = {
       linkLabel: "Más sobre mí",
     },
     closing: {
-      eyebrow: "¿La próxima pieza, la tuya?",
+      eyebrow: "Hacemos lo que necesitas",
       title: "¿Tienes algo en mente?",
       cta: "Hablemos de tu proyecto",
     },
     footerReach: "España · Todo el mundo",
-    mascotReply: {
-      close: "Ocultar el aviso",
-      idle: "¡Venga, tócame! ",
-      touched: "¿Te gusta? ",
-      line: "Podemos crear un personaje así, o aún mejor, para tu web.",
-      cta: "Quiero esta animación →",
-      contactHref: "/contact?service=web-animation",
-    },
   },
   contact: {
     eyebrow: "Contacto",

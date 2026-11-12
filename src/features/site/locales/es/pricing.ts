@@ -506,7 +506,6 @@ const AUTOMATION_PACKAGES: PackageText[] = [
 export const esPricingTexts: ServiceText[] = [
   {
     seoTitle: "Precio de una landing page: paquetes y tarifas",
-    hall: "Sala 01",
     name: "Landing pages",
     lead: "Una sola página que presenta tu producto y te trae solicitudes. Ideal para empezar a vender rápido, validar una idea o acompañar una campaña de publicidad.",
     needs: NEEDS,
@@ -551,7 +550,6 @@ export const esPricingTexts: ServiceText[] = [
   },
   {
     seoTitle: "Precio de una página web: paquetes y tarifas",
-    hall: "Sala 02",
     name: "Webs",
     lead: "Un sitio web de varias páginas que cuenta toda tu historia o la de tu negocio. Cada página responde a una pregunta de tus visitas y ayuda a que te encuentren en los buscadores.",
     needs: [
@@ -610,7 +608,6 @@ export const esPricingTexts: ServiceText[] = [
   },
   {
     seoTitle: "Precio de una aplicación web: paquetes y tarifas",
-    hall: "Sala 03",
     name: "Aplicaciones web",
     lead: "Una aplicación en la que tus clientes o tu equipo hacen pedidos, reservan, llevan registros y hacen cálculos. Empezamos con una primera versión funcional centrada en la tarea principal y la hacemos crecer con el feedback real.",
     needs: [
@@ -671,7 +668,6 @@ export const esPricingTexts: ServiceText[] = [
   },
   {
     seoTitle: "Animaciones para webs: paquetes y precios",
-    hall: "Sala 04",
     name: "Animaciones",
     lead: "La animación hace que una web se recuerde, desde una cabecera que impacta hasta una historia que se despliega al hacer scroll. La creamos como página independiente o dentro de tu web actual.",
     needs: [
@@ -708,7 +704,6 @@ export const esPricingTexts: ServiceText[] = [
   },
   {
     seoTitle: "Precio de automatizar tu negocio: paquetes y tarifas",
-    hall: "Sala 05",
     name: "Automatizaciones",
     lead: "Automatizar es que el software haga el trabajo repetitivo: las solicitudes llegan solas a tu app de mensajería o a tu CRM, un bot atiende a los clientes y los informes se preparan solos. Empezamos por el proceso que más tiempo te quita.",
     needs: [

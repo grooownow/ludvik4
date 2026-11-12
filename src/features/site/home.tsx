@@ -54,7 +54,6 @@ export function Home({
       {worksFirst ? null : steps}
       <HomeGallery
         copy={home.work}
-        exhibitEyebrow={home.exhibit.eyebrow}
         lang={content.lang}
         exhibits={exhibits}
         labels={locale ? uiFor(locale).gallery : undefined}

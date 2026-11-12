@@ -41,19 +41,25 @@ export type NavLink = { href: string; label: string };
 
 /** Copy of the exhibition home (docs/specs/immersive-home.md). Two-part titles
  *  are `[plain, accent]`: the accent half renders in the brand pink. */
-import type { MascotReplyCopy } from "./mascot-reply";
 
 export type HallExhibit =
   "browser" | "landing" | "app" | "gears" | "widget" | "motion" | "question";
 
 export type HomeContent = {
-  /** Museum label next to the mascot; its number comes from mascotExhibitNumber(). */
-  exhibit: { eyebrow: string; name: string; lines: readonly string[] };
+  /** The label next to the mascot, with its "an animation like this" button. */
+  exhibit: {
+    name: string;
+    lines: readonly string[];
+    cta: {
+      label: string;
+      /** Without an order dialog: where the button leads (/contact by default). */
+      contactHref?: string;
+    };
+  };
   collection: {
     eyebrow: string;
     title: [string, string];
     halls: {
-      index: string;
       name: string;
       line: string;
       /** The fine-line plan drawn in the card (hall-plans.tsx). */
@@ -78,8 +84,6 @@ export type HomeContent = {
   closing: { eyebrow: string; title: string; cta: string };
   /** Footer, left: "© Ludvik4 · <current year> · <reach>". */
   footerReach: string;
-  /** The mascot's bubble; Russian by default. */
-  mascotReply?: MascotReplyCopy;
 };
 
 export type MarketContent = {
@@ -394,55 +398,49 @@ const ru: MarketContent = {
   // Draft Russian adaptation of the approved EN copy — awaits the owner's OK.
   home: {
     exhibit: {
-      eyebrow: "Экспонат",
       name: "Ludvik",
       lines: [
         "Анимированный маскот студии.",
         "Живая WebGL-сцена на чистом коде.",
         "Откликается на клик, перетаскивание и свайп по тачпаду.",
       ],
+      cta: { label: "Хочу такую анимацию" },
     },
     collection: {
-      eyebrow: "Коллекция · Что мы делаем",
+      eyebrow: "Что мы делаем",
       title: ["Всё, что работает в браузере, —", "сделаем."],
       halls: [
         {
-          index: "Зал 01",
           name: "Лендинги",
           line: "одно предложение, одно действие",
           exhibit: "landing",
           href: "/uslugi/lendingi",
         },
         {
-          index: "Зал 02",
           name: "Сайты",
           line: "для продуктов, студий, событий",
           exhibit: "browser",
           href: "/uslugi/razrabotka-sajtov",
         },
         {
-          index: "Зал 03",
           name: "Веб-приложения",
           line: "аккаунты, данные, оплаты, AI",
           exhibit: "app",
           href: "/uslugi/veb-prilozheniya",
         },
         {
-          index: "Зал 04",
           name: "Анимации",
           line: "живые герои и интерактив — как Людвик",
           exhibit: "motion",
           href: "/uslugi/animatsiya-dlya-sajta",
         },
         {
-          index: "Зал 05",
           name: "Автоматизации",
           line: "рутина на автомате",
           exhibit: "gears",
           href: "/uslugi/avtomatizatsii",
         },
         {
-          index: "Зал 06",
           name: "Что-то ещё?",
           line: "виджеты, интеграции — спросите, скорее всего, это возможно",
           exhibit: "question",
@@ -472,7 +470,7 @@ const ru: MarketContent = {
       ],
     },
     work: {
-      eyebrow: "Избранные работы · Открытые экспонаты",
+      eyebrow: "Избранные работы",
       title: ["Работы, которые", "можно посмотреть вживую."],
     },
     about: {
@@ -487,7 +485,7 @@ const ru: MarketContent = {
       linkLabel: "Подробнее о студии",
     },
     closing: {
-      eyebrow: "Ваш экспонат — следующий?",
+      eyebrow: "Сделаем то, что нужно вам",
       title: "Есть идея?",
       cta: "Обсудить проект",
     },
@@ -708,51 +706,48 @@ const en: MarketContent = {
   h1: "Websites, workflow automation, and web apps — built for launch",
   home: {
     exhibit: {
-      eyebrow: "Exhibit",
       name: "Ludvik",
       lines: ["Pure code, WebGL, zero polygons.", "Handle with curiosity."],
+      cta: {
+        label: "I want this animation",
+        contactHref: "/contact?service=web-animation",
+      },
     },
     collection: {
-      eyebrow: "The collection · What we build",
+      eyebrow: "What we build",
       title: ["If it lives in a browser,", "we can build it."],
       halls: [
         {
-          index: "Hall 01",
           name: "Landing pages",
           line: "one offer, one action",
           exhibit: "landing",
           href: "/services/landing-pages",
         },
         {
-          index: "Hall 02",
           name: "Websites",
           line: "for products, studios, events",
           exhibit: "browser",
           href: "/services/website-packages",
         },
         {
-          index: "Hall 03",
           name: "Web apps",
           line: "accounts, data, payments, AI",
           exhibit: "app",
           href: "/services/web-apps",
         },
         {
-          index: "Hall 04",
           name: "Animations",
           line: "animated characters and interaction, like Ludvik",
           exhibit: "motion",
           href: "/services/web-animation",
         },
         {
-          index: "Hall 05",
           name: "Automations",
           line: "the boring parts, handled",
           exhibit: "gears",
           href: "/services/automation-packages",
         },
         {
-          index: "Hall 06",
           name: "Something else?",
           line: "ask — it’s probably possible",
           exhibit: "question",
@@ -782,7 +777,7 @@ const en: MarketContent = {
       ],
     },
     work: {
-      eyebrow: "Selected work · Public exhibits",
+      eyebrow: "Selected work",
       title: ["Work you can", "inspect."],
     },
     about: {
@@ -797,19 +792,11 @@ const en: MarketContent = {
       linkLabel: "More about me",
     },
     closing: {
-      eyebrow: "Your exhibit next?",
+      eyebrow: "We build what you need",
       title: "Have something in mind?",
       cta: "Discuss a project",
     },
     footerReach: "Spain · Worldwide",
-    mascotReply: {
-      close: "Hide this hint",
-      idle: "Go on, poke me! ",
-      touched: "Like it? ",
-      line: "We can build a character like this, or better, for your site.",
-      cta: "I want this animation →",
-      contactHref: "/contact?service=web-animation",
-    },
   },
   contact: {
     eyebrow: "Contact",
@@ -855,24 +842,4 @@ export const enContent = en;
 /** Pure market-content accessor — the unit-test entry point for both markets. */
 export function getMarketContent(market: Market): MarketContent {
   return CONTENT[market];
-}
-
-/** The mascot's exhibit number: it is the next exhibit after the work shown. */
-// Ludvik4 the mascot is always exhibit Nº 04 (owner, 2026-10-23); the work
-// exhibits are numbered around it — 01, 02, 03, 05… — so no two share one.
-const MASCOT_EXHIBIT = 4;
-
-function exhibitNumber(n: number, lang: Lang): string {
-  const padded = String(n).padStart(2, "0");
-  return lang === "ru" ? `№ ${padded}` : `Nº ${padded}`;
-}
-
-export function mascotExhibitNumber(lang: Lang): string {
-  return exhibitNumber(MASCOT_EXHIBIT, lang);
-}
-
-/** Number of the work exhibit at gallery position `index` (0-based). */
-export function workExhibitNumber(index: number, lang: Lang): string {
-  const n = index + 1;
-  return exhibitNumber(n < MASCOT_EXHIBIT ? n : n + 1, lang);
 }

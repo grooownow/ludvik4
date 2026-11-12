@@ -12,10 +12,10 @@ describe("HomeStage", () => {
     expect(h1).toHaveClass("sr-only");
   });
 
-  it("shows the exhibit label as Nº 04", () => {
+  it("shows the mascot's label without a museum number", () => {
     render(<HomeStage content={getMarketContent("en")} />);
     const label = screen.getByTestId("exhibit-label");
-    expect(label).toHaveTextContent("Exhibit Nº 04");
+    expect(label).not.toHaveTextContent(/Exhibit|Nº/);
     expect(label).toHaveTextContent("Ludvik");
     expect(label).toHaveTextContent("Pure code, WebGL, zero polygons.");
     expect(label).toHaveTextContent("Handle with curiosity.");
@@ -28,10 +28,10 @@ describe("HomeStage", () => {
     ).not.toHaveClass("max-sm:hidden");
   });
 
-  it("numbers the RU mascot № 04 too and says what it is in plain words", () => {
+  it("says what the RU mascot is in plain words, without a museum number", () => {
     render(<HomeStage content={getMarketContent("ru")} />);
     const label = screen.getByTestId("exhibit-label");
-    expect(label).toHaveTextContent("Экспонат № 04");
+    expect(label).not.toHaveTextContent(/Экспонат|№/);
     // Phones show the first line only: what it is; desktop adds how.
     expect(screen.getByText("Анимированный маскот студии.")).not.toHaveClass(
       "max-sm:hidden",
@@ -43,6 +43,29 @@ describe("HomeStage", () => {
     ).toHaveClass("max-sm:hidden");
     // "Zero polygons" meant nothing to clients (owner, 2026-10-26).
     expect(label).not.toHaveTextContent("полигон");
+  });
+
+  // The bubble over the mascot is gone (owner, 2026-11-12); its "an
+  // animation like this" order button now ends the label.
+  it("ends the RU label with the animation order button, no bubble", () => {
+    render(<HomeStage content={getMarketContent("ru")} />);
+    const label = screen.getByTestId("exhibit-label");
+    const cta = within(label).getByRole("link", {
+      name: /Хочу такую анимацию/,
+    });
+    expect(cta).toHaveAttribute("href", "/contact");
+    expect(cta).toHaveClass("pointer-events-auto");
+    expect(label.lastElementChild).toBe(cta);
+    expect(screen.queryByTestId("mascot-reply")).toBeNull();
+    expect(screen.queryByText(/Понравилось/)).toBeNull();
+  });
+
+  it("EN label's button leads to the animation enquiry", () => {
+    render(<HomeStage content={getMarketContent("en")} />);
+    const label = screen.getByTestId("exhibit-label");
+    expect(
+      within(label).getByRole("link", { name: /I want this animation/ }),
+    ).toHaveAttribute("href", "/contact?service=web-animation");
   });
 
   it("keeps only the scroll cue under the stage, no strip text", () => {

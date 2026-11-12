@@ -180,7 +180,6 @@ function ServicePanel({
     <article aria-labelledby={`title-${service.id}`}>
       <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-4">
         <div className="max-w-2xl">
-          <Eyebrow>{service.hall}</Eyebrow>
           <h2
             id={`title-${service.id}`}
             className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl"

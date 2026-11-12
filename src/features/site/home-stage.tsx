@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 import { AnchorLink } from "./anchor-link";
-import { type MarketContent, mascotExhibitNumber } from "./content";
+import type { MarketContent } from "./content";
 import { ExhibitStage } from "./exhibit-stage";
-import { MascotReply } from "./mascot-reply";
+import { OrderCta } from "./order-cta";
 import { SiteHeader } from "./site-chrome";
 import { uiFor } from "./ui-for";
 
@@ -10,6 +10,10 @@ import { uiFor } from "./ui-for";
 // pink studio stage, a museum label beside it, the text-only menu above and a
 // scroll arrow below. No visible headline — the H1 is for search and screen
 // readers (docs/specs/immersive-home.md).
+
+/** The label's order: the animation service, no package picked yet. */
+const ANIMATION_ORDER = { service: "Анимации и 3D", plan: "", price: "" };
+
 export function HomeStage({ content }: { content: MarketContent }) {
   const { exhibit } = content.home;
   const stage = content.locale ? uiFor(content.locale).stage : undefined;
@@ -34,17 +38,15 @@ export function HomeStage({ content }: { content: MarketContent }) {
       {/* Right of the head at rest (stage-lab.html), clamped so it never
           leaves the viewport. In near-square windows the clamp pulls it in
           toward the head, so it rises to clear it. Phones: a small, dense
-          museum label at the top right, beside the head (it may overlap it),
-          with only the first line (what it is made of). It is as wide as its
-          longest piece: the one-line eyebrow or the wrapped description. */}
+          label at the top right, beside the head (it may overlap it), with
+          only the first line (what it is made of). It is as wide as its
+          longest piece: the button or the wrapped description. It ends with
+          "an animation like this" (owner, 2026-11-12: replaced the bubble). */}
       <div
         data-testid="exhibit-label"
         className="text-stage-muted absolute top-[calc(50%-25vmin)] left-[min(calc(50%+32vmin),calc(100%-17rem))] rounded-lg bg-white/55 px-4 py-3.5 text-xs leading-relaxed backdrop-blur-md max-sm:top-[17vh] max-sm:right-[3.2vw] max-sm:bottom-auto max-sm:left-auto max-sm:w-max max-sm:rounded-md max-sm:px-2.5 max-sm:py-2 max-sm:text-[9.5px] max-sm:leading-snug max-sm:whitespace-normal sm:max-lg:top-[calc(50%-38vmin)]! sm:max-lg:right-[3.2vw] sm:max-lg:left-auto sm:max-lg:w-[14rem] sm:max-lg:px-4 sm:max-lg:py-4 lg:w-[15.5rem] sm:[@media(max-aspect-ratio:5/4)]:top-[calc(50%-31vmin)]"
       >
-        <span className="font-mono tracking-[0.12em] uppercase max-sm:tracking-[0.08em]">
-          {exhibit.eyebrow} {mascotExhibitNumber(content.lang)}
-        </span>
-        <b className="mt-1 mb-1.5 block text-[15px] font-semibold max-sm:mt-0.5 max-sm:mb-0.5 max-sm:text-[11px]">
+        <b className="mb-1.5 block text-[15px] font-semibold max-sm:mb-0.5 max-sm:text-[11px]">
           {exhibit.name}
         </b>
         {/* Each line is its own short paragraph. Phones: the first only. */}
@@ -59,10 +61,16 @@ export function HomeStage({ content }: { content: MarketContent }) {
             {line}
           </span>
         ))}
+        <OrderCta
+          target={ANIMATION_ORDER}
+          placement="mascot"
+          contactHref={exhibit.cta.contactHref}
+          className="bg-foreground text-background hover:bg-primary focus-visible:ring-primary pointer-events-auto mt-3 inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none max-sm:mt-1.5 max-sm:gap-1 max-sm:px-2 max-sm:py-1 max-sm:text-[9.5px]"
+        >
+          {exhibit.cta.label}
+          <span aria-hidden="true">→</span>
+        </OrderCta>
       </div>
-
-      {/* "An animation like this for your site" — the mascot's bubble. */}
-      <MascotReply copy={content.home.mascotReply} />
 
       {/* Only the scroll cue, in the tagline's muted ink; a round
           iridescent glow rises behind it on hover (.scroll-cue). */}

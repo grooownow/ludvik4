@@ -541,7 +541,6 @@ export const internationalPricingServices: PricingService[] = [
   service({
     slug: "landing-pages",
     seoTitle: "Landing Page Cost: Packages and Prices",
-    hall: "Hall 01",
     name: "Landing pages",
     lead: "One page that presents your product and brings in enquiries. A good fit for starting sales quickly, testing an idea or backing an ad campaign.",
     needs: NEEDS,
@@ -587,7 +586,6 @@ export const internationalPricingServices: PricingService[] = [
   service({
     slug: "website-packages",
     seoTitle: "Website Development Cost: Packages and Prices",
-    hall: "Hall 02",
     name: "Websites",
     lead: "A multi-page site that tells the whole story of you or your business. Each page answers one visitor question and helps people find you in search.",
     needs: [
@@ -647,7 +645,6 @@ export const internationalPricingServices: PricingService[] = [
   service({
     slug: "web-apps",
     seoTitle: "Web App Development Cost: Packages and Prices",
-    hall: "Hall 03",
     name: "Web apps",
     lead: "An app where your clients or staff place orders, book, keep records and run calculations. We start with a first working version built around the main task, then grow it from real feedback.",
     needs: [
@@ -709,7 +706,6 @@ export const internationalPricingServices: PricingService[] = [
   service({
     slug: "web-animation",
     seoTitle: "Website Animation: Packages and Prices",
-    hall: "Hall 04",
     name: "Animations",
     lead: "Animation makes a site memorable, from a striking hero section to a story that unfolds as you scroll. We build it as a separate page or into your existing site.",
     needs: [
@@ -747,7 +743,6 @@ export const internationalPricingServices: PricingService[] = [
   service({
     slug: "automation-packages",
     seoTitle: "Business Automation Cost: Packages and Prices",
-    hall: "Hall 05",
     name: "Automations",
     lead: "Automation means software does the repetitive work: enquiries reach your messaging app or CRM on their own, a bot answers clients, and reports put themselves together. We start with the process that takes up the most time.",
     needs: [
