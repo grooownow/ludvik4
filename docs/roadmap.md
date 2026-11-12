@@ -19,6 +19,18 @@ git) in `.design/works/`. Open: a live bug on ludvik4.ru/gridfin/ (gridfin
 repo) — at 360–414px the header CTA «Получить ранний доступ» overflows the
 screen; EN/ES `/work` pages were not touched.
 
+**[MONITOR 2026-11-06] The international sitemap doubled and the prior crawl-
+depth regression improved.** `sitemap.xml` grew from 26 to 54 URLs: 35 EN/root
+and 19 ES; all 54 return `200`, are self-canonical and indexable. `/ru` remains
+intentionally `noindex` and outside the sitemap. New package pages are linked
+from the home at depth 1; the three older monitored service-detail pages moved
+from depth 3 to 2. Follow-up 2026-11-09: production signals are unchanged, but
+GSC is blocked for a fifth run. Playwright needs Google login; Orca now reports
+its permissions as granted, while Computer Use still returns
+`permission_denied`, so restart Orca and its helper before retrying Chrome.
+Submit the new sitemap and refresh Performance/Pages/Inspection as soon as
+access is restored. Full evidence: `docs/seo/seo-handoff.md`.
+
 **[2026-10-31 · incident] Vercel Functions Storage over the Hobby 10 GB.**
 Cause: `src/features/blog/articles.ts` read articles through a dynamic path,
 so Turbopack traced the whole repo into every blog function (~70 MB each) and
