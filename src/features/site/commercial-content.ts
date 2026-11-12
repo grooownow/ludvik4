@@ -19,14 +19,16 @@ export type ServicePage = {
 };
 
 export type CaseStudy = {
-  slug: "smallfriendfiles" | "fortnoise" | "gridfin" | "qa-pilot";
+  slug:
+    "smallfriendfiles" | "fortnoise" | "gridfin" | "secret-santa" | "qa-pilot";
   title: string;
   kind: "Сайт" | "Веб-приложение" | "SaaS" | "AI-плагин";
   description: string;
   lead: string;
   image: string;
   imageAlt: string;
-  website: string;
+  /** The live product. Absent when outside visitors must not reach it (Secret Santa runs a live game). */
+  website?: string;
   task: string;
   solution: string[];
   result: string;
@@ -255,6 +257,32 @@ export const caseStudies: CaseStudy[] = [
       "shadcn/ui",
       "Vitest",
       "Playwright",
+    ],
+  },
+  {
+    slug: "secret-santa",
+    title: "Тайный Санта",
+    kind: "Веб-приложение",
+    description:
+      "Онлайн-игра «Тайный Санта» для соседей, коллег и друзей: анкеты, жеребьёвка, передача подарков, угадывание Санты и стена благодарностей.",
+    lead: "Игра проходит в браузере: организатор запускает её одной кнопкой, участники заполняют анкеты, получают своего получателя и передают подарки.",
+    image: "/cases/secret-santa/promo-d-t.webp",
+    imageAlt: "Промо-страница онлайн-игры «Тайный Санта»",
+    task: "Провести «Тайного Санту» для группы без таблиц и чатов: анкеты, честная жеребьёвка и передача подарков в одном сервисе.",
+    solution: [
+      "Анкеты участников с пожеланиями",
+      "Автоматическая жеребьёвка и кабинет участника",
+      "Передача подарка, угадывание Санты и стена благодарностей",
+    ],
+    result: "Игра запущена и проходит в реальной группе.",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind",
+      "Drizzle",
+      "Postgres",
+      "next-auth",
+      "Groq",
     ],
   },
   {

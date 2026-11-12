@@ -1,4 +1,4 @@
-import { caseStudies } from "./commercial-content";
+import { caseStudies, type CaseStudy } from "./commercial-content";
 import type { Market } from "./content";
 import {
   type InternationalWorkItem,
@@ -20,20 +20,30 @@ export type HomeExhibit = {
   site: string;
 };
 
+// The RU home keeps its four exhibits; Secret Santa is only on /cases.
+const HOME_SLUGS: readonly CaseStudy["slug"][] = [
+  "smallfriendfiles",
+  "fortnoise",
+  "gridfin",
+  "qa-pilot",
+];
+
 // EN shows the international work layer (3), RU its case studies (4), each in
 // the order the owner set (docs/specs/immersive-home.md → Markets).
 export function homeExhibits(market: Market): HomeExhibit[] {
   if (market === "en") return workExhibits(internationalWork);
-  return caseStudies.map((item) => ({
-    slug: item.slug,
-    name: item.title,
-    kind: item.kind,
-    line: item.description,
-    image: item.image,
-    imageAlt: item.imageAlt,
-    href: `/cases/${item.slug}`,
-    site: item.website,
-  }));
+  return caseStudies
+    .filter((item) => HOME_SLUGS.includes(item.slug))
+    .map((item) => ({
+      slug: item.slug,
+      name: item.title,
+      kind: item.kind,
+      line: item.description,
+      image: item.image,
+      imageAlt: item.imageAlt,
+      href: `/cases/${item.slug}`,
+      site: item.website ?? `/cases/${item.slug}`,
+    }));
 }
 
 /** ludvik4.dev's work as home exhibits, in one language (`prefix`: "/es"). */

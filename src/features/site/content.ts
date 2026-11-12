@@ -210,7 +210,7 @@ const ru: MarketContent = {
     tagline: "Студия веб-разработки",
     cta: "Контакты",
     links: [
-      { href: "/#work", label: "Работы" },
+      { href: "/cases", label: "Работы" },
       { href: "/uslugi", label: "Услуги" },
       { href: "/about", label: "О студии" },
     ],

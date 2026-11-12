@@ -1,11 +1,8 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { Breadcrumbs } from "./breadcrumbs";
-import {
-  CaseStudyPageView,
-  CasesIndexView,
-  ServicePageView,
-} from "./commercial-pages";
+import { CaseStudyPageView, CasesIndexView } from "./case-pages";
+import { ServicePageView } from "./commercial-pages";
 import { getCaseStudy, getServicePage } from "./commercial-content";
 
 describe("Breadcrumbs", () => {

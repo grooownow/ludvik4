@@ -37,6 +37,7 @@ describe("commercial content", () => {
       "smallfriendfiles",
       "fortnoise",
       "gridfin",
+      "secret-santa",
       "qa-pilot",
     ]);
     expect(getCaseStudy("fortnoise")?.kind).toBe("Сайт");
