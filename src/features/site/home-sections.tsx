@@ -182,7 +182,10 @@ export function HomeGallery({
     <Band id="work" className="bg-[#fff8fb]">
       <Eyebrow>{copy.eyebrow}</Eyebrow>
       <Title parts={copy.title} long={lang !== "en"} />
-      <div className="mt-14 grid gap-10 sm:grid-cols-2">
+      {/* Skipped until near the screen: the previews' lazy images are then
+          not fetched during the first paint (the RU home puts the work right
+          under the services, inside the browser's lazy-load distance). */}
+      <div className="mt-14 grid gap-10 [contain-intrinsic-size:auto_1400px] [content-visibility:auto] sm:grid-cols-2">
         {exhibits.map((exhibit, i) => {
           const featured = featureFirst && i === 0;
           return (
