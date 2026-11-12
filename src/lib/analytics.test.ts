@@ -73,6 +73,7 @@ describe("ANALYTICS_EVENTS", () => {
     expect(ANALYTICS_EVENTS).toEqual({
       ctaClicked: "cta.clicked",
       telegramClicked: "contact.telegram_clicked",
+      whatsappClicked: "contact.whatsapp_clicked",
       leadFormStarted: "lead.form_started",
       leadFormSubmitted: "lead.form_submitted",
       leadFormFailed: "lead.form_failed",

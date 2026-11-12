@@ -335,6 +335,17 @@ describe("AnalyticsProvider outbound clicks", () => {
     );
   });
 
+  it("leaves WhatsApp to its own event rather than counting it twice", async () => {
+    await renderProvider(<a href="https://wa.me/34665575316">WhatsApp</a>);
+
+    await userEvent.click(screen.getByRole("link", { name: "WhatsApp" }));
+
+    expect(track).not.toHaveBeenCalledWith(
+      "nav.outbound_clicked",
+      expect.anything(),
+    );
+  });
+
   it("ignores an internal link", async () => {
     await renderProvider(<p>content</p>);
 
