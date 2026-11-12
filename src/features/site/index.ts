@@ -34,12 +34,8 @@ export {
   type CaseStudy,
   type ServicePage,
 } from "./commercial-content";
-export {
-  CasesIndexView,
-  CasesPreview,
-  CaseStudyPageView,
-  ServicePageView,
-} from "./commercial-pages";
+export { CasesPreview, ServicePageView } from "./commercial-pages";
+export { CasesIndexView, CaseStudyPageView } from "./case-pages";
 export {
   getInternationalGuide,
   getInternationalService,

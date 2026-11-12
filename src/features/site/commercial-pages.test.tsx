@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { CasesIndexView, ServicePageView } from "./commercial-pages";
+import { CasesIndexView } from "./case-pages";
+import { ServicePageView } from "./commercial-pages";
 import { getServicePage } from "./commercial-content";
 
 describe("CasesIndexView", () => {
@@ -11,6 +12,7 @@ describe("CasesIndexView", () => {
       [/smallFriendFiles/i, "/cases/smallfriendfiles"],
       [/FortNoise/, "/cases/fortnoise"],
       [/Gridfin/, "/cases/gridfin"],
+      [/Тайный Санта/, "/cases/secret-santa"],
       [/qa-pilot/, "/cases/qa-pilot"],
     ] as const) {
       expect(screen.getByRole("link", { name })).toHaveAttribute("href", href);

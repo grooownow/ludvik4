@@ -6,6 +6,19 @@ writing detail here.
 
 ## Now
 
+**[DONE 2026-11-12 · RU only] Works section as a screen gallery.** `/cases`
+lists all five works (smallFriendFiles, FortNoise, Gridfin, Тайный Санта,
+qa-pilot) as rows with screen strips; `/cases/<slug>` tells each work point by
+point with its screens; any screen opens a fullscreen gallery
+(`src/features/site/case-pages.tsx`, `screen-gallery.tsx`, `scroll-strip.tsx`,
+data in `case-gallery.ts`, screens in `public/cases/<slug>/`). The RU header
+«Работы» now leads to `/cases`; the home page is unchanged (its four exhibit
+tiles; Secret Santa is only on `/cases`). Spec and per-project decisions:
+`docs/superpowers/specs/2026-11-11-works-gallery-design.md`; mockups (not in
+git) in `.design/works/`. Open: a live bug on ludvik4.ru/gridfin/ (gridfin
+repo) — at 360–414px the header CTA «Получить ранний доступ» overflows the
+screen; EN/ES `/work` pages were not touched.
+
 **[2026-10-31 · incident] Vercel Functions Storage over the Hobby 10 GB.**
 Cause: `src/features/blog/articles.ts` read articles through a dynamic path,
 so Turbopack traced the whole repo into every blog function (~70 MB each) and

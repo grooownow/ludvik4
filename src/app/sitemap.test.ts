@@ -50,6 +50,7 @@ describe("buildSitemap", () => {
     expect(urls).toContain(`${baseURL}/cases/smallfriendfiles/`);
     expect(urls).toContain(`${baseURL}/cases/fortnoise/`);
     expect(urls).toContain(`${baseURL}/cases/gridfin/`);
+    expect(urls).toContain(`${baseURL}/cases/secret-santa/`);
     expect(urls).toContain(`${baseURL}/cases/qa-pilot/`);
     // Gridfin landing + its supporting pages (static files in public/gridfin/).
     expect(urls).toContain(`${baseURL}/gridfin/`);
@@ -67,7 +68,7 @@ describe("buildSitemap", () => {
     for (const d of getAllArticles().filter((a) => a.draft)) {
       expect(urls).not.toContain(`${baseURL}/blog/${d.slug}/`);
     }
-    expect(urls).toHaveLength(22 + getPublishedArticles().length);
+    expect(urls).toHaveLength(23 + getPublishedArticles().length);
   });
 
   it("EN: landing, service pages, proof, source pages and EN articles", () => {

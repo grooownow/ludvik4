@@ -24,7 +24,7 @@ describe("market content", () => {
     ]);
     // Exhibition home (docs/specs/immersive-home.md): same menu as EN, translated.
     expect(ru.nav.links).toEqual([
-      { href: "/#work", label: "Работы" },
+      { href: "/cases", label: "Работы" },
       { href: "/uslugi", label: "Услуги" },
       { href: "/about", label: "О студии" },
     ]);

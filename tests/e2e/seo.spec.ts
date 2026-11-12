@@ -30,7 +30,7 @@ test.describe("SEO surfaces", () => {
     await expect(page.getByText(/₽/)).toHaveCount(0);
   });
 
-  test("the Work menu item scrolls to the work section", async ({
+  test("the Работы menu item opens the works page", async ({
     page,
     isMobile,
   }) => {
@@ -38,8 +38,10 @@ test.describe("SEO surfaces", () => {
     await page.goto("/");
 
     await page.getByRole("link", { name: "Работы" }).first().click();
-    await expect(page).toHaveURL(/#work$/);
-    await expect(page.locator("#work")).toBeInViewport();
+    await expect(page).toHaveURL(/\/cases$/);
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Проекты студии Ludvik4" }),
+    ).toBeVisible();
   });
 
   test("blog footer reaches the bottom of the viewport on short content", async ({
