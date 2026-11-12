@@ -17,7 +17,7 @@ numbering, no mascot bubble; the mascot's label ends with the "I want this
 animation" button; the RU home shows Тайный Санта instead of qa-pilot
 (`docs/specs/immersive-home.md` → Change, 2026-11-12).
 
-**[PREPARED 2026-11-12 · ES home only] Facebook link-preview artwork.**
+**[SHIPPED 2026-11-12 · ES home only] Facebook link-preview artwork.**
 The approved pink service poster is adapted to 1200 × 630 in
 `public/social/ludvik4-facebook-es-v1.png`. `/es` sets explicit Open Graph and
 Twitter images through `localeHomeMetadata`; the other pages keep their
@@ -29,8 +29,14 @@ image metadata is in `<head>`, resolves to the production HTTPS asset URL,
 and the served PNG is 1200 × 630. Browser regression checks on the RU production
 build pass: 67 passed, 11 skipped (existing suite), using a separate temporary
 PGlite database without resetting the working database.
-Owner approved commit, push and publication on 2026-11-12; deployment and
-Facebook cache refresh are pending. Share target: `https://ludvik4.dev/es`.
+Owner approved commit, push and publication on 2026-11-12. Released in
+`4b16c3f`; Vercel deployment `dpl_EfDChHmNSRq4HurSxvRShXEy4GMt` is Ready.
+Production `facebookexternalhit` verification passes: self-canonical `/es`,
+expected OG/Twitter image, a public 1200 × 630 PNG matching the approved file
+byte for byte, and no campaign image on `/`, `/ru` or `/es/about`. Facebook's
+cached preview could not be observed/refreshed because Sharing Debugger
+requires owner login. If stale, inspect the URL there and use Scrape Again.
+Share target: `https://ludvik4.dev/es`.
 Decision: `docs/decisions/0015-spanish-home-share-artwork.md`.
 
 **[DONE 2026-11-12 · RU only] Works section as a screen gallery.** `/cases`

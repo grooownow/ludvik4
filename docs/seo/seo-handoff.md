@@ -1,16 +1,22 @@
 # SEO handoff — Ludvik4 International
 
-## Local social-preview update — 2026-11-12
+## Published social-preview update — 2026-11-12
 
-Prepared, not deployed: `/es` now points Open Graph and Twitter to the approved
-1200 × 630 Spanish campaign artwork at
-`/social/ludvik4-facebook-es-v1.png`. The owner approved commit, push and
-publication on 2026-11-12; deployment is in progress. The local production build returns the expected absolute HTTPS
-image URL inside `<head>` for `facebookexternalhit`; the image endpoint returns
-200 and a valid 1200 × 630 PNG. Other pages do not receive this campaign image.
-See ADR 0015 and the roadmap for validation and release status. After deployment,
-inspect `https://ludvik4.dev/es` in the Facebook Sharing Debugger and refresh its
-cache before posting the link. This does not change indexing or the sitemap.
+Owner-approved release `4b16c3f` is live on ludvik4.dev. `/es` points Open Graph
+and Twitter to the approved 1200 × 630 Spanish campaign artwork at
+`/social/ludvik4-facebook-es-v1.png`. Vercel deployment
+`dpl_EfDChHmNSRq4HurSxvRShXEy4GMt` is Ready. Production requests using
+`facebookexternalhit` verify the absolute HTTPS image URL inside `<head>`,
+self-canonical `/es`, Spanish OG locale and a 200 PNG matching the approved
+1200 × 630 file byte for byte. `/`, `/ru` and `/es/about` do not receive this
+campaign image. All 851 tests, lint, the EN production build/function-trace
+gate and the RU browser suite (67 passed, 11 skipped) pass on Node 24.
+
+The Sharing Debugger opens but requires Facebook login, so Facebook's own
+cached card was not verified or refreshed. If a post shows a stale preview,
+the owner can inspect `https://ludvik4.dev/es` in
+https://developers.facebook.com/tools/debug/ and use Scrape Again. This does
+not change indexing or the sitemap. See ADR 0015 and the roadmap for details.
 
 ## Last production monitoring run
 

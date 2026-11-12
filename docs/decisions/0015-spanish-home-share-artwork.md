@@ -32,4 +32,8 @@ Verified against the installed Next.js documentation in this session.
 
 ## Status
 
-Accepted by the owner on 2026-11-12. Production deployment is in progress.
+Accepted by the owner and deployed on 2026-11-12 (`4b16c3f`). Production
+verification with `facebookexternalhit` passed: the Spanish home emits the
+expected metadata in `<head>` and serves the approved 1200 × 630 PNG byte for
+byte. Facebook Sharing Debugger requires owner login, so its cached preview
+was not refreshed or observed in this session.
