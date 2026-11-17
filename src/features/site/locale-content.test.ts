@@ -40,12 +40,16 @@ describe.each(translated)("$locale bundle", (bundle) => {
     );
     // Gridfin has its own landing per language (/gridfin/es); the rest of a
     // live link is the same everywhere.
+    // Secret Santa is English and Russian only, each card in its language
+    // (src/features/site/case-sites.ts); the other works are shared.
     const live = (b: typeof en) =>
-      b.work.map(({ slug, image, website }) => ({
-        slug,
-        image,
-        website: website.replace(/\/gridfin\/[a-z-]+$/, "/gridfin"),
-      }));
+      b.work
+        .filter((item) => item.slug !== "secret-santa")
+        .map(({ slug, image, website }) => ({
+          slug,
+          image,
+          website: website.replace(/\/gridfin\/[a-z-]+$/, "/gridfin"),
+        }));
     expect(live(bundle)).toEqual(live(en));
     expect(bundle.pricingServices.map((s) => s.slug)).toEqual(
       en.pricingServices.map((s) => s.slug),

@@ -5,52 +5,79 @@ import { Button } from "@/components/ui/button";
 import { jsonLdString } from "@/lib/json-ld";
 import { cn } from "@/lib/utils";
 import { Breadcrumbs } from "./breadcrumbs";
+import type { CaseGallery, Screen, ScreenImage } from "./case-gallery";
 import {
-  type CaseGallery,
-  caseGalleries,
-  type Screen,
-  type ScreenImage,
-} from "./case-gallery";
-import { caseStudies, type CaseStudy } from "./commercial-content";
-import { getMarketContent } from "./content";
+  type CaseSite,
+  type CaseSlug,
+  caseSiteHref,
+  ruCaseSite,
+} from "./case-sites";
+import type { CaseStudy } from "./commercial-content";
 import { ScreenButton, ScreenGalleryProvider } from "./screen-gallery";
 import { ScrollStrip } from "./scroll-strip";
 import { publicUrl } from "./seo";
 import { SiteFooter, SiteHeader } from "./site-chrome";
 
-// The RU works section: /cases lists every work as a row with a strip of its
-// screens, /cases/<slug> tells one work point by point with its screens.
-// Any screen opens the fullscreen gallery. Mockups: .design/works/
+// The works section: the index lists every work as a row with a strip of its
+// screens, the case page tells one work point by point with its screens.
+// Any screen opens the fullscreen gallery. One layout for every storefront
+// (ludvik4.ru /cases, ludvik4.dev /work and /ru/work); the texts, links and
+// screens come from its CaseSite (case-sites.ts). Mockups: .design/works/
 // (preview-b.html?all, case-4.html); spec:
 // docs/superpowers/specs/2026-11-11-works-gallery-design.md.
 
-const ruContent = getMarketContent("ru");
 const WRAP = "mx-auto w-full max-w-[1120px] px-6";
 
-function Shell({ children }: { children: React.ReactNode }) {
+function Shell({
+  site,
+  children,
+}: {
+  site: CaseSite;
+  children: React.ReactNode;
+}) {
   return (
     <div className="bg-background text-foreground flex min-h-screen flex-col">
-      <SiteHeader content={ruContent} />
+      <SiteHeader content={site.content} />
       <main className="flex-1">{children}</main>
-      <SiteFooter content={ruContent} />
+      <SiteFooter content={site.content} />
     </div>
   );
 }
 
-const screensBySlug = (slugs: CaseStudy["slug"][]) =>
-  Object.fromEntries(slugs.map((s) => [s, caseGalleries[s].screens]));
+const gallery = (site: CaseSite, slug: CaseSlug) => site.galleries[slug]!;
 
-export function screenCount(n: number): string {
-  const a = n % 10;
-  const b = n % 100;
-  if (a === 1 && b !== 11) return `${n} экран`;
-  if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return `${n} экрана`;
-  return `${n} экранов`;
+const screensBySlug = (site: CaseSite, slugs: readonly CaseSlug[]) =>
+  Object.fromEntries(slugs.map((s) => [s, gallery(site, s).screens]));
+
+/** The RU plural, kept for callers of the RU storefront. */
+export const screenCount = ruCaseSite.ui.screenCount;
+
+const openLabel = (site: CaseSite, s: Screen) =>
+  site.ui.open(
+    s.caption,
+    s.kind === "mobile" ? site.ui.gallery.mobile : site.ui.gallery.desktop,
+  );
+
+/** "Все 14 экранов" with the last space unbreakable. */
+const allScreens = (site: CaseSite, n: number) =>
+  site.ui.allScreens(n).replace(/ (?=\S+$)/, " ");
+
+function SiteBreadcrumbs({
+  site,
+  items,
+}: {
+  site: CaseSite;
+  items: { label: string; href?: Route }[];
+}) {
+  return (
+    <Breadcrumbs
+      homeLabel={site.ui.home}
+      homeHref={site.prefix || "/"}
+      ariaLabel={site.ui.breadcrumbsAria}
+      items={items}
+    />
+  );
 }
-
-const kindLabel = (s: Screen) =>
-  s.kind === "mobile" ? "мобильная" : "десктоп";
-const openLabel = (s: Screen) => `Открыть: ${s.caption}, ${kindLabel(s)}`;
 
 /** Aspect ratio of a whole-page preview, cut at the bottom only for very tall pages. */
 function cappedRatio(img: ScreenImage, max: number): string {
@@ -86,38 +113,45 @@ function Shot({
   );
 }
 
-function WebsiteButton({ g }: { g: CaseGallery }) {
+function WebsiteButton({ site, g }: { site: CaseSite; g: CaseGallery }) {
   if (!g.website) return null;
   return (
     <Button asChild className="h-11 px-5 text-[15px] font-semibold">
       <a href={g.website} target="_blank" rel="noopener noreferrer">
-        {g.websiteLabel ?? "Открыть проект"} ↗
+        {g.websiteLabel ?? site.ui.openProject} ↗
       </a>
     </Button>
   );
 }
 
-// ─── /cases ──────────────────────────────────────────────────────────────
+// ─── the index: /cases, /work ───────────────────────────────────────────
 
-export function CasesIndexView({ baseUrl }: { baseUrl: string }) {
-  const url = publicUrl("ru", baseUrl, "/cases");
+export function CasesIndexView({
+  baseUrl,
+  site = ruCaseSite,
+}: {
+  baseUrl: string;
+  site?: CaseSite;
+}) {
+  const { ui } = site;
+  const url = publicUrl(site.market, baseUrl, caseSiteHref(site));
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "CollectionPage",
-        name: "Работы Ludvik4",
-        description:
-          "Публичные примеры сайтов, веб-приложений и AI-инструментов Ludvik4 с экранами каждого проекта.",
+        name: ui.indexJsonLdName,
+        description: ui.indexJsonLdDescription,
         url,
+        inLanguage: ui.lang,
         isPartOf: { "@id": `${baseUrl}/#website` },
         mainEntity: {
           "@type": "ItemList",
-          itemListElement: caseStudies.map((item, index) => ({
+          itemListElement: site.slugs.map((slug, index) => ({
             "@type": "ListItem",
             position: index + 1,
-            url: publicUrl("ru", baseUrl, `/cases/${item.slug}`),
-            name: item.title,
+            url: publicUrl(site.market, baseUrl, caseSiteHref(site, slug)),
+            name: gallery(site, slug).title,
           })),
         },
       },
@@ -127,37 +161,37 @@ export function CasesIndexView({ baseUrl }: { baseUrl: string }) {
           {
             "@type": "ListItem",
             position: 1,
-            name: "Главная",
-            item: `${baseUrl}/`,
+            name: ui.home,
+            item: `${baseUrl}${site.prefix}/`,
           },
-          { "@type": "ListItem", position: 2, name: "Работы", item: url },
+          { "@type": "ListItem", position: 2, name: ui.works, item: url },
         ],
       },
     ],
   };
 
   return (
-    <Shell>
+    <Shell site={site}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
       <ScreenGalleryProvider
-        galleries={screensBySlug(caseStudies.map((c) => c.slug))}
+        galleries={screensBySlug(site, site.slugs)}
+        labels={ui.gallery}
       >
         <div className={cn(WRAP, "py-10 sm:py-14")}>
-          <Breadcrumbs items={[{ label: "Работы" }]} />
-          <p className="text-primary mt-8 font-mono text-xs">Работы</p>
+          <SiteBreadcrumbs site={site} items={[{ label: ui.works }]} />
+          <p className="text-primary mt-8 font-mono text-xs">{ui.works}</p>
           <h1 className="mt-2 text-[clamp(30px,4.6vw,40px)] font-extrabold tracking-tight">
-            Проекты студии Ludvik4
+            {ui.indexTitle}
           </h1>
           <p className="text-muted-foreground mt-3 max-w-[640px] text-lg leading-relaxed">
-            Листайте экраны прямо здесь — нажмите на любой, чтобы открыть на
-            весь экран.
+            {ui.indexLead}
           </p>
           <div className="mt-4">
-            {caseStudies.map((study) => (
-              <CaseRow key={study.slug} slug={study.slug} />
+            {site.slugs.map((slug) => (
+              <CaseRow key={slug} site={site} slug={slug} />
             ))}
           </div>
         </div>
@@ -166,10 +200,11 @@ export function CasesIndexView({ baseUrl }: { baseUrl: string }) {
   );
 }
 
-function CaseRow({ slug }: { slug: CaseStudy["slug"] }) {
-  const g = caseGalleries[slug];
-  const href = `/cases/${slug}` as Route;
-  const count = screenCount(g.screens.length);
+function CaseRow({ site, slug }: { site: CaseSite; slug: CaseSlug }) {
+  const { ui } = site;
+  const g = gallery(site, slug);
+  const href = caseSiteHref(site, slug) as Route;
+  const count = ui.screenCount(g.screens.length);
   return (
     <section className="border-border grid gap-[18px] border-t py-7 first:border-t-0 min-[801px]:grid-cols-[260px_minmax(0,1fr)] min-[801px]:gap-8 min-[801px]:py-9">
       <div>
@@ -187,14 +222,17 @@ function CaseRow({ slug }: { slug: CaseStudy["slug"] }) {
             href={href}
             className="text-primary font-mono text-sm font-semibold"
           >
-            Подробнее о проекте →
+            {ui.more}
           </Link>
           <span className="text-muted-foreground font-mono text-[13px]">
             {count}
           </span>
         </div>
       </div>
-      <ScrollStrip className="-mx-6 scroll-pl-6 items-end gap-2.5 px-6 pb-2.5 min-[801px]:mx-0 min-[801px]:scroll-pl-0 min-[801px]:gap-3.5 min-[801px]:px-0 min-[801px]:pb-3">
+      <ScrollStrip
+        labels={ui.strip}
+        className="-mx-6 scroll-pl-6 items-end gap-2.5 px-6 pb-2.5 min-[801px]:mx-0 min-[801px]:scroll-pl-0 min-[801px]:gap-3.5 min-[801px]:px-0 min-[801px]:pb-3"
+      >
         {g.strip.map((i) => {
           const s = g.screens[i]!;
           const img = s.stripThumb ?? s.thumb;
@@ -204,7 +242,7 @@ function CaseRow({ slug }: { slug: CaseStudy["slug"] }) {
               key={i}
               slug={slug}
               index={i}
-              label={openLabel(s)}
+              label={openLabel(site, s)}
               className={cn(
                 "group bg-muted relative flex-none snap-start overflow-hidden p-0",
                 mobile
@@ -229,7 +267,7 @@ function CaseRow({ slug }: { slug: CaseStudy["slug"] }) {
             className="bg-accent border-pink-soft text-primary grid w-[120px] flex-none snap-start place-items-center self-stretch rounded-xl border text-center font-mono text-sm font-semibold min-[801px]:w-[150px]"
           >
             <span>
-              Все {count.replace(" ", " ")}
+              {allScreens(site, g.screens.length)}
               <br />→
             </span>
           </Link>
@@ -246,10 +284,12 @@ const PHONE_BOX =
   "bg-intro w-[calc((60%-8px)*390/844+8px)] shrink-0 rounded-[14px] p-1 shadow-lg lg:w-[180px]";
 
 function DesktopPreview({
+  site,
   slug,
   index,
   s,
 }: {
+  site: CaseSite;
   slug: string;
   index: number;
   s: Screen;
@@ -258,7 +298,7 @@ function DesktopPreview({
     <ScreenButton
       slug={slug}
       index={index}
-      label={openLabel(s)}
+      label={openLabel(site, s)}
       className={cn(DESKTOP_BOX, "shadow-lg")}
     >
       <Shot
@@ -270,10 +310,12 @@ function DesktopPreview({
 }
 
 function PhonePreview({
+  site,
   slug,
   index,
   s,
 }: {
+  site: CaseSite;
   slug: string;
   index: number;
   s: Screen;
@@ -282,7 +324,7 @@ function PhonePreview({
     <ScreenButton
       slug={slug}
       index={index}
-      label={openLabel(s)}
+      label={openLabel(site, s)}
       className={PHONE_BOX}
     >
       <Shot
@@ -294,10 +336,12 @@ function PhonePreview({
 }
 
 function PointShots({
+  site,
   slug,
   g,
   screens,
 }: {
+  site: CaseSite;
   slug: string;
   g: CaseGallery;
   screens: number[];
@@ -308,7 +352,13 @@ function PointShots({
     return (
       <div className="flex gap-4 lg:justify-end lg:gap-6">
         {phones.map((i) => (
-          <PhonePreview key={i} slug={slug} index={i} s={g.screens[i]!} />
+          <PhonePreview
+            key={i}
+            site={site}
+            slug={slug}
+            index={i}
+            s={g.screens[i]!}
+          />
         ))}
       </div>
     );
@@ -316,19 +366,37 @@ function PointShots({
   const phone = phones[0];
   return (
     <div className="flex items-start gap-3 lg:justify-end lg:gap-6">
-      <DesktopPreview slug={slug} index={desktop} s={g.screens[desktop]!} />
+      <DesktopPreview
+        site={site}
+        slug={slug}
+        index={desktop}
+        s={g.screens[desktop]!}
+      />
       {phone != null ? (
-        <PhonePreview slug={slug} index={phone} s={g.screens[phone]!} />
+        <PhonePreview
+          site={site}
+          slug={slug}
+          index={phone}
+          s={g.screens[phone]!}
+        />
       ) : null}
     </div>
   );
 }
 
-function HeroShots({ slug, g }: { slug: string; g: CaseGallery }) {
+function HeroShots({
+  site,
+  slug,
+  g,
+}: {
+  site: CaseSite;
+  slug: string;
+  g: CaseGallery;
+}) {
   const d = g.screens[g.cover.desktop]!;
   const mIndex = g.cover.mobile;
   const m = mIndex != null ? g.screens[mIndex] : undefined;
-  const dLabel = openLabel(d);
+  const dLabel = openLabel(site, d);
 
   if (!m || mIndex == null) {
     // A short, wide first screen: the whole desktop alone.
@@ -359,7 +427,7 @@ function HeroShots({ slug, g }: { slug: string; g: CaseGallery }) {
         <ScreenButton
           slug={slug}
           index={mIndex}
-          label={openLabel(m)}
+          label={openLabel(site, m)}
           className="bg-intro min-w-0 flex-[0.462_1_0%] rounded-[14px] p-1 shadow-lg"
         >
           <Shot img={m.thumb} className="h-auto w-full rounded-[10px]" />
@@ -386,7 +454,7 @@ function HeroShots({ slug, g }: { slug: string; g: CaseGallery }) {
       <ScreenButton
         slug={slug}
         index={mIndex}
-        label={openLabel(m)}
+        label={openLabel(site, m)}
         className={cn(PHONE_BOX, "lg:w-[210px]")}
       >
         <Shot
@@ -434,7 +502,15 @@ function PointsList({
   );
 }
 
-function LandingRow({ slug, g }: { slug: string; g: CaseGallery }) {
+function LandingRow({
+  site,
+  slug,
+  g,
+}: {
+  site: CaseSite;
+  slug: string;
+  g: CaseGallery;
+}) {
   const d = g.screens.findIndex((s) => s.kind === "desktop");
   const m = g.screens.findIndex((s) => s.kind === "mobile");
   const ds = g.screens[d]!;
@@ -447,7 +523,7 @@ function LandingRow({ slug, g }: { slug: string; g: CaseGallery }) {
         <ScreenButton
           slug={slug}
           index={d}
-          label={openLabel(ds)}
+          label={openLabel(site, ds)}
           className={cn(DESKTOP_BOX, "self-start shadow-lg")}
         >
           <Shot img={ds.thumb} className="h-auto w-full rounded-xl" />
@@ -455,7 +531,7 @@ function LandingRow({ slug, g }: { slug: string; g: CaseGallery }) {
         <ScreenButton
           slug={slug}
           index={m}
-          label={openLabel(ms)}
+          label={openLabel(site, ms)}
           className={cn(PHONE_BOX, "relative")}
         >
           <Shot
@@ -468,7 +544,15 @@ function LandingRow({ slug, g }: { slug: string; g: CaseGallery }) {
   );
 }
 
-function StoryRows({ slug, g }: { slug: string; g: CaseGallery }) {
+function StoryRows({
+  site,
+  slug,
+  g,
+}: {
+  site: CaseSite;
+  slug: string;
+  g: CaseGallery;
+}) {
   return (
     <div className="grid gap-3 lg:gap-0">
       {g.points.map((p, n) => (
@@ -489,7 +573,7 @@ function StoryRows({ slug, g }: { slug: string; g: CaseGallery }) {
               {p.text}
             </p>
           </div>
-          <PointShots slug={slug} g={g} screens={p.screens} />
+          <PointShots site={site} slug={slug} g={g} screens={p.screens} />
         </div>
       ))}
     </div>
@@ -498,24 +582,32 @@ function StoryRows({ slug, g }: { slug: string; g: CaseGallery }) {
 
 export function CaseStudyPageView({
   study,
+  slug: slugProp,
   baseUrl,
+  site = ruCaseSite,
 }: {
-  study: CaseStudy;
+  /** The RU storefront passes its case study; the others pass the slug. */
+  study?: CaseStudy;
+  slug?: CaseSlug;
   baseUrl: string;
+  site?: CaseSite;
 }) {
-  const slug = study.slug;
-  const g = caseGalleries[slug];
-  const url = publicUrl("ru", baseUrl, `/cases/${slug}`);
+  const slug = (slugProp ?? study?.slug)!;
+  const { ui } = site;
+  const g = gallery(site, slug);
+  const seo = site.seo(slug);
+  const url = publicUrl(site.market, baseUrl, caseSiteHref(site, slug));
   const story = g.layout === "story";
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "CreativeWork",
-        name: study.title,
-        description: study.description,
+        name: g.title,
+        description: seo.description,
         url,
-        image: `${baseUrl}${study.image}`,
+        inLanguage: ui.lang,
+        image: `${baseUrl}${seo.image}`,
         creator: { "@type": "Organization", name: "Ludvik4", url: baseUrl },
       },
       {
@@ -524,32 +616,39 @@ export function CaseStudyPageView({
           {
             "@type": "ListItem",
             position: 1,
-            name: "Главная",
-            item: `${baseUrl}/`,
+            name: ui.home,
+            item: `${baseUrl}${site.prefix}/`,
           },
           {
             "@type": "ListItem",
             position: 2,
-            name: "Работы",
-            item: publicUrl("ru", baseUrl, "/cases"),
+            name: ui.works,
+            item: publicUrl(site.market, baseUrl, caseSiteHref(site)),
           },
-          { "@type": "ListItem", position: 3, name: study.title, item: url },
+          { "@type": "ListItem", position: 3, name: g.title, item: url },
         ],
       },
     ],
   };
 
   return (
-    <Shell>
+    <Shell site={site}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
       />
-      <ScreenGalleryProvider galleries={screensBySlug([slug])}>
+      <ScreenGalleryProvider
+        galleries={screensBySlug(site, [slug])}
+        labels={ui.gallery}
+      >
         <section className="bg-[radial-gradient(120%_90%_at_85%_10%,var(--pink-soft),var(--accent)_55%,var(--background))] pt-4 pb-7 lg:pt-6 lg:pb-10">
           <div className={WRAP}>
-            <Breadcrumbs
-              items={[{ label: "Работы", href: "/cases" }, { label: g.title }]}
+            <SiteBreadcrumbs
+              site={site}
+              items={[
+                { label: ui.works, href: caseSiteHref(site) as Route },
+                { label: g.title },
+              ]}
             />
             <div className="mt-3 grid gap-5 lg:mt-5 lg:grid-cols-[400px_minmax(0,1fr)] lg:items-start lg:gap-14">
               <div>
@@ -561,15 +660,15 @@ export function CaseStudyPageView({
                   {g.lead}
                 </p>
                 <div className="mt-[18px] flex flex-wrap gap-2.5">
-                  <WebsiteButton g={g} />
+                  <WebsiteButton site={site} g={g} />
                   {story ? (
                     <ScreenButton
                       slug={slug}
                       index={0}
-                      label={`Все ${screenCount(g.screens.length)}`}
+                      label={allScreens(site, g.screens.length)}
                       className="border-border bg-background hover:bg-muted inline-flex h-11 items-center rounded-lg border px-5 text-[15px] font-semibold"
                     >
-                      Все {screenCount(g.screens.length)}
+                      {allScreens(site, g.screens.length)}
                     </ScreenButton>
                   ) : null}
                 </div>
@@ -589,7 +688,7 @@ export function CaseStudyPageView({
                   ))}
                 </ul>
               </div>
-              <HeroShots slug={slug} g={g} />
+              <HeroShots site={site} slug={slug} g={g} />
             </div>
           </div>
         </section>
@@ -599,13 +698,16 @@ export function CaseStudyPageView({
             <div className={WRAP}>
               <div className="mb-3.5 flex flex-wrap items-baseline justify-between gap-3 lg:mb-5">
                 <h2 className="text-[22px] font-semibold tracking-tight lg:text-[26px]">
-                  Все экраны
+                  {ui.allScreensTitle}
                 </h2>
                 <span className="text-muted-foreground text-sm">
-                  {g.screens.length} · десктоп и мобильная версия
+                  {ui.allScreensNote(g.screens.length)}
                 </span>
               </div>
-              <ScrollStrip className="-mx-6 gap-2.5 px-6 pt-1 pb-2 lg:mx-0 lg:px-0">
+              <ScrollStrip
+                labels={ui.strip}
+                className="-mx-6 gap-2.5 px-6 pt-1 pb-2 lg:mx-0 lg:px-0"
+              >
                 {g.screens.map((s, i) => {
                   const img = s.stripThumb ?? s.thumb;
                   return (
@@ -613,7 +715,7 @@ export function CaseStudyPageView({
                       key={i}
                       slug={slug}
                       index={i}
-                      label={openLabel(s)}
+                      label={openLabel(site, s)}
                       className="border-border bg-card h-[260px] flex-none snap-start overflow-hidden rounded-[10px] border p-0 lg:h-[340px]"
                     >
                       <Shot
@@ -637,14 +739,14 @@ export function CaseStudyPageView({
         <section className={cn("pb-7 lg:pb-10", !story && "pt-7 lg:pt-10")}>
           <div className={WRAP}>
             <h2 className="mb-3.5 text-[22px] font-semibold tracking-tight lg:mb-5 lg:text-[26px]">
-              {story ? "Экраны и функции" : "Что внутри"}
+              {story ? ui.storyTitle : ui.insideTitle}
             </h2>
             {g.layout === "landing" ? (
-              <LandingRow slug={slug} g={g} />
+              <LandingRow site={site} slug={slug} g={g} />
             ) : g.layout === "brief" ? (
               <PointsList g={g} twoColumns />
             ) : (
-              <StoryRows slug={slug} g={g} />
+              <StoryRows site={site} slug={slug} g={g} />
             )}
           </div>
         </section>
@@ -653,9 +755,9 @@ export function CaseStudyPageView({
           <div className={WRAP}>
             <div className="border-border grid gap-4 border-t pt-6 md:grid-cols-3 md:gap-7">
               {[
-                ["Задача", g.task],
-                ["Результат", g.result],
-                ["Технологии", g.stack.join(" · ")],
+                [ui.task, g.task],
+                [ui.result, g.result],
+                [ui.stack, g.stack.join(" · ")],
               ].map(([title, text]) => (
                 <div key={title} className="text-[15px] leading-relaxed">
                   <h2 className="text-muted-foreground mb-1.5 font-mono text-[13px] font-medium">
@@ -667,13 +769,15 @@ export function CaseStudyPageView({
             </div>
             <div className="border-border mt-7 flex flex-wrap items-center justify-between gap-4 border-t pt-6">
               <div>
-                <h2 className="text-xl font-bold">Обсудить похожую задачу</h2>
+                <h2 className="text-xl font-bold">{ui.ctaTitle}</h2>
                 <p className="text-muted-foreground mt-1 text-[15px]">
-                  Коротко опишите идею — ответим с вариантами и сроками.
+                  {ui.ctaBody}
                 </p>
               </div>
               <Button asChild className="h-11 px-5 text-[15px] font-semibold">
-                <Link href={"/contact" as Route}>Обсудить задачу</Link>
+                <Link href={`${site.prefix}/contact` as Route}>
+                  {ui.ctaButton}
+                </Link>
               </Button>
             </div>
           </div>

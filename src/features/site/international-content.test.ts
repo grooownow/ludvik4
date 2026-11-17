@@ -24,6 +24,7 @@ describe("international commercial content", () => {
     expect(internationalWork.map((item) => item.slug)).toEqual([
       "smallfriendfiles",
       "gridfin",
+      "secret-santa",
       "qa-pilot",
     ]);
     const gridfin = internationalWork.find((item) => item.slug === "gridfin");

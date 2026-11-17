@@ -1,11 +1,11 @@
 import type { Metadata, MetadataRoute } from "next";
 import { isTranslatedPath, localizeHref } from "@/lib/i18n";
+import { DEV_CASE_SLUGS } from "./case-slugs";
 import { caseStudies, servicePages } from "./commercial-content";
 import { type Market, type MarketContent, TELEGRAM_URL } from "./content";
 import {
   internationalFaq,
   internationalGuides,
-  internationalCaseStudies,
   internationalServicePages,
 } from "./international-content";
 import { internationalPricingServices } from "./international-pricing";
@@ -192,9 +192,9 @@ export function buildSitemap(
       changeFrequency: "monthly",
       priority: 0.8,
     });
-    for (const item of internationalCaseStudies) {
+    for (const slug of DEV_CASE_SLUGS) {
       entries.push({
-        url: publicUrl(market, baseUrl, `/work/${item.slug}`),
+        url: publicUrl(market, baseUrl, `/work/${slug}`),
         changeFrequency: "monthly",
         priority: 0.8,
       });

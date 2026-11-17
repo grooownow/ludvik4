@@ -85,12 +85,12 @@ describe("Home (EN)", () => {
     ).toHaveTextContent("your idea");
   });
 
-  it("frames three unnumbered work exhibits, the first one large", () => {
+  it("frames four unnumbered work exhibits in an even grid", () => {
     const { container } = renderHome("en");
     const work = container.querySelector("#work") as HTMLElement;
-    expect(work.querySelectorAll("[data-exhibit]")).toHaveLength(3);
+    expect(work.querySelectorAll("[data-exhibit]")).toHaveLength(4);
     expect(work).not.toHaveTextContent(/Exhibit|Nº/);
-    expect(work.querySelectorAll("[data-exhibit]")[0]).toHaveClass(
+    expect(work.querySelectorAll("[data-exhibit]")[0]).not.toHaveClass(
       "sm:row-span-2",
     );
   });
@@ -217,17 +217,21 @@ describe("Home (RU)", () => {
 });
 
 describe("homeExhibits", () => {
-  it("EN: smallFriendFiles, Gridfin, qa-pilot with their existing links", () => {
+  it("EN: smallFriendFiles, Gridfin, Secret Santa, qa-pilot with their links", () => {
     const exhibits = homeExhibits("en");
     expect(exhibits.map((e) => e.slug)).toEqual([
       "smallfriendfiles",
       "gridfin",
+      "secret-santa",
       "qa-pilot",
     ]);
     expect(exhibits[0]!.href).toBe("/work/smallfriendfiles");
+    expect(exhibits[2]!.href).toBe("/work/secret-santa");
+    // Secret Santa has no public link (a live game runs on it): its case page.
     expect(exhibits.map((e) => e.site)).toEqual([
       "https://smallfriendfiles.fyi/en",
       "https://ludvik4.dev/gridfin/en",
+      "https://ludvik4.dev/work/secret-santa",
       "https://ludvik4.dev/qa-pilot",
     ]);
     expect(exhibits[1]).toMatchObject({ href: "/gridfin/en", newTab: true });

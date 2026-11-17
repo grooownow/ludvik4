@@ -95,7 +95,7 @@ function enBody(baseURL: string): string {
   const workLines = internationalWork
     .map(
       (item) =>
-        `- [${item.title}](${publicUrl("en", baseURL, item.cardLink?.href ?? `/work/${item.slug}`)}): ${item.description}`,
+        `- [${item.title}](${publicUrl("en", baseURL, `/work/${item.slug}`)}): ${item.description}`,
     )
     .join("\n");
   const guideLines = internationalGuides
@@ -123,7 +123,7 @@ Contact: Telegram https://t.me/ludvik4work.
 
 - [Home](${baseURL}/): positioning, services, process, proof, FAQ, and contact
 - [Services and prices](${publicUrl("en", baseURL, "/services")}): five services, what each package includes, timelines and prices
-- [Selected work](${publicUrl("en", baseURL, "/work")}): public evidence and case studies
+- [Work](${publicUrl("en", baseURL, "/work")}): every project shown screen by screen, with a case page for each
 - [Articles](${publicUrl("en", baseURL, "/blog")}): comparisons and engineering notes on AI-assisted development
 - [Planning guides](${publicUrl("en", baseURL, "/guides")}): practical decision tools for website, automation, and MVP projects
 - [About](${publicUrl("en", baseURL, "/about")}): founder-led delivery model and engineering approach

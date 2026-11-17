@@ -1,24 +1,25 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import {
-  InternationalWorkIndexView,
+  CasesIndexView,
+  enCaseSite,
   languageAlternates,
 } from "@/features/site";
 import { env } from "@/lib/env";
 
 export const metadata: Metadata = {
-  title: "Selected Work",
+  title: "Work",
   description:
-    "Selected Ludvik4 work with public evidence, including developer products, documentation, and inspectable code.",
+    "Ludvik4 studio projects with their real screens: the smallFriendFiles pet medical file, the Gridfin starter kit, an online Secret Santa game and the qa-pilot plugin.",
   alternates: { canonical: "/work", ...languageAlternates("/work") },
   openGraph: {
-    title: "Selected Work — Ludvik4",
-    description: "Digital products with public, inspectable evidence.",
+    title: "Ludvik4 work",
+    description: "Digital products shown screen by screen.",
     url: "/work",
   },
 };
 
 export default function InternationalWorkPage() {
   if (env.SITE_MARKET !== "en") notFound();
-  return <InternationalWorkIndexView />;
+  return <CasesIndexView site={enCaseSite} baseUrl={env.NEXT_PUBLIC_APP_URL} />;
 }

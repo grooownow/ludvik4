@@ -28,7 +28,7 @@ const HOME_SLUGS: readonly CaseStudy["slug"][] = [
   "secret-santa",
 ];
 
-// EN shows the international work layer (3), RU its case studies (4), each in
+// EN shows the international work layer (4), RU its case studies (4), each in
 // the order the owner set (docs/specs/immersive-home.md → Markets).
 export function homeExhibits(market: Market): HomeExhibit[] {
   if (market === "en") return workExhibits(internationalWork);

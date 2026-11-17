@@ -21,14 +21,32 @@ import type { Screen } from "./case-gallery";
 type Open = (slug: string, index: number) => void;
 const GalleryContext = createContext<Open | null>(null);
 
-const kindLabel = (s: Screen) =>
-  s.kind === "mobile" ? "мобильная" : "десктоп";
+/** Gallery chrome in the page's language. */
+export type GalleryLabels = {
+  mobile: string;
+  desktop: string;
+  close: string;
+  prev: string;
+  next: string;
+};
+
+export const RU_GALLERY_LABELS: GalleryLabels = {
+  mobile: "мобильная",
+  desktop: "десктоп",
+  close: "Закрыть",
+  prev: "Предыдущий экран",
+  next: "Следующий экран",
+};
+
+const LabelsContext = createContext<GalleryLabels>(RU_GALLERY_LABELS);
 
 export function ScreenGalleryProvider({
   galleries,
+  labels = RU_GALLERY_LABELS,
   children,
 }: {
   galleries: Record<string, Screen[]>;
+  labels?: GalleryLabels;
   children: React.ReactNode;
 }) {
   const [state, setState] = useState<{ slug: string; index: number } | null>(
@@ -47,15 +65,17 @@ export function ScreenGalleryProvider({
 
   return (
     <GalleryContext.Provider value={open}>
-      {children}
-      {state && screens.length > 0 ? (
-        <GalleryDialog
-          screens={screens}
-          index={state.index}
-          onIndex={(index) => setState({ slug: state.slug, index })}
-          onClose={close}
-        />
-      ) : null}
+      <LabelsContext.Provider value={labels}>
+        {children}
+        {state && screens.length > 0 ? (
+          <GalleryDialog
+            screens={screens}
+            index={state.index}
+            onIndex={(index) => setState({ slug: state.slug, index })}
+            onClose={close}
+          />
+        ) : null}
+      </LabelsContext.Provider>
     </GalleryContext.Provider>
   );
 }
@@ -98,6 +118,7 @@ function GalleryDialog({
   onIndex: (index: number) => void;
   onClose: () => void;
 }) {
+  const labels = useContext(LabelsContext);
   const n = screens.length;
   const i = ((index % n) + n) % n;
   const screen = screens[i]!;
@@ -186,13 +207,14 @@ function GalleryDialog({
       ref={dialog}
       open
       aria-modal="true"
-      aria-label={`${screen.caption} · ${kindLabel(screen)}`}
+      aria-label={`${screen.caption} · ${screen.kind === "mobile" ? labels.mobile : labels.desktop}`}
       className="bg-intro/95 text-intro-foreground fixed inset-0 z-[100] m-0 flex h-full max-h-none w-full max-w-none flex-col border-0 p-0"
     >
       <div className="flex items-center justify-between gap-3 px-4 py-3 text-sm">
         <span>
           <span className="font-semibold">
-            {screen.caption} · {kindLabel(screen)}
+            {screen.caption} ·{" "}
+            {screen.kind === "mobile" ? labels.mobile : labels.desktop}
           </span>{" "}
           <span className="font-mono opacity-70">
             {i + 1} / {n}
@@ -201,7 +223,7 @@ function GalleryDialog({
         <button
           ref={closeBtn}
           type="button"
-          aria-label="Закрыть"
+          aria-label={labels.close}
           onClick={onClose}
           className="border-intro-foreground/25 bg-intro-foreground/5 grid size-11 place-items-center rounded-full border text-xl"
         >
@@ -260,10 +282,11 @@ function NavButton({
   side: "prev" | "next";
   onClick: () => void;
 }) {
+  const labels = useContext(LabelsContext);
   return (
     <button
       type="button"
-      aria-label={side === "prev" ? "Предыдущий экран" : "Следующий экран"}
+      aria-label={side === "prev" ? labels.prev : labels.next}
       onClick={onClick}
       className={cn(
         "border-intro-foreground/25 bg-intro-foreground/5 absolute top-1/2 hidden size-11 -translate-y-1/2 place-items-center rounded-full border text-xl sm:grid",

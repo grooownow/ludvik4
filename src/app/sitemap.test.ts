@@ -81,6 +81,8 @@ describe("buildSitemap", () => {
       `${baseURL}/services/mvp-development`,
       `${baseURL}/work`,
       `${baseURL}/work/smallfriendfiles`,
+      `${baseURL}/work/gridfin`,
+      `${baseURL}/work/secret-santa`,
       `${baseURL}/work/qa-pilot`,
       `${baseURL}/services`,
       `${baseURL}/services/landing-pages`,

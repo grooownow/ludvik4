@@ -68,6 +68,14 @@ describe("isTranslatedPath", () => {
       expect(isTranslatedPath(path), path).toBe(false);
     }
   });
+
+  it("leaves out the case studies Spanish does not have yet", () => {
+    // A Spanish reader on /work/gridfin must not be sent to a missing page.
+    expect(isTranslatedPath("/work/smallfriendfiles")).toBe(true);
+    expect(isTranslatedPath("/work/gridfin")).toBe(false);
+    expect(isTranslatedPath("/work/secret-santa")).toBe(false);
+    expect(switchHref("/work/secret-santa", "es")).toBe("/es");
+  });
 });
 
 describe("switchHref", () => {

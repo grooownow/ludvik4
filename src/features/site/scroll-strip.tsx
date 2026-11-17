@@ -7,11 +7,16 @@ import { cn } from "@/lib/utils";
 // strip gets them). Arrows scroll smoothly on pointer devices, hide at the
 // ends, and are not shown on touch screens or narrow viewports.
 
+const RU_LABELS = { left: "Прокрутить влево", right: "Прокрутить вправо" };
+
 export function ScrollStrip({
   className,
+  labels = RU_LABELS,
   children,
 }: {
   className?: string;
+  /** The arrows' accessible names in the page's language. */
+  labels?: { left: string; right: string };
   children: React.ReactNode;
 }) {
   const strip = useRef<HTMLDivElement>(null);
@@ -52,8 +57,18 @@ export function ScrollStrip({
 
   return (
     <div className="relative min-w-0">
-      <Arrow side="l" hidden={ends.start} onClick={() => step(-1)} />
-      <Arrow side="r" hidden={ends.end} onClick={() => step(1)} />
+      <Arrow
+        side="l"
+        label={labels.left}
+        hidden={ends.start}
+        onClick={() => step(-1)}
+      />
+      <Arrow
+        side="r"
+        label={labels.right}
+        hidden={ends.end}
+        onClick={() => step(1)}
+      />
       <div
         ref={strip}
         className={cn("flex snap-x snap-mandatory overflow-x-auto", className)}
@@ -66,10 +81,12 @@ export function ScrollStrip({
 
 function Arrow({
   side,
+  label,
   hidden,
   onClick,
 }: {
   side: "l" | "r";
+  label: string;
   hidden: boolean;
   onClick: () => void;
 }) {
@@ -78,7 +95,7 @@ function Arrow({
       type="button"
       tabIndex={hidden ? -1 : 0}
       aria-hidden={hidden || undefined}
-      aria-label={side === "l" ? "Прокрутить влево" : "Прокрутить вправо"}
+      aria-label={label}
       onClick={onClick}
       className={cn(
         "border-border bg-background text-foreground hover:border-primary hover:text-primary absolute top-[calc(50%-6px)] z-10 hidden size-11 -translate-y-1/2 place-items-center rounded-full border text-lg shadow-md transition-opacity [@media(hover:hover)_and_(min-width:801px)]:grid",

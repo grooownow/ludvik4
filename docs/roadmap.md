@@ -6,6 +6,16 @@ writing detail here.
 
 ## Now
 
+**[DONE 2026-11-17 · ludvik4.dev, branch `feat/en-works-gallery`] Works
+gallery on .dev.** `/work` and `/work/<slug>` now use the RU `/cases` screen
+gallery with English texts and English screens (`public/cases/<slug>/en/`):
+smallFriendFiles, Gridfin, Secret Santa, qa-pilot — no FortNoise. `/ru/work`
+shows the RU texts/screens; `/es/work` keeps the old text cards (Spanish
+gallery is the open follow-up). Home grid: four works (2×2). Gridfin and
+Secret Santa case pages are EN/RU only, so `isTranslatedPath` lists only the
+two Spanish case studies. Spec: `docs/superpowers/specs/2026-11-17-works-gallery-en.md`.
+Not yet merged/pushed — awaiting the owner's look at the English copy.
+
 **[DONE 2026-11-12 · ludvik4.dev] WhatsApp chat button.** A fixed
 bottom-right button (captioned pill on desktop; smaller round button on
 phones with a × that is remembered), a header icon and a footer link, all

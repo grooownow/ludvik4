@@ -14,7 +14,7 @@ export type InternationalServicePage = {
 };
 
 export type InternationalWorkItem = {
-  slug: "qa-pilot" | "gridfin" | "smallfriendfiles";
+  slug: "qa-pilot" | "gridfin" | "smallfriendfiles" | "secret-santa";
   title: string;
   kind: string;
   description: string;
@@ -229,6 +229,29 @@ export const internationalWork: InternationalWorkItem[] = [
       label: "View Gridfin landing",
       newTab: true,
     },
+  },
+  {
+    slug: "secret-santa",
+    title: "Secret Santa",
+    kind: "Web application",
+    description:
+      "An online Secret Santa game for neighbours, colleagues and friends: the draw, gift hand-over and the Santa reveal, in five languages.",
+    image: "/cases/secret-santa-en.webp",
+    imageAlt:
+      "Secret Santa promo page with the recipient card of the participant app",
+    lead: "Secret Santa runs the whole game for a group that speaks different languages: sign-up, a secret draw, gift hand-over and the reveal.",
+    problem:
+      "A large group of people who barely know each other and speak different languages needs an honest secret draw without spreadsheets or chats, and nobody may be left without a gift.",
+    solution: [
+      "Invitations by link or QR code and a one-button draw that keeps families apart",
+      "Wish profiles translated automatically into five interface languages",
+      "Gift hand-over with an anonymous note and a one-click report if the gift is missing",
+      "A guessing game, a thank-you wall and an organiser admin that never shows the pairs",
+    ],
+    result:
+      "A live game is running now. After the game all data is deleted automatically.",
+    website: "https://ludvik4.dev/work/secret-santa",
+    websiteLabel: "View the Secret Santa case",
   },
   {
     slug: "qa-pilot",
