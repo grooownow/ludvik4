@@ -14,7 +14,12 @@ shows the RU texts/screens; `/es/work` keeps the old text cards (Spanish
 gallery is the open follow-up). Home grid: four works (2×2). Gridfin and
 Secret Santa case pages are EN/RU only, so `isTranslatedPath` lists only the
 two Spanish case studies. Spec: `docs/superpowers/specs/2026-11-17-works-gallery-en.md`.
-Not yet merged/pushed — awaiting the owner's look at the English copy.
+Gridfin's three screens set `openWhole`: the viewer opens them fitted and a
+click zooms (owner's call, 2026-11-18). Merged to `main` and pushed
+2026-11-18. Open: Next's security upgrade (`next upgrade --agent=security`)
+as its own branch; the smallfriendfiles.fyi EN hero shows a Russian app
+screenshot (fix on the SFF site). Run gates on Node 22 (`.nvmrc`) — on Node
+26 jsdom's `localStorage` breaks three component test files.
 
 **[DONE 2026-11-12 · ludvik4.dev] WhatsApp chat button.** A fixed
 bottom-right button (captioned pill on desktop; smaller round button on

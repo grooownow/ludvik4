@@ -15,6 +15,8 @@ export type Screen = {
   stripThumb?: ScreenImage;
   squareThumb?: ScreenImage;
   longThumb?: ScreenImage;
+  /** Open fitted (the whole page) even when it is very tall; a click zooms. */
+  openWhole?: boolean;
 };
 
 export type CasePoint = {

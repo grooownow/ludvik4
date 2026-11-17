@@ -14,8 +14,9 @@ import type { Screen } from "./case-gallery";
 
 // Fullscreen screen gallery for the /cases pages. A page opens whole (fitted
 // to the screen); a click on the picture zooms it to width with scrolling and
-// back. Phones and very tall pages (over 3× their width) open at width — a
-// fitted 15 000px page is an unreadable sliver. Arrows / ← → / swipe page,
+// back. Phones and very tall pages (over 3× their width, unless the screen
+// sets `openWhole`) open at width — a fitted 15 000px page is an unreadable
+// sliver. Arrows / ← → / swipe page,
 // Esc or any click outside the picture closes, focus returns to the opener.
 
 type Open = (slug: string, index: number) => void;
@@ -122,7 +123,7 @@ function GalleryDialog({
   const n = screens.length;
   const i = ((index % n) + n) % n;
   const screen = screens[i]!;
-  const tall = screen.full.height / screen.full.width > 3;
+  const tall = !screen.openWhole && screen.full.height / screen.full.width > 3;
   const [fit, setFit] = useState(true);
   const dialog = useRef<HTMLDialogElement>(null);
   const body = useRef<HTMLDivElement>(null);

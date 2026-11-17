@@ -156,6 +156,41 @@ describe("/work (English)", () => {
   });
 });
 
+describe("/work gallery: Gridfin opens whole", () => {
+  // Fitted = the whole page on screen; at width = cropped, scrolls.
+  const fitted = (img: HTMLElement) => img.classList.contains("max-h-full");
+
+  it.each([
+    ["Open: Landing, desktop", "Landing"],
+    ["Open: Landing, mobile", "Landing"],
+  ])("%s opens fitted and zooms on a click", (name, alt) => {
+    render(<CasesIndexView site={enCaseSite} baseUrl={BASE} />);
+    const row = screen
+      .getByRole("heading", { name: "Gridfin" })
+      .closest("section")!;
+    fireEvent.click(within(row).getByRole("button", { name }));
+    const img = () =>
+      within(screen.getByRole("dialog")).getByRole("img", { name: alt });
+    expect(fitted(img())).toBe(true);
+    fireEvent.click(img());
+    expect(fitted(img())).toBe(false);
+  });
+
+  it("leaves the other tall pages opening at width", () => {
+    render(<CasesIndexView site={enCaseSite} baseUrl={BASE} />);
+    const row = screen
+      .getByRole("heading", { name: "Secret Santa" })
+      .closest("section")!;
+    fireEvent.click(
+      within(row).getByRole("button", { name: "Open: Promo page, mobile" }),
+    );
+    const img = within(screen.getByRole("dialog")).getByRole("img", {
+      name: "Promo page",
+    });
+    expect(fitted(img)).toBe(false);
+  });
+});
+
 describe("/ru/work (ludvik4.dev in Russian)", () => {
   it("keeps the Russian texts and the /ru prefix", () => {
     render(<CasesIndexView site={devRuCaseSite} baseUrl={BASE} />);

@@ -202,6 +202,7 @@ export const caseScreensEn = {
   ],
   gridfin: [
     {
+      openWhole: true,
       kind: "desktop",
       caption: "Landing",
       full: {
@@ -221,6 +222,7 @@ export const caseScreensEn = {
       },
     },
     {
+      openWhole: true,
       kind: "mobile",
       caption: "Landing",
       full: {
@@ -240,6 +242,7 @@ export const caseScreensEn = {
       },
     },
     {
+      openWhole: true,
       kind: "desktop",
       caption: "First screen",
       full: {
