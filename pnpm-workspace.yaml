@@ -36,6 +36,13 @@ auditConfig:
     # > lighthouse > puppeteer-core), which validates no visitor input and has
     # no patched 3.x release. Remove when chromium-bidi moves to zod 4.
     - GHSA-mrhx-c7xc-m3w5
+    # GHSA-fc5q-39xc-vjpf: picomatch ReDoS on single-branch repeated extglobs,
+    # all versions <=4.0.7 and no patched npm release yet (4.0.7 is latest).
+    # The only production path is build-time: @sentry/nextjs >
+    # @rollup/plugin-commonjs (+ pluginutils, fdir) with repository-controlled
+    # globs; picomatch 2.x is dev-only tooling. src/ has no glob entry point
+    # and no request-supplied patterns. Remove once picomatch ships >=4.0.8.
+    - GHSA-fc5q-39xc-vjpf
 overrides:
   # GHSA-8r5x-fm3f-whwj + GHSA-p8wg-vrv2-v86f: AST injection. The latest
   # eslint-plugin-boundaries 7.2.0 pins 4.7.9; 4.7.10 preserves the 4.x API.
