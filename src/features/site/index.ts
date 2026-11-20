@@ -41,6 +41,7 @@ export {
   DEV_CASE_SLUGS,
   devRuCaseSite,
   enCaseSite,
+  esCaseSite,
   getCaseGallery,
   ruCaseSite,
 } from "./case-sites";
@@ -62,8 +63,6 @@ export {
   InternationalGuideIndexView,
   InternationalGuideView,
   InternationalServiceView,
-  InternationalWorkIndexView,
-  InternationalWorkView,
 } from "./international-pages";
 export { buildHumansTxt, buildSecurityTxt } from "./service-files";
 export { getLocaleBundle, type LocaleBundle } from "./locale-content";

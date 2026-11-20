@@ -87,9 +87,8 @@ export function splitLocale(pathname: string): {
 const TRANSLATED = [
   /^\/$/,
   /^\/services(\/[a-z0-9-]+)?$/,
-  // Spanish has only these two case studies so far: Gridfin and Secret
-  // Santa are English and Russian (src/features/site/case-sites.ts).
-  /^\/work(\/(smallfriendfiles|qa-pilot))?$/,
+  // Every ludvik4.dev work (DEV_CASE_SLUGS in src/features/site/case-slugs.ts).
+  /^\/work(\/(smallfriendfiles|gridfin|secret-santa|qa-pilot))?$/,
   /^\/(about|contact|privacy|cookies|legal-notice|terms-of-service)$/,
 ];
 

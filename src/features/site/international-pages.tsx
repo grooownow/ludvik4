@@ -1,19 +1,16 @@
 import type { Route } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CtaLink } from "./cta-link";
-import { type Locale, localePrefix, localizeHref } from "@/lib/i18n";
+import { type Locale, localizeHref } from "@/lib/i18n";
 import { jsonLdString } from "@/lib/json-ld";
 import { Breadcrumbs } from "./breadcrumbs";
 import { getLocaleBundle } from "./locale-content";
 import type {
   InternationalGuide,
   InternationalServicePage,
-  InternationalWorkItem,
 } from "./international-content";
 import { internationalGuides } from "./international-content";
-import { InternationalWorkGrid } from "./international-work-grid";
 import { publicUrl } from "./seo";
 import { Eyebrow, Section, SiteFooter, SiteHeader } from "./site-chrome";
 
@@ -229,132 +226,6 @@ export function InternationalServiceView({
               </Link>
             </section>
           ) : null}
-        </div>
-      </Section>
-      <EnquiryCta locale={locale} />
-    </InternationalShell>
-  );
-}
-
-export function InternationalWorkIndexView({
-  locale = "en",
-}: {
-  locale?: Locale;
-}) {
-  const { ui, work } = getLocaleBundle(locale);
-  return (
-    <InternationalShell locale={locale}>
-      <div className="mx-auto max-w-5xl px-6 py-14">
-        <LocaleBreadcrumbs
-          locale={locale}
-          items={[{ label: ui.breadcrumbs.work }]}
-        />
-        <div className="mt-10 max-w-3xl">
-          <Eyebrow>{ui.workIndex.eyebrow}</Eyebrow>
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
-            {ui.workIndex.title}
-          </h1>
-          <p className="text-muted-foreground mt-5 text-lg leading-relaxed">
-            {ui.workIndex.lead}
-          </p>
-        </div>
-        <InternationalWorkGrid
-          items={work}
-          newTabLabel={ui.newTab}
-          prefix={localePrefix(locale)}
-        />
-      </div>
-      <EnquiryCta locale={locale} />
-    </InternationalShell>
-  );
-}
-
-export function InternationalWorkView({
-  item,
-  baseUrl,
-  locale = "en",
-}: {
-  item: InternationalWorkItem;
-  baseUrl: string;
-  locale?: Locale;
-}) {
-  const { ui } = getLocaleBundle(locale);
-  const url = publicUrl(
-    "en",
-    baseUrl,
-    localizeHref(locale, `/work/${item.slug}`),
-  );
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    name: item.title,
-    description: item.description,
-    inLanguage: locale,
-    url,
-    creator: { "@id": `${baseUrl}/#organization` },
-    sameAs: item.website,
-  };
-
-  return (
-    <InternationalShell locale={locale}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
-      />
-      <div className="mx-auto max-w-5xl px-6 py-14">
-        <LocaleBreadcrumbs
-          locale={locale}
-          items={[
-            { label: ui.breadcrumbs.work, href: "/work" },
-            { label: item.title },
-          ]}
-        />
-        <div className="mt-10 max-w-3xl">
-          <Eyebrow>{item.kind}</Eyebrow>
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
-            {item.title}
-          </h1>
-          <p className="text-muted-foreground mt-5 text-lg leading-relaxed">
-            {item.lead}
-          </p>
-          <a
-            href={item.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary mt-6 inline-block font-mono text-sm font-semibold"
-          >
-            {item.websiteLabel} →
-          </a>
-          <Image
-            src={item.image}
-            alt={item.imageAlt}
-            width={1200}
-            height={675}
-            priority
-            sizes="(min-width: 1024px) 768px, 100vw"
-            className="border-border mt-8 aspect-video w-full rounded-2xl border object-cover object-top"
-          />
-        </div>
-      </div>
-      <Section>
-        <div className="grid max-w-3xl gap-12">
-          <section>
-            <h2 className="text-2xl font-semibold tracking-tight">
-              {ui.workPage.problem}
-            </h2>
-            <p className="text-muted-foreground mt-4 leading-relaxed">
-              {item.problem}
-            </p>
-          </section>
-          <BulletSection title={ui.workPage.built} items={item.solution} />
-          <section>
-            <h2 className="text-2xl font-semibold tracking-tight">
-              {ui.workPage.result}
-            </h2>
-            <p className="text-muted-foreground mt-4 leading-relaxed">
-              {item.result}
-            </p>
-          </section>
         </div>
       </Section>
       <EnquiryCta locale={locale} />

@@ -1,0 +1,156 @@
+/**
+ * Writes src/features/site/case-screens-<locale>.ts: the screen list of every
+ * ludvik4.dev case in one language, sizes read from the files in
+ * public/cases/<slug>/<dir>/. Re-run after re-exporting a screen:
+ * `pnpm tsx scripts/gen-case-screens.ts en` (or `es`), then `pnpm prettier
+ * --write` the output.
+ * Specs: docs/superpowers/specs/2026-11-17-works-gallery-en.md,
+ * docs/superpowers/specs/2026-11-20-works-gallery-es.md.
+ */
+import { execFileSync } from "node:child_process";
+import { existsSync, writeFileSync } from "node:fs";
+import path from "node:path";
+
+type Locale = "en" | "es";
+
+type Spec = {
+  kind: "desktop" | "mobile";
+  caption: Record<Locale, string>;
+  full: string;
+  thumb: string;
+  stripThumb?: string;
+  squareThumb?: string;
+  longThumb?: string;
+  /** Open fitted even when very tall (the Gridfin landing). */
+  openWhole?: true;
+};
+
+type Caption = Record<Locale, string>;
+
+const d = (
+  caption: Caption,
+  name: string,
+  extra: Partial<Spec> = {},
+): Spec => ({
+  kind: "desktop",
+  caption,
+  full: `${name}.webp`,
+  thumb: `${name}-t.webp`,
+  ...extra,
+});
+const m = (
+  caption: Caption,
+  name: string,
+  extra: Partial<Spec> = {},
+): Spec => ({
+  ...d(caption, name, extra),
+  kind: "mobile",
+  ...extra,
+});
+
+const t = (en: string, es: string): Caption => ({ en, es });
+
+const SCREENS: Record<string, Spec[]> = {
+  smallfriendfiles: [
+    d(t("Landing", "Landing"), "welcome-d"),
+    m(t("Landing", "Landing"), "welcome-m"),
+    d(t("Home", "Inicio"), "xgHTM"),
+    m(t("Home", "Inicio"), "OS83o"),
+    d(t("Pet passport", "Pasaporte"), "LioTf"),
+    m(t("Pet passport", "Pasaporte"), "U4KOO"),
+    d(t("Document", "Documento"), "doc-d"),
+    m(t("Document", "Documento"), "doc-m"),
+    d(t("Vaccinations", "Vacunas"), "xLzLo"),
+    m(t("Vaccinations", "Vacunas"), "P6zcT"),
+    d(t("Document pack", "Paquete de documentos"), "pack-d"),
+    m(t("Document pack", "Paquete de documentos"), "pack-m"),
+    d(t("Profile", "Perfil"), "prof-d"),
+    m(t("Profile", "Perfil"), "prof-m"),
+  ],
+  gridfin: [
+    d(t("Landing", "Landing"), "landing-d", {
+      stripThumb: "landing-d-s.webp",
+      openWhole: true,
+    }),
+    m(t("Landing", "Landing"), "landing-m", {
+      full: "landing-m.jpg",
+      longThumb: "landing-m-f.webp",
+      openWhole: true,
+    }),
+    d(t("First screen", "Primera pantalla"), "hero-d", { openWhole: true }),
+  ],
+  "secret-santa": [
+    d(t("Promo page", "Página promocional"), "promo-d"),
+    m(t("Promo page", "Página promocional"), "promo-m", {
+      full: "promo-m.jpg",
+    }),
+    d(t("Profile", "Ficha"), "RCoTL", { squareThumb: "RCoTL-sq.webp" }),
+    m(t("Profile", "Ficha"), "KjReh"),
+    m(t("Participant's account", "Cuenta del participante"), "MAQfu"),
+    m(t("Leave a gift", "Dejar el regalo"), "b4x7S"),
+    m(t("Gift waiting", "Regalo esperando"), "pgbnS"),
+    m(t("Guess your Santa", "Adivina tu Santa"), "zY7JF"),
+    d(t("Thank-you wall", "Muro de agradecimientos"), "S1a6y", {
+      squareThumb: "S1a6y-sq.webp",
+    }),
+    m(t("Thank-you wall", "Muro de agradecimientos"), "z6Qz5"),
+    m(t("Organiser admin", "Admin de la organización"), "ThhEp"),
+  ],
+  "qa-pilot": [
+    d(t("First screen", "Primera pantalla"), "hero-d"),
+    m(t("First screen", "Primera pantalla"), "hero-m"),
+  ],
+};
+
+/** The qa-pilot landing exists only in English: every locale shows its screens. */
+const SCREEN_DIR: Partial<Record<string, Partial<Record<Locale, string>>>> = {
+  "qa-pilot": { es: "en" },
+};
+
+const locale = process.argv[2] as Locale;
+if (locale !== "en" && locale !== "es") {
+  throw new Error("usage: pnpm tsx scripts/gen-case-screens.ts <en|es>");
+}
+
+const root = path.resolve(import.meta.dirname, "..");
+
+function image(slug: string, file: string) {
+  const dir = SCREEN_DIR[slug]?.[locale] ?? locale;
+  const src = `/cases/${slug}/${dir}/${file}`;
+  const abs = path.join(root, "public", src);
+  if (!existsSync(abs)) throw new Error(`missing screen ${src}`);
+  const [width, height] = execFileSync("magick", [
+    "identify",
+    "-format",
+    "%w %h",
+    abs,
+  ])
+    .toString()
+    .split(" ")
+    .map(Number);
+  return { src, width, height };
+}
+
+const out: Record<string, unknown[]> = {};
+for (const [slug, specs] of Object.entries(SCREENS)) {
+  out[slug] = specs.map((s) => ({
+    ...(s.openWhole ? { openWhole: true } : {}),
+    kind: s.kind,
+    caption: s.caption[locale],
+    full: image(slug, s.full),
+    thumb: image(slug, s.thumb),
+    ...(s.stripThumb ? { stripThumb: image(slug, s.stripThumb) } : {}),
+    ...(s.squareThumb ? { squareThumb: image(slug, s.squareThumb) } : {}),
+    ...(s.longThumb ? { longThumb: image(slug, s.longThumb) } : {}),
+  }));
+}
+
+const name = `caseScreens${locale[0]!.toUpperCase()}${locale.slice(1)}`;
+writeFileSync(
+  path.join(root, `src/features/site/case-screens-${locale}.ts`),
+  `// Generated by scripts/gen-case-screens.ts — do not edit by hand.
+import type { Screen } from "./case-gallery";
+
+export const ${name} = ${JSON.stringify(out, null, 2)} satisfies Record<string, Screen[]>;
+`,
+);

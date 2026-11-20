@@ -69,12 +69,22 @@ describe("isTranslatedPath", () => {
     }
   });
 
-  it("leaves out the case studies Spanish does not have yet", () => {
-    // A Spanish reader on /work/gridfin must not be sent to a missing page.
-    expect(isTranslatedPath("/work/smallfriendfiles")).toBe(true);
-    expect(isTranslatedPath("/work/gridfin")).toBe(false);
-    expect(isTranslatedPath("/work/secret-santa")).toBe(false);
-    expect(switchHref("/work/secret-santa", "es")).toBe("/es");
+  it("translates every ludvik4.dev case page, and nothing else under /work", () => {
+    // The DEV_CASE_SLUGS of src/features/site/case-slugs.ts.
+    for (const slug of [
+      "smallfriendfiles",
+      "gridfin",
+      "secret-santa",
+      "qa-pilot",
+    ]) {
+      expect(isTranslatedPath(`/work/${slug}`), slug).toBe(true);
+    }
+    expect(switchHref("/work/secret-santa", "es")).toBe(
+      "/es/work/secret-santa",
+    );
+    expect(switchHref("/es/work/gridfin", "en")).toBe("/work/gridfin");
+    // FortNoise is a ludvik4.ru work only: no page on ludvik4.dev.
+    expect(isTranslatedPath("/work/fortnoise")).toBe(false);
   });
 });
 

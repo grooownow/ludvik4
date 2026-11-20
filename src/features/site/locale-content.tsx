@@ -50,8 +50,6 @@ export type LocaleBundle = {
   ui: UiCopy;
   servicePages: InternationalServicePage[];
   work: InternationalWorkItem[];
-  /** Work with its own case page (not the ones whose card leaves the site). */
-  caseStudies: InternationalWorkItem[];
   pricingServices: PricingService[];
   pricingCatalog: PricingCatalog;
   orderPrefills: Record<string, string>;
@@ -71,11 +69,7 @@ function bundle(
   locale: Locale,
   parts: Omit<
     LocaleBundle,
-    | "locale"
-    | "caseStudies"
-    | "pricingServices"
-    | "pricingCatalog"
-    | "orderPrefills"
+    "locale" | "pricingServices" | "pricingCatalog" | "orderPrefills"
   > & {
     pricingServices: PricingService[];
     pricingCopy: typeof enPricingLocaleCopy;
@@ -89,7 +83,6 @@ function bundle(
     content: localizeHrefs(locale, rest.content),
     servicePages: localizeHrefs(locale, rest.servicePages),
     work,
-    caseStudies: work.filter((item) => !item.cardLink),
     pricingServices,
     pricingCatalog: buildInternationalCatalog(
       locale,

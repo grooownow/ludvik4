@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { isTranslatedPath, splitLocale } from "@/lib/i18n";
 import { getLocaleBundle } from "./locale-content";
@@ -38,19 +40,26 @@ describe.each(translated)("$locale bundle", (bundle) => {
     expect(bundle.servicePages.map((p) => p.slug)).toEqual(
       en.servicePages.map((p) => p.slug),
     );
-    // Gridfin has its own landing per language (/gridfin/es); the rest of a
-    // live link is the same everywhere.
-    // Secret Santa is English and Russian only, each card in its language
-    // (src/features/site/case-sites.ts); the other works are shared.
-    const live = (b: typeof en) =>
-      b.work
-        .filter((item) => item.slug !== "secret-santa")
-        .map(({ slug, image, website }) => ({
-          slug,
-          image,
-          website: website.replace(/\/gridfin\/[a-z-]+$/, "/gridfin"),
-        }));
-    expect(live(bundle)).toEqual(live(en));
+    // The same works in the same order. A live link may point at the
+    // product's own page in the language (/gridfin/es, smallfriendfiles.fyi/es,
+    // the Secret Santa case page); the cover image may be the language's own
+    // screenshot (src/features/site/case-sites.ts), but always one that ships.
+    expect(bundle.work.map((item) => item.slug)).toEqual(
+      en.work.map((item) => item.slug),
+    );
+    const site = (url: string) =>
+      url
+        .replace(/\/(es|ru)(\/work)/, "$2")
+        .replace(/(smallfriendfiles\.fyi)\/[a-z-]+$/, "$1")
+        .replace(/\/gridfin\/[a-z-]+$/, "/gridfin");
+    expect(bundle.work.map((item) => site(item.website))).toEqual(
+      en.work.map((item) => site(item.website)),
+    );
+    for (const { image } of bundle.work) {
+      expect(existsSync(join(process.cwd(), "public", image)), image).toBe(
+        true,
+      );
+    }
     expect(bundle.pricingServices.map((s) => s.slug)).toEqual(
       en.pricingServices.map((s) => s.slug),
     );

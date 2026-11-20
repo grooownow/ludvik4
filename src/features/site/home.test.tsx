@@ -2,7 +2,8 @@ import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { getMarketContent } from "./content";
 import { Home } from "./home";
-import { homeExhibits } from "./home-exhibits";
+import { homeExhibits, workExhibits } from "./home-exhibits";
+import { getLocaleBundle } from "./locale-content";
 
 const renderHome = (market: "ru" | "en") =>
   render(
@@ -235,6 +236,36 @@ describe("homeExhibits", () => {
       "https://ludvik4.dev/qa-pilot",
     ]);
     expect(exhibits[1]).toMatchObject({ href: "/gridfin/en", newTab: true });
+  });
+
+  it("ES: the same four works, in Spanish, linking to the /es pages", () => {
+    const exhibits = workExhibits(getLocaleBundle("es").work, "/es");
+    expect(exhibits.map((e) => e.slug)).toEqual([
+      "smallfriendfiles",
+      "gridfin",
+      "secret-santa",
+      "qa-pilot",
+    ]);
+    expect(exhibits.map((e) => e.href)).toEqual([
+      "/es/work/smallfriendfiles",
+      "/gridfin/es",
+      "/es/work/secret-santa",
+      "/es/work/qa-pilot",
+    ]);
+    expect(exhibits.map((e) => e.site)).toEqual([
+      "https://smallfriendfiles.fyi/es",
+      "https://ludvik4.dev/gridfin/es",
+      "https://ludvik4.dev/es/work/secret-santa",
+      "https://ludvik4.dev/qa-pilot",
+    ]);
+    // Spanish screenshots on the cards (qa-pilot's landing is English only).
+    expect(exhibits.map((e) => e.image)).toEqual([
+      "/cases/smallfriendfiles-es.webp",
+      "/cases/gridfin-es.webp",
+      "/cases/secret-santa-es.webp",
+      "/cases/qa-pilot-en.webp",
+    ]);
+    expect(exhibits.map((e) => e.kind)).toContain("Aplicación web");
   });
 
   it("RU: four case studies linking to /cases", () => {

@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 import {
   CasesIndexView,
   devRuCaseSite,
+  esCaseSite,
   getLocaleBundle,
-  InternationalWorkIndexView,
   localePageMetadata,
   parseLocaleParam,
 } from "@/features/site";
@@ -33,11 +33,10 @@ export default async function LocaleWorkPage({
 }) {
   const locale = parseLocaleParam((await params).locale);
   if (!locale) notFound();
-  // Russian has the screen gallery; Spanish keeps the text cards for now.
-  if (locale === "ru") {
-    return (
-      <CasesIndexView site={devRuCaseSite} baseUrl={env.NEXT_PUBLIC_APP_URL} />
-    );
-  }
-  return <InternationalWorkIndexView locale={locale} />;
+  return (
+    <CasesIndexView
+      site={locale === "ru" ? devRuCaseSite : esCaseSite}
+      baseUrl={env.NEXT_PUBLIC_APP_URL}
+    />
+  );
 }

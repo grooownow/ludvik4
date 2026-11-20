@@ -130,9 +130,9 @@ export const esWork: InternationalWorkItem[] = [
     kind: "Aplicación web",
     description:
       "El historial médico de tu mascota en un solo lugar: pasaportes, análisis e informes veterinarios, con extracción de datos, búsqueda y archivos listos para compartir.",
-    image: "/cases/smallfriendfiles-en.webp",
+    image: "/cases/smallfriendfiles-es.webp",
     imageAlt:
-      "Landing en inglés de smallFriendFiles con el historial médico de una mascota en ordenador y móvil",
+      "Landing en español de smallFriendFiles con el historial médico de una mascota en ordenador y móvil",
     lead: "smallFriendFiles convierte los papeles dispersos de una mascota en un historial ordenado que su dueño puede buscar, revisar y compartir con el veterinario.",
     problem:
       "Pasaportes, análisis e informes veterinarios suelen acabar repartidos entre carpetas y fotos del móvil. Encontrar el documento correcto y preparar el papeleo para una clínica nueva, una mudanza o una segunda opinión se convierte en una tarea manual que se repite una y otra vez.",
@@ -145,7 +145,7 @@ export const esWork: InternationalWorkItem[] = [
     ],
     result:
       "La aplicación ya está disponible en beta abierta. Reúne en un mismo flujo la subida, la organización, la búsqueda y el envío de documentos. El procesamiento automático se encarga del trabajo rutinario, mientras que las decisiones médicas siguen en manos del veterinario.",
-    website: "https://smallfriendfiles.fyi/en",
+    website: "https://smallfriendfiles.fyi/es",
     websiteLabel: "Abrir smallFriendFiles",
   },
   {
@@ -154,7 +154,7 @@ export const esWork: InternationalWorkItem[] = [
     kind: "SaaS",
     description:
       "Un starter para Claude Code con esqueleto de aplicación, especificaciones, tests, hooks, controles de calidad y flujos de ingeniería reutilizables.",
-    image: "/cases/gridfin-en.webp",
+    image: "/cases/gridfin-es.webp",
     imageAlt:
       "Landing del producto Gridfin con una vista previa del terminal de Claude Code",
     lead: "Gridfin da al desarrollo de producto con IA una base de arquitectura que funciona y un proceso de entrega que se cumple desde el primer commit.",
@@ -175,6 +175,29 @@ export const esWork: InternationalWorkItem[] = [
       label: "Ver la landing de Gridfin",
       newTab: true,
     },
+  },
+  {
+    slug: "secret-santa",
+    title: "Secret Santa",
+    kind: "Aplicación web",
+    description:
+      "Un Amigo Invisible online para vecinos, compañeros y amigos: el sorteo, la entrega de regalos y la revelación de los Santas, en cinco idiomas.",
+    image: "/cases/secret-santa-es.webp",
+    imageAlt:
+      "Página promocional de Secret Santa con la tarjeta del destinatario en la app del participante",
+    lead: "Secret Santa organiza todo el juego para un grupo que habla idiomas distintos: inscripción, sorteo secreto, entrega de regalos y revelación.",
+    problem:
+      "Un grupo grande de personas que apenas se conocen y hablan idiomas distintos necesita un sorteo secreto de verdad, sin hojas de cálculo ni chats, y sin que nadie se quede sin regalo.",
+    solution: [
+      "Invitaciones por enlace o código QR y un sorteo con un botón que separa a las familias",
+      "Fichas de deseos traducidas automáticamente a los cinco idiomas de la interfaz",
+      "Entrega del regalo con una nota anónima y aviso con un clic si el regalo no está",
+      "Un juego de adivinar, un muro de agradecimientos y un panel para la organización que nunca muestra las parejas",
+    ],
+    result:
+      "Ahora mismo hay un juego en marcha. Al terminar, todos los datos se borran automáticamente.",
+    website: "https://ludvik4.dev/es/work/secret-santa",
+    websiteLabel: "Ver el caso de Secret Santa",
   },
   {
     slug: "qa-pilot",

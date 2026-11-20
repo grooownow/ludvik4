@@ -1,9 +1,12 @@
-// The works gallery (/cases on ludvik4.ru, /work and /ru/work on ludvik4.dev):
+// The works gallery (/cases on ludvik4.ru, /work, /es/work and /ru/work on
+// ludvik4.dev):
 // which works each storefront shows, their texts and screens, and the page
 // chrome in its language. Views: case-pages.tsx. Spec:
-// docs/superpowers/specs/2026-11-17-works-gallery-en.md.
+// docs/superpowers/specs/2026-11-17-works-gallery-en.md and
+// docs/superpowers/specs/2026-11-20-works-gallery-es.md.
 import { type CaseGallery, caseGalleries } from "./case-gallery";
 import { caseScreensEn } from "./case-screens-en";
+import { caseScreensEs } from "./case-screens-es";
 import { DEV_CASE_SLUGS, type DevCaseSlug } from "./case-slugs";
 import {
   caseStudies,
@@ -18,7 +21,7 @@ export type CaseSlug = CaseStudy["slug"];
 export { DEV_CASE_SLUGS, type DevCaseSlug };
 
 export type CaseUi = {
-  lang: "ru" | "en";
+  lang: "ru" | "en" | "es";
   screenCount: (n: number) => string;
   /** "Все 14 экранов" — the strip tile and the hero button. */
   allScreens: (n: number) => string;
@@ -130,6 +133,47 @@ export const enCaseUi: CaseUi = {
   ctaBody:
     "Briefly describe your idea — we'll reply with options and timelines.",
   ctaButton: "Discuss a project",
+};
+
+const esScreenCount = (n: number) =>
+  `${n} ${n === 1 ? "pantalla" : "pantallas"}`;
+
+export const esCaseUi: CaseUi = {
+  lang: "es",
+  screenCount: esScreenCount,
+  allScreens: (n) => `${n === 1 ? "La" : "Las"} ${esScreenCount(n)}`,
+  open: (caption, kind) => `Abrir: ${caption}, ${kind}`,
+  gallery: {
+    mobile: "móvil",
+    desktop: "escritorio",
+    close: "Cerrar",
+    prev: "Pantalla anterior",
+    next: "Pantalla siguiente",
+  },
+  strip: { left: "Desplazar a la izquierda", right: "Desplazar a la derecha" },
+  openProject: "Abrir el proyecto",
+  home: "Inicio",
+  breadcrumbsAria: "Ruta de navegación",
+  works: "Proyectos",
+  indexTitle: "Proyectos del estudio Ludvik4",
+  indexLead:
+    "Desliza las pantallas aquí mismo: pulsa cualquiera para abrirla a pantalla completa.",
+  indexJsonLdName: "Proyectos de Ludvik4",
+  indexJsonLdDescription:
+    "Ejemplos públicos de webs, aplicaciones web y herramientas de IA de Ludvik4, con pantallas de cada proyecto.",
+  more: "Sobre el proyecto →",
+  caseTitle: (title) => `${title}: caso de estudio de Ludvik4`,
+  allScreensTitle: "Todas las pantallas",
+  allScreensNote: (n) => `${n} · escritorio y móvil`,
+  storyTitle: "Pantallas y funciones",
+  insideTitle: "Qué incluye",
+  task: "Reto",
+  result: "Resultado",
+  stack: "Tecnologías",
+  ctaTitle: "Hablemos de un proyecto parecido",
+  ctaBody:
+    "Cuéntanos tu idea en pocas líneas y te responderemos con opciones y plazos.",
+  ctaButton: "Hablar del proyecto",
 };
 
 type EnSlug = keyof typeof caseScreensEn;
@@ -347,10 +391,235 @@ const enTexts: Record<EnSlug, Omit<CaseGallery, "screens">> = {
   },
 };
 
+/** The Spanish texts of each work; the screens come from case-screens-es.ts. */
+const esTexts: Record<EnSlug, Omit<CaseGallery, "screens">> = {
+  smallfriendfiles: {
+    title: "smallFriendFiles",
+    kind: "Aplicación web",
+    line: "El historial médico digital de tu mascota: la IA lee los documentos, controla las vacunas y prepara paquetes para el veterinario en su idioma",
+    website: "https://smallfriendfiles.fyi/es",
+    layout: "story",
+    lead: "El historial médico digital de una mascota. Los documentos se suben como fotos o PDF y sus datos se extraen automáticamente. Totalmente multilingüe, con cuatro idiomas.",
+    task: "Los documentos médicos de una mascota acaban repartidos entre fotos, PDF y papeles, y cuando cambias de clínica o viajas, el que necesitas no aparece. El reto era reunirlo todo en un solo historial sin rellenar nada a mano.",
+    points: [
+      {
+        title: "Inicio",
+        text: "Todo lo importante de la mascota en una pantalla. El bloque «Requiere atención» controla automáticamente las vacunas y los seguros que caducan y los datos que faltan en el pasaporte, y se actualiza cada vez que se suben documentos nuevos.",
+        screens: [2, 3],
+      },
+      {
+        title: "Pasaporte",
+        text: "Los datos se recogen automáticamente de fotos o de un PDF del pasaporte. Se pueden subir varios pasaportes, elegir el principal y editar cualquier campo.",
+        screens: [4, 5],
+      },
+      {
+        title: "Documentos",
+        text: "El usuario sube fotos o PDF. La IA extrae los datos, rellena todos los campos y escribe un resumen breve. No hace falta nada más: las notas son opcionales.",
+        screens: [6, 7],
+      },
+      {
+        title: "Vacunas",
+        text: "Los datos se extraen primero de las fotos del pasaporte. Las vacunas nuevas se añaden en cualquier momento subiendo fotos: la IA extrae los datos y marca las que están a punto de caducar.",
+        screens: [8, 9],
+      },
+      {
+        title: "Paquetes de documentos",
+        text: "Los documentos se agrupan para el veterinario u otra persona y se comparten por enlace o código QR, o se descargan en un solo PDF. Cualquiera puede abrir el enlace público, elegir su idioma y obtener una traducción completa, títulos incluidos. Los originales no cambian.",
+        screens: [10, 11],
+      },
+      {
+        title: "Perfil",
+        text: "Varias mascotas y cambio rápido entre ellas. Aquí también se descargan todos los datos en un archivo, se elige el idioma de la app, se desactiva una mascota o se elimina la cuenta.",
+        screens: [12, 13],
+      },
+    ],
+    result:
+      "En beta abierta. Del documento fotografiado al envío al veterinario, todo ocurre en un solo servicio. El procesamiento automático se encarga de la rutina; las decisiones médicas siguen en manos del veterinario.",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind",
+      "Supabase",
+      "API de Claude y Gemini",
+      "Playwright",
+    ],
+    cover: { desktop: 0 },
+    strip: [0, 1, 2, 3, 4, 5, 6, 7],
+  },
+  gridfin: {
+    title: "Gridfin",
+    kind: "Producto del estudio",
+    line: "Un starter para desarrollar con Claude Code: de una idea a una aplicación funcional y con tests en una hora",
+    website: "https://ludvik4.dev/gridfin/es",
+    websiteLabel: "Abrir la landing",
+    note: "El kit se entrega bajo petición: el acceso anticipado está abierto.",
+    layout: "landing",
+    lead: "Un starter para desarrollar con Claude Code. Un solo comando en el terminal te lleva de una idea a una aplicación funcional con tests en una hora. Incluye una arquitectura lista, reglas de ingeniería y controles de calidad que el agente sigue en cada paso.",
+    task: "Conseguir que Claude Code construya aplicaciones con arquitectura, tests y un proceso como los de un equipo de ingeniería, no prototipos de una tarde.",
+    points: [
+      {
+        title: "Arranque con un comando",
+        text: "El comando /gridfin pregunta por la idea, escribe el brief del producto y las primeras especificaciones, y adapta la plantilla al proyecto: nombre, esquema de datos y datos de demostración.",
+        screens: [],
+      },
+      {
+        title: "Una funcionalidad de la especificación al commit",
+        text: "El comando /feature construye una funcionalidad de principio a fin: especificación, plan de cambios, código, tests obligatorios, comprobaciones y commit.",
+        screens: [],
+      },
+      {
+        title: "Controles de calidad",
+        text: "Linters, comprobación de tipos y tests unitarios, de componentes, de integración y end-to-end se ejecutan con un comando. En cada comprobación, el agente muestra el resultado con la salida del comando.",
+        screens: [],
+      },
+      {
+        title: "Revisión y diseño",
+        text: "El comando /review revisa los cambios según las reglas del proyecto y busca errores; /design muestra 3–5 variantes de pantalla en el navegador y recuerda la elegida.",
+        screens: [],
+      },
+      {
+        title: "Landing",
+        text: "Una página de venta en varios idiomas: el problema, el proceso paso a paso, qué incluye el kit, para quién es y una solicitud de acceso anticipado.",
+        screens: [],
+      },
+    ],
+    result:
+      "La landing está publicada en varios idiomas y el acceso anticipado está abierto. Usamos el kit en nuestros propios proyectos.",
+    stack: [
+      "Claude Code",
+      "Next.js",
+      "TypeScript",
+      "Tailwind",
+      "Vitest",
+      "Playwright",
+    ],
+    cover: { desktop: 0, mobile: 1 },
+    strip: [0, 1, 2],
+  },
+  "secret-santa": {
+    title: "Secret Santa",
+    kind: "Aplicación web",
+    line: "Un Amigo Invisible online para vecinos, compañeros y amigos: el sorteo, la entrega de regalos y la revelación de los Santas",
+    layout: "story",
+    lead: "Un Amigo Invisible online para vecinos, compañeros y amigos. La organización invita a los participantes por enlace o código QR y hace el sorteo con un botón; los correos, los recordatorios, la entrega de regalos y la revelación corren por cuenta del servicio.",
+    task: "Organizar un Amigo Invisible para un grupo grande de personas que hablan idiomas distintos y apenas se conocen: sin hojas de cálculo ni chats, con un sorteo secreto de verdad y sin que nadie se quede sin regalo.",
+    points: [
+      {
+        title: "Página promocional",
+        text: "Qué es el juego, para quién sirve (amigos, una oficina, un equipo remoto, vecinos) y cómo funciona: los pasos para la organización y para los participantes.",
+        screens: [0, 1],
+      },
+      {
+        title: "Ficha",
+        text: "Nombre, dirección de entrega, una foto opcional, deseos y qué no regalar. Una persona adulta puede añadir a sus hijos a su cuenta. Los deseos se traducen automáticamente a los demás idiomas de la interfaz, cinco en total: español, inglés, alemán, ruso y ucraniano.",
+        screens: [2, 3],
+      },
+      {
+        title: "Cuenta del participante",
+        text: "Un resumen de la fase del juego: antes del sorteo, el estado de la ficha y la fecha del sorteo; después, el destinatario y los días que faltan para el intercambio; durante el intercambio, el regalo que te espera. Si en una cuenta hay varios participantes, muestra quién juega ahora.",
+        screens: [4],
+      },
+      {
+        title: "Entrega del regalo",
+        text: "El Santa indica dónde ha dejado el regalo y puede añadir una nota anónima. La marca es definitiva y no se puede cambiar. El destinatario recibe al momento un correo con el lugar y la nota y, si el regalo no está, lo avisa con un clic.",
+        screens: [5, 6],
+      },
+      {
+        title: "Adivina tu Santa",
+        text: "Durante el intercambio, cada participante puede intentar adivinar quién es su Santa y cambiar de respuesta. El 1 de enero se revelan los Santas y cada uno ve si ha acertado.",
+        screens: [7],
+      },
+      {
+        title: "Muro de agradecimientos",
+        text: "Un muro de mensajes de agradecimiento con fotos de los regalos, abierto durante el intercambio. Las fotos se abren a pantalla completa y los mensajes también se traducen automáticamente al idioma de quien los lee.",
+        screens: [8, 9],
+      },
+      {
+        title: "Administración y sorteo",
+        text: "La organización revisa las inscripciones y hace el sorteo con un botón. El algoritmo evita que nadie regale a su propia familia y hace que los niños regalen a niños. Nadie ve las parejas: ni en la administración ni en los correos. Si alguien se da de baja, la cadena se cierra sola, y un Santa de reserva ayuda a quien se quede sin regalo.",
+        screens: [10],
+      },
+    ],
+    result:
+      "Ahora mismo hay un juego en marcha: las inscripciones están abiertas y el sorteo es en diciembre. Cinco idiomas, correos en cada fase, Santas de reserva y un panel para la organización. Al terminar el juego, todos los datos se borran automáticamente.",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind",
+      "Drizzle",
+      "Postgres",
+      "next-auth",
+      "Groq",
+    ],
+    cover: { desktop: 0, mobile: 1 },
+    strip: [0, 1, 2, 3, 4, 5, 6],
+  },
+  "qa-pilot": {
+    title: "qa-pilot",
+    kind: "Plugin de IA",
+    line: "Un plugin de QA abierto para Claude Code: un plan de tests por tarea, auditorías de requisitos y de tests, y tests que demuestran que pueden fallar",
+    website: "https://ludvik4.dev/qa-pilot",
+    websiteLabel: "Abrir la landing (en inglés)",
+    note: "El plugin es de código abierto, con el código en GitHub. Se instala con dos comandos en Claude Code.",
+    layout: "brief",
+    lead: "Un plugin de Claude Code que convierte el testing en un proceso repetible. El agente planifica las comprobaciones antes del código, verifica la tarea después, escribe los tests según las reglas del proyecto y hace auditorías, y respalda cada conclusión con un enlace al código o al requisito.",
+    task: "Los agentes de IA escriben tests rápido, pero esos tests suelen ser superficiales, abusan de los mocks y pasan sea cual sea el comportamiento. Necesitábamos un proceso en el que el agente pruebe como un QA con experiencia y el resultado se pueda comprobar.",
+    points: [
+      {
+        title: "Perfil del proyecto",
+        text: "El comando /qa-pilot:onboard estudia una vez el stack, los niveles de tests, los comandos y la CI, pregunta por lo que no está en el código (entornos seguros, flujos críticos) y escribe un perfil que leen los demás comandos.",
+        screens: [],
+      },
+      {
+        title: "QA en cada tarea",
+        text: "Antes del desarrollo, /qa-pilot:test prepara un plan de tests y busca huecos en los requisitos; después, verifica la tarea, recorre los flujos en el navegador y escribe los tests del plan.",
+        screens: [],
+      },
+      {
+        title: "Auditorías",
+        text: "El comando /qa-pilot:audit evalúa todo el proyecto, los requisitos de una funcionalidad o el código de tests: tests en falso verde e inestables, duplicados. El resultado es una lista de trabajo priorizada.",
+        screens: [],
+      },
+      {
+        title: "Un test tiene que poder fallar",
+        text: "Cada test nuevo se comprueba: el agente rompe el código bajo prueba, ve el fallo y revierte el cambio. El resultado esperado sale de la especificación o del requisito, no del propio código.",
+        screens: [],
+      },
+      {
+        title: "Prioridad por riesgo",
+        text: "Los hallazgos se dividen en Must, Should y Highlight según su impacto en el producto, no según el porcentaje de cobertura. Should tiene un máximo de ocho, así que la lista se puede terminar de verdad.",
+        screens: [],
+      },
+      {
+        title: "Base de reglas y scripts",
+        text: "Más de 1300 reglas de testing contrastadas con estándares (ISTQB, OWASP, W3C, NIST). Scripts sin LLM eligen las reglas para el producto, validan los informes y comprueban el perfil contra el repositorio.",
+        screens: [],
+      },
+    ],
+    result:
+      "El plugin está publicado en GitHub y en su propia landing. Los planes, informes y tests se guardan como archivos en el repositorio del usuario, y una sesión interrumpida se puede retomar.",
+    stack: ["Claude Code", "Skills y agentes", "Playwright MCP", "Python"],
+    cover: { desktop: 0, mobile: 1 },
+    strip: [0, 1],
+  },
+};
+
 const enGalleries = Object.fromEntries(
   DEV_CASE_SLUGS.map((slug) => [
     slug,
     { ...enTexts[slug], screens: caseScreensEn[slug] },
+  ]),
+) as Record<DevCaseSlug, CaseGallery>;
+
+/**
+ * ludvik4.dev/es: the Spanish texts and screens. qa-pilot has only an English
+ * landing, so its screens are the English ones (case-screens-es.ts points at
+ * public/cases/qa-pilot/en/).
+ */
+const esGalleries = Object.fromEntries(
+  DEV_CASE_SLUGS.map((slug) => [
+    slug,
+    { ...esTexts[slug], screens: caseScreensEs[slug] },
   ]),
 ) as Record<DevCaseSlug, CaseGallery>;
 
@@ -380,7 +649,7 @@ const devRuGalleries = Object.fromEntries(
 export type CaseSite = {
   /** The storefront: which canonical host the URLs belong to. */
   market: "ru" | "en";
-  /** The language prefix on ludvik4.dev: "" or "/ru". */
+  /** The language prefix on ludvik4.dev: "", "/es" or "/ru". */
   prefix: string;
   /** The works index path (without the prefix). */
   basePath: "/cases" | "/work";
@@ -418,6 +687,20 @@ export const enCaseSite: CaseSite = {
   content: getLocaleBundle("en").content,
   seo: (slug) => {
     const g = enGalleries[slug as DevCaseSlug];
+    return { description: g.line, image: coverImage(g) };
+  },
+};
+
+export const esCaseSite: CaseSite = {
+  market: "en",
+  prefix: "/es",
+  basePath: "/work",
+  slugs: DEV_CASE_SLUGS,
+  galleries: esGalleries,
+  ui: esCaseUi,
+  content: getLocaleBundle("es").content,
+  seo: (slug) => {
+    const g = esGalleries[slug as DevCaseSlug];
     return { description: g.line, image: coverImage(g) };
   },
 };

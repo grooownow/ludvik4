@@ -32,7 +32,7 @@ ludvik4.dev.
   RU (desktop 2400 / thumbs 1200 or 760; phones 1170 or 780 / thumbs 600 or
   360; Secret Santa phone thumbs top-cropped at 864; square 760 thumbs for
   short desktops). `src/features/site/case-screens-en.ts` is generated from
-  the files by `pnpm tsx scripts/gen-case-screens-en.ts`.
+  the files by `pnpm tsx scripts/gen-case-screens.ts en`.
 - Sources: `.pen` screens were copied, translated with the apps' own
   `messages/en.json` strings, exported (2x desktop / 3x phone) and the copies
   deleted. The same export-only fixes as RU: no pricing (Secret Santa promo
@@ -51,6 +51,7 @@ ludvik4.dev.
 
 ## Open
 
-- Spanish `/es/work` gallery (Spanish screens) — later.
+- ~~Spanish `/es/work` gallery~~ — built 2026-11-20, see
+  `2026-11-20-works-gallery-es.md`.
 - The smallFriendFiles English landing hero shows a Russian app screenshot
   ("Медкарта Космос") — a fix for the smallFriendFiles site, not this one.
