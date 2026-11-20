@@ -4,8 +4,8 @@
   "project_url": "https://ludvik4.dev",
   "mode": "autopilot",
   "created_at": "2026-08-10T17:43:23+00:00",
-  "updated_at": "2026-11-09T21:30:05+00:00",
-  "current_stage": "search-index-monitoring",
+  "updated_at": "2026-11-16T11:50:13+00:00",
+  "current_stage": "weekly-search-monitoring-2026-11-16",
   "completed_stages": [
     "inventory",
     "service-files-audit",
@@ -31,9 +31,14 @@
     "weekly-search-monitoring-2026-10-19",
     "weekly-search-monitoring-2026-10-26",
     "weekly-search-monitoring-2026-11-06",
-    "weekly-search-monitoring-2026-11-09"
+    "weekly-search-monitoring-2026-11-09",
+    "authenticated-gsc-audit-2026-11-12",
+    "spanish-index-inventory-2026-11-12",
+    "spain-query-and-competitor-research-2026-11-12",
+    "spain-growth-plan-2026-11-12",
+    "weekly-search-monitoring-2026-11-16"
   ],
-  "next_stage": "search-index-monitoring",
+  "next_stage": "spain-commercial-pages-and-guide-foundation",
   "freshness": {
     "status": "fresh",
     "latest_relevant_change": "2026-11-09T21:29:25.594167+00:00",
@@ -47,23 +52,58 @@
     "docs/marketing/en/search-and-content-strategy.md",
     "docs/seo/client-article-publication-2026-10-12.json",
     "docs/seo/en-audit-2026-08-10.md",
+    "docs/seo/evidence-2026-11-12/crawl.json",
+    "docs/seo/evidence-2026-11-12/search-console.json",
     "docs/seo/ludvik4-seo-audit-2026-08-10.md",
     "docs/seo/seo-handoff.md",
     "docs/seo/seo-state.json",
     "docs/seo/smallfriendfiles-publication-2026-10-12.json",
+    "docs/seo/spain-search-growth-plan-2026-11-12.md",
     "docs/specs/en-commercial-seo.plan.md"
   ],
   "blockers": [
-    "The Playwright browser session is not authenticated to Google Search Console, so five consecutive weekly runs lack current performance and index-state evidence",
-    "Orca reports Accessibility and Screen Recording as granted, but Computer Use still returns permission_denied and exposes no Chrome window; restart Orca and its helper",
-    "The canonical P1 URL /services/workflow-automation was unknown to Google in the last fresh URL Inspection despite passing every current technical preflight",
-    "The last verified page-indexing aggregate was refreshed on 2026-09-21 and does not cover the root sitemap growth from 19 to 54 URLs"
+    "The English /services/workflow-automation URL is discovered but not indexed and has no crawl recorded.",
+    "All three English guide detail pages are crawled but not indexed; the guide hub itself is indexed.",
+    "The Spanish buyer-guide surface does not yet exist; /es navigation currently leads to English guides."
   ],
   "next_actions": [
-    "Restart Orca and the Orca Computer Use helper, then retry the existing authenticated Chrome session; alternatively sign in through Playwright or provide GSC exports.",
-    "Submit or resubmit the 54-URL root sitemap and capture submitted/detected counts and its processing date.",
-    "Inspect all eight monitored P1 URLs, especially /services/workflow-automation, plus discovery for the 19 Spanish URLs.",
-    "Expand the commercial P1 inventory to include /services and the five package pages.",
-    "Keep genuine legacy /blog/* 404 rows separate from live English, Spanish and commercial pages."
-  ]
+    "Inspect/request indexing for /services/workflow-automation and the three English guide details; no unchanged sitemap resubmission is needed.",
+    "Strengthen contextual internal links and unique evidence on the four excluded P1 pages, then add truthful lastModified values when substantive changes publish.",
+    "Review the Spain growth plan and confirm the primary language/audience; working assumption: Spanish-speaking small businesses first.",
+    "Reconcile outdated July/August strategy rules with the October multilingual storefront and approved EUR packages.",
+    "Implement the first slice: improve three ES commercial pages, add /es/guides and reviewed Spanish website-brief and automation-scorecard guides.",
+    "Use connected Chrome for future GSC checks; the root sitemap was processed successfully on 2026-11-12 and does not require unchanged resubmission."
+  ],
+  "console_access": {
+    "checked_on": "2026-11-12",
+    "google_search_console": "verified via connected Chrome extension using CUA",
+    "property": "https://ludvik4.dev/",
+    "playwright_mcp": "configured but real call failed: browser profile already in use",
+    "bing_webmaster_tools": "not verified"
+  },
+  "latest_verified_search": {
+    "period_label": "latest 7 days available in GSC on 2026-11-16",
+    "clicks": 0,
+    "impressions": 58,
+    "previous_period_clicks": 0,
+    "previous_period_impressions": 46,
+    "ctr": 0,
+    "average_position": 6.8,
+    "previous_average_position": 7.8,
+    "google_ai_impressions": 2,
+    "previous_google_ai_impressions": 7,
+    "indexed_all_processed": 50,
+    "excluded_all_processed": 31,
+    "indexed_submitted_urls": 50,
+    "excluded_submitted_urls": 9,
+    "indexed_spanish_sitemap_urls": 19,
+    "spanish_sitemap_urls": 19,
+    "index_report_updated": "2026-11-13",
+    "root_sitemap_last_read": "2026-11-12"
+  },
+  "scope": {
+    "current_request": "Weekly GSC monitoring and repo-side diagnosis",
+    "website_implementation": "not started",
+    "publishing": "not performed"
+  }
 }

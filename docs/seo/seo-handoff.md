@@ -1,5 +1,187 @@
 # SEO handoff — Ludvik4 International
 
+## Weekly search monitor — 2026-11-16
+
+### Verdict
+
+Google visibility improved week over week, but traffic did not: the rolling
+seven-day comparison shows 58 impressions versus 46 (+26.1%), 0 clicks in
+both periods, 0% CTR, and average position improving from 7.8 to 6.8. The
+index report moved in the opposite direction since the 2026-11-12 checkpoint:
+50 indexed / 31 excluded versus 56 / 25. This is primarily a selection issue,
+not a crawlability failure: all eight monitored canonical P1 URLs pass the
+public technical preflight, while GSC currently excludes the automation page
+and all three guide details.
+
+GSC was read through the authenticated `https://ludvik4.dev/` URL-prefix
+property on 2026-11-16. Performance data was updated about three hours before
+the check; the Page indexing report was last updated 2026-11-13.
+
+### Week-over-week search performance
+
+| Metric           | Latest 7 days | Previous 7 days |          Change |
+| ---------------- | ------------: | --------------: | --------------: |
+| Clicks           |             0 |               0 |               0 |
+| Impressions      |            58 |              46 |    +12 (+26.1%) |
+| CTR              |            0% |              0% |            0 pp |
+| Average position |           6.8 |             7.8 | improved by 1.0 |
+
+New or growing queries were `gridfin` (4 vs 1 impressions), `qa pilot` (2 vs
+1), `ludvik ai` (1 vs 0), and `ludvik 14` (1 vs 0). The only declining query
+shown was `custom web app development quote` (0 vs 4). The largest landing-
+page gain was `/` (35 vs 21). Other gains were
+`/blog/spec-first-spec-anchored-spec-as-source` (5 vs 4), `/gridfin/es` (3 vs
+0), `/gridfin/en` (3 vs 1), `/guides` (2 vs 1), `/work/qa-pilot` (2 vs 1),
+`/about` (2 vs 1), `/blog/ai-website-diy-or-developer` (2 vs 1), `/contact`
+(1 vs 0), and `/services/website-packages` (1 vs 0). No monitored service
+detail generated a click. Google generative-AI impressions fell from 7 to 2;
+the two current impressions went to the AI website article and `/gridfin/es`.
+
+### Sitemaps and index inventory
+
+- Both submitted sitemaps remain successful. `/sitemap.xml` reports 54
+  detected URLs (last processed 2026-11-12); `/gridfin/sitemap.xml` reports 8
+  (last processed 2026-11-11). The sum is not a unique-URL count because the
+  sitemaps overlap.
+- The submitted-URL view contains 59 unique known URLs: 50 indexed and 9
+  excluded. The 9 are 8 crawled/not indexed and 1 discovered/not indexed.
+- The all-known-URL view contains 81 URLs: 50 indexed and 31 excluded. Reasons:
+  16 excluded by `noindex`, 3 true 404s, 1 redirect, 10 crawled/not indexed,
+  and 1 discovered/not indexed.
+- Since the 2026-11-12 checkpoint, indexed fell 56 -> 50 and excluded rose
+  25 -> 31. Crawled/not indexed rose 2 -> 10; discovered/not indexed fell
+  3 -> 1. The total inventory stayed 81, so this is reclassification rather
+  than sitemap growth.
+
+### P1 URL status
+
+| Canonical URL                           | GSC state                                   | Public preflight |
+| --------------------------------------- | ------------------------------------------- | ---------------- |
+| `/`                                     | Indexed; last crawl 2026-11-13              | Pass             |
+| `/services/websites`                    | Indexed; last crawl 2026-11-03              | Pass             |
+| `/services/workflow-automation`         | Discovered, not indexed; no crawl           | Pass             |
+| `/services/mvp-development`             | Indexed; last crawl 2026-11-04              | Pass             |
+| `/guides`                               | Indexed; last crawl 2026-10-15              | Pass             |
+| `/guides/mvp-scope-one-user-journey`    | Crawled, not indexed; last crawl 2026-08-13 | Pass             |
+| `/guides/website-project-brief`         | Crawled, not indexed; last crawl 2026-08-12 | Pass             |
+| `/guides/automation-priority-scorecard` | Crawled, not indexed; last crawl 2026-08-12 | Pass             |
+
+The shorthand paths `/services/automations` and `/services/mvp` return 404 and
+are not the canonical P1 routes. Repository links and sitemap entries use the
+canonical routes above. Add redirects only if external backlinks or historical
+campaign links to those shorthand paths are confirmed.
+
+### Exclusions and technical diagnosis
+
+The three GSC 404 examples are legacy blog URLs only:
+`/blog/cursor-rules`, `/blog/spec-driven-development`, and
+`/blog/agents-ready-project`. `/blog/agents-md-primer` also returns 404 but is
+currently classified as crawled/not indexed. Current commercial pages are not
+mixed into the 404 bucket. The live
+`/blog/spec-driven-development-vs-vibe-coding` article still returns 200.
+
+The production service-file audit passes: robots allows crawling, the root
+sitemap parses with 54 URLs, and `llms.txt`, `humans.txt`, `security.txt`,
+`ads.txt`, and `app-ads.txt` return 200. Every monitored P1 URL returns 200,
+has `index, follow`, a self-canonical, an internal link path, and a sitemap
+entry. The sitemap gives static pages `changefreq`/priority but no truthful
+`lastmod`; blog posts alone carry publication dates. This is not a proven
+indexing blocker, but when the four excluded P1 pages receive a substantive
+content/internal-link update, add a source-backed `lastModified` value instead
+of emitting today's date on every build.
+
+Public `site:` and exact-title checks returned no result for the tested home,
+automation, guides hub, and guide-detail titles. This is only a supporting
+signal; the GSC states above are authoritative.
+
+### Actions
+
+- **P0:** Inspect/request indexing for `/services/workflow-automation` and the
+  three guide details after confirming the live HTML; no sitemap resubmission
+  is needed.
+- **P1:** Strengthen the four excluded pages as a connected commercial cluster:
+  add contextual links from the home/services/guides hub and relevant indexed
+  articles, sharpen unique evidence/examples, then publish truthful `lastmod`
+  values and recheck after 7–14 days.
+- **P2:** Investigate why the legacy aliases were used in monitoring and add
+  permanent redirects only if real external demand exists. Keep watching the
+  rising brand/product queries; CTR remains the acquisition bottleneck.
+
+No site code, console setting, indexing request, commit, or push was changed
+in this run.
+
+## Spain audit and plan — 2026-11-12
+
+Owner requested research and a plan for search and recommendation discovery in
+Spain. The work is complete as an audit/plan; implementation is not started.
+
+Plan: [Spain search growth](spain-search-growth-plan-2026-11-12.md).
+Evidence: [GSC transcription](evidence-2026-11-12/search-console.json),
+[54-URL raw HTML crawl](evidence-2026-11-12/crawl.json).
+Russian owner review copy: `tmp-review/seo-plan-spain-2026-11-12.ru.md`
+(ignored; repo artifacts remain English).
+
+### Current verified state
+
+- GSC access restored through connected Chrome/CUA. Playwright MCP's actual
+  call failed because its browser profile was already in use. Do not repeat
+  the old Orca/restart blocker when Chrome is available.
+- Google Web, 2026-10-14–2026-11-10: 177 impressions, 0 clicks, CTR 0%, average
+  position 7.9. Country Spain: 5 impressions, 0 clicks, average position 16.4.
+- Three months, 2026-08-11–2026-11-10: 568 impressions, 9 clicks, CTR 1.6%,
+  average position 24.4. Do not compare unequal periods as a growth delta.
+- GSC Pages updated 2026-11-09: 56 indexed, 25 excluded across all known URLs.
+  All 19 current ES sitemap URLs appear in the indexed examples (all 56 rows
+  inspected). This is not a 56/54 indexing ratio; inventories differ.
+- Current root sitemap: 54 URLs (35 EN/root, 19 ES), all 200/indexable/self-
+  canonical in the raw crawl. All ES pairs have reciprocal EN/ES/x-default
+  alternates. `/ru` stays intentionally noindex and outside the sitemap.
+- GSC root sitemap: Success, 54 discovered, last read 2026-11-12. Gridfin
+  sitemap: Success, 8 discovered, last read 2026-11-11. No resubmission needed
+  for the unchanged root sitemap.
+- Google generative AI beta report: 13 impressions for the 28-day window,
+  16 over three months. No independent ChatGPT/Perplexity/Gemini answers were
+  tested. Impressions do not establish a contractor recommendation/citation.
+- Fresh URL Inspection: EN `/services/workflow-automation` is discovered/not
+  indexed, with no crawl recorded; ES `/es/services/automation-packages` is
+  indexed, HTTPS, one valid breadcrumb item.
+
+### Diagnosis and next slice
+
+Discovery is working; Spain-specific commercial relevance and the buyer path
+need development. `/es/guides` and `/es/blog` do not exist; Spanish navigation
+and service worksheets lead to English content. Existing developer articles
+have search exposure but do not by themselves establish Spanish buyer demand.
+
+Working audience assumption: Spanish-speaking small businesses/autonomos
+first; EN Spain secondary. The owner was asked for a preference in this chat;
+if unanswered, this remains an explicit assumption.
+
+First implementation slice: reconcile outdated strategy documents, improve
+three ES commercial package pages, add `/es/guides` with reviewed Spanish
+versions of the website brief and automation scorecard. Then follow the eight-
+guide sequence and acceptance criteria in the plan. Preserve current URLs and
+separate package-page and process-page intents. Do not translate the entire
+technical blog or create thin city pages.
+
+### Exclusions and remaining gaps
+
+Aggregate exclusion reasons: 16 noindex, 3 404, 1 redirect, 3 discovered/not
+indexed, 2 crawled/not indexed. Discovered examples: `/gridfin/pt-br`,
+`/qa-pilot`, `/services/workflow-automation`. Crawled examples:
+`/gridfin/en/terms`, legacy `/blog/agents-md-primer`. The noindex/404 lists
+were not expanded. Do not force every excluded URL into the index.
+
+Keep the four genuinely obsolete blog URLs separate from current content:
+`/blog/agents-md-primer`, `/blog/agents-ready-project`,
+`/blog/spec-driven-development`, `/blog/cursor-rules`. Prior monitoring found
+404 responses; historical impression rows do not imply current 200 responses.
+
+Bing index state, analytics enquiry counts, manual-action/security detail
+reports and assistant answer citations remain unverified. GSC overview has no
+CWV field data; no numerical lab score was measured. No site code, production
+content, console settings, indexing requests, commit or push changed here.
+
 ## Published social-preview update — 2026-11-12
 
 Owner-approved release `4b16c3f` is live on ludvik4.dev. `/es` points Open Graph
@@ -17,159 +199,3 @@ cached card was not verified or refreshed. If a post shows a stale preview,
 the owner can inspect `https://ludvik4.dev/es` in
 https://developers.facebook.com/tools/debug/ and use Scrape Again. This does
 not change indexing or the sitemap. See ADR 0015 and the roadmap for details.
-
-## Last production monitoring run
-
-- Property: `https://ludvik4.dev/`
-- Monitoring run: 2026-11-09 22:29 Europe/Madrid
-- Requested comparison window: latest complete seven days versus the preceding seven days
-- Console status: blocked for the fifth consecutive run
-- Last verified GSC performance window: 2026-09-26–2026-10-02
-
-## Verdict
-
-No new production-side SEO regression was found since 2026-11-06. The root
-sitemap remains at 54 URLs: 35 English/root URLs and 19 Spanish URLs. Service
-files pass, and all eight monitored P1 URLs return `200`, permit indexing, are
-self-canonical and remain in the sitemap. Four genuinely obsolete `/blog/*`
-URLs still return `404`; current English, Spanish and commercial pages remain
-separate from that legacy group.
-
-Google Search Console is still unavailable. The Playwright browser opens
-Google sign-in. Orca now reports Accessibility and Screen Recording as granted,
-but browser control still returns `permission_denied` and exposes no Chrome
-window, so the Computer Use helper or Orca needs a restart before the existing
-Chrome session can be used. Public `site:` and exact-title checks returned no
-results and are treated only as a supporting signal.
-
-## Search performance
-
-Clicks, impressions, CTR, average position, new or rising queries and landing-
-page changes are **unverified for 2026-11-09**. Current manual-action, security,
-sitemap-processing, Pages and URL Inspection evidence is also unavailable. No
-previous values are presented as current.
-
-Last verified week, 2026-09-26–2026-10-02 versus the preceding week:
-
-| Metric           | Verified week | Previous week |
-| ---------------- | ------------: | ------------: |
-| Clicks           |             1 |             0 |
-| Impressions      |            35 |             5 |
-| CTR              |          2.9% |            0% |
-| Average position |          16.3 |  not retained |
-
-The verified click and most impressions came from current English editorial
-content. Commercial P1 pages had four visible page-level impressions and no
-clicks. Page-row totals are directional because GSC can suppress low-volume
-rows.
-
-## Indexing and sitemaps
-
-| Signal                         | Current public/technical result | Last verified GSC result |
-| ------------------------------ | ------------------------------: | -----------------------: |
-| Root sitemap URLs              |                              54 |                       21 |
-| English/root sitemap URLs      |                              35 |               unverified |
-| Spanish sitemap URLs           |                              19 |               unverified |
-| Russian `/ru` sitemap URLs     |                               0 |               unverified |
-| Gridfin submitted sitemap URLs |                      unverified |                        8 |
-| All processed indexed          |                      unverified |                       23 |
-| All processed excluded         |                      unverified |                        7 |
-| Submitted indexed              |                      unverified |                       19 |
-| Submitted excluded             |                      unverified |                        5 |
-
-The last verified GSC Pages report was dated 2026-09-21 and predates the
-sitemap's growth from 19 to 54 URLs. Its last known exclusion breakdown was
-five discovered/not-indexed URLs, one redirect and one 404. Current submitted
-and detected sitemap counts, indexed/excluded totals and reasons are unverified.
-
-The Spanish surface remains technically ready: its URLs are indexable,
-self-canonical and in the sitemap, with reciprocal `en`, `es` and `x-default`
-hreflang on sampled pairs. `/ru` remains intentionally `noindex, follow` and
-outside the sitemap.
-
-## Canonical monitored P1 set
-
-The prompt's aliases `/services/automations` and `/services/mvp` map to
-`/services/workflow-automation` and `/services/mvp-development`.
-
-| URL                                     | Preflight | Crawl depth | Last verified Google state |
-| --------------------------------------- | --------- | ----------: | -------------------------- |
-| `/`                                     | pass      |           0 | indexed                    |
-| `/services/websites`                    | pass      |           2 | indexed                    |
-| `/services/workflow-automation`         | pass      |           2 | unknown to Google          |
-| `/services/mvp-development`             | pass      |           2 | indexed                    |
-| `/guides`                               | pass      |           1 | indexed                    |
-| `/guides/website-project-brief`         | pass      |           2 | indexed                    |
-| `/guides/automation-priority-scorecard` | pass      |           2 | indexed                    |
-| `/guides/mvp-scope-one-user-journey`    | pass      |           2 | indexed                    |
-
-The last verified GSC ratio remains **7/8 indexed**; the current ratio is
-unverified. The newer package pages are the primary conversion layer and remain
-linked directly from the home at depth 1.
-
-## Legacy 404 separation
-
-The following obsolete URLs still return `404`:
-
-- `/blog/agents-md-primer`
-- `/blog/agents-ready-project`
-- `/blog/spec-driven-development`
-- `/blog/cursor-rules`
-
-`/blog/spec-driven-development-vs-vibe-coding` returns `200` and is current
-English content. Current articles, package pages, Spanish pages and commercial
-pages must not be grouped with the legacy slugs.
-
-## Technical checks
-
-- `robots.txt`: `200`, no global block, one sitemap declaration.
-- `sitemap.xml`: `200`, parseable, 54 URLs.
-- `llms.txt`, `humans.txt`, `security.txt`, `ads.txt`, and `app-ads.txt`: valid
-  non-HTML responses.
-- All eight monitored P1 pages: `200`, indexable, self-canonical and in sitemap.
-- Root sitemap count and the legacy/live URL split are unchanged since
-  2026-11-06.
-- Public exact-title checks for commercial pages, Spanish pages, qa-pilot and
-  smallFriendFiles returned no result. This is not evidence of deindexing.
-- No new safe repository-side defect was found. No code was changed, committed
-  or pushed.
-
-## Blockers
-
-1. Playwright is not authenticated to the Google account with the
-   `https://ludvik4.dev/` property, so five consecutive runs lack current GSC
-   performance and index-state evidence.
-2. Orca's permissions screen reports Accessibility and Screen Recording as
-   granted, but Computer Use still returns `permission_denied`; restart Orca
-   and its Computer Use helper before retrying Chrome.
-3. `/services/workflow-automation` was unknown to Google in the last fresh URL
-   Inspection despite passing every technical preflight.
-4. The last GSC aggregate predates all 19 indexable Spanish URLs and the new EN
-   commercial/legal surface.
-
-## Actions
-
-### P0
-
-1. Restart Orca and the Orca Computer Use helper, then retry the existing
-   Chrome session. Alternatively, sign in to Google in Playwright or provide
-   GSC exports for Performance, Pages and Sitemaps.
-2. Submit or resubmit the 54-URL root sitemap after access is restored and
-   capture submitted/detected counts plus the processing date.
-
-### P1
-
-1. Reinspect all eight monitored P1 URLs, especially
-   `/services/workflow-automation`.
-2. Capture current all/submitted indexed and excluded totals plus every
-   exclusion reason.
-3. Inspect discovery for the 19 Spanish URLs and the new EN package/legal pages.
-4. Compare query and landing-page performance separately for legacy 404s,
-   current EN content, EN commercial pages and Spanish pages.
-
-### P2
-
-1. Expand the commercial P1 inventory to include `/services` and the five
-   package pages while retaining the older service-detail URLs as supporting
-   pages.
-2. Continue weekly comparisons once authenticated console access is stable.

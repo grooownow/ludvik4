@@ -1,0 +1,67 @@
+# Ludvik4
+
+> Ludvik4 is a founder-led web product studio based in Spain and working with clients worldwide. It designs and builds focused websites, controlled business workflow automations, MVPs, and custom web applications. One point of accountability leads each project from discovery through launch.
+
+Five services, each with three packages and prices in euros:
+
+- [Landing pages](https://ludvik4.dev/services/landing-pages), from €200: One page that presents your product and brings in enquiries. A good fit for starting sales quickly, testing an idea or backing an ad campaign.
+- [Websites](https://ludvik4.dev/services/website-packages), from €500: A multi-page site that tells the whole story of you or your business. Each page answers one visitor question and helps people find you in search.
+- [Web apps](https://ludvik4.dev/services/web-apps), from €1,500: An app where your clients or staff place orders, book, keep records and run calculations. We start with a first working version built around the main task, then grow it from real feedback.
+- [Animations](https://ludvik4.dev/services/web-animation), from €150: Animation makes a site memorable, from a striking hero section to a story that unfolds as you scroll. We build it as a separate page or into your existing site.
+- [Automations](https://ludvik4.dev/services/automation-packages), from €500: Automation means software does the repetitive work: enquiries reach your messaging app or CRM on their own, a bot answers clients, and reports put themselves together. We start with the process that takes up the most time.
+
+Delivery model: direct founder communication, written scope, production-ready delivery, source-code handover, and trusted specialists only when the agreed work needs them.
+
+Engineering approach: AI assists research, implementation, testing, and review inside a process with specifications, version control, automated tests, and quality gates. The public qa-pilot project demonstrates this approach.
+
+Contact: Telegram https://t.me/ludvik4work.
+
+## Main pages
+
+- [Home](https://ludvik4.dev/): positioning, services, process, proof, FAQ, and contact
+- [Services and prices](https://ludvik4.dev/services): five services, what each package includes, timelines and prices
+- [Selected work](https://ludvik4.dev/work): public evidence and case studies
+- [Articles](https://ludvik4.dev/blog): comparisons and engineering notes on AI-assisted development
+- [Planning guides](https://ludvik4.dev/guides): practical decision tools for website, automation, and MVP projects
+- [About](https://ludvik4.dev/about): founder-led delivery model and engineering approach
+- [Privacy](https://ludvik4.dev/privacy): enquiry form data handling
+- [Legal notice](https://ludvik4.dev/legal-notice): website owner details
+- [Terms](https://ludvik4.dev/terms-of-service): how client work is agreed and paid
+
+## Services
+
+- [Website Design and Development](https://ludvik4.dev/services/websites): Founder-led website design and development for startups and small businesses: strategy, copy structure, responsive development, SEO foundations, analytics, and launch.
+- [Business Workflow Automation](https://ludvik4.dev/services/workflow-automation): Custom workflow automation for small teams: integrations, document processing, reporting, bots, and AI with logs, checks, and human approval where it matters.
+- [MVP and Custom Web App Development](https://ludvik4.dev/services/mvp-development): Founder-led MVP and custom web app development for startup founders and small teams: product scoping, UX/UI, frontend, backend, testing, and launch.
+
+## Public work
+
+- [smallFriendFiles](https://ludvik4.dev/work/smallfriendfiles): A pet's digital medical file: passports, lab results and vet reports in one place, with document extraction, search and selected files ready to share.
+- [Gridfin](https://ludvik4.dev/gridfin/en): A Claude Code starter that combines an application skeleton, specifications, tests, hooks, quality gates, and reusable engineering workflows.
+- [qa-pilot](https://ludvik4.dev/work/qa-pilot): An AI plugin that plans, writes, audits, and runs software tests with project-specific context and evidence-based quality checks.
+
+## Planning guides
+
+- [Build a Website Project Brief](https://ludvik4.dev/guides/website-project-brief): A practical website project brief template for founders and small teams: define the offer, audience, conversion path, evidence, content, constraints, and launch decision before requesting estimates.
+- [Score an Automation Opportunity](https://ludvik4.dev/guides/automation-priority-scorecard): A practical workflow automation scorecard for choosing which repetitive business process to automate first, including readiness, risk, exceptions, data, and human approval.
+- [Scope an MVP Around One Journey](https://ludvik4.dev/guides/mvp-scope-one-user-journey): A practical MVP scoping worksheet for founders: define one primary user journey, acceptance criteria, boundaries, operational dependencies, and evidence for the next release.
+
+## Articles
+
+- [AI Website or Web App: Build It Yourself or Hire a Developer?](https://ludvik4.dev/blog/ai-website-diy-or-developer): Decide when an AI-built website or small web app is enough for your business, and when professional help adds value. Design, working journeys, data and handover.
+- [What a Website or Web App Development Quote Actually Pays For](https://ludvik4.dev/blog/what-development-quote-pays-for): Understand what a development quote covers: business decisions, design, working journeys, testing and handover. Compare scope and costs before choosing a builder.
+- [How to Write Cursor Rules That Stay Small and Actually Apply](https://ludvik4.dev/blog/cursor-rules-best-practices): Practical Cursor Rules: choosing Always Apply, intelligent, glob, or manual activation; reducing duplication; and connecting instructions to enforceable checks.
+- [Spec-First, Spec-Anchored, or Spec-as-Source: How Long Should a Specification Live?](https://ludvik4.dev/blog/spec-first-spec-anchored-spec-as-source): Three specification persistence models after implementation: when spec-first is enough, how spec-anchored avoids drift, and where spec-as-source earns its cost.
+- [GitHub Spec Kit vs an Application Skeleton: Workflow, Architecture, and Enforcement](https://ludvik4.dev/blog/github-spec-kit-vs-application-skeleton): How GitHub Spec Kit differs from an Application Skeleton: specification workflow, pre-decided architecture, tests, hooks, quality gates, and selection criteria.
+- [Spec-Driven Development vs Vibe Coding: What Changes After the Prototype](https://ludvik4.dev/blog/spec-driven-development-vs-vibe-coding): A practical comparison of spec-driven development and vibe coding: exploration speed, durable intent, tests, review, and the transition from prototype to product.
+- [AGENTS.md vs CLAUDE.md vs Cursor Rules: Which Instruction File Should You Use?](https://ludvik4.dev/blog/agents-md-vs-claude-md-vs-cursor-rules): A practical comparison of AGENTS.md, CLAUDE.md, and Cursor Rules: who reads each format, how scope works, and how to keep one source of truth.
+
+## Gridfin
+
+- [Gridfin for Claude Code](https://ludvik4.dev/gridfin/en): an Application Skeleton and enforced spec-driven workflow for focused products built with Claude Code
+- [What is an Application Skeleton?](https://ludvik4.dev/gridfin/en/docs/application-skeleton): the stack, rules, tests, quality gates, skills and playbooks that form Gridfin's architectural foundation
+- [Why AI development needs engineering rules](https://ludvik4.dev/gridfin/en/guides/why-ai-needs-engineering-rules): why instructions alone are insufficient and how hooks, proven-failing tests and gates make the workflow enforceable
+
+## qa-pilot
+
+- [qa-pilot for Claude Code](https://ludvik4.dev/qa-pilot): an open-source QA plugin — a QA plan per task, coverage analysis, requirement and test audits, and tests proven able to fail

@@ -1,0 +1,214 @@
+{
+  "observed_on": "2026-11-12",
+  "timezone": "Europe/Madrid",
+  "property": "https://ludvik4.dev/",
+  "method": "Transcribed from the authenticated Google Search Console UI through the connected Chrome browser; not an API export.",
+  "performance": {
+    "search_type": "Web",
+    "last_28_days": {
+      "start": "2026-10-14",
+      "end": "2026-11-10",
+      "clicks": 0,
+      "impressions": 177,
+      "ctr_percent": 0,
+      "average_position": 7.9,
+      "spain": {
+        "clicks": 0,
+        "impressions": 5,
+        "average_position": 16.4
+      },
+      "visible_queries": [
+        {
+          "query": "custom web app development quote",
+          "impressions": 4
+        },
+        {
+          "query": "gridfin",
+          "impressions": 3
+        },
+        {
+          "query": "qa pilot",
+          "impressions": 2
+        },
+        {
+          "query": "ludvik ai",
+          "impressions": 2
+        },
+        {
+          "query": "web application development quote",
+          "impressions": 2
+        },
+        {
+          "query": "ludvik 14",
+          "impressions": 1
+        },
+        {
+          "query": "app development quotation",
+          "impressions": 1
+        }
+      ],
+      "page_rows": [
+        ["/", 83],
+        ["/blog/spec-first-spec-anchored-spec-as-source", 16],
+        ["/blog/what-development-quote-pays-for", 12],
+        ["/work", 11],
+        ["/blog/cursor-rules-best-practices", 11],
+        ["/blog", 10],
+        ["/blog/ai-website-diy-or-developer", 7],
+        ["/about", 7],
+        ["/guides", 6],
+        ["/blog/cursor-rules", 5],
+        ["/privacy", 5],
+        ["/blog/github-spec-kit-vs-application-skeleton", 4],
+        ["/gridfin/en/docs/application-skeleton", 3],
+        ["/gridfin/es", 3],
+        ["/work/qa-pilot", 3],
+        ["/blog/spec-driven-development-vs-vibe-coding", 2],
+        ["/legal-notice", 2],
+        ["/guides/website-project-brief", 2],
+        ["/services/websites", 2],
+        ["/guides/mvp-scope-one-user-journey", 2],
+        ["/gridfin/en", 2],
+        ["/es/legal-notice", 2],
+        ["/es/services/web-animation", 1],
+        ["/contact", 1],
+        ["/es/work/qa-pilot", 1],
+        ["/blog/agents-md-vs-claude-md-vs-cursor-rules", 1],
+        ["/work/smallfriendfiles", 1],
+        ["/services/mvp-development", 1],
+        ["/services/website-packages", 1],
+        ["/guides/automation-priority-scorecard", 1],
+        ["/es/services/landing-pages", 1]
+      ],
+      "visible_spain_queries": [["gridfin", 1]],
+      "visible_spain_pages": [["/gridfin/es", 1]],
+      "notes": "Every visible page/query row had zero clicks. Row counts do not reconcile to property totals because aggregation and privacy filtering differ. The five /es/* page-row impressions worldwide are not the same cohort as the five country=Spain property impressions."
+    },
+    "last_3_months": {
+      "start": "2026-08-11",
+      "end": "2026-11-10",
+      "clicks": 9,
+      "impressions": 568,
+      "ctr_percent": 1.6,
+      "average_position": 24.4,
+      "selected_visible_queries": [
+        ["spec-anchored", 1, 1],
+        ["spec driven development vs vibe coding", 0, 105],
+        ["vibe coding vs spec coding", 0, 71],
+        ["spec coding vs vibe coding", 0, 54]
+      ],
+      "query_row_format": ["query", "clicks", "impressions"]
+    }
+  },
+  "indexing": {
+    "report_updated": "2026-11-09",
+    "scope": "All known processed URLs, including Gridfin and historical URLs",
+    "indexed": 56,
+    "excluded": 25,
+    "excluded_reasons": {
+      "noindex": 16,
+      "404": 3,
+      "redirect": 1,
+      "discovered_not_indexed": 3,
+      "crawled_not_indexed": 2
+    },
+    "discovered_not_indexed_urls": [
+      "/gridfin/pt-br",
+      "/qa-pilot",
+      "/services/workflow-automation"
+    ],
+    "crawled_not_indexed_urls": ["/gridfin/en/terms", "/blog/agents-md-primer"],
+    "spanish_sitemap_urls_seen_in_indexed_examples": [
+      "/es",
+      "/es/contact",
+      "/es/services/websites",
+      "/es/services/workflow-automation",
+      "/es/services/mvp-development",
+      "/es/work",
+      "/es/work/smallfriendfiles",
+      "/es/work/qa-pilot",
+      "/es/services",
+      "/es/services/landing-pages",
+      "/es/services/website-packages",
+      "/es/services/web-apps",
+      "/es/services/web-animation",
+      "/es/services/automation-packages",
+      "/es/about",
+      "/es/privacy",
+      "/es/legal-notice",
+      "/es/cookies",
+      "/es/terms-of-service"
+    ],
+    "indexed_examples_inspected": "All 56 rows displayed by choosing 100 rows per page. All 19 current Spanish sitemap URLs were present.",
+    "noindex_and_404_subgroup_urls": "Not expanded in this audit; do not infer that every excluded URL is a defect."
+  },
+  "sitemaps": [
+    {
+      "path": "/sitemap.xml",
+      "submitted": "2026-08-11",
+      "last_read": "2026-11-12",
+      "status": "Success",
+      "discovered_urls": 54
+    },
+    {
+      "path": "/gridfin/sitemap.xml",
+      "submitted": "2026-08-11",
+      "last_read": "2026-11-11",
+      "status": "Success",
+      "discovered_urls": 8
+    }
+  ],
+  "generative_ai_performance": {
+    "report_label": "Generative AI features, beta",
+    "last_3_months": {
+      "start": "2026-08-11",
+      "end": "2026-11-10",
+      "impressions": 16
+    },
+    "last_28_days": {
+      "start": "2026-10-14",
+      "end": "2026-11-10",
+      "impressions": 13,
+      "visible_page_rows": [
+        ["/blog/ai-website-diy-or-developer", 2],
+        ["/blog/cursor-rules", 2],
+        ["/blog/spec-first-spec-anchored-spec-as-source", 2],
+        ["/", 1],
+        ["/blog/github-spec-kit-vs-application-skeleton", 1],
+        ["/blog/spec-driven-development-vs-vibe-coding", 1],
+        ["/blog/what-development-quote-pays-for", 1],
+        ["/es/services/web-animation", 1],
+        ["/gridfin/es", 1],
+        ["/legal-notice", 1]
+      ]
+    },
+    "caveat": "Impressions in Google's generative AI report do not prove service recommendations, named citations in captured answers, ChatGPT visibility, or qualified enquiries. Do not add this total to Web performance without checking report aggregation rules."
+  },
+  "core_web_vitals": "Overview showed no field data for mobile or desktop; no lab performance score measured.",
+  "unverified": [
+    "Bing Webmaster Tools",
+    "ChatGPT/Perplexity/Gemini recommendation answers",
+    "analytics conversion counts",
+    "current manual action and security reports"
+  ],
+  "url_inspection": [
+    {
+      "url": "https://ludvik4.dev/services/workflow-automation",
+      "observed_on": "2026-11-12",
+      "state": "URL is not on Google",
+      "reason": "Discovered - currently not indexed",
+      "last_crawl": null,
+      "discovery": [
+        "https://ludvik4.dev/sitemap.xml",
+        "https://ludvik4.dev/es/services/workflow-automation"
+      ]
+    },
+    {
+      "url": "https://ludvik4.dev/es/services/automation-packages",
+      "observed_on": "2026-11-12",
+      "state": "URL is on Google",
+      "https": "pass",
+      "breadcrumbs_valid_items": 1
+    }
+  ]
+}

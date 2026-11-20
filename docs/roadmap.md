@@ -22,6 +22,37 @@ exists (build-time Sentry path only). Open: the smallfriendfiles.fyi EN hero
 shows a Russian app screenshot (fix on the SFF site). Run gates on Node 22 (`.nvmrc`) — on Node
 26 jsdom's `localStorage` breaks three component test files.
 
+**[MONITOR 2026-11-16 · ludvik4.dev] Impressions rose, but four P1 pages need
+indexing work.** Rolling seven-day GSC comparison: 58 impressions vs 46
+(+26.1%), 0 clicks in both periods, CTR 0%, average position 6.8 vs 7.8.
+Index report updated 13 Nov: 50 indexed / 31 excluded, down from 56 / 25 at
+the 12 Nov checkpoint. Root, websites, MVP and guides hub are indexed;
+workflow automation is discovered/not indexed and the three guide details are
+crawled/not indexed. Both sitemaps remain successful (54 root + 8 Gridfin
+detected, with overlap); all eight P1 URLs pass technical preflight. The three
+GSC 404 examples are obsolete `/blog/*` URLs, not commercial pages. Next:
+request indexing for the four P1 exclusions after a live inspection, then
+strengthen their contextual links/evidence and publish truthful `lastmod`
+values when content actually changes. Full report: `docs/seo/seo-handoff.md`.
+No code, console setting, indexing request, commit or push changed.
+
+**[RESEARCHED 2026-11-12 · Spain SEO plan] Spanish commercial discovery is
+the next acquisition focus.** Authenticated GSC access works through connected
+Chrome: all 19 Spanish sitemap URLs are indexed. Google Web for 14 Oct–10 Nov
+records 177 impressions / 0 clicks worldwide and 5 / 0 from Spain; the separate
+Google generative-AI report records 13 impressions. Root sitemap processing is
+successful (54 discovered, last read 12 Nov), so unchanged resubmission is not
+pending. Research, commercial page roles, eight Spanish guide briefs and a
+six-week sequence: `docs/seo/spain-search-growth-plan-2026-11-12.md`; current
+evidence/access notes: `docs/seo/seo-handoff.md`. Owner review copy in ignored
+`tmp-review/seo-plan-spain-2026-11-12.ru.md`. Working audience assumption:
+Spanish-speaking small businesses first, EN Spain secondary. Next slice after
+plan review: reconcile stale marketing rules, improve three ES commercial
+pages, add `/es/guides` and reviewed ES website-brief/automation-scorecard
+guides. This session changed reports only; implementation/publication has not
+started. EN `/services/workflow-automation` still needs a targeted indexing
+investigation; its ES counterparts are indexed.
+
 **[DONE 2026-11-12 · ludvik4.dev] WhatsApp chat button.** A fixed
 bottom-right button (captioned pill on desktop; smaller round button on
 phones with a × that is remembered), a header icon and a footer link, all
@@ -68,17 +99,17 @@ git) in `.design/works/`. Open: a live bug on ludvik4.ru/gridfin/ (gridfin
 repo) — at 360–414px the header CTA «Получить ранний доступ» overflows the
 screen; EN/ES `/work` pages were not touched.
 
-**[MONITOR 2026-11-06] The international sitemap doubled and the prior crawl-
+**[MONITOR 2026-11-06 · refreshed 2026-11-12] The international sitemap doubled and the prior crawl-
 depth regression improved.** `sitemap.xml` grew from 26 to 54 URLs: 35 EN/root
 and 19 ES; all 54 return `200`, are self-canonical and indexable. `/ru` remains
 intentionally `noindex` and outside the sitemap. New package pages are linked
 from the home at depth 1; the three older monitored service-detail pages moved
 from depth 3 to 2. Follow-up 2026-11-09: production signals are unchanged, but
-GSC is blocked for a fifth run. Playwright needs Google login; Orca now reports
-its permissions as granted, while Computer Use still returns
-`permission_denied`, so restart Orca and its helper before retrying Chrome.
-Submit the new sitemap and refresh Performance/Pages/Inspection as soon as
-access is restored. Full evidence: `docs/seo/seo-handoff.md`.
+GSC was blocked for a fifth run. On 12 Nov connected Chrome restored access:
+56 indexed URLs overall, including all 19 ES URLs; root sitemap processing
+succeeds with 54 discovered URLs and a 12 Nov read date. The restart and sitemap
+submission actions are superseded. Use the current audit and handoff above.
+Full evidence: `docs/seo/seo-handoff.md`.
 
 **[2026-10-31 · incident] Vercel Functions Storage over the Hobby 10 GB.**
 Cause: `src/features/blog/articles.ts` read articles through a dynamic path,

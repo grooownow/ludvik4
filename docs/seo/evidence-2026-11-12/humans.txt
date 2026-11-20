@@ -1,0 +1,14 @@
+/* TEAM */
+
+Owner: Ludvik4
+Site: https://ludvik4.dev/
+Contact: https://t.me/ludvik4work
+Location: Valencia, Spain · Remote · Worldwide
+
+/* SITE */
+
+Language: English
+Primary topic: websites, business workflow automation, MVP development, web applications, and AI-assisted development
+Canonical URL: https://ludvik4.dev/
+Sitemap: https://ludvik4.dev/sitemap.xml
+LLM overview: https://ludvik4.dev/llms.txt
