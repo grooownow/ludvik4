@@ -396,15 +396,15 @@ const esTexts: Record<EnSlug, Omit<CaseGallery, "screens">> = {
   smallfriendfiles: {
     title: "smallFriendFiles",
     kind: "Aplicación web",
-    line: "El historial médico digital de tu mascota: la IA lee los documentos, controla las vacunas y prepara paquetes para el veterinario en su idioma",
+    line: "El historial médico digital de tu mascota: la IA lee los documentos, controla las vacunas y prepara paquetes de documentos para el veterinario en su idioma",
     website: "https://smallfriendfiles.fyi/es",
     layout: "story",
-    lead: "El historial médico digital de una mascota. Los documentos se suben como fotos o PDF y sus datos se extraen automáticamente. Totalmente multilingüe, con cuatro idiomas.",
+    lead: "El historial médico digital de una mascota. Los documentos se suben como fotos o PDF y sus datos se extraen automáticamente. Disponible en cuatro idiomas.",
     task: "Los documentos médicos de una mascota acaban repartidos entre fotos, PDF y papeles, y cuando cambias de clínica o viajas, el que necesitas no aparece. El reto era reunirlo todo en un solo historial sin rellenar nada a mano.",
     points: [
       {
         title: "Inicio",
-        text: "Todo lo importante de la mascota en una pantalla. El bloque «Requiere atención» controla automáticamente las vacunas y los seguros que caducan y los datos que faltan en el pasaporte, y se actualiza cada vez que se suben documentos nuevos.",
+        text: "Todo lo importante de la mascota en una pantalla. El bloque «Requiere atención» vigila automáticamente las vacunas y los seguros a punto de caducar y los datos que faltan en el pasaporte, y se actualiza cada vez que se suben documentos nuevos.",
         screens: [2, 3],
       },
       {
@@ -452,7 +452,7 @@ const esTexts: Record<EnSlug, Omit<CaseGallery, "screens">> = {
     line: "Un starter para desarrollar con Claude Code: de una idea a una aplicación funcional y con tests en una hora",
     website: "https://ludvik4.dev/gridfin/es",
     websiteLabel: "Abrir la landing",
-    note: "El kit se entrega bajo petición: el acceso anticipado está abierto.",
+    note: "El kit se entrega bajo petición y el acceso anticipado ya está abierto.",
     layout: "landing",
     lead: "Un starter para desarrollar con Claude Code. Un solo comando en el terminal te lleva de una idea a una aplicación funcional con tests en una hora. Incluye una arquitectura lista, reglas de ingeniería y controles de calidad que el agente sigue en cada paso.",
     task: "Conseguir que Claude Code construya aplicaciones con arquitectura, tests y un proceso como los de un equipo de ingeniería, no prototipos de una tarde.",
@@ -463,13 +463,13 @@ const esTexts: Record<EnSlug, Omit<CaseGallery, "screens">> = {
         screens: [],
       },
       {
-        title: "Una funcionalidad de la especificación al commit",
+        title: "Una funcionalidad, de la especificación al commit",
         text: "El comando /feature construye una funcionalidad de principio a fin: especificación, plan de cambios, código, tests obligatorios, comprobaciones y commit.",
         screens: [],
       },
       {
         title: "Controles de calidad",
-        text: "Linters, comprobación de tipos y tests unitarios, de componentes, de integración y end-to-end se ejecutan con un comando. En cada comprobación, el agente muestra el resultado con la salida del comando.",
+        text: "Los linters, la comprobación de tipos y los tests unitarios, de componentes, de integración y end-to-end se ejecutan con un solo comando. El agente respalda cada resultado con la salida del comando.",
         screens: [],
       },
       {
@@ -479,7 +479,7 @@ const esTexts: Record<EnSlug, Omit<CaseGallery, "screens">> = {
       },
       {
         title: "Landing",
-        text: "Una página de venta en varios idiomas: el problema, el proceso paso a paso, qué incluye el kit, para quién es y una solicitud de acceso anticipado.",
+        text: "Una página de venta en varios idiomas: el problema, el proceso paso a paso, qué incluye el kit, para quién es y un formulario para pedir acceso anticipado.",
         screens: [],
       },
     ],
@@ -506,7 +506,7 @@ const esTexts: Record<EnSlug, Omit<CaseGallery, "screens">> = {
     points: [
       {
         title: "Página promocional",
-        text: "Qué es el juego, para quién sirve (amigos, una oficina, un equipo remoto, vecinos) y cómo funciona: los pasos para la organización y para los participantes.",
+        text: "Qué es el juego, para quién es (amigos, una oficina, un equipo remoto, vecinos) y cómo funciona: los pasos para la organización y para los participantes.",
         screens: [0, 1],
       },
       {
@@ -516,17 +516,17 @@ const esTexts: Record<EnSlug, Omit<CaseGallery, "screens">> = {
       },
       {
         title: "Cuenta del participante",
-        text: "Un resumen de la fase del juego: antes del sorteo, el estado de la ficha y la fecha del sorteo; después, el destinatario y los días que faltan para el intercambio; durante el intercambio, el regalo que te espera. Si en una cuenta hay varios participantes, muestra quién juega ahora.",
+        text: "Muestra en qué fase está el juego: antes del sorteo, el estado de la ficha y la fecha del sorteo; después, el destinatario y los días que faltan para el intercambio; durante el intercambio, el regalo que te espera. Si en una cuenta hay varios participantes, muestra quién juega ahora.",
         screens: [4],
       },
       {
         title: "Entrega del regalo",
-        text: "El Santa indica dónde ha dejado el regalo y puede añadir una nota anónima. La marca es definitiva y no se puede cambiar. El destinatario recibe al momento un correo con el lugar y la nota y, si el regalo no está, lo avisa con un clic.",
+        text: "El Santa indica dónde ha dejado el regalo y puede añadir una nota anónima. Una vez marcada, la entrega ya no se puede cambiar. El destinatario recibe al momento un correo con el lugar y la nota y, si el regalo no está, lo avisa con un clic.",
         screens: [5, 6],
       },
       {
         title: "Adivina tu Santa",
-        text: "Durante el intercambio, cada participante puede intentar adivinar quién es su Santa y cambiar de respuesta. El 1 de enero se revelan los Santas y cada uno ve si ha acertado.",
+        text: "Durante el intercambio, cada participante puede intentar adivinar quién es su Santa y cambiar su respuesta. El 1 de enero se revelan los Santas y cada uno ve si ha acertado.",
         screens: [7],
       },
       {
@@ -536,7 +536,7 @@ const esTexts: Record<EnSlug, Omit<CaseGallery, "screens">> = {
       },
       {
         title: "Administración y sorteo",
-        text: "La organización revisa las inscripciones y hace el sorteo con un botón. El algoritmo evita que nadie regale a su propia familia y hace que los niños regalen a niños. Nadie ve las parejas: ni en la administración ni en los correos. Si alguien se da de baja, la cadena se cierra sola, y un Santa de reserva ayuda a quien se quede sin regalo.",
+        text: "La organización revisa las inscripciones y hace el sorteo con un botón. El algoritmo se asegura de que nadie regale a alguien de su propia familia y de que los niños regalen a otros niños. Nadie ve las parejas: ni en la administración ni en los correos. Si alguien se da de baja, la cadena se cierra sola, y un Santa de reserva ayuda a quien se quede sin regalo.",
         screens: [10],
       },
     ],
@@ -562,7 +562,7 @@ const esTexts: Record<EnSlug, Omit<CaseGallery, "screens">> = {
     websiteLabel: "Abrir la landing (en inglés)",
     note: "El plugin es de código abierto, con el código en GitHub. Se instala con dos comandos en Claude Code.",
     layout: "brief",
-    lead: "Un plugin de Claude Code que convierte el testing en un proceso repetible. El agente planifica las comprobaciones antes del código, verifica la tarea después, escribe los tests según las reglas del proyecto y hace auditorías, y respalda cada conclusión con un enlace al código o al requisito.",
+    lead: "Un plugin de Claude Code que convierte el testing en un proceso repetible. El agente planifica las comprobaciones antes de escribir código, verifica la tarea después, escribe los tests según las reglas del proyecto y hace auditorías. Cada conclusión va respaldada por un enlace al código o al requisito.",
     task: "Los agentes de IA escriben tests rápido, pero esos tests suelen ser superficiales, abusan de los mocks y pasan sea cual sea el comportamiento. Necesitábamos un proceso en el que el agente pruebe como un QA con experiencia y el resultado se pueda comprobar.",
     points: [
       {
@@ -577,7 +577,7 @@ const esTexts: Record<EnSlug, Omit<CaseGallery, "screens">> = {
       },
       {
         title: "Auditorías",
-        text: "El comando /qa-pilot:audit evalúa todo el proyecto, los requisitos de una funcionalidad o el código de tests: tests en falso verde e inestables, duplicados. El resultado es una lista de trabajo priorizada.",
+        text: "El comando /qa-pilot:audit evalúa todo el proyecto, los requisitos de una funcionalidad o el código de los tests, donde busca falsos verdes, tests inestables y duplicados. El resultado es una lista de trabajo priorizada.",
         screens: [],
       },
       {
@@ -587,12 +587,12 @@ const esTexts: Record<EnSlug, Omit<CaseGallery, "screens">> = {
       },
       {
         title: "Prioridad por riesgo",
-        text: "Los hallazgos se dividen en Must, Should y Highlight según su impacto en el producto, no según el porcentaje de cobertura. Should tiene un máximo de ocho, así que la lista se puede terminar de verdad.",
+        text: "Los hallazgos se dividen en Must, Should y Highlight según su impacto en el producto, no según el porcentaje de cobertura. Should admite como máximo ocho, así que la lista se puede terminar de verdad.",
         screens: [],
       },
       {
         title: "Base de reglas y scripts",
-        text: "Más de 1300 reglas de testing contrastadas con estándares (ISTQB, OWASP, W3C, NIST). Scripts sin LLM eligen las reglas para el producto, validan los informes y comprueban el perfil contra el repositorio.",
+        text: "Más de 1300 reglas de testing contrastadas con estándares (ISTQB, OWASP, W3C, NIST). Unos scripts sin LLM seleccionan las reglas adecuadas para el producto, validan los informes y comprueban el perfil contra el repositorio.",
         screens: [],
       },
     ],

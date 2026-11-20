@@ -189,10 +189,10 @@ export const esWork: InternationalWorkItem[] = [
     problem:
       "Un grupo grande de personas que apenas se conocen y hablan idiomas distintos necesita un sorteo secreto de verdad, sin hojas de cálculo ni chats, y sin que nadie se quede sin regalo.",
     solution: [
-      "Invitaciones por enlace o código QR y un sorteo con un botón que separa a las familias",
+      "Invitaciones por enlace o código QR y un sorteo con un solo botón que nunca empareja a miembros de la misma familia",
       "Fichas de deseos traducidas automáticamente a los cinco idiomas de la interfaz",
       "Entrega del regalo con una nota anónima y aviso con un clic si el regalo no está",
-      "Un juego de adivinar, un muro de agradecimientos y un panel para la organización que nunca muestra las parejas",
+      "Un juego para adivinar a tu Santa, un muro de agradecimientos y un panel para la organización que nunca muestra las parejas",
     ],
     result:
       "Ahora mismo hay un juego en marcha. Al terminar, todos los datos se borran automáticamente.",

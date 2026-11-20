@@ -88,13 +88,13 @@ const SCREENS: Record<string, Spec[]> = {
     m(t("Profile", "Ficha"), "KjReh"),
     m(t("Participant's account", "Cuenta del participante"), "MAQfu"),
     m(t("Leave a gift", "Dejar el regalo"), "b4x7S"),
-    m(t("Gift waiting", "Regalo esperando"), "pgbnS"),
+    m(t("Gift waiting", "Tu regalo te espera"), "pgbnS"),
     m(t("Guess your Santa", "Adivina tu Santa"), "zY7JF"),
     d(t("Thank-you wall", "Muro de agradecimientos"), "S1a6y", {
       squareThumb: "S1a6y-sq.webp",
     }),
     m(t("Thank-you wall", "Muro de agradecimientos"), "z6Qz5"),
-    m(t("Organiser admin", "Admin de la organización"), "ThhEp"),
+    m(t("Organiser admin", "Panel de la organización"), "ThhEp"),
   ],
   "qa-pilot": [
     d(t("First screen", "Primera pantalla"), "hero-d"),

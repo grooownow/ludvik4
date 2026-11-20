@@ -349,7 +349,7 @@ export const caseScreensEs = {
     },
     {
       kind: "mobile",
-      caption: "Regalo esperando",
+      caption: "Tu regalo te espera",
       full: {
         src: "/cases/secret-santa/es/pgbnS.webp",
         width: 1170,
@@ -410,7 +410,7 @@ export const caseScreensEs = {
     },
     {
       kind: "mobile",
-      caption: "Admin de la organización",
+      caption: "Panel de la organización",
       full: {
         src: "/cases/secret-santa/es/ThhEp.webp",
         width: 1170,
