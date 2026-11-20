@@ -6,8 +6,8 @@ writing detail here.
 
 ## Now
 
-**[BUILT, AWAITING OWNER TEST 2026-11-20 · ludvik4.dev, branch
-`feat/es-works-gallery`] Spanish works gallery.** `/es/work` and
+**[DONE 2026-11-20 · ludvik4.dev, branch
+`feat/es-works-gallery`, merged to `main`] Spanish works gallery.** `/es/work` and
 `/es/work/<slug>` now use the same screen gallery as `/work` with Spanish
 texts and Spanish screens at the English sizes (`public/cases/<slug>/es/`):
 smallFriendFiles, Gridfin, Secret Santa; qa-pilot keeps its English screens
@@ -15,8 +15,8 @@ smallFriendFiles, Gridfin, Secret Santa; qa-pilot keeps its English screens
 every `/work/<slug>` is a translated path (switch, sitemap, hreflang). Home
 `/es`: four works with Spanish covers. Old Spanish text cards removed.
 `scripts/gen-case-screens.ts <en|es>` replaces the EN-only generator. Spec:
-`docs/superpowers/specs/2026-11-20-works-gallery-es.md`. **Not merged**: the
-owner tests locally first, then merge to `main` and push.
+`docs/superpowers/specs/2026-11-20-works-gallery-es.md`. Owner tested
+locally; Spanish copy polished before the merge.
 
 **[DONE 2026-11-17 · ludvik4.dev, branch `feat/en-works-gallery`] Works
 gallery on .dev.** `/work` and `/work/<slug>` now use the RU `/cases` screen

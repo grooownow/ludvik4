@@ -1,6 +1,6 @@
 # Works gallery on ludvik4.dev — Spanish
 
-Status: built 2026-11-20 on `feat/es-works-gallery`. Extends
+Status: shipped 2026-11-20 (`feat/es-works-gallery`, merged to `main`). Extends
 `2026-11-17-works-gallery-en.md` (the `/work` gallery in English and
 Russian) to Spanish.
 
